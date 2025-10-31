@@ -1,0 +1,203 @@
+import React from "react";
+import { Toaster } from "./components/ui/toaster";
+import { Toaster as Sonner } from "./components/ui/sonner";
+import { TooltipProvider } from "./components/ui/tooltip";
+import { ChatbotContainer } from "./components/chatbot/chatbot-container";
+import "./lib/demo-explainable-elements";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route, useNavigate, Link } from "react-router-dom";
+import Landing from "./pages/Landing";
+import Index from "./pages/Index";
+import BusinessForecast from "./pages/BusinessForecast";
+import TaxCompliance from "./pages/TaxCompliance";
+import PricingStrategy from "./pages/PricingStrategy";
+import RevenueStrategy from "./pages/RevenueStrategy";
+import MarketCompetitiveAnalysis from "./pages/MarketCompetitiveAnalysis";
+import LoanFunding from "./pages/LoanFunding";
+import InventorySupplyChain from "./pages/InventorySupplyChain";
+import FinancialAdvisory from "./pages/FinancialAdvisory";
+import PolicyEconomicAnalysis from "./pages/PolicyEconomicAnalysis";
+import BusinessFeasibility from "./pages/BusinessFeasibility";
+import BusinessFeasibilityIdea from "./pages/BusinessFeasibilityIdea";
+import ImpactCalculator from "./pages/ImpactCalculator";
+import AiInsights from "./pages/AiInsights";
+import DocumentManager from "./pages/DocumentManager";
+import GrowthPlanning from "./pages/GrowthPlanning";
+import AllReports from "./pages/AllReports";
+import Notifications from "./pages/Notifications";
+import PolicyAlerts from "./pages/PolicyAlerts";
+import StrategyBuilder from "./pages/StrategyBuilder";
+import RiskManagement from "./pages/RiskManagement";
+import ComplianceReports from "./pages/ComplianceReports";
+import AuditReports from "./pages/AuditReports";
+import AuditTrail from "./pages/AuditTrail";
+import DocumentUpload from "./pages/DocumentUpload";
+import NotFound from "./pages/NotFound";
+import Infrastructure from "./pages/Infrastructure";
+import Networks from './pages/infrastructure/Networks';
+import Opportunities from './pages/infrastructure/Opportunities';
+import ValueExchangeChannels from './pages/infrastructure/ValueExchangeChannels';
+import KnowledgeFlows from './pages/infrastructure/KnowledgeFlows';
+import GovernanceTrustMechanisms from './pages/infrastructure/GovernanceTrustMechanisms';
+import SocialCapitalInclusion from './pages/infrastructure/SocialCapitalInclusion';
+import CultureOfCollaboration from './pages/infrastructure/CultureOfCollaboration';
+import PolicyIntegrationLayer from './pages/infrastructure/PolicyIntegrationLayer';
+import DataEconomyLayer from './pages/infrastructure/DataEconomyLayer';
+import InfrastructureMappingEngine from './pages/infrastructure/InfrastructureMappingEngine';
+import AnalyticsMetricsEngine from './pages/infrastructure/AnalyticsMetricsEngine';
+import MarketAccessLayer from './pages/infrastructure/MarketAccessLayer';
+import FundingLayer from './pages/infrastructure/FundingLayer';
+import BusinessIntelligenceLayer from './pages/infrastructure/BusinessIntelligenceLayer';
+import SupportSystems from './pages/infrastructure/SupportSystems';
+import OpportunitiesMarketplace from './pages/infrastructure/OpportunitiesMarketplace';
+import SignUp from "./pages/SignUp";
+import Learn from "./pages/learn/Learn";
+import LearnDiscover from "./pages/learn/LearnDiscover";
+import LearnCourses from "./pages/learn/LearnCourses";
+import LearnCourseGenerate from "./pages/learn/LearnCourseGenerate";
+import LearnCourseView from "./pages/learn/LearnCourseView";
+import LearnQuizzes from "./pages/learn/LearnQuizzes";
+import LearnRecords from "./pages/learn/LearnRecords";
+
+const queryClient = new QueryClient();
+
+const infraModules = [
+  { slug: "networks", name: "Networks" },
+  { slug: "jobs", name: "Jobs" },
+  { slug: "opportunities", name: "Opportunities" },
+  { slug: "services", name: "Services" },
+  { slug: "support-systems", name: "Support Systems" },
+  { slug: "value-exchange-channels", name: "Value Exchange Channels" },
+  { slug: "knowledge-flows", name: "Knowledge Flows" },
+  { slug: "governance-trust-mechanisms", name: "Governance & Trust Mechanisms" },
+  { slug: "social-capital-inclusion", name: "Social Capital & Inclusion" },
+  { slug: "culture-of-collaboration", name: "Culture of Collaboration" },
+  { slug: "business-intelligence-layer", name: "Business Intelligence Layer" },
+  { slug: "policy-integration-layer", name: "Policy Integration Layer" },
+  { slug: "data-economy-layer", name: "Data Economy Layer" },
+  { slug: "funding-layer", name: "Funding Layer" },
+  { slug: "market-access-layer", name: "Market Access Layer" },
+  { slug: "infrastructure-mapping-engine", name: "Infrastructure Mapping Engine" },
+  { slug: "education-training-layer", name: "Education & Training Layer" },
+  { slug: "analytics-metrics-engine", name: "Analytics & Metrics Engine" },
+  { slug: "community-governance-council", name: "Community Governance Council" },
+];
+
+const infraRouteComp = {
+  'networks': Networks,
+  'opportunities': Opportunities,
+  'value-exchange-channels': ValueExchangeChannels,
+  'knowledge-flows': KnowledgeFlows,
+  'governance-trust-mechanisms': GovernanceTrustMechanisms,
+  'social-capital-inclusion': SocialCapitalInclusion,
+  'culture-of-collaboration': CultureOfCollaboration,
+  'policy-integration-layer': PolicyIntegrationLayer,
+  'data-economy-layer': DataEconomyLayer,
+  'infrastructure-mapping-engine': InfrastructureMappingEngine,
+  'analytics-metrics-engine': AnalyticsMetricsEngine,
+  // Add correct mappings for the four modules:
+  'market-access-layer': MarketAccessLayer,
+  'funding-layer': FundingLayer,
+  'business-intelligence-layer': BusinessIntelligenceLayer,
+  'support-systems': SupportSystems,
+};
+
+function InfraModulePage({ name }: { name: string }) {
+  return (
+    <div className="container mx-auto max-w-xl py-16">
+      <div className="text-3xl font-bold mb-4">{name}</div>
+      <p className="text-muted-foreground mb-2">This is a placeholder module page for <b>{name}</b>. More functionality and integration coming soon. </p>
+    </div>
+  );
+}
+
+function TopDivisionNav() {
+  return (
+    <nav className="w-full bg-white border-b shadow-sm px-4 py-3 sticky top-0 z-40 flex gap-2 items-center">
+      <Link to="/" className="font-bold tracking-tight text-lg px-3 py-1 rounded hover:bg-muted/30 transition-colors">Solutions</Link>
+      <Link to="/infrastructure" className="font-bold tracking-tight text-lg px-3 py-1 rounded hover:bg-muted/30 transition-colors">Infrastructure</Link>
+      <Link to="/learn" className="font-bold tracking-tight text-lg px-3 py-1 rounded hover:bg-muted/30 transition-colors">Learn</Link>
+      <span className="ml-auto text-xs text-muted-foreground font-medium">Divisions</span>
+    </nav>
+  );
+}
+
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <TopDivisionNav />
+        <ChatbotContainer />
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/signup" element={<SignUp />} />
+          
+          {/* Main 10 Module Routes - matching landing page links */}
+          <Route path="/economic-indicators" element={<Index />} />
+          <Route path="/business-forecast" element={<BusinessForecast />} />
+          <Route path="/market-competitive-analysis" element={<MarketCompetitiveAnalysis />} />
+          <Route path="/pricing-strategies" element={<PricingStrategy />} />
+          <Route path="/revenue-forecasting" element={<RevenueStrategy />} />
+          <Route path="/loan-research" element={<LoanFunding />} />
+          <Route path="/supply-chain-analytics" element={<InventorySupplyChain />} />
+          <Route path="/financial-advisory" element={<FinancialAdvisory />} />
+          <Route path="/impact-calculator" element={<ImpactCalculator />} />
+          <Route path="/tax-compliance" element={<TaxCompliance />} />
+          <Route path="/business-feasibility" element={<BusinessFeasibility />} />
+          <Route path="/business-feasibility/:id" element={<BusinessFeasibilityIdea />} />
+          
+          {/* Additional Feature Routes */}
+          <Route path="/ai-insights" element={<AiInsights />} />
+          <Route path="/document-manager" element={<DocumentManager />} />
+          <Route path="/growth-planning" element={<GrowthPlanning />} />
+          <Route path="/all-reports" element={<AllReports />} />
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/policy-alerts" element={<PolicyAlerts />} />
+          <Route path="/strategy-builder" element={<StrategyBuilder />} />
+          <Route path="/risk-management" element={<RiskManagement />} />
+          <Route path="/compliance-reports" element={<ComplianceReports />} />
+          <Route path="/audit-reports" element={<AuditReports />} />
+          <Route path="/audit-trail" element={<AuditTrail />} />
+          <Route path="/document-upload" element={<DocumentUpload />} />
+          
+          {/* Legacy routes for backward compatibility */}
+          <Route path="/pricing-strategy" element={<PricingStrategy />} />
+          <Route path="/revenue-strategy" element={<RevenueStrategy />} />
+          <Route path="/loan-funding" element={<LoanFunding />} />
+          <Route path="/inventory-supply-chain" element={<InventorySupplyChain />} />
+          <Route path="/InventorySupplyChain" element={<InventorySupplyChain />} />
+          <Route path="/policy-economic-analysis" element={<PolicyEconomicAnalysis />} />
+          
+          {/* Infrastructure Division Routes */}
+          <Route path="/infrastructure" element={<Infrastructure />} />
+          <Route path="/infrastructure/opportunities/marketplace" element={<OpportunitiesMarketplace />} />
+          
+          {/* Learn Division Routes */}
+          <Route path="/learn" element={<Learn />} />
+          <Route path="/learn/discover" element={<LearnDiscover />} />
+          <Route path="/learn/courses" element={<LearnCourses />} />
+          <Route path="/learn/courses/generate" element={<LearnCourseGenerate />} />
+          <Route path="/learn/courses/:courseId" element={<LearnCourseView />} />
+          <Route path="/learn/quizzes" element={<LearnQuizzes />} />
+          <Route path="/learn/records" element={<LearnRecords />} />
+          {/* Individual infrastructure module routes */}
+          {infraModules.map(mod => (
+            <Route 
+              key={mod.slug}
+              path={`/infrastructure/${mod.slug}`}
+              element={infraRouteComp[mod.slug] ? React.createElement(infraRouteComp[mod.slug]) : <InfraModulePage name={mod.name} />} 
+            />
+          ))}
+          
+          {/* Catch-all route - MUST be last */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </TooltipProvider>
+  </QueryClientProvider>
+);
+
+export default App;
