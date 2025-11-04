@@ -466,7 +466,7 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
               <div className="flex items-center justify-between p-3 border-b border-border/50">
                 {!sidebarCollapsed && (
                   <span className="text-xs font-medium text-muted-foreground">
-                    Context & Tools
+                    Modules
                   </span>
                 )}
                 <Button
