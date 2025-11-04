@@ -61,6 +61,7 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
   const [activePanel, setActivePanel] = useState<"chat" | "tools" | "agent">(
     "chat",
   );
+  const [rightPanelCollapsed, setRightPanelCollapsed] = useState(false);
   const [sizeMode, setSizeMode] = useState<ChatbotSize>("half");
   const conversationalMode = externalConversationalMode !== undefined ? externalConversationalMode : true;
 
