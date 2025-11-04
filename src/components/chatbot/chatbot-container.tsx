@@ -440,11 +440,11 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
 
         {/* Main Content */}
         {sizeMode !== "minimized" && (
-          <div className="flex h-[calc(100%-4rem)] overflow-hidden">
+          <div className="flex h-[calc(100%-4rem)] overflow-hidden items-stretch">
             {/* Left Sidebar - Module Context Switcher */}
             <div
               className={cn(
-                "border-r border-border/50 bg-muted/20 backdrop-blur-sm transition-all duration-200 flex-shrink-0",
+                "border-r border-border/50 bg-muted/20 backdrop-blur-sm transition-all duration-200 flex-shrink-0 min-h-0",
                 sidebarCollapsed
                   ? "w-12"
                   : sizeMode === "fullscreen"
@@ -473,7 +473,7 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
               </div>
 
               {!sidebarCollapsed && (
-                <div className="flex flex-col h-[calc(100%-3rem)]">
+                <div className="flex flex-col h[calc(100%-3rem)] min-h-0">
                   {/* Tab Switcher */}
                   <div className="flex border-b border-border/50">
                     <Button
@@ -506,7 +506,7 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
                   </div>
 
                   {/* Panel Content */}
-                  <div className="flex-1">
+                  <div className="flex-1 overflow-y-auto min-h-0">
                     {activePanel === "chat" ? (
                       <ModuleContextSwitcher
                         contexts={moduleContexts}
