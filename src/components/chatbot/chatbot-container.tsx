@@ -459,7 +459,7 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
                 sidebarCollapsed
                   ? "w-12"
                   : sizeMode === "fullscreen"
-                    ? "w-80"
+                    ? "basis-[15%] max-w-[15%] min-w-[220px]"
                     : "w-48 sm:w-52",
               )}
             >
@@ -535,7 +535,7 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
                 rightPanelCollapsed
                   ? "w-12"
                   : sizeMode === "fullscreen"
-                    ? "w-80"
+                    ? "basis-[15%] max-w-[15%] min-w-[220px]"
                     : "w-48 sm:w-52",
               )}
             >
