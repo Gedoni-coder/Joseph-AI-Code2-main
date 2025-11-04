@@ -171,7 +171,7 @@ export function ChatInterface({
       </div>
 
       {/* Messages Area */}
-      <ScrollArea className="flex-1 min-h-0 p-3 overflow-y-auto pb-20">
+      <ScrollArea className="flex-1 min-h-0 p-3 overflow-y-auto">
         <div className="space-y-4">
           {messages.map((message) => (
             <div
@@ -289,7 +289,7 @@ export function ChatInterface({
       )} */}
 
       {/* Input Area (always at bottom - permanently fixed) */}
-      <div className="sticky bottom-0 left-0 right-0 p-3 border-t shrink-0 bg-white/95 backdrop-blur-sm z-20 shadow-lg">
+      <div className="mt-auto p-3 border-t shrink-0 bg-white/95 backdrop-blur-sm z-20 shadow-lg">
         {/* Attachment Preview */}
         <div id="attachmentPreview" className="mb-3 hidden">
           {/* Attachment previews will be dynamically added here */}
