@@ -473,7 +473,7 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
               </div>
 
               {!sidebarCollapsed && (
-                <div className="flex flex-col h[calc(100%-3rem)] min-h-0">
+                <div className="flex flex-col h-[calc(100%-3rem)] min-h-0">
                   {/* Tab Switcher */}
                   <div className="flex border-b border-border/50">
                     <Button
