@@ -428,7 +428,8 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
                   variant="ghost"
                   size="sm"
                   className="h-8 w-8 p-0 hover:bg-destructive/10 hover:text-destructive"
-                  onClick={() => setIsOpen(false)}
+                  onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(false); }}
                 >
                   <X className="h-4 w-4" />
                 </Button>
