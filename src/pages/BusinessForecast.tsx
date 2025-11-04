@@ -146,7 +146,7 @@ const BusinessForecast = () => {
           {/* Main Content Tabs */}
           <Tabs defaultValue="overview" className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full sm:w-auto">
+              <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full sm:w-auto rounded-md bg-muted p-1 text-muted-foreground">
                 <TabsList className="contents">
                   <TabsTrigger value="overview" className="w-full justify-center">Overview</TabsTrigger>
                   <TabsTrigger value="summary-recommendation" className="w-full justify-center">
