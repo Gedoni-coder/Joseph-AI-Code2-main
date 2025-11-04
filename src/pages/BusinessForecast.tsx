@@ -146,18 +146,20 @@ const BusinessForecast = () => {
           {/* Main Content Tabs */}
           <Tabs defaultValue="overview" className="space-y-6">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <TabsList className="grid grid-cols-8 w-full sm:w-auto">
-                <TabsTrigger value="overview">Overview</TabsTrigger>
-                <TabsTrigger value="summary-recommendation">
-                  Summary & Recommendation
-                </TabsTrigger>
-                <TabsTrigger value="tables">Tables</TabsTrigger>
-                <TabsTrigger value="revenue">Revenue</TabsTrigger>
-                <TabsTrigger value="costs">Costs</TabsTrigger>
-                <TabsTrigger value="planning">Planning</TabsTrigger>
-                <TabsTrigger value="analytics">Analytics</TabsTrigger>
-                <TabsTrigger value="documents">Documents</TabsTrigger>
-              </TabsList>
+              <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full sm:w-auto">
+                <TabsList className="contents">
+                  <TabsTrigger value="overview" className="w-full justify-center">Overview</TabsTrigger>
+                  <TabsTrigger value="summary-recommendation" className="w-full justify-center">
+                    Summary & Recommendation
+                  </TabsTrigger>
+                  <TabsTrigger value="tables" className="w-full justify-center">Tables</TabsTrigger>
+                  <TabsTrigger value="revenue" className="w-full justify-center">Revenue</TabsTrigger>
+                  <TabsTrigger value="costs" className="w-full justify-center">Costs</TabsTrigger>
+                  <TabsTrigger value="planning" className="w-full justify-center">Planning</TabsTrigger>
+                  <TabsTrigger value="analytics" className="w-full justify-center">Analytics</TabsTrigger>
+                  <TabsTrigger value="documents" className="w-full justify-center">Documents</TabsTrigger>
+                </TabsList>
+              </div>
 
               <div className="flex items-center gap-2">
                 <Badge
