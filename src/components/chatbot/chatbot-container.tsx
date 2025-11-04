@@ -83,6 +83,7 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
     const checkScreenSize = () => {
       if (window.innerWidth < 768) {
         setSidebarCollapsed(true);
+        setRightPanelCollapsed(true);
       }
     };
 
