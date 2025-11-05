@@ -96,7 +96,7 @@ export function MarketAnalysis({
           <h2 className="text-2xl font-bold text-gray-900">
             Market Size & Growth Rate
           </h2>
-          <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => window.print()}>
+          <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => { document.body.setAttribute('data-print-scope','market-analysis'); setTimeout(() => window.print(), 50); setTimeout(() => document.body.removeAttribute('data-print-scope'), 2000); }}>
             <Target className="w-4 h-4 mr-2" />
             Export Analysis
           </Button>

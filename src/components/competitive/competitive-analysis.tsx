@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -8,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
@@ -41,6 +43,7 @@ export function CompetitiveAnalysis({
   productComparisons,
   marketPositions,
 }: CompetitiveAnalysisProps) {
+  const navigate = useNavigate();
   const [showAddForm, setShowAddForm] = useState(false);
   const [adding, setAdding] = useState(false);
   const [localCompetitors, setLocalCompetitors] = useState<Competitor[]>([]);
@@ -253,13 +256,14 @@ export function CompetitiveAnalysis({
                 </div>
 
                 <div className="flex space-x-2">
-                  <Button variant="outline" size="sm" className="flex-1">
+                  <Button variant="outline" size="sm" className="flex-1" onClick={() => navigate(`/market-competitive-analysis/profile/${competitor.id}`)}>
                     <Eye className="w-3 h-3 mr-1" />
                     View Profile
                   </Button>
                   <Button
                     size="sm"
                     className="flex-1 bg-blue-600 hover:bg-blue-700"
+                    onClick={() => navigate(`/market-competitive-analysis/swot?company=${encodeURIComponent(competitor.name)}`)}
                   >
                     SWOT Analysis
                   </Button>
