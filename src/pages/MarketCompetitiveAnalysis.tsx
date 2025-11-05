@@ -117,46 +117,46 @@ export default function MarketCompetitiveAnalysis() {
           onValueChange={setActiveTab}
           className="space-y-6"
         >
-          <TabsList className="grid w-full grid-cols-8 bg-white border">
+          <TabsList className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
             <TabsTrigger
               value="overview"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
             >
               Overview
             </TabsTrigger>
             <TabsTrigger
               value="summary-recommendation"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
             >
               Summary & Recommendation
             </TabsTrigger>
             <TabsTrigger
               value="market"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
             >
               Market Analysis
             </TabsTrigger>
             <TabsTrigger
               value="competitive"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
             >
               Competitive Analysis
             </TabsTrigger>
             <TabsTrigger
               value="strategy"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
             >
               Strategy & Advantages
             </TabsTrigger>
             <TabsTrigger
               value="reports"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
             >
               Report Notes
             </TabsTrigger>
             <TabsTrigger
               value="conversation"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
             >
               JOSEPH
             </TabsTrigger>
