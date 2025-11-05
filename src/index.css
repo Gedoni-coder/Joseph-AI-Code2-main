@@ -193,3 +193,10 @@
     @apply text-economic-neutral;
   }
 }
+
+/* Print only the Market Analysis section when exporting */
+@media print {
+  body * { visibility: hidden !important; }
+  #market-analysis-print, #market-analysis-print * { visibility: visible !important; }
+  #market-analysis-print { position: absolute; left: 0; top: 0; width: 100%; }
+}
