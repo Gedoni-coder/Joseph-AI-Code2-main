@@ -18,6 +18,8 @@ import {
   Award,
   Zap,
   Check,
+  AlertCircle,
+  Calendar as CalendarIcon,
 } from "lucide-react";
 import {
   type CompetitiveAdvantage,
@@ -33,6 +35,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useAgent } from "@/hooks/useAgent";
+import { useToast } from "@/hooks/use-toast";
 
 interface CompetitiveStrategyProps {
   competitiveAdvantages: CompetitiveAdvantage[];
