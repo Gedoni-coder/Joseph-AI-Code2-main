@@ -143,6 +143,7 @@ const App = () => (
           <Route path="/economic-indicators" element={<Index />} />
           <Route path="/business-forecast" element={<BusinessForecast />} />
           <Route path="/market-competitive-analysis" element={<MarketCompetitiveAnalysis />} />
+          <Route path="/market-report/:reportId" element={<MarketReportView />} />
           <Route path="/market-competitive-analysis/swot" element={<SwotWhitePaper />} />
           <Route path="/market-competitive-analysis/profile/:id" element={<CompetitorWhitePaper />} />
           <Route path="/pricing-strategies" element={<PricingStrategy />} />
