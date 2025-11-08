@@ -73,6 +73,17 @@ export function CompetitiveStrategy({
     competitorResponse: "",
   });
 
+  const [newStrategy, setNewStrategy] = useState({
+    title: "",
+    description: "",
+    category: "positioning" as "positioning" | "pricing" | "partnerships" | "product" | "marketing",
+    timeframe: "short-term" as "immediate" | "short-term" | "long-term",
+    expectedImpact: "medium" as "low" | "medium" | "high",
+    budget: "",
+    owner: "",
+    objectives: "",
+  });
+
   const advantages = useMemo(
     () => [...competitiveAdvantages, ...localAdvantages],
     [competitiveAdvantages, localAdvantages],
