@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -19,6 +21,9 @@ import {
   User,
 } from "lucide-react";
 import { type ReportNote } from "@/lib/market-data";
+import { ActionPlanDialog } from "@/components/market/action-plan-dialog";
+import { useToast } from "@/hooks/use-toast";
+import { generateReportPDF } from "@/lib/pdf-generator";
 
 interface ReportNotesProps {
   reportNotes: ReportNote[];
