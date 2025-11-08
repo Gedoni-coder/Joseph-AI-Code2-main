@@ -55,6 +55,13 @@ export function CompetitiveStrategy({
   const [localAdvantages, setLocalAdvantages] = useState<CompetitiveAdvantage[]>([]);
   const [monitored, setMonitored] = useState<Record<string, boolean>>({});
   const [selectedRecs, setSelectedRecs] = useState<Record<string, Set<string>>>({});
+  const [createStrategyOpen, setCreateStrategyOpen] = useState(false);
+  const [scheduleReviewOpen, setScheduleReviewOpen] = useState<string | null>(null);
+  const [reviewDate, setReviewDate] = useState<Date | undefined>(undefined);
+  const [reviewNotes, setReviewNotes] = useState("");
+  const [implementingStrategy, setImplementingStrategy] = useState<string | null>(null);
+  const { addAgentTask, isLoading: agentLoading, error: agentError } = useAgent();
+  const { toast } = useToast();
 
   const [newAdv, setNewAdv] = useState({
     type: "technology" as CompetitiveAdvantage["type"],
