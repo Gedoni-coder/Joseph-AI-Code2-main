@@ -195,6 +195,17 @@
   }
 }
 
+/* Calendar styling in Popover */
+[role="dialog"] [role="application"] {
+  @apply w-auto;
+}
+
+.rdp {
+  --rdp-cell-size: 40px;
+  --rdp-accent-color: hsl(217, 91%, 35%);
+  --rdp-background-color: hsl(217, 91%, 90%);
+}
+
 /* Print only the Market Analysis section when exporting */
 @media print {
   body[data-print-scope="market-analysis"] * { visibility: hidden !important; }
