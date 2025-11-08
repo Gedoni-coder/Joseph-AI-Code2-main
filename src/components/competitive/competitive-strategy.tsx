@@ -212,6 +212,88 @@ export function CompetitiveStrategy({
     setSelectedRecs((prev) => ({ ...prev, [advId]: new Set(ids) }));
   };
 
+  const handleCreateStrategy = () => {
+    if (!newStrategy.title.trim() || !newStrategy.description.trim()) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all required fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "Strategy Created",
+      description: `"${newStrategy.title}" has been added to your strategic initiatives.`,
+    });
+
+    setCreateStrategyOpen(false);
+    setNewStrategy({
+      title: "",
+      description: "",
+      category: "positioning",
+      timeframe: "short-term",
+      expectedImpact: "medium",
+      budget: "",
+      owner: "",
+      objectives: "",
+    });
+  };
+
+  const handleScheduleReview = (strategyId: string) => {
+    if (!reviewDate) {
+      toast({
+        title: "Missing Date",
+        description: "Please select a date for the review",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "Review Scheduled",
+      description: `Review scheduled for ${reviewDate.toLocaleDateString()}`,
+    });
+
+    setScheduleReviewOpen(null);
+    setReviewDate(undefined);
+    setReviewNotes("");
+  };
+
+  const handleImplementStrategy = async (strategy: StrategyRecommendation) => {
+    setImplementingStrategy(strategy.id);
+    try {
+      await addAgentTask({
+        type: "implement_strategy",
+        strategy: {
+          id: strategy.id,
+          title: strategy.title,
+          description: strategy.description,
+          category: strategy.category,
+          resources: strategy.resources,
+          timeframe: strategy.timeframe,
+          expectedImpact: strategy.expectedImpact,
+          metrics: strategy.metrics,
+          risks: strategy.risks,
+        },
+        action: "Implement this competitive strategy. Break it down into actionable steps, identify required resources, create a timeline, and establish success metrics.",
+      });
+
+      toast({
+        title: "Strategy Implementation Started",
+        description: `Joseph AI is now working on implementing "${strategy.title}"`,
+      });
+    } catch (err) {
+      toast({
+        title: "Implementation Failed",
+        description: agentError || "Failed to start strategy implementation",
+        variant: "destructive",
+      });
+    } finally {
+      setImplementingStrategy(null);
+    }
+  };
+
   const handleAnalyzeSubmit = () => {
     if (!newAdv.advantage.trim() || !newAdv.description.trim()) return;
     const adv: CompetitiveAdvantage = {
