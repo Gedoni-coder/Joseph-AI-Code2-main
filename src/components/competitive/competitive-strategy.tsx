@@ -913,6 +913,7 @@ export function CompetitiveStrategy({
                     id="review-time"
                     type="time"
                     defaultValue="09:00"
+                    className="h-10"
                   />
                 </div>
               )}
