@@ -30,6 +30,12 @@ interface ReportNotesProps {
 }
 
 export function ReportNotes({ reportNotes }: ReportNotesProps) {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const [actionPlanOpen, setActionPlanOpen] = useState(false);
+  const [actionPlanReport, setActionPlanReport] = useState<string | null>(null);
+  const [generatingPDF, setGeneratingPDF] = useState(false);
+
   const formatDate = (date: Date) => {
     return new Intl.DateTimeFormat("en-US", {
       year: "numeric",
