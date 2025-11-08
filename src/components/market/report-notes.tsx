@@ -68,6 +68,45 @@ export function ReportNotes({ reportNotes }: ReportNotesProps) {
     }
   };
 
+  const handleViewFullReport = (reportId: string, reportTitle: string) => {
+    navigate(`/market-report/${reportId}`, { state: { title: reportTitle } });
+  };
+
+  const handleCreateActionPlan = (reportTitle: string) => {
+    setActionPlanReport(reportTitle);
+    setActionPlanOpen(true);
+  };
+
+  const handleGenerateReport = async (report: ReportNote) => {
+    setGeneratingPDF(true);
+    try {
+      await generateReportPDF({
+        id: report.id,
+        title: report.title,
+        summary: report.summary,
+        dateGenerated: report.dateGenerated,
+        author: report.author,
+        confidence: report.confidence,
+        keyMetrics: report.keyMetrics,
+        insights: report.insights,
+        recommendations: report.recommendations,
+        nextSteps: report.nextSteps,
+      });
+      toast({
+        title: "PDF Generated",
+        description: "Report has been downloaded successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to generate PDF",
+        variant: "destructive",
+      });
+    } finally {
+      setGeneratingPDF(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
