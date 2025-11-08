@@ -261,10 +261,17 @@ export function ReportNotes({ reportNotes }: ReportNotesProps) {
 
               {/* Action Buttons */}
               <div className="flex space-x-3 pt-4 border-t">
-                <Button variant="outline" className="flex-1">
+                <Button
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => handleViewFullReport(report.id, report.title)}
+                >
                   View Full Report
                 </Button>
-                <Button className="flex-1 bg-blue-600 hover:bg-blue-700">
+                <Button
+                  className="flex-1 bg-blue-600 hover:bg-blue-700"
+                  onClick={() => handleCreateActionPlan(report.title)}
+                >
                   Create Action Plan
                 </Button>
               </div>
