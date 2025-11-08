@@ -134,8 +134,9 @@ const App = () => (
         <TopDivisionNav />
         <ChatbotContainer />
         <Routes>
-          <Route path="/" element={<Landing />} />
+          <Route path="/" element={<SignUp />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/landing" element={<Landing />} />
           
           {/* Main 10 Module Routes - matching landing page links */}
           <Route path="/economic-indicators" element={<Index />} />
