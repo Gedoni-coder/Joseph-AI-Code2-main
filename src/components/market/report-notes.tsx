@@ -118,9 +118,17 @@ export function ReportNotes({ reportNotes }: ReportNotesProps) {
             Comprehensive insights, metrics, and strategic recommendations
           </p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button
+          className="bg-blue-600 hover:bg-blue-700"
+          disabled={generatingPDF}
+          onClick={() => {
+            if (reportNotes.length > 0) {
+              handleGenerateReport(reportNotes[0]);
+            }
+          }}
+        >
           <FileText className="w-4 h-4 mr-2" />
-          Generate Report
+          {generatingPDF ? "Generating..." : "Generate Report"}
         </Button>
       </div>
 
