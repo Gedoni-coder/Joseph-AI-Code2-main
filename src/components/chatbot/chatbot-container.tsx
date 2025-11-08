@@ -61,6 +61,7 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
   const [activePanel, setActivePanel] = useState<"chat" | "tools" | "agent">(
     "chat",
   );
+  const [rightPanelCollapsed, setRightPanelCollapsed] = useState(false);
   const [sizeMode, setSizeMode] = useState<ChatbotSize>("half");
   const conversationalMode = externalConversationalMode !== undefined ? externalConversationalMode : true;
 
@@ -82,6 +83,7 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
     const checkScreenSize = () => {
       if (window.innerWidth < 768) {
         setSidebarCollapsed(true);
+        setRightPanelCollapsed(true);
       }
     };
 
@@ -263,8 +265,16 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
   }
 
   return (
-    <div
-      data-joseph-no-explain
+    <>
+      {sizeMode !== "minimized" && (
+        <div
+          className="fixed inset-0 z-[9998]"
+          onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }}
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+        />
+      )}
+      <div
+        data-joseph-no-explain
       className={cn(
         "fixed transition-all duration-300",
         getSizeClasses(),
@@ -426,7 +436,8 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
                   variant="ghost"
                   size="sm"
                   className="h-8 w-8 p-0 hover:bg-destructive/10 hover:text-destructive"
-                  onClick={() => setIsOpen(false)}
+                  onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(false); }}
                 >
                   <X className="h-4 w-4" />
                 </Button>
@@ -440,22 +451,22 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
 
         {/* Main Content */}
         {sizeMode !== "minimized" && (
-          <div className="flex h-[calc(100%-4rem)] overflow-hidden">
+          <div className="flex h-[calc(100%-4rem)] overflow-hidden items-stretch">
             {/* Left Sidebar - Module Context Switcher */}
             <div
               className={cn(
-                "border-r border-border/50 bg-muted/20 backdrop-blur-sm transition-all duration-200 flex-shrink-0",
+                "border-r border-border/50 bg-muted/20 backdrop-blur-sm transition-all duration-200 flex-shrink-0 min-h-0",
                 sidebarCollapsed
                   ? "w-12"
                   : sizeMode === "fullscreen"
-                    ? "w-80"
+                    ? "basis-[15%] max-w-[15%] min-w-[220px]"
                     : "w-48 sm:w-52",
               )}
             >
               <div className="flex items-center justify-between p-3 border-b border-border/50">
                 {!sidebarCollapsed && (
                   <span className="text-xs font-medium text-muted-foreground">
-                    Context & Tools
+                    Modules
                   </span>
                 )}
                 <Button
@@ -473,11 +484,11 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
               </div>
 
               {!sidebarCollapsed && (
-                <div className="flex flex-col h-[calc(100%-3rem)]">
-                  {/* Tab Switcher */}
+                <div className="flex flex-col h-[calc(100%-3rem)] min-h-0">
+                  {/* Panel Header */}
                   <div className="flex border-b border-border/50">
                     <Button
-                      variant={activePanel === "chat" ? "secondary" : "ghost"}
+                      variant={"secondary"}
                       size="sm"
                       className="flex-1 rounded-none h-9 text-xs font-medium"
                       onClick={() => setActivePanel("chat")}
@@ -485,42 +496,15 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
                       <MessageCircle className="h-3 w-3 mr-1" />
                       <span className="text-xs">Modules</span>
                     </Button>
-                    <Button
-                      variant={activePanel === "tools" ? "secondary" : "ghost"}
-                      size="sm"
-                      className="flex-1 rounded-none h-9 text-xs font-medium"
-                      onClick={() => setActivePanel("tools")}
-                    >
-                      <Bot className="h-3 w-3 mr-1" />
-                      <span className="text-xs">Tools</span>
-                    </Button>
-                    <Button
-                      variant={activePanel === "agent" ? "secondary" : "ghost"}
-                      size="sm"
-                      className="flex-1 rounded-none h-9 text-xs font-medium"
-                      onClick={() => setActivePanel("agent")}
-                    >
-                      <Bot className="h-3 w-3 mr-1" />
-                      <span className="text-xs">Agent</span>
-                    </Button>
                   </div>
 
                   {/* Panel Content */}
-                  <div className="flex-1">
-                    {activePanel === "chat" ? (
-                      <ModuleContextSwitcher
-                        contexts={moduleContexts}
-                        currentContext={currentContext}
-                        onContextSwitch={switchContext}
-                      />
-                    ) : activePanel === "tools" ? (
-                      <ToolsDock
-                        tools={economicTools}
-                        onToolSelect={openTool}
-                      />
-                    ) : (
-                      <AgentPanel />
-                    )}
+                  <div className="flex-1 overflow-y-auto min-h-0">
+                    <ModuleContextSwitcher
+                      contexts={moduleContexts}
+                      currentContext={currentContext}
+                      onContextSwitch={switchContext}
+                    />
                   </div>
                 </div>
               )}
@@ -542,6 +526,47 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
                 onSuggestionClick={handleSuggestionClick}
                 onClearChat={clearChat}
               />
+            </div>
+
+            {/* Right Tools Sidebar */}
+            <div
+              className={cn(
+                "border-l border-border/50 bg-muted/20 backdrop-blur-sm transition-all duration-200 flex-shrink-0 min-h-0",
+                rightPanelCollapsed
+                  ? "w-12"
+                  : sizeMode === "fullscreen"
+                    ? "basis-[15%] max-w-[15%] min-w-[220px]"
+                    : "w-48 sm:w-52",
+              )}
+            >
+              <div className="flex items-center justify-between p-3 border-b border-border/50">
+                {!rightPanelCollapsed && (
+                  <span className="text-xs font-medium text-muted-foreground">
+                    Tools
+                  </span>
+                )}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-8 w-8 p-0"
+                  onClick={() => setRightPanelCollapsed(!rightPanelCollapsed)}
+                >
+                  {rightPanelCollapsed ? (
+                    <ChevronLeft className="h-4 w-4" />
+                  ) : (
+                    <ChevronRight className="h-4 w-4" />
+                  )}
+                </Button>
+              </div>
+
+              {!rightPanelCollapsed && (
+                <div className="flex-1 overflow-y-auto min-h-0 h-[calc(100%-3rem)]">
+                  <ToolsDock
+                    tools={economicTools}
+                    onToolSelect={openTool}
+                  />
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -583,6 +608,7 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
         />
       </Card>
     </div>
+    </>
   );
 }
 

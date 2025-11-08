@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -7,6 +8,9 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
 import {
   Building,
@@ -38,6 +42,41 @@ export function CompetitiveAnalysis({
   productComparisons,
   marketPositions,
 }: CompetitiveAnalysisProps) {
+  const navigate = useNavigate();
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [adding, setAdding] = useState(false);
+  const [localCompetitors, setLocalCompetitors] = useState<Competitor[]>([]);
+  const [form, setForm] = useState({
+    name: "",
+    description: "",
+    website: "",
+    type: "direct" as Competitor["type"],
+  });
+
+  const displayCompetitors = [...competitors, ...localCompetitors];
+
+  const handleAdd = () => {
+    if (!form.name.trim()) return;
+    setAdding(true);
+    setTimeout(() => {
+      const newComp: Competitor = {
+        id: Date.now().toString(),
+        name: form.name.trim(),
+        description: form.description.trim() || "Added via assistant",
+        type: form.type,
+        marketShare: 0,
+        revenue: 0,
+        employees: 0,
+        keyProducts: [],
+        founded: new Date().getFullYear().toString(),
+        headquarters: "",
+      };
+      setLocalCompetitors((prev) => [newComp, ...prev]);
+      setAdding(false);
+      setShowAddForm(false);
+      setForm({ name: "", description: "", website: "", type: "direct" });
+    }, 800);
+  };
   const formatCurrency = (amount: number) => {
     if (amount >= 1000000000) {
       return `$${(amount / 1000000000).toFixed(1)}B`;
@@ -114,14 +153,53 @@ export function CompetitiveAnalysis({
           <h2 className="text-2xl font-bold text-gray-900">
             Key Competitor Identification
           </h2>
-          <Button className="bg-blue-600 hover:bg-blue-700">
+          <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => setShowAddForm((s) => !s)}>
             <Building className="w-4 h-4 mr-2" />
-            Add Competitor
+            {showAddForm ? "Close" : "Add Competitor"}
           </Button>
         </div>
 
+        {showAddForm && (
+          <Card className="border-blue-200 bg-blue-50">
+            <CardContent className="p-4">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+                <Input
+                  placeholder="Competitor Name"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                />
+                <Input
+                  placeholder="Website (optional)"
+                  value={form.website}
+                  onChange={(e) => setForm({ ...form, website: e.target.value })}
+                />
+                <select
+                  value={form.type}
+                  onChange={(e) => setForm({ ...form, type: e.target.value as Competitor["type"] })}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                >
+                  <option value="direct">Direct</option>
+                  <option value="indirect">Indirect</option>
+                  <option value="substitute">Substitute</option>
+                </select>
+                <Button onClick={handleAdd} disabled={adding || !form.name} className="bg-blue-600 hover:bg-blue-700">
+                  {adding ? "Adding..." : "Go"}
+                </Button>
+              </div>
+              <div className="mt-3">
+                <Textarea
+                  placeholder="Short description"
+                  value={form.description}
+                  onChange={(e) => setForm({ ...form, description: e.target.value })}
+                  className="min-h-[70px]"
+                />
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {competitors.map((competitor) => (
+          {displayCompetitors.map((competitor) => (
             <Card
               key={competitor.id}
               className="hover:shadow-lg transition-shadow"
@@ -177,13 +255,14 @@ export function CompetitiveAnalysis({
                 </div>
 
                 <div className="flex space-x-2">
-                  <Button variant="outline" size="sm" className="flex-1">
+                  <Button variant="outline" size="sm" className="flex-1" onClick={() => navigate(`/market-competitive-analysis/profile/${competitor.id}`)}>
                     <Eye className="w-3 h-3 mr-1" />
                     View Profile
                   </Button>
                   <Button
                     size="sm"
                     className="flex-1 bg-blue-600 hover:bg-blue-700"
+                    onClick={() => navigate(`/market-competitive-analysis/swot?company=${encodeURIComponent(competitor.name)}`)}
                   >
                     SWOT Analysis
                   </Button>

@@ -13,6 +13,8 @@ import TaxCompliance from "./pages/TaxCompliance";
 import PricingStrategy from "./pages/PricingStrategy";
 import RevenueStrategy from "./pages/RevenueStrategy";
 import MarketCompetitiveAnalysis from "./pages/MarketCompetitiveAnalysis";
+import SwotWhitePaper from "./pages/SwotWhitePaper";
+import CompetitorWhitePaper from "./pages/CompetitorWhitePaper";
 import LoanFunding from "./pages/LoanFunding";
 import InventorySupplyChain from "./pages/InventorySupplyChain";
 import FinancialAdvisory from "./pages/FinancialAdvisory";
@@ -139,6 +141,8 @@ const App = () => (
           <Route path="/economic-indicators" element={<Index />} />
           <Route path="/business-forecast" element={<BusinessForecast />} />
           <Route path="/market-competitive-analysis" element={<MarketCompetitiveAnalysis />} />
+          <Route path="/market-competitive-analysis/swot" element={<SwotWhitePaper />} />
+          <Route path="/market-competitive-analysis/profile/:id" element={<CompetitorWhitePaper />} />
           <Route path="/pricing-strategies" element={<PricingStrategy />} />
           <Route path="/revenue-forecasting" element={<RevenueStrategy />} />
           <Route path="/loan-research" element={<LoanFunding />} />

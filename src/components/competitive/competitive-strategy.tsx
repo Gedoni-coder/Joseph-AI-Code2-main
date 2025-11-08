@@ -1,3 +1,4 @@
+import React, { useMemo, useState } from "react";
 import {
   Card,
   CardContent,
@@ -16,11 +17,22 @@ import {
   TrendingUp,
   Award,
   Zap,
+  Check,
 } from "lucide-react";
 import {
   type CompetitiveAdvantage,
   type StrategyRecommendation,
 } from "@/lib/competitive-data";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 interface CompetitiveStrategyProps {
   competitiveAdvantages: CompetitiveAdvantage[];
@@ -31,6 +43,27 @@ export function CompetitiveStrategy({
   competitiveAdvantages,
   strategyRecommendations,
 }: CompetitiveStrategyProps) {
+  const [analyzeOpen, setAnalyzeOpen] = useState(false);
+  const [strengthenFor, setStrengthenFor] = useState<string | null>(null);
+  const [localAdvantages, setLocalAdvantages] = useState<CompetitiveAdvantage[]>([]);
+  const [monitored, setMonitored] = useState<Record<string, boolean>>({});
+  const [selectedRecs, setSelectedRecs] = useState<Record<string, Set<string>>>({});
+
+  const [newAdv, setNewAdv] = useState({
+    type: "technology" as CompetitiveAdvantage["type"],
+    advantage: "",
+    description: "",
+    sustainability: "medium" as CompetitiveAdvantage["sustainability"],
+    timeToReplicate: 12,
+    strategicImportance: "important" as CompetitiveAdvantage["strategicImportance"],
+    competitorResponse: "",
+  });
+
+  const advantages = useMemo(
+    () => [...competitiveAdvantages, ...localAdvantages],
+    [competitiveAdvantages, localAdvantages],
+  );
+
   const getTypeIcon = (type: string) => {
     switch (type) {
       case "technology":
@@ -134,126 +167,246 @@ export function CompetitiveStrategy({
     }
   };
 
+  const typeCategoryMap: Record<CompetitiveAdvantage["type"], StrategyRecommendation["category"][]> = {
+    technology: ["product", "positioning"],
+    cost: ["pricing", "partnerships"],
+    service: ["positioning", "marketing"],
+    brand: ["marketing", "positioning"],
+    distribution: ["partnerships", "positioning"],
+    partnerships: ["partnerships", "marketing"],
+  };
+
+  const openStrengthen = (advId: string) => setStrengthenFor(advId);
+  const closeStrengthen = () => setStrengthenFor(null);
+
+  const toggleMonitor = (advId: string) => {
+    setMonitored((prev) => ({ ...prev, [advId]: !prev[advId] }));
+  };
+
+  const applyRecommendations = (advId: string, ids: Set<string>) => {
+    setSelectedRecs((prev) => ({ ...prev, [advId]: new Set(ids) }));
+  };
+
+  const handleAnalyzeSubmit = () => {
+    if (!newAdv.advantage.trim() || !newAdv.description.trim()) return;
+    const adv: CompetitiveAdvantage = {
+      id: `${Date.now()}`,
+      type: newAdv.type,
+      advantage: newAdv.advantage.trim(),
+      description: newAdv.description.trim(),
+      sustainability: newAdv.sustainability,
+      competitorResponse: newAdv.competitorResponse
+        .split(/\n|,/) // split by newlines or commas
+        .map((s) => s.trim())
+        .filter(Boolean),
+      timeToReplicate: Number(newAdv.timeToReplicate) || 0,
+      strategicImportance: newAdv.strategicImportance,
+    };
+    setLocalAdvantages((prev) => [adv, ...prev]);
+    setAnalyzeOpen(false);
+    setNewAdv({
+      type: "technology",
+      advantage: "",
+      description: "",
+      sustainability: "medium",
+      timeToReplicate: 12,
+      strategicImportance: "important",
+      competitorResponse: "",
+    });
+  };
+
+  const StrengthenDialog = () => {
+    if (!strengthenFor) return null;
+    const adv = advantages.find((a) => a.id === strengthenFor)!;
+    const allowedCategories = typeCategoryMap[adv.type];
+    const choices = strategyRecommendations.filter((s) =>
+      allowedCategories.includes(s.category),
+    );
+
+    const current = selectedRecs[strengthenFor] || new Set<string>();
+    const [temp, setTemp] = useState<Set<string>>(new Set(current));
+
+    const toggleChoice = (id: string) => {
+      setTemp((prev) => {
+        const n = new Set(prev);
+        if (n.has(id)) n.delete(id);
+        else n.add(id);
+        return n;
+      });
+    };
+
+    const apply = () => {
+      applyRecommendations(strengthenFor, temp);
+      closeStrengthen();
+    };
+
+    return (
+      <Dialog open={!!strengthenFor} onOpenChange={(open) => (!open ? closeStrengthen() : null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Select strengthening actions</DialogTitle>
+            <DialogDescription>
+              Choose recommendations to apply for “{adv.advantage}”.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3 max-h-[300px] overflow-auto pr-1">
+            {choices.map((c) => (
+              <label
+                key={c.id}
+                className="flex items-start gap-3 rounded-md border p-3 hover:bg-accent cursor-pointer"
+              >
+                <input
+                  type="checkbox"
+                  checked={temp.has(c.id)}
+                  onChange={() => toggleChoice(c.id)}
+                  className="mt-1"
+                />
+                <div className="flex-1">
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium">{c.title}</span>
+                    <Badge className={getImpactColor(c.expectedImpact)}>
+                      {c.expectedImpact} impact
+                    </Badge>
+                  </div>
+                  <div className="text-sm text-muted-foreground">{c.description}</div>
+                </div>
+              </label>
+            ))}
+            {choices.length === 0 && (
+              <div className="text-sm text-muted-foreground">
+                No recommendations available for this advantage type.
+              </div>
+            )}
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={closeStrengthen}>Cancel</Button>
+            <Button onClick={apply} className="bg-blue-600 hover:bg-blue-700">
+              <Check className="w-4 h-4 mr-2" /> Apply
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    );
+  };
+
   return (
     <div className="space-y-8">
-      {/* Competitive Advantage Evaluation */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-bold text-gray-900">
             Competitive Advantage Evaluation
           </h2>
-          <Button className="bg-blue-600 hover:bg-blue-700">
+          <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => setAnalyzeOpen(true)}>
             <Shield className="w-4 h-4 mr-2" />
             Analyze New Advantage
           </Button>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {competitiveAdvantages.map((advantage) => (
-            <Card
-              key={advantage.id}
-              className="hover:shadow-lg transition-shadow"
-            >
-              <CardHeader className="pb-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
-                    {getTypeIcon(advantage.type)}
-                    <CardTitle className="text-lg">
-                      {advantage.advantage}
-                    </CardTitle>
-                  </div>
-                  <Badge className={getTypeColor(advantage.type)}>
-                    {advantage.type}
-                  </Badge>
-                </div>
-                <CardDescription>{advantage.description}</CardDescription>
-              </CardHeader>
-
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <div className="text-sm text-gray-600">Sustainability</div>
-                    <div
-                      className={`text-lg font-bold ${getSustainabilityColor(advantage.sustainability)}`}
-                    >
-                      {advantage.sustainability}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-600">
-                      Time to Replicate
-                    </div>
-                    <div className="text-lg font-bold">
-                      {advantage.timeToReplicate} months
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
+          {advantages.map((advantage) => {
+            const isMonitoring = !!monitored[advantage.id];
+            const applied = selectedRecs[advantage.id];
+            return (
+              <Card key={advantage.id} className="hover:shadow-lg transition-shadow">
+                <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">
-                      Strategic Importance
-                    </span>
-                    <Badge
-                      className={getImportanceColor(
-                        advantage.strategicImportance,
-                      )}
-                    >
-                      {advantage.strategicImportance}
-                    </Badge>
+                    <div className="flex items-center space-x-2">
+                      {getTypeIcon(advantage.type)}
+                      <CardTitle className="text-lg">{advantage.advantage}</CardTitle>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {isMonitoring && <Badge className="bg-emerald-100 text-emerald-800">Monitoring</Badge>}
+                      <Badge className={getTypeColor(advantage.type)}>{advantage.type}</Badge>
+                    </div>
                   </div>
-                  <Progress
-                    value={
-                      advantage.strategicImportance === "critical"
-                        ? 100
-                        : advantage.strategicImportance === "important"
+                  <CardDescription>{advantage.description}</CardDescription>
+                </CardHeader>
+
+                <CardContent className="space-y-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <div className="text-sm text-gray-600">Sustainability</div>
+                      <div className={`text-lg font-bold ${getSustainabilityColor(advantage.sustainability)}`}>
+                        {advantage.sustainability}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-sm text-gray-600">Time to Replicate</div>
+                      <div className="text-lg font-bold">{advantage.timeToReplicate} months</div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600">Strategic Importance</span>
+                      <Badge className={getImportanceColor(advantage.strategicImportance)}>
+                        {advantage.strategicImportance}
+                      </Badge>
+                    </div>
+                    <Progress
+                      value={
+                        advantage.strategicImportance === "critical"
+                          ? 100
+                          : advantage.strategicImportance === "important"
                           ? 75
                           : 50
-                    }
-                    className="h-2"
-                  />
-                </div>
-
-                <div>
-                  <div className="text-sm font-medium text-gray-900 mb-2">
-                    Potential Competitor Responses
+                      }
+                      className="h-2"
+                    />
                   </div>
-                  <ul className="space-y-1">
-                    {advantage.competitorResponse.map((response, index) => (
-                      <li
-                        key={index}
-                        className="text-sm text-gray-700 flex items-start"
-                      >
-                        <span className="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-2 flex-shrink-0"></span>
-                        {response}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
 
-                <div className="flex space-x-2 pt-3 border-t">
-                  <Button variant="outline" size="sm" className="flex-1">
-                    Monitor
-                  </Button>
-                  <Button
-                    size="sm"
-                    className="flex-1 bg-blue-600 hover:bg-blue-700"
-                  >
-                    Strengthen
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                  <div>
+                    <div className="text-sm font-medium text-gray-900 mb-2">Potential Competitor Responses</div>
+                    <ul className="space-y-1">
+                      {advantage.competitorResponse.map((response, index) => (
+                        <li key={index} className="text-sm text-gray-700 flex items-start">
+                          <span className="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-2 flex-shrink-0"></span>
+                          {response}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {applied && applied.size > 0 && (
+                    <div className="pt-2 border-t">
+                      <div className="text-sm font-medium text-gray-900 mb-2">Applied Strengthening Actions</div>
+                      <div className="flex flex-wrap gap-2">
+                        {[...applied].map((rid) => {
+                          const r = strategyRecommendations.find((s) => s.id === rid);
+                          if (!r) return null;
+                          return (
+                            <Badge key={rid} className="bg-blue-100 text-blue-800">
+                              {r.title}
+                            </Badge>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex space-x-2 pt-3 border-t">
+                    <Button
+                      variant={isMonitoring ? "secondary" : "outline"}
+                      size="sm"
+                      className="flex-1"
+                      onClick={() => toggleMonitor(advantage.id)}
+                    >
+                      {isMonitoring ? "Unmonitor" : "Monitor"}
+                    </Button>
+                    <Button size="sm" className="flex-1 bg-blue-600 hover:bg-blue-700" onClick={() => openStrengthen(advantage.id)}>
+                      Strengthen
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
 
-      {/* Strategy Recommendations */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900">
-            Strategy Recommendations
-          </h2>
+          <h2 className="text-2xl font-bold text-gray-900">Strategy Recommendations</h2>
           <Button className="bg-blue-600 hover:bg-blue-700">
             <Lightbulb className="w-4 h-4 mr-2" />
             Create Strategy
@@ -262,38 +415,26 @@ export function CompetitiveStrategy({
 
         <div className="space-y-6">
           {strategyRecommendations.map((strategy) => (
-            <Card
-              key={strategy.id}
-              className="hover:shadow-lg transition-shadow"
-            >
+            <Card key={strategy.id} className="hover:shadow-lg transition-shadow">
               <CardHeader className="pb-4">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-2">
-                      <CardTitle className="text-xl">
-                        {strategy.title}
-                      </CardTitle>
-                      <Badge className={getTypeColor(strategy.category)}>
-                        {strategy.category}
-                      </Badge>
+                      <CardTitle className="text-xl">{strategy.title}</CardTitle>
+                      <Badge className={getTypeColor(strategy.category)}>{strategy.category}</Badge>
                     </div>
-                    <CardDescription className="text-base">
-                      {strategy.description}
-                    </CardDescription>
+                    <CardDescription className="text-base">{strategy.description}</CardDescription>
                   </div>
                   <div className="flex items-center space-x-2 ml-4">
                     <Badge className={getImpactColor(strategy.expectedImpact)}>
                       {strategy.expectedImpact} impact
                     </Badge>
-                    <Badge className={getTimeframeColor(strategy.timeframe)}>
-                      {strategy.timeframe}
-                    </Badge>
+                    <Badge className={getTimeframeColor(strategy.timeframe)}>{strategy.timeframe}</Badge>
                   </div>
                 </div>
               </CardHeader>
 
               <CardContent className="space-y-6">
-                {/* Implementation Details */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="text-center p-3 bg-gray-50 rounded-lg">
                     <div className="text-sm text-gray-600">Expected Impact</div>
@@ -303,42 +444,27 @@ export function CompetitiveStrategy({
                   </div>
                   <div className="text-center p-3 bg-gray-50 rounded-lg">
                     <div className="text-sm text-gray-600">Complexity</div>
-                    <Badge
-                      className={getComplexityColor(
-                        strategy.implementationComplexity,
-                      )}
-                    >
+                    <Badge className={getComplexityColor(strategy.implementationComplexity)}>
                       {strategy.implementationComplexity}
                     </Badge>
                   </div>
                   <div className="text-center p-3 bg-gray-50 rounded-lg">
                     <div className="text-sm text-gray-600">Timeframe</div>
-                    <Badge className={getTimeframeColor(strategy.timeframe)}>
-                      {strategy.timeframe}
-                    </Badge>
+                    <Badge className={getTimeframeColor(strategy.timeframe)}>{strategy.timeframe}</Badge>
                   </div>
                 </div>
 
-                {/* Rationale */}
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">
-                    Strategic Rationale
-                  </h4>
+                  <h4 className="font-semibold text-gray-900 mb-2">Strategic Rationale</h4>
                   <p className="text-sm text-gray-700">{strategy.rationale}</p>
                 </div>
 
-                {/* Resources, Metrics, and Risks */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">
-                      Required Resources
-                    </h4>
+                    <h4 className="font-semibold text-gray-900 mb-2">Required Resources</h4>
                     <ul className="space-y-1">
                       {strategy.resources.map((resource, index) => (
-                        <li
-                          key={index}
-                          className="text-sm text-gray-700 flex items-start"
-                        >
+                        <li key={index} className="text-sm text-gray-700 flex items-start">
                           <span className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-2 flex-shrink-0"></span>
                           {resource}
                         </li>
@@ -347,15 +473,10 @@ export function CompetitiveStrategy({
                   </div>
 
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">
-                      Success Metrics
-                    </h4>
+                    <h4 className="font-semibold text-gray-900 mb-2">Success Metrics</h4>
                     <ul className="space-y-1">
                       {strategy.metrics.map((metric, index) => (
-                        <li
-                          key={index}
-                          className="text-sm text-gray-700 flex items-start"
-                        >
+                        <li key={index} className="text-sm text-gray-700 flex items-start">
                           <span className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-2 flex-shrink-0"></span>
                           {metric}
                         </li>
@@ -364,15 +485,10 @@ export function CompetitiveStrategy({
                   </div>
 
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">
-                      Key Risks
-                    </h4>
+                    <h4 className="font-semibold text-gray-900 mb-2">Key Risks</h4>
                     <ul className="space-y-1">
                       {strategy.risks.map((risk, index) => (
-                        <li
-                          key={index}
-                          className="text-sm text-gray-700 flex items-start"
-                        >
+                        <li key={index} className="text-sm text-gray-700 flex items-start">
                           <span className="w-2 h-2 bg-red-500 rounded-full mt-2 mr-2 flex-shrink-0"></span>
                           {risk}
                         </li>
@@ -381,7 +497,6 @@ export function CompetitiveStrategy({
                   </div>
                 </div>
 
-                {/* Action Buttons */}
                 <div className="flex space-x-3 pt-4 border-t">
                   <Button variant="outline" className="flex-1">
                     <Clock className="w-3 h-3 mr-1" />
@@ -398,63 +513,134 @@ export function CompetitiveStrategy({
         </div>
       </div>
 
-      {/* Summary Dashboard */}
       <Card className="bg-blue-50 border-blue-200">
         <CardHeader>
-          <CardTitle className="text-blue-900">
-            Competitive Strategy Summary
-          </CardTitle>
+          <CardTitle className="text-blue-900">Competitive Strategy Summary</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="text-center">
               <div className="text-2xl font-bold text-blue-900">
-                {
-                  competitiveAdvantages.filter(
-                    (a) => a.strategicImportance === "critical",
-                  ).length
-                }
+                {advantages.filter((a) => a.strategicImportance === "critical").length}
               </div>
               <div className="text-sm text-blue-700">Critical Advantages</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-blue-900">
-                {Math.round(
-                  competitiveAdvantages.reduce(
-                    (acc, a) => acc + a.timeToReplicate,
-                    0,
-                  ) / competitiveAdvantages.length,
-                )}
+                {Math.round(advantages.reduce((acc, a) => acc + a.timeToReplicate, 0) / advantages.length)}
               </div>
-              <div className="text-sm text-blue-700">
-                Avg Months to Replicate
-              </div>
+              <div className="text-sm text-blue-700">Avg Months to Replicate</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-blue-900">
-                {
-                  strategyRecommendations.filter(
-                    (s) => s.timeframe === "immediate",
-                  ).length
-                }
+                {Object.values(selectedRecs).reduce((acc, s) => acc + (s?.size || 0), 0)}
               </div>
-              <div className="text-sm text-blue-700">Immediate Actions</div>
+              <div className="text-sm text-blue-700">Strengthening Actions Applied</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-900">
-                {
-                  strategyRecommendations.filter(
-                    (s) => s.expectedImpact === "high",
-                  ).length
-                }
-              </div>
-              <div className="text-sm text-blue-700">
-                High Impact Strategies
-              </div>
+              <div className="text-2xl font-bold text-blue-900">{Object.values(monitored).filter(Boolean).length}</div>
+              <div className="text-sm text-blue-700">Advantages Monitored</div>
             </div>
           </div>
         </CardContent>
       </Card>
+
+      <Dialog open={analyzeOpen} onOpenChange={setAnalyzeOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Analyze New Advantage</DialogTitle>
+            <DialogDescription>
+              Capture details about a new competitive advantage to evaluate and track.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <div className="text-sm mb-1">Type</div>
+                <select
+                  value={newAdv.type}
+                  onChange={(e) => setNewAdv((p) => ({ ...p, type: e.target.value as CompetitiveAdvantage["type"] }))}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                >
+                  <option value="technology">Technology</option>
+                  <option value="cost">Cost</option>
+                  <option value="service">Service</option>
+                  <option value="brand">Brand</option>
+                  <option value="distribution">Distribution</option>
+                  <option value="partnerships">Partnerships</option>
+                </select>
+              </div>
+              <div>
+                <div className="text-sm mb-1">Strategic Importance</div>
+                <select
+                  value={newAdv.strategicImportance}
+                  onChange={(e) => setNewAdv((p) => ({ ...p, strategicImportance: e.target.value as CompetitiveAdvantage["strategicImportance"] }))}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                >
+                  <option value="critical">Critical</option>
+                  <option value="important">Important</option>
+                  <option value="moderate">Moderate</option>
+                </select>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div>
+                <div className="text-sm mb-1">Sustainability</div>
+                <select
+                  value={newAdv.sustainability}
+                  onChange={(e) => setNewAdv((p) => ({ ...p, sustainability: e.target.value as CompetitiveAdvantage["sustainability"] }))}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                >
+                  <option value="high">High</option>
+                  <option value="medium">Medium</option>
+                  <option value="low">Low</option>
+                </select>
+              </div>
+              <div>
+                <div className="text-sm mb-1">Time to Replicate (months)</div>
+                <Input
+                  type="number"
+                  min={0}
+                  value={newAdv.timeToReplicate}
+                  onChange={(e) => setNewAdv((p) => ({ ...p, timeToReplicate: Number(e.target.value) }))}
+                />
+              </div>
+            </div>
+            <div>
+              <div className="text-sm mb-1">Advantage Title</div>
+              <Input
+                placeholder="e.g., Real-time Processing Engine"
+                value={newAdv.advantage}
+                onChange={(e) => setNewAdv((p) => ({ ...p, advantage: e.target.value }))}
+              />
+            </div>
+            <div>
+              <div className="text-sm mb-1">Description</div>
+              <Textarea
+                placeholder="Describe the advantage and why it matters"
+                value={newAdv.description}
+                onChange={(e) => setNewAdv((p) => ({ ...p, description: e.target.value }))}
+                className="min-h-[90px]"
+              />
+            </div>
+            <div>
+              <div className="text-sm mb-1">Potential Competitor Responses (one per line or comma-separated)</div>
+              <Textarea
+                placeholder="Invest in infrastructure upgrades\nAcquire real-time technology companies"
+                value={newAdv.competitorResponse}
+                onChange={(e) => setNewAdv((p) => ({ ...p, competitorResponse: e.target.value }))}
+                className="min-h-[80px]"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setAnalyzeOpen(false)}>Cancel</Button>
+            <Button onClick={handleAnalyzeSubmit} className="bg-blue-600 hover:bg-blue-700">Save</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <StrengthenDialog />
     </div>
   );
 }
