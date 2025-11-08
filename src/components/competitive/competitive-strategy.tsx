@@ -605,13 +605,21 @@ export function CompetitiveStrategy({
                 </div>
 
                 <div className="flex space-x-3 pt-4 border-t">
-                  <Button variant="outline" className="flex-1">
+                  <Button
+                    variant="outline"
+                    className="flex-1"
+                    onClick={() => setScheduleReviewOpen(strategy.id)}
+                  >
                     <Clock className="w-3 h-3 mr-1" />
                     Schedule Review
                   </Button>
-                  <Button className="flex-1 bg-blue-600 hover:bg-blue-700">
+                  <Button
+                    className="flex-1 bg-blue-600 hover:bg-blue-700"
+                    onClick={() => handleImplementStrategy(strategy)}
+                    disabled={implementingStrategy === strategy.id || agentLoading}
+                  >
                     <Target className="w-3 h-3 mr-1" />
-                    Implement Strategy
+                    {implementingStrategy === strategy.id ? "Implementing..." : "Implement Strategy"}
                   </Button>
                 </div>
               </CardContent>
