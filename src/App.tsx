@@ -13,6 +13,7 @@ import TaxCompliance from "./pages/TaxCompliance";
 import PricingStrategy from "./pages/PricingStrategy";
 import RevenueStrategy from "./pages/RevenueStrategy";
 import MarketCompetitiveAnalysis from "./pages/MarketCompetitiveAnalysis";
+import MarketReportView from "./pages/MarketReportView";
 import SwotWhitePaper from "./pages/SwotWhitePaper";
 import CompetitorWhitePaper from "./pages/CompetitorWhitePaper";
 import LoanFunding from "./pages/LoanFunding";
