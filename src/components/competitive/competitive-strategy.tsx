@@ -514,7 +514,7 @@ export function CompetitiveStrategy({
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-bold text-gray-900">Strategy Recommendations</h2>
-          <Button className="bg-blue-600 hover:bg-blue-700">
+          <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => setCreateStrategyOpen(true)}>
             <Lightbulb className="w-4 h-4 mr-2" />
             Create Strategy
           </Button>
