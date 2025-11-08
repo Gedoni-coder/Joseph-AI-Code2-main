@@ -314,6 +314,12 @@ export function ReportNotes({ reportNotes }: ReportNotesProps) {
           </div>
         </CardContent>
       </Card>
+
+      <ActionPlanDialog
+        open={actionPlanOpen}
+        onOpenChange={setActionPlanOpen}
+        reportTitle={actionPlanReport || "Market Analysis Report"}
+      />
     </div>
   );
 }
