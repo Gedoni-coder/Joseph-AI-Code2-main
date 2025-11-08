@@ -756,6 +756,200 @@ export function CompetitiveStrategy({
       </Dialog>
 
       <StrengthenDialog />
+
+      <Dialog open={createStrategyOpen} onOpenChange={setCreateStrategyOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Create New Strategy</DialogTitle>
+            <DialogDescription>
+              Define a new competitive strategy to pursue
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="strategy-title">Strategy Title</Label>
+              <Input
+                id="strategy-title"
+                placeholder="e.g., Enter Premium Market Segment"
+                value={newStrategy.title}
+                onChange={(e) => setNewStrategy((p) => ({ ...p, title: e.target.value }))}
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="strategy-description">Description</Label>
+              <Textarea
+                id="strategy-description"
+                placeholder="Describe the strategy and its objectives"
+                value={newStrategy.description}
+                onChange={(e) => setNewStrategy((p) => ({ ...p, description: e.target.value }))}
+                className="min-h-[80px]"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="strategy-category">Category</Label>
+                <select
+                  id="strategy-category"
+                  value={newStrategy.category}
+                  onChange={(e) => setNewStrategy((p) => ({ ...p, category: e.target.value as any }))}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                >
+                  <option value="positioning">Positioning</option>
+                  <option value="pricing">Pricing</option>
+                  <option value="partnerships">Partnerships</option>
+                  <option value="product">Product</option>
+                  <option value="marketing">Marketing</option>
+                </select>
+              </div>
+
+              <div>
+                <Label htmlFor="strategy-impact">Expected Impact</Label>
+                <select
+                  id="strategy-impact"
+                  value={newStrategy.expectedImpact}
+                  onChange={(e) => setNewStrategy((p) => ({ ...p, expectedImpact: e.target.value as any }))}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                >
+                  <option value="low">Low</option>
+                  <option value="medium">Medium</option>
+                  <option value="high">High</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="strategy-timeframe">Timeframe</Label>
+                <select
+                  id="strategy-timeframe"
+                  value={newStrategy.timeframe}
+                  onChange={(e) => setNewStrategy((p) => ({ ...p, timeframe: e.target.value as any }))}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                >
+                  <option value="immediate">Immediate</option>
+                  <option value="short-term">Short-term (0-6 months)</option>
+                  <option value="long-term">Long-term (6+ months)</option>
+                </select>
+              </div>
+
+              <div>
+                <Label htmlFor="strategy-owner">Owner</Label>
+                <Input
+                  id="strategy-owner"
+                  placeholder="Responsible person/team"
+                  value={newStrategy.owner}
+                  onChange={(e) => setNewStrategy((p) => ({ ...p, owner: e.target.value }))}
+                />
+              </div>
+            </div>
+
+            <div>
+              <Label htmlFor="strategy-budget">Budget</Label>
+              <Input
+                id="strategy-budget"
+                placeholder="e.g., $50,000"
+                value={newStrategy.budget}
+                onChange={(e) => setNewStrategy((p) => ({ ...p, budget: e.target.value }))}
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="strategy-objectives">Key Objectives</Label>
+              <Textarea
+                id="strategy-objectives"
+                placeholder="List the main objectives (one per line)"
+                value={newStrategy.objectives}
+                onChange={(e) => setNewStrategy((p) => ({ ...p, objectives: e.target.value }))}
+                className="min-h-[60px]"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setCreateStrategyOpen(false)}>Cancel</Button>
+            <Button onClick={handleCreateStrategy} className="bg-blue-600 hover:bg-blue-700">Create Strategy</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {scheduleReviewOpen && (
+        <Dialog open={!!scheduleReviewOpen} onOpenChange={(open) => !open && setScheduleReviewOpen(null)}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Schedule Strategy Review</DialogTitle>
+              <DialogDescription>
+                Set a date and time for reviewing this strategy
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div>
+                <Label>Review Date</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className="w-full justify-start text-left font-normal"
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {reviewDate ? reviewDate.toLocaleDateString() : "Pick a date"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={reviewDate}
+                      onSelect={setReviewDate}
+                      disabled={(date) => date < new Date()}
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              {reviewDate && (
+                <div>
+                  <Label htmlFor="review-time">Time</Label>
+                  <Input
+                    id="review-time"
+                    type="time"
+                    defaultValue="09:00"
+                  />
+                </div>
+              )}
+
+              <div>
+                <Label htmlFor="review-notes">Review Notes</Label>
+                <Textarea
+                  id="review-notes"
+                  placeholder="Add notes for the review session"
+                  value={reviewNotes}
+                  onChange={(e) => setReviewNotes(e.target.value)}
+                  className="min-h-[80px]"
+                />
+              </div>
+
+              {!reviewDate && (
+                <div className="flex items-start gap-2 p-3 bg-amber-50 rounded border border-amber-200">
+                  <AlertCircle className="h-4 w-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                  <div className="text-sm text-amber-700">
+                    Please select a date for the review
+                  </div>
+                </div>
+              )}
+            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setScheduleReviewOpen(null)}>Cancel</Button>
+              <Button
+                onClick={() => handleScheduleReview(scheduleReviewOpen)}
+                className="bg-blue-600 hover:bg-blue-700"
+                disabled={!reviewDate}
+              >
+                Schedule Review
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 }
