@@ -206,6 +206,27 @@
   --rdp-background-color: hsl(217, 91%, 90%);
 }
 
+/* Ensure calendar is interactive */
+.rdp-months {
+  position: relative;
+  z-index: 50;
+}
+
+.rdp-month_caption {
+  position: relative;
+}
+
+.rdp-nav_button {
+  position: absolute !important;
+  pointer-events: auto !important;
+  z-index: 10 !important;
+}
+
+.rdp-day_button {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
 /* Print only the Market Analysis section when exporting */
 @media print {
   body[data-print-scope="market-analysis"] * { visibility: hidden !important; }
