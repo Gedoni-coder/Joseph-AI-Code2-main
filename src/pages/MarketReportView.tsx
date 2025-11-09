@@ -223,18 +223,26 @@ export default function MarketReportView() {
             </div>
             <div className="flex gap-2">
               <Button
-                variant="outline"
-                onClick={handlePrint}
-              >
-                <Printer className="w-4 h-4 mr-2" />
-                Print
-              </Button>
-              <Button
-                variant="outline"
-              >
-                <Share className="w-4 h-4 mr-2" />
-                Share
-              </Button>
+              variant="outline"
+              onClick={handlePrint}
+            >
+              <Printer className="w-4 h-4 mr-2" />
+              Print
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handleExport}
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Export CSV
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handleShare}
+            >
+              <Share className="w-4 h-4 mr-2" />
+              Share
+            </Button>
               <Button
                 onClick={handleGeneratePDF}
                 disabled={isGeneratingPDF}
