@@ -130,6 +130,76 @@ export default function MarketReportView() {
     window.print();
   };
 
+  const handleExport = () => {
+    const csvContent = [
+      ['Market Analysis Report Export'],
+      ['Title', report.title],
+      ['Author', report.author],
+      ['Generated', formatDate(report.dateGenerated)],
+      ['Confidence', `${report.confidence}%`],
+      [],
+      ['KEY METRICS'],
+      ['Metric', 'Value', 'Trend'],
+      ...report.keyMetrics.map(m => [m.label, m.value, m.trend]),
+      [],
+      ['KEY INSIGHTS'],
+      ...report.insights.map((i, idx) => [`${idx + 1}. ${i}`]),
+      [],
+      ['RECOMMENDATIONS'],
+      ...report.recommendations.map((r, idx) => [`${idx + 1}. ${r}`]),
+      [],
+      ['NEXT STEPS'],
+      ...report.nextSteps.map((s, idx) => [`${idx + 1}. ${s}`]),
+    ]
+      .map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+      .join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `market-analysis-${report.id}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast({
+      title: "Report Exported",
+      description: "Report exported as CSV successfully",
+    });
+  };
+
+  const handleShare = () => {
+    const shareText = `Check out this Market Analysis Report: "${report.title}"\n\nConfidence: ${report.confidence}%\n\n${report.summary}`;
+
+    if (navigator.share) {
+      navigator.share({
+        title: report.title,
+        text: shareText,
+      }).catch(() => {
+        copyToClipboard(shareText);
+      });
+    } else {
+      copyToClipboard(shareText);
+    }
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      toast({
+        title: "Copied to Clipboard",
+        description: "Report summary copied successfully",
+      });
+    }).catch(() => {
+      toast({
+        title: "Share Failed",
+        description: "Unable to share report",
+        variant: "destructive",
+      });
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4">
