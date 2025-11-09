@@ -261,7 +261,7 @@ export default function MarketReportView() {
             <div className="flex items-center justify-between flex-wrap gap-4">
               <div className="flex items-center space-x-4">
                 <div className="flex items-center space-x-2">
-                  <Calendar className="w-4 h-4 text-gray-600" />
+                  <CalendarIcon className="w-4 h-4 text-gray-600" />
                   <span className="text-sm text-gray-600">
                     {formatDate(report.dateGenerated)}
                   </span>
