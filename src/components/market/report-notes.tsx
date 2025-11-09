@@ -219,11 +219,19 @@ export function ReportNotes({ reportNotes }: ReportNotesProps) {
                   <Badge variant="outline">
                     {report.confidence}% confidence
                   </Badge>
-                  <Button variant="outline" size="sm">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleExportReport(report)}
+                  >
                     <Download className="w-3 h-3 mr-1" />
                     Export
                   </Button>
-                  <Button variant="outline" size="sm">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleShareReport(report)}
+                  >
                     <Share className="w-3 h-3 mr-1" />
                     Share
                   </Button>
