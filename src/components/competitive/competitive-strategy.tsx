@@ -895,12 +895,17 @@ export function CompetitiveStrategy({
                       {reviewDate ? reviewDate.toLocaleDateString() : "Pick a date"}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
+                  <PopoverContent className="w-auto p-0 z-50" align="start">
                     <Calendar
                       mode="single"
                       selected={reviewDate}
                       onSelect={setReviewDate}
-                      disabled={(date) => date < new Date()}
+                      disabled={(date) => {
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+                        return date < today;
+                      }}
+                      defaultMonth={reviewDate || new Date()}
                     />
                   </PopoverContent>
                 </Popover>
