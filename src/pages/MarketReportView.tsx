@@ -19,7 +19,7 @@ import {
   TrendingUp,
   TrendingDown,
   Minus,
-  Calendar,
+  Calendar as CalendarIcon,
   User,
 } from "lucide-react";
 import { generateReportPDF } from "@/lib/pdf-generator";
