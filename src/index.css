@@ -204,26 +204,30 @@
   --rdp-cell-size: 40px;
   --rdp-accent-color: hsl(217, 91%, 35%);
   --rdp-background-color: hsl(217, 91%, 90%);
+  pointer-events: auto !important;
 }
 
 /* Calendar styling - make fully interactive */
-.rdp {
-  pointer-events: auto;
-}
-
 .rdp-months {
   position: relative;
   z-index: 50;
+  pointer-events: auto;
 }
 
-.rdp-month_caption {
+.rdp-month {
+  pointer-events: auto;
+}
+
+.rdp-caption {
   position: relative;
   z-index: 10;
+  pointer-events: auto;
 }
 
 .rdp-nav {
   position: relative;
   z-index: 20;
+  pointer-events: auto;
 }
 
 .rdp-nav_button {
@@ -232,20 +236,81 @@
   cursor: pointer !important;
   z-index: 30 !important;
   touch-action: manipulation;
+  width: 32px !important;
+  height: 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 .rdp-nav_button:hover {
   opacity: 100% !important;
+  background-color: hsl(217, 91%, 90%) !important;
 }
 
-.rdp-day_button {
-  cursor: pointer;
+.rdp-nav_button_previous {
+  left: 8px !important;
+}
+
+.rdp-nav_button_next {
+  right: 8px !important;
+}
+
+.rdp-head_cell {
   pointer-events: auto;
-  touch-action: manipulation;
+  color: hsl(240 4% 46%);
+  font-weight: 600;
+  font-size: 0.875rem;
 }
 
 .rdp-cell {
   pointer-events: auto;
+  position: relative;
+  text-align: center;
+}
+
+.rdp-day {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.rdp-day_button {
+  cursor: pointer;
+  pointer-events: auto !important;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  min-width: 36px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+}
+
+.rdp-day_button:not([disabled]):hover {
+  background-color: hsl(217, 91%, 80%);
+}
+
+.rdp-day_selected:not([disabled]) {
+  background-color: hsl(217, 91%, 35%) !important;
+  color: white !important;
+  font-weight: 600;
+}
+
+.rdp-day_today {
+  font-weight: 700;
+  color: hsl(217, 91%, 35%);
+}
+
+.rdp-day_disabled {
+  color: hsl(240 5% 96%);
+  opacity: 0.5;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
 }
 
 /* Print only the Market Analysis section when exporting */
