@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 interface ConversationalModeContextType {
   conversationalMode: boolean;
@@ -25,13 +25,13 @@ export function ConversationalModeProvider({ children }: { children: ReactNode }
   };
 
   if (!isLoaded) {
-    return children as JSX.Element;
+    return React.createElement(React.Fragment, {}, children);
   }
 
-  return (
-    <ConversationalModeContext.Provider value={{ conversationalMode, setConversationalMode }}>
-      {children}
-    </ConversationalModeContext.Provider>
+  return React.createElement(
+    ConversationalModeContext.Provider,
+    { value: { conversationalMode, setConversationalMode } },
+    children
   );
 }
 
