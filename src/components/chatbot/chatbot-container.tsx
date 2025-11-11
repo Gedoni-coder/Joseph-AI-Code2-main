@@ -232,7 +232,7 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
     return (
       <div
         data-joseph-no-explain
-        className={cn("fixed bottom-4 right-4 z-[99999]", className)}
+        className={cn("fixed bottom-4 right-4 z-[99999]", conversationalMode ? "" : "hidden", className)}
       >
         <Tooltip>
           <TooltipTrigger asChild>
