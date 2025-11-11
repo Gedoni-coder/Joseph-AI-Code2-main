@@ -150,14 +150,32 @@ function TopDivisionNav({ conversationalMode, onConversationalModeChange }: TopD
 }
 
 
-const App = () => (
+const App = () => {
+  const [conversationalMode, setConversationalMode] = React.useState(true);
+
+  React.useEffect(() => {
+    const saved = localStorage.getItem("conversationalMode");
+    if (saved !== null) {
+      setConversationalMode(saved === "true");
+    }
+  }, []);
+
+  const handleConversationalModeChange = (enabled: boolean) => {
+    setConversationalMode(enabled);
+    localStorage.setItem("conversationalMode", String(enabled));
+  };
+
+  return (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <TopDivisionNav />
-        <ChatbotContainer />
+        <TopDivisionNav
+          conversationalMode={conversationalMode}
+          onConversationalModeChange={handleConversationalModeChange}
+        />
+        <ChatbotContainer conversationalMode={conversationalMode} />
         <Routes>
           <Route path="/" element={<SignUp />} />
           <Route path="/signup" element={<SignUp />} />
@@ -229,6 +247,7 @@ const App = () => (
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
-);
+  );
+};
 
 export default App;
