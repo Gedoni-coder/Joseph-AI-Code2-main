@@ -41,6 +41,124 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { useAgent } from "@/hooks/useAgent";
 import { useToast } from "@/hooks/use-toast";
 
+interface StrengthenDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  advantage: CompetitiveAdvantage | null;
+  strategyRecommendations: StrategyRecommendation[];
+  selectedRecs: Record<string, Set<string>>;
+  onApply: (recs: Set<string>) => void;
+}
+
+const typeCategoryMap: Record<string, string[]> = {
+  technology: ["product", "partnerships"],
+  process: ["operations", "partnerships"],
+  brand: ["marketing", "pricing"],
+  talent: ["operations", "partnerships"],
+  data: ["operations", "partnerships"],
+  patents: ["product", "partnerships"],
+  supply_chain: ["operations", "partnerships"],
+  distribution: ["marketing", "partnerships"],
+  customer_relationships: ["marketing", "partnerships"],
+  cost_structure: ["pricing", "operations"],
+};
+
+const getImpactColor = (impact: string) => {
+  switch (impact) {
+    case "high":
+      return "bg-red-100 text-red-800";
+    case "medium":
+      return "bg-yellow-100 text-yellow-800";
+    case "low":
+      return "bg-green-100 text-green-800";
+    default:
+      return "bg-gray-100 text-gray-800";
+  }
+};
+
+function StrengthenDialogComponent({
+  open,
+  onOpenChange,
+  advantage,
+  strategyRecommendations,
+  selectedRecs,
+  onApply,
+}: StrengthenDialogProps) {
+  if (!advantage) return null;
+
+  const allowedCategories = typeCategoryMap[advantage.type];
+  const choices = strategyRecommendations.filter((s) =>
+    allowedCategories.includes(s.category),
+  );
+
+  const current = selectedRecs[advantage.id] || new Set<string>();
+  const [temp, setTemp] = React.useState<Set<string>>(new Set(current));
+
+  const toggleChoice = (id: string) => {
+    setTemp((prev) => {
+      const n = new Set(prev);
+      if (n.has(id)) n.delete(id);
+      else n.add(id);
+      return n;
+    });
+  };
+
+  const handleApply = () => {
+    onApply(temp);
+    onOpenChange(false);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Select strengthening actions</DialogTitle>
+          <DialogDescription>
+            Choose recommendations to apply for "{advantage.advantage}".
+          </DialogDescription>
+        </DialogHeader>
+        <div className="space-y-3 max-h-[300px] overflow-auto pr-1">
+          {choices.map((c) => (
+            <label
+              key={c.id}
+              className="flex items-start gap-3 rounded-md border p-3 hover:bg-accent cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                checked={temp.has(c.id)}
+                onChange={() => toggleChoice(c.id)}
+                className="mt-1"
+              />
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="font-medium">{c.title}</span>
+                  <Badge className={getImpactColor(c.expectedImpact)}>
+                    {c.expectedImpact} impact
+                  </Badge>
+                </div>
+                <div className="text-sm text-muted-foreground">{c.description}</div>
+              </div>
+            </label>
+          ))}
+          {choices.length === 0 && (
+            <div className="text-sm text-muted-foreground">
+              No recommendations available for this advantage type.
+            </div>
+          )}
+        </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
+            Cancel
+          </Button>
+          <Button onClick={handleApply} className="bg-blue-600 hover:bg-blue-700">
+            <Check className="w-4 h-4 mr-2" /> Apply
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 interface CompetitiveStrategyProps {
   competitiveAdvantages: CompetitiveAdvantage[];
   strategyRecommendations: StrategyRecommendation[];
