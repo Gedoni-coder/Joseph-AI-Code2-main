@@ -276,10 +276,12 @@
   transition: all 0.2s ease;
   position: relative;
   z-index: 1;
+  margin: 2px;
 }
 
+.rdp-day button,
 .rdp-day_button {
-  cursor: pointer;
+  cursor: pointer !important;
   pointer-events: auto !important;
   border-radius: 4px;
   transition: all 0.2s ease;
@@ -289,16 +291,25 @@
   align-items: center;
   justify-content: center;
   font-size: 0.875rem;
+  background-color: transparent;
+  border: 1px solid transparent;
+  position: relative;
+  z-index: 1;
 }
 
+.rdp-day button:not(:disabled):hover,
 .rdp-day_button:not([disabled]):hover {
-  background-color: hsl(217, 91%, 80%);
+  background-color: hsl(217, 91%, 85%) !important;
+  border-color: hsl(217, 91%, 50%) !important;
 }
 
+.rdp-day button[aria-selected="true"],
+.rdp-day_selected:not([disabled]) button,
 .rdp-day_selected:not([disabled]) {
   background-color: hsl(217, 91%, 35%) !important;
   color: white !important;
   font-weight: 600;
+  border-color: hsl(217, 91%, 35%) !important;
 }
 
 .rdp-day_today {
@@ -306,11 +317,14 @@
   color: hsl(217, 91%, 35%);
 }
 
-.rdp-day_disabled {
-  color: hsl(240 5% 96%);
-  opacity: 0.5;
+.rdp-day_disabled,
+.rdp-day button:disabled,
+.rdp-day_disabled button {
+  color: hsl(240 5% 80%) !important;
+  opacity: 0.4 !important;
   cursor: not-allowed !important;
   pointer-events: none !important;
+  background-color: transparent !important;
 }
 
 /* Popover inside dialogs - ensure it's interactive */
