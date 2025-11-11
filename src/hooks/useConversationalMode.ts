@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
 interface ConversationalModeContextType {
   conversationalMode: boolean;
@@ -25,7 +25,7 @@ export function ConversationalModeProvider({ children }: { children: ReactNode }
   };
 
   if (!isLoaded) {
-    return <>{children}</>;
+    return children as JSX.Element;
   }
 
   return (
