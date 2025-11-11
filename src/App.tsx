@@ -116,10 +116,6 @@ function InfraModulePage({ name }: { name: string }) {
   );
 }
 
-import { useState } from "react";
-import { Switch } from "./components/ui/switch";
-import { Radio, Tooltip, TooltipContent, TooltipTrigger } from "lucide-react";
-
 interface TopDivisionNavProps {
   conversationalMode: boolean;
   onConversationalModeChange: (enabled: boolean) => void;
