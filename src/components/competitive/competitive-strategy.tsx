@@ -271,19 +271,6 @@ export function CompetitiveStrategy({
     }
   };
 
-  const getImpactColor = (impact: string) => {
-    switch (impact) {
-      case "high":
-        return "bg-green-100 text-green-800";
-      case "medium":
-        return "bg-yellow-100 text-yellow-800";
-      case "low":
-        return "bg-gray-100 text-gray-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
-
   const getComplexityColor = (complexity: string) => {
     switch (complexity) {
       case "high":
@@ -308,15 +295,6 @@ export function CompetitiveStrategy({
       default:
         return "bg-gray-100 text-gray-800";
     }
-  };
-
-  const typeCategoryMap: Record<CompetitiveAdvantage["type"], StrategyRecommendation["category"][]> = {
-    technology: ["product", "positioning"],
-    cost: ["pricing", "partnerships"],
-    service: ["positioning", "marketing"],
-    brand: ["marketing", "positioning"],
-    distribution: ["partnerships", "positioning"],
-    partnerships: ["partnerships", "marketing"],
   };
 
   const openStrengthen = (advId: string) => setStrengthenFor(advId);
