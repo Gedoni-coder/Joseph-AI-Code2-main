@@ -313,6 +313,17 @@
   pointer-events: none !important;
 }
 
+/* Popover inside dialogs - ensure it's interactive */
+[role="dialog"] [role="dialog"] {
+  z-index: 60 !important;
+  pointer-events: auto !important;
+}
+
+[role="dialog"] .rdp {
+  z-index: 60 !important;
+  pointer-events: auto !important;
+}
+
 /* Print only the Market Analysis section when exporting */
 @media print {
   body[data-print-scope="market-analysis"] * { visibility: hidden !important; }
