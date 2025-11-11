@@ -851,7 +851,18 @@ export function CompetitiveStrategy({
         </DialogContent>
       </Dialog>
 
-      <StrengthenDialog />
+      <StrengthenDialogComponent
+        open={!!strengthenFor}
+        onOpenChange={(open) => !open && closeStrengthen()}
+        advantage={advantages.find((a) => a.id === strengthenFor) || null}
+        strategyRecommendations={strategyRecommendations}
+        selectedRecs={selectedRecs}
+        onApply={(recs) => {
+          if (strengthenFor) {
+            applyRecommendations(strengthenFor, recs);
+          }
+        }}
+      />
 
       <Dialog open={createStrategyOpen} onOpenChange={setCreateStrategyOpen}>
         <DialogContent>
