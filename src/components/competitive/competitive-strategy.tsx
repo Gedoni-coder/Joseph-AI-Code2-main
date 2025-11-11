@@ -37,7 +37,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { useAgent } from "@/hooks/useAgent";
 import { useToast } from "@/hooks/use-toast";
 
@@ -136,7 +140,9 @@ function StrengthenDialogComponent({
                     {c.expectedImpact} impact
                   </Badge>
                 </div>
-                <div className="text-sm text-muted-foreground">{c.description}</div>
+                <div className="text-sm text-muted-foreground">
+                  {c.description}
+                </div>
               </div>
             </label>
           ))}
@@ -150,7 +156,10 @@ function StrengthenDialogComponent({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button onClick={handleApply} className="bg-blue-600 hover:bg-blue-700">
+          <Button
+            onClick={handleApply}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
             <Check className="w-4 h-4 mr-2" /> Apply
           </Button>
         </DialogFooter>
@@ -170,15 +179,27 @@ export function CompetitiveStrategy({
 }: CompetitiveStrategyProps) {
   const [analyzeOpen, setAnalyzeOpen] = useState(false);
   const [strengthenFor, setStrengthenFor] = useState<string | null>(null);
-  const [localAdvantages, setLocalAdvantages] = useState<CompetitiveAdvantage[]>([]);
+  const [localAdvantages, setLocalAdvantages] = useState<
+    CompetitiveAdvantage[]
+  >([]);
   const [monitored, setMonitored] = useState<Record<string, boolean>>({});
-  const [selectedRecs, setSelectedRecs] = useState<Record<string, Set<string>>>({});
+  const [selectedRecs, setSelectedRecs] = useState<Record<string, Set<string>>>(
+    {},
+  );
   const [createStrategyOpen, setCreateStrategyOpen] = useState(false);
-  const [scheduleReviewOpen, setScheduleReviewOpen] = useState<string | null>(null);
+  const [scheduleReviewOpen, setScheduleReviewOpen] = useState<string | null>(
+    null,
+  );
   const [reviewDate, setReviewDate] = useState<Date | undefined>(undefined);
   const [reviewNotes, setReviewNotes] = useState("");
-  const [implementingStrategy, setImplementingStrategy] = useState<string | null>(null);
-  const { addAgentTask, isLoading: agentLoading, error: agentError } = useAgent();
+  const [implementingStrategy, setImplementingStrategy] = useState<
+    string | null
+  >(null);
+  const {
+    addAgentTask,
+    isLoading: agentLoading,
+    error: agentError,
+  } = useAgent();
   const { toast } = useToast();
 
   const [newAdv, setNewAdv] = useState({
@@ -187,14 +208,20 @@ export function CompetitiveStrategy({
     description: "",
     sustainability: "medium" as CompetitiveAdvantage["sustainability"],
     timeToReplicate: 12,
-    strategicImportance: "important" as CompetitiveAdvantage["strategicImportance"],
+    strategicImportance:
+      "important" as CompetitiveAdvantage["strategicImportance"],
     competitorResponse: "",
   });
 
   const [newStrategy, setNewStrategy] = useState({
     title: "",
     description: "",
-    category: "positioning" as "positioning" | "pricing" | "partnerships" | "product" | "marketing",
+    category: "positioning" as
+      | "positioning"
+      | "pricing"
+      | "partnerships"
+      | "product"
+      | "marketing",
     timeframe: "short-term" as "immediate" | "short-term" | "long-term",
     expectedImpact: "medium" as "low" | "medium" | "high",
     budget: "",
@@ -372,7 +399,8 @@ export function CompetitiveStrategy({
           metrics: strategy.metrics,
           risks: strategy.risks,
         },
-        action: "Implement this competitive strategy. Break it down into actionable steps, identify required resources, create a timeline, and establish success metrics.",
+        action:
+          "Implement this competitive strategy. Break it down into actionable steps, identify required resources, create a timeline, and establish success metrics.",
       });
 
       toast({
@@ -418,7 +446,6 @@ export function CompetitiveStrategy({
     });
   };
 
-
   return (
     <div className="space-y-8">
       <div className="space-y-4">
@@ -426,7 +453,10 @@ export function CompetitiveStrategy({
           <h2 className="text-2xl font-bold text-gray-900">
             Competitive Advantage Evaluation
           </h2>
-          <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => setAnalyzeOpen(true)}>
+          <Button
+            className="bg-blue-600 hover:bg-blue-700"
+            onClick={() => setAnalyzeOpen(true)}
+          >
             <Shield className="w-4 h-4 mr-2" />
             Analyze New Advantage
           </Button>
@@ -437,16 +467,27 @@ export function CompetitiveStrategy({
             const isMonitoring = !!monitored[advantage.id];
             const applied = selectedRecs[advantage.id];
             return (
-              <Card key={advantage.id} className="hover:shadow-lg transition-shadow">
+              <Card
+                key={advantage.id}
+                className="hover:shadow-lg transition-shadow"
+              >
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
                       {getTypeIcon(advantage.type)}
-                      <CardTitle className="text-lg">{advantage.advantage}</CardTitle>
+                      <CardTitle className="text-lg">
+                        {advantage.advantage}
+                      </CardTitle>
                     </div>
                     <div className="flex items-center gap-2">
-                      {isMonitoring && <Badge className="bg-emerald-100 text-emerald-800">Monitoring</Badge>}
-                      <Badge className={getTypeColor(advantage.type)}>{advantage.type}</Badge>
+                      {isMonitoring && (
+                        <Badge className="bg-emerald-100 text-emerald-800">
+                          Monitoring
+                        </Badge>
+                      )}
+                      <Badge className={getTypeColor(advantage.type)}>
+                        {advantage.type}
+                      </Badge>
                     </div>
                   </div>
                   <CardDescription>{advantage.description}</CardDescription>
@@ -455,21 +496,35 @@ export function CompetitiveStrategy({
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <div className="text-sm text-gray-600">Sustainability</div>
-                      <div className={`text-lg font-bold ${getSustainabilityColor(advantage.sustainability)}`}>
+                      <div className="text-sm text-gray-600">
+                        Sustainability
+                      </div>
+                      <div
+                        className={`text-lg font-bold ${getSustainabilityColor(advantage.sustainability)}`}
+                      >
                         {advantage.sustainability}
                       </div>
                     </div>
                     <div>
-                      <div className="text-sm text-gray-600">Time to Replicate</div>
-                      <div className="text-lg font-bold">{advantage.timeToReplicate} months</div>
+                      <div className="text-sm text-gray-600">
+                        Time to Replicate
+                      </div>
+                      <div className="text-lg font-bold">
+                        {advantage.timeToReplicate} months
+                      </div>
                     </div>
                   </div>
 
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">Strategic Importance</span>
-                      <Badge className={getImportanceColor(advantage.strategicImportance)}>
+                      <span className="text-sm text-gray-600">
+                        Strategic Importance
+                      </span>
+                      <Badge
+                        className={getImportanceColor(
+                          advantage.strategicImportance,
+                        )}
+                      >
                         {advantage.strategicImportance}
                       </Badge>
                     </div>
@@ -478,18 +533,23 @@ export function CompetitiveStrategy({
                         advantage.strategicImportance === "critical"
                           ? 100
                           : advantage.strategicImportance === "important"
-                          ? 75
-                          : 50
+                            ? 75
+                            : 50
                       }
                       className="h-2"
                     />
                   </div>
 
                   <div>
-                    <div className="text-sm font-medium text-gray-900 mb-2">Potential Competitor Responses</div>
+                    <div className="text-sm font-medium text-gray-900 mb-2">
+                      Potential Competitor Responses
+                    </div>
                     <ul className="space-y-1">
                       {advantage.competitorResponse.map((response, index) => (
-                        <li key={index} className="text-sm text-gray-700 flex items-start">
+                        <li
+                          key={index}
+                          className="text-sm text-gray-700 flex items-start"
+                        >
                           <span className="w-2 h-2 bg-orange-500 rounded-full mt-2 mr-2 flex-shrink-0"></span>
                           {response}
                         </li>
@@ -499,13 +559,20 @@ export function CompetitiveStrategy({
 
                   {applied && applied.size > 0 && (
                     <div className="pt-2 border-t">
-                      <div className="text-sm font-medium text-gray-900 mb-2">Applied Strengthening Actions</div>
+                      <div className="text-sm font-medium text-gray-900 mb-2">
+                        Applied Strengthening Actions
+                      </div>
                       <div className="flex flex-wrap gap-2">
                         {[...applied].map((rid) => {
-                          const r = strategyRecommendations.find((s) => s.id === rid);
+                          const r = strategyRecommendations.find(
+                            (s) => s.id === rid,
+                          );
                           if (!r) return null;
                           return (
-                            <Badge key={rid} className="bg-blue-100 text-blue-800">
+                            <Badge
+                              key={rid}
+                              className="bg-blue-100 text-blue-800"
+                            >
                               {r.title}
                             </Badge>
                           );
@@ -523,7 +590,11 @@ export function CompetitiveStrategy({
                     >
                       {isMonitoring ? "Unmonitor" : "Monitor"}
                     </Button>
-                    <Button size="sm" className="flex-1 bg-blue-600 hover:bg-blue-700" onClick={() => openStrengthen(advantage.id)}>
+                    <Button
+                      size="sm"
+                      className="flex-1 bg-blue-600 hover:bg-blue-700"
+                      onClick={() => openStrengthen(advantage.id)}
+                    >
                       Strengthen
                     </Button>
                   </div>
@@ -536,8 +607,13 @@ export function CompetitiveStrategy({
 
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900">Strategy Recommendations</h2>
-          <Button className="bg-blue-600 hover:bg-blue-700" onClick={() => setCreateStrategyOpen(true)}>
+          <h2 className="text-2xl font-bold text-gray-900">
+            Strategy Recommendations
+          </h2>
+          <Button
+            className="bg-blue-600 hover:bg-blue-700"
+            onClick={() => setCreateStrategyOpen(true)}
+          >
             <Lightbulb className="w-4 h-4 mr-2" />
             Create Strategy
           </Button>
@@ -545,21 +621,32 @@ export function CompetitiveStrategy({
 
         <div className="space-y-6">
           {strategyRecommendations.map((strategy) => (
-            <Card key={strategy.id} className="hover:shadow-lg transition-shadow">
+            <Card
+              key={strategy.id}
+              className="hover:shadow-lg transition-shadow"
+            >
               <CardHeader className="pb-4">
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <div className="flex items-center space-x-2 mb-2">
-                      <CardTitle className="text-xl">{strategy.title}</CardTitle>
-                      <Badge className={getTypeColor(strategy.category)}>{strategy.category}</Badge>
+                      <CardTitle className="text-xl">
+                        {strategy.title}
+                      </CardTitle>
+                      <Badge className={getTypeColor(strategy.category)}>
+                        {strategy.category}
+                      </Badge>
                     </div>
-                    <CardDescription className="text-base">{strategy.description}</CardDescription>
+                    <CardDescription className="text-base">
+                      {strategy.description}
+                    </CardDescription>
                   </div>
                   <div className="flex items-center space-x-2 ml-4">
                     <Badge className={getImpactColor(strategy.expectedImpact)}>
                       {strategy.expectedImpact} impact
                     </Badge>
-                    <Badge className={getTimeframeColor(strategy.timeframe)}>{strategy.timeframe}</Badge>
+                    <Badge className={getTimeframeColor(strategy.timeframe)}>
+                      {strategy.timeframe}
+                    </Badge>
                   </div>
                 </div>
               </CardHeader>
@@ -574,27 +661,40 @@ export function CompetitiveStrategy({
                   </div>
                   <div className="text-center p-3 bg-gray-50 rounded-lg">
                     <div className="text-sm text-gray-600">Complexity</div>
-                    <Badge className={getComplexityColor(strategy.implementationComplexity)}>
+                    <Badge
+                      className={getComplexityColor(
+                        strategy.implementationComplexity,
+                      )}
+                    >
                       {strategy.implementationComplexity}
                     </Badge>
                   </div>
                   <div className="text-center p-3 bg-gray-50 rounded-lg">
                     <div className="text-sm text-gray-600">Timeframe</div>
-                    <Badge className={getTimeframeColor(strategy.timeframe)}>{strategy.timeframe}</Badge>
+                    <Badge className={getTimeframeColor(strategy.timeframe)}>
+                      {strategy.timeframe}
+                    </Badge>
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-gray-900 mb-2">Strategic Rationale</h4>
+                  <h4 className="font-semibold text-gray-900 mb-2">
+                    Strategic Rationale
+                  </h4>
                   <p className="text-sm text-gray-700">{strategy.rationale}</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Required Resources</h4>
+                    <h4 className="font-semibold text-gray-900 mb-2">
+                      Required Resources
+                    </h4>
                     <ul className="space-y-1">
                       {strategy.resources.map((resource, index) => (
-                        <li key={index} className="text-sm text-gray-700 flex items-start">
+                        <li
+                          key={index}
+                          className="text-sm text-gray-700 flex items-start"
+                        >
                           <span className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-2 flex-shrink-0"></span>
                           {resource}
                         </li>
@@ -603,10 +703,15 @@ export function CompetitiveStrategy({
                   </div>
 
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Success Metrics</h4>
+                    <h4 className="font-semibold text-gray-900 mb-2">
+                      Success Metrics
+                    </h4>
                     <ul className="space-y-1">
                       {strategy.metrics.map((metric, index) => (
-                        <li key={index} className="text-sm text-gray-700 flex items-start">
+                        <li
+                          key={index}
+                          className="text-sm text-gray-700 flex items-start"
+                        >
                           <span className="w-2 h-2 bg-green-500 rounded-full mt-2 mr-2 flex-shrink-0"></span>
                           {metric}
                         </li>
@@ -615,10 +720,15 @@ export function CompetitiveStrategy({
                   </div>
 
                   <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Key Risks</h4>
+                    <h4 className="font-semibold text-gray-900 mb-2">
+                      Key Risks
+                    </h4>
                     <ul className="space-y-1">
                       {strategy.risks.map((risk, index) => (
-                        <li key={index} className="text-sm text-gray-700 flex items-start">
+                        <li
+                          key={index}
+                          className="text-sm text-gray-700 flex items-start"
+                        >
                           <span className="w-2 h-2 bg-red-500 rounded-full mt-2 mr-2 flex-shrink-0"></span>
                           {risk}
                         </li>
@@ -639,10 +749,14 @@ export function CompetitiveStrategy({
                   <Button
                     className="flex-1 bg-blue-600 hover:bg-blue-700"
                     onClick={() => handleImplementStrategy(strategy)}
-                    disabled={implementingStrategy === strategy.id || agentLoading}
+                    disabled={
+                      implementingStrategy === strategy.id || agentLoading
+                    }
                   >
                     <Target className="w-3 h-3 mr-1" />
-                    {implementingStrategy === strategy.id ? "Implementing..." : "Implement Strategy"}
+                    {implementingStrategy === strategy.id
+                      ? "Implementing..."
+                      : "Implement Strategy"}
                   </Button>
                 </div>
               </CardContent>
@@ -653,30 +767,47 @@ export function CompetitiveStrategy({
 
       <Card className="bg-blue-50 border-blue-200">
         <CardHeader>
-          <CardTitle className="text-blue-900">Competitive Strategy Summary</CardTitle>
+          <CardTitle className="text-blue-900">
+            Competitive Strategy Summary
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="text-center">
               <div className="text-2xl font-bold text-blue-900">
-                {advantages.filter((a) => a.strategicImportance === "critical").length}
+                {
+                  advantages.filter((a) => a.strategicImportance === "critical")
+                    .length
+                }
               </div>
               <div className="text-sm text-blue-700">Critical Advantages</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-blue-900">
-                {Math.round(advantages.reduce((acc, a) => acc + a.timeToReplicate, 0) / advantages.length)}
+                {Math.round(
+                  advantages.reduce((acc, a) => acc + a.timeToReplicate, 0) /
+                    advantages.length,
+                )}
               </div>
-              <div className="text-sm text-blue-700">Avg Months to Replicate</div>
+              <div className="text-sm text-blue-700">
+                Avg Months to Replicate
+              </div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-blue-900">
-                {Object.values(selectedRecs).reduce((acc, s) => acc + (s?.size || 0), 0)}
+                {Object.values(selectedRecs).reduce(
+                  (acc, s) => acc + (s?.size || 0),
+                  0,
+                )}
               </div>
-              <div className="text-sm text-blue-700">Strengthening Actions Applied</div>
+              <div className="text-sm text-blue-700">
+                Strengthening Actions Applied
+              </div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-900">{Object.values(monitored).filter(Boolean).length}</div>
+              <div className="text-2xl font-bold text-blue-900">
+                {Object.values(monitored).filter(Boolean).length}
+              </div>
               <div className="text-sm text-blue-700">Advantages Monitored</div>
             </div>
           </div>
@@ -688,7 +819,8 @@ export function CompetitiveStrategy({
           <DialogHeader>
             <DialogTitle>Analyze New Advantage</DialogTitle>
             <DialogDescription>
-              Capture details about a new competitive advantage to evaluate and track.
+              Capture details about a new competitive advantage to evaluate and
+              track.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
@@ -697,7 +829,12 @@ export function CompetitiveStrategy({
                 <div className="text-sm mb-1">Type</div>
                 <select
                   value={newAdv.type}
-                  onChange={(e) => setNewAdv((p) => ({ ...p, type: e.target.value as CompetitiveAdvantage["type"] }))}
+                  onChange={(e) =>
+                    setNewAdv((p) => ({
+                      ...p,
+                      type: e.target.value as CompetitiveAdvantage["type"],
+                    }))
+                  }
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                 >
                   <option value="technology">Technology</option>
@@ -712,7 +849,13 @@ export function CompetitiveStrategy({
                 <div className="text-sm mb-1">Strategic Importance</div>
                 <select
                   value={newAdv.strategicImportance}
-                  onChange={(e) => setNewAdv((p) => ({ ...p, strategicImportance: e.target.value as CompetitiveAdvantage["strategicImportance"] }))}
+                  onChange={(e) =>
+                    setNewAdv((p) => ({
+                      ...p,
+                      strategicImportance: e.target
+                        .value as CompetitiveAdvantage["strategicImportance"],
+                    }))
+                  }
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                 >
                   <option value="critical">Critical</option>
@@ -726,7 +869,13 @@ export function CompetitiveStrategy({
                 <div className="text-sm mb-1">Sustainability</div>
                 <select
                   value={newAdv.sustainability}
-                  onChange={(e) => setNewAdv((p) => ({ ...p, sustainability: e.target.value as CompetitiveAdvantage["sustainability"] }))}
+                  onChange={(e) =>
+                    setNewAdv((p) => ({
+                      ...p,
+                      sustainability: e.target
+                        .value as CompetitiveAdvantage["sustainability"],
+                    }))
+                  }
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                 >
                   <option value="high">High</option>
@@ -740,7 +889,12 @@ export function CompetitiveStrategy({
                   type="number"
                   min={0}
                   value={newAdv.timeToReplicate}
-                  onChange={(e) => setNewAdv((p) => ({ ...p, timeToReplicate: Number(e.target.value) }))}
+                  onChange={(e) =>
+                    setNewAdv((p) => ({
+                      ...p,
+                      timeToReplicate: Number(e.target.value),
+                    }))
+                  }
                 />
               </div>
             </div>
@@ -749,7 +903,9 @@ export function CompetitiveStrategy({
               <Input
                 placeholder="e.g., Real-time Processing Engine"
                 value={newAdv.advantage}
-                onChange={(e) => setNewAdv((p) => ({ ...p, advantage: e.target.value }))}
+                onChange={(e) =>
+                  setNewAdv((p) => ({ ...p, advantage: e.target.value }))
+                }
               />
             </div>
             <div>
@@ -757,23 +913,39 @@ export function CompetitiveStrategy({
               <Textarea
                 placeholder="Describe the advantage and why it matters"
                 value={newAdv.description}
-                onChange={(e) => setNewAdv((p) => ({ ...p, description: e.target.value }))}
+                onChange={(e) =>
+                  setNewAdv((p) => ({ ...p, description: e.target.value }))
+                }
                 className="min-h-[90px]"
               />
             </div>
             <div>
-              <div className="text-sm mb-1">Potential Competitor Responses (one per line or comma-separated)</div>
+              <div className="text-sm mb-1">
+                Potential Competitor Responses (one per line or comma-separated)
+              </div>
               <Textarea
                 placeholder="Invest in infrastructure upgrades\nAcquire real-time technology companies"
                 value={newAdv.competitorResponse}
-                onChange={(e) => setNewAdv((p) => ({ ...p, competitorResponse: e.target.value }))}
+                onChange={(e) =>
+                  setNewAdv((p) => ({
+                    ...p,
+                    competitorResponse: e.target.value,
+                  }))
+                }
                 className="min-h-[80px]"
               />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setAnalyzeOpen(false)}>Cancel</Button>
-            <Button onClick={handleAnalyzeSubmit} className="bg-blue-600 hover:bg-blue-700">Save</Button>
+            <Button variant="outline" onClick={() => setAnalyzeOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              onClick={handleAnalyzeSubmit}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
+              Save
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -806,7 +978,9 @@ export function CompetitiveStrategy({
                 id="strategy-title"
                 placeholder="e.g., Enter Premium Market Segment"
                 value={newStrategy.title}
-                onChange={(e) => setNewStrategy((p) => ({ ...p, title: e.target.value }))}
+                onChange={(e) =>
+                  setNewStrategy((p) => ({ ...p, title: e.target.value }))
+                }
               />
             </div>
 
@@ -816,7 +990,9 @@ export function CompetitiveStrategy({
                 id="strategy-description"
                 placeholder="Describe the strategy and its objectives"
                 value={newStrategy.description}
-                onChange={(e) => setNewStrategy((p) => ({ ...p, description: e.target.value }))}
+                onChange={(e) =>
+                  setNewStrategy((p) => ({ ...p, description: e.target.value }))
+                }
                 className="min-h-[80px]"
               />
             </div>
@@ -827,7 +1003,12 @@ export function CompetitiveStrategy({
                 <select
                   id="strategy-category"
                   value={newStrategy.category}
-                  onChange={(e) => setNewStrategy((p) => ({ ...p, category: e.target.value as any }))}
+                  onChange={(e) =>
+                    setNewStrategy((p) => ({
+                      ...p,
+                      category: e.target.value as any,
+                    }))
+                  }
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                 >
                   <option value="positioning">Positioning</option>
@@ -843,7 +1024,12 @@ export function CompetitiveStrategy({
                 <select
                   id="strategy-impact"
                   value={newStrategy.expectedImpact}
-                  onChange={(e) => setNewStrategy((p) => ({ ...p, expectedImpact: e.target.value as any }))}
+                  onChange={(e) =>
+                    setNewStrategy((p) => ({
+                      ...p,
+                      expectedImpact: e.target.value as any,
+                    }))
+                  }
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                 >
                   <option value="low">Low</option>
@@ -859,7 +1045,12 @@ export function CompetitiveStrategy({
                 <select
                   id="strategy-timeframe"
                   value={newStrategy.timeframe}
-                  onChange={(e) => setNewStrategy((p) => ({ ...p, timeframe: e.target.value as any }))}
+                  onChange={(e) =>
+                    setNewStrategy((p) => ({
+                      ...p,
+                      timeframe: e.target.value as any,
+                    }))
+                  }
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                 >
                   <option value="immediate">Immediate</option>
@@ -874,7 +1065,9 @@ export function CompetitiveStrategy({
                   id="strategy-owner"
                   placeholder="Responsible person/team"
                   value={newStrategy.owner}
-                  onChange={(e) => setNewStrategy((p) => ({ ...p, owner: e.target.value }))}
+                  onChange={(e) =>
+                    setNewStrategy((p) => ({ ...p, owner: e.target.value }))
+                  }
                 />
               </div>
             </div>
@@ -885,7 +1078,9 @@ export function CompetitiveStrategy({
                 id="strategy-budget"
                 placeholder="e.g., $50,000"
                 value={newStrategy.budget}
-                onChange={(e) => setNewStrategy((p) => ({ ...p, budget: e.target.value }))}
+                onChange={(e) =>
+                  setNewStrategy((p) => ({ ...p, budget: e.target.value }))
+                }
               />
             </div>
 
@@ -895,20 +1090,35 @@ export function CompetitiveStrategy({
                 id="strategy-objectives"
                 placeholder="List the main objectives (one per line)"
                 value={newStrategy.objectives}
-                onChange={(e) => setNewStrategy((p) => ({ ...p, objectives: e.target.value }))}
+                onChange={(e) =>
+                  setNewStrategy((p) => ({ ...p, objectives: e.target.value }))
+                }
                 className="min-h-[60px]"
               />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setCreateStrategyOpen(false)}>Cancel</Button>
-            <Button onClick={handleCreateStrategy} className="bg-blue-600 hover:bg-blue-700">Create Strategy</Button>
+            <Button
+              variant="outline"
+              onClick={() => setCreateStrategyOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleCreateStrategy}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
+              Create Strategy
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       {scheduleReviewOpen && (
-        <Dialog open={!!scheduleReviewOpen} onOpenChange={(open) => !open && setScheduleReviewOpen(null)}>
+        <Dialog
+          open={!!scheduleReviewOpen}
+          onOpenChange={(open) => !open && setScheduleReviewOpen(null)}
+        >
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Schedule Strategy Review</DialogTitle>
@@ -926,7 +1136,9 @@ export function CompetitiveStrategy({
                       className="w-full justify-start text-left font-normal"
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {reviewDate ? reviewDate.toLocaleDateString() : "Pick a date"}
+                      {reviewDate
+                        ? reviewDate.toLocaleDateString()
+                        : "Pick a date"}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0 z-50" align="start">
@@ -979,7 +1191,12 @@ export function CompetitiveStrategy({
               )}
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setScheduleReviewOpen(null)}>Cancel</Button>
+              <Button
+                variant="outline"
+                onClick={() => setScheduleReviewOpen(null)}
+              >
+                Cancel
+              </Button>
               <Button
                 onClick={() => handleScheduleReview(scheduleReviewOpen)}
                 className="bg-blue-600 hover:bg-blue-700"

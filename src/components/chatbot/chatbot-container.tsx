@@ -30,7 +30,10 @@ interface ChatbotContainerProps {
 
 type ChatbotSize = "minimized" | "half" | "fullscreen";
 
-export function ChatbotContainer({ className, conversationalMode: externalConversationalMode }: ChatbotContainerProps) {
+export function ChatbotContainer({
+  className,
+  conversationalMode: externalConversationalMode,
+}: ChatbotContainerProps) {
   const {
     isOpen,
     isMinimized,
@@ -63,7 +66,10 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
   );
   const [rightPanelCollapsed, setRightPanelCollapsed] = useState(false);
   const [sizeMode, setSizeMode] = useState<ChatbotSize>("half");
-  const conversationalMode = externalConversationalMode !== undefined ? externalConversationalMode : true;
+  const conversationalMode =
+    externalConversationalMode !== undefined
+      ? externalConversationalMode
+      : true;
 
   // Initialize global explain function
   useEffect(() => {
@@ -98,7 +104,7 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
 
     const handlePageClick = (e: MouseEvent) => {
       // Don't open chatbot if clicking inside it
-      const chatbot = document.querySelector('[data-joseph-no-explain]');
+      const chatbot = document.querySelector("[data-joseph-no-explain]");
       if (chatbot && chatbot.contains(e.target as Node)) return;
 
       // Don't open if already open
@@ -232,7 +238,11 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
     return (
       <div
         data-joseph-no-explain
-        className={cn("fixed bottom-4 right-4 z-[99999]", conversationalMode ? "" : "hidden", className)}
+        className={cn(
+          "fixed bottom-4 right-4 z-[99999]",
+          conversationalMode ? "" : "hidden",
+          className,
+        )}
       >
         <Tooltip>
           <TooltipTrigger asChild>
@@ -269,345 +279,355 @@ export function ChatbotContainer({ className, conversationalMode: externalConver
       {sizeMode !== "minimized" && (
         <div
           className="fixed inset-0 z-[9998]"
-          onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }}
-          onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
         />
       )}
       <div
         data-joseph-no-explain
-      className={cn(
-        "fixed transition-all duration-300",
-        getSizeClasses(),
-        className,
-      )}
-      style={{ zIndex: 9999 }}
-    >
-      <Card
         className={cn(
-          "h-full shadow-2xl border border-border/50 bg-background/95 backdrop-blur-sm",
-          sizeMode === "fullscreen" ? "overflow-auto" : "overflow-hidden",
+          "fixed transition-all duration-300",
+          getSizeClasses(),
+          className,
         )}
+        style={{ zIndex: 9999 }}
       >
-        {/* Header Bar - Made Sticky */}
-        <div className="sticky top-0 z-20 flex items-center justify-between p-3 bg-gradient-to-r from-primary/10 via-primary/5 to-background border-b border-border/50 backdrop-blur-md shadow-sm">
-          <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
-            {/* Logo Space */}
-            <div className="flex items-center gap-3 flex-shrink-0">
-              {/* Company/App Logo */}
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <button className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-white flex items-center justify-center shadow-lg border border-gray-200 hover:shadow-xl hover:scale-105 transition-all duration-200 group p-2">
+        <Card
+          className={cn(
+            "h-full shadow-2xl border border-border/50 bg-background/95 backdrop-blur-sm",
+            sizeMode === "fullscreen" ? "overflow-auto" : "overflow-hidden",
+          )}
+        >
+          {/* Header Bar - Made Sticky */}
+          <div className="sticky top-0 z-20 flex items-center justify-between p-3 bg-gradient-to-r from-primary/10 via-primary/5 to-background border-b border-border/50 backdrop-blur-md shadow-sm">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+              {/* Logo Space */}
+              <div className="flex items-center gap-3 flex-shrink-0">
+                {/* Company/App Logo */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-white flex items-center justify-center shadow-lg border border-gray-200 hover:shadow-xl hover:scale-105 transition-all duration-200 group p-2">
+                      <img
+                        src="https://cdn.builder.io/api/v1/image/assets%2F65b22f3aedf4439cb7708f60698fc899%2Fe85e18d5c9404f1da472bd3d9d893f87?format=webp&width=800"
+                        alt="Joseph AI Logo"
+                        className="w-full h-full object-contain"
+                      />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <div className="text-center">
+                      <p className="font-medium">Joseph AI Platform</p>
+                      <p className="text-xs opacity-90">
+                        Economic Analysis Suite
+                      </p>
+                    </div>
+                  </TooltipContent>
+                </Tooltip>
+
+                {/* Separator */}
+                <div className="w-px h-8 bg-border/50"></div>
+
+                {/* Joseph Avatar */}
+                <div className="relative flex-shrink-0">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-md border-2 border-primary/20 p-1">
                     <img
                       src="https://cdn.builder.io/api/v1/image/assets%2F65b22f3aedf4439cb7708f60698fc899%2Fe85e18d5c9404f1da472bd3d9d893f87?format=webp&width=800"
-                      alt="Joseph AI Logo"
+                      alt="Joseph AI"
                       className="w-full h-full object-contain"
                     />
-                  </button>
+                  </div>
+                  <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
+                </div>
+
+                {/* Branding & Status */}
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <div className="font-semibold text-sm sm:text-base truncate">
+                      Joseph AI
+                    </div>
+                    <Badge
+                      variant="secondary"
+                      className="text-xs bg-green-100 text-green-700 border-green-200"
+                    >
+                      Live
+                    </Badge>
+                  </div>
+                  <div className="text-xs text-muted-foreground">
+                    Economic Assistant • Peaceful Intelligence
+                  </div>
+                </div>
+              </div>
+              <Badge
+                variant="secondary"
+                className="text-xs truncate max-w-[120px]"
+              >
+                {currentContext.name}
+              </Badge>
+              <Button
+                variant="outline"
+                size="sm"
+                className="text-xs h-6 px-2"
+                onClick={() => {
+                  console.log("Badge clicked, current mode:", sizeMode);
+                  cycleSizeMode();
+                }}
+              >
+                {sizeMode.charAt(0).toUpperCase() + sizeMode.slice(1)} - Click
+                to Change
+              </Button>
+            </div>
+
+            <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+              {/* Show/Hide Sidebar Button (mobile) */}
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0 sm:hidden hover:bg-primary/10"
+                    onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+                  >
+                    {sidebarCollapsed ? (
+                      <ChevronRight className="h-4 w-4" />
+                    ) : (
+                      <ChevronLeft className="h-4 w-4" />
+                    )}
+                  </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <div className="text-center">
-                    <p className="font-medium">Joseph AI Platform</p>
-                    <p className="text-xs opacity-90">
-                      Economic Analysis Suite
-                    </p>
-                  </div>
+                  <p>{sidebarCollapsed ? "Show" : "Hide"} sidebar</p>
                 </TooltipContent>
               </Tooltip>
 
-              {/* Separator */}
-              <div className="w-px h-8 bg-border/50"></div>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0 hidden sm:flex hover:bg-primary/10"
+                    onClick={() => {
+                      const panels = ["chat", "tools", "agent"] as const;
+                      const currentIndex = panels.indexOf(activePanel);
+                      const nextIndex = (currentIndex + 1) % panels.length;
+                      setActivePanel(panels[nextIndex]);
+                    }}
+                  >
+                    <Settings className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Switch panels</p>
+                </TooltipContent>
+              </Tooltip>
 
-              {/* Joseph Avatar */}
-              <div className="relative flex-shrink-0">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-md border-2 border-primary/20 p-1">
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0 hover:bg-primary/10"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      cycleSizeMode();
+                    }}
+                  >
+                    {getSizeModeIcon()}
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{getSizeModeTooltip()}</p>
+                </TooltipContent>
+              </Tooltip>
+
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0 hover:bg-destructive/10 hover:text-destructive"
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setIsOpen(false);
+                    }}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Close chat</p>
+                </TooltipContent>
+              </Tooltip>
+            </div>
+          </div>
+
+          {/* Main Content */}
+          {sizeMode !== "minimized" && (
+            <div className="flex h-[calc(100%-4rem)] overflow-hidden items-stretch">
+              {/* Left Sidebar - Module Context Switcher */}
+              <div
+                className={cn(
+                  "border-r border-border/50 bg-muted/20 backdrop-blur-sm transition-all duration-200 flex-shrink-0 min-h-0",
+                  sidebarCollapsed
+                    ? "w-12"
+                    : sizeMode === "fullscreen"
+                      ? "basis-[15%] max-w-[15%] min-w-[220px]"
+                      : "w-48 sm:w-52",
+                )}
+              >
+                <div className="flex items-center justify-between p-3 border-b border-border/50">
+                  {!sidebarCollapsed && (
+                    <span className="text-xs font-medium text-muted-foreground">
+                      Modules
+                    </span>
+                  )}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0"
+                    onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+                  >
+                    {sidebarCollapsed ? (
+                      <ChevronRight className="h-4 w-4" />
+                    ) : (
+                      <ChevronLeft className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
+
+                {!sidebarCollapsed && (
+                  <div className="flex flex-col h-[calc(100%-3rem)] min-h-0">
+                    {/* Panel Header */}
+                    <div className="flex border-b border-border/50">
+                      <Button
+                        variant={"secondary"}
+                        size="sm"
+                        className="flex-1 rounded-none h-9 text-xs font-medium"
+                        onClick={() => setActivePanel("chat")}
+                      >
+                        <MessageCircle className="h-3 w-3 mr-1" />
+                        <span className="text-xs">Modules</span>
+                      </Button>
+                    </div>
+
+                    {/* Panel Content */}
+                    <div className="flex-1 overflow-y-auto min-h-0">
+                      <ModuleContextSwitcher
+                        contexts={moduleContexts}
+                        currentContext={currentContext}
+                        onContextSwitch={switchContext}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Main Chat Area */}
+              <div
+                className="flex-1 flex flex-col overflow-hidden relative"
+                data-chatbot-main
+              >
+                <ChatInterface
+                  messages={messages}
+                  currentInput={currentInput}
+                  isTyping={isTyping}
+                  currentContext={currentContext}
+                  smartSuggestions={smartSuggestions}
+                  onInputChange={setCurrentInput}
+                  onSendMessage={sendMessage}
+                  onSuggestionClick={handleSuggestionClick}
+                  onClearChat={clearChat}
+                />
+              </div>
+
+              {/* Right Tools Sidebar */}
+              <div
+                className={cn(
+                  "border-l border-border/50 bg-muted/20 backdrop-blur-sm transition-all duration-200 flex-shrink-0 min-h-0",
+                  rightPanelCollapsed
+                    ? "w-12"
+                    : sizeMode === "fullscreen"
+                      ? "basis-[15%] max-w-[15%] min-w-[220px]"
+                      : "w-48 sm:w-52",
+                )}
+              >
+                <div className="flex items-center justify-between p-3 border-b border-border/50">
+                  {!rightPanelCollapsed && (
+                    <span className="text-xs font-medium text-muted-foreground">
+                      Tools
+                    </span>
+                  )}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0"
+                    onClick={() => setRightPanelCollapsed(!rightPanelCollapsed)}
+                  >
+                    {rightPanelCollapsed ? (
+                      <ChevronLeft className="h-4 w-4" />
+                    ) : (
+                      <ChevronRight className="h-4 w-4" />
+                    )}
+                  </Button>
+                </div>
+
+                {!rightPanelCollapsed && (
+                  <div className="flex-1 overflow-y-auto min-h-0 h-[calc(100%-3rem)]">
+                    <ToolsDock tools={economicTools} onToolSelect={openTool} />
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Minimized State */}
+          {sizeMode === "minimized" && (
+            <div className="flex items-center justify-between p-3">
+              <div className="flex items-center gap-2">
+                <div className="w-6 h-6 rounded-full bg-white border border-gray-200 flex items-center justify-center p-1">
                   <img
                     src="https://cdn.builder.io/api/v1/image/assets%2F65b22f3aedf4439cb7708f60698fc899%2Fe85e18d5c9404f1da472bd3d9d893f87?format=webp&width=800"
                     alt="Joseph AI"
                     className="w-full h-full object-contain"
                   />
                 </div>
-                <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
-              </div>
-
-              {/* Branding & Status */}
-              <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <div className="font-semibold text-sm sm:text-base truncate">
-                    Joseph AI
-                  </div>
-                  <Badge
-                    variant="secondary"
-                    className="text-xs bg-green-100 text-green-700 border-green-200"
-                  >
-                    Live
+                <span className="text-sm font-medium">Joseph AI</span>
+                {isTyping && (
+                  <Badge variant="secondary" className="text-xs">
+                    Typing...
                   </Badge>
-                </div>
-                <div className="text-xs text-muted-foreground">
-                  Economic Assistant • Peaceful Intelligence
-                </div>
-              </div>
-            </div>
-            <Badge
-              variant="secondary"
-              className="text-xs truncate max-w-[120px]"
-            >
-              {currentContext.name}
-            </Badge>
-            <Button
-              variant="outline"
-              size="sm"
-              className="text-xs h-6 px-2"
-              onClick={() => {
-                console.log("Badge clicked, current mode:", sizeMode);
-                cycleSizeMode();
-              }}
-            >
-              {sizeMode.charAt(0).toUpperCase() + sizeMode.slice(1)} - Click to
-              Change
-            </Button>
-          </div>
-
-          <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-            {/* Show/Hide Sidebar Button (mobile) */}
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0 sm:hidden hover:bg-primary/10"
-                  onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-                >
-                  {sidebarCollapsed ? (
-                    <ChevronRight className="h-4 w-4" />
-                  ) : (
-                    <ChevronLeft className="h-4 w-4" />
-                  )}
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{sidebarCollapsed ? "Show" : "Hide"} sidebar</p>
-              </TooltipContent>
-            </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0 hidden sm:flex hover:bg-primary/10"
-                  onClick={() => {
-                    const panels = ["chat", "tools", "agent"] as const;
-                    const currentIndex = panels.indexOf(activePanel);
-                    const nextIndex = (currentIndex + 1) % panels.length;
-                    setActivePanel(panels[nextIndex]);
-                  }}
-                >
-                  <Settings className="h-4 w-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Switch panels</p>
-              </TooltipContent>
-            </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0 hover:bg-primary/10"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    cycleSizeMode();
-                  }}
-                >
-                  {getSizeModeIcon()}
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{getSizeModeTooltip()}</p>
-              </TooltipContent>
-            </Tooltip>
-
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0 hover:bg-destructive/10 hover:text-destructive"
-                  onMouseDown={(e) => { e.preventDefault(); e.stopPropagation(); }}
-                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); setIsOpen(false); }}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Close chat</p>
-              </TooltipContent>
-            </Tooltip>
-          </div>
-        </div>
-
-        {/* Main Content */}
-        {sizeMode !== "minimized" && (
-          <div className="flex h-[calc(100%-4rem)] overflow-hidden items-stretch">
-            {/* Left Sidebar - Module Context Switcher */}
-            <div
-              className={cn(
-                "border-r border-border/50 bg-muted/20 backdrop-blur-sm transition-all duration-200 flex-shrink-0 min-h-0",
-                sidebarCollapsed
-                  ? "w-12"
-                  : sizeMode === "fullscreen"
-                    ? "basis-[15%] max-w-[15%] min-w-[220px]"
-                    : "w-48 sm:w-52",
-              )}
-            >
-              <div className="flex items-center justify-between p-3 border-b border-border/50">
-                {!sidebarCollapsed && (
-                  <span className="text-xs font-medium text-muted-foreground">
-                    Modules
-                  </span>
                 )}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0"
-                  onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-                >
-                  {sidebarCollapsed ? (
-                    <ChevronRight className="h-4 w-4" />
-                  ) : (
-                    <ChevronLeft className="h-4 w-4" />
-                  )}
-                </Button>
               </div>
-
-              {!sidebarCollapsed && (
-                <div className="flex flex-col h-[calc(100%-3rem)] min-h-0">
-                  {/* Panel Header */}
-                  <div className="flex border-b border-border/50">
-                    <Button
-                      variant={"secondary"}
-                      size="sm"
-                      className="flex-1 rounded-none h-9 text-xs font-medium"
-                      onClick={() => setActivePanel("chat")}
-                    >
-                      <MessageCircle className="h-3 w-3 mr-1" />
-                      <span className="text-xs">Modules</span>
-                    </Button>
-                  </div>
-
-                  {/* Panel Content */}
-                  <div className="flex-1 overflow-y-auto min-h-0">
-                    <ModuleContextSwitcher
-                      contexts={moduleContexts}
-                      currentContext={currentContext}
-                      onContextSwitch={switchContext}
-                    />
-                  </div>
-                </div>
-              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 w-8 p-0 hover:bg-primary/10"
+                onClick={() => setSizeMode("half")}
+              >
+                <Maximize2 className="h-4 w-4" />
+              </Button>
             </div>
+          )}
 
-            {/* Main Chat Area */}
-            <div
-              className="flex-1 flex flex-col overflow-hidden relative"
-              data-chatbot-main
-            >
-              <ChatInterface
-                messages={messages}
-                currentInput={currentInput}
-                isTyping={isTyping}
-                currentContext={currentContext}
-                smartSuggestions={smartSuggestions}
-                onInputChange={setCurrentInput}
-                onSendMessage={sendMessage}
-                onSuggestionClick={handleSuggestionClick}
-                onClearChat={clearChat}
-              />
-            </div>
-
-            {/* Right Tools Sidebar */}
-            <div
-              className={cn(
-                "border-l border-border/50 bg-muted/20 backdrop-blur-sm transition-all duration-200 flex-shrink-0 min-h-0",
-                rightPanelCollapsed
-                  ? "w-12"
-                  : sizeMode === "fullscreen"
-                    ? "basis-[15%] max-w-[15%] min-w-[220px]"
-                    : "w-48 sm:w-52",
-              )}
-            >
-              <div className="flex items-center justify-between p-3 border-b border-border/50">
-                {!rightPanelCollapsed && (
-                  <span className="text-xs font-medium text-muted-foreground">
-                    Tools
-                  </span>
-                )}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0"
-                  onClick={() => setRightPanelCollapsed(!rightPanelCollapsed)}
-                >
-                  {rightPanelCollapsed ? (
-                    <ChevronLeft className="h-4 w-4" />
-                  ) : (
-                    <ChevronRight className="h-4 w-4" />
-                  )}
-                </Button>
-              </div>
-
-              {!rightPanelCollapsed && (
-                <div className="flex-1 overflow-y-auto min-h-0 h-[calc(100%-3rem)]">
-                  <ToolsDock
-                    tools={economicTools}
-                    onToolSelect={openTool}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Minimized State */}
-        {sizeMode === "minimized" && (
-          <div className="flex items-center justify-between p-3">
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-full bg-white border border-gray-200 flex items-center justify-center p-1">
-                <img
-                  src="https://cdn.builder.io/api/v1/image/assets%2F65b22f3aedf4439cb7708f60698fc899%2Fe85e18d5c9404f1da472bd3d9d893f87?format=webp&width=800"
-                  alt="Joseph AI"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-              <span className="text-sm font-medium">Joseph AI</span>
-              {isTyping && (
-                <Badge variant="secondary" className="text-xs">
-                  Typing...
-                </Badge>
-              )}
-            </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-8 w-8 p-0 hover:bg-primary/10"
-              onClick={() => setSizeMode("half")}
-            >
-              <Maximize2 className="h-4 w-4" />
-            </Button>
-          </div>
-        )}
-
-        {/* Tool Modal */}
-        <ToolModal
-          tool={selectedTool}
-          isOpen={isToolOpen}
-          onClose={() => setIsToolOpen(false)}
-        />
-      </Card>
-    </div>
+          {/* Tool Modal */}
+          <ToolModal
+            tool={selectedTool}
+            isOpen={isToolOpen}
+            onClose={() => setIsToolOpen(false)}
+          />
+        </Card>
+      </div>
     </>
   );
 }

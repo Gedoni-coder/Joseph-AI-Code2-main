@@ -340,8 +340,17 @@
 
 /* Print only the Market Analysis section when exporting */
 @media print {
-  body[data-print-scope="market-analysis"] * { visibility: hidden !important; }
+  body[data-print-scope="market-analysis"] * {
+    visibility: hidden !important;
+  }
   body[data-print-scope="market-analysis"] #market-analysis-print,
-  body[data-print-scope="market-analysis"] #market-analysis-print * { visibility: visible !important; }
-  body[data-print-scope="market-analysis"] #market-analysis-print { position: absolute; left: 0; top: 0; width: 100%; }
+  body[data-print-scope="market-analysis"] #market-analysis-print * {
+    visibility: visible !important;
+  }
+  body[data-print-scope="market-analysis"] #market-analysis-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
 }
