@@ -92,7 +92,7 @@ function StrengthenDialogComponent({
   );
 
   const current = selectedRecs[advantage.id] || new Set<string>();
-  const [temp, setTemp] = React.useState<Set<string>>(new Set(current));
+  const [temp, setTemp] = useState<Set<string>>(new Set(current));
 
   const toggleChoice = (id: string) => {
     setTemp((prev) => {
