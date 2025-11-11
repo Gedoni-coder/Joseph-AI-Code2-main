@@ -897,9 +897,10 @@ export function CompetitiveStrategy({
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0 z-50" align="start">
                     <Calendar
-                      mode="single"
                       selected={reviewDate}
-                      onSelect={setReviewDate}
+                      onSelect={(date) => {
+                        setReviewDate(date);
+                      }}
                       disabled={(date) => {
                         const today = new Date();
                         today.setHours(0, 0, 0, 0);
