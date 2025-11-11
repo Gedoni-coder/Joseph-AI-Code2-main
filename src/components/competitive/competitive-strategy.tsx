@@ -327,7 +327,7 @@ export function CompetitiveStrategy({
   };
 
   const applyRecommendations = (advId: string, ids: Set<string>) => {
-    setSelectedRecs((prev) => ({ ...prev, [advId]: new Set(ids) }));
+    setSelectedRecs((prev) => ({ ...prev, [advId]: ids }));
   };
 
   const handleCreateStrategy = () => {
