@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -19,12 +21,21 @@ import {
   User,
 } from "lucide-react";
 import { type ReportNote } from "@/lib/market-data";
+import { ActionPlanDialog } from "@/components/market/action-plan-dialog";
+import { useToast } from "@/hooks/use-toast";
+import { generateReportPDF } from "@/lib/pdf-generator";
 
 interface ReportNotesProps {
   reportNotes: ReportNote[];
 }
 
 export function ReportNotes({ reportNotes }: ReportNotesProps) {
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const [actionPlanOpen, setActionPlanOpen] = useState(false);
+  const [actionPlanReport, setActionPlanReport] = useState<string | null>(null);
+  const [generatingPDF, setGeneratingPDF] = useState(false);
+
   const formatDate = (date: Date) => {
     return new Intl.DateTimeFormat("en-US", {
       year: "numeric",
@@ -57,6 +68,117 @@ export function ReportNotes({ reportNotes }: ReportNotesProps) {
     }
   };
 
+  const handleViewFullReport = (reportId: string, reportTitle: string) => {
+    navigate(`/market-report/${reportId}`, { state: { title: reportTitle } });
+  };
+
+  const handleCreateActionPlan = (reportTitle: string) => {
+    setActionPlanReport(reportTitle);
+    setActionPlanOpen(true);
+  };
+
+  const handleGenerateReport = async (report: ReportNote) => {
+    setGeneratingPDF(true);
+    try {
+      await generateReportPDF({
+        id: report.id,
+        title: report.title,
+        summary: report.summary,
+        dateGenerated: report.dateGenerated,
+        author: report.author,
+        confidence: report.confidence,
+        keyMetrics: report.keyMetrics,
+        insights: report.insights,
+        recommendations: report.recommendations,
+        nextSteps: report.nextSteps,
+      });
+      toast({
+        title: "PDF Generated",
+        description: "Report has been downloaded successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to generate PDF",
+        variant: "destructive",
+      });
+    } finally {
+      setGeneratingPDF(false);
+    }
+  };
+
+  const handleExportReport = (report: ReportNote) => {
+    const csvContent = [
+      ['Market Analysis Report Export'],
+      ['Title', report.title],
+      ['Author', report.author],
+      ['Generated', formatDate(report.dateGenerated)],
+      ['Confidence', `${report.confidence}%`],
+      [],
+      ['KEY METRICS'],
+      ['Metric', 'Value', 'Trend'],
+      ...report.keyMetrics.map(m => [m.label, m.value, m.trend]),
+      [],
+      ['KEY INSIGHTS'],
+      ...report.insights.map((i, idx) => [`${idx + 1}. ${i}`]),
+      [],
+      ['RECOMMENDATIONS'],
+      ...report.recommendations.map((r, idx) => [`${idx + 1}. ${r}`]),
+      [],
+      ['NEXT STEPS'],
+      ...report.nextSteps.map((s, idx) => [`${idx + 1}. ${s}`]),
+    ]
+      .map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+      .join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `market-analysis-${report.id}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast({
+      title: "Report Exported",
+      description: "Report exported as CSV successfully",
+    });
+  };
+
+  const handleShareReport = (report: ReportNote) => {
+    const shareText = `Check out this Market Analysis Report: "${report.title}"\n\nConfidence: ${report.confidence}%\n\n${report.summary}`;
+
+    if (navigator.share) {
+      navigator.share({
+        title: report.title,
+        text: shareText,
+      }).catch(() => {
+        // Share dialog dismissed, copy to clipboard instead
+        copyToClipboard(shareText);
+      });
+    } else {
+      // Fallback: copy to clipboard
+      copyToClipboard(shareText);
+    }
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      toast({
+        title: "Copied to Clipboard",
+        description: "Report summary copied successfully",
+      });
+    }).catch(() => {
+      toast({
+        title: "Share Failed",
+        description: "Unable to share report",
+        variant: "destructive",
+      });
+    });
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -68,9 +190,17 @@ export function ReportNotes({ reportNotes }: ReportNotesProps) {
             Comprehensive insights, metrics, and strategic recommendations
           </p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button
+          className="bg-blue-600 hover:bg-blue-700"
+          disabled={generatingPDF}
+          onClick={() => {
+            if (reportNotes.length > 0) {
+              handleGenerateReport(reportNotes[0]);
+            }
+          }}
+        >
           <FileText className="w-4 h-4 mr-2" />
-          Generate Report
+          {generatingPDF ? "Generating..." : "Generate Report"}
         </Button>
       </div>
 
@@ -89,11 +219,19 @@ export function ReportNotes({ reportNotes }: ReportNotesProps) {
                   <Badge variant="outline">
                     {report.confidence}% confidence
                   </Badge>
-                  <Button variant="outline" size="sm">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleExportReport(report)}
+                  >
                     <Download className="w-3 h-3 mr-1" />
                     Export
                   </Button>
-                  <Button variant="outline" size="sm">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleShareReport(report)}
+                  >
                     <Share className="w-3 h-3 mr-1" />
                     Share
                   </Button>
@@ -203,10 +341,17 @@ export function ReportNotes({ reportNotes }: ReportNotesProps) {
 
               {/* Action Buttons */}
               <div className="flex space-x-3 pt-4 border-t">
-                <Button variant="outline" className="flex-1">
+                <Button
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => handleViewFullReport(report.id, report.title)}
+                >
                   View Full Report
                 </Button>
-                <Button className="flex-1 bg-blue-600 hover:bg-blue-700">
+                <Button
+                  className="flex-1 bg-blue-600 hover:bg-blue-700"
+                  onClick={() => handleCreateActionPlan(report.title)}
+                >
                   Create Action Plan
                 </Button>
               </div>
@@ -249,6 +394,12 @@ export function ReportNotes({ reportNotes }: ReportNotesProps) {
           </div>
         </CardContent>
       </Card>
+
+      <ActionPlanDialog
+        open={actionPlanOpen}
+        onOpenChange={setActionPlanOpen}
+        reportTitle={actionPlanReport || "Market Analysis Report"}
+      />
     </div>
   );
 }
