@@ -114,13 +114,39 @@ function InfraModulePage({ name }: { name: string }) {
   );
 }
 
-function TopDivisionNav() {
+import { useState } from "react";
+import { Switch } from "./components/ui/switch";
+import { Radio, Tooltip, TooltipContent, TooltipTrigger } from "lucide-react";
+
+interface TopDivisionNavProps {
+  conversationalMode: boolean;
+  onConversationalModeChange: (enabled: boolean) => void;
+}
+
+function TopDivisionNav({ conversationalMode, onConversationalModeChange }: TopDivisionNavProps) {
   return (
     <nav className="w-full bg-white border-b shadow-sm px-4 py-3 sticky top-0 z-40 flex gap-2 items-center">
       <Link to="/" className="font-bold tracking-tight text-lg px-3 py-1 rounded hover:bg-muted/30 transition-colors">Solutions</Link>
       <Link to="/infrastructure" className="font-bold tracking-tight text-lg px-3 py-1 rounded hover:bg-muted/30 transition-colors">Infrastructure</Link>
       <Link to="/learn" className="font-bold tracking-tight text-lg px-3 py-1 rounded hover:bg-muted/30 transition-colors">Learn</Link>
-      <span className="ml-auto text-xs text-muted-foreground font-medium">Divisions</span>
+
+      <div className="ml-auto flex items-center gap-4">
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-muted-foreground font-medium">Divisions</span>
+        </div>
+
+        <div className="h-6 w-px bg-border"></div>
+
+        <div className="flex items-center gap-2 px-2 py-1 hover:bg-primary/10 rounded transition-all cursor-pointer" title={conversationalMode ? "Conversational Mode ON" : "Conversational Mode OFF"}>
+          <Radio className="h-4 w-4 text-primary" />
+          <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">Chat</span>
+          <Switch
+            checked={conversationalMode}
+            onCheckedChange={onConversationalModeChange}
+            className="scale-75"
+          />
+        </div>
+      </div>
     </nav>
   );
 }
