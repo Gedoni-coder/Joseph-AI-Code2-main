@@ -46,9 +46,13 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
 }) => {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [ideasOpen, setIdeasOpen] = useState(false);
-  const [conversationalMode, setConversationalMode] = useState(
-    externalConversationalMode !== undefined ? externalConversationalMode : true,
-  );
+  const [conversationalMode, setConversationalMode] = useState(() => {
+    if (externalConversationalMode !== undefined) {
+      return externalConversationalMode;
+    }
+    const saved = localStorage.getItem("conversationalMode");
+    return saved !== null ? saved === "true" : true;
+  });
 
   React.useEffect(() => {
     if (externalConversationalMode !== undefined) {
