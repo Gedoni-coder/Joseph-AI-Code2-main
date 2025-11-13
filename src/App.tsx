@@ -15,6 +15,7 @@ import {
 import { Radio } from "lucide-react";
 import { Switch } from "./components/ui/switch";
 import Landing from "./pages/Landing";
+import PrimaryLanding from "./pages/PrimaryLanding";
 import Index from "./pages/Index";
 import BusinessForecast from "./pages/BusinessForecast";
 import TaxCompliance from "./pages/TaxCompliance";
