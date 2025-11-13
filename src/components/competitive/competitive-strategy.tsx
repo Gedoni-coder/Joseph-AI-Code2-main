@@ -1143,6 +1143,7 @@ export function CompetitiveStrategy({
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0 z-50" align="start">
                     <Calendar
+                      mode="single"
                       selected={reviewDate}
                       onSelect={(date) => {
                         setReviewDate(date);
