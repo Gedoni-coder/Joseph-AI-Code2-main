@@ -224,8 +224,9 @@ const App = () => {
           />
           <ChatbotContainer conversationalMode={conversationalMode} />
           <Routes>
-            <Route path="/" element={<SignUp />} />
+            <Route path="/" element={<PrimaryLanding />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/secondlandingpage" element={<Landing />} />
             <Route path="/landing" element={<Landing />} />
 
             {/* Main 10 Module Routes - matching landing page links */}
