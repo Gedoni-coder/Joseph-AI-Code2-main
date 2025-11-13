@@ -28,6 +28,7 @@ interface ModuleHeaderProps {
   connectionLabel?: string;
   showConnectionStatus?: boolean;
   onConversationalModeChange?: (enabled: boolean) => void;
+  conversationalMode?: boolean;
 }
 
 const ModuleHeader: React.FC<ModuleHeaderProps> = ({
@@ -41,10 +42,19 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
   connectionLabel = "Live",
   showConnectionStatus = true,
   onConversationalModeChange,
+  conversationalMode: externalConversationalMode,
 }) => {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [ideasOpen, setIdeasOpen] = useState(false);
-  const [conversationalMode, setConversationalMode] = useState(true);
+  const [conversationalMode, setConversationalMode] = useState(
+    externalConversationalMode !== undefined ? externalConversationalMode : true,
+  );
+
+  React.useEffect(() => {
+    if (externalConversationalMode !== undefined) {
+      setConversationalMode(externalConversationalMode);
+    }
+  }, [externalConversationalMode]);
 
   const handleConversationalModeChange = (enabled: boolean) => {
     setConversationalMode(enabled);
