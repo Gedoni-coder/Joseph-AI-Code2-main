@@ -90,7 +90,7 @@ export default function SignUp() {
             <Button type="submit" disabled={loading} className="w-full">
               {loading ? "Creating account…" : "Create account"}
             </Button>
-            <Button type="button" variant="secondary" className="w-full" onClick={() => navigate("/")}>Skip for now</Button>
+            <Button type="button" variant="secondary" className="w-full" onClick={() => navigate("/secondlandingpage")}>Skip for now</Button>
           </form>
           <div className="mt-6">
             {googleClientId ? (
