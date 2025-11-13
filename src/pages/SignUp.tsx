@@ -7,7 +7,13 @@ import { Button } from "../components/ui/button";
 export default function SignUp() {
   const navigate = useNavigate();
   const [fullName, setFullName] = React.useState("");
-  const [email, setEmail] = React.useState("");
+  const [email, setEmail] = React.useState(() => {
+    try {
+      return localStorage.getItem("joseph:signupEmail") || "";
+    } catch {
+      return "";
+    }
+  });
   const [password, setPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const googleClientId = import.meta.env?.VITE_GOOGLE_CLIENT_ID as string | undefined;
@@ -22,7 +28,7 @@ export default function SignUp() {
         localStorage.setItem("joseph:signedUp", "true");
       } catch {}
       setLoading(false);
-      navigate("/");
+      navigate("/secondlandingpage");
     }, 500);
   }
 
@@ -103,5 +109,3 @@ export default function SignUp() {
     </div>
   );
 }
-
-
