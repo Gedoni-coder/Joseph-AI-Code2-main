@@ -7,7 +7,13 @@ import { Button } from "../components/ui/button";
 export default function SignUp() {
   const navigate = useNavigate();
   const [fullName, setFullName] = React.useState("");
-  const [email, setEmail] = React.useState("");
+  const [email, setEmail] = React.useState(() => {
+    try {
+      return localStorage.getItem("joseph:signupEmail") || "";
+    } catch {
+      return "";
+    }
+  });
   const [password, setPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const googleClientId = import.meta.env?.VITE_GOOGLE_CLIENT_ID as string | undefined;
@@ -22,7 +28,7 @@ export default function SignUp() {
         localStorage.setItem("joseph:signedUp", "true");
       } catch {}
       setLoading(false);
-      navigate("/");
+      navigate("/secondlandingpage");
     }, 500);
   }
 
@@ -44,7 +50,7 @@ export default function SignUp() {
               localStorage.setItem("joseph:signedUp", "true");
               localStorage.setItem("joseph:googleCredential", response?.credential || "");
             } catch {}
-            navigate("/");
+            navigate("/secondlandingpage");
           },
         });
         // @ts-ignore
@@ -84,7 +90,7 @@ export default function SignUp() {
             <Button type="submit" disabled={loading} className="w-full">
               {loading ? "Creating account…" : "Create account"}
             </Button>
-            <Button type="button" variant="secondary" className="w-full" onClick={() => navigate("/")}>Skip for now</Button>
+            <Button type="button" variant="secondary" className="w-full" onClick={() => navigate("/secondlandingpage")}>Skip for now</Button>
           </form>
           <div className="mt-6">
             {googleClientId ? (
@@ -103,5 +109,3 @@ export default function SignUp() {
     </div>
   );
 }
-
-

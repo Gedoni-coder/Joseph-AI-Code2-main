@@ -15,6 +15,7 @@ import {
 import { Radio } from "lucide-react";
 import { Switch } from "./components/ui/switch";
 import Landing from "./pages/Landing";
+import PrimaryLanding from "./pages/PrimaryLanding";
 import Index from "./pages/Index";
 import BusinessForecast from "./pages/BusinessForecast";
 import TaxCompliance from "./pages/TaxCompliance";
@@ -146,7 +147,7 @@ function TopDivisionNav({
   return (
     <nav className="w-full bg-white border-b shadow-sm px-4 py-3 sticky top-0 z-40 flex gap-2 items-center">
       <Link
-        to="/"
+        to="/secondlandingpage"
         className="font-bold tracking-tight text-lg px-3 py-1 rounded hover:bg-muted/30 transition-colors"
       >
         Solutions
@@ -223,8 +224,9 @@ const App = () => {
           />
           <ChatbotContainer conversationalMode={conversationalMode} />
           <Routes>
-            <Route path="/" element={<SignUp />} />
+            <Route path="/" element={<PrimaryLanding />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/secondlandingpage" element={<Landing />} />
             <Route path="/landing" element={<Landing />} />
 
             {/* Main 10 Module Routes - matching landing page links */}
