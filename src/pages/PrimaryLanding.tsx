@@ -106,7 +106,7 @@ export default function PrimaryLanding() {
       {/* Navigation */}
       <nav className="relative z-40 flex items-center justify-between px-6 lg:px-12 py-6 backdrop-blur-sm border-b border-[#4d7fd9]/10">
         <div className="text-2xl font-bold text-white">Joseph AI</div>
-        
+
         <div className="hidden lg:flex items-center gap-8">
           <button
             onClick={() => scrollToSection("features")}
@@ -211,7 +211,10 @@ export default function PrimaryLanding() {
       </div>
 
       {/* Features Section */}
-      <div id="features" className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20">
+      <div
+        id="features"
+        className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20"
+      >
         <div className="space-y-16">
           {/* Intro */}
           <div className="text-center space-y-4">
@@ -279,7 +282,10 @@ export default function PrimaryLanding() {
       </div>
 
       {/* Pricing Section */}
-      <div id="pricing" className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20">
+      <div
+        id="pricing"
+        className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20"
+      >
         <div className="space-y-12">
           <div className="text-center space-y-4">
             <h2 className="text-4xl lg:text-5xl font-bold text-white">
@@ -431,15 +437,21 @@ export default function PrimaryLanding() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300 text-sm">Custom API access</span>
+                  <span className="text-gray-300 text-sm">
+                    Custom API access
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300 text-sm">Private model tuning</span>
+                  <span className="text-gray-300 text-sm">
+                    Private model tuning
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300 text-sm">Dedicated support</span>
+                  <span className="text-gray-300 text-sm">
+                    Dedicated support
+                  </span>
                 </li>
               </ul>
             </div>
@@ -460,7 +472,9 @@ export default function PrimaryLanding() {
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300 text-sm">SAML SSO security</span>
+                  <span className="text-gray-300 text-sm">
+                    SAML SSO security
+                  </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
@@ -481,21 +495,26 @@ export default function PrimaryLanding() {
       </div>
 
       {/* About Section */}
-      <div id="about" className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20">
+      <div
+        id="about"
+        className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20"
+      >
         <div className="space-y-12">
           <div className="text-center space-y-4">
             <h2 className="text-4xl lg:text-5xl font-bold text-white">
               About Us
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Learn more about our mission, vision, and the values that drive
-              us forward.
+              Learn more about our mission, vision, and the values that drive us
+              forward.
             </p>
           </div>
 
           <div className="p-12 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/20 to-[#3d6dc4]/10 border border-[#4d7fd9]/30 backdrop-blur-sm space-y-8">
             <div>
-              <h3 className="text-2xl font-bold text-white mb-4">Our Mission</h3>
+              <h3 className="text-2xl font-bold text-white mb-4">
+                Our Mission
+              </h3>
               <p className="text-lg text-gray-300 leading-relaxed">
                 <span className="font-semibold text-[#4d7fd9]">
                   Driving Global Economic Revival and Building the Connected
@@ -537,7 +556,10 @@ export default function PrimaryLanding() {
       </div>
 
       {/* Contact Section */}
-      <div id="contact" className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20">
+      <div
+        id="contact"
+        className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20"
+      >
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Info */}
           <div className="space-y-8">
