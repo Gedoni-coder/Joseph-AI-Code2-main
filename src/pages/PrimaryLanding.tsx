@@ -3,21 +3,34 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import {
-  ChevronRight,
   ArrowRight,
-  Sparkles,
   TrendingUp,
   BarChart3,
   Zap,
   Target,
   Globe,
   Shield,
+  DollarSign,
+  Truck,
+  TrendingDown,
+  Lock,
+  Check,
+  Mail,
+  Phone,
+  MapPin,
 } from "lucide-react";
 
 export default function PrimaryLanding() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+  const [contactLoading, setContactLoading] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -45,60 +58,44 @@ export default function PrimaryLanding() {
     }, 300);
   };
 
-  const features = [
-    {
-      icon: <Globe className="w-6 h-6" />,
-      title: "Economic Intelligence",
-      description: "Real-time insights into global economic trends and indicators",
-    },
-    {
-      icon: <TrendingUp className="w-6 h-6" />,
-      title: "Business Forecasting",
-      description: "Predict revenue, growth, and business outcomes with precision",
-    },
-    {
-      icon: <BarChart3 className="w-6 h-6" />,
-      title: "Market Analysis",
-      description: "Understand your competition and market positioning instantly",
-    },
-    {
-      icon: <Target className="w-6 h-6" />,
-      title: "Strategy Planning",
-      description: "Develop data-driven strategies that actually work",
-    },
-    {
-      icon: <Zap className="w-6 h-6" />,
-      title: "AI-Powered Insights",
-      description: "Get intelligent recommendations from our Joseph AI assistant",
-    },
-    {
-      icon: <Shield className="w-6 h-6" />,
-      title: "Enterprise Security",
-      description: "Your data is protected with enterprise-grade security",
-    },
-  ];
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setContactLoading(true);
+    setTimeout(() => {
+      setContactLoading(false);
+      setFormData({ name: "", email: "", phone: "", message: "" });
+      alert("Thank you! We'll get back to you within 1 business day.");
+    }, 500);
+  };
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <div
       ref={containerRef}
-      className="relative min-h-screen overflow-hidden bg-slate-950"
+      className="relative min-h-screen overflow-x-hidden bg-gradient-to-br from-[#0a1449] via-[#1a2555] to-[#0a1449]"
     >
       {/* Animated Liquidmetal Background */}
       <div className="fixed inset-0 z-0">
-        {/* Base gradient with royal blue */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-blue-950 to-slate-950" />
+        {/* Base gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0a1449] via-[#1a2555] to-[#0a1449]" />
 
         {/* Animated liquid metal blobs */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob" />
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-2000" />
-        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#4d7fd9] rounded-full mix-blend-multiply filter blur-3xl opacity-25 animate-blob" />
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[#3d6dc4] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
+        <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-[#2d5db9] rounded-full mix-blend-multiply filter blur-3xl opacity-25 animate-blob animation-delay-4000" />
 
         {/* Gradient overlay for depth */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1449] via-transparent to-transparent" />
 
-        {/* Radial light effect following mouse (Shopify-like) */}
+        {/* Radial light effect following mouse */}
         <div
-          className="absolute pointer-events-none w-96 h-96 bg-gradient-radial from-blue-500/20 to-transparent rounded-full blur-3xl transition-all duration-100"
+          className="absolute pointer-events-none w-96 h-96 bg-gradient-radial from-[#4d7fd9]/15 to-transparent rounded-full blur-3xl transition-all duration-100"
           style={{
             left: `${mousePosition.x - 192}px`,
             top: `${mousePosition.y - 192}px`,
@@ -107,339 +104,568 @@ export default function PrimaryLanding() {
       </div>
 
       {/* Navigation */}
-      <nav className="relative z-40 flex items-center justify-between px-6 lg:px-12 py-6">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
-            <Sparkles className="w-6 h-6 text-white" />
-          </div>
-          <span className="text-xl font-bold text-white">Joseph</span>
-        </div>
-        <div className="hidden md:flex items-center gap-8">
-          <a
-            href="#features"
-            className="text-gray-300 hover:text-white transition-colors"
+      <nav className="relative z-40 flex items-center justify-between px-6 lg:px-12 py-6 backdrop-blur-sm border-b border-[#4d7fd9]/10">
+        <div className="text-2xl font-bold text-white">Joseph AI</div>
+        
+        <div className="hidden lg:flex items-center gap-8">
+          <button
+            onClick={() => scrollToSection("features")}
+            className="text-gray-300 hover:text-[#4d7fd9] transition-colors font-medium"
           >
             Features
-          </a>
-          <a
-            href="#how-it-works"
-            className="text-gray-300 hover:text-white transition-colors"
+          </button>
+          <button
+            onClick={() => scrollToSection("pricing")}
+            className="text-gray-300 hover:text-[#4d7fd9] transition-colors font-medium"
           >
-            How It Works
-          </a>
-          <Button
-            variant="outline"
-            className="border-blue-500/50 text-white hover:bg-blue-500/10"
-            onClick={() => navigate("/signup")}
+            Pricing
+          </button>
+          <button
+            onClick={() => scrollToSection("about")}
+            className="text-gray-300 hover:text-[#4d7fd9] transition-colors font-medium"
           >
-            Sign In
-          </Button>
+            About
+          </button>
+          <button
+            onClick={() => scrollToSection("contact")}
+            className="text-gray-300 hover:text-[#4d7fd9] transition-colors font-medium"
+          >
+            Contact
+          </button>
         </div>
+
+        <Button
+          variant="outline"
+          className="border-[#4d7fd9]/50 text-white hover:bg-[#4d7fd9]/10 hover:border-[#4d7fd9]"
+          onClick={() => navigate("/signup")}
+        >
+          Get Started
+        </Button>
       </nav>
 
       {/* Hero Section */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20 lg:py-32">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <div className="inline-block">
-                <div className="px-4 py-2 rounded-full border border-blue-500/30 bg-blue-500/10 backdrop-blur-sm">
-                  <span className="text-sm text-blue-300 font-medium">
-                    Powered by AI • Always Learning
-                  </span>
-                </div>
-              </div>
+      <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-12 py-20 lg:py-32">
+        <div className="text-center space-y-12">
+          {/* Main Tagline */}
+          <div className="space-y-6">
+            <h1 className="text-6xl lg:text-7xl font-bold text-white leading-tight">
+              <span className="font-bold">Plan.</span>
+              <span className="italic text-[#4d7fd9] ml-3">Decide.</span>
+              <span className="font-bold text-white ml-3">Grow.</span>
+            </h1>
 
-              <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight">
-                Your{" "}
-                <span className="bg-gradient-to-r from-blue-400 via-blue-300 to-indigo-400 bg-clip-text text-transparent animate-pulse">
-                  Economic
-                </span>{" "}
-                Intelligence Platform
-              </h1>
-
-              <p className="text-xl text-gray-300 max-w-xl leading-relaxed">
-                Make better business decisions with real-time economic insights,
-                market intelligence, and AI-powered strategy recommendations.
-              </p>
-            </div>
-
-            {/* Email Signup - Floating Style */}
-            <div className="relative">
-              <form onSubmit={handleEmailSignup} className="group">
-                <div className="relative p-1 rounded-full bg-gradient-to-r from-blue-500/30 via-indigo-500/20 to-blue-500/30 backdrop-blur-sm">
-                  <div className="relative flex items-center bg-slate-900 rounded-full pr-1 pl-6 py-1 gap-2">
-                    <Input
-                      type="email"
-                      placeholder="Enter your email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="bg-transparent border-0 text-white placeholder:text-gray-500 focus:outline-none"
-                      required
-                    />
-                    <Button
-                      type="submit"
-                      disabled={isLoading}
-                      className="bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white rounded-full px-6 h-10 font-semibold flex items-center gap-2 transition-all duration-300"
-                    >
-                      {isLoading ? (
-                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                      ) : (
-                        <>
-                          Get Started
-                          <ArrowRight className="w-4 h-4" />
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                </div>
-              </form>
-              <p className="text-sm text-gray-400 mt-3 text-center">
-                Free for 14 days. No credit card required. Cancel anytime.
-              </p>
-            </div>
-
-            {/* Trust Elements */}
-            <div className="flex items-center gap-6 pt-4">
-              <div className="flex -space-x-2">
-                {[...Array(3)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-indigo-600 border-2 border-slate-950 flex items-center justify-center text-white text-xs font-bold"
-                  >
-                    {i + 1}
-                  </div>
-                ))}
-              </div>
-              <span className="text-sm text-gray-400">
-                Join 10,000+ businesses
-              </span>
-            </div>
+            <p className="text-lg text-gray-300 max-w-4xl mx-auto leading-relaxed">
+              Agentic Economic Intelligence System built to guide businesses,
+              policymakers, and enterprises toward smarter financial, market,
+              and operational decisions. From micro to macro, Joseph helps you
+              grow sustainably — and drive real economic growth.
+            </p>
           </div>
 
-          {/* Right - Visual Element */}
-          <div className="relative h-96 lg:h-full min-h-96">
-            {/* Animated cards showcase */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="relative w-80 h-96">
-                {/* Card 1 */}
-                <div className="absolute top-0 left-8 w-72 p-6 rounded-2xl bg-gradient-to-br from-blue-500/20 to-indigo-500/10 backdrop-blur-md border border-blue-400/30 shadow-2xl transform hover:scale-105 transition-transform duration-300 animate-float"
-                  style={{ animationDelay: "0s" }}>
-                  <div className="flex items-center gap-3 mb-4">
-                    <TrendingUp className="w-5 h-5 text-blue-400" />
-                    <span className="text-sm font-semibold text-white">
-                      Revenue Growth
-                    </span>
-                  </div>
-                  <div className="text-3xl font-bold text-transparent bg-gradient-to-r from-blue-300 to-indigo-300 bg-clip-text">
-                    +34.2%
-                  </div>
-                  <p className="text-xs text-gray-400 mt-2">
-                    Projected this quarter
-                  </p>
-                </div>
-
-                {/* Card 2 */}
-                <div className="absolute top-32 right-0 w-72 p-6 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-blue-500/10 backdrop-blur-md border border-indigo-400/30 shadow-2xl transform hover:scale-105 transition-transform duration-300 animate-float"
-                  style={{ animationDelay: "0.5s" }}>
-                  <div className="flex items-center gap-3 mb-4">
-                    <BarChart3 className="w-5 h-5 text-indigo-400" />
-                    <span className="text-sm font-semibold text-white">
-                      Market Position
-                    </span>
-                  </div>
-                  <div className="text-3xl font-bold text-transparent bg-gradient-to-r from-indigo-300 to-blue-300 bg-clip-text">
-                    Top 10%
-                  </div>
-                  <p className="text-xs text-gray-400 mt-2">
-                    In your market segment
-                  </p>
+          {/* Email Signup with Pricing Button */}
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-4 max-w-2xl mx-auto">
+            <form onSubmit={handleEmailSignup} className="w-full lg:flex-1">
+              <div className="relative p-1 rounded-lg bg-gradient-to-r from-[#4d7fd9]/30 via-[#3d6dc4]/20 to-[#4d7fd9]/30 backdrop-blur-sm">
+                <div className="relative flex items-center bg-[#0a1449] rounded-lg pr-2 pl-6 py-3">
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="bg-transparent border-0 text-white placeholder:text-gray-500 focus:outline-none text-base"
+                    required
+                  />
                 </div>
               </div>
-            </div>
+            </form>
+
+            <Button
+              variant="outline"
+              className="border-[#4d7fd9]/50 text-white hover:bg-[#4d7fd9]/10 hover:border-[#4d7fd9] rounded-lg px-6 h-12 font-semibold w-full lg:w-auto whitespace-nowrap"
+              onClick={() => scrollToSection("pricing")}
+            >
+              View Plan and Pricing
+            </Button>
+          </div>
+
+          {/* CTA Button */}
+          <div>
+            <Button
+              onClick={handleEmailSignup}
+              disabled={isLoading || !email}
+              className="bg-gradient-to-r from-[#4d7fd9] to-[#3d6dc4] hover:from-[#5d8fe9] hover:to-[#4d7dd4] text-white rounded-lg px-8 h-12 font-semibold inline-flex items-center gap-2 text-lg"
+            >
+              {isLoading ? (
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <>
+                  Get Started Free <ArrowRight className="w-5 h-5" />
+                </>
+              )}
+            </Button>
+            <p className="text-sm text-gray-400 mt-3">
+              14-day free trial • No credit card required
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Features Grid */}
+      {/* Features Section */}
       <div id="features" className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">
-            Powerful Features for Your Business
-          </h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Everything you need to understand your market, optimize your strategy,
-            and drive growth
-          </p>
-        </div>
+        <div className="space-y-16">
+          {/* Intro */}
+          <div className="text-center space-y-4">
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Joseph AI connects data, insight, and action to help businesses
+              grow smarter. Powered by Agentic AI.
+            </p>
+          </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="group relative p-6 rounded-xl bg-gradient-to-br from-blue-500/10 to-indigo-500/5 border border-blue-400/20 hover:border-blue-400/50 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20"
-            >
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-600/0 to-indigo-600/0 group-hover:from-blue-600/10 group-hover:to-indigo-600/10 transition-all duration-300" />
-              <div className="relative">
-                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white mb-4 group-hover:shadow-lg group-hover:shadow-blue-500/50 transition-all duration-300">
+          {/* Features Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              {
+                icon: <DollarSign className="w-8 h-8" />,
+                title: "Real-time Financial Insights",
+                description:
+                  "Analyze finance in real time with AI-powered analytics.",
+              },
+              {
+                icon: <Target className="w-8 h-8" />,
+                title: "Smart Pricing Optimization",
+                description:
+                  "Optimize revenue and pricing strategies intelligently.",
+              },
+              {
+                icon: <TrendingDown className="w-8 h-8" />,
+                title: "Loan & Funding Advisory",
+                description:
+                  "Access tools to help secure funding and manage loans.",
+              },
+              {
+                icon: <Truck className="w-8 h-8" />,
+                title: "Predictive Supply Chain",
+                description:
+                  "AI-driven supply chain forecasting and optimization.",
+              },
+              {
+                icon: <TrendingUp className="w-8 h-8" />,
+                title: "Policy & Market Forecasting",
+                description:
+                  "Predict market and policy trends with intelligence.",
+              },
+              {
+                icon: <Lock className="w-8 h-8" />,
+                title: "Secure Data Management",
+                description:
+                  "Enterprise-grade security with continuous updates.",
+              },
+            ].map((feature, index) => (
+              <div
+                key={index}
+                className="p-8 rounded-xl bg-gradient-to-br from-[#4d7fd9]/15 to-[#3d6dc4]/10 border border-[#4d7fd9]/20 hover:border-[#4d7fd9]/50 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-[#4d7fd9]/20"
+              >
+                <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-[#4d7fd9] to-[#3d6dc4] flex items-center justify-center text-white mb-4 group-hover:shadow-lg group-hover:shadow-[#4d7fd9]/50 transition-all duration-300">
                   {feature.icon}
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-2">
                   {feature.title}
                 </h3>
-                <p className="text-gray-400">{feature.description}</p>
+                <p className="text-gray-300 text-sm">{feature.description}</p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* How It Works */}
-      <div id="how-it-works" className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">
-            How It Works
-          </h2>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          {[
-            {
-              step: "01",
-              title: "Sign Up",
-              description: "Create your account in seconds and get started immediately",
-            },
-            {
-              step: "02",
-              title: "Connect Data",
-              description: "Link your business data sources for real-time analysis",
-            },
-            {
-              step: "03",
-              title: "Get Insights",
-              description: "Receive AI-powered recommendations and strategic guidance",
-            },
-          ].map((item, index) => (
-            <div key={index} className="relative">
-              <div className="p-8 rounded-xl bg-gradient-to-br from-blue-500/10 to-indigo-500/5 border border-blue-400/20 backdrop-blur-sm h-full">
-                <div className="text-4xl font-bold text-blue-400/50 mb-4">
-                  {item.step}
-                </div>
-                <h3 className="text-xl font-semibold text-white mb-3">
-                  {item.title}
-                </h3>
-                <p className="text-gray-400">{item.description}</p>
-              </div>
-              {index < 2 && (
-                <div className="hidden md:flex absolute -right-4 top-1/2 transform -translate-y-1/2 z-20">
-                  <ChevronRight className="w-8 h-8 text-blue-500/50" />
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* CTA Section */}
-      <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-12 py-20">
-        <div className="relative p-12 rounded-2xl bg-gradient-to-r from-blue-500/20 via-indigo-500/20 to-blue-500/20 border border-blue-400/30 backdrop-blur-sm overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-indigo-600/10" />
-          <div className="relative text-center space-y-6">
+      {/* Pricing Section */}
+      <div id="pricing" className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20">
+        <div className="space-y-12">
+          <div className="text-center space-y-4">
             <h2 className="text-4xl lg:text-5xl font-bold text-white">
-              Ready to Transform Your Business?
+              Plans and Pricing
             </h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              Join thousands of companies using Joseph to make smarter business
-              decisions
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Choose the perfect plan for your needs. From individual creators
+              to enterprise teams, we have flexible pricing options to help you
+              succeed.
             </p>
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-full px-8 h-12 font-semibold inline-flex items-center gap-2 text-lg"
-              onClick={() => navigate("/signup")}
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+            {/* FREE Plan */}
+            <div className="p-8 rounded-xl bg-gradient-to-br from-[#4d7fd9]/10 to-[#3d6dc4]/5 border border-[#4d7fd9]/20 hover:border-[#4d7fd9]/50 backdrop-blur-sm transition-all duration-300">
+              <h3 className="text-xl font-bold text-white mb-2">FREE</h3>
+              <p className="text-gray-300 text-sm mb-6">Get Started</p>
+              <div className="mb-6">
+                <span className="text-3xl font-bold text-white">$0</span>
+                <span className="text-gray-400 text-sm ml-2">/month</span>
+              </div>
+              <Button className="w-full bg-[#4d7fd9]/20 border border-[#4d7fd9]/50 text-white hover:bg-[#4d7fd9]/30 rounded-lg mb-6">
+                Get Started
+              </Button>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">
+                    $5 monthly AI credits
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">
+                    Access basic economic insights
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">
+                    Smart market recommendations
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">
+                    Interactive dashboards
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            {/* PREMIUM Plan */}
+            <div className="p-8 rounded-xl bg-gradient-to-br from-[#4d7fd9]/20 to-[#3d6dc4]/10 border border-[#4d7fd9]/50 backdrop-blur-sm transition-all duration-300 ring-2 ring-[#4d7fd9]/50">
+              <h3 className="text-xl font-bold text-white mb-2">PREMIUM</h3>
+              <p className="text-gray-300 text-sm mb-6">Subscribe</p>
+              <div className="mb-2">
+                <span className="text-3xl font-bold text-white">$6</span>
+                <span className="text-gray-400 text-sm ml-2">/month</span>
+              </div>
+              <p className="text-gray-400 text-xs mb-6">or $60/year</p>
+              <Button className="w-full bg-[#4d7fd9] hover:bg-[#5d8fe9] text-white rounded-lg mb-6">
+                Subscribe
+              </Button>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">
+                    $20 monthly AI credits
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">
+                    Advanced module access (finance, market, tax)
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">
+                    Custom business insights
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">
+                    Higher data upload limits
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            {/* TEAM Plan */}
+            <div className="p-8 rounded-xl bg-gradient-to-br from-[#4d7fd9]/15 to-[#3d6dc4]/8 border border-[#4d7fd9]/30 hover:border-[#4d7fd9]/50 backdrop-blur-sm transition-all duration-300">
+              <h3 className="text-xl font-bold text-white mb-2">TEAM</h3>
+              <p className="text-gray-300 text-sm mb-6">Subscribe</p>
+              <div className="mb-2">
+                <span className="text-3xl font-bold text-white">$60</span>
+                <span className="text-gray-400 text-sm ml-2">/user/month</span>
+              </div>
+              <Button className="w-full bg-[#4d7fd9]/20 border border-[#4d7fd9]/50 text-white hover:bg-[#4d7fd9]/30 rounded-lg mb-6">
+                Subscribe
+              </Button>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">
+                    $60 monthly AI credits per user
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">
+                    Centralized dashboards
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">
+                    Collaborative financial analysis
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">
+                    Shared project data
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            {/* BUSINESS Plan */}
+            <div className="p-8 rounded-xl bg-gradient-to-br from-[#4d7fd9]/15 to-[#3d6dc4]/8 border border-[#4d7fd9]/30 hover:border-[#4d7fd9]/50 backdrop-blur-sm transition-all duration-300">
+              <h3 className="text-xl font-bold text-white mb-2">BUSINESS</h3>
+              <p className="text-gray-300 text-sm mb-6">Subscribe</p>
+              <div className="mb-2">
+                <span className="text-3xl font-bold text-white">$200</span>
+                <span className="text-gray-400 text-sm ml-2">/user/month</span>
+              </div>
+              <Button className="w-full bg-[#4d7fd9]/20 border border-[#4d7fd9]/50 text-white hover:bg-[#4d7fd9]/30 rounded-lg mb-6">
+                Subscribe
+              </Button>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">
+                    $60 monthly AI credits per user
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">Custom API access</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">Private model tuning</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">Dedicated support</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* ENTERPRISE Plan */}
+            <div className="p-8 rounded-xl bg-gradient-to-br from-[#4d7fd9]/15 to-[#3d6dc4]/8 border border-[#4d7fd9]/30 hover:border-[#4d7fd9]/50 backdrop-blur-sm transition-all duration-300">
+              <h3 className="text-xl font-bold text-white mb-2">ENTERPRISE</h3>
+              <p className="text-gray-300 text-sm mb-6">Contact Sales</p>
+              <Button className="w-full bg-[#4d7fd9]/20 border border-[#4d7fd9]/50 text-white hover:bg-[#4d7fd9]/30 rounded-lg mb-6">
+                Contact Us
+              </Button>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">
+                    Custom Agentic automation for large-scale analytics
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">SAML SSO security</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">
+                    Dedicated account manager
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-sm">
+                    Priority infrastructure
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* About Section */}
+      <div id="about" className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20">
+        <div className="space-y-12">
+          <div className="text-center space-y-4">
+            <h2 className="text-4xl lg:text-5xl font-bold text-white">
+              About Us
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Learn more about our mission, vision, and the values that drive
+              us forward.
+            </p>
+          </div>
+
+          <div className="p-12 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/20 to-[#3d6dc4]/10 border border-[#4d7fd9]/30 backdrop-blur-sm space-y-8">
+            <div>
+              <h3 className="text-2xl font-bold text-white mb-4">Our Mission</h3>
+              <p className="text-lg text-gray-300 leading-relaxed">
+                <span className="font-semibold text-[#4d7fd9]">
+                  Driving Global Economic Revival and Building the Connected
+                  Economy Using Agentic AI
+                </span>
+              </p>
+              <p className="text-gray-300 mt-4 leading-relaxed">
+                At Joseph AI, we empower MSMEs, entrepreneurs, and enterprises
+                across Africa to make smarter financial, policy, and market
+                choices using Agentic AI — a new class of artificial
+                intelligence that learns, reasons, and acts autonomously. By
+                combining economic intelligence, predictive analytics, and
+                AI-powered automation, Joseph AI helps businesses cut losses,
+                access funding, optimize pricing, and grow sustainably. Our goal
+                is to transform local business performance into national
+                economic growth, one enterprise at a time.
+              </p>
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-bold text-white mb-4">
+                Core Values
+              </h3>
+              <div className="flex flex-wrap gap-4">
+                {["Innovation", "Integrity", "Revival", "Satisfaction"].map(
+                  (value, index) => (
+                    <div
+                      key={index}
+                      className="px-4 py-2 rounded-lg bg-[#4d7fd9]/20 border border-[#4d7fd9]/50 text-white font-semibold"
+                    >
+                      {value}
+                    </div>
+                  ),
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Contact Section */}
+      <div id="contact" className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20">
+        <div className="grid lg:grid-cols-2 gap-12">
+          {/* Contact Info */}
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">
+                Get in touch
+              </h2>
+              <p className="text-xl text-gray-300">
+                If you have any questions regarding our Services or need help,
+                please fill out the form here. We do our best to respond within
+                1 business day.
+              </p>
+            </div>
+
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <Mail className="w-6 h-6 text-[#4d7fd9] mt-1 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-white mb-1">Email</h3>
+                  <p className="text-gray-300">support@josephai.site</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <Phone className="w-6 h-6 text-[#4d7fd9] mt-1 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-white mb-1">Phone</h3>
+                  <p className="text-gray-300">+234 708 811 4692</p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <MapPin className="w-6 h-6 text-[#4d7fd9] mt-1 flex-shrink-0" />
+                <div>
+                  <h3 className="font-semibold text-white mb-1">Address</h3>
+                  <p className="text-gray-300">Lagos, Nigeria</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Contact Form */}
+          <div>
+            <form
+              onSubmit={handleContactSubmit}
+              className="space-y-6 p-8 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/15 to-[#3d6dc4]/8 border border-[#4d7fd9]/30 backdrop-blur-sm"
             >
-              Start Free Trial <ArrowRight className="w-5 h-5" />
-            </Button>
-            <p className="text-sm text-gray-400">
-              14-day free trial • No credit card required • Full access to all
-              features
-            </p>
+              <div>
+                <label className="block text-sm font-medium text-white mb-2">
+                  Name
+                </label>
+                <Input
+                  type="text"
+                  placeholder="Your name"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  className="bg-[#0a1449] border-[#4d7fd9]/30 text-white placeholder:text-gray-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-white mb-2">
+                  Email
+                </label>
+                <Input
+                  type="email"
+                  placeholder="your@email.com"
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  className="bg-[#0a1449] border-[#4d7fd9]/30 text-white placeholder:text-gray-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-white mb-2">
+                  Phone
+                </label>
+                <Input
+                  type="tel"
+                  placeholder="+234..."
+                  value={formData.phone}
+                  onChange={(e) =>
+                    setFormData({ ...formData, phone: e.target.value })
+                  }
+                  className="bg-[#0a1449] border-[#4d7fd9]/30 text-white placeholder:text-gray-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-white mb-2">
+                  Message
+                </label>
+                <textarea
+                  placeholder="Your message..."
+                  value={formData.message}
+                  onChange={(e) =>
+                    setFormData({ ...formData, message: e.target.value })
+                  }
+                  rows={5}
+                  className="bg-[#0a1449] border border-[#4d7fd9]/30 text-white placeholder:text-gray-500 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-[#4d7fd9]"
+                  required
+                />
+              </div>
+
+              <Button
+                type="submit"
+                disabled={contactLoading}
+                className="w-full bg-[#4d7fd9] hover:bg-[#5d8fe9] text-white rounded-lg py-3 font-semibold"
+              >
+                {contactLoading ? "Sending..." : "Submit"}
+              </Button>
+            </form>
           </div>
         </div>
       </div>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-blue-500/10 mt-20">
+      <footer className="relative z-10 border-t border-[#4d7fd9]/10 mt-20 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <div className="flex items-center gap-2 mb-4">
-                <Sparkles className="w-5 h-5 text-blue-400" />
-                <span className="font-bold text-white">Joseph</span>
-              </div>
-              <p className="text-sm text-gray-400">
-                Economic intelligence platform for modern businesses
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">Product</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Features
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Pricing
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Security
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">Company</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold text-white mb-4">Legal</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Privacy
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-white transition-colors">
-                    Terms
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-blue-500/10 pt-8">
-            <p className="text-center text-sm text-gray-500">
-              © 2024 Joseph. All rights reserved.
+          <div className="text-center">
+            <p className="text-gray-400">
+              © 2024 Joseph AI. All rights reserved.
             </p>
           </div>
         </div>
