@@ -169,8 +169,7 @@ export default function PrimaryLanding() {
                 <div className="relative animate-float-card" style={{ animationDelay: '0s' }}>
                   <div className="absolute inset-0 bg-gradient-to-r from-[#4d7fd9] to-[#3d6dc4] rounded-2xl blur-lg opacity-30 animate-pulse" />
                   <div className="relative w-32 h-40 px-4 py-6 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/25 to-[#3d6dc4]/15 border border-[#4d7fd9]/50 backdrop-blur-md flex flex-col items-center justify-center text-center">
-                    <div className="text-2xl font-bold text-[#4d7fd9] mb-2">📊</div>
-                    <div className="text-xs font-semibold text-white leading-tight">Top 10 in competitive market</div>
+                    <div className="text-sm font-semibold text-white leading-tight">Top 10 in competitive market</div>
                   </div>
                 </div>
 
@@ -178,8 +177,7 @@ export default function PrimaryLanding() {
                 <div className="relative animate-float-card" style={{ animationDelay: '0.5s' }}>
                   <div className="absolute inset-0 bg-gradient-to-r from-[#4d7fd9] to-[#3d6dc4] rounded-2xl blur-lg opacity-30 animate-pulse" />
                   <div className="relative w-32 h-40 px-4 py-6 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/25 to-[#3d6dc4]/15 border border-[#4d7fd9]/50 backdrop-blur-md flex flex-col items-center justify-center text-center">
-                    <div className="text-2xl font-bold text-[#4d7fd9] mb-2">📈</div>
-                    <div className="text-xs font-semibold text-white leading-tight">100% Revenue growth</div>
+                    <div className="text-sm font-semibold text-white leading-tight">+100% Revenue growth</div>
                   </div>
                 </div>
               </div>
