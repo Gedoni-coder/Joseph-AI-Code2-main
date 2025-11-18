@@ -205,7 +205,7 @@ export default function PrimaryLanding() {
             </form>
 
             <Button
-              className="bg-transparent border border-[#4d7fd9]/30 text-[#4d7fd9] hover:bg-[#4d7fd9]/10 hover:border-[#4d7fd9]/60 rounded-lg px-6 h-12 font-semibold w-full lg:w-auto whitespace-nowrap transition-all duration-300"
+              className="bg-transparent border border-[#4d7fd9]/30 text-white hover:bg-[#4d7fd9]/10 hover:border-[#4d7fd9]/60 rounded-lg px-6 h-12 font-semibold w-full lg:w-auto whitespace-nowrap transition-all duration-300"
               onClick={() => scrollToSection("pricing")}
             >
               View Plan and Pricing
