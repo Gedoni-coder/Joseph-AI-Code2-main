@@ -48,12 +48,15 @@ export default function PrimaryLanding() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const handleEmailSignup = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
+  const handleEmailSignup = (e?: React.FormEvent) => {
+    if (e) {
+      e.preventDefault();
+    }
     setIsLoading(true);
     setTimeout(() => {
-      localStorage.setItem("joseph:signupEmail", email);
+      if (email) {
+        localStorage.setItem("joseph:signupEmail", email);
+      }
       navigate("/signup");
     }, 300);
   };
