@@ -164,14 +164,15 @@ export default function PrimaryLanding() {
           {/* Email Signup with Pricing Button */}
           <div className="flex flex-col lg:flex-row items-center justify-center gap-4 max-w-2xl mx-auto">
             <form onSubmit={handleEmailSignup} className="w-full lg:flex-1">
-              <div className="relative p-1 rounded-lg bg-gradient-to-r from-[#4d7fd9]/30 via-[#3d6dc4]/20 to-[#4d7fd9]/30 backdrop-blur-sm">
-                <div className="relative flex items-center bg-[#0a1449] rounded-lg pr-2 pl-6 py-3">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-[#4d7fd9]/40 via-[#3d6dc4]/20 to-[#4d7fd9]/40 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative flex items-center bg-[#0a1449]/80 border border-[#4d7fd9]/20 rounded-xl px-6 py-3.5 backdrop-blur-md hover:border-[#4d7fd9]/50 hover:bg-[#0a1449]/90 transition-all duration-300 shadow-lg hover:shadow-lg hover:shadow-[#4d7fd9]/10">
                   <Input
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder="your@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="bg-transparent border-0 text-white placeholder:text-gray-500 focus:outline-none text-base"
+                    className="bg-transparent border-0 text-white placeholder:text-gray-500/70 focus:outline-none text-base w-full"
                     required
                   />
                 </div>
