@@ -216,8 +216,14 @@ export default function PrimaryLanding() {
           {/* CTA Button */}
           <div>
             <Button
-              onClick={handleEmailSignup}
-              disabled={isLoading || !email}
+              onClick={() => {
+                if (email) {
+                  handleEmailSignup({ preventDefault: () => {} } as React.FormEvent);
+                } else {
+                  navigate("/signup");
+                }
+              }}
+              disabled={isLoading}
               className="bg-gradient-to-r from-[#4d7fd9] to-[#3d6dc4] hover:from-[#5d8fe9] hover:to-[#4d7dd4] text-white rounded-lg px-8 h-12 font-semibold inline-flex items-center gap-2 text-lg"
             >
               {isLoading ? (
