@@ -153,31 +153,33 @@ export default function PrimaryLanding() {
               <span className="font-bold text-white ml-3">Grow.</span>
             </h1>
 
-            <div className="flex flex-col lg:flex-row items-start lg:items-center gap-8 max-w-5xl mx-auto">
-              <p className="text-lg text-gray-300 leading-relaxed flex-1">
-                Agentic Economic Intelligence System built to guide businesses,
-                policymakers, and enterprises toward smarter financial, market,
-                and operational decisions. From micro to macro, Joseph helps you
-                grow sustainably — and drive real economic growth.
-              </p>
+            <div className="flex flex-col lg:flex-row items-center gap-8 max-w-5xl mx-auto">
+              <div className="flex-1">
+                <p className="text-lg text-gray-300 leading-relaxed">
+                  Agentic Economic Intelligence System built to guide businesses,
+                  policymakers, and enterprises toward smarter financial, market,
+                  and operational decisions. From micro to macro, Joseph helps you
+                  grow sustainably — and drive real economic growth.
+                </p>
+              </div>
 
               {/* Floating Metrics Cards */}
-              <div className="flex flex-col gap-4 flex-shrink-0">
+              <div className="flex gap-6 flex-shrink-0 lg:ml-4">
                 {/* Card 1 */}
-                <div className="group relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#4d7fd9] to-[#3d6dc4] rounded-xl blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 animate-pulse" />
-                  <div className="relative px-6 py-4 rounded-xl bg-gradient-to-br from-[#4d7fd9]/20 to-[#3d6dc4]/10 border border-[#4d7fd9]/40 backdrop-blur-md hover:border-[#4d7fd9]/70 transition-all duration-300">
-                    <div className="text-sm font-medium text-[#4d7fd9] mb-1">Achievement</div>
-                    <div className="text-xl font-bold text-white whitespace-nowrap">Top 10 in competitive market</div>
+                <div className="relative animate-float-card" style={{ animationDelay: '0s' }}>
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#4d7fd9] to-[#3d6dc4] rounded-2xl blur-lg opacity-30 animate-pulse" />
+                  <div className="relative w-32 h-40 px-4 py-6 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/25 to-[#3d6dc4]/15 border border-[#4d7fd9]/50 backdrop-blur-md flex flex-col items-center justify-center text-center">
+                    <div className="text-2xl font-bold text-[#4d7fd9] mb-2">📊</div>
+                    <div className="text-xs font-semibold text-white leading-tight">Top 10 in competitive market</div>
                   </div>
                 </div>
 
                 {/* Card 2 */}
-                <div className="group relative">
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#4d7fd9] to-[#3d6dc4] rounded-xl blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 animate-pulse" />
-                  <div className="relative px-6 py-4 rounded-xl bg-gradient-to-br from-[#4d7fd9]/20 to-[#3d6dc4]/10 border border-[#4d7fd9]/40 backdrop-blur-md hover:border-[#4d7fd9]/70 transition-all duration-300">
-                    <div className="text-sm font-medium text-[#4d7fd9] mb-1">Growth</div>
-                    <div className="text-xl font-bold text-white whitespace-nowrap">100% Revenue growth</div>
+                <div className="relative animate-float-card" style={{ animationDelay: '0.5s' }}>
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#4d7fd9] to-[#3d6dc4] rounded-2xl blur-lg opacity-30 animate-pulse" />
+                  <div className="relative w-32 h-40 px-4 py-6 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/25 to-[#3d6dc4]/15 border border-[#4d7fd9]/50 backdrop-blur-md flex flex-col items-center justify-center text-center">
+                    <div className="text-2xl font-bold text-[#4d7fd9] mb-2">📈</div>
+                    <div className="text-xs font-semibold text-white leading-tight">100% Revenue growth</div>
                   </div>
                 </div>
               </div>
