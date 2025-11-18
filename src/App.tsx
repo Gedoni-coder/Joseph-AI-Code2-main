@@ -117,7 +117,6 @@ const infraRouteComp = {
   "data-economy-layer": DataEconomyLayer,
   "infrastructure-mapping-engine": InfrastructureMappingEngine,
   "analytics-metrics-engine": AnalyticsMetricsEngine,
-  // Add correct mappings for the four modules:
   "market-access-layer": MarketAccessLayer,
   "funding-layer": FundingLayer,
   "business-intelligence-layer": BusinessIntelligenceLayer,
@@ -198,8 +197,10 @@ function TopDivisionNav({
   );
 }
 
-const App = () => {
+function AppContent() {
   const [conversationalMode, setConversationalMode] = React.useState(true);
+  const location = useLocation();
+  const isLandingPage = location.pathname === "/" || location.pathname === "/signup";
 
   React.useEffect(() => {
     const saved = localStorage.getItem("conversationalMode");
@@ -214,130 +215,140 @@ const App = () => {
   };
 
   return (
+    <>
+      {!isLandingPage && (
+        <TopDivisionNav
+          conversationalMode={conversationalMode}
+          onConversationalModeChange={handleConversationalModeChange}
+        />
+      )}
+      {!isLandingPage && <ChatbotContainer conversationalMode={conversationalMode} />}
+      <Routes>
+        <Route path="/" element={<PrimaryLanding />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/secondlandingpage" element={<Landing />} />
+        <Route path="/landing" element={<Landing />} />
+
+        {/* Main 10 Module Routes - matching landing page links */}
+        <Route path="/economic-indicators" element={<Index />} />
+        <Route path="/business-forecast" element={<BusinessForecast />} />
+        <Route
+          path="/market-competitive-analysis"
+          element={<MarketCompetitiveAnalysis />}
+        />
+        <Route
+          path="/market-report/:reportId"
+          element={<MarketReportView />}
+        />
+        <Route
+          path="/market-competitive-analysis/swot"
+          element={<SwotWhitePaper />}
+        />
+        <Route
+          path="/market-competitive-analysis/profile/:id"
+          element={<CompetitorWhitePaper />}
+        />
+        <Route path="/pricing-strategies" element={<PricingStrategy />} />
+        <Route path="/revenue-forecasting" element={<RevenueStrategy />} />
+        <Route path="/loan-research" element={<LoanFunding />} />
+        <Route
+          path="/supply-chain-analytics"
+          element={<InventorySupplyChain />}
+        />
+        <Route path="/financial-advisory" element={<FinancialAdvisory />} />
+        <Route path="/impact-calculator" element={<ImpactCalculator />} />
+        <Route path="/tax-compliance" element={<TaxCompliance />} />
+        <Route
+          path="/business-feasibility"
+          element={<BusinessFeasibility />}
+        />
+        <Route
+          path="/business-feasibility/:id"
+          element={<BusinessFeasibilityIdea />}
+        />
+
+        {/* Additional Feature Routes */}
+        <Route path="/ai-insights" element={<AiInsights />} />
+        <Route path="/document-manager" element={<DocumentManager />} />
+        <Route path="/growth-planning" element={<GrowthPlanning />} />
+        <Route path="/all-reports" element={<AllReports />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/policy-alerts" element={<PolicyAlerts />} />
+        <Route path="/strategy-builder" element={<StrategyBuilder />} />
+        <Route path="/risk-management" element={<RiskManagement />} />
+        <Route path="/compliance-reports" element={<ComplianceReports />} />
+        <Route path="/audit-reports" element={<AuditReports />} />
+        <Route path="/audit-trail" element={<AuditTrail />} />
+        <Route path="/document-upload" element={<DocumentUpload />} />
+
+        {/* Legacy routes for backward compatibility */}
+        <Route path="/pricing-strategy" element={<PricingStrategy />} />
+        <Route path="/revenue-strategy" element={<RevenueStrategy />} />
+        <Route path="/loan-funding" element={<LoanFunding />} />
+        <Route
+          path="/inventory-supply-chain"
+          element={<InventorySupplyChain />}
+        />
+        <Route
+          path="/InventorySupplyChain"
+          element={<InventorySupplyChain />}
+        />
+        <Route
+          path="/policy-economic-analysis"
+          element={<PolicyEconomicAnalysis />}
+        />
+
+        {/* Infrastructure Division Routes */}
+        <Route path="/infrastructure" element={<Infrastructure />} />
+        <Route
+          path="/infrastructure/opportunities/marketplace"
+          element={<OpportunitiesMarketplace />}
+        />
+
+        {/* Learn Division Routes */}
+        <Route path="/learn" element={<Learn />} />
+        <Route path="/learn/discover" element={<LearnDiscover />} />
+        <Route path="/learn/courses" element={<LearnCourses />} />
+        <Route
+          path="/learn/courses/generate"
+          element={<LearnCourseGenerate />}
+        />
+        <Route
+          path="/learn/courses/:courseId"
+          element={<LearnCourseView />}
+        />
+        <Route path="/learn/quizzes" element={<LearnQuizzes />} />
+        <Route path="/learn/records" element={<LearnRecords />} />
+        {/* Individual infrastructure module routes */}
+        {infraModules.map((mod) => (
+          <Route
+            key={mod.slug}
+            path={`/infrastructure/${mod.slug}`}
+            element={
+              infraRouteComp[mod.slug] ? (
+                React.createElement(infraRouteComp[mod.slug])
+              ) : (
+                <InfraModulePage name={mod.name} />
+              )
+            }
+          />
+        ))}
+
+        {/* Catch-all route - MUST be last */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
+  );
+}
+
+const App = () => {
+  return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <TopDivisionNav
-            conversationalMode={conversationalMode}
-            onConversationalModeChange={handleConversationalModeChange}
-          />
-          <ChatbotContainer conversationalMode={conversationalMode} />
-      <Routes>
-        <Route path="/" element={<PrimaryLanding />} />
-        <Route path="/signup" element={<SignUp />} />
-            <Route path="/secondlandingpage" element={<Landing />} />
-            <Route path="/landing" element={<Landing />} />
-
-            {/* Main 10 Module Routes - matching landing page links */}
-            <Route path="/economic-indicators" element={<Index />} />
-            <Route path="/business-forecast" element={<BusinessForecast />} />
-            <Route
-              path="/market-competitive-analysis"
-              element={<MarketCompetitiveAnalysis />}
-            />
-            <Route
-              path="/market-report/:reportId"
-              element={<MarketReportView />}
-            />
-            <Route
-              path="/market-competitive-analysis/swot"
-              element={<SwotWhitePaper />}
-            />
-            <Route
-              path="/market-competitive-analysis/profile/:id"
-              element={<CompetitorWhitePaper />}
-            />
-            <Route path="/pricing-strategies" element={<PricingStrategy />} />
-            <Route path="/revenue-forecasting" element={<RevenueStrategy />} />
-            <Route path="/loan-research" element={<LoanFunding />} />
-            <Route
-              path="/supply-chain-analytics"
-              element={<InventorySupplyChain />}
-            />
-            <Route path="/financial-advisory" element={<FinancialAdvisory />} />
-            <Route path="/impact-calculator" element={<ImpactCalculator />} />
-            <Route path="/tax-compliance" element={<TaxCompliance />} />
-            <Route
-              path="/business-feasibility"
-              element={<BusinessFeasibility />}
-            />
-            <Route
-              path="/business-feasibility/:id"
-              element={<BusinessFeasibilityIdea />}
-            />
-
-            {/* Additional Feature Routes */}
-            <Route path="/ai-insights" element={<AiInsights />} />
-            <Route path="/document-manager" element={<DocumentManager />} />
-            <Route path="/growth-planning" element={<GrowthPlanning />} />
-            <Route path="/all-reports" element={<AllReports />} />
-            <Route path="/notifications" element={<Notifications />} />
-            <Route path="/policy-alerts" element={<PolicyAlerts />} />
-            <Route path="/strategy-builder" element={<StrategyBuilder />} />
-            <Route path="/risk-management" element={<RiskManagement />} />
-            <Route path="/compliance-reports" element={<ComplianceReports />} />
-            <Route path="/audit-reports" element={<AuditReports />} />
-            <Route path="/audit-trail" element={<AuditTrail />} />
-            <Route path="/document-upload" element={<DocumentUpload />} />
-
-            {/* Legacy routes for backward compatibility */}
-            <Route path="/pricing-strategy" element={<PricingStrategy />} />
-            <Route path="/revenue-strategy" element={<RevenueStrategy />} />
-            <Route path="/loan-funding" element={<LoanFunding />} />
-            <Route
-              path="/inventory-supply-chain"
-              element={<InventorySupplyChain />}
-            />
-            <Route
-              path="/InventorySupplyChain"
-              element={<InventorySupplyChain />}
-            />
-            <Route
-              path="/policy-economic-analysis"
-              element={<PolicyEconomicAnalysis />}
-            />
-
-            {/* Infrastructure Division Routes */}
-            <Route path="/infrastructure" element={<Infrastructure />} />
-            <Route
-              path="/infrastructure/opportunities/marketplace"
-              element={<OpportunitiesMarketplace />}
-            />
-
-            {/* Learn Division Routes */}
-            <Route path="/learn" element={<Learn />} />
-            <Route path="/learn/discover" element={<LearnDiscover />} />
-            <Route path="/learn/courses" element={<LearnCourses />} />
-            <Route
-              path="/learn/courses/generate"
-              element={<LearnCourseGenerate />}
-            />
-            <Route
-              path="/learn/courses/:courseId"
-              element={<LearnCourseView />}
-            />
-            <Route path="/learn/quizzes" element={<LearnQuizzes />} />
-            <Route path="/learn/records" element={<LearnRecords />} />
-            {/* Individual infrastructure module routes */}
-            {infraModules.map((mod) => (
-              <Route
-                key={mod.slug}
-                path={`/infrastructure/${mod.slug}`}
-                element={
-                  infraRouteComp[mod.slug] ? (
-                    React.createElement(infraRouteComp[mod.slug])
-                  ) : (
-                    <InfraModulePage name={mod.name} />
-                  )
-                }
-              />
-            ))}
-
-            {/* Catch-all route - MUST be last */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AppContent />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
