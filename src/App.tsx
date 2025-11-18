@@ -11,6 +11,7 @@ import {
   Route,
   useNavigate,
   Link,
+  useLocation,
 } from "react-router-dom";
 import { Radio } from "lucide-react";
 import { Switch } from "./components/ui/switch";
@@ -223,9 +224,9 @@ const App = () => {
             onConversationalModeChange={handleConversationalModeChange}
           />
           <ChatbotContainer conversationalMode={conversationalMode} />
-          <Routes>
-            <Route path="/" element={<PrimaryLanding />} />
-            <Route path="/signup" element={<SignUp />} />
+      <Routes>
+        <Route path="/" element={<PrimaryLanding />} />
+        <Route path="/signup" element={<SignUp />} />
             <Route path="/secondlandingpage" element={<Landing />} />
             <Route path="/landing" element={<Landing />} />
 
