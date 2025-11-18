@@ -187,7 +187,9 @@ export default function PrimaryLanding() {
           </div>
 
           {/* Email Signup with Pricing Button */}
-          <div className="flex flex-col lg:flex-row items-center justify-center gap-4 max-w-2xl mx-auto">
+          <div className="space-y-3">
+            <p className="text-center text-sm text-gray-400 font-medium">Enter your email in the email box</p>
+            <div className="flex flex-col lg:flex-row items-center justify-center gap-4 max-w-2xl mx-auto">
             <form onSubmit={handleEmailSignup} className="w-full lg:flex-1">
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-[#4d7fd9]/40 via-[#3d6dc4]/20 to-[#4d7fd9]/40 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -210,6 +212,7 @@ export default function PrimaryLanding() {
             >
               View Plan and Pricing
             </Button>
+          </div>
           </div>
 
           {/* CTA Button */}
@@ -744,6 +747,15 @@ export default function PrimaryLanding() {
 
         .animate-float {
           animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float-card {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-15px); }
+        }
+
+        .animate-float-card {
+          animation: float-card 3s ease-in-out infinite;
         }
 
         .bg-gradient-radial {
