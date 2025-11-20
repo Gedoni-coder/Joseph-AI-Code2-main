@@ -239,55 +239,278 @@ const SalesIntelligence = () => {
 
           {/* Lead Intelligence Tab */}
           <TabsContent value="lead-pipeline" className="space-y-6">
+            <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+              <div className="flex gap-3">
+                <AlertCircle className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h4 className="font-semibold text-blue-900 mb-1">
+                    Pipeline Health Alert
+                  </h4>
+                  <p className="text-sm text-blue-800">
+                    3 deals at risk detected. AI suggests intervention
+                    strategies for rescue.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Hot Leads Table */}
             <Card>
               <CardHeader>
-                <CardTitle>Lead Qualification & Scoring</CardTitle>
-                <CardDescription>
-                  AI-powered lead qualification with pipeline forecasting and
-                  deal rescue
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="p-4 border rounded-lg">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                      <h4 className="font-semibold">Hot Leads</h4>
-                    </div>
-                    <p className="text-2xl font-bold">24</p>
-                    <p className="text-sm text-gray-600">High conversion chance</p>
-                  </div>
-                  <div className="p-4 border rounded-lg">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                      <h4 className="font-semibold">Warm Leads</h4>
-                    </div>
-                    <p className="text-2xl font-bold">47</p>
-                    <p className="text-sm text-gray-600">Medium potential</p>
-                  </div>
-                  <div className="p-4 border rounded-lg">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                      <h4 className="font-semibold">Cold Leads</h4>
-                    </div>
-                    <p className="text-2xl font-bold">89</p>
-                    <p className="text-sm text-gray-600">Nurturing phase</p>
-                  </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                  <CardTitle>🔥 Hot Leads (High Conversion Probability)</CardTitle>
                 </div>
+                <CardDescription>Deals in advanced stages with high probability scores</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b bg-gray-50">
+                        <th className="text-left py-3 px-4 font-semibold">Company Name</th>
+                        <th className="text-left py-3 px-4 font-semibold">Deal Description</th>
+                        <th className="text-left py-3 px-4 font-semibold">Opening Date</th>
+                        <th className="text-left py-3 px-4 font-semibold">Expected Close</th>
+                        <th className="text-left py-3 px-4 font-semibold">Pipeline Stage</th>
+                        <th className="text-center py-3 px-4 font-semibold">AI Lead Score</th>
+                        <th className="text-center py-3 px-4 font-semibold">Deal Probability</th>
+                        <th className="text-center py-3 px-4 font-semibold">Stall?</th>
+                        <th className="text-left py-3 px-4 font-semibold">AI Rescue Playbook</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[
+                        {
+                          company: "ZenithTech Ltd",
+                          description: "50 Laptops Supply Contract",
+                          opening: "2025-01-11",
+                          expectedClose: "2025-02-05",
+                          stage: "Proposal Sent",
+                          leadScore: 92,
+                          probability: 88,
+                          stall: "No",
+                          playbook: "Not Required"
+                        },
+                        {
+                          company: "PrimeFoods PLC",
+                          description: "Packaging Automation Upgrade",
+                          opening: "2025-01-03",
+                          expectedClose: "2025-01-28",
+                          stage: "Negotiation",
+                          leadScore: 95,
+                          probability: 93,
+                          stall: "No",
+                          playbook: "Not Required"
+                        },
+                        {
+                          company: "Star Transport Co.",
+                          description: "Fleet Tracking Subscription",
+                          opening: "2025-01-15",
+                          expectedClose: "2025-02-10",
+                          stage: "Decision Pending",
+                          leadScore: 89,
+                          probability: 80,
+                          stall: "Yes",
+                          playbook: "Send 'Decision Reminder + Value ROI Summary'"
+                        }
+                      ].map((deal, idx) => (
+                        <tr key={idx} className="border-b hover:bg-gray-50">
+                          <td className="py-3 px-4">{deal.company}</td>
+                          <td className="py-3 px-4">{deal.description}</td>
+                          <td className="py-3 px-4">{deal.opening}</td>
+                          <td className="py-3 px-4">{deal.expectedClose}</td>
+                          <td className="py-3 px-4">{deal.stage}</td>
+                          <td className="py-3 px-4 text-center">
+                            <Badge className="bg-green-100 text-green-800">{deal.leadScore}</Badge>
+                          </td>
+                          <td className="py-3 px-4 text-center">
+                            <Badge className="bg-green-100 text-green-800">{deal.probability}%</Badge>
+                          </td>
+                          <td className="py-3 px-4 text-center">
+                            <span className={`font-semibold ${deal.stall === "Yes" ? "text-red-600" : "text-green-600"}`}>
+                              {deal.stall}
+                            </span>
+                          </td>
+                          <td className="py-3 px-4 text-xs">{deal.playbook}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
 
-                <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                  <div className="flex gap-3">
-                    <AlertCircle className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <h4 className="font-semibold text-blue-900 mb-1">
-                        Pipeline Health Alert
-                      </h4>
-                      <p className="text-sm text-blue-800">
-                        3 deals at risk detected. AI suggests intervention
-                        strategies for rescue.
-                      </p>
-                    </div>
-                  </div>
+            {/* Warm Leads Table */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                  <CardTitle>🌤 Warm Leads (Medium Conversion Probability)</CardTitle>
+                </div>
+                <CardDescription>Leads in qualification and early engagement stages</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b bg-gray-50">
+                        <th className="text-left py-3 px-4 font-semibold">Company Name</th>
+                        <th className="text-left py-3 px-4 font-semibold">Deal Description</th>
+                        <th className="text-left py-3 px-4 font-semibold">Opening Date</th>
+                        <th className="text-left py-3 px-4 font-semibold">Expected Close</th>
+                        <th className="text-left py-3 px-4 font-semibold">Pipeline Stage</th>
+                        <th className="text-center py-3 px-4 font-semibold">AI Lead Score</th>
+                        <th className="text-center py-3 px-4 font-semibold">Deal Probability</th>
+                        <th className="text-center py-3 px-4 font-semibold">Stall?</th>
+                        <th className="text-left py-3 px-4 font-semibold">AI Rescue Playbook</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[
+                        {
+                          company: "GreenMart Stores",
+                          description: "POS + Inventory SaaS",
+                          opening: "2025-01-08",
+                          expectedClose: "2025-03-01",
+                          stage: "Product Demo Booked",
+                          leadScore: 72,
+                          probability: 54,
+                          stall: "No",
+                          playbook: "Not Required"
+                        },
+                        {
+                          company: "CraftBuild Ltd",
+                          description: "Supplier Workflow System",
+                          opening: "2025-01-04",
+                          expectedClose: "2025-03-20",
+                          stage: "Lead Contacted",
+                          leadScore: 68,
+                          probability: 48,
+                          stall: "Yes",
+                          playbook: "'Re-engage With Case Study'"
+                        },
+                        {
+                          company: "NextGen Autos",
+                          description: "CRM Deployment",
+                          opening: "2025-01-18",
+                          expectedClose: "2025-03-10",
+                          stage: "Initial Qualification",
+                          leadScore: 61,
+                          probability: 40,
+                          stall: "No",
+                          playbook: "'Send Competitive Comparison Brief'"
+                        }
+                      ].map((deal, idx) => (
+                        <tr key={idx} className="border-b hover:bg-gray-50">
+                          <td className="py-3 px-4">{deal.company}</td>
+                          <td className="py-3 px-4">{deal.description}</td>
+                          <td className="py-3 px-4">{deal.opening}</td>
+                          <td className="py-3 px-4">{deal.expectedClose}</td>
+                          <td className="py-3 px-4">{deal.stage}</td>
+                          <td className="py-3 px-4 text-center">
+                            <Badge className="bg-yellow-100 text-yellow-800">{deal.leadScore}</Badge>
+                          </td>
+                          <td className="py-3 px-4 text-center">
+                            <Badge className="bg-yellow-100 text-yellow-800">{deal.probability}%</Badge>
+                          </td>
+                          <td className="py-3 px-4 text-center">
+                            <span className={`font-semibold ${deal.stall === "Yes" ? "text-orange-600" : "text-green-600"}`}>
+                              {deal.stall}
+                            </span>
+                          </td>
+                          <td className="py-3 px-4 text-xs">{deal.playbook}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Cold Leads Table */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                  <CardTitle>❄ Cold Leads (Low Conversion Probability - Nurturing)</CardTitle>
+                </div>
+                <CardDescription>Outreach and early engagement stage - requires nurturing</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b bg-gray-50">
+                        <th className="text-left py-3 px-4 font-semibold">Company Name</th>
+                        <th className="text-left py-3 px-4 font-semibold">Deal Description</th>
+                        <th className="text-left py-3 px-4 font-semibold">Opening Date</th>
+                        <th className="text-left py-3 px-4 font-semibold">Expected Close</th>
+                        <th className="text-left py-3 px-4 font-semibold">Pipeline Stage</th>
+                        <th className="text-center py-3 px-4 font-semibold">AI Lead Score</th>
+                        <th className="text-center py-3 px-4 font-semibold">Deal Probability</th>
+                        <th className="text-center py-3 px-4 font-semibold">Stall?</th>
+                        <th className="text-left py-3 px-4 font-semibold">AI Rescue Playbook</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {[
+                        {
+                          company: "AlphaPrint",
+                          description: "Printer Leasing Proposal",
+                          opening: "2024-12-22",
+                          expectedClose: "2025-04-15",
+                          stage: "Outreach Attempted",
+                          leadScore: 25,
+                          probability: 9,
+                          stall: "Yes",
+                          playbook: "'Dormant Lead Recovery Script'"
+                        },
+                        {
+                          company: "Urban Boutique",
+                          description: "Website Revamp",
+                          opening: "2025-01-02",
+                          expectedClose: "2025-04-01",
+                          stage: "Unresponsive",
+                          leadScore: 31,
+                          probability: 12,
+                          stall: "Yes",
+                          playbook: "'Soft Re-open Offer + Discount'"
+                        },
+                        {
+                          company: "RapidFoods",
+                          description: "Delivery App Integration",
+                          opening: "2025-01-14",
+                          expectedClose: "2025-05-20",
+                          stage: "No Response Yet",
+                          leadScore: 28,
+                          probability: 7,
+                          stall: "No",
+                          playbook: "'Reminder + Value Proposition Summary'"
+                        }
+                      ].map((deal, idx) => (
+                        <tr key={idx} className="border-b hover:bg-gray-50">
+                          <td className="py-3 px-4">{deal.company}</td>
+                          <td className="py-3 px-4">{deal.description}</td>
+                          <td className="py-3 px-4">{deal.opening}</td>
+                          <td className="py-3 px-4">{deal.expectedClose}</td>
+                          <td className="py-3 px-4">{deal.stage}</td>
+                          <td className="py-3 px-4 text-center">
+                            <Badge className="bg-blue-100 text-blue-800">{deal.leadScore}</Badge>
+                          </td>
+                          <td className="py-3 px-4 text-center">
+                            <Badge className="bg-blue-100 text-blue-800">{deal.probability}%</Badge>
+                          </td>
+                          <td className="py-3 px-4 text-center">
+                            <span className={`font-semibold ${deal.stall === "Yes" ? "text-red-600" : "text-green-600"}`}>
+                              {deal.stall}
+                            </span>
+                          </td>
+                          <td className="py-3 px-4 text-xs">{deal.playbook}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </CardContent>
             </Card>
