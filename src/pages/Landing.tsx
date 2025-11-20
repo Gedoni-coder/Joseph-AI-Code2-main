@@ -23,6 +23,7 @@ import {
   DollarSign,
   Package,
   CreditCard,
+  MessageSquare,
 } from "lucide-react";
 
 const Landing = () => {
@@ -108,6 +109,12 @@ const Landing = () => {
       title: "Business Feasibility",
       description: "Evaluate and analyze business ideas across multiple scenarios to determine viability and success potential",
       link: "/business-feasibility"
+    },
+    {
+      icon: <MessageSquare className="h-6 w-6" />,
+      title: "Sales Intelligence",
+      description: "Universal sales intelligence module for lead handling, sales performance optimization, pipeline forecasting, and revenue conversion",
+      link: "/sales-intelligence"
     },
   ];
 
