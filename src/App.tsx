@@ -71,6 +71,7 @@ import LearnCourseGenerate from "./pages/learn/LearnCourseGenerate";
 import LearnCourseView from "./pages/learn/LearnCourseView";
 import LearnQuizzes from "./pages/learn/LearnQuizzes";
 import LearnRecords from "./pages/learn/LearnRecords";
+import SalesIntelligence from "./pages/SalesIntelligence";
 
 const queryClient = new QueryClient();
 
@@ -266,6 +267,7 @@ function AppContent() {
           path="/business-feasibility/:id"
           element={<BusinessFeasibilityIdea />}
         />
+        <Route path="/sales-intelligence" element={<SalesIntelligence />} />
 
         {/* Additional Feature Routes */}
         <Route path="/ai-insights" element={<AiInsights />} />
