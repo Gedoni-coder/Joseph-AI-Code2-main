@@ -28,7 +28,7 @@ const SalesIntelligence = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [isLoading, setIsLoading] = useState(false);
   const isConnected = true;
-  const lastUpdated = new Date().toLocaleString();
+  const lastUpdated = new Date();
 
   const subModules = [
     {
@@ -612,36 +612,66 @@ const SalesIntelligence = () => {
           </TabsContent>
         </Tabs>
 
-        {/* Summary Recommendation Section */}
-        <SummaryRecommendationSection
-          title="Sales Intelligence Recommendations"
-          insights={[
-            {
-              icon: <TrendingUp className="h-4 w-4" />,
-              title: "Focus on Pipeline Expansion",
-              description:
-                "Current pipeline is healthy but needs more top-of-funnel activity to maintain growth",
-            },
-            {
-              icon: <Target className="h-4 w-4" />,
-              title: "Implement Deal Rescue Playbooks",
-              description:
-                "3 deals at risk detected. Using AI-recommended intervention strategies can recover $180K",
-            },
-            {
-              icon: <Users className="h-4 w-4" />,
-              title: "Personalized Coaching for Mid-Tier Reps",
-              description:
-                "John and Lisa can reach top performer status with focused 1-on-1 coaching on objection handling",
-            },
-          ]}
-          recommendations={[
-            "Increase daily prospecting activity by 25%",
-            "Implement automated follow-up for warm leads",
-            "Launch sales enablement training program",
-            "Optimize proposal turnaround time to < 24 hours",
-          ]}
-        />
+        {/* Strategic Recommendations Card */}
+        <Card className="mt-8">
+          <CardHeader>
+            <CardTitle>Strategic Recommendations</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="p-4 border rounded-lg">
+                <div className="flex items-start gap-3">
+                  <TrendingUp className="h-5 w-5 text-blue-600 mt-1 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-semibold mb-1">Focus on Pipeline Expansion</h4>
+                    <p className="text-sm text-gray-600">
+                      Current pipeline is healthy but needs more top-of-funnel activity to maintain growth
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="p-4 border rounded-lg">
+                <div className="flex items-start gap-3">
+                  <Target className="h-5 w-5 text-orange-600 mt-1 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-semibold mb-1">Implement Deal Rescue Playbooks</h4>
+                    <p className="text-sm text-gray-600">
+                      3 deals at risk detected. Using AI-recommended intervention strategies can recover $180K
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="p-4 border rounded-lg">
+                <div className="flex items-start gap-3">
+                  <Users className="h-5 w-5 text-green-600 mt-1 flex-shrink-0" />
+                  <div>
+                    <h4 className="font-semibold mb-1">Personalized Coaching for Mid-Tier Reps</h4>
+                    <p className="text-sm text-gray-600">
+                      John and Lisa can reach top performer status with focused 1-on-1 coaching
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="font-semibold mb-3">Action Items</h4>
+              <ul className="space-y-2">
+                {[
+                  "Increase daily prospecting activity by 25%",
+                  "Implement automated follow-up for warm leads",
+                  "Launch sales enablement training program",
+                  "Optimize proposal turnaround time to < 24 hours",
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <span className="text-sm">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
