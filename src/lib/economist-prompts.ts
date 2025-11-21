@@ -110,16 +110,18 @@ export function createEconomistSystemPrompt(
 }
 
 export const ECONOMIST_SAMPLE_QUESTIONS = [
-  "How will rising interest rates affect my business financing and pricing strategy?",
-  "Analyze the elasticity of demand for my products given current inflation trends",
-  "What macroeconomic indicators should I monitor for my business?",
-  "How should I adjust my revenue forecast based on economic conditions?",
-  "What's the optimal pricing strategy considering current market conditions?",
-  "How does the competitive landscape change based on economic cycles?",
-  "Evaluate my business feasibility considering current and projected economic conditions",
-  "What are the economic risks to my supply chain?",
-  "How should I segment my customers based on economic behavior?",
-  "What's the economic impact of this policy change on my business?",
+  "Which of my revenue streams are most profitable and which are losing money?",
+  "How can I optimize my pricing to maximize profit margins without losing customers?",
+  "Where am I wasting money operationally that I could eliminate?",
+  "What's my true profitability by customer segment?",
+  "How will rising interest rates impact my profitability?",
+  "Which products should I focus on to maximize profit?",
+  "How can I reduce my supply chain costs without compromising quality?",
+  "What's my break-even point and how can I improve it?",
+  "Analyze my cost structure - where can I cut expenses?",
+  "How do macro economic conditions threaten my profit margins?",
+  "What's my optimal pricing strategy to maximize revenue and profit?",
+  "Which operational inefficiencies are draining my profit?",
 ];
 
 export const ECONOMIST_CAPABILITIES = [
