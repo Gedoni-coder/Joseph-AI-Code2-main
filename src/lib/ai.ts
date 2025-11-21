@@ -117,7 +117,7 @@ export async function generateAIResponse(history: ChatMessage[], opts: AIOptions
       const body = {
         model,
         temperature: typeof opts.temperature === "number" ? opts.temperature : 0.3,
-        messages: toOpenAIMessages(history, opts.system, opts.webContext),
+        messages: toOpenAIMessages(history, enhancedSystem, enhancedWebContext),
       } as const;
 
       const res = await fetch("/api/ai/openai", {
@@ -137,7 +137,7 @@ export async function generateAIResponse(history: ChatMessage[], opts: AIOptions
   // Then Gemini
   if (GEMINI_API_KEY) {
     try {
-      const body = toGeminiBody(history, opts.system || undefined, opts.webContext || undefined, opts.model, opts.temperature);
+      const body = toGeminiBody(history, enhancedSystem || undefined, enhancedWebContext || undefined, opts.model, opts.temperature);
       const res = await fetch("/api/ai/gemini", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
