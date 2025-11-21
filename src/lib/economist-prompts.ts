@@ -92,7 +92,7 @@ Use this data combined with macroeconomic indicators to identify profit maximiza
 
 export function createEconomistSystemPrompt(
   baseSystem?: string,
-  userContext?: string
+  userContext?: string,
 ): string {
   const parts: string[] = [ECONOMIST_SYSTEM_PROMPT];
 

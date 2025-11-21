@@ -108,10 +108,12 @@ export function getAllAppData(): AppContextData {
   // Collect visible page data from DOM (text content, structured data)
   try {
     const pageText = document.body.innerText.substring(0, 5000);
-    const metaTags = Array.from(document.querySelectorAll("meta[name], meta[property]"))
+    const metaTags = Array.from(
+      document.querySelectorAll("meta[name], meta[property]"),
+    )
       .map(
         (tag) =>
-          `${tag.getAttribute("name") || tag.getAttribute("property")}: ${tag.getAttribute("content")}`
+          `${tag.getAttribute("name") || tag.getAttribute("property")}: ${tag.getAttribute("content")}`,
       )
       .join("\n");
 
@@ -130,7 +132,9 @@ export function formatContextForPrompt(data: AppContextData): string {
   if (data.userSettings.email) {
     sections.push(`User Email: ${data.userSettings.email}`);
   }
-  sections.push(`Conversational Mode: ${data.conversationalMode ? "Enabled" : "Disabled"}`);
+  sections.push(
+    `Conversational Mode: ${data.conversationalMode ? "Enabled" : "Disabled"}`,
+  );
   sections.push(`Current Page: ${data.pageContext}`);
 
   if (data.businessFeasibility.length > 0) {
@@ -138,7 +142,7 @@ export function formatContextForPrompt(data: AppContextData): string {
     sections.push(`Total Ideas Analyzed: ${data.businessFeasibility.length}`);
     data.businessFeasibility.slice(0, 3).forEach((item: any, idx) => {
       sections.push(
-        `Idea ${idx + 1}: ${item.idea} (${item.verdict}, Score: ${item.score})`
+        `Idea ${idx + 1}: ${item.idea} (${item.verdict}, Score: ${item.score})`,
       );
     });
   }
@@ -168,7 +172,7 @@ export function summarizeContextForQuery(data: AppContextData): string {
 
   if (data.businessFeasibility.length > 0) {
     summary.push(
-      `User has analyzed ${data.businessFeasibility.length} business ideas`
+      `User has analyzed ${data.businessFeasibility.length} business ideas`,
     );
   }
 

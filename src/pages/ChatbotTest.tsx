@@ -7,7 +7,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Send, Loader2, TrendingUp } from "lucide-react";
 import { generateAIResponse } from "@/lib/ai";
 import { getAllAppData, formatContextForPrompt } from "@/lib/app-context";
-import { ECONOMIST_SAMPLE_QUESTIONS, ECONOMIST_CAPABILITIES } from "@/lib/economist-prompts";
+import {
+  ECONOMIST_SAMPLE_QUESTIONS,
+  ECONOMIST_CAPABILITIES,
+} from "@/lib/economist-prompts";
 import type { ChatMessage } from "@/lib/chatbot-data";
 
 export default function ChatbotTest() {

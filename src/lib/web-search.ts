@@ -19,14 +19,14 @@ export async function performWebSearch(query: string): Promise<SearchResult[]> {
         headers: {
           "User-Agent": "Joseph-AI-Chatbot/1.0",
         },
-      }
+      },
     );
 
     if (!response.ok) {
       return [];
     }
 
-    const data = await response.json() as any;
+    const data = (await response.json()) as any;
     const results: SearchResult[] = [];
 
     // Parse DuckDuckGo response
@@ -82,7 +82,7 @@ export async function fetchWebPageText(rawUrl: string): Promise<string | null> {
 
 export async function searchAndSummarize(
   query: string,
-  maxResults: number = 3
+  maxResults: number = 3,
 ): Promise<string> {
   const results = await performWebSearch(query);
 
@@ -103,7 +103,7 @@ export async function searchAndSummarize(
 
 export async function enhanceResponseWithWebContext(
   query: string,
-  maxSearchResults: number = 2
+  maxSearchResults: number = 2,
 ): Promise<string> {
   const searchResults = await performWebSearch(query);
 
