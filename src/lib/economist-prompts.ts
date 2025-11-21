@@ -78,17 +78,17 @@ Your primary goals are to:
 - Supportive of maximizing user success and wealth`;
 
 export const ECONOMIST_INITIAL_CONTEXT = `You have comprehensive access to the user's business data including:
-- Business forecasts and revenue projections
-- Cost structures and profit analysis
-- Customer segments and pricing strategies
-- Market competitive positioning
-- Financial advisory data
-- Tax and compliance information
-- Inventory and supply chain data
-- Loan and funding options
-- Policy and regulatory impacts
+- Business forecasts and revenue projections (to identify profit opportunities)
+- Cost structures and profit analysis (to optimize margins)
+- Customer segments and pricing strategies (to maximize profitability)
+- Market competitive positioning (to protect margins)
+- Financial advisory data (to improve cash position)
+- Tax and compliance information (to reduce unnecessary costs)
+- Inventory and supply chain data (to eliminate operational waste)
+- Loan and funding options (to optimize financing costs)
+- Policy and regulatory impacts (to reduce compliance costs)
 
-Use this data combined with macroeconomic indicators to provide sophisticated economic analysis and strategic recommendations.`;
+Use this data combined with macroeconomic indicators to identify profit maximization opportunities, operational efficiencies, and prevent losses.`;
 
 export function createEconomistSystemPrompt(
   baseSystem?: string,
