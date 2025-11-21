@@ -523,35 +523,267 @@ const SalesIntelligence = () => {
 
           {/* Engagement Tab */}
           <TabsContent value="engagement" className="space-y-6">
+            {/* Channel Selection */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Select Engagement Channel</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  {
+                    id: "whatsapp",
+                    name: "WhatsApp",
+                    icon: <MessageCircle className="h-8 w-8 text-green-600" />,
+                    color: "border-green-300 bg-green-50",
+                  },
+                  {
+                    id: "sms",
+                    name: "SMS",
+                    icon: <MessageSquareDot className="h-8 w-8 text-blue-600" />,
+                    color: "border-blue-300 bg-blue-50",
+                  },
+                  {
+                    id: "email",
+                    name: "Email",
+                    icon: <Mail className="h-8 w-8 text-red-600" />,
+                    color: "border-red-300 bg-red-50",
+                  },
+                  {
+                    id: "linkedin",
+                    name: "LinkedIn",
+                    icon: <Linkedin className="h-8 w-8 text-blue-700" />,
+                    color: "border-blue-400 bg-blue-100",
+                  },
+                ].map((channel) => (
+                  <button
+                    key={channel.id}
+                    onClick={() => setSelectedChannel(channel.id)}
+                    className={`p-6 rounded-lg border-2 transition-all ${
+                      selectedChannel === channel.id
+                        ? `${channel.color} border-solid shadow-lg scale-105`
+                        : "border-gray-200 bg-white hover:border-gray-300"
+                    }`}
+                  >
+                    <div className="flex flex-col items-center gap-2">
+                      {channel.icon}
+                      <span className="font-semibold text-sm">{channel.name}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Engagement Data Table */}
+            <Card>
+              <CardHeader>
+                <CardTitle>
+                  {selectedChannel === "whatsapp" && "WhatsApp Engagement"}
+                  {selectedChannel === "sms" && "SMS Engagement"}
+                  {selectedChannel === "email" && "Email Engagement"}
+                  {selectedChannel === "linkedin" && "LinkedIn Engagement"}
+                </CardTitle>
+                <CardDescription>
+                  Engagement metrics by contact for the selected channel
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b bg-gray-50">
+                        <th className="text-left py-3 px-4 font-semibold">Name</th>
+                        <th className="text-left py-3 px-4 font-semibold">Company</th>
+                        <th className="text-left py-3 px-4 font-semibold">Deal Description</th>
+                        <th className="text-center py-3 px-4 font-semibold">Avg Response Rate</th>
+                        <th className="text-center py-3 px-4 font-semibold">Avg Response Time</th>
+                        <th className="text-center py-3 px-4 font-semibold">Engagement Score</th>
+                        <th className="text-center py-3 px-4 font-semibold">Follow-up Rate</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(selectedChannel === "whatsapp"
+                        ? [
+                            {
+                              name: "Ahmed Hassan",
+                              company: "ZenithTech Ltd",
+                              dealDescription: "50 Laptops Supply Contract",
+                              avgResponseRate: "95%",
+                              avgResponseTime: "8 min",
+                              engagementScore: 9.2,
+                              followUpRate: "100%",
+                            },
+                            {
+                              name: "Fatima Ali",
+                              company: "PrimeFoods PLC",
+                              dealDescription: "Packaging Automation Upgrade",
+                              avgResponseRate: "88%",
+                              avgResponseTime: "15 min",
+                              engagementScore: 8.7,
+                              followUpRate: "94%",
+                            },
+                            {
+                              name: "John Smith",
+                              company: "Star Transport Co.",
+                              dealDescription: "Fleet Tracking Subscription",
+                              avgResponseRate: "72%",
+                              avgResponseTime: "2.5 hours",
+                              engagementScore: 7.1,
+                              followUpRate: "78%",
+                            },
+                          ]
+                        : selectedChannel === "email"
+                        ? [
+                            {
+                              name: "Sarah Johnson",
+                              company: "GreenMart Stores",
+                              dealDescription: "POS + Inventory SaaS",
+                              avgResponseRate: "68%",
+                              avgResponseTime: "4 hours",
+                              engagementScore: 7.4,
+                              followUpRate: "82%",
+                            },
+                            {
+                              name: "Michael Brown",
+                              company: "CraftBuild Ltd",
+                              dealDescription: "Supplier Workflow System",
+                              avgResponseRate: "52%",
+                              avgResponseTime: "6 hours",
+                              engagementScore: 6.2,
+                              followUpRate: "65%",
+                            },
+                            {
+                              name: "Lisa Chen",
+                              company: "NextGen Autos",
+                              dealDescription: "CRM Deployment",
+                              avgResponseRate: "61%",
+                              avgResponseTime: "5.2 hours",
+                              engagementScore: 6.9,
+                              followUpRate: "71%",
+                            },
+                          ]
+                        : selectedChannel === "sms"
+                        ? [
+                            {
+                              name: "David Wilson",
+                              company: "AlphaPrint",
+                              dealDescription: "Printer Leasing Proposal",
+                              avgResponseRate: "75%",
+                              avgResponseTime: "12 min",
+                              engagementScore: 7.8,
+                              followUpRate: "88%",
+                            },
+                            {
+                              name: "Emma Davis",
+                              company: "Urban Boutique",
+                              dealDescription: "Website Revamp",
+                              avgResponseRate: "58%",
+                              avgResponseTime: "35 min",
+                              engagementScore: 6.3,
+                              followUpRate: "69%",
+                            },
+                            {
+                              name: "Robert Garcia",
+                              company: "RapidFoods",
+                              dealDescription: "Delivery App Integration",
+                              avgResponseRate: "81%",
+                              avgResponseTime: "20 min",
+                              engagementScore: 8.4,
+                              followUpRate: "91%",
+                            },
+                          ]
+                        : [
+                            {
+                              name: "James Anderson",
+                              company: "TechVision Inc",
+                              dealDescription: "Enterprise Software Suite",
+                              avgResponseRate: "45%",
+                              avgResponseTime: "8 hours",
+                              engagementScore: 5.8,
+                              followUpRate: "52%",
+                            },
+                            {
+                              name: "Rachel Moore",
+                              company: "Digital Solutions LLC",
+                              dealDescription: "Cloud Migration Services",
+                              avgResponseRate: "62%",
+                              avgResponseTime: "6 hours",
+                              engagementScore: 7.2,
+                              followUpRate: "74%",
+                            },
+                            {
+                              name: "Christopher Lee",
+                              company: "Innovation Labs",
+                              dealDescription: "AI Implementation Project",
+                              avgResponseRate: "71%",
+                              avgResponseTime: "4 hours",
+                              engagementScore: 8.1,
+                              followUpRate: "85%",
+                            },
+                          ]
+                      ).map((contact, idx) => (
+                        <tr key={idx} className="border-b hover:bg-gray-50">
+                          <td className="py-3 px-4 font-medium">{contact.name}</td>
+                          <td className="py-3 px-4">{contact.company}</td>
+                          <td className="py-3 px-4">{contact.dealDescription}</td>
+                          <td className="py-3 px-4 text-center">
+                            <Badge className="bg-green-100 text-green-800">
+                              {contact.avgResponseRate}
+                            </Badge>
+                          </td>
+                          <td className="py-3 px-4 text-center text-sm">
+                            {contact.avgResponseTime}
+                          </td>
+                          <td className="py-3 px-4 text-center">
+                            <Badge className="bg-blue-100 text-blue-800">
+                              {contact.engagementScore}/10
+                            </Badge>
+                          </td>
+                          <td className="py-3 px-4 text-center">
+                            <Badge className="bg-purple-100 text-purple-800">
+                              {contact.followUpRate}
+                            </Badge>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Automated Engagement & CRM Stats Card */}
             <Card>
               <CardHeader>
                 <CardTitle>Automated Engagement & CRM</CardTitle>
                 <CardDescription>
-                  Automated follow-ups, conversation summaries, and engagement
-                  tracking
+                  Overall engagement statistics and automation metrics
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 border rounded-lg">
-                    <h4 className="font-semibold mb-4">Engagement Channels</h4>
+                    <h4 className="font-semibold mb-4">Channel Performance</h4>
                     <div className="space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm">Email</span>
-                        <div className="w-32 bg-gray-200 rounded-full h-2">
-                          <div className="bg-blue-600 h-2 rounded-full w-5/6"></div>
-                        </div>
-                      </div>
                       <div className="flex justify-between items-center">
                         <span className="text-sm">WhatsApp</span>
                         <div className="w-32 bg-gray-200 rounded-full h-2">
-                          <div className="bg-green-600 h-2 rounded-full w-4/6"></div>
+                          <div className="bg-green-600 h-2 rounded-full w-5/6"></div>
                         </div>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-sm">SMS</span>
                         <div className="w-32 bg-gray-200 rounded-full h-2">
-                          <div className="bg-purple-600 h-2 rounded-full w-3/6"></div>
+                          <div className="bg-blue-600 h-2 rounded-full w-4/6"></div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">Email</span>
+                        <div className="w-32 bg-gray-200 rounded-full h-2">
+                          <div className="bg-red-600 h-2 rounded-full w-3/5"></div>
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm">LinkedIn</span>
+                        <div className="w-32 bg-gray-200 rounded-full h-2">
+                          <div className="bg-blue-700 h-2 rounded-full w-2/5"></div>
                         </div>
                       </div>
                     </div>
@@ -562,19 +794,25 @@ const SalesIntelligence = () => {
                       <div>
                         <div className="flex justify-between text-sm mb-1">
                           <span>Automated Triggers</span>
-                          <span className="font-semibold">847</span>
+                          <span className="font-semibold">2,847</span>
                         </div>
                       </div>
                       <div>
                         <div className="flex justify-between text-sm mb-1">
-                          <span>Response Rate</span>
-                          <span className="font-semibold">67%</span>
+                          <span>Overall Response Rate</span>
+                          <span className="font-semibold">72%</span>
                         </div>
                       </div>
                       <div>
                         <div className="flex justify-between text-sm mb-1">
                           <span>Avg Response Time</span>
-                          <span className="font-semibold">2.3 hours</span>
+                          <span className="font-semibold">2.1 hours</span>
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex justify-between text-sm mb-1">
+                          <span>Conversion from Engagement</span>
+                          <span className="font-semibold">34%</span>
                         </div>
                       </div>
                     </div>
