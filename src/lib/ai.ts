@@ -1,10 +1,14 @@
 import type { ChatMessage } from "./chatbot-data";
+import { getAllAppData, formatContextForPrompt } from "./app-context";
+import { enhanceResponseWithWebContext, shouldPerformWebSearch } from "./web-search";
 
 export interface AIOptions {
   model?: string;
   temperature?: number;
   system?: string;
   webContext?: string | null;
+  includeAppContext?: boolean;
+  performWebSearch?: boolean;
 }
 
 const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY as string | undefined;
