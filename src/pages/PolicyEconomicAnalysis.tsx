@@ -62,60 +62,32 @@ export default function PolicyEconomicAnalysis() {
         </div>
       </div>
 
-      {/* Loading State */}
-      {isLoading && (
-        <div className="flex items-center justify-center py-8">
-          <Loader2 className="h-8 w-8 animate-spin mr-2" />
-          <span>Loading policy and economic data...</span>
-        </div>
-      )}
-
       {/* Main Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-6 lg:grid-cols-11 overflow-x-auto">
-          <TabsTrigger value="external-policy" className="flex items-center gap-2">
-            <Globe className="h-4 w-4" />
-            <span className="hidden sm:inline text-xs">External</span>
-          </TabsTrigger>
-          <TabsTrigger value="internal-policy" className="flex items-center gap-2">
-            <Building className="h-4 w-4" />
-            <span className="hidden sm:inline text-xs">Internal</span>
-          </TabsTrigger>
-          <TabsTrigger value="policy-reports" className="flex items-center gap-2">
-            <FileText className="h-4 w-4" />
-            <span className="hidden sm:inline text-xs">Reports</span>
-          </TabsTrigger>
-          <TabsTrigger value="economic-impact" className="flex items-center gap-2">
-            <TrendingUp className="h-4 w-4" />
-            <span className="hidden sm:inline text-xs">Impact</span>
-          </TabsTrigger>
-          <TabsTrigger value="internal-impact" className="flex items-center gap-2">
-            <Target className="h-4 w-4" />
-            <span className="hidden sm:inline text-xs">Int. Impact</span>
-          </TabsTrigger>
-          <TabsTrigger value="strategy" className="flex items-center gap-2">
-            <Shield className="h-4 w-4" />
-            <span className="hidden sm:inline text-xs">Strategy</span>
+        <TabsList className="grid w-full grid-cols-6">
+          <TabsTrigger value="management" className="flex items-center gap-2">
+            <Settings className="h-4 w-4" />
+            <span className="hidden sm:inline">Management</span>
           </TabsTrigger>
           <TabsTrigger value="watchtower" className="flex items-center gap-2">
             <Radio className="h-4 w-4" />
-            <span className="hidden sm:inline text-xs">Watchtower</span>
+            <span className="hidden sm:inline">Watchtower</span>
           </TabsTrigger>
           <TabsTrigger value="simplifier" className="flex items-center gap-2">
             <BookOpen className="h-4 w-4" />
-            <span className="hidden sm:inline text-xs">Simplifier</span>
+            <span className="hidden sm:inline">Simplifier</span>
           </TabsTrigger>
           <TabsTrigger value="pulseboard" className="flex items-center gap-2">
             <Activity className="h-4 w-4" />
-            <span className="hidden sm:inline text-xs">Pulseboard</span>
+            <span className="hidden sm:inline">Pulseboard</span>
           </TabsTrigger>
           <TabsTrigger value="scenario" className="flex items-center gap-2">
             <Zap className="h-4 w-4" />
-            <span className="hidden sm:inline text-xs">Scenario</span>
+            <span className="hidden sm:inline">Scenario</span>
           </TabsTrigger>
           <TabsTrigger value="fiscal" className="flex items-center gap-2">
             <DollarSign className="h-4 w-4" />
-            <span className="hidden sm:inline text-xs">Fiscal</span>
+            <span className="hidden sm:inline">Fiscal</span>
           </TabsTrigger>
         </TabsList>
 
