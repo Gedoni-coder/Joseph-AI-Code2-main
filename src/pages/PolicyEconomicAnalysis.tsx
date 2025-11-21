@@ -116,31 +116,6 @@ export default function PolicyEconomicAnalysis() {
         </TabsContent>
       </Tabs>
 
-      {/* Action Center */}
-      <div className="bg-muted/50 rounded-lg p-6 mt-8">
-        <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Link to="/policy-alerts">
-            <Button variant="outline" className="w-full flex items-center gap-2">
-              <Globe className="h-4 w-4" />
-              Policy Alerts
-            </Button>
-          </Link>
-          <Link to="/impact-calculator">
-            <Button variant="outline" className="w-full flex items-center gap-2">
-              <TrendingUp className="h-4 w-4" />
-              Impact Calculator
-            </Button>
-          </Link>
-          <Link to="/strategy-builder">
-            <Button variant="outline" className="w-full flex items-center gap-2">
-              <Shield className="h-4 w-4" />
-              Strategy Builder
-            </Button>
-          </Link>
-        </div>
-      </div>
-
       {/* Footer */}
       <footer className="border-t bg-muted/30 mt-16">
         <div className="container mx-auto px-4 py-6">
