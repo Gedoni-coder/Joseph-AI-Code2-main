@@ -28,30 +28,7 @@ import {
 } from "lucide-react";
 
 export default function PolicyEconomicAnalysis() {
-  const {
-    externalPolicies,
-    internalPolicies,
-    policyReports,
-    economicIndicators,
-    internalImpacts,
-    strategyRecommendations,
-    isLoading,
-    error,
-    lastUpdated,
-    isConnected,
-    addExternalPolicy,
-    updateExternalPolicy,
-    addInternalPolicy,
-    updateInternalPolicy,
-    generatePolicyReport,
-    addInternalImpact,
-    updateImpactStatus,
-    addStrategyRecommendation,
-    updateStrategyStatus,
-    refreshData,
-  } = usePolicyEconomicData();
-
-  const [activeTab, setActiveTab] = useState("external-policy");
+  const [activeTab, setActiveTab] = useState("management");
 
   if (error) {
     return (
