@@ -21,11 +21,16 @@ import {
   ArrowRight,
   CheckCircle,
   AlertCircle,
+  Mail,
+  MessageCircle,
+  MessageSquareDot,
+  Linkedin,
 } from "lucide-react";
 
 const SalesIntelligence = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedChannel, setSelectedChannel] = useState("whatsapp");
   const isConnected = true;
   const lastUpdated = new Date();
 
