@@ -4,9 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Send, Loader2 } from "lucide-react";
+import { Send, Loader2, TrendingUp } from "lucide-react";
 import { generateAIResponse } from "@/lib/ai";
 import { getAllAppData, formatContextForPrompt } from "@/lib/app-context";
+import { ECONOMIST_SAMPLE_QUESTIONS, ECONOMIST_CAPABILITIES } from "@/lib/economist-prompts";
 import type { ChatMessage } from "@/lib/chatbot-data";
 
 export default function ChatbotTest() {
@@ -15,7 +16,7 @@ export default function ChatbotTest() {
       id: "welcome",
       type: "assistant",
       content:
-        "Welcome to the Enhanced Chatbot Test! I now have access to all your app data and can search the web for relevant information. Ask me anything about your business or general topics!",
+        "Hello! I'm Joseph, your Expert Macro and Micro Business Economist. My mission is to help you maximize profitability and operations efficiency while minimizing losses. I analyze your business data combined with economic indicators to identify profit opportunities, cost savings, pricing optimization, and financial risks. Ask me how to increase profit margins, reduce costs, identify unprofitable operations, or protect against economic threats!",
       timestamp: new Date(),
     },
   ]);
@@ -52,8 +53,7 @@ export default function ChatbotTest() {
     try {
       const history = [...messages, userMessage];
       const response = await generateAIResponse(history, {
-        system:
-          "You are Joseph AI, an expert business advisor. You have access to the user's business data and can search the web for relevant information. Be helpful, specific, and cite sources when using web information.",
+        // Uses the economist system prompt automatically when system is not specified
         includeAppContext: true,
         performWebSearch: true,
       });
