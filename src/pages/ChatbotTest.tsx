@@ -176,13 +176,15 @@ export default function ChatbotTest() {
 
       <div className="mt-4 p-4 bg-amber-50 rounded-lg border border-amber-200">
         <h3 className="font-semibold text-amber-900 mb-2">
-          Try asking:
+          Try asking Joseph (Focus on Profit & Loss):
         </h3>
         <ul className="text-sm text-amber-800 space-y-1">
-          <li>• "What's the latest trend in e-commerce?"</li>
-          <li>• "How can I improve my business forecast?"</li>
-          <li>• "What's the current economic outlook?"</li>
-          <li>• "How do I optimize my pricing strategy?"</li>
+          <li>• "Which of my operations are losing money?"</li>
+          <li>• "What's my optimal pricing to maximize profit?"</li>
+          <li>• "Where can I reduce costs without impacting quality?"</li>
+          <li>• "Which customer segments are most profitable?"</li>
+          <li>• "How do rising interest rates impact my profit margins?"</li>
+          <li>• "What's the best way to improve my break-even point?"</li>
         </ul>
       </div>
     </div>
