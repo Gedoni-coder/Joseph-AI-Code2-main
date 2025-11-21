@@ -48,12 +48,15 @@ export default function PrimaryLanding() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  const handleEmailSignup = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
+  const handleEmailSignup = (e?: React.FormEvent) => {
+    if (e) {
+      e.preventDefault();
+    }
     setIsLoading(true);
     setTimeout(() => {
-      localStorage.setItem("joseph:signupEmail", email);
+      if (email) {
+        localStorage.setItem("joseph:signupEmail", email);
+      }
       navigate("/signup");
     }, 300);
   };
@@ -135,8 +138,7 @@ export default function PrimaryLanding() {
         </div>
 
         <Button
-          variant="outline"
-          className="border-[#4d7fd9]/50 text-white hover:bg-[#4d7fd9]/10 hover:border-[#4d7fd9]"
+          className="bg-transparent border border-[#4d7fd9]/30 text-[#4d7fd9] hover:bg-[#4d7fd9]/10 hover:border-[#4d7fd9]/60 transition-all duration-300"
           onClick={() => navigate("/signup")}
         >
           Get Started
@@ -154,25 +156,51 @@ export default function PrimaryLanding() {
               <span className="font-bold text-white ml-3">Grow.</span>
             </h1>
 
-            <p className="text-lg text-gray-300 max-w-4xl mx-auto leading-relaxed">
-              Agentic Economic Intelligence System built to guide businesses,
-              policymakers, and enterprises toward smarter financial, market,
-              and operational decisions. From micro to macro, Joseph helps you
-              grow sustainably — and drive real economic growth.
-            </p>
+            <div className="flex flex-col lg:flex-row items-center gap-8 max-w-5xl mx-auto">
+              <div className="flex-1">
+                <p className="text-lg text-gray-300 leading-relaxed">
+                  Agentic Economic Intelligence System built to guide businesses,
+                  policymakers, and enterprises toward smarter financial, market,
+                  and operational decisions. From micro to macro, Joseph helps you
+                  grow sustainably — and drive real economic growth.
+                </p>
+              </div>
+
+              {/* Floating Metrics Cards */}
+              <div className="flex gap-6 flex-shrink-0 lg:ml-4">
+                {/* Card 1 */}
+                <div className="relative animate-float-card" style={{ animationDelay: '0s' }}>
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#4d7fd9] to-[#3d6dc4] rounded-2xl blur-lg opacity-30 animate-pulse" />
+                  <div className="relative w-32 h-40 px-4 py-6 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/25 to-[#3d6dc4]/15 border border-[#4d7fd9]/50 backdrop-blur-md flex flex-col items-center justify-center text-center">
+                    <div className="text-sm font-semibold text-white leading-tight">Top 10 in competitive market</div>
+                  </div>
+                </div>
+
+                {/* Card 2 */}
+                <div className="relative animate-float-card" style={{ animationDelay: '0.5s' }}>
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#4d7fd9] to-[#3d6dc4] rounded-2xl blur-lg opacity-30 animate-pulse" />
+                  <div className="relative w-32 h-40 px-4 py-6 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/25 to-[#3d6dc4]/15 border border-[#4d7fd9]/50 backdrop-blur-md flex flex-col items-center justify-center text-center">
+                    <div className="text-sm font-semibold text-white leading-tight">+100% Revenue growth</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Email Signup with Pricing Button */}
-          <div className="flex flex-col lg:flex-row items-center justify-center gap-4 max-w-2xl mx-auto">
+          <div className="space-y-3">
+            <p className="text-center text-sm text-gray-400 font-medium">Enter your email in the email box</p>
+            <div className="flex flex-col lg:flex-row items-center justify-center gap-4 max-w-2xl mx-auto">
             <form onSubmit={handleEmailSignup} className="w-full lg:flex-1">
-              <div className="relative p-1 rounded-lg bg-gradient-to-r from-[#4d7fd9]/30 via-[#3d6dc4]/20 to-[#4d7fd9]/30 backdrop-blur-sm">
-                <div className="relative flex items-center bg-[#0a1449] rounded-lg pr-2 pl-6 py-3">
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-[#4d7fd9]/40 via-[#3d6dc4]/20 to-[#4d7fd9]/40 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative flex items-center bg-[#0a1449]/80 border border-[#4d7fd9]/20 rounded-xl px-6 py-3.5 backdrop-blur-md hover:border-[#4d7fd9]/50 hover:bg-[#0a1449]/90 transition-all duration-300 shadow-lg hover:shadow-lg hover:shadow-[#4d7fd9]/10">
                   <Input
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder="your@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="bg-transparent border-0 text-white placeholder:text-gray-500 focus:outline-none text-base"
+                    className="bg-transparent border-0 text-white placeholder:text-gray-500/70 focus:outline-none text-base w-full"
                     required
                   />
                 </div>
@@ -180,19 +208,19 @@ export default function PrimaryLanding() {
             </form>
 
             <Button
-              variant="outline"
-              className="border-[#4d7fd9]/50 text-white hover:bg-[#4d7fd9]/10 hover:border-[#4d7fd9] rounded-lg px-6 h-12 font-semibold w-full lg:w-auto whitespace-nowrap"
+              className="bg-transparent border border-[#4d7fd9]/30 text-white hover:bg-[#4d7fd9]/10 hover:border-[#4d7fd9]/60 rounded-lg px-6 h-12 font-semibold w-full lg:w-auto whitespace-nowrap transition-all duration-300"
               onClick={() => scrollToSection("pricing")}
             >
               View Plan and Pricing
             </Button>
           </div>
+          </div>
 
           {/* CTA Button */}
           <div>
             <Button
-              onClick={handleEmailSignup}
-              disabled={isLoading || !email}
+              onClick={() => handleEmailSignup()}
+              disabled={isLoading}
               className="bg-gradient-to-r from-[#4d7fd9] to-[#3d6dc4] hover:from-[#5d8fe9] hover:to-[#4d7dd4] text-white rounded-lg px-8 h-12 font-semibold inline-flex items-center gap-2 text-lg"
             >
               {isLoading ? (
@@ -720,6 +748,15 @@ export default function PrimaryLanding() {
 
         .animate-float {
           animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float-card {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-15px); }
+        }
+
+        .animate-float-card {
+          animation: float-card 3s ease-in-out infinite;
         }
 
         .bg-gradient-radial {
