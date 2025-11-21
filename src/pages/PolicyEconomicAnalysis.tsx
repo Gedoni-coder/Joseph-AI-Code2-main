@@ -15,6 +15,11 @@ import { PolicyReports } from "../components/policy/policy-reports";
 import { EconomicImpactAnalysis } from "../components/policy/economic-impact-analysis";
 import { InternalImpactAnalysis } from "../components/policy/internal-impact-analysis";
 import { StrategyRecommendations } from "../components/policy/strategy-recommendations";
+import { PolicyWatchtower } from "../components/policy/policy-watchtower";
+import { PolicySimplifier } from "../components/policy/policy-simplifier";
+import { EconomicPulseboard } from "../components/policy/economic-pulseboard";
+import { ScenarioSimulation } from "../components/policy/scenario-simulation";
+import { FiscalPolicyAnalyzer } from "../components/policy/fiscal-policy-analyzer";
 import {
   Loader2,
   Globe,
@@ -23,6 +28,11 @@ import {
   TrendingUp,
   Target,
   Shield,
+  Radio,
+  BookOpen,
+  Activity,
+  Zap,
+  DollarSign,
 } from "lucide-react";
 
 export default function PolicyEconomicAnalysis() {
