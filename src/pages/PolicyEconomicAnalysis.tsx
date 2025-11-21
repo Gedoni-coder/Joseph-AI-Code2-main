@@ -209,6 +209,26 @@ export default function PolicyEconomicAnalysis() {
             onUpdateStatus={updateStrategyStatus}
           />
         </TabsContent>
+
+        <TabsContent value="watchtower" className="space-y-4">
+          <PolicyWatchtower />
+        </TabsContent>
+
+        <TabsContent value="simplifier" className="space-y-4">
+          <PolicySimplifier />
+        </TabsContent>
+
+        <TabsContent value="pulseboard" className="space-y-4">
+          <EconomicPulseboard />
+        </TabsContent>
+
+        <TabsContent value="scenario" className="space-y-4">
+          <ScenarioSimulation />
+        </TabsContent>
+
+        <TabsContent value="fiscal" className="space-y-4">
+          <FiscalPolicyAnalyzer />
+        </TabsContent>
       </Tabs>
 
       {/* Action Center */}
