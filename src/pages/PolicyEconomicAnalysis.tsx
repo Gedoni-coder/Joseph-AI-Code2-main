@@ -91,52 +91,8 @@ export default function PolicyEconomicAnalysis() {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="external-policy" className="space-y-4">
-          <ExternalPolicyAnalysis
-            externalPolicies={externalPolicies}
-            onAddPolicy={addExternalPolicy}
-            onUpdatePolicy={updateExternalPolicy}
-          />
-        </TabsContent>
-
-        <TabsContent value="internal-policy" className="space-y-4">
-          <InternalPolicyAnalysis
-            internalPolicies={internalPolicies}
-            onAddPolicy={addInternalPolicy}
-            onUpdatePolicy={updateInternalPolicy}
-          />
-        </TabsContent>
-
-        <TabsContent value="policy-reports" className="space-y-4">
-          <PolicyReports
-            policyReports={policyReports}
-            onGenerateReport={generatePolicyReport}
-            isLoading={isLoading}
-          />
-        </TabsContent>
-
-        <TabsContent value="economic-impact" className="space-y-4">
-          <EconomicImpactAnalysis
-            economicIndicators={economicIndicators}
-            onRefreshData={refreshData}
-            isLoading={isLoading}
-          />
-        </TabsContent>
-
-        <TabsContent value="internal-impact" className="space-y-4">
-          <InternalImpactAnalysis
-            internalImpacts={internalImpacts}
-            onAddImpact={addInternalImpact}
-            onUpdateStatus={updateImpactStatus}
-          />
-        </TabsContent>
-
-        <TabsContent value="strategy" className="space-y-4">
-          <StrategyRecommendations
-            strategyRecommendations={strategyRecommendations}
-            onAddRecommendation={addStrategyRecommendation}
-            onUpdateStatus={updateStrategyStatus}
-          />
+        <TabsContent value="management" className="space-y-4">
+          <PolicyEconomicManagement />
         </TabsContent>
 
         <TabsContent value="watchtower" className="space-y-4">
