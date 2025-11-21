@@ -1,7 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import {
   TrendingUp,
@@ -47,74 +52,86 @@ const Landing = () => {
     {
       icon: <Globe className="h-6 w-6" />,
       title: "Economic Forecasting",
-      description: "Advanced economic modeling and forecasting across local, state, national, and international markets",
-      link: "/economic-indicators"
+      description:
+        "Advanced economic modeling and forecasting across local, state, national, and international markets",
+      link: "/economic-indicators",
     },
     {
       icon: <TrendingUp className="h-6 w-6" />,
       title: "Business Forecasting",
-      description: "Predictive analytics for revenue, growth projections, and comprehensive business planning strategies",
-      link: "/business-forecast"
+      description:
+        "Predictive analytics for revenue, growth projections, and comprehensive business planning strategies",
+      link: "/business-forecast",
     },
     {
       icon: <BarChart3 className="h-6 w-6" />,
       title: "Market Analysis",
-      description: "Competitive intelligence, market trends, and strategic positioning analysis for informed decisions",
-      link: "/market-competitive-analysis"
+      description:
+        "Competitive intelligence, market trends, and strategic positioning analysis for informed decisions",
+      link: "/market-competitive-analysis",
     },
     {
       icon: <Target className="h-6 w-6" />,
       title: "Pricing Strategy",
-      description: "Dynamic pricing models, competitive analysis, and optimization strategies for maximum profitability",
-      link: "/pricing-strategies"
+      description:
+        "Dynamic pricing models, competitive analysis, and optimization strategies for maximum profitability",
+      link: "/pricing-strategies",
     },
     {
       icon: <DollarSign className="h-6 w-6" />,
       title: "Revenue Strategy",
-      description: "Revenue optimization, stream diversification, and growth strategies tailored to your business model",
-      link: "/revenue-forecasting"
+      description:
+        "Revenue optimization, stream diversification, and growth strategies tailored to your business model",
+      link: "/revenue-forecasting",
     },
     {
       icon: <CreditCard className="h-6 w-6" />,
       title: "Loan and Funding",
-      description: "Funding options analysis, loan comparison, investor matching, and capital strategy planning",
-      link: "/loan-research"
+      description:
+        "Funding options analysis, loan comparison, investor matching, and capital strategy planning",
+      link: "/loan-research",
     },
     {
       icon: <Package className="h-6 w-6" />,
       title: "Inventory and Supply Chain",
-      description: "Supply chain optimization, inventory management, and demand forecasting for operational efficiency",
-      link: "/supply-chain-analytics"
+      description:
+        "Supply chain optimization, inventory management, and demand forecasting for operational efficiency",
+      link: "/supply-chain-analytics",
     },
     {
       icon: <Calculator className="h-6 w-6" />,
       title: "Financial Advisory",
-      description: "Strategic budgeting, cash flow planning, and comprehensive financial guidance for better decisions",
-      link: "/financial-advisory"
+      description:
+        "Strategic budgeting, cash flow planning, and comprehensive financial guidance for better decisions",
+      link: "/financial-advisory",
     },
     {
       icon: <AlertTriangle className="h-6 w-6" />,
       title: "Policy and Economic Impact",
-      description: "Policy analysis, economic impact assessment, and regulatory compliance impact calculations",
-      link: "/impact-calculator"
+      description:
+        "Policy analysis, economic impact assessment, and regulatory compliance impact calculations",
+      link: "/impact-calculator",
     },
     {
       icon: <Shield className="h-6 w-6" />,
       title: "Tax and Compliance",
-      description: "Tax optimization, compliance monitoring, and regulatory reporting for seamless operations",
-      link: "/tax-compliance"
+      description:
+        "Tax optimization, compliance monitoring, and regulatory reporting for seamless operations",
+      link: "/tax-compliance",
     },
     {
       icon: <CheckCircle className="h-6 w-6" />,
       title: "Business Feasibility",
-      description: "Evaluate and analyze business ideas across multiple scenarios to determine viability and success potential",
-      link: "/business-feasibility"
+      description:
+        "Evaluate and analyze business ideas across multiple scenarios to determine viability and success potential",
+      link: "/business-feasibility",
     },
     {
       icon: <MessageSquare className="h-6 w-6" />,
       title: "Sales Intelligence",
-      description: "Universal sales intelligence module for lead handling, sales performance optimization, pipeline forecasting, and revenue conversion",
-      link: "/sales-intelligence"
+      description:
+        "Universal sales intelligence module for lead handling, sales performance optimization, pipeline forecasting, and revenue conversion",
+      link: "/sales-intelligence",
     },
   ];
 
@@ -134,7 +151,9 @@ const Landing = () => {
               </div>
               <div>
                 <h1 className="text-xl font-bold text-gray-900">Joseph AI</h1>
-                <p className="text-xs text-gray-600">Economic Intelligence Platform</p>
+                <p className="text-xs text-gray-600">
+                  Economic Intelligence Platform
+                </p>
               </div>
             </div>
             <Link to="/economic-indicators">
@@ -162,25 +181,36 @@ const Landing = () => {
               <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-4 border-white animate-pulse"></div>
             </div>
           </div>
-          
+
           <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-            Meet <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Joseph AI</span>
+            Meet{" "}
+            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              Joseph AI
+            </span>
           </h1>
-          
+
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Your intelligent economic analysis companion. Get real-time insights, forecasts, and strategic guidance 
-            powered by advanced AI technology for smarter business decisions.
+            Your intelligent economic analysis companion. Get real-time
+            insights, forecasts, and strategic guidance powered by advanced AI
+            technology for smarter business decisions.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Link to="/economic-indicators">
-              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-lg px-8 py-3">
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-lg px-8 py-3"
+              >
                 <Zap className="mr-2 h-5 w-5" />
                 Start Analyzing
               </Button>
             </Link>
             <Link to="/business-forecast">
-              <Button variant="outline" size="lg" className="text-lg px-8 py-3 border-2 hover:bg-gray-50">
+              <Button
+                variant="outline"
+                size="lg"
+                className="text-lg px-8 py-3 border-2 hover:bg-gray-50"
+              >
                 <BarChart3 className="mr-2 h-5 w-5" />
                 View Demo
               </Button>
@@ -216,7 +246,8 @@ const Landing = () => {
               Comprehensive Business Intelligence Suite
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Access all business intelligence modules from one unified platform. Click any module to dive deep into specialized analysis.
+              Access all business intelligence modules from one unified
+              platform. Click any module to dive deep into specialized analysis.
             </p>
           </div>
 
@@ -235,7 +266,9 @@ const Landing = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="pt-0">
-                    <p className="text-gray-600 leading-relaxed text-sm">{feature.description}</p>
+                    <p className="text-gray-600 leading-relaxed text-sm">
+                      {feature.description}
+                    </p>
                   </CardContent>
                 </Card>
               </Link>
@@ -252,7 +285,8 @@ const Landing = () => {
               Meet the Team Behind Joseph AI
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              The brilliant minds who make intelligent economic analysis possible
+              The brilliant minds who make intelligent economic analysis
+              possible
             </p>
           </div>
 
@@ -260,7 +294,10 @@ const Landing = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Profile cards will be added here - currently showing placeholder structure */}
             {[1, 2, 3, 4, 5, 6].map((placeholder) => (
-              <Card key={placeholder} className="border-2 border-dashed border-gray-300 bg-gray-50/50">
+              <Card
+                key={placeholder}
+                className="border-2 border-dashed border-gray-300 bg-gray-50/50"
+              >
                 <CardContent className="p-8 text-center">
                   <div className="w-24 h-24 rounded-full bg-gray-200 mx-auto mb-4 flex items-center justify-center">
                     <Users className="h-12 w-12 text-gray-400" />
@@ -285,7 +322,8 @@ const Landing = () => {
                 <div className="flex items-center gap-3">
                   <Upload className="h-5 w-5 text-blue-600" />
                   <p className="text-blue-800 font-medium">
-                    Ready to add photos and descriptions for your important team members
+                    Ready to add photos and descriptions for your important team
+                    members
                   </p>
                 </div>
               </CardContent>
@@ -344,24 +382,32 @@ const Landing = () => {
                   />
                 </div>
               </div>
-              
+
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
                 Ready to Transform Your Economic Analysis?
               </h2>
-              
+
               <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-                Join thousands of professionals who trust Joseph AI for intelligent economic insights and strategic guidance.
+                Join thousands of professionals who trust Joseph AI for
+                intelligent economic insights and strategic guidance.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Link to="/economic-indicators">
-                  <Button size="lg" className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-lg px-8 py-3">
+                  <Button
+                    size="lg"
+                    className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-lg px-8 py-3"
+                  >
                     <Zap className="mr-2 h-5 w-5" />
                     Get Started Free
                   </Button>
                 </Link>
                 <Link to="/financial-advisory">
-                  <Button variant="outline" size="lg" className="text-lg px-8 py-3 border-2">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="text-lg px-8 py-3 border-2"
+                  >
                     <Calculator className="mr-2 h-5 w-5" />
                     Explore Features
                   </Button>
@@ -388,43 +434,98 @@ const Landing = () => {
                 <h3 className="text-xl font-bold">Joseph AI</h3>
               </div>
               <p className="text-gray-400 mb-4 max-w-md">
-                Advanced economic intelligence platform powered by AI. Get real-time insights, forecasts, and strategic guidance for smarter business decisions.
+                Advanced economic intelligence platform powered by AI. Get
+                real-time insights, forecasts, and strategic guidance for
+                smarter business decisions.
               </p>
               <div className="flex gap-2">
-                <Badge variant="secondary" className="bg-gray-800 text-gray-300">
+                <Badge
+                  variant="secondary"
+                  className="bg-gray-800 text-gray-300"
+                >
                   <Star className="h-3 w-3 mr-1" />
                   AI-Powered
                 </Badge>
-                <Badge variant="secondary" className="bg-gray-800 text-gray-300">
+                <Badge
+                  variant="secondary"
+                  className="bg-gray-800 text-gray-300"
+                >
                   <Zap className="h-3 w-3 mr-1" />
                   Real-time
                 </Badge>
               </div>
             </div>
-            
+
             <div>
               <h4 className="font-semibold mb-4">Quick Access</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><Link to="/economic-indicators" className="hover:text-white transition-colors">Economic Forecasting</Link></li>
-                <li><Link to="/business-forecast" className="hover:text-white transition-colors">Business Forecasting</Link></li>
-                <li><Link to="/financial-advisory" className="hover:text-white transition-colors">Financial Advisory</Link></li>
-                <li><Link to="/market-competitive-analysis" className="hover:text-white transition-colors">Market Analysis</Link></li>
+                <li>
+                  <Link
+                    to="/economic-indicators"
+                    className="hover:text-white transition-colors"
+                  >
+                    Economic Forecasting
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/business-forecast"
+                    className="hover:text-white transition-colors"
+                  >
+                    Business Forecasting
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/financial-advisory"
+                    className="hover:text-white transition-colors"
+                  >
+                    Financial Advisory
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/market-competitive-analysis"
+                    className="hover:text-white transition-colors"
+                  >
+                    Market Analysis
+                  </Link>
+                </li>
               </ul>
             </div>
-            
+
             <div>
               <h4 className="font-semibold mb-4">Support</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Help Center</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Contact Us</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Status</a></li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Documentation
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Help Center
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Contact Us
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="hover:text-white transition-colors">
+                    Status
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
-          
+
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Joseph AI. All rights reserved. Peaceful Intelligence Technology.</p>
+            <p>
+              &copy; 2024 Joseph AI. All rights reserved. Peaceful Intelligence
+              Technology.
+            </p>
           </div>
         </div>
       </footer>

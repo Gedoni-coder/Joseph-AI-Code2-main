@@ -53,7 +53,8 @@ const SalesIntelligence = () => {
       id: "engagement-crm",
       name: "Automated Engagement & CRM",
       icon: <MessageSquare className="h-5 w-5" />,
-      description: "Automated follow-ups, CRM intelligence, engagement tracking",
+      description:
+        "Automated follow-ups, CRM intelligence, engagement tracking",
       metrics: {
         "Follow-up Rate": "94%",
         "Engagement Score": "7.8/10",
@@ -64,7 +65,8 @@ const SalesIntelligence = () => {
       id: "sales-targets",
       name: "Target Tracking & Revenue",
       icon: <BarChart3 className="h-5 w-5" />,
-      description: "Sales target monitoring, performance analytics, forecasting",
+      description:
+        "Sales target monitoring, performance analytics, forecasting",
       metrics: {
         "Target Achievement": "112%",
         "Revenue Trend": "+18%",
@@ -75,7 +77,8 @@ const SalesIntelligence = () => {
       id: "sales-assets",
       name: "Sales Assets & Marketing",
       icon: <Zap className="h-5 w-5" />,
-      description: "Proposal generation, marketing intelligence, lead attribution",
+      description:
+        "Proposal generation, marketing intelligence, lead attribution",
       metrics: {
         "Proposal Gen": "156 generated",
         "Channel Effectiveness": "7.5/10",
@@ -204,7 +207,10 @@ const SalesIntelligence = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {subModules.map((module) => (
-                <Card key={module.id} className="hover:shadow-lg transition-shadow">
+                <Card
+                  key={module.id}
+                  className="hover:shadow-lg transition-shadow"
+                >
                   <CardHeader>
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-3">
@@ -225,19 +231,17 @@ const SalesIntelligence = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
-                      {Object.entries(module.metrics).map(
-                        ([key, value]) => (
-                          <div
-                            key={key}
-                            className="flex justify-between items-center text-sm"
-                          >
-                            <span className="text-gray-600">{key}</span>
-                            <span className="font-semibold text-gray-900">
-                              {value}
-                            </span>
-                          </div>
-                        )
-                      )}
+                      {Object.entries(module.metrics).map(([key, value]) => (
+                        <div
+                          key={key}
+                          className="flex justify-between items-center text-sm"
+                        >
+                          <span className="text-gray-600">{key}</span>
+                          <span className="font-semibold text-gray-900">
+                            {value}
+                          </span>
+                        </div>
+                      ))}
                     </div>
                   </CardContent>
                 </Card>
@@ -267,24 +271,46 @@ const SalesIntelligence = () => {
               <CardHeader>
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                  <CardTitle>🔥 Hot Leads (High Conversion Probability)</CardTitle>
+                  <CardTitle>
+                    🔥 Hot Leads (High Conversion Probability)
+                  </CardTitle>
                 </div>
-                <CardDescription>Deals in advanced stages with high probability scores</CardDescription>
+                <CardDescription>
+                  Deals in advanced stages with high probability scores
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b bg-gray-50">
-                        <th className="text-left py-3 px-4 font-semibold">Company Name</th>
-                        <th className="text-left py-3 px-4 font-semibold">Deal Description</th>
-                        <th className="text-left py-3 px-4 font-semibold">Opening Date</th>
-                        <th className="text-left py-3 px-4 font-semibold">Expected Close</th>
-                        <th className="text-left py-3 px-4 font-semibold">Pipeline Stage</th>
-                        <th className="text-center py-3 px-4 font-semibold">AI Lead Score</th>
-                        <th className="text-center py-3 px-4 font-semibold">Deal Probability</th>
-                        <th className="text-center py-3 px-4 font-semibold">Stall?</th>
-                        <th className="text-left py-3 px-4 font-semibold">AI Rescue Playbook</th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Company Name
+                        </th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Deal Description
+                        </th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Opening Date
+                        </th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Expected Close
+                        </th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Pipeline Stage
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          AI Lead Score
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          Deal Probability
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          Stall?
+                        </th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          AI Rescue Playbook
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -298,7 +324,7 @@ const SalesIntelligence = () => {
                           leadScore: 92,
                           probability: 88,
                           stall: "No",
-                          playbook: "Not Required"
+                          playbook: "Not Required",
                         },
                         {
                           company: "PrimeFoods PLC",
@@ -309,7 +335,7 @@ const SalesIntelligence = () => {
                           leadScore: 95,
                           probability: 93,
                           stall: "No",
-                          playbook: "Not Required"
+                          playbook: "Not Required",
                         },
                         {
                           company: "Star Transport Co.",
@@ -320,8 +346,9 @@ const SalesIntelligence = () => {
                           leadScore: 89,
                           probability: 80,
                           stall: "Yes",
-                          playbook: "Send 'Decision Reminder + Value ROI Summary'"
-                        }
+                          playbook:
+                            "Send 'Decision Reminder + Value ROI Summary'",
+                        },
                       ].map((deal, idx) => (
                         <tr key={idx} className="border-b hover:bg-gray-50">
                           <td className="py-3 px-4">{deal.company}</td>
@@ -330,13 +357,19 @@ const SalesIntelligence = () => {
                           <td className="py-3 px-4">{deal.expectedClose}</td>
                           <td className="py-3 px-4">{deal.stage}</td>
                           <td className="py-3 px-4 text-center">
-                            <Badge className="bg-green-100 text-green-800">{deal.leadScore}</Badge>
+                            <Badge className="bg-green-100 text-green-800">
+                              {deal.leadScore}
+                            </Badge>
                           </td>
                           <td className="py-3 px-4 text-center">
-                            <Badge className="bg-green-100 text-green-800">{deal.probability}%</Badge>
+                            <Badge className="bg-green-100 text-green-800">
+                              {deal.probability}%
+                            </Badge>
                           </td>
                           <td className="py-3 px-4 text-center">
-                            <span className={`font-semibold ${deal.stall === "Yes" ? "text-red-600" : "text-green-600"}`}>
+                            <span
+                              className={`font-semibold ${deal.stall === "Yes" ? "text-red-600" : "text-green-600"}`}
+                            >
                               {deal.stall}
                             </span>
                           </td>
@@ -354,24 +387,46 @@ const SalesIntelligence = () => {
               <CardHeader>
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                  <CardTitle>🌤 Warm Leads (Medium Conversion Probability)</CardTitle>
+                  <CardTitle>
+                    🌤 Warm Leads (Medium Conversion Probability)
+                  </CardTitle>
                 </div>
-                <CardDescription>Leads in qualification and early engagement stages</CardDescription>
+                <CardDescription>
+                  Leads in qualification and early engagement stages
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b bg-gray-50">
-                        <th className="text-left py-3 px-4 font-semibold">Company Name</th>
-                        <th className="text-left py-3 px-4 font-semibold">Deal Description</th>
-                        <th className="text-left py-3 px-4 font-semibold">Opening Date</th>
-                        <th className="text-left py-3 px-4 font-semibold">Expected Close</th>
-                        <th className="text-left py-3 px-4 font-semibold">Pipeline Stage</th>
-                        <th className="text-center py-3 px-4 font-semibold">AI Lead Score</th>
-                        <th className="text-center py-3 px-4 font-semibold">Deal Probability</th>
-                        <th className="text-center py-3 px-4 font-semibold">Stall?</th>
-                        <th className="text-left py-3 px-4 font-semibold">AI Rescue Playbook</th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Company Name
+                        </th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Deal Description
+                        </th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Opening Date
+                        </th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Expected Close
+                        </th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Pipeline Stage
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          AI Lead Score
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          Deal Probability
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          Stall?
+                        </th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          AI Rescue Playbook
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -385,7 +440,7 @@ const SalesIntelligence = () => {
                           leadScore: 72,
                           probability: 54,
                           stall: "No",
-                          playbook: "Not Required"
+                          playbook: "Not Required",
                         },
                         {
                           company: "CraftBuild Ltd",
@@ -396,7 +451,7 @@ const SalesIntelligence = () => {
                           leadScore: 68,
                           probability: 48,
                           stall: "Yes",
-                          playbook: "'Re-engage With Case Study'"
+                          playbook: "'Re-engage With Case Study'",
                         },
                         {
                           company: "NextGen Autos",
@@ -407,8 +462,8 @@ const SalesIntelligence = () => {
                           leadScore: 61,
                           probability: 40,
                           stall: "No",
-                          playbook: "'Send Competitive Comparison Brief'"
-                        }
+                          playbook: "'Send Competitive Comparison Brief'",
+                        },
                       ].map((deal, idx) => (
                         <tr key={idx} className="border-b hover:bg-gray-50">
                           <td className="py-3 px-4">{deal.company}</td>
@@ -417,13 +472,19 @@ const SalesIntelligence = () => {
                           <td className="py-3 px-4">{deal.expectedClose}</td>
                           <td className="py-3 px-4">{deal.stage}</td>
                           <td className="py-3 px-4 text-center">
-                            <Badge className="bg-yellow-100 text-yellow-800">{deal.leadScore}</Badge>
+                            <Badge className="bg-yellow-100 text-yellow-800">
+                              {deal.leadScore}
+                            </Badge>
                           </td>
                           <td className="py-3 px-4 text-center">
-                            <Badge className="bg-yellow-100 text-yellow-800">{deal.probability}%</Badge>
+                            <Badge className="bg-yellow-100 text-yellow-800">
+                              {deal.probability}%
+                            </Badge>
                           </td>
                           <td className="py-3 px-4 text-center">
-                            <span className={`font-semibold ${deal.stall === "Yes" ? "text-orange-600" : "text-green-600"}`}>
+                            <span
+                              className={`font-semibold ${deal.stall === "Yes" ? "text-orange-600" : "text-green-600"}`}
+                            >
                               {deal.stall}
                             </span>
                           </td>
@@ -441,24 +502,46 @@ const SalesIntelligence = () => {
               <CardHeader>
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                  <CardTitle>❄ Cold Leads (Low Conversion Probability - Nurturing)</CardTitle>
+                  <CardTitle>
+                    ❄ Cold Leads (Low Conversion Probability - Nurturing)
+                  </CardTitle>
                 </div>
-                <CardDescription>Outreach and early engagement stage - requires nurturing</CardDescription>
+                <CardDescription>
+                  Outreach and early engagement stage - requires nurturing
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b bg-gray-50">
-                        <th className="text-left py-3 px-4 font-semibold">Company Name</th>
-                        <th className="text-left py-3 px-4 font-semibold">Deal Description</th>
-                        <th className="text-left py-3 px-4 font-semibold">Opening Date</th>
-                        <th className="text-left py-3 px-4 font-semibold">Expected Close</th>
-                        <th className="text-left py-3 px-4 font-semibold">Pipeline Stage</th>
-                        <th className="text-center py-3 px-4 font-semibold">AI Lead Score</th>
-                        <th className="text-center py-3 px-4 font-semibold">Deal Probability</th>
-                        <th className="text-center py-3 px-4 font-semibold">Stall?</th>
-                        <th className="text-left py-3 px-4 font-semibold">AI Rescue Playbook</th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Company Name
+                        </th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Deal Description
+                        </th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Opening Date
+                        </th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Expected Close
+                        </th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Pipeline Stage
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          AI Lead Score
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          Deal Probability
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          Stall?
+                        </th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          AI Rescue Playbook
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -472,7 +555,7 @@ const SalesIntelligence = () => {
                           leadScore: 25,
                           probability: 9,
                           stall: "Yes",
-                          playbook: "'Dormant Lead Recovery Script'"
+                          playbook: "'Dormant Lead Recovery Script'",
                         },
                         {
                           company: "Urban Boutique",
@@ -483,7 +566,7 @@ const SalesIntelligence = () => {
                           leadScore: 31,
                           probability: 12,
                           stall: "Yes",
-                          playbook: "'Soft Re-open Offer + Discount'"
+                          playbook: "'Soft Re-open Offer + Discount'",
                         },
                         {
                           company: "RapidFoods",
@@ -494,8 +577,8 @@ const SalesIntelligence = () => {
                           leadScore: 28,
                           probability: 7,
                           stall: "No",
-                          playbook: "'Reminder + Value Proposition Summary'"
-                        }
+                          playbook: "'Reminder + Value Proposition Summary'",
+                        },
                       ].map((deal, idx) => (
                         <tr key={idx} className="border-b hover:bg-gray-50">
                           <td className="py-3 px-4">{deal.company}</td>
@@ -504,13 +587,19 @@ const SalesIntelligence = () => {
                           <td className="py-3 px-4">{deal.expectedClose}</td>
                           <td className="py-3 px-4">{deal.stage}</td>
                           <td className="py-3 px-4 text-center">
-                            <Badge className="bg-blue-100 text-blue-800">{deal.leadScore}</Badge>
+                            <Badge className="bg-blue-100 text-blue-800">
+                              {deal.leadScore}
+                            </Badge>
                           </td>
                           <td className="py-3 px-4 text-center">
-                            <Badge className="bg-blue-100 text-blue-800">{deal.probability}%</Badge>
+                            <Badge className="bg-blue-100 text-blue-800">
+                              {deal.probability}%
+                            </Badge>
                           </td>
                           <td className="py-3 px-4 text-center">
-                            <span className={`font-semibold ${deal.stall === "Yes" ? "text-red-600" : "text-green-600"}`}>
+                            <span
+                              className={`font-semibold ${deal.stall === "Yes" ? "text-red-600" : "text-green-600"}`}
+                            >
                               {deal.stall}
                             </span>
                           </td>
@@ -528,7 +617,9 @@ const SalesIntelligence = () => {
           <TabsContent value="engagement" className="space-y-6">
             {/* Channel Selection */}
             <div>
-              <h3 className="text-lg font-semibold mb-4">Select Engagement Channel</h3>
+              <h3 className="text-lg font-semibold mb-4">
+                Select Engagement Channel
+              </h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   {
@@ -540,7 +631,9 @@ const SalesIntelligence = () => {
                   {
                     id: "sms",
                     name: "SMS",
-                    icon: <MessageSquareDot className="h-8 w-8 text-blue-600" />,
+                    icon: (
+                      <MessageSquareDot className="h-8 w-8 text-blue-600" />
+                    ),
                     color: "border-blue-300 bg-blue-50",
                   },
                   {
@@ -567,7 +660,9 @@ const SalesIntelligence = () => {
                   >
                     <div className="flex flex-col items-center gap-2">
                       {channel.icon}
-                      <span className="font-semibold text-sm">{channel.name}</span>
+                      <span className="font-semibold text-sm">
+                        {channel.name}
+                      </span>
                     </div>
                   </button>
                 ))}
@@ -592,13 +687,27 @@ const SalesIntelligence = () => {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b bg-gray-50">
-                        <th className="text-left py-3 px-4 font-semibold">Name</th>
-                        <th className="text-left py-3 px-4 font-semibold">Company</th>
-                        <th className="text-left py-3 px-4 font-semibold">Deal Description</th>
-                        <th className="text-center py-3 px-4 font-semibold">Avg Response Rate</th>
-                        <th className="text-center py-3 px-4 font-semibold">Avg Response Time</th>
-                        <th className="text-center py-3 px-4 font-semibold">Engagement Score</th>
-                        <th className="text-center py-3 px-4 font-semibold">Follow-up Rate</th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Name
+                        </th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Company
+                        </th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Deal Description
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          Avg Response Rate
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          Avg Response Time
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          Engagement Score
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          Follow-up Rate
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -633,99 +742,103 @@ const SalesIntelligence = () => {
                             },
                           ]
                         : selectedChannel === "email"
-                        ? [
-                            {
-                              name: "Sarah Johnson",
-                              company: "GreenMart Stores",
-                              dealDescription: "POS + Inventory SaaS",
-                              avgResponseRate: "68%",
-                              avgResponseTime: "4 hours",
-                              engagementScore: 7.4,
-                              followUpRate: "82%",
-                            },
-                            {
-                              name: "Michael Brown",
-                              company: "CraftBuild Ltd",
-                              dealDescription: "Supplier Workflow System",
-                              avgResponseRate: "52%",
-                              avgResponseTime: "6 hours",
-                              engagementScore: 6.2,
-                              followUpRate: "65%",
-                            },
-                            {
-                              name: "Lisa Chen",
-                              company: "NextGen Autos",
-                              dealDescription: "CRM Deployment",
-                              avgResponseRate: "61%",
-                              avgResponseTime: "5.2 hours",
-                              engagementScore: 6.9,
-                              followUpRate: "71%",
-                            },
-                          ]
-                        : selectedChannel === "sms"
-                        ? [
-                            {
-                              name: "David Wilson",
-                              company: "AlphaPrint",
-                              dealDescription: "Printer Leasing Proposal",
-                              avgResponseRate: "75%",
-                              avgResponseTime: "12 min",
-                              engagementScore: 7.8,
-                              followUpRate: "88%",
-                            },
-                            {
-                              name: "Emma Davis",
-                              company: "Urban Boutique",
-                              dealDescription: "Website Revamp",
-                              avgResponseRate: "58%",
-                              avgResponseTime: "35 min",
-                              engagementScore: 6.3,
-                              followUpRate: "69%",
-                            },
-                            {
-                              name: "Robert Garcia",
-                              company: "RapidFoods",
-                              dealDescription: "Delivery App Integration",
-                              avgResponseRate: "81%",
-                              avgResponseTime: "20 min",
-                              engagementScore: 8.4,
-                              followUpRate: "91%",
-                            },
-                          ]
-                        : [
-                            {
-                              name: "James Anderson",
-                              company: "TechVision Inc",
-                              dealDescription: "Enterprise Software Suite",
-                              avgResponseRate: "45%",
-                              avgResponseTime: "8 hours",
-                              engagementScore: 5.8,
-                              followUpRate: "52%",
-                            },
-                            {
-                              name: "Rachel Moore",
-                              company: "Digital Solutions LLC",
-                              dealDescription: "Cloud Migration Services",
-                              avgResponseRate: "62%",
-                              avgResponseTime: "6 hours",
-                              engagementScore: 7.2,
-                              followUpRate: "74%",
-                            },
-                            {
-                              name: "Christopher Lee",
-                              company: "Innovation Labs",
-                              dealDescription: "AI Implementation Project",
-                              avgResponseRate: "71%",
-                              avgResponseTime: "4 hours",
-                              engagementScore: 8.1,
-                              followUpRate: "85%",
-                            },
-                          ]
+                          ? [
+                              {
+                                name: "Sarah Johnson",
+                                company: "GreenMart Stores",
+                                dealDescription: "POS + Inventory SaaS",
+                                avgResponseRate: "68%",
+                                avgResponseTime: "4 hours",
+                                engagementScore: 7.4,
+                                followUpRate: "82%",
+                              },
+                              {
+                                name: "Michael Brown",
+                                company: "CraftBuild Ltd",
+                                dealDescription: "Supplier Workflow System",
+                                avgResponseRate: "52%",
+                                avgResponseTime: "6 hours",
+                                engagementScore: 6.2,
+                                followUpRate: "65%",
+                              },
+                              {
+                                name: "Lisa Chen",
+                                company: "NextGen Autos",
+                                dealDescription: "CRM Deployment",
+                                avgResponseRate: "61%",
+                                avgResponseTime: "5.2 hours",
+                                engagementScore: 6.9,
+                                followUpRate: "71%",
+                              },
+                            ]
+                          : selectedChannel === "sms"
+                            ? [
+                                {
+                                  name: "David Wilson",
+                                  company: "AlphaPrint",
+                                  dealDescription: "Printer Leasing Proposal",
+                                  avgResponseRate: "75%",
+                                  avgResponseTime: "12 min",
+                                  engagementScore: 7.8,
+                                  followUpRate: "88%",
+                                },
+                                {
+                                  name: "Emma Davis",
+                                  company: "Urban Boutique",
+                                  dealDescription: "Website Revamp",
+                                  avgResponseRate: "58%",
+                                  avgResponseTime: "35 min",
+                                  engagementScore: 6.3,
+                                  followUpRate: "69%",
+                                },
+                                {
+                                  name: "Robert Garcia",
+                                  company: "RapidFoods",
+                                  dealDescription: "Delivery App Integration",
+                                  avgResponseRate: "81%",
+                                  avgResponseTime: "20 min",
+                                  engagementScore: 8.4,
+                                  followUpRate: "91%",
+                                },
+                              ]
+                            : [
+                                {
+                                  name: "James Anderson",
+                                  company: "TechVision Inc",
+                                  dealDescription: "Enterprise Software Suite",
+                                  avgResponseRate: "45%",
+                                  avgResponseTime: "8 hours",
+                                  engagementScore: 5.8,
+                                  followUpRate: "52%",
+                                },
+                                {
+                                  name: "Rachel Moore",
+                                  company: "Digital Solutions LLC",
+                                  dealDescription: "Cloud Migration Services",
+                                  avgResponseRate: "62%",
+                                  avgResponseTime: "6 hours",
+                                  engagementScore: 7.2,
+                                  followUpRate: "74%",
+                                },
+                                {
+                                  name: "Christopher Lee",
+                                  company: "Innovation Labs",
+                                  dealDescription: "AI Implementation Project",
+                                  avgResponseRate: "71%",
+                                  avgResponseTime: "4 hours",
+                                  engagementScore: 8.1,
+                                  followUpRate: "85%",
+                                },
+                              ]
                       ).map((contact, idx) => (
                         <tr key={idx} className="border-b hover:bg-gray-50">
-                          <td className="py-3 px-4 font-medium">{contact.name}</td>
+                          <td className="py-3 px-4 font-medium">
+                            {contact.name}
+                          </td>
                           <td className="py-3 px-4">{contact.company}</td>
-                          <td className="py-3 px-4">{contact.dealDescription}</td>
+                          <td className="py-3 px-4">
+                            {contact.dealDescription}
+                          </td>
                           <td className="py-3 px-4 text-center">
                             <Badge className="bg-green-100 text-green-800">
                               {contact.avgResponseRate}
@@ -829,7 +942,9 @@ const SalesIntelligence = () => {
           <TabsContent value="targets" className="space-y-6">
             {/* Sales Rep Selection */}
             <div>
-              <h3 className="text-lg font-semibold mb-4">Select Sales Representative</h3>
+              <h3 className="text-lg font-semibold mb-4">
+                Select Sales Representative
+              </h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {[
                   { id: "sarah", name: "Sarah Johnson", achievement: 125 },
@@ -852,9 +967,13 @@ const SalesIntelligence = () => {
                       </div>
                       <div>
                         <p className="font-semibold text-sm">{rep.name}</p>
-                        <p className={`text-xs font-bold ${
-                          rep.achievement >= 100 ? "text-green-600" : "text-orange-600"
-                        }`}>
+                        <p
+                          className={`text-xs font-bold ${
+                            rep.achievement >= 100
+                              ? "text-green-600"
+                              : "text-orange-600"
+                          }`}
+                        >
                           {rep.achievement}%
                         </p>
                       </div>
@@ -868,10 +987,13 @@ const SalesIntelligence = () => {
             <Card>
               <CardHeader>
                 <CardTitle>
-                  {selectedSalesRep === "sarah" && "Sarah Johnson - Target Tracking"}
+                  {selectedSalesRep === "sarah" &&
+                    "Sarah Johnson - Target Tracking"}
                   {selectedSalesRep === "mike" && "Mike Chen - Target Tracking"}
-                  {selectedSalesRep === "lisa" && "Lisa Rodriguez - Target Tracking"}
-                  {selectedSalesRep === "john" && "John Davis - Target Tracking"}
+                  {selectedSalesRep === "lisa" &&
+                    "Lisa Rodriguez - Target Tracking"}
+                  {selectedSalesRep === "john" &&
+                    "John Davis - Target Tracking"}
                 </CardTitle>
                 <CardDescription>
                   Comprehensive target achievement and performance metrics
@@ -882,14 +1004,30 @@ const SalesIntelligence = () => {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b bg-gray-50">
-                        <th className="text-left py-3 px-4 font-semibold">Target Period</th>
-                        <th className="text-center py-3 px-4 font-semibold">Target ($)</th>
-                        <th className="text-center py-3 px-4 font-semibold">Achieved ($)</th>
-                        <th className="text-center py-3 px-4 font-semibold">Achievement %</th>
-                        <th className="text-center py-3 px-4 font-semibold">Status</th>
-                        <th className="text-center py-3 px-4 font-semibold">Deals Closed</th>
-                        <th className="text-center py-3 px-4 font-semibold">Avg Deal Size</th>
-                        <th className="text-left py-3 px-4 font-semibold">AI Recommendation</th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          Target Period
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          Target ($)
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          Achieved ($)
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          Achievement %
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          Status
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          Deals Closed
+                        </th>
+                        <th className="text-center py-3 px-4 font-semibold">
+                          Avg Deal Size
+                        </th>
+                        <th className="text-left py-3 px-4 font-semibold">
+                          AI Recommendation
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
@@ -901,7 +1039,8 @@ const SalesIntelligence = () => {
                               achieved: 62500,
                               deals: 5,
                               avgDealSize: 12500,
-                              recommendation: "Maintain momentum - top performer"
+                              recommendation:
+                                "Maintain momentum - top performer",
                             },
                             {
                               period: "February",
@@ -909,7 +1048,7 @@ const SalesIntelligence = () => {
                               achieved: 50000,
                               deals: 4,
                               avgDealSize: 12500,
-                              recommendation: "On track - focus on pipeline"
+                              recommendation: "On track - focus on pipeline",
                             },
                             {
                               period: "March (YTD)",
@@ -917,112 +1056,140 @@ const SalesIntelligence = () => {
                               achieved: 112500,
                               deals: 9,
                               avgDealSize: 12500,
-                              recommendation: "75% completion - increase outreach"
-                            }
+                              recommendation:
+                                "75% completion - increase outreach",
+                            },
                           ]
                         : selectedSalesRep === "mike"
-                        ? [
-                            {
-                              period: "January",
-                              target: 50000,
-                              achieved: 59000,
-                              deals: 4,
-                              avgDealSize: 14750,
-                              recommendation: "Performing above average"
-                            },
-                            {
-                              period: "February",
-                              target: 50000,
-                              achieved: 55000,
-                              deals: 3,
-                              avgDealSize: 18333,
-                              recommendation: "Lower volume but higher value deals"
-                            },
-                            {
-                              period: "March (YTD)",
-                              target: 150000,
-                              achieved: 114000,
-                              deals: 7,
-                              avgDealSize: 16286,
-                              recommendation: "76% completion - focus on closing stalled deals"
-                            }
-                          ]
-                        : selectedSalesRep === "lisa"
-                        ? [
-                            {
-                              period: "January",
-                              target: 50000,
-                              achieved: 45000,
-                              deals: 3,
-                              avgDealSize: 15000,
-                              recommendation: "Below target - needs support"
-                            },
-                            {
-                              period: "February",
-                              target: 50000,
-                              achieved: 50000,
-                              deals: 3,
-                              avgDealSize: 16667,
-                              recommendation: "Met minimum target"
-                            },
-                            {
-                              period: "March (YTD)",
-                              target: 150000,
-                              achieved: 95000,
-                              deals: 6,
-                              avgDealSize: 15833,
-                              recommendation: "63% completion - coaching program recommended"
-                            }
-                          ]
-                        : [
-                            {
-                              period: "January",
-                              target: 50000,
-                              achieved: 54000,
-                              deals: 4,
-                              avgDealSize: 13500,
-                              recommendation: "Solid performer - consistent results"
-                            },
-                            {
-                              period: "February",
-                              target: 50000,
-                              achieved: 50000,
-                              deals: 3,
-                              avgDealSize: 16667,
-                              recommendation: "At target with larger deals"
-                            },
-                            {
-                              period: "March (YTD)",
-                              target: 150000,
-                              achieved: 104000,
-                              deals: 7,
-                              avgDealSize: 14857,
-                              recommendation: "69% completion - push for final stretch"
-                            }
-                          ]
+                          ? [
+                              {
+                                period: "January",
+                                target: 50000,
+                                achieved: 59000,
+                                deals: 4,
+                                avgDealSize: 14750,
+                                recommendation: "Performing above average",
+                              },
+                              {
+                                period: "February",
+                                target: 50000,
+                                achieved: 55000,
+                                deals: 3,
+                                avgDealSize: 18333,
+                                recommendation:
+                                  "Lower volume but higher value deals",
+                              },
+                              {
+                                period: "March (YTD)",
+                                target: 150000,
+                                achieved: 114000,
+                                deals: 7,
+                                avgDealSize: 16286,
+                                recommendation:
+                                  "76% completion - focus on closing stalled deals",
+                              },
+                            ]
+                          : selectedSalesRep === "lisa"
+                            ? [
+                                {
+                                  period: "January",
+                                  target: 50000,
+                                  achieved: 45000,
+                                  deals: 3,
+                                  avgDealSize: 15000,
+                                  recommendation:
+                                    "Below target - needs support",
+                                },
+                                {
+                                  period: "February",
+                                  target: 50000,
+                                  achieved: 50000,
+                                  deals: 3,
+                                  avgDealSize: 16667,
+                                  recommendation: "Met minimum target",
+                                },
+                                {
+                                  period: "March (YTD)",
+                                  target: 150000,
+                                  achieved: 95000,
+                                  deals: 6,
+                                  avgDealSize: 15833,
+                                  recommendation:
+                                    "63% completion - coaching program recommended",
+                                },
+                              ]
+                            : [
+                                {
+                                  period: "January",
+                                  target: 50000,
+                                  achieved: 54000,
+                                  deals: 4,
+                                  avgDealSize: 13500,
+                                  recommendation:
+                                    "Solid performer - consistent results",
+                                },
+                                {
+                                  period: "February",
+                                  target: 50000,
+                                  achieved: 50000,
+                                  deals: 3,
+                                  avgDealSize: 16667,
+                                  recommendation: "At target with larger deals",
+                                },
+                                {
+                                  period: "March (YTD)",
+                                  target: 150000,
+                                  achieved: 104000,
+                                  deals: 7,
+                                  avgDealSize: 14857,
+                                  recommendation:
+                                    "69% completion - push for final stretch",
+                                },
+                              ]
                       ).map((target, idx) => {
-                        const achievement = (target.achieved / target.target) * 100;
+                        const achievement =
+                          (target.achieved / target.target) * 100;
                         const isAchieved = achievement >= 100;
                         return (
                           <tr key={idx} className="border-b hover:bg-gray-50">
-                            <td className="py-3 px-4 font-medium">{target.period}</td>
-                            <td className="py-3 px-4 text-center">${(target.target / 1000).toFixed(0)}K</td>
-                            <td className="py-3 px-4 text-center font-semibold">${(target.achieved / 1000).toFixed(0)}K</td>
+                            <td className="py-3 px-4 font-medium">
+                              {target.period}
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              ${(target.target / 1000).toFixed(0)}K
+                            </td>
+                            <td className="py-3 px-4 text-center font-semibold">
+                              ${(target.achieved / 1000).toFixed(0)}K
+                            </td>
                             <td className="py-3 px-4 text-center">
                               <div className="flex items-center justify-center gap-2">
-                                <Badge className={isAchieved ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"}>
+                                <Badge
+                                  className={
+                                    isAchieved
+                                      ? "bg-green-100 text-green-800"
+                                      : "bg-yellow-100 text-yellow-800"
+                                  }
+                                >
                                   {achievement.toFixed(0)}%
                                 </Badge>
-                                {isAchieved && <CheckCircle2 className="h-4 w-4 text-green-600" />}
+                                {isAchieved && (
+                                  <CheckCircle2 className="h-4 w-4 text-green-600" />
+                                )}
                               </div>
                             </td>
                             <td className="py-3 px-4 text-center">
-                              <Badge variant={isAchieved ? "default" : "secondary"}>
+                              <Badge
+                                variant={isAchieved ? "default" : "secondary"}
+                              >
                                 {isAchieved ? "✓ Achieved" : "In Progress"}
                               </Badge>
                             </td>
-                            <td className="py-3 px-4 text-center font-semibold">{target.deals}</td>
-                            <td className="py-3 px-4 text-center text-sm">${(target.avgDealSize / 1000).toFixed(1)}K</td>
+                            <td className="py-3 px-4 text-center font-semibold">
+                              {target.deals}
+                            </td>
+                            <td className="py-3 px-4 text-center text-sm">
+                              ${(target.avgDealSize / 1000).toFixed(1)}K
+                            </td>
                             <td className="py-3 px-4 text-xs">
                               <div className="flex items-start gap-1">
                                 <Lightbulb className="h-4 w-4 text-amber-600 flex-shrink-0 mt-0.5" />
@@ -1042,27 +1209,37 @@ const SalesIntelligence = () => {
             <Card>
               <CardHeader>
                 <CardTitle>Team Target Summary</CardTitle>
-                <CardDescription>Overall team performance across all periods</CardDescription>
+                <CardDescription>
+                  Overall team performance across all periods
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <div className="p-4 border rounded-lg">
-                    <p className="text-sm text-gray-600 mb-1">Total Team Target</p>
+                    <p className="text-sm text-gray-600 mb-1">
+                      Total Team Target
+                    </p>
                     <p className="text-2xl font-bold text-gray-900">$600K</p>
                     <p className="text-xs text-gray-500 mt-2">Q1 Total</p>
                   </div>
                   <div className="p-4 border rounded-lg bg-green-50">
                     <p className="text-sm text-gray-600 mb-1">Total Achieved</p>
                     <p className="text-2xl font-bold text-green-700">$425.5K</p>
-                    <p className="text-xs text-green-600 mt-2">71% Completion</p>
+                    <p className="text-xs text-green-600 mt-2">
+                      71% Completion
+                    </p>
                   </div>
                   <div className="p-4 border rounded-lg">
                     <p className="text-sm text-gray-600 mb-1">Top Performer</p>
                     <p className="text-2xl font-bold text-blue-700">Sarah</p>
-                    <p className="text-xs text-blue-600 mt-2">125% Achievement</p>
+                    <p className="text-xs text-blue-600 mt-2">
+                      125% Achievement
+                    </p>
                   </div>
                   <div className="p-4 border rounded-lg">
-                    <p className="text-sm text-gray-600 mb-1">Avg Team Achievement</p>
+                    <p className="text-sm text-gray-600 mb-1">
+                      Avg Team Achievement
+                    </p>
                     <p className="text-2xl font-bold text-purple-700">111%</p>
                     <p className="text-xs text-purple-600 mt-2">Above Target</p>
                   </div>
@@ -1089,7 +1266,9 @@ const SalesIntelligence = () => {
                       <div className="flex justify-between items-center">
                         <div>
                           <p className="font-semibold">Proposals</p>
-                          <p className="text-sm text-gray-600">Auto-generated</p>
+                          <p className="text-sm text-gray-600">
+                            Auto-generated
+                          </p>
                         </div>
                         <p className="text-2xl font-bold text-blue-600">156</p>
                       </div>
@@ -1174,7 +1353,7 @@ const SalesIntelligence = () => {
                             <div className="w-2 h-2 bg-green-600 rounded-full"></div>
                             {name}
                           </div>
-                        )
+                        ),
                       )}
                     </div>
                   </div>
@@ -1222,7 +1401,9 @@ const SalesIntelligence = () => {
 
                 <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
                   <CardHeader>
-                    <CardTitle className="text-base">Weekly Insights Report</CardTitle>
+                    <CardTitle className="text-base">
+                      Weekly Insights Report
+                    </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2 text-sm">
@@ -1261,9 +1442,12 @@ const SalesIntelligence = () => {
                 <div className="flex items-start gap-3">
                   <TrendingUp className="h-5 w-5 text-blue-600 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold mb-1">Focus on Pipeline Expansion</h4>
+                    <h4 className="font-semibold mb-1">
+                      Focus on Pipeline Expansion
+                    </h4>
                     <p className="text-sm text-gray-600">
-                      Current pipeline is healthy but needs more top-of-funnel activity to maintain growth
+                      Current pipeline is healthy but needs more top-of-funnel
+                      activity to maintain growth
                     </p>
                   </div>
                 </div>
@@ -1272,9 +1456,12 @@ const SalesIntelligence = () => {
                 <div className="flex items-start gap-3">
                   <Target className="h-5 w-5 text-orange-600 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold mb-1">Implement Deal Rescue Playbooks</h4>
+                    <h4 className="font-semibold mb-1">
+                      Implement Deal Rescue Playbooks
+                    </h4>
                     <p className="text-sm text-gray-600">
-                      3 deals at risk detected. Using AI-recommended intervention strategies can recover $180K
+                      3 deals at risk detected. Using AI-recommended
+                      intervention strategies can recover $180K
                     </p>
                   </div>
                 </div>
@@ -1283,9 +1470,12 @@ const SalesIntelligence = () => {
                 <div className="flex items-start gap-3">
                   <Users className="h-5 w-5 text-green-600 mt-1 flex-shrink-0" />
                   <div>
-                    <h4 className="font-semibold mb-1">Personalized Coaching for Mid-Tier Reps</h4>
+                    <h4 className="font-semibold mb-1">
+                      Personalized Coaching for Mid-Tier Reps
+                    </h4>
                     <p className="text-sm text-gray-600">
-                      John and Lisa can reach top performer status with focused 1-on-1 coaching
+                      John and Lisa can reach top performer status with focused
+                      1-on-1 coaching
                     </p>
                   </div>
                 </div>
