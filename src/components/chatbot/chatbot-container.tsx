@@ -316,7 +316,7 @@ export function ChatbotContainer({
                       <img
                         src="https://cdn.builder.io/api/v1/image/assets%2F65b22f3aedf4439cb7708f60698fc899%2Fe85e18d5c9404f1da472bd3d9d893f87?format=webp&width=800"
                         alt="Joseph AI Logo"
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-cover"
                       />
                     </button>
                   </TooltipTrigger>
