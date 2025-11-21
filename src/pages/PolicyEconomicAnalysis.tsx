@@ -41,7 +41,6 @@ export default function PolicyEconomicAnalysis() {
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <ConnectionStatus isConnected={isConnected} lastUpdated={lastUpdated} />
           <Link to="/economic-indicators">
             <Button variant="outline" size="sm" className="flex items-center gap-2">
               <TrendingUp className="h-4 w-4" />
