@@ -162,13 +162,15 @@ export default function ChatbotTest() {
 
       <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
         <h3 className="font-semibold text-blue-900 mb-2">
-          Enhanced Chatbot Features:
+          Joseph's Profit-Focused Capabilities:
         </h3>
         <ul className="text-sm text-blue-800 space-y-1">
-          <li>✓ Automatic access to all your business data in the app</li>
-          <li>✓ Real-time web search for current information</li>
-          <li>✓ App data prioritized over generic web results</li>
-          <li>✓ Contextual responses based on your current page</li>
+          <li>✓ Identify which operations are profitable vs. loss-making</li>
+          <li>✓ Optimize pricing to maximize profit margins</li>
+          <li>✓ Reduce operational costs and eliminate waste</li>
+          <li>✓ Analyze profitability by customer segment</li>
+          <li>✓ Identify economic risks to your profitability</li>
+          <li>✓ Real-time economic data and market analysis</li>
         </ul>
       </div>
 
