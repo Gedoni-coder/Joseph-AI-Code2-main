@@ -248,14 +248,14 @@ export function ChatbotContainer({
           <TooltipTrigger asChild>
             <Button
               size="lg"
-              className="h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 bg-gradient-to-br from-primary to-primary/80 border-2 border-primary/20 p-2"
+              className="h-14 w-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 bg-gradient-to-br from-primary to-primary/80 border-2 border-primary/20 p-2 flex items-center justify-center overflow-hidden"
               onClick={handleOpenClick}
             >
-              <div className="relative w-full h-full">
+              <div className="relative w-full h-full flex items-center justify-center">
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F65b22f3aedf4439cb7708f60698fc899%2Fe85e18d5c9404f1da472bd3d9d893f87?format=webp&width=800"
                   alt="Joseph AI"
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-contain p-1"
                 />
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
               </div>
