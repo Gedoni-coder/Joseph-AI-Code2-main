@@ -312,7 +312,7 @@ export function ChatbotContainer({
                 {/* Company/App Logo */}
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <button className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-white flex items-center justify-center shadow-lg border border-gray-200 hover:shadow-xl hover:scale-105 transition-all duration-200 group p-2">
+                    <button className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-white flex items-center justify-center shadow-lg border border-gray-200 hover:shadow-xl hover:scale-105 transition-all duration-200 group overflow-hidden flex-shrink-0">
                       <img
                         src="https://cdn.builder.io/api/v1/image/assets%2F65b22f3aedf4439cb7708f60698fc899%2Fe85e18d5c9404f1da472bd3d9d893f87?format=webp&width=800"
                         alt="Joseph AI Logo"
@@ -335,11 +335,11 @@ export function ChatbotContainer({
 
                 {/* Joseph Avatar */}
                 <div className="relative flex-shrink-0">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-md border-2 border-primary/20 p-1">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-md border-2 border-primary/20 overflow-hidden">
                     <img
                       src="https://cdn.builder.io/api/v1/image/assets%2F65b22f3aedf4439cb7708f60698fc899%2Fe85e18d5c9404f1da472bd3d9d893f87?format=webp&width=800"
                       alt="Joseph AI"
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-contain p-0.5"
                     />
                   </div>
                   <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
