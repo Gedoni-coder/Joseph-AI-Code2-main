@@ -125,11 +125,11 @@ const Landing = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-white shadow-lg border border-gray-200 overflow-hidden">
+              <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-white shadow-lg border border-gray-200 overflow-hidden p-1.5">
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F65b22f3aedf4439cb7708f60698fc899%2Fe85e18d5c9404f1da472bd3d9d893f87?format=webp&width=800"
                   alt="Joseph AI Logo"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               </div>
               <div>
@@ -152,7 +152,7 @@ const Landing = () => {
         <div className="container mx-auto text-center">
           <div className="flex justify-center mb-8">
             <div className="relative">
-              <div className="flex items-center justify-center w-24 h-24 rounded-2xl bg-white shadow-2xl border border-gray-200 p-4">
+              <div className="flex items-center justify-center w-24 h-24 rounded-2xl bg-white shadow-2xl border border-gray-200 p-3 overflow-hidden">
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets%2F65b22f3aedf4439cb7708f60698fc899%2Fe85e18d5c9404f1da472bd3d9d893f87?format=webp&width=800"
                   alt="Joseph AI Logo"
