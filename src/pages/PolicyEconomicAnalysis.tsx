@@ -30,17 +30,6 @@ import {
 export default function PolicyEconomicAnalysis() {
   const [activeTab, setActiveTab] = useState("management");
 
-  if (error) {
-    return (
-      <div className="container mx-auto py-6">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-red-600">Error Loading Data</h1>
-          <p className="text-muted-foreground">{error}</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="container mx-auto py-6 space-y-6">
       {/* Header */}
@@ -48,7 +37,7 @@ export default function PolicyEconomicAnalysis() {
         <div>
           <h1 className="text-3xl font-bold">Policy & Economic Impact Analysis</h1>
           <p className="text-muted-foreground">
-            Monitor policies, assess economic impacts, and develop strategic responses
+            Comprehensive policy monitoring, regulatory compliance, economic forecasting, and strategic decision-making engine
           </p>
         </div>
         <div className="flex items-center gap-3">
