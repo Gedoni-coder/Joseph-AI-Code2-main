@@ -339,7 +339,7 @@ export function ChatbotContainer({
                     <img
                       src="https://cdn.builder.io/api/v1/image/assets%2F65b22f3aedf4439cb7708f60698fc899%2Fe85e18d5c9404f1da472bd3d9d893f87?format=webp&width=800"
                       alt="Joseph AI"
-                      className="w-full h-full object-contain p-0.5"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                   <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
