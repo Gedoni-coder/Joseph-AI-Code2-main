@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { usePolicyEconomicData } from "../hooks/usePolicyEconomicData";
 import { Button } from "../components/ui/button";
 import {
   Tabs,
@@ -9,12 +8,7 @@ import {
   TabsTrigger,
 } from "../components/ui/tabs";
 import { ConnectionStatus } from "../components/ui/connection-status";
-import { ExternalPolicyAnalysis } from "../components/policy/external-policy-analysis";
-import { InternalPolicyAnalysis } from "../components/policy/internal-policy-analysis";
-import { PolicyReports } from "../components/policy/policy-reports";
-import { EconomicImpactAnalysis } from "../components/policy/economic-impact-analysis";
-import { InternalImpactAnalysis } from "../components/policy/internal-impact-analysis";
-import { StrategyRecommendations } from "../components/policy/strategy-recommendations";
+import { PolicyEconomicManagement } from "../components/policy/policy-economic-management";
 import { PolicyWatchtower } from "../components/policy/policy-watchtower";
 import { PolicySimplifier } from "../components/policy/policy-simplifier";
 import { EconomicPulseboard } from "../components/policy/economic-pulseboard";
@@ -22,17 +16,15 @@ import { ScenarioSimulation } from "../components/policy/scenario-simulation";
 import { FiscalPolicyAnalyzer } from "../components/policy/fiscal-policy-analyzer";
 import {
   Loader2,
-  Globe,
-  Building,
-  FileText,
-  TrendingUp,
-  Target,
-  Shield,
+  Settings,
   Radio,
   BookOpen,
   Activity,
   Zap,
   DollarSign,
+  TrendingUp,
+  Target,
+  Shield,
 } from "lucide-react";
 
 export default function PolicyEconomicAnalysis() {
