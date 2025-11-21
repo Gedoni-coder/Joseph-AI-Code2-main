@@ -56,13 +56,47 @@ function toGeminiBody(history: ChatMessage[], system?: string, webContext?: stri
 }
 
 export async function generateAIResponse(history: ChatMessage[], opts: AIOptions = {}): Promise<string | null> {
+  // Default to including app context and performing web search
+  const includeAppContext = opts.includeAppContext !== false;
+  const performWebSearch = opts.performWebSearch !== false;
+
+  let enhancedSystem = opts.system || "";
+  let enhancedWebContext = opts.webContext || "";
+
+  try {
+    // Collect app context if enabled
+    if (includeAppContext) {
+      const appData = getAllAppData();
+      const contextStr = formatContextForPrompt(appData);
+      enhancedSystem = enhancedSystem
+        ? `${enhancedSystem}\n\n### User Data Context\n${contextStr}`
+        : `You are Joseph AI, an expert business advisor with access to the user's business data.\n\n### User Data Context\n${contextStr}`;
+    }
+
+    // Perform web search if enabled and query suggests need
+    if (performWebSearch && history.length > 0) {
+      const lastUserMessage = history[history.length - 1];
+      if (lastUserMessage.type === "user") {
+        const shouldSearch = await shouldPerformWebSearch(lastUserMessage.content);
+        if (shouldSearch) {
+          const webContext = await enhanceResponseWithWebContext(lastUserMessage.content);
+          if (webContext) {
+            enhancedWebContext = enhancedWebContext ? `${enhancedWebContext}\n\n${webContext}` : webContext;
+          }
+        }
+      }
+    }
+  } catch (e) {
+    console.error("Error enhancing response context:", e);
+  }
+
   // Always try Groq first with a directly integrated key
   try {
     const model = opts.model || DEFAULT_GROQ_MODEL;
     const body = {
       model,
       temperature: typeof opts.temperature === "number" ? opts.temperature : 0.3,
-      messages: toOpenAIMessages(history, opts.system, opts.webContext),
+      messages: toOpenAIMessages(history, enhancedSystem, enhancedWebContext),
     } as const;
     const res = await fetch("/api/ai/groq", {
       method: "POST",
