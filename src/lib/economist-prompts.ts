@@ -125,14 +125,16 @@ export const ECONOMIST_SAMPLE_QUESTIONS = [
 ];
 
 export const ECONOMIST_CAPABILITIES = [
-  "Macroeconomic trend analysis and forecasting",
-  "Microeconomic business optimization",
-  "Pricing strategy optimization",
-  "Demand elasticity analysis",
-  "Competitive economic positioning",
-  "Supply chain economic analysis",
-  "Financial forecasting with economic indicators",
-  "Risk assessment and economic scenarios",
-  "Market segmentation and customer economics",
-  "Policy impact analysis on business",
+  "Profit margin optimization and analysis",
+  "Cost structure analysis and waste elimination",
+  "Pricing optimization for profit maximization",
+  "Profitability by customer segment",
+  "Operational efficiency improvement",
+  "Revenue stream profitability analysis",
+  "Loss identification and prevention",
+  "Supply chain cost optimization",
+  "Working capital and cash flow optimization",
+  "Macroeconomic threat assessment to profitability",
+  "Break-even analysis and margin improvement",
+  "Competitive pricing for profit protection",
 ];
