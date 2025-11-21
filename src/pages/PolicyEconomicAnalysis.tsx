@@ -7,7 +7,6 @@ import {
   TabsList,
   TabsTrigger,
 } from "../components/ui/tabs";
-import { ConnectionStatus } from "../components/ui/connection-status";
 import { PolicyEconomicManagement } from "../components/policy/policy-economic-management";
 import { PolicyWatchtower } from "../components/policy/policy-watchtower";
 import { PolicySimplifier } from "../components/policy/policy-simplifier";
@@ -15,7 +14,6 @@ import { EconomicPulseboard } from "../components/policy/economic-pulseboard";
 import { ScenarioSimulation } from "../components/policy/scenario-simulation";
 import { FiscalPolicyAnalyzer } from "../components/policy/fiscal-policy-analyzer";
 import {
-  Loader2,
   Settings,
   Radio,
   BookOpen,
