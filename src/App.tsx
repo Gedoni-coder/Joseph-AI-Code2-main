@@ -72,6 +72,7 @@ import LearnCourseView from "./pages/learn/LearnCourseView";
 import LearnQuizzes from "./pages/learn/LearnQuizzes";
 import LearnRecords from "./pages/learn/LearnRecords";
 import SalesIntelligence from "./pages/SalesIntelligence";
+import ChatbotTest from "./pages/ChatbotTest";
 
 const queryClient = new QueryClient();
 
