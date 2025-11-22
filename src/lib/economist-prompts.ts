@@ -128,18 +128,18 @@ export function createEconomistSystemPrompt(
 }
 
 export const ECONOMIST_SAMPLE_QUESTIONS = [
-  "Which of my revenue streams are most profitable and which are losing money?",
-  "How can I optimize my pricing to maximize profit margins without losing customers?",
-  "Where am I wasting money operationally that I could eliminate?",
-  "What's my true profitability by customer segment?",
-  "How will rising interest rates impact my profitability?",
-  "Which products should I focus on to maximize profit?",
-  "How can I reduce my supply chain costs without compromising quality?",
-  "What's my break-even point and how can I improve it?",
-  "Analyze my cost structure - where can I cut expenses?",
-  "How do macro economic conditions threaten my profit margins?",
-  "What's my optimal pricing strategy to maximize revenue and profit?",
-  "Which operational inefficiencies are draining my profit?",
+  "What is my exact profit margin by revenue stream and which ones must I shut down?",
+  "What is my optimal price point and what will it add to my bottom line?",
+  "Identify every operational waste and what I will save by eliminating each",
+  "Show me profitability by customer segment - which ones am I losing money on?",
+  "How much will rising interest rates decrease my profitability?",
+  "Which products represent my highest profit and which are destroying value?",
+  "How much can I reduce supply chain costs without quality degradation?",
+  "What is my exact break-even point and the specific steps to improve it?",
+  "Analyze my cost structure and tell me exactly what to cut",
+  "Which macro economic conditions pose the biggest threat to my profitability?",
+  "What is my profit-maximizing price and why is that the correct level?",
+  "Which operational inefficiencies are draining profit and how much will I recover by fixing them?",
 ];
 
 export const ECONOMIST_CAPABILITIES = [
