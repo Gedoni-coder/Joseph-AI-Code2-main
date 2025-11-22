@@ -72,6 +72,7 @@ import LearnCourseView from "./pages/learn/LearnCourseView";
 import LearnQuizzes from "./pages/learn/LearnQuizzes";
 import LearnRecords from "./pages/learn/LearnRecords";
 import SalesIntelligence from "./pages/SalesIntelligence";
+import ChatbotTest from "./pages/ChatbotTest";
 
 const queryClient = new QueryClient();
 
@@ -201,7 +202,8 @@ function TopDivisionNav({
 function AppContent() {
   const [conversationalMode, setConversationalMode] = React.useState(true);
   const location = useLocation();
-  const isLandingPage = location.pathname === "/" || location.pathname === "/signup";
+  const isLandingPage =
+    location.pathname === "/" || location.pathname === "/signup";
 
   React.useEffect(() => {
     const saved = localStorage.getItem("conversationalMode");
@@ -223,10 +225,13 @@ function AppContent() {
           onConversationalModeChange={handleConversationalModeChange}
         />
       )}
-      {!isLandingPage && <ChatbotContainer conversationalMode={conversationalMode} />}
+      {!isLandingPage && (
+        <ChatbotContainer conversationalMode={conversationalMode} />
+      )}
       <Routes>
         <Route path="/" element={<PrimaryLanding />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/chatbot-test" element={<ChatbotTest />} />
         <Route path="/secondlandingpage" element={<Landing />} />
         <Route path="/landing" element={<Landing />} />
 
@@ -237,10 +242,7 @@ function AppContent() {
           path="/market-competitive-analysis"
           element={<MarketCompetitiveAnalysis />}
         />
-        <Route
-          path="/market-report/:reportId"
-          element={<MarketReportView />}
-        />
+        <Route path="/market-report/:reportId" element={<MarketReportView />} />
         <Route
           path="/market-competitive-analysis/swot"
           element={<SwotWhitePaper />}
@@ -259,10 +261,7 @@ function AppContent() {
         <Route path="/financial-advisory" element={<FinancialAdvisory />} />
         <Route path="/impact-calculator" element={<ImpactCalculator />} />
         <Route path="/tax-compliance" element={<TaxCompliance />} />
-        <Route
-          path="/business-feasibility"
-          element={<BusinessFeasibility />}
-        />
+        <Route path="/business-feasibility" element={<BusinessFeasibility />} />
         <Route
           path="/business-feasibility/:id"
           element={<BusinessFeasibilityIdea />}
@@ -315,10 +314,7 @@ function AppContent() {
           path="/learn/courses/generate"
           element={<LearnCourseGenerate />}
         />
-        <Route
-          path="/learn/courses/:courseId"
-          element={<LearnCourseView />}
-        />
+        <Route path="/learn/courses/:courseId" element={<LearnCourseView />} />
         <Route path="/learn/quizzes" element={<LearnQuizzes />} />
         <Route path="/learn/records" element={<LearnRecords />} />
         {/* Individual infrastructure module routes */}
