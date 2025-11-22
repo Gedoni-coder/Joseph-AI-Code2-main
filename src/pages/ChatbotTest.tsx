@@ -165,15 +165,15 @@ export default function ChatbotTest() {
 
       <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
         <h3 className="font-semibold text-blue-900 mb-2">
-          Joseph's Profit-Focused Capabilities:
+          Joseph's Definitive Profit Analysis:
         </h3>
         <ul className="text-sm text-blue-800 space-y-1">
-          <li>✓ Identify which operations are profitable vs. loss-making</li>
-          <li>✓ Optimize pricing to maximize profit margins</li>
-          <li>✓ Reduce operational costs and eliminate waste</li>
-          <li>✓ Analyze profitability by customer segment</li>
-          <li>✓ Identify economic risks to your profitability</li>
-          <li>✓ Real-time economic data and market analysis</li>
+          <li>✓ <strong>Exactly</strong> which operations are unprofitable and what to do</li>
+          <li>✓ <strong>Precise</strong> optimal price points and revenue impact</li>
+          <li>✓ <strong>Specific</strong> cost reduction targets with amounts</li>
+          <li>✓ <strong>Definitive</strong> profitability ranking by customer segment</li>
+          <li>✓ <strong>Concrete</strong> economic risks and mitigation actions</li>
+          <li>✓ <strong>Quantified</strong> impact analysis with exact figures</li>
         </ul>
       </div>
 
