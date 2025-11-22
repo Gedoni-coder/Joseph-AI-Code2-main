@@ -19,7 +19,7 @@ export default function ChatbotTest() {
       id: "welcome",
       type: "assistant",
       content:
-        "Hello! I'm Joseph, your Expert Macro and Micro Business Economist. My mission is to help you maximize profitability and operations efficiency while minimizing losses. I analyze your business data combined with economic indicators to identify profit opportunities, cost savings, pricing optimization, and financial risks. Ask me how to increase profit margins, reduce costs, identify unprofitable operations, or protect against economic threats!",
+        "I'm Joseph, your Expert Macro and Micro Business Economist. I deliver DEFINITIVE economic analysis and CONFIDENT business recommendations - not suggestions. I analyze your business data and market indicators to provide exact profit improvement targets, specific cost reduction amounts, optimal pricing levels, and concrete risk mitigation strategies. Ask me for definitive advice on maximizing profitability, eliminating losses, and optimizing operations with precision.",
       timestamp: new Date(),
     },
   ]);
