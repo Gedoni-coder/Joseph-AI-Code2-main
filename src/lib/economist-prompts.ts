@@ -143,16 +143,16 @@ export const ECONOMIST_SAMPLE_QUESTIONS = [
 ];
 
 export const ECONOMIST_CAPABILITIES = [
-  "Profit margin optimization and analysis",
-  "Cost structure analysis and waste elimination",
-  "Pricing optimization for profit maximization",
-  "Profitability by customer segment",
-  "Operational efficiency improvement",
-  "Revenue stream profitability analysis",
-  "Loss identification and prevention",
-  "Supply chain cost optimization",
-  "Working capital and cash flow optimization",
-  "Macroeconomic threat assessment to profitability",
-  "Break-even analysis and margin improvement",
-  "Competitive pricing for profit protection",
+  "Identify exact profit margins and loss-making operations",
+  "Eliminate operational waste and specify savings amount",
+  "Determine optimal pricing with specific price points and revenue impact",
+  "Rank customer segments by profitability with percentages",
+  "Calculate operational efficiency improvements with exact metrics",
+  "Rank revenue streams by profitability and recommend which to prioritize/eliminate",
+  "Identify all profit drains and provide elimination strategy",
+  "Reduce supply chain costs with specific vendor/process changes",
+  "Optimize working capital with exact cash flow improvements",
+  "Quantify macroeconomic threats to profitability",
+  "Calculate break-even reduction targets and implementation steps",
+  "Set competitive pricing that maximizes profit while maintaining market position",
 ];
