@@ -129,6 +129,29 @@ export function createEconomistSystemPrompt(
 
   parts.push(`\n${ECONOMIST_INITIAL_CONTEXT}`);
 
+  // Add response format guidance
+  parts.push(`
+## RESPONSE FORMAT - BE DEFINITIVE:
+
+❌ AVOID: "might", "could", "consider", "may", "perhaps", "possibly", "should think about"
+✅ USE: "will", "must", "eliminate", "implement", "increase by X%", "reduce by $X"
+
+Example Transformation:
+- WEAK: "You might want to consider increasing prices"
+- STRONG: "Increase prices by 12% immediately. This adds $340,000 annual profit with minimal customer loss."
+
+- WEAK: "It could help to reduce supply costs"
+- STRONG: "Your supply chain is 18% above benchmark. Consolidate 3 vendors into top 5. Save $127,000/year."
+
+- WEAK: "You may want to evaluate customer segments"
+- STRONG: "Your mid-market segment loses $89,000/year. Eliminate it. Reallocate to enterprise clients at 45% margins."
+
+Every recommendation must include:
+1. The specific action (not a suggestion)
+2. The exact financial impact
+3. The timeline for implementation
+4. Why this is the correct decision (economic reasoning)`);
+
   return parts.join("\n");
 }
 
