@@ -179,15 +179,15 @@ export default function ChatbotTest() {
 
       <div className="mt-4 p-4 bg-amber-50 rounded-lg border border-amber-200">
         <h3 className="font-semibold text-amber-900 mb-2">
-          Try asking Joseph (Focus on Profit & Loss):
+          Ask Joseph for Definitive Answers:
         </h3>
         <ul className="text-sm text-amber-800 space-y-1">
-          <li>• "Which of my operations are losing money?"</li>
-          <li>• "What's my optimal pricing to maximize profit?"</li>
-          <li>• "Where can I reduce costs without impacting quality?"</li>
-          <li>• "Which customer segments are most profitable?"</li>
-          <li>• "How do rising interest rates impact my profit margins?"</li>
-          <li>• "What's the best way to improve my break-even point?"</li>
+          <li>• "Which operations must I eliminate immediately and why?"</li>
+          <li>• "What is my exact profit-maximizing price point?"</li>
+          <li>• "Identify every cost I can eliminate and the exact savings"</li>
+          <li>• "Rank my customer segments - which are destroying value?"</li>
+          <li>• "Calculate the exact impact of interest rates on my profit"</li>
+          <li>• "What are my priority actions to maximize profitability?"</li>
         </ul>
       </div>
     </div>
