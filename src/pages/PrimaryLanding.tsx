@@ -745,114 +745,114 @@ export default function PrimaryLanding() {
         @keyframes bubble-float {
           0%, 100% {
             transform: translateY(0px) translateX(0px);
-            opacity: 0.4;
+            opacity: 0.7;
           }
           25% {
             transform: translateY(-40px) translateX(20px);
-            opacity: 0.35;
+            opacity: 0.65;
           }
           50% {
             transform: translateY(-80px) translateX(-15px);
-            opacity: 0.4;
+            opacity: 0.7;
           }
           75% {
             transform: translateY(-40px) translateX(-30px);
-            opacity: 0.35;
+            opacity: 0.65;
           }
         }
 
         @keyframes bubble-float-delayed-1 {
           0%, 100% {
             transform: translateY(0px) translateX(0px);
-            opacity: 0.35;
+            opacity: 0.65;
           }
           25% {
             transform: translateY(30px) translateX(-25px);
-            opacity: 0.3;
+            opacity: 0.6;
           }
           50% {
             transform: translateY(60px) translateX(20px);
-            opacity: 0.35;
+            opacity: 0.65;
           }
           75% {
             transform: translateY(30px) translateX(35px);
-            opacity: 0.3;
+            opacity: 0.6;
           }
         }
 
         @keyframes bubble-float-delayed-2 {
           0%, 100% {
             transform: translateY(0px) translateX(0px);
-            opacity: 0.3;
+            opacity: 0.6;
           }
           25% {
             transform: translateY(-50px) translateX(-30px);
-            opacity: 0.25;
+            opacity: 0.55;
           }
           50% {
             transform: translateY(-100px) translateX(25px);
-            opacity: 0.3;
+            opacity: 0.6;
           }
           75% {
             transform: translateY(-50px) translateX(40px);
-            opacity: 0.25;
+            opacity: 0.55;
           }
         }
 
         @keyframes bubble-float-delayed-3 {
           0%, 100% {
             transform: translateY(0px) translateX(0px);
-            opacity: 0.35;
+            opacity: 0.65;
           }
           25% {
             transform: translateY(35px) translateX(30px);
-            opacity: 0.3;
+            opacity: 0.6;
           }
           50% {
             transform: translateY(70px) translateX(-20px);
-            opacity: 0.35;
+            opacity: 0.65;
           }
           75% {
             transform: translateY(35px) translateX(-40px);
-            opacity: 0.3;
+            opacity: 0.6;
           }
         }
 
         @keyframes bubble-float-delayed-4 {
           0%, 100% {
             transform: translateY(0px) translateX(0px);
-            opacity: 0.25;
+            opacity: 0.5;
           }
           25% {
             transform: translateY(-60px) translateX(35px);
-            opacity: 0.2;
+            opacity: 0.45;
           }
           50% {
             transform: translateY(-120px) translateX(-30px);
-            opacity: 0.25;
+            opacity: 0.5;
           }
           75% {
             transform: translateY(-60px) translateX(-45px);
-            opacity: 0.2;
+            opacity: 0.45;
           }
         }
 
         @keyframes bubble-float-delayed-5 {
           0%, 100% {
             transform: translateY(0px) translateX(0px);
-            opacity: 0.4;
+            opacity: 0.7;
           }
           25% {
             transform: translateY(-45px) translateX(-25px);
-            opacity: 0.35;
+            opacity: 0.65;
           }
           50% {
             transform: translateY(-90px) translateX(30px);
-            opacity: 0.4;
+            opacity: 0.7;
           }
           75% {
             transform: translateY(-45px) translateX(20px);
-            opacity: 0.35;
+            opacity: 0.65;
           }
         }
 
