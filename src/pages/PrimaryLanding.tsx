@@ -93,6 +93,14 @@ export default function PrimaryLanding() {
         <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[#3d6dc4] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
         <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-[#2d5db9] rounded-full mix-blend-multiply filter blur-3xl opacity-25 animate-blob animation-delay-4000" />
 
+        {/* Glowing Bubble Animations */}
+        <div className="absolute top-1/4 left-10 w-16 h-16 bg-[#4d7fd9]/40 rounded-full border-2 border-[#4d7fd9]/80 opacity-80 animate-bubble-float shadow-lg shadow-[#4d7fd9]/50 backdrop-blur-sm" />
+        <div className="absolute top-1/3 right-20 w-12 h-12 bg-[#3d6dc4]/40 rounded-full border-2 border-[#3d6dc4]/80 opacity-75 animate-bubble-float-delayed-1 shadow-lg shadow-[#3d6dc4]/50 backdrop-blur-sm" />
+        <div className="absolute bottom-1/3 left-1/4 w-20 h-20 bg-[#4d7fd9]/35 rounded-full border-2 border-[#4d7fd9]/70 opacity-70 animate-bubble-float-delayed-2 shadow-lg shadow-[#4d7fd9]/40 backdrop-blur-sm" />
+        <div className="absolute top-2/3 right-1/3 w-14 h-14 bg-[#2d5db9]/40 rounded-full border-2 border-[#2d5db9]/80 opacity-75 animate-bubble-float-delayed-3 shadow-lg shadow-[#2d5db9]/50 backdrop-blur-sm" />
+        <div className="absolute bottom-1/4 right-10 w-24 h-24 bg-[#3d6dc4]/30 rounded-full border-2 border-[#3d6dc4]/60 opacity-60 animate-bubble-float-delayed-4 shadow-lg shadow-[#3d6dc4]/40 backdrop-blur-sm" />
+        <div className="absolute top-1/2 left-1/3 w-10 h-10 bg-[#4d7fd9]/40 rounded-full border-2 border-[#4d7fd9]/80 opacity-80 animate-bubble-float-delayed-5 shadow-lg shadow-[#4d7fd9]/50 backdrop-blur-sm" />
+
         {/* Gradient overlay for depth */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a1449] via-transparent to-transparent" />
 
@@ -734,6 +742,120 @@ export default function PrimaryLanding() {
           50% { transform: translateY(-20px); }
         }
 
+        @keyframes bubble-float {
+          0%, 100% {
+            transform: translateY(0px) translateX(0px);
+            opacity: 0.8;
+          }
+          25% {
+            transform: translateY(-40px) translateX(20px);
+            opacity: 0.75;
+          }
+          50% {
+            transform: translateY(-80px) translateX(-15px);
+            opacity: 0.8;
+          }
+          75% {
+            transform: translateY(-40px) translateX(-30px);
+            opacity: 0.75;
+          }
+        }
+
+        @keyframes bubble-float-delayed-1 {
+          0%, 100% {
+            transform: translateY(0px) translateX(0px);
+            opacity: 0.75;
+          }
+          25% {
+            transform: translateY(30px) translateX(-25px);
+            opacity: 0.7;
+          }
+          50% {
+            transform: translateY(60px) translateX(20px);
+            opacity: 0.75;
+          }
+          75% {
+            transform: translateY(30px) translateX(35px);
+            opacity: 0.7;
+          }
+        }
+
+        @keyframes bubble-float-delayed-2 {
+          0%, 100% {
+            transform: translateY(0px) translateX(0px);
+            opacity: 0.7;
+          }
+          25% {
+            transform: translateY(-50px) translateX(-30px);
+            opacity: 0.65;
+          }
+          50% {
+            transform: translateY(-100px) translateX(25px);
+            opacity: 0.7;
+          }
+          75% {
+            transform: translateY(-50px) translateX(40px);
+            opacity: 0.65;
+          }
+        }
+
+        @keyframes bubble-float-delayed-3 {
+          0%, 100% {
+            transform: translateY(0px) translateX(0px);
+            opacity: 0.75;
+          }
+          25% {
+            transform: translateY(35px) translateX(30px);
+            opacity: 0.7;
+          }
+          50% {
+            transform: translateY(70px) translateX(-20px);
+            opacity: 0.75;
+          }
+          75% {
+            transform: translateY(35px) translateX(-40px);
+            opacity: 0.7;
+          }
+        }
+
+        @keyframes bubble-float-delayed-4 {
+          0%, 100% {
+            transform: translateY(0px) translateX(0px);
+            opacity: 0.6;
+          }
+          25% {
+            transform: translateY(-60px) translateX(35px);
+            opacity: 0.55;
+          }
+          50% {
+            transform: translateY(-120px) translateX(-30px);
+            opacity: 0.6;
+          }
+          75% {
+            transform: translateY(-60px) translateX(-45px);
+            opacity: 0.55;
+          }
+        }
+
+        @keyframes bubble-float-delayed-5 {
+          0%, 100% {
+            transform: translateY(0px) translateX(0px);
+            opacity: 0.8;
+          }
+          25% {
+            transform: translateY(-45px) translateX(-25px);
+            opacity: 0.75;
+          }
+          50% {
+            transform: translateY(-90px) translateX(30px);
+            opacity: 0.8;
+          }
+          75% {
+            transform: translateY(-45px) translateX(20px);
+            opacity: 0.75;
+          }
+        }
+
         .animate-blob {
           animation: blob 7s infinite;
         }
@@ -748,6 +870,35 @@ export default function PrimaryLanding() {
 
         .animate-float {
           animation: float 3s ease-in-out infinite;
+        }
+
+        .animate-bubble-float {
+          animation: bubble-float 8s ease-in-out infinite;
+        }
+
+        .animate-bubble-float-delayed-1 {
+          animation: bubble-float-delayed-1 8s ease-in-out infinite;
+          animation-delay: 1s;
+        }
+
+        .animate-bubble-float-delayed-2 {
+          animation: bubble-float-delayed-2 8s ease-in-out infinite;
+          animation-delay: 2s;
+        }
+
+        .animate-bubble-float-delayed-3 {
+          animation: bubble-float-delayed-3 8s ease-in-out infinite;
+          animation-delay: 3s;
+        }
+
+        .animate-bubble-float-delayed-4 {
+          animation: bubble-float-delayed-4 8s ease-in-out infinite;
+          animation-delay: 4s;
+        }
+
+        .animate-bubble-float-delayed-5 {
+          animation: bubble-float-delayed-5 8s ease-in-out infinite;
+          animation-delay: 5s;
         }
 
         @keyframes float-card {
