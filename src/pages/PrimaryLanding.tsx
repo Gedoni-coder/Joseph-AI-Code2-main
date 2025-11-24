@@ -93,6 +93,14 @@ export default function PrimaryLanding() {
         <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[#3d6dc4] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000" />
         <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-[#2d5db9] rounded-full mix-blend-multiply filter blur-3xl opacity-25 animate-blob animation-delay-4000" />
 
+        {/* Glowing Bubble Animations */}
+        <div className="absolute top-1/4 left-10 w-16 h-16 bg-[#4d7fd9] rounded-full filter blur-xl opacity-40 animate-bubble-float shadow-lg shadow-[#4d7fd9]/50" />
+        <div className="absolute top-1/3 right-20 w-12 h-12 bg-[#3d6dc4] rounded-full filter blur-xl opacity-35 animate-bubble-float-delayed-1 shadow-lg shadow-[#3d6dc4]/50" />
+        <div className="absolute bottom-1/3 left-1/4 w-20 h-20 bg-[#4d7fd9] rounded-full filter blur-2xl opacity-30 animate-bubble-float-delayed-2 shadow-lg shadow-[#4d7fd9]/40" />
+        <div className="absolute top-2/3 right-1/3 w-14 h-14 bg-[#2d5db9] rounded-full filter blur-xl opacity-35 animate-bubble-float-delayed-3 shadow-lg shadow-[#2d5db9]/50" />
+        <div className="absolute bottom-1/4 right-10 w-24 h-24 bg-[#3d6dc4] rounded-full filter blur-3xl opacity-25 animate-bubble-float-delayed-4 shadow-lg shadow-[#3d6dc4]/40" />
+        <div className="absolute top-1/2 left-1/3 w-10 h-10 bg-[#4d7fd9] rounded-full filter blur-lg opacity-40 animate-bubble-float-delayed-5 shadow-lg shadow-[#4d7fd9]/50" />
+
         {/* Gradient overlay for depth */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a1449] via-transparent to-transparent" />
 
