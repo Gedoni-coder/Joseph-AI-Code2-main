@@ -68,7 +68,10 @@ export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
             Track and analyze revenue performance across all channels
           </p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button
+          className="bg-blue-600 hover:bg-blue-700"
+          onClick={() => setDialogOpen(true)}
+        >
           <Target className="w-4 h-4 mr-2" />
           Add Stream
         </Button>
