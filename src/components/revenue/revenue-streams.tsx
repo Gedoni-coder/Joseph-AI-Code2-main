@@ -32,12 +32,20 @@ const typeColors = {
   advertising: "bg-red-100 text-red-800",
 };
 
-export function RevenueStreams({ streams }: RevenueStreamsProps) {
+export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   const formatCurrency = (amount: number) => {
     if (amount >= 1000000) {
       return `$${(amount / 1000000).toFixed(1)}M`;
     }
     return `$${amount.toLocaleString()}`;
+  };
+
+  const handleAddStream = (stream: RevenueStream) => {
+    if (onAddStream) {
+      onAddStream(stream);
+    }
   };
 
   const totalCurrentRevenue = streams.reduce(
