@@ -34,7 +34,7 @@ import { Link } from "react-router-dom";
 
 export default function RevenueStrategy() {
   const {
-    streams,
+    streams: initialStreams,
     scenarios,
     churn,
     upsells,
@@ -48,6 +48,11 @@ export default function RevenueStrategy() {
     refreshData,
   } = useRevenueData();
   const [activeTab, setActiveTab] = useState("overview");
+  const [streams, setStreams] = useState(initialStreams);
+
+  const handleAddStream = (newStream: typeof initialStreams[0]) => {
+    setStreams([...streams, newStream]);
+  };
 
   if (error) {
     return (
