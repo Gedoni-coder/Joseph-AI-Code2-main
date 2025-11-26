@@ -219,6 +219,12 @@ export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
           </Card>
         ))}
       </div>
+
+      <AddRevenueStreamDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        onAdd={handleAddStream}
+      />
     </div>
   );
 }
