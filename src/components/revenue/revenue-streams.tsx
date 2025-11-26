@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -16,9 +17,11 @@ import {
   Target,
 } from "lucide-react";
 import { type RevenueStream } from "@/lib/revenue-data";
+import { AddRevenueStreamDialog } from "./add-revenue-stream-dialog";
 
 interface RevenueStreamsProps {
   streams: RevenueStream[];
+  onAddStream?: (stream: RevenueStream) => void;
 }
 
 const typeColors = {
