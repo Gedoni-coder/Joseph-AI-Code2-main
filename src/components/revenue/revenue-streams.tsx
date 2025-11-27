@@ -121,12 +121,12 @@ export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
         </Card>
 
         <Card className="bg-green-50 border-green-200">
-          <CardContent className="p-4">
+          <CardContent className="p-3 sm:p-4">
             <div className="flex items-center space-x-2">
-              <Target className="w-5 h-5 text-green-600" />
-              <div>
-                <div className="text-sm text-green-700">Forecast Revenue</div>
-                <div className="text-xl font-bold text-green-900">
+              <Target className="w-4 sm:w-5 h-4 sm:h-5 text-green-600 flex-shrink-0" />
+              <div className="min-w-0">
+                <div className="text-xs sm:text-sm text-green-700">Forecast Revenue</div>
+                <div className="text-lg sm:text-xl font-bold text-green-900 truncate">
                   {formatCurrency(totalForecastRevenue)}
                 </div>
               </div>
@@ -135,12 +135,12 @@ export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
         </Card>
 
         <Card className="bg-purple-50 border-purple-200">
-          <CardContent className="p-4">
+          <CardContent className="p-3 sm:p-4">
             <div className="flex items-center space-x-2">
-              <TrendingUp className="w-5 h-5 text-purple-600" />
-              <div>
-                <div className="text-sm text-purple-700">Expected Growth</div>
-                <div className="text-xl font-bold text-purple-900">
+              <TrendingUp className="w-4 sm:w-5 h-4 sm:h-5 text-purple-600 flex-shrink-0" />
+              <div className="min-w-0">
+                <div className="text-xs sm:text-sm text-purple-700">Expected Growth</div>
+                <div className="text-lg sm:text-xl font-bold text-purple-900 truncate">
                   {overallGrowth.toFixed(1)}%
                 </div>
               </div>
@@ -149,12 +149,12 @@ export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
         </Card>
 
         <Card className="bg-orange-50 border-orange-200">
-          <CardContent className="p-4">
+          <CardContent className="p-3 sm:p-4">
             <div className="flex items-center space-x-2">
-              <Users className="w-5 h-5 text-orange-600" />
-              <div>
-                <div className="text-sm text-orange-700">Total Customers</div>
-                <div className="text-xl font-bold text-orange-900">
+              <Users className="w-4 sm:w-5 h-4 sm:h-5 text-orange-600 flex-shrink-0" />
+              <div className="min-w-0">
+                <div className="text-xs sm:text-sm text-orange-700">Total Customers</div>
+                <div className="text-lg sm:text-xl font-bold text-orange-900 truncate">
                   {streams
                     .reduce((acc, s) => acc + s.customers, 0)
                     .toLocaleString()}
