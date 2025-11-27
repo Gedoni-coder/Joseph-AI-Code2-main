@@ -177,18 +177,18 @@ export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
               </div>
             </CardHeader>
 
-            <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-sm text-gray-600">Current Revenue</div>
-                  <div className="text-2xl font-bold">
+            <CardContent className="p-3 sm:p-4 space-y-3 sm:space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="text-xs sm:text-sm text-gray-600">Current Revenue</div>
+                  <div className="text-xl sm:text-2xl font-bold truncate">
                     {formatCurrency(stream.currentRevenue)}
                   </div>
                 </div>
-                <div className="text-right">
-                  <div className="text-sm text-gray-600">Forecast</div>
+                <div className="text-left sm:text-right">
+                  <div className="text-xs sm:text-sm text-gray-600">Forecast</div>
                   <div className="flex items-center space-x-2">
-                    <div className="text-xl font-bold text-blue-600">
+                    <div className="text-lg sm:text-xl font-bold text-blue-600 truncate">
                       {formatCurrency(stream.forecastRevenue)}
                     </div>
                     {stream.growth > 0 ? (
