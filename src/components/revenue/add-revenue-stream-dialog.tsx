@@ -300,23 +300,24 @@ export function AddRevenueStreamDialog({
               className={errors.avgRevenuePerCustomer ? "border-red-500" : ""}
             />
             {errors.avgRevenuePerCustomer && (
-              <p className="text-sm text-red-500">
+              <p className="text-xs sm:text-sm text-red-500">
                 {errors.avgRevenuePerCustomer}
               </p>
             )}
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="gap-2 sm:gap-3 flex-col sm:flex-row pt-2">
             <Button
               type="button"
               variant="outline"
               onClick={() => handleOpenChange(false)}
+              className="w-full sm:w-auto order-2 sm:order-1"
             >
               Cancel
             </Button>
             <Button
               type="submit"
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto order-1 sm:order-2"
             >
               Add Stream
             </Button>
