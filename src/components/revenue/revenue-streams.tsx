@@ -230,8 +230,24 @@ export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
               </div>
 
               <div className="flex space-x-2 pt-2">
-                <Button variant="outline" size="sm" className="flex-1">
-                  View Details
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1"
+                  onClick={() => handleViewDetails(stream)}
+                  disabled={loadingStreamId === stream.id}
+                >
+                  {loadingStreamId === stream.id ? (
+                    <>
+                      <div className="w-3 h-3 mr-1 border-2 border-gray-400 border-t-gray-600 rounded-full animate-spin" />
+                      Generating...
+                    </>
+                  ) : (
+                    <>
+                      <Download className="w-3 h-3 mr-1" />
+                      View Details
+                    </>
+                  )}
                 </Button>
                 <Button
                   size="sm"
