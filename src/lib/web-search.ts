@@ -184,30 +184,39 @@ export function extractSearchTerms(userQuery: string): string[] {
 }
 
 export async function shouldPerformWebSearch(query: string): Promise<boolean> {
-  // Perform web search for questions that likely need current information
-  const searchIndicators = [
-    "what is",
-    "how to",
-    "latest",
-    "current",
-    "recent",
-    "news",
-    "trends",
-    "statistics",
-    "data",
-    "market",
-    "price",
-    "rate",
-    "forecast",
-    "predict",
-    "compare",
-    "difference between",
-    "best",
-    "top",
-    "guide",
-    "tutorial",
-  ];
+  try {
+    // Don't perform web search if offline
+    if (!navigator.onLine) {
+      return false;
+    }
 
-  const lowerQuery = query.toLowerCase();
-  return searchIndicators.some((indicator) => lowerQuery.includes(indicator));
+    // Perform web search for questions that likely need current information
+    const searchIndicators = [
+      "what is",
+      "how to",
+      "latest",
+      "current",
+      "recent",
+      "news",
+      "trends",
+      "statistics",
+      "data",
+      "market",
+      "price",
+      "rate",
+      "forecast",
+      "predict",
+      "compare",
+      "difference between",
+      "best",
+      "top",
+      "guide",
+      "tutorial",
+    ];
+
+    const lowerQuery = query.toLowerCase();
+    return searchIndicators.some((indicator) => lowerQuery.includes(indicator));
+  } catch {
+    return false;
+  }
 }
