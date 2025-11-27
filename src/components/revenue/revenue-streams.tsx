@@ -165,12 +165,12 @@ export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6">
         {streams.map((stream) => (
           <Card key={stream.id} className="hover:shadow-lg transition-shadow">
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-lg">{stream.name}</CardTitle>
+            <CardHeader className="pb-2 sm:pb-3">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                <CardTitle className="text-base sm:text-lg">{stream.name}</CardTitle>
                 <Badge className={typeColors[stream.type]}>
                   {stream.type.replace("-", " ")}
                 </Badge>
