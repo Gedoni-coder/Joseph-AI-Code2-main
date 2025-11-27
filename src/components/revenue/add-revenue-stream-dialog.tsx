@@ -144,8 +144,8 @@ export function AddRevenueStreamDialog({
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
+          <div className="space-y-1.5">
+            <label className="text-xs sm:text-sm font-medium text-gray-700">
               Stream Name *
             </label>
             <Input
