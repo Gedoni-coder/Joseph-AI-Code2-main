@@ -141,8 +141,8 @@ export default function RevenueStrategy() {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <TabsContent value="overview" className="space-y-4 sm:space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
               {metrics.slice(0, 6).map((metric) => (
                 <Card key={metric.id}>
                   <CardContent className="p-6">
