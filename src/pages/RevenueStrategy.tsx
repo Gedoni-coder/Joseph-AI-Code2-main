@@ -99,43 +99,43 @@ export default function RevenueStrategy() {
           <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 bg-white border gap-1">
             <TabsTrigger
               value="overview"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3"
             >
               Overview
             </TabsTrigger>
             <TabsTrigger
               value="summary-recommendation"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden sm:inline-flex"
             >
-              Summary & Recommendation
+              Summary & Rec
             </TabsTrigger>
             <TabsTrigger
               value="streams"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3"
             >
-              Revenue Streams
+              Streams
             </TabsTrigger>
             <TabsTrigger
               value="forecasting"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden sm:inline-flex"
             >
-              Forecasting
+              Forecast
             </TabsTrigger>
             <TabsTrigger
               value="churn"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden md:inline-flex"
             >
-              Churn Analysis
+              Churn
             </TabsTrigger>
             <TabsTrigger
               value="upsell"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden md:inline-flex"
             >
               Upsell
             </TabsTrigger>
             <TabsTrigger
               value="conversation"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden lg:inline-flex"
             >
               JOSEPH
             </TabsTrigger>
