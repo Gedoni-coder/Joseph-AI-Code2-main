@@ -234,27 +234,30 @@ export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="flex-1"
+                  className="flex-1 text-xs sm:text-sm"
                   onClick={() => handleViewDetails(stream)}
                   disabled={loadingStreamId === stream.id}
                 >
                   {loadingStreamId === stream.id ? (
                     <>
                       <div className="w-3 h-3 mr-1 border-2 border-gray-400 border-t-gray-600 rounded-full animate-spin" />
-                      Generating...
+                      <span className="hidden sm:inline">Generating...</span>
+                      <span className="sm:hidden">Wait...</span>
                     </>
                   ) : (
                     <>
                       <Download className="w-3 h-3 mr-1" />
-                      View Details
+                      <span className="hidden sm:inline">View Details</span>
+                      <span className="sm:hidden">Details</span>
                     </>
                   )}
                 </Button>
                 <Button
                   size="sm"
-                  className="flex-1 bg-blue-600 hover:bg-blue-700"
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-xs sm:text-sm"
                 >
-                  Optimize
+                  <span className="hidden sm:inline">Optimize</span>
+                  <span className="sm:hidden">Opt.</span>
                 </Button>
               </div>
             </CardContent>
