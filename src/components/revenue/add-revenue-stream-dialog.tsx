@@ -197,12 +197,12 @@ export function AddRevenueStreamDialog({
               className={errors.currentRevenue ? "border-red-500" : ""}
             />
             {errors.currentRevenue && (
-              <p className="text-sm text-red-500">{errors.currentRevenue}</p>
+              <p className="text-xs sm:text-sm text-red-500">{errors.currentRevenue}</p>
             )}
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
+          <div className="space-y-1.5">
+            <label className="text-xs sm:text-sm font-medium text-gray-700">
               Forecast Revenue ($) *
             </label>
             <Input
