@@ -217,12 +217,12 @@ export function AddRevenueStreamDialog({
               className={errors.forecastRevenue ? "border-red-500" : ""}
             />
             {errors.forecastRevenue && (
-              <p className="text-sm text-red-500">{errors.forecastRevenue}</p>
+              <p className="text-xs sm:text-sm text-red-500">{errors.forecastRevenue}</p>
             )}
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
+          <div className="space-y-1.5">
+            <label className="text-xs sm:text-sm font-medium text-gray-700">
               Growth Rate (%) *
             </label>
             <Input
@@ -236,12 +236,12 @@ export function AddRevenueStreamDialog({
               className={errors.growth ? "border-red-500" : ""}
             />
             {errors.growth && (
-              <p className="text-sm text-red-500">{errors.growth}</p>
+              <p className="text-xs sm:text-sm text-red-500">{errors.growth}</p>
             )}
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
+          <div className="space-y-1.5">
+            <label className="text-xs sm:text-sm font-medium text-gray-700">
               Margin (%) *
             </label>
             <Input
@@ -257,12 +257,12 @@ export function AddRevenueStreamDialog({
               className={errors.margin ? "border-red-500" : ""}
             />
             {errors.margin && (
-              <p className="text-sm text-red-500">{errors.margin}</p>
+              <p className="text-xs sm:text-sm text-red-500">{errors.margin}</p>
             )}
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
+          <div className="space-y-1.5">
+            <label className="text-xs sm:text-sm font-medium text-gray-700">
               Customers *
             </label>
             <Input
@@ -277,12 +277,12 @@ export function AddRevenueStreamDialog({
               className={errors.customers ? "border-red-500" : ""}
             />
             {errors.customers && (
-              <p className="text-sm text-red-500">{errors.customers}</p>
+              <p className="text-xs sm:text-sm text-red-500">{errors.customers}</p>
             )}
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
+          <div className="space-y-1.5">
+            <label className="text-xs sm:text-sm font-medium text-gray-700">
               Avg Revenue Per Customer ($) *
             </label>
             <Input
