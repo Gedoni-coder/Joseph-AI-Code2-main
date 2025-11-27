@@ -145,20 +145,20 @@ export default function RevenueStrategy() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
               {metrics.slice(0, 6).map((metric) => (
                 <Card key={metric.id}>
-                  <CardContent className="p-6">
+                  <CardContent className="p-3 sm:p-4 md:p-6">
                     <div className="flex items-center space-x-2">
-                      <DollarSign className="w-5 h-5 text-blue-600" />
-                      <div className="flex-1">
-                        <div className="text-sm text-gray-600">
+                      <DollarSign className="w-4 sm:w-5 h-4 sm:h-5 text-blue-600 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <div className="text-xs sm:text-sm text-gray-600 truncate">
                           {metric.name}
                         </div>
-                        <div className="text-2xl font-bold text-gray-900">
+                        <div className="text-lg sm:text-2xl font-bold text-gray-900 truncate">
                           {metric.unit === "$" ? "$" : ""}
                           {metric.value.toLocaleString()}
                           {metric.unit !== "$" ? metric.unit : ""}
                         </div>
                         <div
-                          className={`text-sm flex items-center ${
+                          className={`text-xs sm:text-sm flex items-center gap-1 ${
                             metric.trend === "up"
                               ? "text-green-600"
                               : metric.trend === "down"
@@ -167,12 +167,14 @@ export default function RevenueStrategy() {
                           }`}
                         >
                           <TrendingUp
-                            className={`w-3 h-3 mr-1 ${
+                            className={`w-3 h-3 flex-shrink-0 ${
                               metric.trend === "down" ? "rotate-180" : ""
                             }`}
                           />
-                          {metric.change > 0 ? "+" : ""}
-                          {metric.change.toFixed(1)}% {metric.period}
+                          <span className="truncate">
+                            {metric.change > 0 ? "+" : ""}
+                            {metric.change.toFixed(1)}% {metric.period}
+                          </span>
                         </div>
                       </div>
                     </div>
