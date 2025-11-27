@@ -201,7 +201,7 @@ export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
               </div>
 
               <div className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
+                <div className="flex items-center justify-between text-xs sm:text-sm">
                   <span className="text-gray-600">Growth Target</span>
                   <span className="font-medium">{stream.growth}%</span>
                 </div>
@@ -211,26 +211,26 @@ export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
                 />
               </div>
 
-              <div className="grid grid-cols-3 gap-3 pt-3 border-t">
+              <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-2 sm:pt-3 border-t">
                 <div className="text-center">
                   <div className="text-xs text-gray-500">Customers</div>
-                  <div className="font-semibold">
+                  <div className="text-sm sm:text-base font-semibold truncate">
                     {stream.customers.toLocaleString()}
                   </div>
                 </div>
                 <div className="text-center">
                   <div className="text-xs text-gray-500">ARPC</div>
-                  <div className="font-semibold">
+                  <div className="text-sm sm:text-base font-semibold truncate">
                     ${stream.avgRevenuePerCustomer.toLocaleString()}
                   </div>
                 </div>
                 <div className="text-center">
                   <div className="text-xs text-gray-500">Margin</div>
-                  <div className="font-semibold">{stream.margin}%</div>
+                  <div className="text-sm sm:text-base font-semibold">{stream.margin}%</div>
                 </div>
               </div>
 
-              <div className="flex space-x-2 pt-2">
+              <div className="flex gap-1 sm:gap-2 pt-2 sm:pt-3">
                 <Button
                   variant="outline"
                   size="sm"
