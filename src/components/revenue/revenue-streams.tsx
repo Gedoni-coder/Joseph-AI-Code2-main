@@ -37,6 +37,8 @@ const typeColors = {
 
 export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [loadingStreamId, setLoadingStreamId] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const formatCurrency = (amount: number) => {
     if (amount >= 1000000) {
@@ -48,6 +50,26 @@ export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
   const handleAddStream = (stream: RevenueStream) => {
     if (onAddStream) {
       onAddStream(stream);
+    }
+  };
+
+  const handleViewDetails = async (stream: RevenueStream) => {
+    try {
+      setLoadingStreamId(stream.id);
+      await generateRevenueStreamPDF(stream, streams);
+      toast({
+        title: "Success",
+        description: `PDF whitepaper for ${stream.name} has been downloaded.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to generate PDF. Please try again.",
+        variant: "destructive",
+      });
+      console.error("PDF generation error:", error);
+    } finally {
+      setLoadingStreamId(null);
     }
   };
 
