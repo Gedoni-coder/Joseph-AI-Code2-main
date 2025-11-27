@@ -15,9 +15,12 @@ import {
   Users,
   DollarSign,
   Target,
+  Download,
 } from "lucide-react";
 import { type RevenueStream } from "@/lib/revenue-data";
 import { AddRevenueStreamDialog } from "./add-revenue-stream-dialog";
+import { generateRevenueStreamPDF } from "@/lib/revenue-stream-pdf-generator";
+import { useToast } from "@/hooks/use-toast";
 
 interface RevenueStreamsProps {
   streams: RevenueStream[];
