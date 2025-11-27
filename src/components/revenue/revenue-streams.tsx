@@ -85,17 +85,18 @@ export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
     ((totalForecastRevenue - totalCurrentRevenue) / totalCurrentRevenue) * 100;
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Revenue Streams</h2>
-          <p className="text-gray-600">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900">Revenue Streams</h2>
+          <p className="text-sm sm:text-base text-gray-600">
             Track and analyze revenue performance across all channels
           </p>
         </div>
         <Button
-          className="bg-blue-600 hover:bg-blue-700"
+          className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto"
           onClick={() => setDialogOpen(true)}
+          size="sm"
         >
           <Target className="w-4 h-4 mr-2" />
           Add Stream
