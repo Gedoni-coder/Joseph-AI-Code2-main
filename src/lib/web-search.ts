@@ -72,6 +72,8 @@ export async function performWebSearch(query: string): Promise<SearchResult[]> {
 
 export async function fetchWebPageText(rawUrl: string): Promise<string | null> {
   try {
+    if (!navigator.onLine) return null;
+
     let url = rawUrl.trim();
     if (!/^https?:\/\//i.test(url)) {
       url = `https://${url}`;
