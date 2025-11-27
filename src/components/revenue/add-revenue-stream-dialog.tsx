@@ -157,12 +157,12 @@ export function AddRevenueStreamDialog({
               className={errors.name ? "border-red-500" : ""}
             />
             {errors.name && (
-              <p className="text-sm text-red-500">{errors.name}</p>
+              <p className="text-xs sm:text-sm text-red-500">{errors.name}</p>
             )}
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
+          <div className="space-y-1.5">
+            <label className="text-xs sm:text-sm font-medium text-gray-700">
               Stream Type *
             </label>
             <Select value={formData.type} onValueChange={(value) =>
