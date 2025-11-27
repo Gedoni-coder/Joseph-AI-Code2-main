@@ -181,8 +181,8 @@ export function AddRevenueStreamDialog({
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
+          <div className="space-y-1.5">
+            <label className="text-xs sm:text-sm font-medium text-gray-700">
               Current Revenue ($) *
             </label>
             <Input
