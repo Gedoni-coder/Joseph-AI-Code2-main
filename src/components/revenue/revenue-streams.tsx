@@ -105,14 +105,14 @@ export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-4 sm:mb-6">
         <Card className="bg-blue-50 border-blue-200">
-          <CardContent className="p-4">
+          <CardContent className="p-3 sm:p-4">
             <div className="flex items-center space-x-2">
-              <DollarSign className="w-5 h-5 text-blue-600" />
-              <div>
-                <div className="text-sm text-blue-700">
+              <DollarSign className="w-4 sm:w-5 h-4 sm:h-5 text-blue-600 flex-shrink-0" />
+              <div className="min-w-0">
+                <div className="text-xs sm:text-sm text-blue-700">
                   Total Current Revenue
                 </div>
-                <div className="text-xl font-bold text-blue-900">
+                <div className="text-lg sm:text-xl font-bold text-blue-900 truncate">
                   {formatCurrency(totalCurrentRevenue)}
                 </div>
               </div>
