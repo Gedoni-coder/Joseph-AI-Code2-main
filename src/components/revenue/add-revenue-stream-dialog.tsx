@@ -134,7 +134,7 @@ export function AddRevenueStreamDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="w-full max-w-sm sm:max-w-md mx-4">
         <DialogHeader>
           <DialogTitle>Add New Revenue Stream</DialogTitle>
           <DialogDescription>
