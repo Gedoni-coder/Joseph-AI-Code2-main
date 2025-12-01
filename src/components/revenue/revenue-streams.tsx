@@ -264,6 +264,7 @@ export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
                 <Button
                   size="sm"
                   className="flex-1 bg-blue-600 hover:bg-blue-700 text-xs sm:text-sm"
+                  onClick={() => handleOptimize(stream)}
                 >
                   <span className="hidden sm:inline">Optimize</span>
                   <span className="sm:hidden">Opt.</span>
