@@ -280,6 +280,13 @@ export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
         onOpenChange={setDialogOpen}
         onAdd={handleAddStream}
       />
+
+      <OptimizeStreamDialog
+        open={optimizeDialogOpen}
+        onOpenChange={setOptimizeDialogOpen}
+        stream={selectedStreamForOptimization}
+        allStreams={streams}
+      />
     </div>
   );
 }
