@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { type RevenueStream } from "@/lib/revenue-data";
 import { AddRevenueStreamDialog } from "./add-revenue-stream-dialog";
+import { OptimizeStreamDialog } from "./optimize-stream-dialog";
 import { generateRevenueStreamPDF } from "@/lib/revenue-stream-pdf-generator";
 import { useToast } from "@/hooks/use-toast";
 
@@ -37,6 +38,9 @@ const typeColors = {
 
 export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [optimizeDialogOpen, setOptimizeDialogOpen] = useState(false);
+  const [selectedStreamForOptimization, setSelectedStreamForOptimization] =
+    useState<RevenueStream | null>(null);
   const [loadingStreamId, setLoadingStreamId] = useState<string | null>(null);
   const { toast } = useToast();
 
