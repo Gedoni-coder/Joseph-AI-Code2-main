@@ -170,7 +170,7 @@ function analyzeStream(
       id: "churn-reduction",
       title: "Reduce Churn Rate",
       description: `Implement retention program targeting high-value customers. Even 5% churn reduction could protect significant revenue.`,
-      projectedImpact: stream.currentRevenue * 0.08,
+      projectedImpact: Math.max(0, stream.currentRevenue * 0.08),
       projectedImpactUnit: "$",
       difficulty: "medium",
       timeframe: "180 days",
@@ -178,12 +178,15 @@ function analyzeStream(
     });
   }
 
-  if (stream.currentRevenue < 1000000) {
+  if (stream.currentRevenue && stream.currentRevenue < 1000000) {
+    const upsellImpact = stream.customers
+      ? stream.customers * (stream.avgRevenuePerCustomer || 0) * 0.15
+      : 0;
     recommendations.push({
       id: "upsell-program",
       title: "Develop Cross-Sell Strategy",
       description: `Create targeted upsell program for existing customers. Leverage complementary offerings to increase customer lifetime value.`,
-      projectedImpact: stream.customers * (stream.avgRevenuePerCustomer * 0.15),
+      projectedImpact: Math.max(0, upsellImpact),
       projectedImpactUnit: "$",
       difficulty: "easy",
       timeframe: "60 days",
@@ -191,16 +194,18 @@ function analyzeStream(
     });
   }
 
-  recommendations.push({
-    id: "customer-segmentation",
-    title: "Advanced Customer Segmentation",
-    description: `Segment customers by profitability and engagement. Tailor offers and messaging to each segment for improved conversion and retention.`,
-    projectedImpact: stream.currentRevenue * 0.12,
-    projectedImpactUnit: "$",
-    difficulty: "hard",
-    timeframe: "150 days",
-    action: "Build segmentation model",
-  });
+  if (stream.currentRevenue) {
+    recommendations.push({
+      id: "customer-segmentation",
+      title: "Advanced Customer Segmentation",
+      description: `Segment customers by profitability and engagement. Tailor offers and messaging to each segment for improved conversion and retention.`,
+      projectedImpact: Math.max(0, stream.currentRevenue * 0.12),
+      projectedImpactUnit: "$",
+      difficulty: "hard",
+      timeframe: "150 days",
+      action: "Build segmentation model",
+    });
+  }
 
   return {
     bottlenecks,
