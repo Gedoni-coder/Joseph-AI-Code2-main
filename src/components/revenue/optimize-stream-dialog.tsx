@@ -452,7 +452,7 @@ export function OptimizeStreamDialog({
           </Card>
         </div>
 
-        <div className="px-6 py-4 border-t bg-white sticky bottom-0 flex gap-3">
+        <div className="flex gap-3 pt-4 border-t mt-4">
           <Button
             variant="outline"
             onClick={() => onOpenChange(false)}
