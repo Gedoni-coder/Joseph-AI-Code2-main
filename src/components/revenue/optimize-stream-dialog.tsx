@@ -320,9 +320,9 @@ export function OptimizeStreamDialog({
     }
   };
 
-  const handleExportPlan = () => {
+  const handleExportPlan = async () => {
     try {
-      generateOptimizationPlanPDF(
+      await generateOptimizationPlanPDF(
         stream,
         bottlenecks,
         recommendations,
