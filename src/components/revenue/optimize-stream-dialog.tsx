@@ -246,49 +246,48 @@ export function OptimizeStreamDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Zap className="w-5 h-5 text-blue-600" />
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <DialogHeader className="mb-6">
+          <DialogTitle className="flex items-center gap-2 text-2xl">
+            <Zap className="w-6 h-6 text-blue-600" />
             Optimize: {stream.name}
           </DialogTitle>
-          <DialogDescription>
-            Performance diagnosis and optimization recommendations for your{" "}
-            {stream.type} revenue stream
+          <DialogDescription className="text-base mt-2">
+            Performance diagnosis and optimization recommendations for your {stream.type} revenue stream
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-6 overflow-y-auto flex-1">
+        <div className="space-y-6">
           {/* Current Performance Overview */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Current Performance</CardTitle>
+              <CardTitle className="text-base">Current Performance</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 gap-4">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-blue-600">
                     ${(stream.currentRevenue / 1000000).toFixed(1)}M
                   </div>
-                  <div className="text-sm text-gray-600">Current Revenue</div>
+                  <div className="text-xs text-gray-600">Current Revenue</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-green-600">
                     {stream.growth}%
                   </div>
-                  <div className="text-sm text-gray-600">Growth Target</div>
+                  <div className="text-xs text-gray-600">Growth Target</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-purple-600">
                     {stream.margin}%
                   </div>
-                  <div className="text-sm text-gray-600">Margin</div>
+                  <div className="text-xs text-gray-600">Margin</div>
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-orange-600">
                     {stream.customers.toLocaleString()}
                   </div>
-                  <div className="text-sm text-gray-600">Customers</div>
+                  <div className="text-xs text-gray-600">Customers</div>
                 </div>
               </div>
             </CardContent>
@@ -298,31 +297,25 @@ export function OptimizeStreamDialog({
           {bottlenecks.length > 0 && (
             <Card className="border-orange-200 bg-orange-50">
               <CardHeader>
-                <CardTitle className="text-lg flex items-center gap-2">
+                <CardTitle className="text-base flex items-center gap-2">
                   <AlertTriangle className="w-5 h-5 text-orange-600" />
                   Performance Diagnosis
                 </CardTitle>
-                <CardDescription>
-                  Identified bottlenecks preventing this stream from reaching its
-                  potential
-                </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-3">
                 {bottlenecks.map((bottleneck) => (
                   <div
                     key={bottleneck.id}
-                    className={`p-4 rounded-lg border ${severityColors[bottleneck.severity]}`}
+                    className={`p-3 rounded-lg border ${severityColors[bottleneck.severity]}`}
                   >
-                    <div className="flex items-start justify-between mb-2">
-                      <h4 className="font-semibold">{bottleneck.title}</h4>
+                    <div className="flex items-start justify-between mb-1">
+                      <h4 className="font-semibold text-sm">{bottleneck.title}</h4>
                       <Badge variant="outline" className="text-xs">
                         {bottleneck.severity}
                       </Badge>
                     </div>
-                    <p className="text-sm mb-2">{bottleneck.description}</p>
-                    <div className="text-xs font-medium opacity-75">
-                      Impact Area: {bottleneck.impact}
-                    </div>
+                    <p className="text-sm mb-1">{bottleneck.description}</p>
+                    <div className="text-xs opacity-75">Impact: {bottleneck.impact}</div>
                   </div>
                 ))}
               </CardContent>
@@ -332,75 +325,48 @@ export function OptimizeStreamDialog({
           {/* Optimization Recommendations */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg flex items-center gap-2">
+              <CardTitle className="text-base flex items-center gap-2">
                 <TrendingUp className="w-5 h-5 text-blue-600" />
                 Optimization Recommendations
               </CardTitle>
-              <CardDescription>
-                Prioritized actions to improve this revenue stream
-              </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+            <CardContent className="space-y-3">
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-sm text-gray-700">
-                    Total Projected Impact:
-                  </span>
-                  <span className="text-2xl font-bold text-blue-600">
+                  <span className="text-sm text-gray-700">Total Projected Impact:</span>
+                  <span className="text-xl font-bold text-blue-600">
                     +${(totalProjectedImpact / 1000000).toFixed(2)}M
                   </span>
-                  <span className="text-xs text-gray-600">annual revenue</span>
+                  <span className="text-xs text-gray-600">annual</span>
                 </div>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {recommendations.map((rec, index) => (
                   <div
                     key={rec.id}
-                    className={`border rounded-lg p-4 cursor-pointer transition-all ${
-                      selectedRecommendation === rec.id
-                        ? "border-blue-500 bg-blue-50"
-                        : "border-gray-200 hover:border-blue-300"
-                    }`}
-                    onClick={() =>
-                      setSelectedRecommendation(
-                        selectedRecommendation === rec.id ? null : rec.id
-                      )
-                    }
+                    className="border border-gray-200 rounded-lg p-3 hover:border-blue-300 transition-colors"
                   >
-                    <div className="flex items-start justify-between mb-2">
+                    <div className="flex items-start justify-between gap-3">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="inline-flex w-6 h-6 items-center justify-center rounded-full bg-blue-100 text-blue-700 text-xs font-semibold">
+                          <span className="inline-flex w-5 h-5 items-center justify-center rounded-full bg-blue-100 text-blue-700 text-xs font-bold">
                             {index + 1}
                           </span>
-                          <h4 className="font-semibold">{rec.title}</h4>
+                          <h4 className="font-semibold text-sm">{rec.title}</h4>
                         </div>
                         <p className="text-sm text-gray-600">{rec.description}</p>
                       </div>
-                      <div className="ml-4 text-right flex-shrink-0">
-                        <div className="text-lg font-bold text-green-600 mb-1">
+                      <div className="text-right flex-shrink-0">
+                        <div className="text-sm font-bold text-green-600 mb-1">
                           +${(rec.projectedImpact / 1000000).toFixed(2)}M
                         </div>
-                        <Badge className={difficultyColors[rec.difficulty]}>
+                        <Badge className={difficultyColors[rec.difficulty]} variant="outline">
                           {rec.difficulty}
                         </Badge>
                       </div>
                     </div>
-
-                    {selectedRecommendation === rec.id && (
-                      <div className="mt-4 pt-4 border-t space-y-3">
-                        <div>
-                          <div className="text-xs font-semibold text-gray-700 mb-1">
-                            Implementation Timeframe
-                          </div>
-                          <div className="text-sm">{rec.timeframe}</div>
-                        </div>
-                        <Button className="w-full bg-blue-600 hover:bg-blue-700">
-                          {rec.action}
-                        </Button>
-                      </div>
-                    )}
+                    <div className="text-xs text-gray-500 mt-2">Timeframe: {rec.timeframe}</div>
                   </div>
                 ))}
               </div>
@@ -410,58 +376,37 @@ export function OptimizeStreamDialog({
           {/* Next Steps */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Recommended Next Steps</CardTitle>
+              <CardTitle className="text-base">Recommended Next Steps</CardTitle>
             </CardHeader>
             <CardContent>
-              <ol className="space-y-3">
-                <li className="flex gap-3">
-                  <span className="inline-flex w-6 h-6 items-center justify-center rounded-full bg-gray-200 text-gray-700 text-xs font-semibold flex-shrink-0">
-                    1
-                  </span>
-                  <span className="text-sm">
-                    Review the identified bottlenecks and understand their impact on
-                    revenue potential
-                  </span>
+              <ol className="space-y-2 text-sm">
+                <li className="flex gap-2">
+                  <span className="font-bold text-blue-600 flex-shrink-0">1.</span>
+                  <span>Review bottlenecks and understand their impact</span>
                 </li>
-                <li className="flex gap-3">
-                  <span className="inline-flex w-6 h-6 items-center justify-center rounded-full bg-gray-200 text-gray-700 text-xs font-semibold flex-shrink-0">
-                    2
-                  </span>
-                  <span className="text-sm">
-                    Select your top 2-3 recommendations based on effort and potential impact
-                  </span>
+                <li className="flex gap-2">
+                  <span className="font-bold text-blue-600 flex-shrink-0">2.</span>
+                  <span>Select top 2-3 recommendations by effort and impact</span>
                 </li>
-                <li className="flex gap-3">
-                  <span className="inline-flex w-6 h-6 items-center justify-center rounded-full bg-gray-200 text-gray-700 text-xs font-semibold flex-shrink-0">
-                    3
-                  </span>
-                  <span className="text-sm">
-                    Click the action buttons to initiate implementation workflows
-                  </span>
+                <li className="flex gap-2">
+                  <span className="font-bold text-blue-600 flex-shrink-0">3.</span>
+                  <span>Click action buttons to initiate implementation</span>
                 </li>
-                <li className="flex gap-3">
-                  <span className="inline-flex w-6 h-6 items-center justify-center rounded-full bg-gray-200 text-gray-700 text-xs font-semibold flex-shrink-0">
-                    4
-                  </span>
-                  <span className="text-sm">
-                    Track progress and measure impact against projected improvements
-                  </span>
+                <li className="flex gap-2">
+                  <span className="font-bold text-blue-600 flex-shrink-0">4.</span>
+                  <span>Track progress and measure impact</span>
                 </li>
               </ol>
             </CardContent>
           </Card>
         </div>
 
-        <div className="flex gap-3 pt-4 border-t mt-4">
-          <Button
-            variant="outline"
-            onClick={() => onOpenChange(false)}
-            className="flex-1"
-          >
+        <div className="flex gap-3 mt-6 pt-4 border-t">
+          <Button variant="outline" onClick={() => onOpenChange(false)} className="flex-1">
             Close
           </Button>
           <Button className="flex-1 bg-blue-600 hover:bg-blue-700">
-            Export Optimization Plan
+            Export Plan
           </Button>
         </div>
       </DialogContent>
