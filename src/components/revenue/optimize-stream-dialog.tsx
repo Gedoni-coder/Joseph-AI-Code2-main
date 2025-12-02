@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   AlertTriangle,
   TrendingUp,
@@ -23,14 +24,19 @@ import {
   Users,
   DollarSign,
   Zap,
+  Download,
+  Rocket,
 } from "lucide-react";
 import { type RevenueStream } from "@/lib/revenue-data";
+import { generateOptimizationPlanPDF } from "@/lib/optimize-plan-pdf-generator";
+import { useToast } from "@/hooks/use-toast";
 
 interface OptimizeStreamDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   stream: RevenueStream | null;
   allStreams: RevenueStream[];
+  onImplement?: (updatedStream: RevenueStream) => void;
 }
 
 interface Bottleneck {
@@ -62,7 +68,6 @@ function analyzeStream(
   const bottlenecks: Bottleneck[] = [];
   const recommendations: Recommendation[] = [];
 
-  // Guard against empty arrays
   if (!allStreams || allStreams.length === 0) {
     return { bottlenecks, recommendations };
   }
@@ -75,7 +80,6 @@ function analyzeStream(
     allStreams.reduce((sum, s) => sum + (s.avgRevenuePerCustomer || 0), 0) /
     allStreams.length;
 
-  // Identify bottlenecks
   if (stream.growth && avgGrowth && stream.growth < avgGrowth * 0.5) {
     bottlenecks.push({
       id: "low-growth",
@@ -120,7 +124,6 @@ function analyzeStream(
     });
   }
 
-  // Generate recommendations based on bottlenecks and stream characteristics
   if (stream.growth && avgGrowth && stream.growth < avgGrowth) {
     recommendations.push({
       id: "expansion-marketing",
@@ -218,10 +221,11 @@ export function OptimizeStreamDialog({
   onOpenChange,
   stream,
   allStreams,
+  onImplement,
 }: OptimizeStreamDialogProps) {
-  const [selectedRecommendation, setSelectedRecommendation] = useState<string | null>(
-    null
-  );
+  const [selectedRecs, setSelectedRecs] = useState<string[]>([]);
+  const [isImplementing, setIsImplementing] = useState(false);
+  const { toast } = useToast();
 
   if (!stream) return null;
 
@@ -239,10 +243,104 @@ export function OptimizeStreamDialog({
     hard: "bg-purple-100 text-purple-800",
   };
 
-  const totalProjectedImpact = recommendations.reduce(
+  const selectedRecommendations = recommendations.filter((r) =>
+    selectedRecs.includes(r.id)
+  );
+  const totalProjectedImpact = selectedRecommendations.reduce(
     (sum, rec) => sum + rec.projectedImpact,
     0
   );
+
+  const toggleRec = (recId: string) => {
+    setSelectedRecs((prev) =>
+      prev.includes(recId)
+        ? prev.filter((id) => id !== recId)
+        : [...prev, recId]
+    );
+  };
+
+  const handleImplement = async () => {
+    if (selectedRecs.length === 0) {
+      toast({
+        title: "No recommendations selected",
+        description: "Please select at least one recommendation to implement.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      setIsImplementing(true);
+
+      const selectedRecommendations = recommendations.filter((r) =>
+        selectedRecs.includes(r.id)
+      );
+
+      const totalImpact = selectedRecommendations.reduce(
+        (sum, rec) => sum + rec.projectedImpact,
+        0
+      );
+
+      const updatedStream: RevenueStream = {
+        ...stream,
+        currentRevenue: stream.currentRevenue + totalImpact,
+        forecastRevenue:
+          stream.forecastRevenue + totalImpact * 1.2,
+        growth: stream.growth + (selectedRecommendations.length * 2),
+        margin: Math.min(
+          100,
+          stream.margin +
+            (selectedRecommendations.filter((r) => r.id === "cost-optimization")
+              .length > 0
+              ? 2
+              : 0)
+        ),
+      };
+
+      if (onImplement) {
+        onImplement(updatedStream);
+      }
+
+      toast({
+        title: "Implementation Successful",
+        description: `Applied ${selectedRecommendations.length} recommendations. Stream updated with projected improvements.`,
+      });
+
+      setSelectedRecs([]);
+      onOpenChange(false);
+    } catch (error) {
+      toast({
+        title: "Implementation Error",
+        description: "Failed to implement recommendations. Please try again.",
+        variant: "destructive",
+      });
+      console.error("Implementation error:", error);
+    } finally {
+      setIsImplementing(false);
+    }
+  };
+
+  const handleExportPlan = () => {
+    try {
+      generateOptimizationPlanPDF(
+        stream,
+        bottlenecks,
+        recommendations,
+        selectedRecs
+      );
+      toast({
+        title: "Success",
+        description: "Optimization plan exported as PDF.",
+      });
+    } catch (error) {
+      toast({
+        title: "Export Error",
+        description: "Failed to export plan. Please try again.",
+        variant: "destructive",
+      });
+      console.error("Export error:", error);
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -253,7 +351,8 @@ export function OptimizeStreamDialog({
             Optimize: {stream.name}
           </DialogTitle>
           <DialogDescription className="text-base mt-2">
-            Performance diagnosis and optimization recommendations for your {stream.type} revenue stream
+            Performance diagnosis and optimization recommendations for your{" "}
+            {stream.type} revenue stream
           </DialogDescription>
         </DialogHeader>
 
@@ -329,44 +428,67 @@ export function OptimizeStreamDialog({
                 <TrendingUp className="w-5 h-5 text-blue-600" />
                 Optimization Recommendations
               </CardTitle>
+              <CardDescription>
+                Select recommendations to implement and view projected impact
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3">
-                <div className="flex items-baseline gap-2">
-                  <span className="text-sm text-gray-700">Total Projected Impact:</span>
-                  <span className="text-xl font-bold text-blue-600">
-                    +${(totalProjectedImpact / 1000000).toFixed(2)}M
-                  </span>
-                  <span className="text-xs text-gray-600">annual</span>
+              {selectedRecs.length > 0 && (
+                <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-lg mb-4">
+                  <div className="flex items-baseline justify-between">
+                    <div>
+                      <div className="text-sm text-green-800 font-semibold">
+                        {selectedRecs.length} recommendation(s) selected
+                      </div>
+                      <div className="text-xs text-green-700 mt-1">
+                        Total projected impact:
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-2xl font-bold text-green-600">
+                        +${(totalProjectedImpact / 1000000).toFixed(2)}M
+                      </div>
+                      <div className="text-xs text-green-600">annual revenue</div>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className="space-y-3">
                 {recommendations.map((rec, index) => (
                   <div
                     key={rec.id}
-                    className="border border-gray-200 rounded-lg p-3 hover:border-blue-300 transition-colors"
+                    className={`border rounded-lg p-4 transition-all ${
+                      selectedRecs.includes(rec.id)
+                        ? "border-blue-500 bg-blue-50"
+                        : "border-gray-200 hover:border-blue-300"
+                    }`}
                   >
-                    <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start gap-3 mb-2">
+                      <Checkbox
+                        checked={selectedRecs.includes(rec.id)}
+                        onCheckedChange={() => toggleRec(rec.id)}
+                        className="mt-1"
+                      />
                       <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="inline-flex w-5 h-5 items-center justify-center rounded-full bg-blue-100 text-blue-700 text-xs font-bold">
-                            {index + 1}
-                          </span>
-                          <h4 className="font-semibold text-sm">{rec.title}</h4>
-                        </div>
+                        <h4 className="font-semibold text-sm mb-1">{rec.title}</h4>
                         <p className="text-sm text-gray-600">{rec.description}</p>
                       </div>
                       <div className="text-right flex-shrink-0">
                         <div className="text-sm font-bold text-green-600 mb-1">
                           +${(rec.projectedImpact / 1000000).toFixed(2)}M
                         </div>
-                        <Badge className={difficultyColors[rec.difficulty]} variant="outline">
+                        <Badge
+                          className={difficultyColors[rec.difficulty]}
+                          variant="outline"
+                        >
                           {rec.difficulty}
                         </Badge>
                       </div>
                     </div>
-                    <div className="text-xs text-gray-500 mt-2">Timeframe: {rec.timeframe}</div>
+                    <div className="text-xs text-gray-500 ml-6">
+                      Timeframe: {rec.timeframe}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -382,19 +504,19 @@ export function OptimizeStreamDialog({
               <ol className="space-y-2 text-sm">
                 <li className="flex gap-2">
                   <span className="font-bold text-blue-600 flex-shrink-0">1.</span>
-                  <span>Review bottlenecks and understand their impact</span>
+                  <span>Select recommendations you want to implement</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="font-bold text-blue-600 flex-shrink-0">2.</span>
-                  <span>Select top 2-3 recommendations by effort and impact</span>
+                  <span>Click "Implement Selected" to apply optimizations</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="font-bold text-blue-600 flex-shrink-0">3.</span>
-                  <span>Click action buttons to initiate implementation</span>
+                  <span>Stream metrics will be updated with projected improvements</span>
                 </li>
                 <li className="flex gap-2">
                   <span className="font-bold text-blue-600 flex-shrink-0">4.</span>
-                  <span>Track progress and measure impact</span>
+                  <span>Export plan to PDF for team alignment and tracking</span>
                 </li>
               </ol>
             </CardContent>
@@ -402,11 +524,24 @@ export function OptimizeStreamDialog({
         </div>
 
         <div className="flex gap-3 mt-6 pt-4 border-t">
-          <Button variant="outline" onClick={() => onOpenChange(false)} className="flex-1">
-            Close
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
+            Cancel
           </Button>
-          <Button className="flex-1 bg-blue-600 hover:bg-blue-700">
+          <Button
+            variant="outline"
+            onClick={handleExportPlan}
+            className="gap-2"
+          >
+            <Download className="w-4 h-4" />
             Export Plan
+          </Button>
+          <Button
+            onClick={handleImplement}
+            disabled={selectedRecs.length === 0 || isImplementing}
+            className="flex-1 bg-green-600 hover:bg-green-700 gap-2"
+          >
+            <Rocket className="w-4 h-4" />
+            {isImplementing ? "Implementing..." : "Implement Selected"}
           </Button>
         </div>
       </DialogContent>
