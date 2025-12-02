@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -10,12 +11,15 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { TrendingUp, AlertTriangle, CheckCircle, Calendar } from "lucide-react";
 import { type RevenueScenario } from "@/lib/revenue-data";
+import { ScenarioComparisonDialog } from "./scenario-comparison-dialog";
 
 interface RevenueForecastingProps {
   scenarios: RevenueScenario[];
 }
 
 export function RevenueForecasting({ scenarios }: RevenueForecastingProps) {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const currentRevenue = scenarios.reduce((sum, s) => sum + s.totalRevenue, 0) / scenarios.length;
   const formatCurrency = (amount: number) => {
     if (amount >= 1000000) {
       return `$${(amount / 1000000).toFixed(1)}M`;
