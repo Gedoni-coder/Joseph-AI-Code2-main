@@ -62,16 +62,21 @@ function analyzeStream(
   const bottlenecks: Bottleneck[] = [];
   const recommendations: Recommendation[] = [];
 
+  // Guard against empty arrays
+  if (!allStreams || allStreams.length === 0) {
+    return { bottlenecks, recommendations };
+  }
+
   const avgGrowth =
-    allStreams.reduce((sum, s) => sum + s.growth, 0) / allStreams.length;
+    allStreams.reduce((sum, s) => sum + (s.growth || 0), 0) / allStreams.length;
   const avgMargin =
-    allStreams.reduce((sum, s) => sum + s.margin, 0) / allStreams.length;
+    allStreams.reduce((sum, s) => sum + (s.margin || 0), 0) / allStreams.length;
   const avgArpc =
-    allStreams.reduce((sum, s) => sum + s.avgRevenuePerCustomer, 0) /
+    allStreams.reduce((sum, s) => sum + (s.avgRevenuePerCustomer || 0), 0) /
     allStreams.length;
 
   // Identify bottlenecks
-  if (stream.growth < avgGrowth * 0.5) {
+  if (stream.growth && avgGrowth && stream.growth < avgGrowth * 0.5) {
     bottlenecks.push({
       id: "low-growth",
       title: "Below-Average Growth Rate",
@@ -81,7 +86,7 @@ function analyzeStream(
     });
   }
 
-  if (stream.margin < avgMargin * 0.8) {
+  if (stream.margin && avgMargin && stream.margin < avgMargin * 0.8) {
     bottlenecks.push({
       id: "low-margin",
       title: "Margin Compression",
@@ -91,7 +96,11 @@ function analyzeStream(
     });
   }
 
-  if (stream.avgRevenuePerCustomer < avgArpc * 0.7) {
+  if (
+    stream.avgRevenuePerCustomer &&
+    avgArpc &&
+    stream.avgRevenuePerCustomer < avgArpc * 0.7
+  ) {
     bottlenecks.push({
       id: "low-arpc",
       title: "Low Revenue Per Customer",
