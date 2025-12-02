@@ -203,6 +203,15 @@ export function RevenueForecasting({ scenarios }: RevenueForecastingProps) {
           </div>
         </CardContent>
       </Card>
+
+      <ScenarioComparisonDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        currentRevenue={currentRevenue}
+        onSave={(scenarios) => {
+          console.log("Scenarios saved:", scenarios);
+        }}
+      />
     </div>
   );
 }
