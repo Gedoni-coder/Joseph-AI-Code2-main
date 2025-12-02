@@ -260,7 +260,7 @@ export function OptimizeStreamDialog({
           </DialogHeader>
         </div>
 
-        <div className="space-y-6 overflow-y-auto flex-1 px-6">
+        <div className="space-y-6 overflow-y-auto flex-1 px-6 py-4">
           {/* Current Performance Overview */}
           <Card>
             <CardHeader>
