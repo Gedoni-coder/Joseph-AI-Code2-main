@@ -246,21 +246,19 @@ export function OptimizeStreamDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[85vh] flex flex-col gap-0 p-0">
-        <div className="px-6 py-4 border-b sticky top-0 bg-white z-10">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Zap className="w-5 h-5 text-blue-600" />
-              Optimize: {stream.name}
-            </DialogTitle>
-            <DialogDescription>
-              Performance diagnosis and optimization recommendations for your{" "}
-              {stream.type} revenue stream
-            </DialogDescription>
-          </DialogHeader>
-        </div>
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <Zap className="w-5 h-5 text-blue-600" />
+            Optimize: {stream.name}
+          </DialogTitle>
+          <DialogDescription>
+            Performance diagnosis and optimization recommendations for your{" "}
+            {stream.type} revenue stream
+          </DialogDescription>
+        </DialogHeader>
 
-        <div className="space-y-6 overflow-y-auto flex-1 px-6 py-4">
+        <div className="space-y-6 overflow-y-auto flex-1">
           {/* Current Performance Overview */}
           <Card>
             <CardHeader>
