@@ -82,6 +82,14 @@ export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
     setOptimizeDialogOpen(true);
   };
 
+  const handleImplementOptimizations = (updatedStream: RevenueStream) => {
+    setStreams(
+      streams.map((s) =>
+        s.id === updatedStream.id ? updatedStream : s
+      )
+    );
+  };
+
   const totalCurrentRevenue = streams.reduce(
     (acc, stream) => acc + stream.currentRevenue,
     0,
