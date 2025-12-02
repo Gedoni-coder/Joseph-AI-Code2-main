@@ -121,12 +121,12 @@ function analyzeStream(
   }
 
   // Generate recommendations based on bottlenecks and stream characteristics
-  if (stream.growth < avgGrowth) {
+  if (stream.growth && avgGrowth && stream.growth < avgGrowth) {
     recommendations.push({
       id: "expansion-marketing",
       title: "Increase Marketing Investment",
       description: `Allocate additional marketing budget to this ${stream.type} stream. A 30% increase in customer acquisition could drive revenue growth.`,
-      projectedImpact: stream.currentRevenue * 0.15,
+      projectedImpact: Math.max(0, stream.currentRevenue * 0.15),
       projectedImpactUnit: "$",
       difficulty: "easy",
       timeframe: "90 days",
@@ -134,12 +134,13 @@ function analyzeStream(
     });
   }
 
-  if (stream.margin < avgMargin) {
+  if (stream.margin && avgMargin && stream.margin < avgMargin) {
+    const marginImprovement = stream.margin * 0.03;
     recommendations.push({
       id: "cost-optimization",
       title: "Optimize Cost Structure",
       description: `Review and optimize operational costs. Target 2-3% margin improvement through operational efficiency and automation.`,
-      projectedImpact: stream.currentRevenue * (stream.margin * 0.03),
+      projectedImpact: Math.max(0, stream.currentRevenue * marginImprovement),
       projectedImpactUnit: "$",
       difficulty: "medium",
       timeframe: "120 days",
@@ -147,12 +148,16 @@ function analyzeStream(
     });
   }
 
-  if (stream.avgRevenuePerCustomer < avgArpc) {
+  if (
+    stream.avgRevenuePerCustomer &&
+    avgArpc &&
+    stream.avgRevenuePerCustomer < avgArpc
+  ) {
     recommendations.push({
       id: "pricing-optimization",
       title: "Implement Tiered Pricing",
       description: `Develop premium tiers or add-ons to increase ARPC. Even a 10% increase in pricing realization could significantly boost revenue.`,
-      projectedImpact: stream.currentRevenue * 0.1,
+      projectedImpact: Math.max(0, stream.currentRevenue * 0.1),
       projectedImpactUnit: "$",
       difficulty: "medium",
       timeframe: "90 days",
