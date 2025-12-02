@@ -294,6 +294,7 @@ export function RevenueStreams({ streams, onAddStream }: RevenueStreamsProps) {
         onOpenChange={setOptimizeDialogOpen}
         stream={selectedStreamForOptimization}
         allStreams={streams}
+        onImplement={handleImplementOptimizations}
       />
     </div>
   );
