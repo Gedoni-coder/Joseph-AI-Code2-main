@@ -17,7 +17,16 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import { TrendingUp, Users, DollarSign, AlertTriangle } from "lucide-react";
 
 interface ScenarioParams {
@@ -71,7 +80,11 @@ const DEFAULT_SCENARIOS: ScenarioParams[] = [
   },
 ];
 
-function calculateProjection(params: ScenarioParams, baseRevenue: number, months: number = 12) {
+function calculateProjection(
+  params: ScenarioParams,
+  baseRevenue: number,
+  months: number = 12,
+) {
   const data = [];
   let revenue = baseRevenue;
   let customers = baseRevenue / params.avgPrice;
@@ -123,21 +136,26 @@ export function ScenarioComparisonDialog({
   currentRevenue,
   onSave,
 }: ScenarioComparisonDialogProps) {
-  const [scenarios, setScenarios] = useState<ScenarioParams[]>(DEFAULT_SCENARIOS);
+  const [scenarios, setScenarios] =
+    useState<ScenarioParams[]>(DEFAULT_SCENARIOS);
 
-  const updateScenario = (id: string, field: keyof Omit<ScenarioParams, 'id' | 'name' | 'color'>, value: number) => {
+  const updateScenario = (
+    id: string,
+    field: keyof Omit<ScenarioParams, "id" | "name" | "color">,
+    value: number,
+  ) => {
     setScenarios((prev) =>
       prev.map((s) =>
-        s.id === id ? { ...s, [field]: Math.max(0, Math.min(100, value)) } : s
-      )
+        s.id === id ? { ...s, [field]: Math.max(0, Math.min(100, value)) } : s,
+      ),
     );
   };
 
   const projectionData = mergeProjections(scenarios, currentRevenue);
   const scenarioColors = {
     "Base Case": "#3b82f6",
-    "Optimistic": "#10b981",
-    "Pessimistic": "#ef4444",
+    Optimistic: "#10b981",
+    Pessimistic: "#ef4444",
   };
 
   const handleSave = () => {
@@ -149,7 +167,10 @@ export function ScenarioComparisonDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto" data-joseph-no-explain>
+      <DialogContent
+        className="max-w-6xl max-h-[90vh] overflow-y-auto"
+        data-joseph-no-explain
+      >
         <DialogHeader className="mb-6">
           <DialogTitle className="text-2xl flex items-center gap-2">
             <TrendingUp className="w-6 h-6 text-blue-600" />
@@ -164,7 +185,9 @@ export function ScenarioComparisonDialog({
           {/* Revenue Projection Chart */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">12-Month Revenue Projection</CardTitle>
+              <CardTitle className="text-lg">
+                12-Month Revenue Projection
+              </CardTitle>
               <CardDescription>
                 Projected revenue based on your scenario parameters
               </CardDescription>
@@ -175,14 +198,24 @@ export function ScenarioComparisonDialog({
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis
                     dataKey="month"
-                    label={{ value: "Month", position: "insideBottomRight", offset: -5 }}
+                    label={{
+                      value: "Month",
+                      position: "insideBottomRight",
+                      offset: -5,
+                    }}
                   />
                   <YAxis
-                    label={{ value: "Revenue ($)", angle: -90, position: "insideLeft" }}
+                    label={{
+                      value: "Revenue ($)",
+                      angle: -90,
+                      position: "insideLeft",
+                    }}
                     tickFormatter={(value) => `$${(value / 1000).toFixed(0)}K`}
                   />
                   <Tooltip
-                    formatter={(value) => `$${(value as number).toLocaleString()}`}
+                    formatter={(value) =>
+                      `$${(value as number).toLocaleString()}`
+                    }
                   />
                   <Legend />
                   {scenarios.map((scenario) => (
@@ -204,7 +237,11 @@ export function ScenarioComparisonDialog({
           {/* Scenario Parameters */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {scenarios.map((scenario) => (
-              <Card key={scenario.id} className="border-l-4" style={{ borderLeftColor: scenario.color }}>
+              <Card
+                key={scenario.id}
+                className="border-l-4"
+                style={{ borderLeftColor: scenario.color }}
+              >
                 <CardHeader>
                   <CardTitle className="text-base flex items-center justify-between">
                     {scenario.name}
@@ -235,14 +272,18 @@ export function ScenarioComparisonDialog({
                           updateScenario(
                             scenario.id,
                             "customerAcquisition",
-                            parseFloat(e.target.value) || 0
+                            parseFloat(e.target.value) || 0,
                           )
                         }
                         className="flex-1"
                       />
-                      <span className="text-sm text-gray-600 w-8 text-right">%/mo</span>
+                      <span className="text-sm text-gray-600 w-8 text-right">
+                        %/mo
+                      </span>
                     </div>
-                    <p className="text-xs text-gray-500 mt-1">Monthly growth rate</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Monthly growth rate
+                    </p>
                   </div>
 
                   {/* Churn Rate */}
@@ -261,14 +302,18 @@ export function ScenarioComparisonDialog({
                           updateScenario(
                             scenario.id,
                             "churnRate",
-                            parseFloat(e.target.value) || 0
+                            parseFloat(e.target.value) || 0,
                           )
                         }
                         className="flex-1"
                       />
-                      <span className="text-sm text-gray-600 w-8 text-right">%/mo</span>
+                      <span className="text-sm text-gray-600 w-8 text-right">
+                        %/mo
+                      </span>
                     </div>
-                    <p className="text-xs text-gray-500 mt-1">Monthly churn rate</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Monthly churn rate
+                    </p>
                   </div>
 
                   {/* Average Price */}
@@ -287,14 +332,16 @@ export function ScenarioComparisonDialog({
                           updateScenario(
                             scenario.id,
                             "avgPrice",
-                            parseFloat(e.target.value) || 0
+                            parseFloat(e.target.value) || 0,
                           )
                         }
                         className="flex-1"
                       />
                       <span className="text-sm text-gray-600">/mo</span>
                     </div>
-                    <p className="text-xs text-gray-500 mt-1">Price per customer</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Price per customer
+                    </p>
                   </div>
 
                   {/* Market Growth */}
@@ -313,14 +360,18 @@ export function ScenarioComparisonDialog({
                           updateScenario(
                             scenario.id,
                             "marketGrowth",
-                            parseFloat(e.target.value) || 0
+                            parseFloat(e.target.value) || 0,
                           )
                         }
                         className="flex-1"
                       />
-                      <span className="text-sm text-gray-600 w-8 text-right">%/yr</span>
+                      <span className="text-sm text-gray-600 w-8 text-right">
+                        %/yr
+                      </span>
                     </div>
-                    <p className="text-xs text-gray-500 mt-1">Annual market expansion</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Annual market expansion
+                    </p>
                   </div>
 
                   {/* Probability */}
@@ -338,14 +389,18 @@ export function ScenarioComparisonDialog({
                           updateScenario(
                             scenario.id,
                             "probability",
-                            parseFloat(e.target.value) || 0
+                            parseFloat(e.target.value) || 0,
                           )
                         }
                         className="flex-1"
                       />
-                      <span className="text-sm text-gray-600 w-8 text-right">%</span>
+                      <span className="text-sm text-gray-600 w-8 text-right">
+                        %
+                      </span>
                     </div>
-                    <p className="text-xs text-gray-500 mt-1">Probability of occurrence</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Probability of occurrence
+                    </p>
                   </div>
                 </CardContent>
               </Card>
@@ -355,12 +410,16 @@ export function ScenarioComparisonDialog({
           {/* Summary Stats */}
           <Card className="bg-blue-50 border-blue-200">
             <CardHeader>
-              <CardTitle className="text-base">Weighted Average Outcome</CardTitle>
+              <CardTitle className="text-base">
+                Weighted Average Outcome
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm text-gray-600 mb-1">Expected 12-Month Revenue</p>
+                  <p className="text-sm text-gray-600 mb-1">
+                    Expected 12-Month Revenue
+                  </p>
                   <p className="text-2xl font-bold text-blue-600">
                     $
                     {(
@@ -368,10 +427,15 @@ export function ScenarioComparisonDialog({
                         const finalRevenue =
                           currentRevenue *
                           Math.pow(
-                            1 + (scenario.customerAcquisition - scenario.churnRate) / 100,
-                            12
+                            1 +
+                              (scenario.customerAcquisition -
+                                scenario.churnRate) /
+                                100,
+                            12,
                           );
-                        return total + (finalRevenue * scenario.probability) / 100;
+                        return (
+                          total + (finalRevenue * scenario.probability) / 100
+                        );
                       }, 0) / 1000000
                     ).toFixed(2)}
                     M
@@ -392,7 +456,10 @@ export function ScenarioComparisonDialog({
           <Button variant="outline" onClick={() => onOpenChange(false)}>
             Cancel
           </Button>
-          <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700">
+          <Button
+            onClick={handleSave}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
             Save Scenarios
           </Button>
         </DialogFooter>
