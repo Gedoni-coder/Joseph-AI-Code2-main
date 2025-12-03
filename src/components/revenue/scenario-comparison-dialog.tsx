@@ -149,7 +149,7 @@ export function ScenarioComparisonDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto" data-joseph-no-explain>
         <DialogHeader className="mb-6">
           <DialogTitle className="text-2xl flex items-center gap-2">
             <TrendingUp className="w-6 h-6 text-blue-600" />
