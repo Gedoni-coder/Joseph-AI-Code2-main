@@ -61,7 +61,7 @@ const ModuleNavigation = () => {
       description: "Revenue optimization strategies"
     },
     {
-      name: "Loan and Funding",
+      name: "Funding and Loan Hub",
       link: "/loan-research",
       icon: <CreditCard className="h-4 w-4" />,
       description: "Funding and capital strategy"
