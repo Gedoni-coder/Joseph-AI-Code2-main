@@ -94,7 +94,7 @@ export default function LoanFunding() {
 
       <ModuleHeader
         icon={<DollarSign className="h-6 w-6" />}
-        title="Loan & Funding Hub"
+        title="Funding and Loan Hub"
         description="Complete financing solutions and funding opportunities for E-buy expansion, operations, and strategic growth"
         isConnected={isConnected}
         lastUpdated={lastUpdated}
