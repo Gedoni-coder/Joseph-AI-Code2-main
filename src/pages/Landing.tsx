@@ -86,7 +86,7 @@ const Landing = () => {
     },
     {
       icon: <CreditCard className="h-6 w-6" />,
-      title: "Loan and Funding",
+      title: "Funding and Loan Hub",
       description:
         "Funding options analysis, loan comparison, investor matching, and capital strategy planning",
       link: "/loan-research",
