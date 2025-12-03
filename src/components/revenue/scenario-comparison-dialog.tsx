@@ -94,14 +94,21 @@ function calculateProjection(params: ScenarioParams, baseRevenue: number, months
 
 function mergeProjections(scenarios: ScenarioParams[], baseRevenue: number) {
   const projections = scenarios.map((s) => calculateProjection(s, baseRevenue));
-  const merged = [];
+  const merged: Record<string, number | string>[] = [];
+
+  if (projections.length === 0 || projections[0].length === 0) {
+    return merged;
+  }
 
   for (let i = 0; i < projections[0].length; i++) {
     const monthData: Record<string, number | string> = { month: i };
     projections.forEach((proj) => {
-      const scenarioName = proj[i] ? Object.keys(proj[i]).find((k) => k !== "month") : "";
-      if (scenarioName) {
-        monthData[scenarioName] = proj[i][scenarioName];
+      if (proj[i]) {
+        Object.entries(proj[i]).forEach(([key, value]) => {
+          if (key !== "month") {
+            monthData[key] = value;
+          }
+        });
       }
     });
     merged.push(monthData);
