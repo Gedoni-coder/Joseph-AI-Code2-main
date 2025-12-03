@@ -34,7 +34,7 @@ import { Link } from "react-router-dom";
 
 export default function RevenueStrategy() {
   const {
-    streams,
+    streams: initialStreams,
     scenarios,
     churn,
     upsells,
@@ -48,6 +48,11 @@ export default function RevenueStrategy() {
     refreshData,
   } = useRevenueData();
   const [activeTab, setActiveTab] = useState("overview");
+  const [streams, setStreams] = useState(initialStreams);
+
+  const handleAddStream = (newStream: typeof initialStreams[0]) => {
+    setStreams([...streams, newStream]);
+  };
 
   if (error) {
     return (
@@ -85,75 +90,75 @@ export default function RevenueStrategy() {
         connectionLabel="Live"
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8">
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
-          className="space-y-6"
+          className="space-y-4 sm:space-y-6"
         >
-          <TabsList className="grid w-full grid-cols-8 bg-white border">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 bg-white border gap-1">
             <TabsTrigger
               value="overview"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3"
             >
               Overview
             </TabsTrigger>
             <TabsTrigger
               value="summary-recommendation"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden sm:inline-flex"
             >
-              Summary & Recommendation
+              Summary & Rec
             </TabsTrigger>
             <TabsTrigger
               value="streams"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3"
             >
-              Revenue Streams
+              Streams
             </TabsTrigger>
             <TabsTrigger
               value="forecasting"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden sm:inline-flex"
             >
-              Forecasting
+              Forecast
             </TabsTrigger>
             <TabsTrigger
               value="churn"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden md:inline-flex"
             >
-              Churn Analysis
+              Churn
             </TabsTrigger>
             <TabsTrigger
               value="upsell"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden md:inline-flex"
             >
               Upsell
             </TabsTrigger>
             <TabsTrigger
               value="conversation"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden lg:inline-flex"
             >
               JOSEPH
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <TabsContent value="overview" className="space-y-4 sm:space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
               {metrics.slice(0, 6).map((metric) => (
                 <Card key={metric.id}>
-                  <CardContent className="p-6">
+                  <CardContent className="p-3 sm:p-4 md:p-6">
                     <div className="flex items-center space-x-2">
-                      <DollarSign className="w-5 h-5 text-blue-600" />
-                      <div className="flex-1">
-                        <div className="text-sm text-gray-600">
+                      <DollarSign className="w-4 sm:w-5 h-4 sm:h-5 text-blue-600 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <div className="text-xs sm:text-sm text-gray-600 truncate">
                           {metric.name}
                         </div>
-                        <div className="text-2xl font-bold text-gray-900">
+                        <div className="text-lg sm:text-2xl font-bold text-gray-900 truncate">
                           {metric.unit === "$" ? "$" : ""}
                           {metric.value.toLocaleString()}
                           {metric.unit !== "$" ? metric.unit : ""}
                         </div>
                         <div
-                          className={`text-sm flex items-center ${
+                          className={`text-xs sm:text-sm flex items-center gap-1 ${
                             metric.trend === "up"
                               ? "text-green-600"
                               : metric.trend === "down"
@@ -162,12 +167,14 @@ export default function RevenueStrategy() {
                           }`}
                         >
                           <TrendingUp
-                            className={`w-3 h-3 mr-1 ${
+                            className={`w-3 h-3 flex-shrink-0 ${
                               metric.trend === "down" ? "rotate-180" : ""
                             }`}
                           />
-                          {metric.change > 0 ? "+" : ""}
-                          {metric.change.toFixed(1)}% {metric.period}
+                          <span className="truncate">
+                            {metric.change > 0 ? "+" : ""}
+                            {metric.change.toFixed(1)}% {metric.period}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -176,7 +183,7 @@ export default function RevenueStrategy() {
               ))}
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
@@ -452,7 +459,7 @@ Evaluate adjacent market opportunities for new revenue streams. Develop partner 
           </TabsContent>
 
           <TabsContent value="streams">
-            <RevenueStreams streams={streams} />
+            <RevenueStreams streams={streams} onAddStream={handleAddStream} />
           </TabsContent>
 
           <TabsContent value="forecasting">

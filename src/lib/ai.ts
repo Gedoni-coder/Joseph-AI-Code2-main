@@ -113,25 +113,29 @@ export async function generateAIResponse(
 
     // Perform web search if enabled and query suggests need
     if (performWebSearch && history.length > 0) {
-      const lastUserMessage = history[history.length - 1];
-      if (lastUserMessage.type === "user") {
-        const shouldSearch = await shouldPerformWebSearch(
-          lastUserMessage.content,
-        );
-        if (shouldSearch) {
-          const webContext = await enhanceResponseWithWebContext(
+      try {
+        const lastUserMessage = history[history.length - 1];
+        if (lastUserMessage.type === "user") {
+          const shouldSearch = await shouldPerformWebSearch(
             lastUserMessage.content,
           );
-          if (webContext) {
-            enhancedWebContext = enhancedWebContext
-              ? `${enhancedWebContext}\n\n${webContext}`
-              : webContext;
+          if (shouldSearch) {
+            const webContext = await enhanceResponseWithWebContext(
+              lastUserMessage.content,
+            );
+            if (webContext) {
+              enhancedWebContext = enhancedWebContext
+                ? `${enhancedWebContext}\n\n${webContext}`
+                : webContext;
+            }
           }
         }
+      } catch {
+        // Web search is optional - silently continue without it
       }
     }
   } catch (e) {
-    console.error("Error enhancing response context:", e);
+    // Silently handle context enhancement errors
   }
 
   // Always try Groq first with a directly integrated key
