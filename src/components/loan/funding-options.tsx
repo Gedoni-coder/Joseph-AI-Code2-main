@@ -336,12 +336,7 @@ export function FundingOptionsExplorer({
 
               {/* Actions */}
               <div className="flex space-x-2 pt-3 border-t">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex-1"
-                  asChild
-                >
+                <Button variant="outline" size="sm" className="flex-1" asChild>
                   <a
                     href={option.website}
                     target="_blank"
