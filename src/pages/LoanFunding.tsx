@@ -20,6 +20,7 @@ import { ApplicationAssistance } from "@/components/loan/application-assistance"
 import { FundingStrategyAnalysis } from "@/components/loan/funding-strategy";
 import { InvestorMatchingEngine } from "@/components/loan/investor-matching";
 import { LoanResearchUpdates } from "@/components/loan/loan-research";
+import { type FundingOption } from "@/lib/loan-data";
 import {
   DollarSign,
   TrendingUp,
