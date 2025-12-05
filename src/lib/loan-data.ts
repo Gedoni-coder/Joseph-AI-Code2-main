@@ -54,6 +54,7 @@ export interface LoanComparison {
   approvalOdds: number;
   pros: string[];
   cons: string[];
+  website?: string;
 }
 
 export interface LoanFee {
