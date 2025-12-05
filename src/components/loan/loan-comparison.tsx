@@ -395,12 +395,33 @@ export function SmartLoanComparison({
 
               {/* Actions */}
               <div className="flex space-x-2 pt-3 border-t">
-                <Button variant="outline" size="sm" className="flex-1">
-                  More Details
-                </Button>
+                {loan.website ? (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex-1"
+                    asChild
+                  >
+                    <a
+                      href={loan.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-1"
+                    >
+                      <ExternalLink className="w-3 h-3" />
+                      More Details
+                    </a>
+                  </Button>
+                ) : (
+                  <Button variant="outline" size="sm" className="flex-1" disabled>
+                    <ExternalLink className="w-3 h-3 mr-1" />
+                    More Details
+                  </Button>
+                )}
                 <Button
                   size="sm"
                   className="flex-1 bg-blue-600 hover:bg-blue-700"
+                  onClick={() => onStartApplication?.(loan)}
                 >
                   Start Application
                 </Button>
