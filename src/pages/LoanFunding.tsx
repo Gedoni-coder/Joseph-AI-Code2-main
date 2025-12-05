@@ -20,6 +20,7 @@ import { ApplicationAssistance } from "@/components/loan/application-assistance"
 import { FundingStrategyAnalysis } from "@/components/loan/funding-strategy";
 import { InvestorMatchingEngine } from "@/components/loan/investor-matching";
 import { LoanResearchUpdates } from "@/components/loan/loan-research";
+import { type FundingOption } from "@/lib/loan-data";
 import {
   DollarSign,
   TrendingUp,
@@ -56,6 +57,7 @@ export default function LoanFunding() {
   } = useLoanData();
 
   const [activeTab, setActiveTab] = useState("overview");
+  const [selectedFundingOption, setSelectedFundingOption] = useState<FundingOption | null>(null);
 
   if (error) {
     return (
@@ -396,7 +398,13 @@ export default function LoanFunding() {
           </TabsContent>
 
           <TabsContent value="options">
-            <FundingOptionsExplorer fundingOptions={fundingOptions} />
+            <FundingOptionsExplorer
+              fundingOptions={fundingOptions}
+              onStartApplication={(option) => {
+                setSelectedFundingOption(option);
+                setActiveTab("application");
+              }}
+            />
           </TabsContent>
 
           <TabsContent value="comparison">
@@ -409,6 +417,7 @@ export default function LoanFunding() {
               businessPlan={businessPlan}
               eligibility={eligibility}
               onUpdateDocumentStatus={updateDocumentStatus}
+              selectedFundingOption={selectedFundingOption}
             />
           </TabsContent>
 
