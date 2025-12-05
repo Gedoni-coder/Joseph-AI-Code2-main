@@ -417,6 +417,7 @@ export default function LoanFunding() {
               businessPlan={businessPlan}
               eligibility={eligibility}
               onUpdateDocumentStatus={updateDocumentStatus}
+              selectedFundingOption={selectedFundingOption}
             />
           </TabsContent>
 
