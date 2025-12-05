@@ -34,6 +34,7 @@ interface FundingOptionsProps {
 
 export function FundingOptionsExplorer({
   fundingOptions,
+  onStartApplication,
 }: FundingOptionsProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [typeFilter, setTypeFilter] = useState<string>("all");
