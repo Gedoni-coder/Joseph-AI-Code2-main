@@ -29,6 +29,7 @@ import { type FundingOption } from "@/lib/loan-data";
 
 interface FundingOptionsProps {
   fundingOptions: FundingOption[];
+  onStartApplication?: (option: FundingOption) => void;
 }
 
 export function FundingOptionsExplorer({
