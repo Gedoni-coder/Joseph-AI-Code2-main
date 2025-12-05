@@ -29,11 +29,28 @@ import {
 } from "lucide-react";
 import { type LoanComparison } from "@/lib/loan-data";
 
-interface LoanComparisonProps {
-  loanComparisons: LoanComparison[];
+interface ConditionsModalState {
+  isOpen: boolean;
+  loanId: string | null;
+  loanName: string;
+  conditions: string[];
 }
 
-export function SmartLoanComparison({ loanComparisons }: LoanComparisonProps) {
+interface LoanComparisonProps {
+  loanComparisons: LoanComparison[];
+  onStartApplication?: (loan: LoanComparison) => void;
+}
+
+export function SmartLoanComparison({
+  loanComparisons,
+  onStartApplication,
+}: LoanComparisonProps) {
+  const [conditionsModal, setConditionsModal] = useState<ConditionsModalState>({
+    isOpen: false,
+    loanId: null,
+    loanName: "",
+    conditions: [],
+  });
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
