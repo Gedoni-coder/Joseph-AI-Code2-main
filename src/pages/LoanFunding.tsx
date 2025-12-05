@@ -398,7 +398,13 @@ export default function LoanFunding() {
           </TabsContent>
 
           <TabsContent value="options">
-            <FundingOptionsExplorer fundingOptions={fundingOptions} />
+            <FundingOptionsExplorer
+              fundingOptions={fundingOptions}
+              onStartApplication={(option) => {
+                setSelectedFundingOption(option);
+                setActiveTab("application");
+              }}
+            />
           </TabsContent>
 
           <TabsContent value="comparison">
