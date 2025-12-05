@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -9,6 +10,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   TrendingUp,
   TrendingDown,
   Clock,
@@ -17,6 +25,7 @@ import {
   CheckCircle,
   XCircle,
   Calculator,
+  ExternalLink,
 } from "lucide-react";
 import { type LoanComparison } from "@/lib/loan-data";
 
