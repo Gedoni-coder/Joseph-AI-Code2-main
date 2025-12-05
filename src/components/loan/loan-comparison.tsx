@@ -95,6 +95,15 @@ export function SmartLoanComparison({
     return "bg-red-100 text-red-800";
   };
 
+  const openConditionsModal = (loan: LoanComparison) => {
+    setConditionsModal({
+      isOpen: true,
+      loanId: loan.id,
+      loanName: loan.loanName,
+      conditions: loan.conditions,
+    });
+  };
+
   const bestInterestRate = getBestOption("interestRate");
   const bestMonthlyPayment = getBestOption("monthlyPayment");
   const bestTotalInterest = getBestOption("totalInterest");
