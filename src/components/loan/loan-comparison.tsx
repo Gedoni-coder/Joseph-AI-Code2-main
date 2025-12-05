@@ -383,7 +383,10 @@ export function SmartLoanComparison({
                     </li>
                   ))}
                   {loan.conditions.length > 3 && (
-                    <li className="text-sm text-blue-600 cursor-pointer hover:underline">
+                    <li
+                      className="text-sm text-blue-600 cursor-pointer hover:underline font-medium"
+                      onClick={() => openConditionsModal(loan)}
+                    >
                       View {loan.conditions.length - 3} more conditions...
                     </li>
                   )}
