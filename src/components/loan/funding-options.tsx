@@ -343,6 +343,7 @@ export function FundingOptionsExplorer({
                 <Button
                   size="sm"
                   className="flex-1 bg-blue-600 hover:bg-blue-700"
+                  onClick={() => onStartApplication?.(option)}
                 >
                   Start Application
                 </Button>
