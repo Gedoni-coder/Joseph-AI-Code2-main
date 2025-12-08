@@ -57,7 +57,8 @@ export default function LoanFunding() {
   } = useLoanData();
 
   const [activeTab, setActiveTab] = useState("overview");
-  const [selectedFundingOption, setSelectedFundingOption] = useState<FundingOption | null>(null);
+  const [selectedFundingOption, setSelectedFundingOption] =
+    useState<FundingOption | null>(null);
 
   if (error) {
     return (

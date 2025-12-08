@@ -263,7 +263,8 @@ export const fundingOptions: FundingOption[] = [
     personalGuarantee: true,
     description:
       "Revolving credit facility for short-term working capital needs with flexible draw and repayment options.",
-    website: "https://www.fnb-online.com/business/loans-leasing/lending/short-term-financing/working-capital-lines-credit",
+    website:
+      "https://www.fnb-online.com/business/loans-leasing/lending/short-term-financing/working-capital-lines-credit",
     tags: ["Flexible", "Quick Approval", "Working Capital"],
   },
   {
@@ -387,7 +388,8 @@ export const loanComparisons: LoanComparison[] = [
       "Shorter repayment term",
       "Stricter cash flow requirements",
     ],
-    website: "https://www.fnb-online.com/business/loans-leasing/lending/short-term-financing/working-capital-lines-credit",
+    website:
+      "https://www.fnb-online.com/business/loans-leasing/lending/short-term-financing/working-capital-lines-credit",
   },
 ];
 
