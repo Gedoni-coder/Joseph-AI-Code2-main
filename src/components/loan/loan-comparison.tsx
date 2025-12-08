@@ -422,6 +422,12 @@ export function SmartLoanComparison({
           </Card>
         ))}
       </div>
+
+      {/* Loan Calculator Modal */}
+      <LoanCalculatorModal
+        isOpen={isCalculatorOpen}
+        onClose={() => setIsCalculatorOpen(false)}
+      />
     </div>
   );
 }
