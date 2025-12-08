@@ -24,6 +24,7 @@ import {
   Shield,
   Navigation,
   CheckCircle,
+  MessageSquare,
 } from "lucide-react";
 
 const ModuleNavigation = () => {
@@ -95,6 +96,12 @@ const ModuleNavigation = () => {
       link: "/tax-compliance",
       icon: <Shield className="h-4 w-4" />,
       description: "Tax optimization and compliance",
+    },
+    {
+      name: "Sales Intelligence",
+      link: "/sales-intelligence",
+      icon: <MessageSquare className="h-4 w-4" />,
+      description: "Lead handling and sales performance optimization",
     },
   ];
 

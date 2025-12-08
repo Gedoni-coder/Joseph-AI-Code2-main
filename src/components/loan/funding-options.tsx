@@ -29,10 +29,12 @@ import { type FundingOption } from "@/lib/loan-data";
 
 interface FundingOptionsProps {
   fundingOptions: FundingOption[];
+  onStartApplication?: (option: FundingOption) => void;
 }
 
 export function FundingOptionsExplorer({
   fundingOptions,
+  onStartApplication,
 }: FundingOptionsProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [typeFilter, setTypeFilter] = useState<string>("all");
@@ -334,13 +336,21 @@ export function FundingOptionsExplorer({
 
               {/* Actions */}
               <div className="flex space-x-2 pt-3 border-t">
-                <Button variant="outline" size="sm" className="flex-1">
-                  <ExternalLink className="w-3 h-3 mr-1" />
-                  Learn More
+                <Button variant="outline" size="sm" className="flex-1" asChild>
+                  <a
+                    href={option.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-1"
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    Learn More
+                  </a>
                 </Button>
                 <Button
                   size="sm"
                   className="flex-1 bg-blue-600 hover:bg-blue-700"
+                  onClick={() => onStartApplication?.(option)}
                 >
                   Start Application
                 </Button>

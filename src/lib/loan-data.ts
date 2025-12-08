@@ -54,6 +54,7 @@ export interface LoanComparison {
   approvalOdds: number;
   pros: string[];
   cons: string[];
+  website?: string;
 }
 
 export interface LoanFee {
@@ -349,6 +350,7 @@ export const loanComparisons: LoanComparison[] = [
       "Strict qualification requirements",
       "Personal guarantee required",
     ],
+    website: "https://firstcommunitybank.com/sba-loans",
   },
   {
     id: "2",
@@ -385,6 +387,7 @@ export const loanComparisons: LoanComparison[] = [
       "Shorter repayment term",
       "Stricter cash flow requirements",
     ],
+    website: "https://regionalbank.com/business-loans",
   },
 ];
 

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -9,6 +10,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   TrendingUp,
   TrendingDown,
   Clock,
@@ -17,14 +25,32 @@ import {
   CheckCircle,
   XCircle,
   Calculator,
+  ExternalLink,
 } from "lucide-react";
 import { type LoanComparison } from "@/lib/loan-data";
 
-interface LoanComparisonProps {
-  loanComparisons: LoanComparison[];
+interface ConditionsModalState {
+  isOpen: boolean;
+  loanId: string | null;
+  loanName: string;
+  conditions: string[];
 }
 
-export function SmartLoanComparison({ loanComparisons }: LoanComparisonProps) {
+interface LoanComparisonProps {
+  loanComparisons: LoanComparison[];
+  onStartApplication?: (loan: LoanComparison) => void;
+}
+
+export function SmartLoanComparison({
+  loanComparisons,
+  onStartApplication,
+}: LoanComparisonProps) {
+  const [conditionsModal, setConditionsModal] = useState<ConditionsModalState>({
+    isOpen: false,
+    loanId: null,
+    loanName: "",
+    conditions: [],
+  });
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -67,6 +93,15 @@ export function SmartLoanComparison({ loanComparisons }: LoanComparisonProps) {
     if (odds >= 80) return "bg-green-100 text-green-800";
     if (odds >= 60) return "bg-yellow-100 text-yellow-800";
     return "bg-red-100 text-red-800";
+  };
+
+  const openConditionsModal = (loan: LoanComparison) => {
+    setConditionsModal({
+      isOpen: true,
+      loanId: loan.id,
+      loanName: loan.loanName,
+      conditions: loan.conditions,
+    });
   };
 
   const bestInterestRate = getBestOption("interestRate");
@@ -348,7 +383,10 @@ export function SmartLoanComparison({ loanComparisons }: LoanComparisonProps) {
                     </li>
                   ))}
                   {loan.conditions.length > 3 && (
-                    <li className="text-sm text-blue-600 cursor-pointer hover:underline">
+                    <li
+                      className="text-sm text-blue-600 cursor-pointer hover:underline font-medium"
+                      onClick={() => openConditionsModal(loan)}
+                    >
                       View {loan.conditions.length - 3} more conditions...
                     </li>
                   )}
@@ -357,12 +395,38 @@ export function SmartLoanComparison({ loanComparisons }: LoanComparisonProps) {
 
               {/* Actions */}
               <div className="flex space-x-2 pt-3 border-t">
-                <Button variant="outline" size="sm" className="flex-1">
-                  More Details
-                </Button>
+                {loan.website ? (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex-1"
+                    asChild
+                  >
+                    <a
+                      href={loan.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-1"
+                    >
+                      <ExternalLink className="w-3 h-3" />
+                      More Details
+                    </a>
+                  </Button>
+                ) : (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex-1"
+                    disabled
+                  >
+                    <ExternalLink className="w-3 h-3 mr-1" />
+                    More Details
+                  </Button>
+                )}
                 <Button
                   size="sm"
                   className="flex-1 bg-blue-600 hover:bg-blue-700"
+                  onClick={() => onStartApplication?.(loan)}
                 >
                   Start Application
                 </Button>
