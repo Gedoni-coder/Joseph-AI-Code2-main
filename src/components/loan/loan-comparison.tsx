@@ -28,6 +28,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { type LoanComparison } from "@/lib/loan-data";
+import { LoanCalculatorModal } from "./loan-calculator";
 
 interface ConditionsModalState {
   isOpen: boolean;
@@ -51,6 +52,7 @@ export function SmartLoanComparison({
     loanName: "",
     conditions: [],
   });
+  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -120,7 +122,10 @@ export function SmartLoanComparison({
             Side-by-side comparison to help you choose the best loan option
           </p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button
+          className="bg-blue-600 hover:bg-blue-700"
+          onClick={() => setIsCalculatorOpen(true)}
+        >
           <Calculator className="w-4 h-4 mr-2" />
           Loan Calculator
         </Button>
@@ -395,34 +400,18 @@ export function SmartLoanComparison({
 
               {/* Actions */}
               <div className="flex space-x-2 pt-3 border-t">
-                {loan.website ? (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex-1"
-                    asChild
-                  >
-                    <a
-                      href={loan.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-1"
-                    >
-                      <ExternalLink className="w-3 h-3" />
-                      More Details
-                    </a>
-                  </Button>
-                ) : (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex-1"
-                    disabled
-                  >
-                    <ExternalLink className="w-3 h-3 mr-1" />
-                    More Details
-                  </Button>
-                )}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1"
+                  onClick={() =>
+                    loan.website && window.open(loan.website, "_blank")
+                  }
+                  disabled={!loan.website}
+                >
+                  <ExternalLink className="w-3 h-3" />
+                  More Details
+                </Button>
                 <Button
                   size="sm"
                   className="flex-1 bg-blue-600 hover:bg-blue-700"
@@ -435,6 +424,12 @@ export function SmartLoanComparison({
           </Card>
         ))}
       </div>
+
+      {/* Loan Calculator Modal */}
+      <LoanCalculatorModal
+        isOpen={isCalculatorOpen}
+        onClose={() => setIsCalculatorOpen(false)}
+      />
     </div>
   );
 }
