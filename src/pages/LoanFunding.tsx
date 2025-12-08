@@ -57,7 +57,8 @@ export default function LoanFunding() {
   } = useLoanData();
 
   const [activeTab, setActiveTab] = useState("overview");
-  const [selectedFundingOption, setSelectedFundingOption] = useState<FundingOption | null>(null);
+  const [selectedFundingOption, setSelectedFundingOption] =
+    useState<FundingOption | null>(null);
 
   if (error) {
     return (
@@ -408,7 +409,12 @@ export default function LoanFunding() {
           </TabsContent>
 
           <TabsContent value="comparison">
-            <SmartLoanComparison loanComparisons={loanComparisons} />
+            <SmartLoanComparison
+              loanComparisons={loanComparisons}
+              onStartApplication={(loan) => {
+                setActiveTab("application");
+              }}
+            />
           </TabsContent>
 
           <TabsContent value="application">
