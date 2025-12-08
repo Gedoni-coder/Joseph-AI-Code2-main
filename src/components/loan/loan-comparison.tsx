@@ -52,6 +52,7 @@ export function SmartLoanComparison({
     loanName: "",
     conditions: [],
   });
+  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
