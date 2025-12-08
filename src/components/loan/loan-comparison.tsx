@@ -404,7 +404,9 @@ export function SmartLoanComparison({
                   variant="outline"
                   size="sm"
                   className="flex-1"
-                  onClick={() => loan.website && window.open(loan.website, "_blank")}
+                  onClick={() =>
+                    loan.website && window.open(loan.website, "_blank")
+                  }
                   disabled={!loan.website}
                 >
                   <ExternalLink className="w-3 h-3" />

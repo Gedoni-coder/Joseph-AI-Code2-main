@@ -25,7 +25,10 @@ interface LoanCalculatorModalProps {
   onClose: () => void;
 }
 
-export function LoanCalculatorModal({ isOpen, onClose }: LoanCalculatorModalProps) {
+export function LoanCalculatorModal({
+  isOpen,
+  onClose,
+}: LoanCalculatorModalProps) {
   const [loanAmount, setLoanAmount] = useState<number>(250000);
   const [interestRate, setInterestRate] = useState<number>(9.5);
   const [rateType, setRateType] = useState<"annual" | "monthly">("annual");
@@ -33,12 +36,11 @@ export function LoanCalculatorModal({ isOpen, onClose }: LoanCalculatorModalProp
   const [tenureType, setTenureType] = useState<"months" | "years">("months");
   const [currency, setCurrency] = useState<string>("USD");
   const [frequency, setFrequency] = useState<"monthly" | "weekly" | "daily">(
-    "monthly"
+    "monthly",
   );
 
   // Calculate tenure in months
-  const tenureInMonths =
-    tenureType === "months" ? tenure : tenure * 12;
+  const tenureInMonths = tenureType === "months" ? tenure : tenure * 12;
 
   // Calculate monthly interest rate
   const monthlyRate =
@@ -48,7 +50,8 @@ export function LoanCalculatorModal({ isOpen, onClose }: LoanCalculatorModalProp
   const calculateMonthlyPayment = (): number => {
     if (tenureInMonths === 0 || monthlyRate === 0) return 0;
 
-    const numerator = loanAmount * monthlyRate * Math.pow(1 + monthlyRate, tenureInMonths);
+    const numerator =
+      loanAmount * monthlyRate * Math.pow(1 + monthlyRate, tenureInMonths);
     const denominator = Math.pow(1 + monthlyRate, tenureInMonths) - 1;
 
     return numerator / denominator;
@@ -123,7 +126,9 @@ export function LoanCalculatorModal({ isOpen, onClose }: LoanCalculatorModalProp
                   id="loan-amount"
                   type="number"
                   value={loanAmount}
-                  onChange={(e) => setLoanAmount(parseFloat(e.target.value) || 0)}
+                  onChange={(e) =>
+                    setLoanAmount(parseFloat(e.target.value) || 0)
+                  }
                   className="flex-1"
                   min="0"
                 />
@@ -155,7 +160,9 @@ export function LoanCalculatorModal({ isOpen, onClose }: LoanCalculatorModalProp
                 <Input
                   type="number"
                   value={interestRate}
-                  onChange={(e) => setInterestRate(parseFloat(e.target.value) || 0)}
+                  onChange={(e) =>
+                    setInterestRate(parseFloat(e.target.value) || 0)
+                  }
                   step="0.1"
                   min="0"
                   className="flex-1"
@@ -168,7 +175,7 @@ export function LoanCalculatorModal({ isOpen, onClose }: LoanCalculatorModalProp
                       "px-3 py-1 text-xs font-medium rounded transition-all",
                       rateType === "annual"
                         ? "bg-blue-600 text-white"
-                        : "bg-transparent text-gray-700 hover:text-gray-900"
+                        : "bg-transparent text-gray-700 hover:text-gray-900",
                     )}
                   >
                     Annual
@@ -179,7 +186,7 @@ export function LoanCalculatorModal({ isOpen, onClose }: LoanCalculatorModalProp
                       "px-3 py-1 text-xs font-medium rounded transition-all",
                       rateType === "monthly"
                         ? "bg-blue-600 text-white"
-                        : "bg-transparent text-gray-700 hover:text-gray-900"
+                        : "bg-transparent text-gray-700 hover:text-gray-900",
                     )}
                   >
                     Monthly
@@ -207,7 +214,7 @@ export function LoanCalculatorModal({ isOpen, onClose }: LoanCalculatorModalProp
                       "px-3 py-1 text-xs font-medium rounded transition-all",
                       tenureType === "months"
                         ? "bg-blue-600 text-white"
-                        : "bg-transparent text-gray-700 hover:text-gray-900"
+                        : "bg-transparent text-gray-700 hover:text-gray-900",
                     )}
                   >
                     Months
@@ -218,7 +225,7 @@ export function LoanCalculatorModal({ isOpen, onClose }: LoanCalculatorModalProp
                       "px-3 py-1 text-xs font-medium rounded transition-all",
                       tenureType === "years"
                         ? "bg-blue-600 text-white"
-                        : "bg-transparent text-gray-700 hover:text-gray-900"
+                        : "bg-transparent text-gray-700 hover:text-gray-900",
                     )}
                   >
                     Years
@@ -235,12 +242,14 @@ export function LoanCalculatorModal({ isOpen, onClose }: LoanCalculatorModalProp
               {["monthly", "weekly", "daily"].map((freq) => (
                 <button
                   key={freq}
-                  onClick={() => setFrequency(freq as "monthly" | "weekly" | "daily")}
+                  onClick={() =>
+                    setFrequency(freq as "monthly" | "weekly" | "daily")
+                  }
                   className={cn(
                     "flex-1 py-2 px-3 text-sm font-medium rounded-md transition-all",
                     frequency === freq
                       ? "bg-blue-600 text-white"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200",
                   )}
                 >
                   {freq.charAt(0).toUpperCase() + freq.slice(1)}
@@ -308,13 +317,15 @@ export function LoanCalculatorModal({ isOpen, onClose }: LoanCalculatorModalProp
             <CardContent className="pt-6">
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Principal (Loan Amount):</span>
-                  <span className="font-semibold">{formatCurrency(loanAmount)}</span>
+                  <span className="text-gray-600">
+                    Principal (Loan Amount):
+                  </span>
+                  <span className="font-semibold">
+                    {formatCurrency(loanAmount)}
+                  </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">
-                    Annual Interest Rate:
-                  </span>
+                  <span className="text-gray-600">Annual Interest Rate:</span>
                   <span className="font-semibold">
                     {rateType === "annual"
                       ? interestRate.toFixed(2)
@@ -325,8 +336,8 @@ export function LoanCalculatorModal({ isOpen, onClose }: LoanCalculatorModalProp
                 <div className="flex justify-between">
                   <span className="text-gray-600">Tenure:</span>
                   <span className="font-semibold">
-                    {tenureInMonths} months ({Math.floor(tenureInMonths / 12)} years{" "}
-                    {tenureInMonths % 12} months)
+                    {tenureInMonths} months ({Math.floor(tenureInMonths / 12)}{" "}
+                    years {tenureInMonths % 12} months)
                   </span>
                 </div>
               </div>
@@ -334,7 +345,10 @@ export function LoanCalculatorModal({ isOpen, onClose }: LoanCalculatorModalProp
           </Card>
 
           {/* Action Button */}
-          <Button onClick={onClose} className="w-full bg-blue-600 hover:bg-blue-700">
+          <Button
+            onClick={onClose}
+            className="w-full bg-blue-600 hover:bg-blue-700"
+          >
             Close Calculator
           </Button>
         </div>
