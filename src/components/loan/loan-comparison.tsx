@@ -28,6 +28,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { type LoanComparison } from "@/lib/loan-data";
+import { LoanCalculatorModal } from "./loan-calculator";
 
 interface ConditionsModalState {
   isOpen: boolean;
