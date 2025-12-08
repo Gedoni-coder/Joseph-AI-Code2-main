@@ -387,7 +387,7 @@ export const loanComparisons: LoanComparison[] = [
       "Shorter repayment term",
       "Stricter cash flow requirements",
     ],
-    website: "https://www.sba.gov/funding-programs/loans",
+    website: "https://www.fnb-online.com/business/loans-leasing/lending/short-term-financing/working-capital-lines-credit",
   },
 ];
 
