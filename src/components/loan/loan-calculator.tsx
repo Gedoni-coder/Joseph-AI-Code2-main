@@ -161,29 +161,30 @@ export function LoanCalculatorModal({ isOpen, onClose }: LoanCalculatorModalProp
                   className="flex-1"
                   placeholder="Rate"
                 />
-                <ToggleGroup
-                  type="single"
-                  value={rateType}
-                  onValueChange={(value) =>
-                    value && setRateType(value as "annual" | "monthly")
-                  }
-                  className="bg-gray-100 p-1 rounded-md"
-                >
-                  <ToggleGroupItem
-                    value="annual"
-                    aria-label="Annual"
-                    className="text-xs px-2"
+                <div className="flex gap-1 bg-gray-100 p-1 rounded-md">
+                  <button
+                    onClick={() => setRateType("annual")}
+                    className={cn(
+                      "px-3 py-1 text-xs font-medium rounded transition-all",
+                      rateType === "annual"
+                        ? "bg-blue-600 text-white"
+                        : "bg-transparent text-gray-700 hover:text-gray-900"
+                    )}
                   >
                     Annual
-                  </ToggleGroupItem>
-                  <ToggleGroupItem
-                    value="monthly"
-                    aria-label="Monthly"
-                    className="text-xs px-2"
+                  </button>
+                  <button
+                    onClick={() => setRateType("monthly")}
+                    className={cn(
+                      "px-3 py-1 text-xs font-medium rounded transition-all",
+                      rateType === "monthly"
+                        ? "bg-blue-600 text-white"
+                        : "bg-transparent text-gray-700 hover:text-gray-900"
+                    )}
                   >
                     Monthly
-                  </ToggleGroupItem>
-                </ToggleGroup>
+                  </button>
+                </div>
               </div>
             </div>
 
