@@ -41,15 +41,10 @@ interface LoanComparisonProps {
   onStartApplication?: (loan: LoanComparison) => void;
 }
 
-interface SmartLoanComparisonProps {
-  loanComparisons: LoanComparison[];
-  onStartApplication?: (loan: LoanComparison) => void;
-}
-
 export function SmartLoanComparison({
   loanComparisons,
   onStartApplication,
-}: SmartLoanComparisonProps) {
+}: LoanComparisonProps) {
   const [conditionsModal, setConditionsModal] = useState<ConditionsModalState>({
     isOpen: false,
     loanId: null,
