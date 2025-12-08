@@ -408,7 +408,12 @@ export default function LoanFunding() {
           </TabsContent>
 
           <TabsContent value="comparison">
-            <SmartLoanComparison loanComparisons={loanComparisons} />
+            <SmartLoanComparison
+              loanComparisons={loanComparisons}
+              onStartApplication={(loan) => {
+                setActiveTab("application");
+              }}
+            />
           </TabsContent>
 
           <TabsContent value="application">
