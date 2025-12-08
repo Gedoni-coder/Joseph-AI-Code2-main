@@ -263,7 +263,7 @@ export const fundingOptions: FundingOption[] = [
     personalGuarantee: true,
     description:
       "Revolving credit facility for short-term working capital needs with flexible draw and repayment options.",
-    website: "https://www.sba.gov/funding-programs/loans",
+    website: "https://www.fnb-online.com/business/loans-leasing/lending/short-term-financing/working-capital-lines-credit",
     tags: ["Flexible", "Quick Approval", "Working Capital"],
   },
   {
@@ -286,7 +286,7 @@ export const fundingOptions: FundingOption[] = [
     personalGuarantee: false,
     description:
       "Small loans for entrepreneurs with limited access to traditional banking, includes business support services.",
-    website: "https://www.sba.gov/funding-programs/grants",
+    website: "https://www.cdfifund.gov/",
     tags: ["Accessible", "Support Services", "Community Focused"],
   },
   {
@@ -309,7 +309,7 @@ export const fundingOptions: FundingOption[] = [
     personalGuarantee: false,
     description:
       "Early-stage equity investment from accredited angel investors with industry expertise and mentorship.",
-    website: "https://www.angelinvestmentnetwork.us/",
+    website: "https://tcaventuregroup.com/",
     tags: ["Equity", "Mentorship", "Technology", "No Repayment"],
   },
 ];
