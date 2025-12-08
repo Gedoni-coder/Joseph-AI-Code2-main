@@ -336,17 +336,17 @@ export function FundingOptionsExplorer({
 
               {/* Actions */}
               <div className="flex space-x-2 pt-3 border-t">
-                <Button variant="outline" size="sm" className="flex-1" asChild>
-                  <a
-                    href={option.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-1"
-                  >
+                <a
+                  href={option.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1"
+                >
+                  <Button variant="outline" size="sm" className="flex-1 pointer-events-none">
                     <ExternalLink className="w-3 h-3" />
                     Learn More
-                  </a>
-                </Button>
+                  </Button>
+                </a>
                 <Button
                   size="sm"
                   className="flex-1 bg-blue-600 hover:bg-blue-700"
