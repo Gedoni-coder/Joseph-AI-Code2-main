@@ -122,7 +122,10 @@ export function SmartLoanComparison({
             Side-by-side comparison to help you choose the best loan option
           </p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button
+          className="bg-blue-600 hover:bg-blue-700"
+          onClick={() => setIsCalculatorOpen(true)}
+        >
           <Calculator className="w-4 h-4 mr-2" />
           Loan Calculator
         </Button>
