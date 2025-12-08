@@ -340,7 +340,7 @@ export function FundingOptionsExplorer({
                   href={option.website}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1"
+                  className="flex flex-1"
                 >
                   <Button variant="outline" size="sm" className="flex-1 pointer-events-none">
                     <ExternalLink className="w-3 h-3" />
