@@ -396,21 +396,21 @@ export function SmartLoanComparison({
               {/* Actions */}
               <div className="flex space-x-2 pt-3 border-t">
                 {loan.website ? (
-                  <a
-                    href={loan.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Button
+                    variant="outline"
+                    size="sm"
                     className="flex-1"
+                    asChild
                   >
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1 pointer-events-none"
+                    <a
+                      href={loan.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       <ExternalLink className="w-3 h-3" />
                       More Details
-                    </Button>
-                  </a>
+                    </a>
+                  </Button>
                 ) : (
                   <Button
                     variant="outline"
