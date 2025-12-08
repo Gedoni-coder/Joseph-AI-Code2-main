@@ -240,7 +240,7 @@ export const fundingOptions: FundingOption[] = [
     personalGuarantee: true,
     description:
       "Flexible loan program for general business purposes including working capital, equipment, and real estate.",
-    website: "https://sba.gov",
+    website: "https://www.sba.gov/funding-programs/loans/7a-loans",
     tags: ["Government", "Low Interest", "Flexible Terms"],
   },
   {
@@ -263,7 +263,7 @@ export const fundingOptions: FundingOption[] = [
     personalGuarantee: true,
     description:
       "Revolving credit facility for short-term working capital needs with flexible draw and repayment options.",
-    website: "https://firstnational.com",
+    website: "https://www.sba.gov/funding-programs/loans",
     tags: ["Flexible", "Quick Approval", "Working Capital"],
   },
   {
@@ -286,7 +286,7 @@ export const fundingOptions: FundingOption[] = [
     personalGuarantee: false,
     description:
       "Small loans for entrepreneurs with limited access to traditional banking, includes business support services.",
-    website: "https://cdfi.org",
+    website: "https://www.sba.gov/funding-programs/grants",
     tags: ["Accessible", "Support Services", "Community Focused"],
   },
   {
@@ -309,7 +309,7 @@ export const fundingOptions: FundingOption[] = [
     personalGuarantee: false,
     description:
       "Early-stage equity investment from accredited angel investors with industry expertise and mentorship.",
-    website: "https://techngels.com",
+    website: "https://www.angelinvestmentnetwork.us/",
     tags: ["Equity", "Mentorship", "Technology", "No Repayment"],
   },
 ];
@@ -350,7 +350,7 @@ export const loanComparisons: LoanComparison[] = [
       "Strict qualification requirements",
       "Personal guarantee required",
     ],
-    website: "https://firstcommunitybank.com/sba-loans",
+    website: "https://www.sba.gov/funding-programs/loans/7a-loans",
   },
   {
     id: "2",
@@ -387,7 +387,7 @@ export const loanComparisons: LoanComparison[] = [
       "Shorter repayment term",
       "Stricter cash flow requirements",
     ],
-    website: "https://regionalbank.com/business-loans",
+    website: "https://www.sba.gov/funding-programs/loans",
   },
 ];
 
