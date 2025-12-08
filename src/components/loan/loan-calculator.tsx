@@ -231,37 +231,22 @@ export function LoanCalculatorModal({ isOpen, onClose }: LoanCalculatorModalProp
           {/* Repayment Frequency Selector */}
           <div className="space-y-2">
             <Label>View Repayment As</Label>
-            <ToggleGroup
-              type="single"
-              value={frequency}
-              onValueChange={(value) =>
-                value &&
-                setFrequency(value as "monthly" | "weekly" | "daily")
-              }
-              className="flex w-full gap-2"
-            >
-              <ToggleGroupItem
-                value="monthly"
-                aria-label="Monthly"
-                className="flex-1"
-              >
-                Monthly
-              </ToggleGroupItem>
-              <ToggleGroupItem
-                value="weekly"
-                aria-label="Weekly"
-                className="flex-1"
-              >
-                Weekly
-              </ToggleGroupItem>
-              <ToggleGroupItem
-                value="daily"
-                aria-label="Daily"
-                className="flex-1"
-              >
-                Daily
-              </ToggleGroupItem>
-            </ToggleGroup>
+            <div className="flex gap-2 w-full">
+              {["monthly", "weekly", "daily"].map((freq) => (
+                <button
+                  key={freq}
+                  onClick={() => setFrequency(freq as "monthly" | "weekly" | "daily")}
+                  className={cn(
+                    "flex-1 py-2 px-3 text-sm font-medium rounded-md transition-all",
+                    frequency === freq
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  )}
+                >
+                  {freq.charAt(0).toUpperCase() + freq.slice(1)}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Results Section */}
