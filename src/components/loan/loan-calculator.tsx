@@ -200,29 +200,30 @@ export function LoanCalculatorModal({ isOpen, onClose }: LoanCalculatorModalProp
                   className="flex-1"
                   placeholder="Duration"
                 />
-                <ToggleGroup
-                  type="single"
-                  value={tenureType}
-                  onValueChange={(value) =>
-                    value && setTenureType(value as "months" | "years")
-                  }
-                  className="bg-gray-100 p-1 rounded-md"
-                >
-                  <ToggleGroupItem
-                    value="months"
-                    aria-label="Months"
-                    className="text-xs px-2"
+                <div className="flex gap-1 bg-gray-100 p-1 rounded-md">
+                  <button
+                    onClick={() => setTenureType("months")}
+                    className={cn(
+                      "px-3 py-1 text-xs font-medium rounded transition-all",
+                      tenureType === "months"
+                        ? "bg-blue-600 text-white"
+                        : "bg-transparent text-gray-700 hover:text-gray-900"
+                    )}
                   >
                     Months
-                  </ToggleGroupItem>
-                  <ToggleGroupItem
-                    value="years"
-                    aria-label="Years"
-                    className="text-xs px-2"
+                  </button>
+                  <button
+                    onClick={() => setTenureType("years")}
+                    className={cn(
+                      "px-3 py-1 text-xs font-medium rounded transition-all",
+                      tenureType === "years"
+                        ? "bg-blue-600 text-white"
+                        : "bg-transparent text-gray-700 hover:text-gray-900"
+                    )}
                   >
                     Years
-                  </ToggleGroupItem>
-                </ToggleGroup>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
