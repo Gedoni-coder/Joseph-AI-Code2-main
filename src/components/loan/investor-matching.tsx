@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -19,10 +20,12 @@ import {
   Star,
   Target,
 } from "lucide-react";
-import { type InvestorMatch } from "@/lib/loan-data";
+import { type InvestorMatch, type LoanEligibility } from "@/lib/loan-data";
+import { RefineMatchingModal, type RefinementFilters } from "@/components/loan/refine-matching-modal";
 
 interface InvestorMatchingProps {
   investorMatches: InvestorMatch[];
+  eligibility: LoanEligibility;
 }
 
 export function InvestorMatchingEngine({
