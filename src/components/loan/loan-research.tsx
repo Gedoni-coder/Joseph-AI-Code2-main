@@ -63,8 +63,7 @@ const AVAILABLE_PROGRAMS: ProgramOption[] = [
     id: "sba-7a",
     name: "SBA 7(a) Loans",
     provider: "Small Business Administration",
-    description:
-      "General purpose business loans for various business purposes",
+    description: "General purpose business loans for various business purposes",
     type: "loan",
     maxAmount: 5000000,
     interestRate: 7.5,
@@ -200,9 +199,7 @@ export function LoanResearchUpdates({ loanUpdates }: LoanResearchProps) {
   const handleAddPrograms = (programIds: string[]) => {
     const newIds = Array.from(new Set([...watchlistProgramIds, ...programIds]));
     setWatchlistProgramIds(newIds);
-    const programs = AVAILABLE_PROGRAMS.filter((p) =>
-      newIds.includes(p.id),
-    );
+    const programs = AVAILABLE_PROGRAMS.filter((p) => newIds.includes(p.id));
     setWatchlistPrograms(programs);
     localStorage.setItem("loanWatchlist", JSON.stringify(newIds));
   };
@@ -211,9 +208,7 @@ export function LoanResearchUpdates({ loanUpdates }: LoanResearchProps) {
   const handleRemoveProgram = (programId: string) => {
     const newIds = watchlistProgramIds.filter((id) => id !== programId);
     setWatchlistProgramIds(newIds);
-    const programs = AVAILABLE_PROGRAMS.filter((p) =>
-      newIds.includes(p.id),
-    );
+    const programs = AVAILABLE_PROGRAMS.filter((p) => newIds.includes(p.id));
     setWatchlistPrograms(programs);
     localStorage.setItem("loanWatchlist", JSON.stringify(newIds));
   };

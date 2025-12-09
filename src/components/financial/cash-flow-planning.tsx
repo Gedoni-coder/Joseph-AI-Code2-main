@@ -138,7 +138,9 @@ export function CashFlowPlanning({
                 capitalExpenditure: 0,
                 debtService: 0,
               },
-              projectedBalance: projection.projection30[projection.projection30.length - 1]?.balance || 0,
+              projectedBalance:
+                projection.projection30[projection.projection30.length - 1]
+                  ?.balance || 0,
               liquidityRatio: 1.5,
               status: "healthy",
               variance: 0,

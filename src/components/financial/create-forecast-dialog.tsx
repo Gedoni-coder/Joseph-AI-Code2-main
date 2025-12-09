@@ -176,7 +176,8 @@ function generateForecast(inputs: ForecastInputs): ForecastResult {
     .filter((d) => d.targetValue !== d.currentValue)
     .map((driver) => {
       const change =
-        ((driver.targetValue - driver.currentValue) / driver.currentValue) * 100;
+        ((driver.targetValue - driver.currentValue) / driver.currentValue) *
+        100;
       let recommendation = "";
 
       if (driver.category === "revenue") {
@@ -331,7 +332,11 @@ export function CreateForecastDialog({
     }));
   };
 
-  const handleDriverChange = (driverId: string, field: string, value: number) => {
+  const handleDriverChange = (
+    driverId: string,
+    field: string,
+    value: number,
+  ) => {
     setInputs((prev) => ({
       ...prev,
       drivers: prev.drivers.map((d) =>
@@ -361,7 +366,10 @@ export function CreateForecastDialog({
   };
 
   const totalRevenue = forecast.monthly.reduce((sum, m) => sum + m.revenue, 0);
-  const totalExpenses = forecast.monthly.reduce((sum, m) => sum + m.expenses, 0);
+  const totalExpenses = forecast.monthly.reduce(
+    (sum, m) => sum + m.expenses,
+    0,
+  );
   const totalNetIncome = totalRevenue - totalExpenses;
   const criticalMonths = forecast.monthly.filter(
     (m) => m.status === "critical",
@@ -509,7 +517,10 @@ export function CreateForecastDialog({
                     type="number"
                     value={inputs.historicalRevenue}
                     onChange={(e) =>
-                      handleInputChange("historicalRevenue", parseFloat(e.target.value))
+                      handleInputChange(
+                        "historicalRevenue",
+                        parseFloat(e.target.value),
+                      )
                     }
                     placeholder="0"
                     className="mt-1"
@@ -523,7 +534,10 @@ export function CreateForecastDialog({
                     type="number"
                     value={inputs.historicalExpenses}
                     onChange={(e) =>
-                      handleInputChange("historicalExpenses", parseFloat(e.target.value))
+                      handleInputChange(
+                        "historicalExpenses",
+                        parseFloat(e.target.value),
+                      )
                     }
                     placeholder="0"
                     className="mt-1"
@@ -577,7 +591,9 @@ export function CreateForecastDialog({
                   <Card key={driver.id}>
                     <CardHeader className="pb-3">
                       <div className="flex items-center justify-between">
-                        <CardTitle className="text-base">{driver.name}</CardTitle>
+                        <CardTitle className="text-base">
+                          {driver.name}
+                        </CardTitle>
                         <Badge
                           className={
                             driver.impact === "high"
@@ -800,12 +816,18 @@ export function CreateForecastDialog({
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={350}>
-                <LineChart data={forecast.monthly} margin={{ top: 5, right: 30, left: 0, bottom: 5 }}>
+                <LineChart
+                  data={forecast.monthly}
+                  margin={{ top: 5, right: 30, left: 0, bottom: 5 }}
+                >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="month" />
                   <YAxis />
                   <Tooltip
-                    contentStyle={{ backgroundColor: "#fff", border: "1px solid #ccc" }}
+                    contentStyle={{
+                      backgroundColor: "#fff",
+                      border: "1px solid #ccc",
+                    }}
                     formatter={(value: any) => formatCurrency(value as number)}
                   />
                   <Legend />
@@ -845,7 +867,9 @@ export function CreateForecastDialog({
           {forecast.driverImpacts.length > 0 && (
             <Card>
               <CardHeader>
-                <CardTitle>Driver-Based Predictions & Recommendations</CardTitle>
+                <CardTitle>
+                  Driver-Based Predictions & Recommendations
+                </CardTitle>
                 <CardDescription>
                   How business drivers affect your forecast
                 </CardDescription>
@@ -893,32 +917,41 @@ export function CreateForecastDialog({
               <div className="space-y-3">
                 {[
                   {
-                    suggestion: "Increase marketing budget by ₦300,000 to maintain sales growth",
+                    suggestion:
+                      "Increase marketing budget by ₦300,000 to maintain sales growth",
                     quarter: "Q2",
                     impact: 300000,
                   },
                   {
-                    suggestion: "Cut non-essential spending in Q2 due to expense spike",
+                    suggestion:
+                      "Cut non-essential spending in Q2 due to expense spike",
                     quarter: "Q2",
                     impact: -150000,
                   },
                   {
-                    suggestion: "Shift hiring to Q3 to optimize cash flow targets",
+                    suggestion:
+                      "Shift hiring to Q3 to optimize cash flow targets",
                     quarter: "Q3",
                     impact: 200000,
                   },
                   {
-                    suggestion: "Allocate additional budget to customer retention in Q4",
+                    suggestion:
+                      "Allocate additional budget to customer retention in Q4",
                     quarter: "Q4",
                     impact: 250000,
                   },
                 ].map((adj, idx) => (
-                  <div key={idx} className="p-3 border rounded-lg flex items-start justify-between">
+                  <div
+                    key={idx}
+                    className="p-3 border rounded-lg flex items-start justify-between"
+                  >
                     <div>
                       <p className="text-sm font-medium text-gray-900">
                         {adj.suggestion}
                       </p>
-                      <p className="text-xs text-gray-600 mt-1">{adj.quarter}</p>
+                      <p className="text-xs text-gray-600 mt-1">
+                        {adj.quarter}
+                      </p>
                     </div>
                     <Badge
                       className={
@@ -947,12 +980,17 @@ export function CreateForecastDialog({
               <CardContent>
                 <div className="space-y-3">
                   {forecast.opportunities.map((opp, idx) => (
-                    <div key={idx} className="flex items-start justify-between p-3 bg-white rounded border border-green-100">
+                    <div
+                      key={idx}
+                      className="flex items-start justify-between p-3 bg-white rounded border border-green-100"
+                    >
                       <div>
                         <p className="text-sm font-medium text-gray-900">
                           {opp.opportunity}
                         </p>
-                        <p className="text-xs text-gray-600 mt-1">{opp.month}</p>
+                        <p className="text-xs text-gray-600 mt-1">
+                          {opp.month}
+                        </p>
                       </div>
                       <Badge className="bg-green-100 text-green-800">
                         +{formatCurrency(opp.impact)}
@@ -966,17 +1004,17 @@ export function CreateForecastDialog({
         </div>
 
         <DialogFooter className="flex space-x-3">
-          <Button
-            variant="outline"
-            onClick={() => setStep("inputs")}
-          >
+          <Button variant="outline" onClick={() => setStep("inputs")}>
             Back to Inputs
           </Button>
           <Button variant="outline">
             <Download className="w-4 h-4 mr-2" />
             Export Report
           </Button>
-          <Button onClick={handleSave} className="bg-blue-600 hover:bg-blue-700">
+          <Button
+            onClick={handleSave}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
             Save Forecast
           </Button>
         </DialogFooter>
