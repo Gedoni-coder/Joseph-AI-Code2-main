@@ -28,6 +28,8 @@ export interface UseLoanDataReturn {
   fundingStrategy: FundingStrategy;
   investorMatches: InvestorMatch[];
   loanUpdates: LoanUpdate[];
+  watchlistPrograms: string[];
+  alertPreferences: AlertPreferences;
   isLoading: boolean;
   isConnected: boolean;
   lastUpdated: Date;
@@ -38,6 +40,9 @@ export interface UseLoanDataReturn {
     docId: string,
     status: ApplicationDocument["status"],
   ) => void;
+  addToWatchlist: (programs: string[]) => void;
+  removeFromWatchlist: (program: string) => void;
+  updateAlertPreferences: (preferences: AlertPreferences) => void;
 }
 
 export function useLoanData(): UseLoanDataReturn {
