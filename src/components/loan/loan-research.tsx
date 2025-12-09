@@ -44,10 +44,179 @@ interface LoanResearchProps {
   loanUpdates: LoanUpdate[];
 }
 
+const DEFAULT_ALERT_PREFERENCES: AlertPreferences = {
+  newPrograms: true,
+  rateChanges: true,
+  deadlines: true,
+  policyUpdates: false,
+  frequency: "real-time",
+  channel: "in-app",
+  quietHours: {
+    enabled: false,
+    startTime: "22:00",
+    endTime: "08:00",
+  },
+};
+
+const AVAILABLE_PROGRAMS: ProgramOption[] = [
+  {
+    id: "sba-7a",
+    name: "SBA 7(a) Loans",
+    provider: "Small Business Administration",
+    description:
+      "General purpose business loans for various business purposes",
+    type: "loan",
+    maxAmount: 5000000,
+    interestRate: 7.5,
+    loanTerm: 240,
+    isNew: false,
+  },
+  {
+    id: "sba-504",
+    name: "SBA 504 Loans",
+    provider: "Small Business Administration",
+    description: "Real estate and equipment financing with fixed rates",
+    type: "loan",
+    maxAmount: 5000000,
+    interestRate: 6.5,
+    loanTerm: 180,
+    isNew: false,
+  },
+  {
+    id: "state-tech-grants",
+    name: "State Tech Innovation Grants",
+    provider: "State Economic Development",
+    description: "Non-dilutive funding for technology-focused businesses",
+    type: "grant",
+    maxAmount: 250000,
+    deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+    isNew: true,
+  },
+  {
+    id: "venture-debt",
+    name: "Growth Venture Debt",
+    provider: "Silicon Valley Bank",
+    description:
+      "Debt financing for high-growth companies looking to extend runway",
+    type: "loan",
+    maxAmount: 3000000,
+    interestRate: 10.0,
+    loanTerm: 60,
+    isNew: false,
+  },
+  {
+    id: "export-credit",
+    name: "Export Credit Guarantee",
+    provider: "Department of Commerce",
+    description:
+      "Credit guarantees for businesses looking to expand internationally",
+    type: "guarantee",
+    maxAmount: 2500000,
+    isNew: true,
+  },
+  {
+    id: "women-owned-loan",
+    name: "Women-Owned Business Loans",
+    provider: "Federal Reserve Program",
+    description:
+      "Specialized financing for women-owned businesses with competitive rates",
+    type: "loan",
+    maxAmount: 1500000,
+    interestRate: 6.0,
+    loanTerm: 120,
+    isNew: false,
+  },
+  {
+    id: "minority-enterprise",
+    name: "Minority Enterprise Development",
+    provider: "Small Business Administration",
+    description:
+      "Support for businesses owned by socially and economically disadvantaged groups",
+    type: "loan",
+    maxAmount: 2000000,
+    interestRate: 7.0,
+    loanTerm: 84,
+    isNew: false,
+  },
+  {
+    id: "green-energy-grant",
+    name: "Green Energy Grants",
+    provider: "Department of Energy",
+    description:
+      "Grants for businesses developing sustainable and renewable energy solutions",
+    type: "grant",
+    maxAmount: 500000,
+    deadline: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000),
+    isNew: true,
+  },
+];
+
 export function LoanResearchUpdates({ loanUpdates }: LoanResearchProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [typeFilter, setTypeFilter] = useState<string>("all");
   const [urgencyFilter, setUrgencyFilter] = useState<string>("all");
+  const [manageAlertsOpen, setManageAlertsOpen] = useState(false);
+  const [addProgramOpen, setAddProgramOpen] = useState(false);
+  const [alertPreferences, setAlertPreferences] = useState<AlertPreferences>(
+    DEFAULT_ALERT_PREFERENCES,
+  );
+  const [watchlistPrograms, setWatchlistPrograms] = useState<
+    ProgramOption[] | null
+  >(null);
+  const [watchlistProgramIds, setWatchlistProgramIds] = useState<string[]>([]);
+
+  // Load from localStorage on mount
+  useEffect(() => {
+    const savedPreferences = localStorage.getItem("loanAlertPreferences");
+    const savedWatchlist = localStorage.getItem("loanWatchlist");
+
+    if (savedPreferences) {
+      try {
+        setAlertPreferences(JSON.parse(savedPreferences));
+      } catch (e) {
+        console.error("Failed to load alert preferences");
+      }
+    }
+
+    if (savedWatchlist) {
+      try {
+        const ids = JSON.parse(savedWatchlist);
+        setWatchlistProgramIds(ids);
+        const programs = AVAILABLE_PROGRAMS.filter((p) => ids.includes(p.id));
+        setWatchlistPrograms(programs);
+      } catch (e) {
+        console.error("Failed to load watchlist");
+      }
+    }
+  }, []);
+
+  // Save preferences to localStorage
+  const handleSavePreferences = (preferences: AlertPreferences) => {
+    setAlertPreferences(preferences);
+    localStorage.setItem("loanAlertPreferences", JSON.stringify(preferences));
+  };
+
+  // Handle adding programs to watchlist
+  const handleAddPrograms = (programIds: string[]) => {
+    const newIds = Array.from(new Set([...watchlistProgramIds, ...programIds]));
+    setWatchlistProgramIds(newIds);
+    const programs = AVAILABLE_PROGRAMS.filter((p) =>
+      newIds.includes(p.id),
+    );
+    setWatchlistPrograms(programs);
+    localStorage.setItem("loanWatchlist", JSON.stringify(newIds));
+  };
+
+  // Handle removing program from watchlist
+  const handleRemoveProgram = (programId: string) => {
+    const newIds = watchlistProgramIds.filter((id) => id !== programId);
+    setWatchlistProgramIds(newIds);
+    const programs = AVAILABLE_PROGRAMS.filter((p) =>
+      newIds.includes(p.id),
+    );
+    setWatchlistPrograms(programs);
+    localStorage.setItem("loanWatchlist", JSON.stringify(newIds));
+  };
 
   const formatDate = (date: Date) => {
     return new Intl.DateTimeFormat("en-US", {
