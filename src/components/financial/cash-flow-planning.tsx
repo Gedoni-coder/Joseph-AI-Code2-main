@@ -24,6 +24,7 @@ import {
   ArrowDownCircle,
   Wallet,
 } from "lucide-react";
+import { CreateProjectionDialog } from "./create-projection-dialog";
 
 interface CashFlowPlanningProps {
   cashFlowProjections: CashFlowProjection[];
@@ -37,6 +38,7 @@ export function CashFlowPlanning({
   onAddProjection,
 }: CashFlowPlanningProps) {
   const [selectedTimeframe, setSelectedTimeframe] = useState("weekly");
+  const [createProjectionOpen, setCreateProjectionOpen] = useState(false);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -106,8 +108,46 @@ export function CashFlowPlanning({
             Near-term cash forecasts and liquidity monitoring
           </p>
         </div>
-        <Button>Create Projection</Button>
+        <Button
+          onClick={() => setCreateProjectionOpen(true)}
+          className="bg-blue-600 hover:bg-blue-700"
+        >
+          <Calendar className="w-4 h-4 mr-2" />
+          Create Projection
+        </Button>
       </div>
+
+      {/* Create Projection Dialog */}
+      <CreateProjectionDialog
+        open={createProjectionOpen}
+        onOpenChange={setCreateProjectionOpen}
+        onSave={(projection) => {
+          if (onAddProjection) {
+            onAddProjection({
+              period: "custom",
+              startDate: new Date(),
+              endDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+              inflows: {
+                operatingCash: projection.inputs.expectedRevenues,
+                accountsReceivable: 0,
+                otherIncome: 0,
+              },
+              outflows: {
+                operatingExpenses: projection.inputs.expectedExpenses,
+                accountsPayable: 0,
+                capitalExpenditure: 0,
+                debtService: 0,
+              },
+              projectedBalance:
+                projection.projection30[projection.projection30.length - 1]
+                  ?.balance || 0,
+              liquidityRatio: 1.5,
+              status: "healthy",
+              variance: 0,
+            });
+          }
+        }}
+      />
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
