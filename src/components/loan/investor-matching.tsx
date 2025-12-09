@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -19,15 +20,29 @@ import {
   Star,
   Target,
 } from "lucide-react";
-import { type InvestorMatch } from "@/lib/loan-data";
+import { type InvestorMatch, type LoanEligibility } from "@/lib/loan-data";
+import {
+  RefineMatchingModal,
+  type RefinementFilters,
+} from "@/components/loan/refine-matching-modal";
 
 interface InvestorMatchingProps {
   investorMatches: InvestorMatch[];
+  eligibility: LoanEligibility;
 }
 
 export function InvestorMatchingEngine({
   investorMatches,
+  eligibility,
 }: InvestorMatchingProps) {
+  const [showRefineModal, setShowRefineModal] = useState(false);
+
+  const handleRefinementFilters = (filters: RefinementFilters) => {
+    console.log("Applied refinement filters:", filters);
+    // In a real implementation, these filters would be sent to an API
+    // to recalculate investor matches based on user preferences
+  };
+
   const formatCurrency = (amount: number) => {
     if (amount >= 1000000) {
       return `$${(amount / 1000000).toFixed(1)}M`;
@@ -111,11 +126,22 @@ export function InvestorMatchingEngine({
             AI-powered matching with suitable investors and lenders
           </p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button
+          onClick={() => setShowRefineModal(true)}
+          className="bg-blue-600 hover:bg-blue-700"
+        >
           <Target className="w-4 h-4 mr-2" />
           Refine Matching
         </Button>
       </div>
+
+      <RefineMatchingModal
+        open={showRefineModal}
+        onOpenChange={setShowRefineModal}
+        investorMatches={investorMatches}
+        eligibility={eligibility}
+        onRefine={handleRefinementFilters}
+      />
 
       {/* Matching Summary */}
       <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-green-200">

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -19,15 +20,36 @@ import {
   Calendar,
   PieChart,
 } from "lucide-react";
-import { type FundingStrategy } from "@/lib/loan-data";
+import {
+  type FundingStrategy,
+  type LoanEligibility,
+  type FundingOption,
+} from "@/lib/loan-data";
+import { StrategyReportGenerator } from "@/components/loan/strategy-report";
+import {
+  RefineMatchingModal,
+  type RefinementFilters,
+} from "@/components/loan/refine-matching-modal";
 
 interface FundingStrategyProps {
   fundingStrategy: FundingStrategy;
+  eligibility: LoanEligibility;
+  fundingOptions: FundingOption[];
 }
 
 export function FundingStrategyAnalysis({
   fundingStrategy,
+  eligibility,
+  fundingOptions,
 }: FundingStrategyProps) {
+  const [showRefineModal, setShowRefineModal] = useState(false);
+
+  const handleRefinementFilters = (filters: RefinementFilters) => {
+    console.log("Applied refinement filters:", filters);
+    // In a real implementation, these filters would be sent to an API
+    // to recalculate investor matches
+  };
+
   const formatCurrency = (amount: number) => {
     if (amount >= 1000000) {
       return `$${(amount / 1000000).toFixed(1)}M`;
@@ -74,10 +96,11 @@ export function FundingStrategyAnalysis({
             Strategic guidance for choosing the right funding approach
           </p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
-          <PieChart className="w-4 h-4 mr-2" />
-          Strategy Report
-        </Button>
+        <StrategyReportGenerator
+          fundingStrategy={fundingStrategy}
+          eligibility={eligibility}
+          fundingOptions={fundingOptions}
+        />
       </div>
 
       {/* Readiness Score */}
