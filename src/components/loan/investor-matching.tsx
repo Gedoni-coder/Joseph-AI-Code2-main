@@ -123,11 +123,22 @@ export function InvestorMatchingEngine({
             AI-powered matching with suitable investors and lenders
           </p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button
+          onClick={() => setShowRefineModal(true)}
+          className="bg-blue-600 hover:bg-blue-700"
+        >
           <Target className="w-4 h-4 mr-2" />
           Refine Matching
         </Button>
       </div>
+
+      <RefineMatchingModal
+        open={showRefineModal}
+        onOpenChange={setShowRefineModal}
+        investorMatches={investorMatches}
+        eligibility={eligibility}
+        onRefine={handleRefinementFilters}
+      />
 
       {/* Matching Summary */}
       <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-green-200">
