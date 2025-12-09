@@ -205,21 +205,8 @@ export function StrategyReportGenerator({
   const capitalGuidance = getCapitalGuidance();
   const checklist = getDocumentationChecklist();
 
-  const generatePDF = async () => {
-    if (!reportRef.current) return;
-
+  const generatePDF = () => {
     try {
-      const canvas = await html2canvas(reportRef.current, {
-        scale: 2,
-        logging: false,
-        useCORS: true,
-        backgroundColor: "#ffffff",
-        canvas: undefined,
-      });
-
-      // Convert canvas to JPEG instead of PNG for better compatibility
-      const imgData = canvas.toDataURL("image/jpeg", 0.95);
-
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "mm",
@@ -227,21 +214,210 @@ export function StrategyReportGenerator({
       });
 
       const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
-      const imgWidth = pageWidth - 20;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const margin = 15;
+      const contentWidth = pageWidth - margin * 2;
+      let yPosition = margin;
 
-      let heightLeft = imgHeight;
-      let position = 10;
+      const addText = (text: string, size: number, weight: "bold" | "normal" = "normal", color = "#000000") => {
+        pdf.setFontSize(size);
+        pdf.setFont(undefined, weight === "bold" ? "bold" : "normal");
+        pdf.setTextColor(color === "#000000" ? 0 : parseInt(color.slice(1, 3), 16),
+                          parseInt(color.slice(3, 5), 16),
+                          parseInt(color.slice(5, 7), 16));
 
-      pdf.addImage(imgData, "JPEG", 10, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight - 20;
+        const lines = pdf.splitTextToSize(text, contentWidth);
+        pdf.text(lines, margin, yPosition);
+        yPosition += (lines.length * 5) + 3;
+      };
 
-      while (heightLeft >= 0) {
-        position = heightLeft - imgHeight;
+      const addSection = (title: string, content: string[]) => {
+        if (yPosition > 250) {
+          pdf.addPage();
+          yPosition = margin;
+        }
+
+        addText(title, 14, "bold", "#0066cc");
+        yPosition += 3;
+
+        content.forEach(line => {
+          if (yPosition > 270) {
+            pdf.addPage();
+            yPosition = margin;
+          }
+          addText(line, 10);
+        });
+
+        yPosition += 5;
+      };
+
+      const addLine = () => {
+        pdf.setDrawColor(200, 200, 200);
+        pdf.line(margin, yPosition, pageWidth - margin, yPosition);
+        yPosition += 3;
+      };
+
+      // Title and Header
+      pdf.setFontSize(24);
+      pdf.setFont(undefined, "bold");
+      pdf.setTextColor(25, 25, 112);
+      pdf.text("FUNDING STRATEGY REPORT", margin, yPosition);
+      yPosition += 12;
+
+      // Subtitle and Score
+      addText(`${eligibility.businessName} • ${eligibility.businessStage.charAt(0).toUpperCase() + eligibility.businessStage.slice(1)} Stage`, 11);
+      addText(`Generated: ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`, 9);
+      yPosition += 2;
+
+      pdf.setFontSize(32);
+      pdf.setFont(undefined, "bold");
+      pdf.setTextColor(0, 102, 204);
+      pdf.text(fundingStrategy.readinessScore.toString(), pageWidth - margin - 20, margin + 8);
+      pdf.setFontSize(9);
+      pdf.setTextColor(100, 100, 100);
+      pdf.text("Readiness Score", pageWidth - margin - 20, margin + 16);
+
+      yPosition = margin + 25;
+      addLine();
+
+      // 1. Recommended Funding
+      addSection("1. RECOMMENDED FUNDING APPROACH", [
+        `For your ${eligibility.businessStage} stage business, the following strategies are recommended:`,
+      ]);
+
+      recommendedFunding.forEach((option, index) => {
+        if (yPosition > 250) {
+          pdf.addPage();
+          yPosition = margin;
+        }
+        const lines = [
+          `${index + 1}. ${option.name}`,
+          `Provider: ${option.provider}`,
+          `Range: ${formatCurrency(option.minAmount)} - ${formatCurrency(option.maxAmount)} | Processing: ${option.processingTime} days`,
+        ];
+
+        lines.forEach(line => {
+          addText(line, line.includes("Provider") ? 9 : 10, line.includes(`${index + 1}.`) ? "bold" : "normal");
+        });
+        yPosition += 3;
+      });
+
+      // 2. Capital Requirement
+      addSection("2. CAPITAL REQUIREMENT GUIDANCE", [
+        `Recommended Funding Range: ${capitalGuidance.range}`,
+        `Based on monthly revenue of ${formatCurrency(eligibility.monthlyRevenue)}, this range avoids over-raising.`,
+        `\nUse of Funds:`,
+        ...capitalGuidance.uses.map(use => `• ${use}`),
+      ]);
+
+      // 3. Funding Risks
+      addSection("3. FUNDING RISKS & WEAK POINTS", [
+        `The following areas may impact funding approval:`,
+      ]);
+
+      fundingRisks.forEach(risk => {
+        if (yPosition > 250) {
+          pdf.addPage();
+          yPosition = margin;
+        }
+        addText(`Risk: ${risk.risk}`, 10, "bold", "#cc0000");
+        addText(`Fix: ${risk.fix}`, 9);
+        yPosition += 2;
+      });
+
+      // 4. Business Strengths
+      addSection("4. BUSINESS STRENGTHS", [
+        `Your business demonstrates the following strengths that justify investor confidence:`,
+      ]);
+
+      strengths.forEach(strength => {
+        if (yPosition > 270) {
+          pdf.addPage();
+          yPosition = margin;
+        }
+        addText(`✓ ${strength}`, 9);
+      });
+
+      // 5. Funding Timeline
+      if (yPosition > 250) {
         pdf.addPage();
-        pdf.addImage(imgData, "JPEG", 10, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight - 20;
+        yPosition = margin;
+      }
+
+      addSection("5. SUGGESTED FUNDING TIMELINE", []);
+
+      fundingStrategy.timeline.forEach((phase, index) => {
+        if (yPosition > 250) {
+          pdf.addPage();
+          yPosition = margin;
+        }
+
+        const phaseText = [
+          `Month ${index + 1}: ${phase.phase}`,
+          `Timeframe: ${phase.timeframe} | Target: ${formatCurrency(phase.amount)} | Type: ${phase.type}`,
+        ];
+
+        phaseText.forEach(text => {
+          addText(text, text.includes("Month") ? 10 : 9, text.includes("Month") ? "bold" : "normal");
+        });
+
+        addText(`Milestones:`, 9, "bold");
+        phase.milestones.forEach(milestone => {
+          if (yPosition > 270) {
+            pdf.addPage();
+            yPosition = margin;
+          }
+          addText(`• ${milestone}`, 9);
+        });
+        yPosition += 3;
+      });
+
+      // 6. Documentation Checklist
+      if (yPosition > 250) {
+        pdf.addPage();
+        yPosition = margin;
+      }
+
+      addSection("6. DOCUMENTATION CHECKLIST", [
+        `Prepare the following documents to support your applications:`,
+      ]);
+
+      checklist.forEach(doc => {
+        if (yPosition > 270) {
+          pdf.addPage();
+          yPosition = margin;
+        }
+        addText(`☐ ${doc}`, 9);
+      });
+
+      // 7. Funding Fit Summary
+      if (yPosition > 240) {
+        pdf.addPage();
+        yPosition = margin;
+      }
+
+      pdf.setDrawColor(0, 150, 0);
+      pdf.setFillColor(240, 255, 240);
+      pdf.rect(margin - 5, yPosition - 5, contentWidth + 10, 40, "F");
+
+      addText("7. FUNDING FIT SUMMARY", 12, "bold", "#006600");
+      const summaryLines = pdf.splitTextToSize(`"${getFundingFitSummary()}"`, contentWidth - 5);
+      pdf.setFontSize(10);
+      pdf.setTextColor(0, 0, 0);
+      pdf.text(summaryLines, margin + 2.5, yPosition + 3);
+      yPosition += (summaryLines.length * 5) + 10;
+
+      // Footer
+      const pageCount = pdf.internal.getPages().length;
+      for (let i = 1; i <= pageCount; i++) {
+        pdf.setPage(i);
+        pdf.setFontSize(8);
+        pdf.setTextColor(150, 150, 150);
+        pdf.text(
+          `Page ${i} of ${pageCount}`,
+          pageWidth / 2,
+          pdf.internal.pageSize.getHeight() - 10,
+          { align: "center" }
+        );
       }
 
       pdf.save(
