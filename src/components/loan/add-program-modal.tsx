@@ -265,7 +265,6 @@ export function AddProgramModal({
                     />
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-lg">{getTypeIcon(program.type)}</span>
                         <h3 className="font-semibold text-gray-900">
                           {program.name}
                         </h3>
