@@ -214,16 +214,23 @@ export function StrategyReportGenerator({
       });
 
       const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
       const margin = 15;
       const contentWidth = pageWidth - margin * 2;
       let yPosition = margin;
+      let pageCount = 1;
 
       const addText = (text: string, size: number, weight: "bold" | "normal" = "normal", color = "#000000") => {
         pdf.setFontSize(size);
         pdf.setFont(undefined, weight === "bold" ? "bold" : "normal");
-        pdf.setTextColor(color === "#000000" ? 0 : parseInt(color.slice(1, 3), 16),
-                          parseInt(color.slice(3, 5), 16),
-                          parseInt(color.slice(5, 7), 16));
+
+        let r = 0, g = 0, b = 0;
+        if (color !== "#000000") {
+          r = parseInt(color.slice(1, 3), 16);
+          g = parseInt(color.slice(3, 5), 16);
+          b = parseInt(color.slice(5, 7), 16);
+        }
+        pdf.setTextColor(r, g, b);
 
         const lines = pdf.splitTextToSize(text, contentWidth);
         pdf.text(lines, margin, yPosition);
@@ -233,6 +240,7 @@ export function StrategyReportGenerator({
       const addSection = (title: string, content: string[]) => {
         if (yPosition > 250) {
           pdf.addPage();
+          pageCount += 1;
           yPosition = margin;
         }
 
@@ -242,6 +250,7 @@ export function StrategyReportGenerator({
         content.forEach(line => {
           if (yPosition > 270) {
             pdf.addPage();
+            pageCount += 1;
             yPosition = margin;
           }
           addText(line, 10);
@@ -287,6 +296,7 @@ export function StrategyReportGenerator({
       recommendedFunding.forEach((option, index) => {
         if (yPosition > 250) {
           pdf.addPage();
+          pageCount += 1;
           yPosition = margin;
         }
         const lines = [
@@ -317,6 +327,7 @@ export function StrategyReportGenerator({
       fundingRisks.forEach(risk => {
         if (yPosition > 250) {
           pdf.addPage();
+          pageCount += 1;
           yPosition = margin;
         }
         addText(`Risk: ${risk.risk}`, 10, "bold", "#cc0000");
@@ -332,6 +343,7 @@ export function StrategyReportGenerator({
       strengths.forEach(strength => {
         if (yPosition > 270) {
           pdf.addPage();
+          pageCount += 1;
           yPosition = margin;
         }
         addText(`✓ ${strength}`, 9);
@@ -340,6 +352,7 @@ export function StrategyReportGenerator({
       // 5. Funding Timeline
       if (yPosition > 250) {
         pdf.addPage();
+        pageCount += 1;
         yPosition = margin;
       }
 
@@ -348,6 +361,7 @@ export function StrategyReportGenerator({
       fundingStrategy.timeline.forEach((phase, index) => {
         if (yPosition > 250) {
           pdf.addPage();
+          pageCount += 1;
           yPosition = margin;
         }
 
@@ -364,6 +378,7 @@ export function StrategyReportGenerator({
         phase.milestones.forEach(milestone => {
           if (yPosition > 270) {
             pdf.addPage();
+            pageCount += 1;
             yPosition = margin;
           }
           addText(`• ${milestone}`, 9);
@@ -374,6 +389,7 @@ export function StrategyReportGenerator({
       // 6. Documentation Checklist
       if (yPosition > 250) {
         pdf.addPage();
+        pageCount += 1;
         yPosition = margin;
       }
 
@@ -384,6 +400,7 @@ export function StrategyReportGenerator({
       checklist.forEach(doc => {
         if (yPosition > 270) {
           pdf.addPage();
+          pageCount += 1;
           yPosition = margin;
         }
         addText(`☐ ${doc}`, 9);
@@ -392,6 +409,7 @@ export function StrategyReportGenerator({
       // 7. Funding Fit Summary
       if (yPosition > 240) {
         pdf.addPage();
+        pageCount += 1;
         yPosition = margin;
       }
 
@@ -404,22 +422,8 @@ export function StrategyReportGenerator({
       pdf.setFontSize(10);
       pdf.setTextColor(0, 0, 0);
       pdf.text(summaryLines, margin + 2.5, yPosition + 3);
-      yPosition += (summaryLines.length * 5) + 10;
 
-      // Footer
-      const pageCount = pdf.internal.getPages().length;
-      for (let i = 1; i <= pageCount; i++) {
-        pdf.setPage(i);
-        pdf.setFontSize(8);
-        pdf.setTextColor(150, 150, 150);
-        pdf.text(
-          `Page ${i} of ${pageCount}`,
-          pageWidth / 2,
-          pdf.internal.pageSize.getHeight() - 10,
-          { align: "center" }
-        );
-      }
-
+      // Save PDF
       pdf.save(
         `Funding-Strategy-Report-${eligibility.businessName}-${new Date().toISOString().split("T")[0]}.pdf`,
       );
