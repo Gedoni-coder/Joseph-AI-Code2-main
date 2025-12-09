@@ -429,8 +429,15 @@ export default function LoanFunding() {
 
           <TabsContent value="strategy">
             <div className="space-y-8">
-              <FundingStrategyAnalysis fundingStrategy={fundingStrategy} />
-              <InvestorMatchingEngine investorMatches={investorMatches} />
+              <FundingStrategyAnalysis
+                fundingStrategy={fundingStrategy}
+                eligibility={eligibility}
+                fundingOptions={fundingOptions}
+              />
+              <InvestorMatchingEngine
+                investorMatches={investorMatches}
+                eligibility={eligibility}
+              />
             </div>
           </TabsContent>
 
