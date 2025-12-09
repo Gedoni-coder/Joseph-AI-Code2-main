@@ -213,9 +213,13 @@ export function StrategyReportGenerator({
         scale: 2,
         logging: false,
         useCORS: true,
+        backgroundColor: "#ffffff",
+        canvas: undefined,
       });
 
-      const imgData = canvas.toDataURL("image/png");
+      // Convert canvas to JPEG instead of PNG for better compatibility
+      const imgData = canvas.toDataURL("image/jpeg", 0.95);
+
       const pdf = new jsPDF({
         orientation: "portrait",
         unit: "mm",
@@ -230,13 +234,13 @@ export function StrategyReportGenerator({
       let heightLeft = imgHeight;
       let position = 10;
 
-      pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+      pdf.addImage(imgData, "JPEG", 10, position, imgWidth, imgHeight);
       heightLeft -= pageHeight - 20;
 
       while (heightLeft >= 0) {
         position = heightLeft - imgHeight;
         pdf.addPage();
-        pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+        pdf.addImage(imgData, "JPEG", 10, position, imgWidth, imgHeight);
         heightLeft -= pageHeight - 20;
       }
 
@@ -245,6 +249,7 @@ export function StrategyReportGenerator({
       );
     } catch (error) {
       console.error("Error generating PDF:", error);
+      alert("Failed to generate PDF. Please try again.");
     }
   };
 
