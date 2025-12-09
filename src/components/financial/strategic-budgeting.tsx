@@ -28,6 +28,7 @@ import {
   DollarSign,
   Target,
 } from "lucide-react";
+import { CreateForecastDialog } from "./create-forecast-dialog";
 
 interface StrategicBudgetingProps {
   budgetForecasts: BudgetForecast[];
