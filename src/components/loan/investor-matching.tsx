@@ -30,7 +30,16 @@ interface InvestorMatchingProps {
 
 export function InvestorMatchingEngine({
   investorMatches,
+  eligibility,
 }: InvestorMatchingProps) {
+  const [showRefineModal, setShowRefineModal] = useState(false);
+
+  const handleRefinementFilters = (filters: RefinementFilters) => {
+    console.log("Applied refinement filters:", filters);
+    // In a real implementation, these filters would be sent to an API
+    // to recalculate investor matches based on user preferences
+  };
+
   const formatCurrency = (amount: number) => {
     if (amount >= 1000000) {
       return `$${(amount / 1000000).toFixed(1)}M`;
