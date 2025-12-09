@@ -26,9 +26,19 @@ import {
   Filter,
   Calendar,
   ExternalLink,
+  Trash2,
+  Plus,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { type LoanUpdate } from "@/lib/loan-data";
+import {
+  ManageAlertsModal,
+  type AlertPreferences,
+} from "@/components/loan/manage-alerts-modal";
+import {
+  AddProgramModal,
+  type ProgramOption,
+} from "@/components/loan/add-program-modal";
 
 interface LoanResearchProps {
   loanUpdates: LoanUpdate[];
