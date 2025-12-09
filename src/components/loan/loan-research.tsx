@@ -344,11 +344,31 @@ export function LoanResearchUpdates({ loanUpdates }: LoanResearchProps) {
             Stay informed about new programs, rate changes, and deadlines
           </p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button
+          onClick={() => setManageAlertsOpen(true)}
+          className="bg-blue-600 hover:bg-blue-700"
+        >
           <Bell className="w-4 h-4 mr-2" />
           Manage Alerts
         </Button>
       </div>
+
+      {/* Manage Alerts Modal */}
+      <ManageAlertsModal
+        open={manageAlertsOpen}
+        onOpenChange={setManageAlertsOpen}
+        preferences={alertPreferences}
+        onSavePreferences={handleSavePreferences}
+      />
+
+      {/* Add Program Modal */}
+      <AddProgramModal
+        open={addProgramOpen}
+        onOpenChange={setAddProgramOpen}
+        availablePrograms={AVAILABLE_PROGRAMS}
+        selectedPrograms={watchlistProgramIds}
+        onAddPrograms={handleAddPrograms}
+      />
 
       {/* Alert Summary */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
