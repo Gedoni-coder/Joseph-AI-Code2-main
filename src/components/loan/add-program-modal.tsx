@@ -187,17 +187,17 @@ export function AddProgramModal({
     }
   };
 
-  const getTypeIcon = (type: string) => {
+  const getTypeLabel = (type: string) => {
     switch (type) {
       case "grant":
-        return "🎁";
+        return "Grant";
       case "equity":
-        return "📈";
+        return "Equity";
       case "guarantee":
-        return "🛡️";
+        return "Guarantee";
       case "loan":
       default:
-        return "💰";
+        return "Loan";
     }
   };
 
