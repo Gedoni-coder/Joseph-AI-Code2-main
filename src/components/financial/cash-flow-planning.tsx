@@ -24,6 +24,7 @@ import {
   ArrowDownCircle,
   Wallet,
 } from "lucide-react";
+import { CreateProjectionDialog } from "./create-projection-dialog";
 
 interface CashFlowPlanningProps {
   cashFlowProjections: CashFlowProjection[];
