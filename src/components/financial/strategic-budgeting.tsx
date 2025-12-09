@@ -103,9 +103,33 @@ export function StrategicBudgeting({
               <SelectItem value="quarterly">Quarterly</SelectItem>
             </SelectContent>
           </Select>
-          <Button>Create Forecast</Button>
+          <Button
+            onClick={() => setCreateForecastOpen(true)}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
+            <Calendar className="w-4 h-4 mr-2" />
+            Create Forecast
+          </Button>
         </div>
       </div>
+
+      {/* Create Forecast Dialog */}
+      <CreateForecastDialog
+        open={createForecastOpen}
+        onOpenChange={setCreateForecastOpen}
+        onSave={(forecastData) => {
+          onCreateForecast({
+            period: `${forecastData.inputs.currentYear}-Q1`,
+            type: "monthly",
+            revenue: forecastData.forecast.monthly[0]?.revenue || 0,
+            expenses: forecastData.forecast.monthly[0]?.expenses || 0,
+            netIncome: forecastData.forecast.monthly[0]?.netIncome || 0,
+            confidence: 85,
+            assumptions: forecastData.inputs.plannedChanges,
+            variance: 0,
+          });
+        }}
+      />
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
