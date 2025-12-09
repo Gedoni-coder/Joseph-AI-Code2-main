@@ -38,6 +38,7 @@ export function CashFlowPlanning({
   onAddProjection,
 }: CashFlowPlanningProps) {
   const [selectedTimeframe, setSelectedTimeframe] = useState("weekly");
+  const [createProjectionOpen, setCreateProjectionOpen] = useState(false);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
