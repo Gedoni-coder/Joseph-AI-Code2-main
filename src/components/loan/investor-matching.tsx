@@ -21,7 +21,10 @@ import {
   Target,
 } from "lucide-react";
 import { type InvestorMatch, type LoanEligibility } from "@/lib/loan-data";
-import { RefineMatchingModal, type RefinementFilters } from "@/components/loan/refine-matching-modal";
+import {
+  RefineMatchingModal,
+  type RefinementFilters,
+} from "@/components/loan/refine-matching-modal";
 
 interface InvestorMatchingProps {
   investorMatches: InvestorMatch[];

@@ -45,21 +45,21 @@ export function AddProgramModal({
               urgency: update.urgency,
               impact: update.impact,
             },
-          ])
+          ]),
         )
-        .entries()
-    ).values()
+        .entries(),
+    ).values(),
   );
 
   const filteredPrograms = uniquePrograms.filter((program) =>
-    program.name.toLowerCase().includes(searchTerm.toLowerCase())
+    program.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const handleToggle = (programName: string) => {
     setSelectedNew((prev) =>
       prev.includes(programName)
         ? prev.filter((p) => p !== programName)
-        : [...prev, programName]
+        : [...prev, programName],
     );
   };
 
@@ -264,7 +264,10 @@ export function AddProgramModal({
             disabled={selectedNew.length === 0}
             className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:opacity-50"
           >
-            Add {newlyAdded.length > 0 ? `${newlyAdded.length} Programs` : "Programs"}
+            Add{" "}
+            {newlyAdded.length > 0
+              ? `${newlyAdded.length} Programs`
+              : "Programs"}
           </Button>
         </div>
       </DialogContent>

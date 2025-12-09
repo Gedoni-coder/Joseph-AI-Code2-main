@@ -8,7 +8,13 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { AlertTriangle, Bell, Clock, Mail } from "lucide-react";
@@ -55,10 +61,13 @@ export function ManageAlertsModal({
   onSavePreferences,
 }: ManageAlertsModalProps) {
   const [localPreferences, setLocalPreferences] = useState<AlertPreferences>(
-    preferences || DEFAULT_PREFERENCES
+    preferences || DEFAULT_PREFERENCES,
   );
 
-  const handleTypeChange = (type: keyof Omit<AlertPreferences, "frequency" | "channel" | "quietHours">, checked: boolean) => {
+  const handleTypeChange = (
+    type: keyof Omit<AlertPreferences, "frequency" | "channel" | "quietHours">,
+    checked: boolean,
+  ) => {
     setLocalPreferences((prev) => ({
       ...prev,
       [type]: checked,
@@ -104,7 +113,8 @@ export function ManageAlertsModal({
         <DialogHeader>
           <DialogTitle>Manage Alert Preferences</DialogTitle>
           <DialogDescription>
-            Customize how you receive updates about loan programs and funding opportunities
+            Customize how you receive updates about loan programs and funding
+            opportunities
           </DialogDescription>
         </DialogHeader>
 
@@ -164,7 +174,8 @@ export function ManageAlertsModal({
                     >
                       <p className="font-medium text-gray-900">Rate Changes</p>
                       <p className="text-sm text-gray-600">
-                        Alerts when interest rates change for programs you're tracking
+                        Alerts when interest rates change for programs you're
+                        tracking
                       </p>
                     </label>
                     <Badge className="bg-blue-100 text-blue-800">Change</Badge>
@@ -178,7 +189,10 @@ export function ManageAlertsModal({
                         handleTypeChange("deadlines", checked as boolean)
                       }
                     />
-                    <label htmlFor="deadlines" className="flex-1 cursor-pointer">
+                    <label
+                      htmlFor="deadlines"
+                      className="flex-1 cursor-pointer"
+                    >
                       <p className="font-medium text-gray-900">
                         Application Deadlines
                       </p>
@@ -452,11 +466,7 @@ export function ManageAlertsModal({
 
         {/* Action Buttons */}
         <div className="flex space-x-3 pt-4 border-t">
-          <Button
-            variant="outline"
-            onClick={handleReset}
-            className="flex-1"
-          >
+          <Button variant="outline" onClick={handleReset} className="flex-1">
             Reset to Default
           </Button>
           <Button

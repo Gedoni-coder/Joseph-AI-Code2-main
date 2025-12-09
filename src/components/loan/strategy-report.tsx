@@ -102,19 +102,27 @@ export function StrategyReportGenerator({
     const strengths: string[] = [];
 
     if (eligibility.eligibilityScore >= 80) {
-      strengths.push("Strong overall eligibility score justifies investor confidence");
+      strengths.push(
+        "Strong overall eligibility score justifies investor confidence",
+      );
     }
 
     if (eligibility.creditScore >= 750) {
-      strengths.push("Excellent personal credit history demonstrates financial responsibility");
+      strengths.push(
+        "Excellent personal credit history demonstrates financial responsibility",
+      );
     }
 
     if (eligibility.monthlyRevenue >= 100000) {
-      strengths.push("Strong monthly revenue indicates business traction and market validation");
+      strengths.push(
+        "Strong monthly revenue indicates business traction and market validation",
+      );
     }
 
     if (eligibility.timeInBusiness >= 24) {
-      strengths.push("Established business track record with proven operations");
+      strengths.push(
+        "Established business track record with proven operations",
+      );
     }
 
     if (eligibility.collateralValue >= eligibility.yearlyRevenue) {
@@ -122,7 +130,9 @@ export function StrategyReportGenerator({
     }
 
     if (eligibility.qualifiedPrograms.length >= 4) {
-      strengths.push("Qualified for multiple funding programs increasing options");
+      strengths.push(
+        "Qualified for multiple funding programs increasing options",
+      );
     }
 
     if (strengths.length === 0) {
@@ -146,12 +156,16 @@ export function StrategyReportGenerator({
     const industrySpecific: { [key: string]: string[] } = {
       Technology: ["Product roadmap", "User acquisition metrics"],
       Retail: ["Inventory documents", "POS system reports"],
-      Manufacturing: ["Equipment list and valuation", "Supply chain documentation"],
+      Manufacturing: [
+        "Equipment list and valuation",
+        "Supply chain documentation",
+      ],
       Services: ["Client contracts", "Service agreements"],
       default: ["Industry certifications", "Compliance documentation"],
     };
 
-    const specific = industrySpecific[eligibility.industry] || industrySpecific.default;
+    const specific =
+      industrySpecific[eligibility.industry] || industrySpecific.default;
     return [...baseDocuments, ...specific];
   };
 
@@ -220,11 +234,18 @@ export function StrategyReportGenerator({
       let yPosition = margin;
       let pageCount = 1;
 
-      const addText = (text: string, size: number, weight: "bold" | "normal" = "normal", color = "#000000") => {
+      const addText = (
+        text: string,
+        size: number,
+        weight: "bold" | "normal" = "normal",
+        color = "#000000",
+      ) => {
         pdf.setFontSize(size);
         pdf.setFont(undefined, weight === "bold" ? "bold" : "normal");
 
-        let r = 0, g = 0, b = 0;
+        let r = 0,
+          g = 0,
+          b = 0;
         if (color !== "#000000") {
           r = parseInt(color.slice(1, 3), 16);
           g = parseInt(color.slice(3, 5), 16);
@@ -234,7 +255,7 @@ export function StrategyReportGenerator({
 
         const lines = pdf.splitTextToSize(text, contentWidth);
         pdf.text(lines, margin, yPosition);
-        yPosition += (lines.length * 5) + 3;
+        yPosition += lines.length * 5 + 3;
       };
 
       const addSection = (title: string, content: string[]) => {
@@ -247,7 +268,7 @@ export function StrategyReportGenerator({
         addText(title, 14, "bold", "#0066cc");
         yPosition += 3;
 
-        content.forEach(line => {
+        content.forEach((line) => {
           if (yPosition > 270) {
             pdf.addPage();
             pageCount += 1;
@@ -273,14 +294,24 @@ export function StrategyReportGenerator({
       yPosition += 12;
 
       // Subtitle and Score
-      addText(`${eligibility.businessName} • ${eligibility.businessStage.charAt(0).toUpperCase() + eligibility.businessStage.slice(1)} Stage`, 11);
-      addText(`Generated: ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`, 9);
+      addText(
+        `${eligibility.businessName} • ${eligibility.businessStage.charAt(0).toUpperCase() + eligibility.businessStage.slice(1)} Stage`,
+        11,
+      );
+      addText(
+        `Generated: ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}`,
+        9,
+      );
       yPosition += 2;
 
       pdf.setFontSize(32);
       pdf.setFont(undefined, "bold");
       pdf.setTextColor(0, 102, 204);
-      pdf.text(fundingStrategy.readinessScore.toString(), pageWidth - margin - 20, margin + 8);
+      pdf.text(
+        fundingStrategy.readinessScore.toString(),
+        pageWidth - margin - 20,
+        margin + 8,
+      );
       pdf.setFontSize(9);
       pdf.setTextColor(100, 100, 100);
       pdf.text("Readiness Score", pageWidth - margin - 20, margin + 16);
@@ -305,8 +336,12 @@ export function StrategyReportGenerator({
           `Range: ${formatCurrency(option.minAmount)} - ${formatCurrency(option.maxAmount)} | Processing: ${option.processingTime} days`,
         ];
 
-        lines.forEach(line => {
-          addText(line, line.includes("Provider") ? 9 : 10, line.includes(`${index + 1}.`) ? "bold" : "normal");
+        lines.forEach((line) => {
+          addText(
+            line,
+            line.includes("Provider") ? 9 : 10,
+            line.includes(`${index + 1}.`) ? "bold" : "normal",
+          );
         });
         yPosition += 3;
       });
@@ -316,7 +351,7 @@ export function StrategyReportGenerator({
         `Recommended Funding Range: ${capitalGuidance.range}`,
         `Based on monthly revenue of ${formatCurrency(eligibility.monthlyRevenue)}, this range avoids over-raising.`,
         `\nUse of Funds:`,
-        ...capitalGuidance.uses.map(use => `• ${use}`),
+        ...capitalGuidance.uses.map((use) => `• ${use}`),
       ]);
 
       // 3. Funding Risks
@@ -324,7 +359,7 @@ export function StrategyReportGenerator({
         `The following areas may impact funding approval:`,
       ]);
 
-      fundingRisks.forEach(risk => {
+      fundingRisks.forEach((risk) => {
         if (yPosition > 250) {
           pdf.addPage();
           pageCount += 1;
@@ -340,7 +375,7 @@ export function StrategyReportGenerator({
         `Your business demonstrates the following strengths that justify investor confidence:`,
       ]);
 
-      strengths.forEach(strength => {
+      strengths.forEach((strength) => {
         if (yPosition > 270) {
           pdf.addPage();
           pageCount += 1;
@@ -370,12 +405,16 @@ export function StrategyReportGenerator({
           `Timeframe: ${phase.timeframe} | Target: ${formatCurrency(phase.amount)} | Type: ${phase.type}`,
         ];
 
-        phaseText.forEach(text => {
-          addText(text, text.includes("Month") ? 10 : 9, text.includes("Month") ? "bold" : "normal");
+        phaseText.forEach((text) => {
+          addText(
+            text,
+            text.includes("Month") ? 10 : 9,
+            text.includes("Month") ? "bold" : "normal",
+          );
         });
 
         addText(`Milestones:`, 9, "bold");
-        phase.milestones.forEach(milestone => {
+        phase.milestones.forEach((milestone) => {
           if (yPosition > 270) {
             pdf.addPage();
             pageCount += 1;
@@ -397,7 +436,7 @@ export function StrategyReportGenerator({
         `Prepare the following documents to support your applications:`,
       ]);
 
-      checklist.forEach(doc => {
+      checklist.forEach((doc) => {
         if (yPosition > 270) {
           pdf.addPage();
           pageCount += 1;
@@ -418,7 +457,10 @@ export function StrategyReportGenerator({
       pdf.rect(margin - 5, yPosition - 5, contentWidth + 10, 40, "F");
 
       addText("7. FUNDING FIT SUMMARY", 12, "bold", "#006600");
-      const summaryLines = pdf.splitTextToSize(`"${getFundingFitSummary()}"`, contentWidth - 5);
+      const summaryLines = pdf.splitTextToSize(
+        `"${getFundingFitSummary()}"`,
+        contentWidth - 5,
+      );
       pdf.setFontSize(10);
       pdf.setTextColor(0, 0, 0);
       pdf.text(summaryLines, margin + 2.5, yPosition + 3);
@@ -457,9 +499,13 @@ export function StrategyReportGenerator({
           <div className="flex justify-between items-center">
             <div>
               <p className="text-lg text-gray-700">
-                <span className="font-semibold">{eligibility.businessName}</span>
+                <span className="font-semibold">
+                  {eligibility.businessName}
+                </span>
                 {" • "}
-                <span className="capitalize">{eligibility.businessStage} Stage</span>
+                <span className="capitalize">
+                  {eligibility.businessStage} Stage
+                </span>
               </p>
               <p className="text-gray-600 mt-2">
                 Generated on{" "}
@@ -497,7 +543,9 @@ export function StrategyReportGenerator({
                 <p className="text-gray-700 text-sm mb-2">
                   Provider: {option.provider}
                 </p>
-                <p className="text-gray-700 text-sm mb-2">{option.description}</p>
+                <p className="text-gray-700 text-sm mb-2">
+                  {option.description}
+                </p>
                 <p className="text-sm text-gray-600">
                   <span className="font-semibold">Range:</span>{" "}
                   {formatCurrency(option.minAmount)} –{" "}
@@ -526,8 +574,8 @@ export function StrategyReportGenerator({
               This range is calculated based on your monthly revenue of{" "}
               <span className="font-semibold">
                 {formatCurrency(eligibility.monthlyRevenue)}
-              </span>
-              {" "}and business stage to avoid over-raising or under-raising.
+              </span>{" "}
+              and business stage to avoid over-raising or under-raising.
             </p>
           </div>
           <p className="text-gray-900 font-semibold mb-3">Use of Funds:</p>
@@ -547,7 +595,8 @@ export function StrategyReportGenerator({
             3. Funding Risks & Weak Points
           </h2>
           <p className="text-gray-700 mb-4">
-            The following areas may impact funding approval. Here's how to address each:
+            The following areas may impact funding approval. Here's how to
+            address each:
           </p>
           <div className="space-y-4">
             {fundingRisks.map((item, index) => (
@@ -572,8 +621,8 @@ export function StrategyReportGenerator({
             4. Business Strengths That Improve Funding Odds
           </h2>
           <p className="text-gray-700 mb-4">
-            Your business has the following strengths that justify investor/lender
-            confidence:
+            Your business has the following strengths that justify
+            investor/lender confidence:
           </p>
           <div className="space-y-2 ml-4">
             {strengths.map((strength, index) => (
@@ -592,15 +641,13 @@ export function StrategyReportGenerator({
           </h2>
           <div className="space-y-4">
             {fundingStrategy.timeline.map((phase, index) => (
-              <div
-                key={index}
-                className="border-l-4 border-blue-600 pl-4 pb-4"
-              >
+              <div key={index} className="border-l-4 border-blue-600 pl-4 pb-4">
                 <p className="font-bold text-gray-900 mb-1">
                   Month {index + 1}: {phase.phase}
                 </p>
                 <p className="text-gray-700 text-sm mb-2">
-                  <span className="font-semibold">Timeframe:</span> {phase.timeframe}
+                  <span className="font-semibold">Timeframe:</span>{" "}
+                  {phase.timeframe}
                 </p>
                 <p className="text-gray-700 text-sm mb-2">
                   <span className="font-semibold">Target Amount:</span>{" "}
@@ -609,7 +656,9 @@ export function StrategyReportGenerator({
                 <p className="text-gray-700 text-sm mb-2">
                   <span className="font-semibold">Type:</span> {phase.type}
                 </p>
-                <p className="text-gray-700 text-sm font-semibold">Milestones:</p>
+                <p className="text-gray-700 text-sm font-semibold">
+                  Milestones:
+                </p>
                 <ul className="ml-4 text-sm text-gray-700">
                   {phase.milestones.map((milestone, milestoneIndex) => (
                     <li key={milestoneIndex}>• {milestone}</li>
@@ -626,7 +675,8 @@ export function StrategyReportGenerator({
             6. Documentation Checklist
           </h2>
           <p className="text-gray-700 mb-4">
-            Prepare the following documents to support your funding applications:
+            Prepare the following documents to support your funding
+            applications:
           </p>
           <div className="space-y-2 ml-4">
             {checklist.map((doc, index) => (

@@ -10,7 +10,13 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   AlertCircle,
@@ -41,7 +47,11 @@ export interface RefinementFilters {
   geographicPreference: "local" | "africa" | "global";
   investorTypes: string[];
   fundingStages: string[];
-  trustScoreTolerance: "balanced" | "high-trust" | "high-match" | "high-probability";
+  trustScoreTolerance:
+    | "balanced"
+    | "high-trust"
+    | "high-match"
+    | "high-probability";
   improvementAreas: {
     pitchDeck: boolean;
     revenueHistory: boolean;
@@ -95,28 +105,28 @@ export function RefineMatchingModal({
 
   const getMatchImprovementAreas = () => {
     const areas = [];
-    
+
     if (!filters.improvementAreas.pitchDeck) {
       areas.push({
         name: "Add or update pitch deck",
         impact: "Could improve match by 10-15%",
       });
     }
-    
+
     if (!filters.improvementAreas.revenueHistory) {
       areas.push({
         name: "Add 12-month revenue history",
         impact: "Could improve match by 8-12%",
       });
     }
-    
+
     if (!filters.improvementAreas.unitEconomics) {
       areas.push({
         name: "Add CAC or unit economics data",
         impact: "Could improve match by 5-10%",
       });
     }
-    
+
     if (!filters.improvementAreas.businessRegistration) {
       areas.push({
         name: "Verify business registration",
@@ -135,7 +145,8 @@ export function RefineMatchingModal({
         <DialogHeader>
           <DialogTitle>Refine Investor/Lender Matching</DialogTitle>
           <DialogDescription>
-            Adjust your preferences and filters to get better-matched funding partners
+            Adjust your preferences and filters to get better-matched funding
+            partners
           </DialogDescription>
         </DialogHeader>
 
@@ -163,15 +174,24 @@ export function RefineMatchingModal({
               <CardContent className="space-y-4">
                 <div>
                   <div className="flex justify-between mb-2">
-                    <span className="text-sm font-semibold">Min: ₦{(filters.investmentAmountMin / 1000000).toFixed(1)}M</span>
-                    <span className="text-sm font-semibold">Max: ₦{(filters.investmentAmountMax / 1000000).toFixed(1)}M</span>
+                    <span className="text-sm font-semibold">
+                      Min: ₦{(filters.investmentAmountMin / 1000000).toFixed(1)}
+                      M
+                    </span>
+                    <span className="text-sm font-semibold">
+                      Max: ₦{(filters.investmentAmountMax / 1000000).toFixed(1)}
+                      M
+                    </span>
                   </div>
                   <Slider
                     value={[filters.investmentAmountMin]}
                     onValueChange={([value]) =>
                       handleFilterChange({
                         ...filters,
-                        investmentAmountMin: Math.min(value, filters.investmentAmountMax),
+                        investmentAmountMin: Math.min(
+                          value,
+                          filters.investmentAmountMax,
+                        ),
                       })
                     }
                     min={50000}
@@ -184,7 +204,10 @@ export function RefineMatchingModal({
                     onValueChange={([value]) =>
                       handleFilterChange({
                         ...filters,
-                        investmentAmountMax: Math.max(value, filters.investmentAmountMin),
+                        investmentAmountMax: Math.max(
+                          value,
+                          filters.investmentAmountMin,
+                        ),
                       })
                     }
                     min={50000}
@@ -198,16 +221,30 @@ export function RefineMatchingModal({
             {/* Equity vs Debt */}
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">Equity vs Debt Preference</CardTitle>
+                <CardTitle className="text-base">
+                  Equity vs Debt Preference
+                </CardTitle>
                 <CardDescription>
                   Choose your preferred financing structure
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 {[
-                  { value: "equity", label: "Equity", description: "Give up ownership stake" },
-                  { value: "debt", label: "Debt", description: "Maintain full control" },
-                  { value: "hybrid", label: "Hybrid", description: "Mix of both" },
+                  {
+                    value: "equity",
+                    label: "Equity",
+                    description: "Give up ownership stake",
+                  },
+                  {
+                    value: "debt",
+                    label: "Debt",
+                    description: "Maintain full control",
+                  },
+                  {
+                    value: "hybrid",
+                    label: "Hybrid",
+                    description: "Mix of both",
+                  },
                 ].map((option) => (
                   <div
                     key={option.value}
@@ -222,8 +259,12 @@ export function RefineMatchingModal({
                         : "border-gray-200 hover:border-gray-300"
                     }`}
                   >
-                    <p className="font-semibold text-gray-900">{option.label}</p>
-                    <p className="text-sm text-gray-600">{option.description}</p>
+                    <p className="font-semibold text-gray-900">
+                      {option.label}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      {option.description}
+                    </p>
                   </div>
                 ))}
               </CardContent>
@@ -242,9 +283,21 @@ export function RefineMatchingModal({
               </CardHeader>
               <CardContent className="space-y-3">
                 {[
-                  { value: "fast", label: "Fast (30-45 days)", description: "I need funds urgently" },
-                  { value: "medium", label: "Medium (45-90 days)", description: "Standard timeline" },
-                  { value: "slow", label: "Slow (90+ days)", description: "I have time to find the best deal" },
+                  {
+                    value: "fast",
+                    label: "Fast (30-45 days)",
+                    description: "I need funds urgently",
+                  },
+                  {
+                    value: "medium",
+                    label: "Medium (45-90 days)",
+                    description: "Standard timeline",
+                  },
+                  {
+                    value: "slow",
+                    label: "Slow (90+ days)",
+                    description: "I have time to find the best deal",
+                  },
                 ].map((option) => (
                   <div
                     key={option.value}
@@ -259,8 +312,12 @@ export function RefineMatchingModal({
                         : "border-gray-200 hover:border-gray-300"
                     }`}
                   >
-                    <p className="font-semibold text-gray-900">{option.label}</p>
-                    <p className="text-sm text-gray-600">{option.description}</p>
+                    <p className="font-semibold text-gray-900">
+                      {option.label}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      {option.description}
+                    </p>
                   </div>
                 ))}
               </CardContent>
@@ -279,14 +336,18 @@ export function RefineMatchingModal({
                   <Checkbox
                     checked={filters.mentoringInterest}
                     onCheckedChange={(checked) =>
-                      handleFilterChange({ mentoringInterest: checked as boolean })
+                      handleFilterChange({
+                        mentoringInterest: checked as boolean,
+                      })
                     }
                   />
                   <label className="text-sm cursor-pointer flex-1">
                     <p className="font-semibold text-gray-900">
                       I'm interested in investor mentorship
                     </p>
-                    <p className="text-gray-600">Get business guidance beyond just funding</p>
+                    <p className="text-gray-600">
+                      Get business guidance beyond just funding
+                    </p>
                   </label>
                 </div>
               </CardContent>
@@ -302,9 +363,21 @@ export function RefineMatchingModal({
               </CardHeader>
               <CardContent className="space-y-3">
                 {[
-                  { value: "local", label: "Local", description: "Same country" },
-                  { value: "africa", label: "Africa", description: "African investors" },
-                  { value: "global", label: "Global", description: "Open to international" },
+                  {
+                    value: "local",
+                    label: "Local",
+                    description: "Same country",
+                  },
+                  {
+                    value: "africa",
+                    label: "Africa",
+                    description: "African investors",
+                  },
+                  {
+                    value: "global",
+                    label: "Global",
+                    description: "Open to international",
+                  },
                 ].map((option) => (
                   <div
                     key={option.value}
@@ -319,8 +392,12 @@ export function RefineMatchingModal({
                         : "border-gray-200 hover:border-gray-300"
                     }`}
                   >
-                    <p className="font-semibold text-gray-900">{option.label}</p>
-                    <p className="text-sm text-gray-600">{option.description}</p>
+                    <p className="font-semibold text-gray-900">
+                      {option.label}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      {option.description}
+                    </p>
                   </div>
                 ))}
               </CardContent>
@@ -345,13 +422,18 @@ export function RefineMatchingModal({
                   { value: "government", label: "Government Programs" },
                   { value: "alternative", label: "Alternative Lenders" },
                 ].map((option) => (
-                  <div key={option.value} className="flex items-center space-x-3">
+                  <div
+                    key={option.value}
+                    className="flex items-center space-x-3"
+                  >
                     <Checkbox
                       checked={filters.investorTypes.includes(option.value)}
                       onCheckedChange={(checked) => {
                         const newTypes = checked
                           ? [...filters.investorTypes, option.value]
-                          : filters.investorTypes.filter((t) => t !== option.value);
+                          : filters.investorTypes.filter(
+                              (t) => t !== option.value,
+                            );
                         handleFilterChange({ investorTypes: newTypes });
                       }}
                     />
@@ -372,22 +454,24 @@ export function RefineMatchingModal({
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                {["Seed", "Series A", "Series B", "Growth", "Expansion"].map((stage) => (
-                  <div key={stage} className="flex items-center space-x-3">
-                    <Checkbox
-                      checked={filters.fundingStages.includes(stage)}
-                      onCheckedChange={(checked) => {
-                        const newStages = checked
-                          ? [...filters.fundingStages, stage]
-                          : filters.fundingStages.filter((s) => s !== stage);
-                        handleFilterChange({ fundingStages: newStages });
-                      }}
-                    />
-                    <label className="text-sm cursor-pointer font-medium text-gray-900">
-                      {stage}
-                    </label>
-                  </div>
-                ))}
+                {["Seed", "Series A", "Series B", "Growth", "Expansion"].map(
+                  (stage) => (
+                    <div key={stage} className="flex items-center space-x-3">
+                      <Checkbox
+                        checked={filters.fundingStages.includes(stage)}
+                        onCheckedChange={(checked) => {
+                          const newStages = checked
+                            ? [...filters.fundingStages, stage]
+                            : filters.fundingStages.filter((s) => s !== stage);
+                          handleFilterChange({ fundingStages: newStages });
+                        }}
+                      />
+                      <label className="text-sm cursor-pointer font-medium text-gray-900">
+                        {stage}
+                      </label>
+                    </div>
+                  ),
+                )}
               </CardContent>
             </Card>
 
@@ -422,7 +506,8 @@ export function RefineMatchingModal({
                   {
                     value: "high-probability",
                     label: "High Funding Probability",
-                    description: "Investors likely to fund your type of business",
+                    description:
+                      "Investors likely to fund your type of business",
                   },
                 ].map((option) => (
                   <div
@@ -438,8 +523,12 @@ export function RefineMatchingModal({
                         : "border-gray-200 hover:border-gray-300"
                     }`}
                   >
-                    <p className="font-semibold text-gray-900">{option.label}</p>
-                    <p className="text-sm text-gray-600">{option.description}</p>
+                    <p className="font-semibold text-gray-900">
+                      {option.label}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      {option.description}
+                    </p>
                   </div>
                 ))}
               </CardContent>
@@ -450,7 +539,9 @@ export function RefineMatchingModal({
           <TabsContent value="details" className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle className="text-base">Current Business Information</CardTitle>
+                <CardTitle className="text-base">
+                  Current Business Information
+                </CardTitle>
                 <CardDescription>
                   These metrics help us find better matches
                 </CardDescription>
@@ -483,8 +574,8 @@ export function RefineMatchingModal({
                   </div>
                 </div>
                 <p className="text-sm text-gray-600 p-3 bg-blue-50 rounded-lg">
-                  💡 Tip: Update these metrics in your business profile to improve match
-                  accuracy
+                  💡 Tip: Update these metrics in your business profile to
+                  improve match accuracy
                 </p>
               </CardContent>
             </Card>
@@ -551,8 +642,12 @@ export function RefineMatchingModal({
                       className="flex items-start justify-between p-4 bg-white rounded-lg border border-yellow-200"
                     >
                       <div className="flex-1">
-                        <p className="font-semibold text-gray-900">{area.name}</p>
-                        <p className="text-sm text-gray-600 mt-1">{area.impact}</p>
+                        <p className="font-semibold text-gray-900">
+                          {area.name}
+                        </p>
+                        <p className="text-sm text-gray-600 mt-1">
+                          {area.impact}
+                        </p>
                       </div>
                       <Button variant="outline" size="sm" className="ml-4">
                         <Upload className="w-4 h-4 mr-1" />
@@ -562,7 +657,9 @@ export function RefineMatchingModal({
                   ))
                 ) : (
                   <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <p className="text-green-900 font-semibold">✓ All key areas complete!</p>
+                    <p className="text-green-900 font-semibold">
+                      ✓ All key areas complete!
+                    </p>
                     <p className="text-sm text-green-700 mt-1">
                       Your profile is well-optimized for matching.
                     </p>
@@ -601,7 +698,9 @@ export function RefineMatchingModal({
                   <div key={item.key} className="flex items-center space-x-3">
                     <Checkbox
                       checked={
-                        filters.improvementAreas[item.key as keyof typeof filters.improvementAreas]
+                        filters.improvementAreas[
+                          item.key as keyof typeof filters.improvementAreas
+                        ]
                       }
                       onCheckedChange={(checked) =>
                         handleFilterChange({
@@ -613,8 +712,12 @@ export function RefineMatchingModal({
                       }
                     />
                     <div className="flex-1">
-                      <p className="font-medium text-gray-900 text-sm">{item.label}</p>
-                      <p className="text-xs text-gray-600">{item.description}</p>
+                      <p className="font-medium text-gray-900 text-sm">
+                        {item.label}
+                      </p>
+                      <p className="text-xs text-gray-600">
+                        {item.description}
+                      </p>
                     </div>
                   </div>
                 ))}

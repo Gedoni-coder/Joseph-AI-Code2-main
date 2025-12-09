@@ -20,9 +20,16 @@ import {
   Calendar,
   PieChart,
 } from "lucide-react";
-import { type FundingStrategy, type LoanEligibility, type FundingOption } from "@/lib/loan-data";
+import {
+  type FundingStrategy,
+  type LoanEligibility,
+  type FundingOption,
+} from "@/lib/loan-data";
 import { StrategyReportGenerator } from "@/components/loan/strategy-report";
-import { RefineMatchingModal, type RefinementFilters } from "@/components/loan/refine-matching-modal";
+import {
+  RefineMatchingModal,
+  type RefinementFilters,
+} from "@/components/loan/refine-matching-modal";
 
 interface FundingStrategyProps {
   fundingStrategy: FundingStrategy;
