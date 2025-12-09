@@ -607,56 +607,149 @@ export function LoanResearchUpdates({ loanUpdates }: LoanResearchProps) {
             Personalized Watchlist
           </CardTitle>
           <CardDescription className="text-blue-700">
-            Customize your alert preferences and tracked programs
+            Manage your tracked programs and alert preferences
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Alert Preferences Summary */}
             <div>
-              <h4 className="font-semibold text-blue-900 mb-3">
-                Alert Preferences
+              <h4 className="font-semibold text-blue-900 mb-3 flex items-center">
+                <Bell className="w-4 h-4 mr-2" />
+                Active Alert Preferences
               </h4>
               <div className="space-y-2 text-sm text-blue-800">
                 <label className="flex items-center space-x-2">
-                  <input type="checkbox" defaultChecked className="rounded" />
+                  <input
+                    type="checkbox"
+                    checked={alertPreferences.newPrograms}
+                    readOnly
+                    className="rounded"
+                  />
                   <span>New loan programs</span>
                 </label>
                 <label className="flex items-center space-x-2">
-                  <input type="checkbox" defaultChecked className="rounded" />
+                  <input
+                    type="checkbox"
+                    checked={alertPreferences.rateChanges}
+                    readOnly
+                    className="rounded"
+                  />
                   <span>Interest rate changes</span>
                 </label>
                 <label className="flex items-center space-x-2">
-                  <input type="checkbox" defaultChecked className="rounded" />
+                  <input
+                    type="checkbox"
+                    checked={alertPreferences.deadlines}
+                    readOnly
+                    className="rounded"
+                  />
                   <span>Application deadlines</span>
                 </label>
                 <label className="flex items-center space-x-2">
-                  <input type="checkbox" className="rounded" />
+                  <input
+                    type="checkbox"
+                    checked={alertPreferences.policyUpdates}
+                    readOnly
+                    className="rounded"
+                  />
                   <span>Policy updates</span>
                 </label>
+                <div className="pt-2 mt-3 border-t border-blue-200">
+                  <p className="text-xs font-medium text-blue-700 mb-1">
+                    Frequency:{" "}
+                    <span className="font-semibold capitalize">
+                      {alertPreferences.frequency.replace("-", " ")}
+                    </span>
+                  </p>
+                  <p className="text-xs font-medium text-blue-700">
+                    Channel:{" "}
+                    <span className="font-semibold capitalize">
+                      {alertPreferences.channel === "in-app"
+                        ? "In-App"
+                        : alertPreferences.channel === "email"
+                          ? "Email"
+                          : "Both"}
+                    </span>
+                  </p>
+                </div>
               </div>
             </div>
+
+            {/* Tracked Programs */}
             <div>
-              <h4 className="font-semibold text-blue-900 mb-3">
-                Tracked Programs
+              <h4 className="font-semibold text-blue-900 mb-3 flex items-center">
+                <Star className="w-4 h-4 mr-2" />
+                Tracked Programs ({watchlistProgramIds.length})
               </h4>
               <div className="space-y-2 text-sm text-blue-800">
-                <div className="flex justify-between items-center">
-                  <span>SBA 7(a) Loans</span>
-                  <Button variant="outline" size="sm" className="text-xs">
-                    Remove
-                  </Button>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span>State Tech Grants</span>
-                  <Button variant="outline" size="sm" className="text-xs">
-                    Remove
-                  </Button>
-                </div>
-                <Button variant="outline" size="sm" className="w-full">
-                  Add Program
-                </Button>
+                {watchlistPrograms && watchlistPrograms.length > 0 ? (
+                  <>
+                    {watchlistPrograms.map((program) => (
+                      <div
+                        key={program.id}
+                        className="flex justify-between items-center p-2 bg-white rounded border border-blue-100"
+                      >
+                        <div>
+                          <span className="font-medium">{program.name}</span>
+                          <p className="text-xs text-blue-700">
+                            {program.provider}
+                          </p>
+                        </div>
+                        <Button
+                          onClick={() => handleRemoveProgram(program.id)}
+                          variant="ghost"
+                          size="sm"
+                          className="text-red-600 hover:text-red-700 hover:bg-red-50 p-1"
+                          title="Remove from watchlist"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ))}
+                    <Button
+                      onClick={() => setAddProgramOpen(true)}
+                      variant="outline"
+                      size="sm"
+                      className="w-full text-blue-700 border-blue-200 hover:bg-blue-100 mt-2"
+                    >
+                      <Plus className="w-4 h-4 mr-1" />
+                      Add Another Program
+                    </Button>
+                  </>
+                ) : (
+                  <div className="p-3 bg-white rounded border border-blue-100 text-center">
+                    <p className="text-blue-700 font-medium mb-2">
+                      No programs tracked yet
+                    </p>
+                    <Button
+                      onClick={() => setAddProgramOpen(true)}
+                      size="sm"
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                    >
+                      <Plus className="w-4 h-4 mr-1" />
+                      Add Program
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
+          </div>
+
+          {/* Manage Alerts Link */}
+          <div className="mt-4 pt-4 border-t border-blue-200">
+            <p className="text-sm text-blue-800 mb-2">
+              Want to change your alert preferences?
+            </p>
+            <Button
+              onClick={() => setManageAlertsOpen(true)}
+              variant="outline"
+              size="sm"
+              className="text-blue-700 border-blue-300 hover:bg-blue-100"
+            >
+              <Bell className="w-4 h-4 mr-1" />
+              Manage Alert Preferences
+            </Button>
           </div>
         </CardContent>
       </Card>
