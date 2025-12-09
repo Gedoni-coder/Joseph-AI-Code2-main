@@ -47,6 +47,7 @@ export function StrategicBudgeting({
 }: StrategicBudgetingProps) {
   const [selectedPeriod, setSelectedPeriod] = useState("all");
   const [selectedType, setSelectedType] = useState("all");
+  const [createForecastOpen, setCreateForecastOpen] = useState(false);
 
   const filteredForecasts = budgetForecasts.filter((forecast) => {
     if (selectedType !== "all" && forecast.type !== selectedType) return false;
