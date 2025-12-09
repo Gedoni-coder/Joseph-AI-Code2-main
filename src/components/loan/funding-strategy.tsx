@@ -32,7 +32,17 @@ interface FundingStrategyProps {
 
 export function FundingStrategyAnalysis({
   fundingStrategy,
+  eligibility,
+  fundingOptions,
 }: FundingStrategyProps) {
+  const [showRefineModal, setShowRefineModal] = useState(false);
+
+  const handleRefinementFilters = (filters: RefinementFilters) => {
+    console.log("Applied refinement filters:", filters);
+    // In a real implementation, these filters would be sent to an API
+    // to recalculate investor matches
+  };
+
   const formatCurrency = (amount: number) => {
     if (amount >= 1000000) {
       return `$${(amount / 1000000).toFixed(1)}M`;
