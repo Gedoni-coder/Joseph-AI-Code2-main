@@ -89,10 +89,11 @@ export function FundingStrategyAnalysis({
             Strategic guidance for choosing the right funding approach
           </p>
         </div>
-        <Button className="bg-blue-600 hover:bg-blue-700">
-          <PieChart className="w-4 h-4 mr-2" />
-          Strategy Report
-        </Button>
+        <StrategyReportGenerator
+          fundingStrategy={fundingStrategy}
+          eligibility={eligibility}
+          fundingOptions={fundingOptions}
+        />
       </div>
 
       {/* Readiness Score */}
