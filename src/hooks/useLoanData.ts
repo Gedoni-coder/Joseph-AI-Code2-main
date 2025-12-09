@@ -17,6 +17,7 @@ import {
   type InvestorMatch,
   type LoanUpdate,
 } from "@/lib/loan-data";
+import { type AlertPreferences } from "@/components/loan/manage-alerts-modal";
 
 export interface UseLoanDataReturn {
   eligibility: LoanEligibility;
