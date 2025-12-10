@@ -43,6 +43,8 @@ export function InsightsReportPanel({
 
   if (!report) return null;
 
+  const isOpen = report !== null;
+
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
