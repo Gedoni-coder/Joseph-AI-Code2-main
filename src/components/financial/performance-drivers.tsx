@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { PerformanceDriver } from "../../lib/financial-advisory-data";
+import { PerformanceDriver, RiskAssessment, BudgetForecast, AdvisoryInsight } from "../../lib/financial-advisory-data";
+import { AddKPIModal } from "./add-kpi-modal";
+import { GenerateInsightsModal } from "./generate-insights-modal";
 import {
   Card,
   CardContent,
