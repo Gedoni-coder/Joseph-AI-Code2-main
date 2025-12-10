@@ -64,6 +64,7 @@ export default function FinancialAdvisory() {
     updateRiskStatus,
     updateInsightStatus,
     addCashFlowProjection,
+    addRisk,
   } = useFinancialAdvisoryData();
 
   const [activeTab, setActiveTab] = useState("strategic-budgeting");
