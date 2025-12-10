@@ -40,9 +40,15 @@ interface PerformanceDriversProps {
 
 export function PerformanceDrivers({
   performanceDrivers,
+  onAddDriver,
+  risks = [],
+  budgets = [],
+  insights = [],
 }: PerformanceDriversProps) {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedImpact, setSelectedImpact] = useState("all");
+  const [showAddKPIModal, setShowAddKPIModal] = useState(false);
+  const [showInsightsModal, setShowInsightsModal] = useState(false);
 
   const filteredDrivers = performanceDrivers.filter((driver) => {
     if (selectedCategory !== "all" && driver.category !== selectedCategory)
