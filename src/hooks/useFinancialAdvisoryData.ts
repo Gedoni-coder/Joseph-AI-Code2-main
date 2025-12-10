@@ -318,5 +318,7 @@ export function useFinancialAdvisoryData() {
     updateInsightStatus,
     addCashFlowProjection,
     addRisk,
+    addPerformanceDriver,
+    generateInsights,
   };
 }
