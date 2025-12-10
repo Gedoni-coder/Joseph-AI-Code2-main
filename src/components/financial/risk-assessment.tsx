@@ -60,6 +60,45 @@ export function RiskAssessmentComponent({
     recommendedActions: "",
   });
 
+  const riskScore = Math.round((form.probability * form.impact) / 100);
+
+  const handleAddRisk = () => {
+    if (!form.riskName.trim()) return;
+    setAdding(true);
+    setTimeout(() => {
+      const newRisk: Omit<RiskAssessment, "id" | "lastReviewed"> = {
+        riskName: form.riskName.trim(),
+        description: form.description.trim() || "Added via assistant",
+        category: form.category,
+        probability: form.probability,
+        impact: form.impact,
+        riskScore,
+        status: form.status,
+        currentMitigation: form.currentMitigation
+          .split("\n")
+          .map((item) => item.trim())
+          .filter((item) => item.length > 0),
+        recommendedActions: form.recommendedActions
+          .split("\n")
+          .map((item) => item.trim())
+          .filter((item) => item.length > 0),
+      };
+      onAddRisk(newRisk);
+      setAdding(false);
+      setShowAddForm(false);
+      setForm({
+        riskName: "",
+        description: "",
+        category: "operational",
+        probability: 50,
+        impact: 50,
+        status: "identified",
+        currentMitigation: "",
+        recommendedActions: "",
+      });
+    }, 800);
+  };
+
   const filteredRisks = riskAssessments.filter((risk) => {
     if (selectedCategory !== "all" && risk.category !== selectedCategory)
       return false;
