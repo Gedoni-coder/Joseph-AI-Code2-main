@@ -226,5 +226,6 @@ export function useFinancialAdvisoryData() {
     updateRiskStatus,
     updateInsightStatus,
     addCashFlowProjection,
+    addRisk,
   };
 }
