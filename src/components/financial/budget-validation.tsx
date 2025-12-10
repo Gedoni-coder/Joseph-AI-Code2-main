@@ -101,8 +101,18 @@ export function BudgetValidation({ budgetForecasts }: BudgetValidationProps) {
             Align budgets with forecasts and track performance accuracy
           </p>
         </div>
-        <Button>Generate Validation Report</Button>
+        <Button
+          onClick={() => setReportDialogOpen(true)}
+          className="bg-blue-600 hover:bg-blue-700"
+        >
+          Generate Validation Report
+        </Button>
       </div>
+
+      <ValidationReportDialog
+        open={reportDialogOpen}
+        onOpenChange={setReportDialogOpen}
+      />
 
       {/* Validation Summary */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
