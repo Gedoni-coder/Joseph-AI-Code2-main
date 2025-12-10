@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { PerformanceDriver, RiskAssessment, BudgetForecast, AdvisoryInsight } from "../../lib/financial-advisory-data";
+import {
+  PerformanceDriver,
+  RiskAssessment,
+  BudgetForecast,
+  AdvisoryInsight,
+} from "../../lib/financial-advisory-data";
 import { AddKPIModal } from "./add-kpi-modal";
 import { GenerateInsightsModal } from "./generate-insights-modal";
 import {
@@ -33,7 +38,12 @@ import {
 
 interface PerformanceDriversProps {
   performanceDrivers: PerformanceDriver[];
-  onAddDriver: (driver: Omit<PerformanceDriver, "id" | "createdAt" | "lastUpdated" | "kpiHistory">) => void;
+  onAddDriver: (
+    driver: Omit<
+      PerformanceDriver,
+      "id" | "createdAt" | "lastUpdated" | "kpiHistory"
+    >,
+  ) => void;
   risks?: RiskAssessment[];
   budgets?: BudgetForecast[];
   insights?: AdvisoryInsight[];
@@ -191,7 +201,10 @@ export function PerformanceDrivers({
               <SelectItem value="low">Low</SelectItem>
             </SelectContent>
           </Select>
-          <Button onClick={() => setShowAddKPIModal(true)} className="bg-blue-600 hover:bg-blue-700">
+          <Button
+            onClick={() => setShowAddKPIModal(true)}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
             <Plus className="w-4 h-4 mr-2" />
             Add KPI
           </Button>
@@ -386,16 +399,11 @@ export function PerformanceDrivers({
                       </td>
                       <td className="py-3 px-4">
                         <div className="max-w-xs">
-                          {driver.driverLink
-                            .slice(0, 2)
-                            .map((item, index) => (
-                              <div
-                                key={index}
-                                className="text-sm text-gray-600"
-                              >
-                                • {item}
-                              </div>
-                            ))}
+                          {driver.driverLink.slice(0, 2).map((item, index) => (
+                            <div key={index} className="text-sm text-gray-600">
+                              • {item}
+                            </div>
+                          ))}
                           {driver.driverLink.length > 2 && (
                             <span className="text-xs text-gray-500">
                               +{driver.driverLink.length - 2} more

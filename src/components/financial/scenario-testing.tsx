@@ -139,7 +139,7 @@ export function ScenarioTesting({
         // 1% market share increase typically increases revenue by ~0.5-1%
         const marketShareRevenueFactor = changeValue * 15000;
         resultingRevenue = baseRevenue + marketShareRevenueFactor;
-        resultingExpenses = baseExpenses + (marketShareRevenueFactor * 0.3); // 30% expense increase
+        resultingExpenses = baseExpenses + marketShareRevenueFactor * 0.3; // 30% expense increase
         resultingNetIncome = resultingRevenue - resultingExpenses;
         cashFlowImpact = marketShareRevenueFactor * 0.7;
         break;
@@ -182,7 +182,10 @@ export function ScenarioTesting({
 
     // Calculate probability based on magnitude (extreme changes are less likely)
     const probabilityBaseline = testType === "stress" ? 30 : 50;
-    const probability = Math.max(5, probabilityBaseline - Math.abs(changeValue) * 0.5);
+    const probability = Math.max(
+      5,
+      probabilityBaseline - Math.abs(changeValue) * 0.5,
+    );
 
     const newScenario = {
       name: `${testVariable} ${changePercent}% Scenario (${testType})`,
@@ -287,7 +290,10 @@ export function ScenarioTesting({
               <label className="text-sm font-medium text-gray-700">
                 Test Type
               </label>
-              <Select value={testType} onValueChange={(value: any) => setTestType(value)}>
+              <Select
+                value={testType}
+                onValueChange={(value: any) => setTestType(value)}
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>

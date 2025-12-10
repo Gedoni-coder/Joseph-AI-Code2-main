@@ -77,7 +77,16 @@ export interface PerformanceDriver {
   id: string;
   name: string;
   description?: string;
-  category: "revenue" | "cost" | "efficiency" | "growth" | "financial" | "operational" | "sales" | "productivity" | "risk";
+  category:
+    | "revenue"
+    | "cost"
+    | "efficiency"
+    | "growth"
+    | "financial"
+    | "operational"
+    | "sales"
+    | "productivity"
+    | "risk";
   currentValue: number;
   targetValue: number;
   unit: string;

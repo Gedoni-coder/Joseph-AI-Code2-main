@@ -243,7 +243,12 @@ export function RiskAssessmentComponent({
                   <label className="text-sm font-medium text-gray-700">
                     Category
                   </label>
-                  <Select value={form.category} onValueChange={(value: any) => setForm({ ...form, category: value })}>
+                  <Select
+                    value={form.category}
+                    onValueChange={(value: any) =>
+                      setForm({ ...form, category: value })
+                    }
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -260,7 +265,12 @@ export function RiskAssessmentComponent({
                   <label className="text-sm font-medium text-gray-700">
                     Status
                   </label>
-                  <Select value={form.status} onValueChange={(value: any) => setForm({ ...form, status: value })}>
+                  <Select
+                    value={form.status}
+                    onValueChange={(value: any) =>
+                      setForm({ ...form, status: value })
+                    }
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -361,7 +371,8 @@ export function RiskAssessmentComponent({
                   </Badge>
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
-                  Formula: Probability × Impact = {form.probability} × {form.impact} = {riskScore}
+                  Formula: Probability × Impact = {form.probability} ×{" "}
+                  {form.impact} = {riskScore}
                 </p>
               </div>
 

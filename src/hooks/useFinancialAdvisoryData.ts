@@ -190,9 +190,7 @@ export function useFinancialAdvisoryData() {
     return newProjection;
   };
 
-  const addRisk = (
-    risk: Omit<RiskAssessment, "id" | "lastReviewed">,
-  ) => {
+  const addRisk = (risk: Omit<RiskAssessment, "id" | "lastReviewed">) => {
     const newRisk: RiskAssessment = {
       ...risk,
       id: `risk-${Date.now()}`,
@@ -203,7 +201,10 @@ export function useFinancialAdvisoryData() {
   };
 
   const addPerformanceDriver = (
-    driver: Omit<PerformanceDriver, "id" | "createdAt" | "lastUpdated" | "kpiHistory">,
+    driver: Omit<
+      PerformanceDriver,
+      "id" | "createdAt" | "lastUpdated" | "kpiHistory"
+    >,
   ) => {
     const newDriver: PerformanceDriver = {
       ...driver,
@@ -228,7 +229,8 @@ export function useFinancialAdvisoryData() {
         id: `insight-${Date.now()}-1`,
         type: "recommendation",
         title: "KPI Performance Analysis",
-        description: "Analysis of current KPI performance against targets and thresholds",
+        description:
+          "Analysis of current KPI performance against targets and thresholds",
         priority: "high",
         category: "cost_optimization",
         financialImpact: {
@@ -249,7 +251,8 @@ export function useFinancialAdvisoryData() {
         id: `insight-${Date.now()}-2`,
         type: "opportunity",
         title: "Budget-KPI Alignment Improvement",
-        description: "Opportunities to strengthen alignment between budgets and performance drivers",
+        description:
+          "Opportunities to strengthen alignment between budgets and performance drivers",
         priority: "medium",
         category: "investment",
         financialImpact: {
@@ -262,7 +265,11 @@ export function useFinancialAdvisoryData() {
           "Establish automated variance reporting between budgets and KPIs",
           "Create feedback loops for budget reforecasting based on KPI changes",
         ],
-        relatedMetrics: ["Budget Variance", "KPI Variance", "Forecast Accuracy"],
+        relatedMetrics: [
+          "Budget Variance",
+          "KPI Variance",
+          "Forecast Accuracy",
+        ],
         createdAt: new Date().toISOString(),
         status: "new",
       },
@@ -270,7 +277,8 @@ export function useFinancialAdvisoryData() {
         id: `insight-${Date.now()}-3`,
         type: "alert",
         title: "Risk Threshold Exposure",
-        description: "Several KPIs approaching critical thresholds requiring immediate attention",
+        description:
+          "Several KPIs approaching critical thresholds requiring immediate attention",
         priority: "high",
         category: "risk_management",
         financialImpact: {

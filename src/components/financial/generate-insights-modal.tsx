@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { AdvisoryInsight, PerformanceDriver, RiskAssessment, BudgetForecast } from "../../lib/financial-advisory-data";
+import {
+  AdvisoryInsight,
+  PerformanceDriver,
+  RiskAssessment,
+  BudgetForecast,
+} from "../../lib/financial-advisory-data";
 import {
   Card,
   CardContent,
@@ -85,29 +90,43 @@ export function GenerateInsightsModal({
   const generateReport = () => {
     setLoading(true);
     setTimeout(() => {
-      const atRiskKpis = performanceDrivers.filter((d) => d.status === "at_risk" || d.status === "critical");
+      const atRiskKpis = performanceDrivers.filter(
+        (d) => d.status === "at_risk" || d.status === "critical",
+      );
       const highRisks = risks.filter((r) => r.riskScore >= 70);
-      const avgBudgetVariance = budgets.reduce((sum, b) => sum + b.variance, 0) / budgets.length;
+      const avgBudgetVariance =
+        budgets.reduce((sum, b) => sum + b.variance, 0) / budgets.length;
 
       const strategicReport: StrategicReport = {
-        executiveSummary: `The organization maintains a stable financial position with strong revenue growth and improving operational efficiency. Current KPI performance shows ${performanceDrivers.filter((d) => d.status === "on_track" || d.status === "exceeding_target").length}/${performanceDrivers.length} metrics on track. Key areas requiring attention include ${atRiskKpis.map((d) => d.name).slice(0, 2).join(" and ")}. Cash flow projections remain healthy with adequate liquidity buffers for operational needs and strategic investments.`,
+        executiveSummary: `The organization maintains a stable financial position with strong revenue growth and improving operational efficiency. Current KPI performance shows ${performanceDrivers.filter((d) => d.status === "on_track" || d.status === "exceeding_target").length}/${performanceDrivers.length} metrics on track. Key areas requiring attention include ${atRiskKpis
+          .map((d) => d.name)
+          .slice(0, 2)
+          .join(
+            " and ",
+          )}. Cash flow projections remain healthy with adequate liquidity buffers for operational needs and strategic investments.`,
 
         keyObservations: [
           {
             title: "Strong Revenue Performance",
-            description: "Revenue KPIs outperforming targets by average of 12%, driven by strong market demand and effective pricing strategy",
+            description:
+              "Revenue KPIs outperforming targets by average of 12%, driven by strong market demand and effective pricing strategy",
             impact: "positive",
           },
           {
             title: "Cost Efficiency Improvements",
-            description: "Operating expense ratio declining 3 percentage points YoY, indicating effective cost management initiatives",
+            description:
+              "Operating expense ratio declining 3 percentage points YoY, indicating effective cost management initiatives",
             impact: "positive",
           },
           {
-            title: atRiskKpis.length > 0 ? `${atRiskKpis.length} KPI(s) Approaching Thresholds` : "KPI Performance Stable",
-            description: atRiskKpis.length > 0
-              ? `${atRiskKpis.map((d) => d.name).join(", ")} approaching critical thresholds. Immediate attention recommended.`
-              : "All KPIs maintain healthy distance from warning thresholds",
+            title:
+              atRiskKpis.length > 0
+                ? `${atRiskKpis.length} KPI(s) Approaching Thresholds`
+                : "KPI Performance Stable",
+            description:
+              atRiskKpis.length > 0
+                ? `${atRiskKpis.map((d) => d.name).join(", ")} approaching critical thresholds. Immediate attention recommended.`
+                : "All KPIs maintain healthy distance from warning thresholds",
             impact: atRiskKpis.length > 0 ? "negative" : "positive",
           },
           {
@@ -117,7 +136,8 @@ export function GenerateInsightsModal({
           },
           {
             title: "Market Positioning",
-            description: "Customer acquisition cost down 13% while maintaining quality metrics, strengthening competitive position",
+            description:
+              "Customer acquisition cost down 13% while maintaining quality metrics, strengthening competitive position",
             impact: "positive",
           },
         ],
@@ -125,13 +145,15 @@ export function GenerateInsightsModal({
         recommendations: [
           {
             title: "Accelerate High-Performing Initiatives",
-            description: "Increase budget allocation to revenue-driving channels showing 15%+ above-target performance",
+            description:
+              "Increase budget allocation to revenue-driving channels showing 15%+ above-target performance",
             impact: 320000,
             priority: "high",
           },
           {
             title: "Strengthen Working Capital Management",
-            description: "Implement automated cash flow forecasting to reduce DSO by 5 days, freeing up $280K in working capital",
+            description:
+              "Implement automated cash flow forecasting to reduce DSO by 5 days, freeing up $280K in working capital",
             impact: 280000,
             priority: "high",
           },
@@ -143,13 +165,15 @@ export function GenerateInsightsModal({
           },
           {
             title: "Operational Excellence Program",
-            description: "Expand efficiency initiatives to achieve 40% operating expense ratio vs. current 42%",
+            description:
+              "Expand efficiency initiatives to achieve 40% operating expense ratio vs. current 42%",
             impact: 180000,
             priority: "medium",
           },
           {
             title: "Strategic Pricing Optimization",
-            description: "Conduct pricing elasticity analysis to capture additional 2-3% revenue without volume loss",
+            description:
+              "Conduct pricing elasticity analysis to capture additional 2-3% revenue without volume loss",
             impact: 225000,
             priority: "medium",
           },
@@ -160,26 +184,35 @@ export function GenerateInsightsModal({
             name: "Best Case Scenario",
             profitImpact: 850000,
             revenueForecast: 2750000,
-            liquidityRisk: "Low - Strong cash generation supports growth investments",
+            liquidityRisk:
+              "Low - Strong cash generation supports growth investments",
           },
           {
             name: "Expected Scenario",
             profitImpact: 520000,
             revenueForecast: 2500000,
-            liquidityRisk: "Moderate - Adequate reserves for operations and contingencies",
+            liquidityRisk:
+              "Moderate - Adequate reserves for operations and contingencies",
           },
           {
             name: "Worst Case Scenario",
             profitImpact: 120000,
             revenueForecast: 2100000,
-            liquidityRisk: "High - May require external financing or expense reduction",
+            liquidityRisk:
+              "High - May require external financing or expense reduction",
           },
         ],
 
         riskAlerts: highRisks.map((risk) => ({
           risk: risk.riskName,
-          severity: risk.riskScore >= 70 ? "critical" : risk.riskScore >= 50 ? "high" : "medium",
-          mitigation: risk.currentMitigation[0] || "Develop mitigation strategy",
+          severity:
+            risk.riskScore >= 70
+              ? "critical"
+              : risk.riskScore >= 50
+                ? "high"
+                : "medium",
+          mitigation:
+            risk.currentMitigation[0] || "Develop mitigation strategy",
         })),
 
         roadmap: [
@@ -219,7 +252,9 @@ export function GenerateInsightsModal({
 
   const handleExportPDF = () => {
     // Mock PDF export - in production, would use jsPDF or similar
-    alert("Exporting to PDF... (Feature would generate actual PDF in production)");
+    alert(
+      "Exporting to PDF... (Feature would generate actual PDF in production)",
+    );
   };
 
   const handleSaveInsight = () => {
@@ -235,7 +270,9 @@ export function GenerateInsightsModal({
           <div className="flex items-center justify-between">
             <div>
               <CardTitle>Strategic Advisory Report</CardTitle>
-              <CardDescription>Joseph AI Generated Financial Insights & Analysis</CardDescription>
+              <CardDescription>
+                Joseph AI Generated Financial Insights & Analysis
+              </CardDescription>
             </div>
             <Button variant="ghost" size="sm" onClick={onClose}>
               ✕
@@ -255,11 +292,17 @@ export function GenerateInsightsModal({
         ) : report ? (
           <>
             <CardContent className="p-6">
-              <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+              <Tabs
+                value={activeTab}
+                onValueChange={setActiveTab}
+                className="space-y-4"
+              >
                 <TabsList className="grid w-full grid-cols-5">
                   <TabsTrigger value="summary">Summary</TabsTrigger>
                   <TabsTrigger value="observations">Observations</TabsTrigger>
-                  <TabsTrigger value="recommendations">Recommendations</TabsTrigger>
+                  <TabsTrigger value="recommendations">
+                    Recommendations
+                  </TabsTrigger>
                   <TabsTrigger value="scenarios">Scenarios</TabsTrigger>
                   <TabsTrigger value="roadmap">Roadmap</TabsTrigger>
                 </TabsList>
@@ -268,10 +311,14 @@ export function GenerateInsightsModal({
                 <TabsContent value="summary" className="space-y-4">
                   <Card className="bg-blue-50 border-blue-200">
                     <CardHeader>
-                      <CardTitle className="text-lg">Executive Summary</CardTitle>
+                      <CardTitle className="text-lg">
+                        Executive Summary
+                      </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-gray-700 leading-relaxed">{report.executiveSummary}</p>
+                      <p className="text-gray-700 leading-relaxed">
+                        {report.executiveSummary}
+                      </p>
                     </CardContent>
                   </Card>
 
@@ -283,7 +330,14 @@ export function GenerateInsightsModal({
                           <CheckCircle className="h-5 w-5 text-green-600" />
                         </div>
                         <p className="text-3xl font-bold text-green-600">
-                          {performanceDrivers.filter((d) => d.status === "on_track" || d.status === "exceeding_target").length}/{performanceDrivers.length}
+                          {
+                            performanceDrivers.filter(
+                              (d) =>
+                                d.status === "on_track" ||
+                                d.status === "exceeding_target",
+                            ).length
+                          }
+                          /{performanceDrivers.length}
                         </p>
                       </CardContent>
                     </Card>
@@ -295,7 +349,13 @@ export function GenerateInsightsModal({
                           <AlertCircle className="h-5 w-5 text-red-600" />
                         </div>
                         <p className="text-3xl font-bold text-red-600">
-                          {performanceDrivers.filter((d) => d.status === "at_risk" || d.status === "critical").length}
+                          {
+                            performanceDrivers.filter(
+                              (d) =>
+                                d.status === "at_risk" ||
+                                d.status === "critical",
+                            ).length
+                          }
                         </p>
                       </CardContent>
                     </Card>
@@ -305,7 +365,16 @@ export function GenerateInsightsModal({
                 {/* Key Observations */}
                 <TabsContent value="observations" className="space-y-3">
                   {report.keyObservations.map((obs, idx) => (
-                    <Card key={idx} className={obs.impact === "positive" ? "border-l-4 border-l-green-500" : obs.impact === "negative" ? "border-l-4 border-l-red-500" : ""}>
+                    <Card
+                      key={idx}
+                      className={
+                        obs.impact === "positive"
+                          ? "border-l-4 border-l-green-500"
+                          : obs.impact === "negative"
+                            ? "border-l-4 border-l-red-500"
+                            : ""
+                      }
+                    >
                       <CardContent className="p-4">
                         <div className="flex items-start gap-3">
                           {obs.impact === "positive" ? (
@@ -316,8 +385,12 @@ export function GenerateInsightsModal({
                             <Target className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
                           )}
                           <div className="flex-1">
-                            <h4 className="font-medium text-gray-900">{obs.title}</h4>
-                            <p className="text-sm text-gray-600 mt-1">{obs.description}</p>
+                            <h4 className="font-medium text-gray-900">
+                              {obs.title}
+                            </h4>
+                            <p className="text-sm text-gray-600 mt-1">
+                              {obs.description}
+                            </p>
                           </div>
                         </div>
                       </CardContent>
@@ -332,8 +405,18 @@ export function GenerateInsightsModal({
                       <CardContent className="p-4">
                         <div className="flex items-start justify-between mb-2">
                           <div>
-                            <h4 className="font-medium text-gray-900">{rec.title}</h4>
-                            <Badge className={rec.priority === "high" ? "bg-red-100 text-red-800 mt-1" : rec.priority === "medium" ? "bg-yellow-100 text-yellow-800 mt-1" : "bg-green-100 text-green-800 mt-1"}>
+                            <h4 className="font-medium text-gray-900">
+                              {rec.title}
+                            </h4>
+                            <Badge
+                              className={
+                                rec.priority === "high"
+                                  ? "bg-red-100 text-red-800 mt-1"
+                                  : rec.priority === "medium"
+                                    ? "bg-yellow-100 text-yellow-800 mt-1"
+                                    : "bg-green-100 text-green-800 mt-1"
+                              }
+                            >
                               {rec.priority}
                             </Badge>
                           </div>
@@ -341,10 +424,14 @@ export function GenerateInsightsModal({
                             <p className="text-2xl font-bold text-blue-600">
                               ${(rec.impact / 1000).toFixed(0)}K
                             </p>
-                            <p className="text-xs text-gray-500">Potential Impact</p>
+                            <p className="text-xs text-gray-500">
+                              Potential Impact
+                            </p>
                           </div>
                         </div>
-                        <p className="text-sm text-gray-600 mt-3">{rec.description}</p>
+                        <p className="text-sm text-gray-600 mt-3">
+                          {rec.description}
+                        </p>
                       </CardContent>
                     </Card>
                   ))}
@@ -353,30 +440,44 @@ export function GenerateInsightsModal({
                 {/* Scenarios */}
                 <TabsContent value="scenarios" className="space-y-4">
                   {report.scenarios.map((scenario, idx) => (
-                    <Card key={idx} className={idx === 1 ? "border-blue-300 bg-blue-50" : ""}>
+                    <Card
+                      key={idx}
+                      className={idx === 1 ? "border-blue-300 bg-blue-50" : ""}
+                    >
                       <CardContent className="p-4">
-                        <h4 className="font-medium text-gray-900 mb-3">{scenario.name}</h4>
+                        <h4 className="font-medium text-gray-900 mb-3">
+                          {scenario.name}
+                        </h4>
                         <div className="grid grid-cols-3 gap-4 mb-3">
                           <div>
-                            <p className="text-xs text-gray-600">Profit Impact</p>
+                            <p className="text-xs text-gray-600">
+                              Profit Impact
+                            </p>
                             <p className="text-lg font-bold text-green-600">
                               ${(scenario.profitImpact / 1000).toFixed(0)}K
                             </p>
                           </div>
                           <div>
-                            <p className="text-xs text-gray-600">Revenue Forecast</p>
+                            <p className="text-xs text-gray-600">
+                              Revenue Forecast
+                            </p>
                             <p className="text-lg font-bold text-blue-600">
-                              ${(scenario.revenueForecast / 1000000).toFixed(2)}M
+                              ${(scenario.revenueForecast / 1000000).toFixed(2)}
+                              M
                             </p>
                           </div>
                           <div>
-                            <p className="text-xs text-gray-600">Liquidity Risk</p>
+                            <p className="text-xs text-gray-600">
+                              Liquidity Risk
+                            </p>
                             <p className="text-sm font-medium text-gray-900">
                               {scenario.liquidityRisk.split(" - ")[0]}
                             </p>
                           </div>
                         </div>
-                        <p className="text-sm text-gray-600">{scenario.liquidityRisk}</p>
+                        <p className="text-sm text-gray-600">
+                          {scenario.liquidityRisk}
+                        </p>
                       </CardContent>
                     </Card>
                   ))}
@@ -387,11 +488,18 @@ export function GenerateInsightsModal({
                   {report.roadmap.map((phase, idx) => (
                     <Card key={idx}>
                       <CardContent className="p-4">
-                        <h4 className="font-medium text-gray-900 mb-3">{phase.timeframe}</h4>
+                        <h4 className="font-medium text-gray-900 mb-3">
+                          {phase.timeframe}
+                        </h4>
                         <ul className="space-y-2">
                           {phase.actions.map((action, aIdx) => (
-                            <li key={aIdx} className="flex items-start gap-2 text-sm text-gray-700">
-                              <span className="text-blue-600 font-bold mt-0.5">•</span>
+                            <li
+                              key={aIdx}
+                              className="flex items-start gap-2 text-sm text-gray-700"
+                            >
+                              <span className="text-blue-600 font-bold mt-0.5">
+                                •
+                              </span>
                               {action}
                             </li>
                           ))}
@@ -411,7 +519,10 @@ export function GenerateInsightsModal({
                 <Save className="h-4 w-4 mr-2" />
                 Save Insights
               </Button>
-              <Button onClick={handleExportPDF} className="bg-blue-600 hover:bg-blue-700">
+              <Button
+                onClick={handleExportPDF}
+                className="bg-blue-600 hover:bg-blue-700"
+              >
                 <Download className="h-4 w-4 mr-2" />
                 Export PDF
               </Button>
