@@ -37,6 +37,7 @@ import {
 interface RiskAssessmentProps {
   riskAssessments: RiskAssessment[];
   onUpdateRiskStatus: (id: string, status: RiskAssessment["status"]) => void;
+  onAddRisk: (risk: Omit<RiskAssessment, "id" | "lastReviewed">) => void;
 }
 
 export function RiskAssessmentComponent({
