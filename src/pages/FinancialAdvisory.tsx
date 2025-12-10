@@ -48,6 +48,7 @@ export default function FinancialAdvisory() {
   const {
     budgetForecasts,
     cashFlowProjections,
+    currentCashFlows,
     scenarioTests,
     riskAssessments,
     performanceDrivers,
