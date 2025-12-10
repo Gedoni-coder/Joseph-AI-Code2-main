@@ -32,6 +32,10 @@ import {
 
 interface PerformanceDriversProps {
   performanceDrivers: PerformanceDriver[];
+  onAddDriver: (driver: Omit<PerformanceDriver, "id" | "createdAt" | "lastUpdated" | "kpiHistory">) => void;
+  risks?: RiskAssessment[];
+  budgets?: BudgetForecast[];
+  insights?: AdvisoryInsight[];
 }
 
 export function PerformanceDrivers({
