@@ -22,6 +22,7 @@ import {
   DollarSign,
 } from "lucide-react";
 import { ValidationReportDialog } from "./validation-report-dialog";
+import { ImprovementCard } from "./improvement-card";
 
 interface BudgetValidationProps {
   budgetForecasts: BudgetForecast[];
