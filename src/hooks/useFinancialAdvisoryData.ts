@@ -195,6 +195,7 @@ export function useFinancialAdvisoryData() {
     // Data
     budgetForecasts,
     cashFlowProjections,
+    currentCashFlows,
     scenarioTests,
     riskAssessments,
     performanceDrivers,
