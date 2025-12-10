@@ -25,9 +25,8 @@ export function useFinancialAdvisoryData() {
   const [cashFlowProjections, setCashFlowProjections] = useState<
     CashFlowProjection[]
   >(mockCashFlowProjections);
-  const [currentCashFlows, setCurrentCashFlows] = useState<CashFlowProjection[]>(
-    mockCurrentCashFlows,
-  );
+  const [currentCashFlows, setCurrentCashFlows] =
+    useState<CashFlowProjection[]>(mockCurrentCashFlows);
   const [scenarioTests, setScenarioTests] =
     useState<ScenarioTest[]>(mockScenarioTests);
   const [riskAssessments, setRiskAssessments] =

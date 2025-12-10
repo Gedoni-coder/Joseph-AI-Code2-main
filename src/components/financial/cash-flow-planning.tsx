@@ -269,8 +269,10 @@ export function CashFlowPlanning({
 
   const averageLiquidity = useMemo(() => {
     return filteredProjections.length > 0
-      ? filteredProjections.reduce((sum, proj) => sum + proj.liquidityRatio, 0) /
-          filteredProjections.length
+      ? filteredProjections.reduce(
+          (sum, proj) => sum + proj.liquidityRatio,
+          0,
+        ) / filteredProjections.length
       : 0;
   }, [filteredProjections]);
 
@@ -508,10 +510,7 @@ export function CashFlowPlanning({
                     cashFlow.outflows.debtService;
 
                   return (
-                    <tr
-                      key={cashFlow.id}
-                      className="border-b hover:bg-gray-50"
-                    >
+                    <tr key={cashFlow.id} className="border-b hover:bg-gray-50">
                       <td className="py-3 px-4">
                         <div className="flex items-center gap-2">
                           <Calendar className="h-4 w-4 text-gray-400" />

@@ -131,13 +131,13 @@ export function ValidationReportDialog({
           </div>
 
           <div className="flex gap-3 justify-end">
-            <Button
-              variant="outline"
-              onClick={() => onOpenChange(false)}
-            >
+            <Button variant="outline" onClick={() => onOpenChange(false)}>
               Cancel
             </Button>
-            <Button onClick={handleGenerateReport} className="bg-blue-600 hover:bg-blue-700">
+            <Button
+              onClick={handleGenerateReport}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
               Generate Report
             </Button>
           </div>
