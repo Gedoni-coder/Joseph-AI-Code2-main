@@ -551,6 +551,10 @@ Implement comprehensive KPI dashboard for financial performance tracking. Establ
               <AdvisoryInsights
                 advisoryInsights={advisoryInsights}
                 onUpdateInsightStatus={updateInsightStatus}
+                budgets={budgetForecasts}
+                cashFlows={currentCashFlows}
+                drivers={performanceDrivers}
+                risks={riskAssessments}
               />
             </TabsContent>
           </Tabs>
