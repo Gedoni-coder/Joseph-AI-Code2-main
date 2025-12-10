@@ -161,7 +161,7 @@ export function PerformanceDrivers({
             Connect budgets to value drivers and monitor KPI performance
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           <Select value={selectedCategory} onValueChange={setSelectedCategory}>
             <SelectTrigger className="w-32">
               <SelectValue placeholder="Category" />
@@ -172,6 +172,11 @@ export function PerformanceDrivers({
               <SelectItem value="cost">Cost</SelectItem>
               <SelectItem value="efficiency">Efficiency</SelectItem>
               <SelectItem value="growth">Growth</SelectItem>
+              <SelectItem value="financial">Financial</SelectItem>
+              <SelectItem value="operational">Operational</SelectItem>
+              <SelectItem value="sales">Sales</SelectItem>
+              <SelectItem value="productivity">Productivity</SelectItem>
+              <SelectItem value="risk">Risk</SelectItem>
             </SelectContent>
           </Select>
           <Select value={selectedImpact} onValueChange={setSelectedImpact}>
@@ -185,7 +190,14 @@ export function PerformanceDrivers({
               <SelectItem value="low">Low</SelectItem>
             </SelectContent>
           </Select>
-          <Button>Add KPI</Button>
+          <Button onClick={() => setShowAddKPIModal(true)} className="bg-blue-600 hover:bg-blue-700">
+            <Plus className="w-4 h-4 mr-2" />
+            Add KPI
+          </Button>
+          <Button onClick={() => setShowInsightsModal(true)} variant="outline">
+            <Zap className="w-4 h-4 mr-2" />
+            Generate Insights
+          </Button>
         </div>
       </div>
 
