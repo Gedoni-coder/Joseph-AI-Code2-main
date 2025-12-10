@@ -76,7 +76,8 @@ export interface RiskAssessment {
 export interface PerformanceDriver {
   id: string;
   name: string;
-  category: "revenue" | "cost" | "efficiency" | "growth";
+  description?: string;
+  category: "revenue" | "cost" | "efficiency" | "growth" | "financial" | "operational" | "sales" | "productivity" | "risk";
   currentValue: number;
   targetValue: number;
   unit: string;
@@ -87,6 +88,15 @@ export interface PerformanceDriver {
     date: string;
     value: number;
   }[];
+  driverType: "leading" | "lagging";
+  unitOfMeasure: "%" | "$" | "ratio" | "count" | "days" | "hours" | "score";
+  warningThreshold: number;
+  criticalThreshold: number;
+  dataSource: "manual" | "upload" | "auto_sync";
+  status: "on_track" | "at_risk" | "critical" | "exceeding_target";
+  driverLink: string[];
+  createdAt: string;
+  lastUpdated: string;
 }
 
 export interface AdvisoryInsight {
