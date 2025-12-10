@@ -210,9 +210,224 @@ export function RiskAssessmentComponent({
               <SelectItem value="resolved">Resolved</SelectItem>
             </SelectContent>
           </Select>
-          <Button>Add Risk</Button>
+          <Button
+            className="bg-blue-600 hover:bg-blue-700"
+            onClick={() => setShowAddForm((s) => !s)}
+          >
+            <AlertTriangle className="w-4 h-4 mr-2" />
+            {showAddForm ? "Close" : "Add Risk"}
+          </Button>
         </div>
       </div>
+
+      {/* Add Risk Form */}
+      {showAddForm && (
+        <Card className="border-blue-200 bg-blue-50">
+          <CardContent className="p-4">
+            <div className="space-y-4">
+              {/* Row 1: Risk Name, Category, Status */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700">
+                    Risk Name *
+                  </label>
+                  <Input
+                    placeholder="e.g., Decline in Customer Demand"
+                    value={form.riskName}
+                    onChange={(e) =>
+                      setForm({ ...form, riskName: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700">
+                    Category
+                  </label>
+                  <Select value={form.category} onValueChange={(value: any) => setForm({ ...form, category: value })}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="liquidity">Liquidity</SelectItem>
+                      <SelectItem value="credit">Credit</SelectItem>
+                      <SelectItem value="market">Market</SelectItem>
+                      <SelectItem value="operational">Operational</SelectItem>
+                      <SelectItem value="regulatory">Regulatory</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-gray-700">
+                    Status
+                  </label>
+                  <Select value={form.status} onValueChange={(value: any) => setForm({ ...form, status: value })}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="identified">Identified</SelectItem>
+                      <SelectItem value="monitoring">Monitoring</SelectItem>
+                      <SelectItem value="mitigating">Mitigating</SelectItem>
+                      <SelectItem value="resolved">Resolved</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Row 2: Description */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">
+                  Description
+                </label>
+                <Textarea
+                  placeholder="Brief description of the risk"
+                  value={form.description}
+                  onChange={(e) =>
+                    setForm({ ...form, description: e.target.value })
+                  }
+                  className="min-h-[60px]"
+                />
+              </div>
+
+              {/* Row 3: Probability and Impact Sliders */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-medium text-gray-700">
+                      Probability (%)
+                    </label>
+                    <span className="text-lg font-bold text-blue-600">
+                      {form.probability}%
+                    </span>
+                  </div>
+                  <Slider
+                    min={0}
+                    max={100}
+                    step={1}
+                    value={[form.probability]}
+                    onValueChange={(value) =>
+                      setForm({ ...form, probability: value[0] })
+                    }
+                    className="w-full"
+                  />
+                  <div className="flex justify-between text-xs text-gray-500">
+                    <span>0%</span>
+                    <span>100%</span>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <label className="text-sm font-medium text-gray-700">
+                      Impact (%)
+                    </label>
+                    <span className="text-lg font-bold text-orange-600">
+                      {form.impact}%
+                    </span>
+                  </div>
+                  <Slider
+                    min={0}
+                    max={100}
+                    step={1}
+                    value={[form.impact]}
+                    onValueChange={(value) =>
+                      setForm({ ...form, impact: value[0] })
+                    }
+                    className="w-full"
+                  />
+                  <div className="flex justify-between text-xs text-gray-500">
+                    <span>0%</span>
+                    <span>100%</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Row 4: Risk Score Display */}
+              <div className="p-3 bg-white rounded-lg border border-blue-200">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-gray-700">
+                    Risk Score (Auto-calculated)
+                  </span>
+                  <Badge
+                    className={
+                      riskScore >= 70
+                        ? "bg-red-100 text-red-800"
+                        : riskScore >= 40
+                          ? "bg-yellow-100 text-yellow-800"
+                          : "bg-green-100 text-green-800"
+                    }
+                  >
+                    {riskScore}
+                  </Badge>
+                </div>
+                <p className="text-xs text-gray-500 mt-1">
+                  Formula: Probability × Impact = {form.probability} × {form.impact} = {riskScore}
+                </p>
+              </div>
+
+              {/* Row 5: Current Mitigation */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">
+                  Current Mitigation
+                </label>
+                <Textarea
+                  placeholder="Steps already being taken (one per line)"
+                  value={form.currentMitigation}
+                  onChange={(e) =>
+                    setForm({ ...form, currentMitigation: e.target.value })
+                  }
+                  className="min-h-[70px]"
+                />
+              </div>
+
+              {/* Row 6: Recommended Actions */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">
+                  Recommended Actions
+                </label>
+                <Textarea
+                  placeholder="Suggested additional steps (one per line)"
+                  value={form.recommendedActions}
+                  onChange={(e) =>
+                    setForm({ ...form, recommendedActions: e.target.value })
+                  }
+                  className="min-h-[70px]"
+                />
+              </div>
+
+              {/* Row 7: Action Buttons */}
+              <div className="flex gap-2 justify-end pt-2">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setShowAddForm(false);
+                    setForm({
+                      riskName: "",
+                      description: "",
+                      category: "operational",
+                      probability: 50,
+                      impact: 50,
+                      status: "identified",
+                      currentMitigation: "",
+                      recommendedActions: "",
+                    });
+                  }}
+                  disabled={adding}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleAddRisk}
+                  disabled={adding || !form.riskName.trim()}
+                  className="bg-blue-600 hover:bg-blue-700"
+                >
+                  {adding ? "Saving..." : "Save Risk"}
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Risk Overview */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
