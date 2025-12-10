@@ -34,6 +34,7 @@ interface CashFlowPlanningProps {
 }
 
 export function CashFlowPlanning({
+  currentCashFlows,
   cashFlowProjections,
   liquidityMetrics,
   onAddProjection,
