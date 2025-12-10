@@ -571,10 +571,27 @@ export function CashFlowPlanning({
       {/* Cash Flow Projections */}
       <Card>
         <CardHeader>
-          <CardTitle>Cash Flow Projections</CardTitle>
-          <CardDescription>
-            Weekly and daily cash flow forecasts with liquidity analysis
-          </CardDescription>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <CardTitle>Cash Flow Projections</CardTitle>
+              <CardDescription>
+                Weekly and daily cash flow forecasts with liquidity analysis
+              </CardDescription>
+            </div>
+            <Select
+              value={projectionScope}
+              onValueChange={(value) => setProjectionScope(value as TimeScope)}
+            >
+              <SelectTrigger className="w-32">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="weekly">Weekly</SelectItem>
+                <SelectItem value="monthly">Monthly</SelectItem>
+                <SelectItem value="yearly">Yearly</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
@@ -608,7 +625,7 @@ export function CashFlowPlanning({
                 </tr>
               </thead>
               <tbody>
-                {cashFlowProjections.map((projection) => {
+                {filteredProjections.map((projection) => {
                   const totalInflow =
                     projection.inflows.operatingCash +
                     projection.inflows.accountsReceivable +
