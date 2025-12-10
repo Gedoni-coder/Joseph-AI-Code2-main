@@ -244,28 +244,35 @@ export function CashFlowPlanning({
     }
   };
 
-  const totalInflows = cashFlowProjections.reduce(
-    (sum, proj) =>
-      sum +
-      proj.inflows.operatingCash +
-      proj.inflows.accountsReceivable +
-      proj.inflows.otherIncome,
-    0,
-  );
+  const totalInflows = useMemo(() => {
+    return filteredProjections.reduce(
+      (sum, proj) =>
+        sum +
+        proj.inflows.operatingCash +
+        proj.inflows.accountsReceivable +
+        proj.inflows.otherIncome,
+      0,
+    );
+  }, [filteredProjections]);
 
-  const totalOutflows = cashFlowProjections.reduce(
-    (sum, proj) =>
-      sum +
-      proj.outflows.operatingExpenses +
-      proj.outflows.accountsPayable +
-      proj.outflows.capitalExpenditure +
-      proj.outflows.debtService,
-    0,
-  );
+  const totalOutflows = useMemo(() => {
+    return filteredProjections.reduce(
+      (sum, proj) =>
+        sum +
+        proj.outflows.operatingExpenses +
+        proj.outflows.accountsPayable +
+        proj.outflows.capitalExpenditure +
+        proj.outflows.debtService,
+      0,
+    );
+  }, [filteredProjections]);
 
-  const averageLiquidity =
-    cashFlowProjections.reduce((sum, proj) => sum + proj.liquidityRatio, 0) /
-    cashFlowProjections.length;
+  const averageLiquidity = useMemo(() => {
+    return filteredProjections.length > 0
+      ? filteredProjections.reduce((sum, proj) => sum + proj.liquidityRatio, 0) /
+          filteredProjections.length
+      : 0;
+  }, [filteredProjections]);
 
   return (
     <div className="space-y-6">
