@@ -27,6 +27,7 @@ import {
 import { CreateProjectionDialog } from "./create-projection-dialog";
 
 interface CashFlowPlanningProps {
+  currentCashFlows: CashFlowProjection[];
   cashFlowProjections: CashFlowProjection[];
   liquidityMetrics: LiquidityMetric[];
   onAddProjection: (projection: Omit<CashFlowProjection, "id">) => void;
