@@ -34,7 +34,20 @@ import {
   Activity,
   Minus,
   Plus,
+  MoreVertical,
+  Edit2,
+  Eye,
+  Users,
+  CheckCircle,
+  Trash2,
+  Clock,
 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 interface PerformanceDriversProps {
   performanceDrivers: PerformanceDriver[];
