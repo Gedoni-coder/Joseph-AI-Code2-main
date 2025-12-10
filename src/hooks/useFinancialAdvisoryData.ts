@@ -190,6 +190,18 @@ export function useFinancialAdvisoryData() {
     return newProjection;
   };
 
+  const addRisk = (
+    risk: Omit<RiskAssessment, "id" | "lastReviewed">,
+  ) => {
+    const newRisk: RiskAssessment = {
+      ...risk,
+      id: `risk-${Date.now()}`,
+      lastReviewed: new Date().toISOString(),
+    };
+    setRiskAssessments((prev) => [newRisk, ...prev]);
+    return newRisk;
+  };
+
   return {
     // Data
     budgetForecasts,
