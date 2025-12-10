@@ -29,6 +29,7 @@ interface BudgetValidationProps {
 
 export function BudgetValidation({ budgetForecasts }: BudgetValidationProps) {
   const [selectedPeriod, setSelectedPeriod] = useState("all");
+  const [reportDialogOpen, setReportDialogOpen] = useState(false);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
