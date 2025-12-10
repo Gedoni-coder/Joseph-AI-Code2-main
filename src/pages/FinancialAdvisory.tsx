@@ -537,7 +537,13 @@ Implement comprehensive KPI dashboard for financial performance tracking. Establ
             </TabsContent>
 
             <TabsContent value="performance-drivers" className="space-y-6">
-              <PerformanceDrivers performanceDrivers={performanceDrivers} />
+              <PerformanceDrivers
+                performanceDrivers={performanceDrivers}
+                onAddDriver={addPerformanceDriver}
+                risks={riskAssessments}
+                budgets={budgetForecasts}
+                insights={advisoryInsights}
+              />
             </TabsContent>
 
             <TabsContent value="advisory-insights" className="space-y-6">
