@@ -21,6 +21,7 @@ import {
   BarChart3,
   DollarSign,
 } from "lucide-react";
+import { ValidationReportDialog } from "./validation-report-dialog";
 
 interface BudgetValidationProps {
   budgetForecasts: BudgetForecast[];
