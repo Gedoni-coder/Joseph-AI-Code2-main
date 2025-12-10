@@ -299,6 +299,9 @@ export function PerformanceDrivers({
                   <th className="text-center py-3 px-4 font-medium text-gray-900 whitespace-nowrap">
                     Data Source
                   </th>
+                  <th className="text-center py-3 px-4 font-medium text-gray-900 whitespace-nowrap">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody>
