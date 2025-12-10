@@ -10,6 +10,7 @@ import {
   LiquidityMetric,
   mockBudgetForecasts,
   mockCashFlowProjections,
+  mockCurrentCashFlows,
   mockScenarioTests,
   mockRiskAssessments,
   mockPerformanceDrivers,
@@ -24,6 +25,8 @@ export function useFinancialAdvisoryData() {
   const [cashFlowProjections, setCashFlowProjections] = useState<
     CashFlowProjection[]
   >(mockCashFlowProjections);
+  const [currentCashFlows, setCurrentCashFlows] =
+    useState<CashFlowProjection[]>(mockCurrentCashFlows);
   const [scenarioTests, setScenarioTests] =
     useState<ScenarioTest[]>(mockScenarioTests);
   const [riskAssessments, setRiskAssessments] =
@@ -191,6 +194,7 @@ export function useFinancialAdvisoryData() {
     // Data
     budgetForecasts,
     cashFlowProjections,
+    currentCashFlows,
     scenarioTests,
     riskAssessments,
     performanceDrivers,

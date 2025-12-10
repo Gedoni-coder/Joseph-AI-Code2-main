@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   CashFlowProjection,
   LiquidityMetric,
@@ -14,6 +14,13 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Progress } from "../ui/progress";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import {
   DollarSign,
   TrendingUp,
   TrendingDown,
@@ -27,18 +34,182 @@ import {
 import { CreateProjectionDialog } from "./create-projection-dialog";
 
 interface CashFlowPlanningProps {
+  currentCashFlows: CashFlowProjection[];
   cashFlowProjections: CashFlowProjection[];
   liquidityMetrics: LiquidityMetric[];
   onAddProjection: (projection: Omit<CashFlowProjection, "id">) => void;
 }
 
+type TimeScope = "weekly" | "monthly" | "yearly";
+
+const aggregateCashFlowsByMonth = (
+  cashFlows: CashFlowProjection[],
+): CashFlowProjection[] => {
+  const grouped: { [key: string]: CashFlowProjection[] } = {};
+
+  cashFlows.forEach((cf) => {
+    const date = new Date(cf.date);
+    const yearMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+
+    if (!grouped[yearMonth]) {
+      grouped[yearMonth] = [];
+    }
+    grouped[yearMonth].push(cf);
+  });
+
+  return Object.entries(grouped).map(([yearMonth, flows]) => {
+    const firstFlow = flows[0];
+    const lastFlow = flows[flows.length - 1];
+
+    const totalInflows = flows.reduce(
+      (sum, flow) =>
+        sum +
+        flow.inflows.operatingCash +
+        flow.inflows.accountsReceivable +
+        flow.inflows.otherIncome,
+      0,
+    );
+
+    const totalOutflows = flows.reduce(
+      (sum, flow) =>
+        sum +
+        flow.outflows.operatingExpenses +
+        flow.outflows.accountsPayable +
+        flow.outflows.capitalExpenditure +
+        flow.outflows.debtService,
+      0,
+    );
+
+    const avgLiquidityRatio =
+      flows.reduce((sum, flow) => sum + flow.liquidityRatio, 0) / flows.length;
+    const avgDaysOfCash =
+      flows.reduce((sum, flow) => sum + flow.daysOfCash, 0) / flows.length;
+
+    return {
+      id: `monthly-${yearMonth}`,
+      date: flows[Math.floor(flows.length / 2)].date,
+      openingBalance: firstFlow.openingBalance,
+      inflows: {
+        operatingCash: totalInflows * 0.65,
+        accountsReceivable: totalInflows * 0.25,
+        otherIncome: totalInflows * 0.1,
+      },
+      outflows: {
+        operatingExpenses: totalOutflows * 0.5,
+        accountsPayable: totalOutflows * 0.3,
+        capitalExpenditure: totalOutflows * 0.15,
+        debtService: totalOutflows * 0.05,
+      },
+      netCashFlow: totalInflows - totalOutflows,
+      closingBalance: lastFlow.closingBalance,
+      liquidityRatio: avgLiquidityRatio,
+      daysOfCash: Math.round(avgDaysOfCash),
+    };
+  });
+};
+
+const aggregateCashFlowsByYear = (
+  cashFlows: CashFlowProjection[],
+): CashFlowProjection[] => {
+  const grouped: { [key: string]: CashFlowProjection[] } = {};
+
+  cashFlows.forEach((cf) => {
+    const date = new Date(cf.date);
+    const year = date.getFullYear().toString();
+
+    if (!grouped[year]) {
+      grouped[year] = [];
+    }
+    grouped[year].push(cf);
+  });
+
+  return Object.entries(grouped).map(([year, flows]) => {
+    const firstFlow = flows[0];
+    const lastFlow = flows[flows.length - 1];
+
+    const totalInflows = flows.reduce(
+      (sum, flow) =>
+        sum +
+        flow.inflows.operatingCash +
+        flow.inflows.accountsReceivable +
+        flow.inflows.otherIncome,
+      0,
+    );
+
+    const totalOutflows = flows.reduce(
+      (sum, flow) =>
+        sum +
+        flow.outflows.operatingExpenses +
+        flow.outflows.accountsPayable +
+        flow.outflows.capitalExpenditure +
+        flow.outflows.debtService,
+      0,
+    );
+
+    const avgLiquidityRatio =
+      flows.reduce((sum, flow) => sum + flow.liquidityRatio, 0) / flows.length;
+    const avgDaysOfCash =
+      flows.reduce((sum, flow) => sum + flow.daysOfCash, 0) / flows.length;
+
+    return {
+      id: `yearly-${year}`,
+      date: flows[Math.floor(flows.length / 2)].date,
+      openingBalance: firstFlow.openingBalance,
+      inflows: {
+        operatingCash: totalInflows * 0.65,
+        accountsReceivable: totalInflows * 0.25,
+        otherIncome: totalInflows * 0.1,
+      },
+      outflows: {
+        operatingExpenses: totalOutflows * 0.5,
+        accountsPayable: totalOutflows * 0.3,
+        capitalExpenditure: totalOutflows * 0.15,
+        debtService: totalOutflows * 0.05,
+      },
+      netCashFlow: totalInflows - totalOutflows,
+      closingBalance: lastFlow.closingBalance,
+      liquidityRatio: avgLiquidityRatio,
+      daysOfCash: Math.round(avgDaysOfCash),
+    };
+  });
+};
+
+const getFilteredCashFlows = (
+  cashFlows: CashFlowProjection[],
+  scope: TimeScope,
+): CashFlowProjection[] => {
+  switch (scope) {
+    case "weekly":
+      return cashFlows;
+    case "monthly":
+      return aggregateCashFlowsByMonth(cashFlows);
+    case "yearly":
+      return aggregateCashFlowsByYear(cashFlows);
+    default:
+      return cashFlows;
+  }
+};
+
 export function CashFlowPlanning({
+  currentCashFlows,
   cashFlowProjections,
   liquidityMetrics,
   onAddProjection,
 }: CashFlowPlanningProps) {
-  const [selectedTimeframe, setSelectedTimeframe] = useState("weekly");
+  const [currentCashFlowScope, setCurrentCashFlowScope] =
+    useState<TimeScope>("weekly");
+  const [projectionScope, setProjectionScope] = useState<TimeScope>("weekly");
   const [createProjectionOpen, setCreateProjectionOpen] = useState(false);
+
+  const filteredCurrentCashFlows = useMemo(
+    () => getFilteredCashFlows(currentCashFlows, currentCashFlowScope),
+    [currentCashFlows, currentCashFlowScope],
+  );
+
+  const filteredProjections = useMemo(
+    () => getFilteredCashFlows(cashFlowProjections, projectionScope),
+    [cashFlowProjections, projectionScope],
+  );
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -73,28 +244,37 @@ export function CashFlowPlanning({
     }
   };
 
-  const totalInflows = cashFlowProjections.reduce(
-    (sum, proj) =>
-      sum +
-      proj.inflows.operatingCash +
-      proj.inflows.accountsReceivable +
-      proj.inflows.otherIncome,
-    0,
-  );
+  const totalInflows = useMemo(() => {
+    return filteredProjections.reduce(
+      (sum, proj) =>
+        sum +
+        proj.inflows.operatingCash +
+        proj.inflows.accountsReceivable +
+        proj.inflows.otherIncome,
+      0,
+    );
+  }, [filteredProjections]);
 
-  const totalOutflows = cashFlowProjections.reduce(
-    (sum, proj) =>
-      sum +
-      proj.outflows.operatingExpenses +
-      proj.outflows.accountsPayable +
-      proj.outflows.capitalExpenditure +
-      proj.outflows.debtService,
-    0,
-  );
+  const totalOutflows = useMemo(() => {
+    return filteredProjections.reduce(
+      (sum, proj) =>
+        sum +
+        proj.outflows.operatingExpenses +
+        proj.outflows.accountsPayable +
+        proj.outflows.capitalExpenditure +
+        proj.outflows.debtService,
+      0,
+    );
+  }, [filteredProjections]);
 
-  const averageLiquidity =
-    cashFlowProjections.reduce((sum, proj) => sum + proj.liquidityRatio, 0) /
-    cashFlowProjections.length;
+  const averageLiquidity = useMemo(() => {
+    return filteredProjections.length > 0
+      ? filteredProjections.reduce(
+          (sum, proj) => sum + proj.liquidityRatio,
+          0,
+        ) / filteredProjections.length
+      : 0;
+  }, [filteredProjections]);
 
   return (
     <div className="space-y-6">
@@ -207,7 +387,7 @@ export function CashFlowPlanning({
                   Cash Reserves
                 </p>
                 <p className="text-2xl font-bold text-purple-600">
-                  {Math.round(cashFlowProjections[0]?.daysOfCash || 0)} days
+                  {Math.round(filteredProjections[0]?.daysOfCash || 0)} days
                 </p>
               </div>
               <Shield className="h-8 w-8 text-purple-600" />
@@ -259,13 +439,32 @@ export function CashFlowPlanning({
         </CardContent>
       </Card>
 
-      {/* Cash Flow Projections */}
+      {/* Current Cash Flow */}
       <Card>
         <CardHeader>
-          <CardTitle>Cash Flow Projections</CardTitle>
-          <CardDescription>
-            Weekly and daily cash flow forecasts with liquidity analysis
-          </CardDescription>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <CardTitle>Current Cash Flow</CardTitle>
+              <CardDescription>
+                Existing cash flows with daily, weekly, monthly and yearly scope
+              </CardDescription>
+            </div>
+            <Select
+              value={currentCashFlowScope}
+              onValueChange={(value) =>
+                setCurrentCashFlowScope(value as TimeScope)
+              }
+            >
+              <SelectTrigger className="w-32">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="weekly">Weekly</SelectItem>
+                <SelectItem value="monthly">Monthly</SelectItem>
+                <SelectItem value="yearly">Yearly</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
@@ -299,7 +498,140 @@ export function CashFlowPlanning({
                 </tr>
               </thead>
               <tbody>
-                {cashFlowProjections.map((projection) => {
+                {filteredCurrentCashFlows.map((cashFlow) => {
+                  const totalInflow =
+                    cashFlow.inflows.operatingCash +
+                    cashFlow.inflows.accountsReceivable +
+                    cashFlow.inflows.otherIncome;
+                  const totalOutflow =
+                    cashFlow.outflows.operatingExpenses +
+                    cashFlow.outflows.accountsPayable +
+                    cashFlow.outflows.capitalExpenditure +
+                    cashFlow.outflows.debtService;
+
+                  return (
+                    <tr key={cashFlow.id} className="border-b hover:bg-gray-50">
+                      <td className="py-3 px-4">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="h-4 w-4 text-gray-400" />
+                          <span className="font-medium">
+                            {new Date(cashFlow.date).toLocaleDateString()}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="text-right py-3 px-4 font-medium">
+                        {formatCurrency(cashFlow.openingBalance)}
+                      </td>
+                      <td className="text-right py-3 px-4 font-medium text-green-600">
+                        {formatCurrency(totalInflow)}
+                      </td>
+                      <td className="text-right py-3 px-4 font-medium text-red-600">
+                        {formatCurrency(totalOutflow)}
+                      </td>
+                      <td className="text-right py-3 px-4 font-medium">
+                        <span
+                          className={
+                            cashFlow.netCashFlow >= 0
+                              ? "text-green-600"
+                              : "text-red-600"
+                          }
+                        >
+                          {formatCurrency(cashFlow.netCashFlow)}
+                        </span>
+                      </td>
+                      <td className="text-right py-3 px-4 font-bold">
+                        {formatCurrency(cashFlow.closingBalance)}
+                      </td>
+                      <td className="text-center py-3 px-4">
+                        <Badge
+                          className={
+                            cashFlow.liquidityRatio >= 2.5
+                              ? "bg-green-100 text-green-800"
+                              : cashFlow.liquidityRatio >= 1.5
+                                ? "bg-yellow-100 text-yellow-800"
+                                : "bg-red-100 text-red-800"
+                          }
+                        >
+                          {cashFlow.liquidityRatio.toFixed(1)}
+                        </Badge>
+                      </td>
+                      <td className="text-center py-3 px-4">
+                        <div className="flex items-center justify-center gap-1">
+                          <span className="font-medium">
+                            {cashFlow.daysOfCash}
+                          </span>
+                          {cashFlow.daysOfCash < 30 && (
+                            <AlertTriangle className="h-4 w-4 text-red-500" />
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Cash Flow Projections */}
+      <Card>
+        <CardHeader>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <CardTitle>Cash Flow Projections</CardTitle>
+              <CardDescription>
+                Weekly and daily cash flow forecasts with liquidity analysis
+              </CardDescription>
+            </div>
+            <Select
+              value={projectionScope}
+              onValueChange={(value) => setProjectionScope(value as TimeScope)}
+            >
+              <SelectTrigger className="w-32">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="weekly">Weekly</SelectItem>
+                <SelectItem value="monthly">Monthly</SelectItem>
+                <SelectItem value="yearly">Yearly</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b">
+                  <th className="text-left py-3 px-4 font-medium text-gray-900">
+                    Date
+                  </th>
+                  <th className="text-right py-3 px-4 font-medium text-gray-900">
+                    Opening Balance
+                  </th>
+                  <th className="text-right py-3 px-4 font-medium text-gray-900">
+                    Total Inflows
+                  </th>
+                  <th className="text-right py-3 px-4 font-medium text-gray-900">
+                    Total Outflows
+                  </th>
+                  <th className="text-right py-3 px-4 font-medium text-gray-900">
+                    Net Cash Flow
+                  </th>
+                  <th className="text-right py-3 px-4 font-medium text-gray-900">
+                    Closing Balance
+                  </th>
+                  <th className="text-center py-3 px-4 font-medium text-gray-900">
+                    Liquidity Ratio
+                  </th>
+                  <th className="text-center py-3 px-4 font-medium text-gray-900">
+                    Days of Cash
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredProjections.map((projection) => {
                   const totalInflow =
                     projection.inflows.operatingCash +
                     projection.inflows.accountsReceivable +

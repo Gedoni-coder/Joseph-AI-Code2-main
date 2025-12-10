@@ -445,3 +445,86 @@ export const mockLiquidityMetrics: LiquidityMetric[] = [
     trend: "improving",
   },
 ];
+
+export const mockCurrentCashFlows: CashFlowProjection[] = [
+  {
+    id: "ccf-1",
+    date: "2024-01-22",
+    openingBalance: 750000,
+    inflows: {
+      operatingCash: 310000,
+      accountsReceivable: 175000,
+      otherIncome: 20000,
+    },
+    outflows: {
+      operatingExpenses: 210000,
+      accountsPayable: 145000,
+      capitalExpenditure: 70000,
+      debtService: 40000,
+    },
+    netCashFlow: 40000,
+    closingBalance: 790000,
+    liquidityRatio: 2.6,
+    daysOfCash: 64,
+  },
+  {
+    id: "ccf-2",
+    date: "2024-01-15",
+    openingBalance: 680000,
+    inflows: {
+      operatingCash: 285000,
+      accountsReceivable: 155000,
+      otherIncome: 12000,
+    },
+    outflows: {
+      operatingExpenses: 215000,
+      accountsPayable: 135000,
+      capitalExpenditure: 60000,
+      debtService: 35000,
+    },
+    netCashFlow: 52000,
+    closingBalance: 732000,
+    liquidityRatio: 2.5,
+    daysOfCash: 61,
+  },
+  {
+    id: "ccf-3",
+    date: "2024-01-08",
+    openingBalance: 620000,
+    inflows: {
+      operatingCash: 298000,
+      accountsReceivable: 168000,
+      otherIncome: 18000,
+    },
+    outflows: {
+      operatingExpenses: 225000,
+      accountsPayable: 140000,
+      capitalExpenditure: 65000,
+      debtService: 38000,
+    },
+    netCashFlow: 36000,
+    closingBalance: 656000,
+    liquidityRatio: 2.4,
+    daysOfCash: 58,
+  },
+  {
+    id: "ccf-4",
+    date: "2024-01-01",
+    openingBalance: 550000,
+    inflows: {
+      operatingCash: 275000,
+      accountsReceivable: 145000,
+      otherIncome: 15000,
+    },
+    outflows: {
+      operatingExpenses: 200000,
+      accountsPayable: 130000,
+      capitalExpenditure: 55000,
+      debtService: 35000,
+    },
+    netCashFlow: 30000,
+    closingBalance: 580000,
+    liquidityRatio: 2.2,
+    daysOfCash: 55,
+  },
+];

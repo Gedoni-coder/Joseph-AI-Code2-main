@@ -21,6 +21,8 @@ import {
   BarChart3,
   DollarSign,
 } from "lucide-react";
+import { ValidationReportDialog } from "./validation-report-dialog";
+import { ImprovementCard } from "./improvement-card";
 
 interface BudgetValidationProps {
   budgetForecasts: BudgetForecast[];
@@ -28,6 +30,7 @@ interface BudgetValidationProps {
 
 export function BudgetValidation({ budgetForecasts }: BudgetValidationProps) {
   const [selectedPeriod, setSelectedPeriod] = useState("all");
+  const [reportDialogOpen, setReportDialogOpen] = useState(false);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -99,8 +102,18 @@ export function BudgetValidation({ budgetForecasts }: BudgetValidationProps) {
             Align budgets with forecasts and track performance accuracy
           </p>
         </div>
-        <Button>Generate Validation Report</Button>
+        <Button
+          onClick={() => setReportDialogOpen(true)}
+          className="bg-blue-600 hover:bg-blue-700"
+        >
+          Generate Validation Report
+        </Button>
       </div>
+
+      <ValidationReportDialog
+        open={reportDialogOpen}
+        onOpenChange={setReportDialogOpen}
+      />
 
       {/* Validation Summary */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -359,54 +372,198 @@ export function BudgetValidation({ budgetForecasts }: BudgetValidationProps) {
 
         <Card>
           <CardHeader>
-            <CardTitle>Continuous Improvement</CardTitle>
+            <CardTitle>Continuous Improvement Areas</CardTitle>
             <CardDescription>
-              Areas for forecast accuracy enhancement
+              Key focus areas for forecast accuracy enhancement
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
-              <div className="border rounded-lg p-4">
-                <div className="flex items-start gap-3">
-                  <TrendingUp className="h-5 w-5 text-green-600 mt-0.5" />
-                  <div>
-                    <h4 className="font-medium text-gray-900">
-                      Revenue Forecasting
-                    </h4>
-                    <p className="text-sm text-gray-600">
-                      Consistently outperforming forecasts by 3.2% on average
-                    </p>
+            <div className="space-y-3">
+              <ImprovementCard
+                icon={TrendingUp}
+                iconColor="text-green-600"
+                title="Revenue Forecasting Strength"
+                summary="Consistently outperforming forecasts by 3.2% on average"
+                details={
+                  <div className="space-y-3">
+                    <div>
+                      <h5 className="font-semibold text-gray-900 mb-2">
+                        Current Performance
+                      </h5>
+                      <p className="text-sm text-gray-700">
+                        Your revenue forecasts consistently underestimate actual
+                        results, with an average outperformance of{" "}
+                        <span className="font-semibold">+3.2%</span>. This
+                        pattern is consistent across multiple periods,
+                        indicating a systemic tendency toward conservative
+                        estimation rather than random variance.
+                      </p>
+                    </div>
+                    <div>
+                      <h5 className="font-semibold text-gray-900 mb-2">
+                        Root Cause Analysis
+                      </h5>
+                      <p className="text-sm text-gray-700">
+                        This outperformance may result from: (1) conservative
+                        sales forecasting by nature, (2) stronger-than-expected
+                        market demand, or (3) superior sales execution exceeding
+                        internal expectations. Each requires different strategic
+                        responses.
+                      </p>
+                    </div>
+                    <div>
+                      <h5 className="font-semibold text-gray-900 mb-2">
+                        Strategic Implication
+                      </h5>
+                      <p className="text-sm text-gray-700">
+                        While consistent outperformance is positive, it suggests
+                        you may be leaving strategic opportunities on the table.
+                        More aggressive revenue forecasting could enable better
+                        resource allocation and unlock profitable growth
+                        initiatives.
+                      </p>
+                    </div>
+                    <div className="bg-green-50 border border-green-200 rounded p-3">
+                      <p className="text-xs text-green-900 font-semibold mb-1">
+                        RECOMMENDED ACTION
+                      </p>
+                      <p className="text-sm text-green-800">
+                        Increase revenue targets by 3–4% in next forecast cycle
+                        and incorporate leading sales indicators for better
+                        upside visibility.
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </div>
+                }
+              />
 
-              <div className="border rounded-lg p-4">
-                <div className="flex items-start gap-3">
-                  <AlertCircle className="h-5 w-5 text-yellow-600 mt-0.5" />
-                  <div>
-                    <h4 className="font-medium text-gray-900">
-                      Expense Volatility
-                    </h4>
-                    <p className="text-sm text-gray-600">
-                      Higher variance in operating expenses requires adjustment
-                    </p>
+              <ImprovementCard
+                icon={AlertCircle}
+                iconColor="text-yellow-600"
+                title="Expense Volatility Control"
+                summary="Higher variance in operating expenses requires refinement"
+                details={
+                  <div className="space-y-3">
+                    <div>
+                      <h5 className="font-semibold text-gray-900 mb-2">
+                        Current Challenge
+                      </h5>
+                      <p className="text-sm text-gray-700">
+                        Operating expenses exhibit noticeable volatility,
+                        particularly in weeks 1–2 of each period. This
+                        unpredictability increases the challenge of accurate net
+                        income forecasting and weakens the overall stability of
+                        financial projections.
+                      </p>
+                    </div>
+                    <div>
+                      <h5 className="font-semibold text-gray-900 mb-2">
+                        Affected Areas
+                      </h5>
+                      <ul className="text-sm text-gray-700 space-y-2">
+                        <li className="flex gap-2">
+                          <span>•</span>{" "}
+                          <span>
+                            Procurement patterns and supplier payment timing
+                          </span>
+                        </li>
+                        <li className="flex gap-2">
+                          <span>•</span>{" "}
+                          <span>
+                            Staffing costs and hourly labor fluctuations
+                          </span>
+                        </li>
+                        <li className="flex gap-2">
+                          <span>•</span>{" "}
+                          <span>
+                            Discretionary spending and project-based expenses
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h5 className="font-semibold text-gray-900 mb-2">
+                        Impact Assessment
+                      </h5>
+                      <p className="text-sm text-gray-700">
+                        This volatility is the primary source of forecasting
+                        noise and complicates strategic decision-making. It
+                        weakens confidence in cash flow projections and makes
+                        budget variance analysis less actionable.
+                      </p>
+                    </div>
+                    <div className="bg-yellow-50 border border-yellow-200 rounded p-3">
+                      <p className="text-xs text-yellow-900 font-semibold mb-1">
+                        RECOMMENDED ACTION
+                      </p>
+                      <p className="text-sm text-yellow-800">
+                        Implement granular expense tracking by sub-category.
+                        Establish fixed vs. variable expense analysis and
+                        develop rolling 13-week expense forecasts.
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </div>
+                }
+              />
 
-              <div className="border rounded-lg p-4">
-                <div className="flex items-start gap-3">
-                  <TrendingDown className="h-5 w-5 text-blue-600 mt-0.5" />
-                  <div>
-                    <h4 className="font-medium text-gray-900">
-                      Seasonal Adjustments
-                    </h4>
-                    <p className="text-sm text-gray-600">
-                      Incorporate stronger seasonal patterns in Q1 forecasts
-                    </p>
+              <ImprovementCard
+                icon={Calendar}
+                iconColor="text-blue-600"
+                title="Seasonal Pattern Optimization"
+                summary="Strengthen seasonal weighting in quarterly forecasts"
+                details={
+                  <div className="space-y-3">
+                    <div>
+                      <h5 className="font-semibold text-gray-900 mb-2">
+                        Pattern Identification
+                      </h5>
+                      <p className="text-sm text-gray-700">
+                        Q1 and Q4 consistently demonstrate significant seasonal
+                        uplift in revenue, indicating strong recurring patterns
+                        driven by market cycles or business seasonality. These
+                        patterns are partially captured in current forecasts but
+                        insufficiently weighted.
+                      </p>
+                    </div>
+                    <div>
+                      <h5 className="font-semibold text-gray-900 mb-2">
+                        Current State Assessment
+                      </h5>
+                      <p className="text-sm text-gray-700">
+                        While seasonal effects are acknowledged in forecasting,
+                        the magnitude of seasonal adjustments appears to
+                        underestimate the actual impact. Q1 shows approximately{" "}
+                        <span className="font-semibold">15–18% uplift</span> vs.
+                        baseline, but current models incorporate only 8–10%.
+                      </p>
+                    </div>
+                    <div>
+                      <h5 className="font-semibold text-gray-900 mb-2">
+                        Improvement Potential
+                      </h5>
+                      <p className="text-sm text-gray-700">
+                        Incorporating stronger seasonal adjustments with
+                        multi-year historical data analysis could improve
+                        forecast accuracy by{" "}
+                        <span className="font-semibold">
+                          3–5 percentage points
+                        </span>
+                        .
+                      </p>
+                    </div>
+                    <div className="bg-blue-50 border border-blue-200 rounded p-3">
+                      <p className="text-xs text-blue-900 font-semibold mb-1">
+                        RECOMMENDED ACTION
+                      </p>
+                      <p className="text-sm text-blue-800">
+                        Conduct 3-year seasonal analysis by quarter and product
+                        line. Increase seasonal weighting in Q1/Q4 forecasts and
+                        establish dynamic seasonal factors.
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </div>
+                }
+              />
             </div>
           </CardContent>
         </Card>
