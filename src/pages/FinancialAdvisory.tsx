@@ -532,6 +532,7 @@ Implement comprehensive KPI dashboard for financial performance tracking. Establ
               <RiskAssessmentComponent
                 riskAssessments={riskAssessments}
                 onUpdateRiskStatus={updateRiskStatus}
+                onAddRisk={addRisk}
               />
             </TabsContent>
 
