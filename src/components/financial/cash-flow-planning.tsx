@@ -433,10 +433,29 @@ export function CashFlowPlanning({
       {/* Current Cash Flow */}
       <Card>
         <CardHeader>
-          <CardTitle>Current Cash Flow</CardTitle>
-          <CardDescription>
-            Existing cash flows with daily, weekly, monthly and yearly scope
-          </CardDescription>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <CardTitle>Current Cash Flow</CardTitle>
+              <CardDescription>
+                Existing cash flows with daily, weekly, monthly and yearly scope
+              </CardDescription>
+            </div>
+            <Select
+              value={currentCashFlowScope}
+              onValueChange={(value) =>
+                setCurrentCashFlowScope(value as TimeScope)
+              }
+            >
+              <SelectTrigger className="w-32">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="weekly">Weekly</SelectItem>
+                <SelectItem value="monthly">Monthly</SelectItem>
+                <SelectItem value="yearly">Yearly</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
@@ -470,7 +489,7 @@ export function CashFlowPlanning({
                 </tr>
               </thead>
               <tbody>
-                {currentCashFlows.map((cashFlow) => {
+                {filteredCurrentCashFlows.map((cashFlow) => {
                   const totalInflow =
                     cashFlow.inflows.operatingCash +
                     cashFlow.inflows.accountsReceivable +
