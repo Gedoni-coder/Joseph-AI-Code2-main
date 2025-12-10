@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { PerformanceDriver } from "../../lib/financial-advisory-data";
+import {
+  PerformanceDriver,
+  RiskAssessment,
+  BudgetForecast,
+  AdvisoryInsight,
+} from "../../lib/financial-advisory-data";
+import { AddKPIModal } from "./add-kpi-modal";
+import { GenerateInsightsModal } from "./generate-insights-modal";
 import {
   Card,
   CardContent,
@@ -26,17 +33,33 @@ import {
   Zap,
   Activity,
   Minus,
+  Plus,
 } from "lucide-react";
 
 interface PerformanceDriversProps {
   performanceDrivers: PerformanceDriver[];
+  onAddDriver: (
+    driver: Omit<
+      PerformanceDriver,
+      "id" | "createdAt" | "lastUpdated" | "kpiHistory"
+    >,
+  ) => void;
+  risks?: RiskAssessment[];
+  budgets?: BudgetForecast[];
+  insights?: AdvisoryInsight[];
 }
 
 export function PerformanceDrivers({
   performanceDrivers,
+  onAddDriver,
+  risks = [],
+  budgets = [],
+  insights = [],
 }: PerformanceDriversProps) {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedImpact, setSelectedImpact] = useState("all");
+  const [showAddKPIModal, setShowAddKPIModal] = useState(false);
+  const [showInsightsModal, setShowInsightsModal] = useState(false);
 
   const filteredDrivers = performanceDrivers.filter((driver) => {
     if (selectedCategory !== "all" && driver.category !== selectedCategory)
@@ -149,7 +172,7 @@ export function PerformanceDrivers({
             Connect budgets to value drivers and monitor KPI performance
           </p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           <Select value={selectedCategory} onValueChange={setSelectedCategory}>
             <SelectTrigger className="w-32">
               <SelectValue placeholder="Category" />
@@ -160,6 +183,11 @@ export function PerformanceDrivers({
               <SelectItem value="cost">Cost</SelectItem>
               <SelectItem value="efficiency">Efficiency</SelectItem>
               <SelectItem value="growth">Growth</SelectItem>
+              <SelectItem value="financial">Financial</SelectItem>
+              <SelectItem value="operational">Operational</SelectItem>
+              <SelectItem value="sales">Sales</SelectItem>
+              <SelectItem value="productivity">Productivity</SelectItem>
+              <SelectItem value="risk">Risk</SelectItem>
             </SelectContent>
           </Select>
           <Select value={selectedImpact} onValueChange={setSelectedImpact}>
@@ -173,7 +201,17 @@ export function PerformanceDrivers({
               <SelectItem value="low">Low</SelectItem>
             </SelectContent>
           </Select>
-          <Button>Add KPI</Button>
+          <Button
+            onClick={() => setShowAddKPIModal(true)}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Add KPI
+          </Button>
+          <Button onClick={() => setShowInsightsModal(true)} variant="outline">
+            <Zap className="w-4 h-4 mr-2" />
+            Generate Insights
+          </Button>
         </div>
       </div>
 
@@ -209,32 +247,44 @@ export function PerformanceDrivers({
         </CardHeader>
         <CardContent>
           <div className="overflow-x-auto">
-            <table className="w-full">
+            <table className="w-full min-w-max">
               <thead>
-                <tr className="border-b">
-                  <th className="text-left py-3 px-4 font-medium text-gray-900">
+                <tr className="border-b bg-gray-50">
+                  <th className="text-left py-3 px-4 font-medium text-gray-900 whitespace-nowrap">
                     KPI Name
                   </th>
-                  <th className="text-center py-3 px-4 font-medium text-gray-900">
+                  <th className="text-center py-3 px-4 font-medium text-gray-900 whitespace-nowrap">
                     Category
                   </th>
-                  <th className="text-right py-3 px-4 font-medium text-gray-900">
-                    Current Value
-                  </th>
-                  <th className="text-right py-3 px-4 font-medium text-gray-900">
-                    Target Value
-                  </th>
-                  <th className="text-center py-3 px-4 font-medium text-gray-900">
-                    Progress
-                  </th>
-                  <th className="text-center py-3 px-4 font-medium text-gray-900">
-                    Trend
-                  </th>
-                  <th className="text-center py-3 px-4 font-medium text-gray-900">
+                  <th className="text-center py-3 px-4 font-medium text-gray-900 whitespace-nowrap">
                     Impact
                   </th>
-                  <th className="text-left py-3 px-4 font-medium text-gray-900">
+                  <th className="text-right py-3 px-4 font-medium text-gray-900 whitespace-nowrap">
+                    Current Value
+                  </th>
+                  <th className="text-right py-3 px-4 font-medium text-gray-900 whitespace-nowrap">
+                    Target Value
+                  </th>
+                  <th className="text-center py-3 px-4 font-medium text-gray-900 whitespace-nowrap">
+                    Progress
+                  </th>
+                  <th className="text-center py-3 px-4 font-medium text-gray-900 whitespace-nowrap">
+                    Trend
+                  </th>
+                  <th className="text-center py-3 px-4 font-medium text-gray-900 whitespace-nowrap">
+                    Status
+                  </th>
+                  <th className="text-center py-3 px-4 font-medium text-gray-900 whitespace-nowrap">
+                    Driver Type
+                  </th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-900 whitespace-nowrap">
                     Linked Budget Items
+                  </th>
+                  <th className="text-left py-3 px-4 font-medium text-gray-900 whitespace-nowrap">
+                    Driver Link
+                  </th>
+                  <th className="text-center py-3 px-4 font-medium text-gray-900 whitespace-nowrap">
+                    Data Source
                   </th>
                 </tr>
               </thead>
@@ -249,17 +299,32 @@ export function PerformanceDrivers({
                     driver.targetValue,
                   );
 
+                  const getStatusColor = (status: string) => {
+                    switch (status) {
+                      case "on_track":
+                        return "bg-green-100 text-green-800";
+                      case "at_risk":
+                        return "bg-yellow-100 text-yellow-800";
+                      case "critical":
+                        return "bg-red-100 text-red-800";
+                      case "exceeding_target":
+                        return "bg-blue-100 text-blue-800";
+                      default:
+                        return "bg-gray-100 text-gray-800";
+                    }
+                  };
+
                   return (
                     <tr key={driver.id} className="border-b hover:bg-gray-50">
-                      <td className="py-3 px-4">
+                      <td className="py-3 px-4 whitespace-nowrap">
                         <div className="flex items-center gap-2">
-                          <Target className="h-4 w-4 text-gray-400" />
+                          <Target className="h-4 w-4 text-gray-400 flex-shrink-0" />
                           <span className="font-medium text-gray-900">
                             {driver.name}
                           </span>
                         </div>
                       </td>
-                      <td className="text-center py-3 px-4">
+                      <td className="text-center py-3 px-4 whitespace-nowrap">
                         <div className="flex items-center justify-center gap-2">
                           {getCategoryIcon(driver.category)}
                           <Badge className={getCategoryColor(driver.category)}>
@@ -267,15 +332,20 @@ export function PerformanceDrivers({
                           </Badge>
                         </div>
                       </td>
-                      <td className="text-right py-3 px-4 font-medium">
+                      <td className="text-center py-3 px-4 whitespace-nowrap">
+                        <Badge className={getImpactColor(driver.impact)}>
+                          {driver.impact}
+                        </Badge>
+                      </td>
+                      <td className="text-right py-3 px-4 font-medium whitespace-nowrap">
                         {driver.currentValue.toLocaleString()}
                         {driver.unit}
                       </td>
-                      <td className="text-right py-3 px-4 font-medium">
+                      <td className="text-right py-3 px-4 font-medium whitespace-nowrap">
                         {driver.targetValue.toLocaleString()}
                         {driver.unit}
                       </td>
-                      <td className="text-center py-3 px-4">
+                      <td className="text-center py-3 px-4 whitespace-nowrap">
                         <div className="flex items-center justify-center gap-2">
                           <div className="w-16">
                             <Progress
@@ -290,7 +360,7 @@ export function PerformanceDrivers({
                           </span>
                         </div>
                       </td>
-                      <td className="text-center py-3 px-4">
+                      <td className="text-center py-3 px-4 whitespace-nowrap">
                         <div className="flex items-center justify-center gap-2">
                           {getTrendIcon(driver.trend)}
                           <Badge className={getTrendColor(driver.trend)}>
@@ -298,9 +368,14 @@ export function PerformanceDrivers({
                           </Badge>
                         </div>
                       </td>
-                      <td className="text-center py-3 px-4">
-                        <Badge className={getImpactColor(driver.impact)}>
-                          {driver.impact}
+                      <td className="text-center py-3 px-4 whitespace-nowrap">
+                        <Badge className={getStatusColor(driver.status)}>
+                          {driver.status.replace("_", " ")}
+                        </Badge>
+                      </td>
+                      <td className="text-center py-3 px-4 whitespace-nowrap">
+                        <Badge variant="outline" className="text-xs">
+                          {driver.driverType}
                         </Badge>
                       </td>
                       <td className="py-3 px-4">
@@ -321,6 +396,25 @@ export function PerformanceDrivers({
                             </span>
                           )}
                         </div>
+                      </td>
+                      <td className="py-3 px-4">
+                        <div className="max-w-xs">
+                          {driver.driverLink.slice(0, 2).map((item, index) => (
+                            <div key={index} className="text-sm text-gray-600">
+                              • {item}
+                            </div>
+                          ))}
+                          {driver.driverLink.length > 2 && (
+                            <span className="text-xs text-gray-500">
+                              +{driver.driverLink.length - 2} more
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="text-center py-3 px-4 whitespace-nowrap">
+                        <Badge variant="secondary" className="text-xs">
+                          {driver.dataSource.replace("_", " ")}
+                        </Badge>
                       </td>
                     </tr>
                   );
@@ -462,6 +556,23 @@ export function PerformanceDrivers({
           </CardContent>
         </Card>
       </div>
+
+      {/* Modals */}
+      <AddKPIModal
+        isOpen={showAddKPIModal}
+        onClose={() => setShowAddKPIModal(false)}
+        onSave={onAddDriver}
+        linkedBudgetItems={budgets?.map((b) => b.period) || []}
+      />
+
+      <GenerateInsightsModal
+        isOpen={showInsightsModal}
+        onClose={() => setShowInsightsModal(false)}
+        insights={insights}
+        performanceDrivers={performanceDrivers}
+        risks={risks}
+        budgets={budgets || []}
+      />
     </div>
   );
 }

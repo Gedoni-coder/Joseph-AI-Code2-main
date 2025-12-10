@@ -190,6 +190,117 @@ export function useFinancialAdvisoryData() {
     return newProjection;
   };
 
+  const addRisk = (risk: Omit<RiskAssessment, "id" | "lastReviewed">) => {
+    const newRisk: RiskAssessment = {
+      ...risk,
+      id: `risk-${Date.now()}`,
+      lastReviewed: new Date().toISOString(),
+    };
+    setRiskAssessments((prev) => [newRisk, ...prev]);
+    return newRisk;
+  };
+
+  const addPerformanceDriver = (
+    driver: Omit<
+      PerformanceDriver,
+      "id" | "createdAt" | "lastUpdated" | "kpiHistory"
+    >,
+  ) => {
+    const newDriver: PerformanceDriver = {
+      ...driver,
+      id: `driver-${Date.now()}`,
+      createdAt: new Date().toISOString(),
+      lastUpdated: new Date().toISOString(),
+      kpiHistory: [
+        {
+          date: new Date().toISOString().split("T")[0],
+          value: driver.currentValue,
+        },
+      ],
+    };
+    setPerformanceDrivers((prev) => [newDriver, ...prev]);
+    return newDriver;
+  };
+
+  const generateInsights = () => {
+    // Generate insights based on current data
+    const insights: AdvisoryInsight[] = [
+      {
+        id: `insight-${Date.now()}-1`,
+        type: "recommendation",
+        title: "KPI Performance Analysis",
+        description:
+          "Analysis of current KPI performance against targets and thresholds",
+        priority: "high",
+        category: "cost_optimization",
+        financialImpact: {
+          estimated: 250000,
+          timeframe: "90 days",
+          confidence: 82,
+        },
+        actionItems: [
+          "Review underperforming KPIs in detail",
+          "Adjust resource allocation to support at-risk metrics",
+          "Implement daily monitoring for critical thresholds",
+        ],
+        relatedMetrics: performanceDrivers.map((d) => d.name),
+        createdAt: new Date().toISOString(),
+        status: "new",
+      },
+      {
+        id: `insight-${Date.now()}-2`,
+        type: "opportunity",
+        title: "Budget-KPI Alignment Improvement",
+        description:
+          "Opportunities to strengthen alignment between budgets and performance drivers",
+        priority: "medium",
+        category: "investment",
+        financialImpact: {
+          estimated: 180000,
+          timeframe: "60 days",
+          confidence: 75,
+        },
+        actionItems: [
+          "Link additional budget categories to key performance drivers",
+          "Establish automated variance reporting between budgets and KPIs",
+          "Create feedback loops for budget reforecasting based on KPI changes",
+        ],
+        relatedMetrics: [
+          "Budget Variance",
+          "KPI Variance",
+          "Forecast Accuracy",
+        ],
+        createdAt: new Date().toISOString(),
+        status: "new",
+      },
+      {
+        id: `insight-${Date.now()}-3`,
+        type: "alert",
+        title: "Risk Threshold Exposure",
+        description:
+          "Several KPIs approaching critical thresholds requiring immediate attention",
+        priority: "high",
+        category: "risk_management",
+        financialImpact: {
+          estimated: -150000,
+          timeframe: "30 days",
+          confidence: 88,
+        },
+        actionItems: [
+          "Increase monitoring frequency for at-risk KPIs",
+          "Prepare contingency budget adjustments",
+          "Communicate risks to leadership immediately",
+        ],
+        relatedMetrics: performanceDrivers
+          .filter((d) => d.status === "at_risk" || d.status === "critical")
+          .map((d) => d.name),
+        createdAt: new Date().toISOString(),
+        status: "new",
+      },
+    ];
+    return insights;
+  };
+
   return {
     // Data
     budgetForecasts,
@@ -214,5 +325,8 @@ export function useFinancialAdvisoryData() {
     updateRiskStatus,
     updateInsightStatus,
     addCashFlowProjection,
+    addRisk,
+    addPerformanceDriver,
+    generateInsights,
   };
 }

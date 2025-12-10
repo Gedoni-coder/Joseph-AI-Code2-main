@@ -39,6 +39,7 @@ export function ScenarioTesting({
   const [selectedType, setSelectedType] = useState("all");
   const [testVariable, setTestVariable] = useState("Revenue");
   const [changePercent, setChangePercent] = useState("-30");
+  const [testType, setTestType] = useState<"stress" | "sensitivity">("stress");
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -98,38 +99,114 @@ export function ScenarioTesting({
   });
 
   const handleRunScenario = () => {
-    const baseValue = testVariable === "Revenue" ? 2500000 : 1500000;
-    const testValue = baseValue * (1 + parseInt(changePercent) / 100);
+    const changeValue = parseInt(changePercent);
+
+    // Base financial values
+    const baseRevenue = 2500000;
+    const baseExpenses = 1500000;
+    const baseNetIncome = baseRevenue - baseExpenses;
+
+    // Get the base and test values based on the variable
+    let baseValue: number;
+    let testValue: number;
+    let resultingRevenue: number;
+    let resultingExpenses: number;
+    let resultingNetIncome: number;
+    let cashFlowImpact: number;
+
+    switch (testVariable) {
+      case "Revenue":
+        baseValue = baseRevenue;
+        testValue = baseRevenue * (1 + changeValue / 100);
+        resultingRevenue = testValue;
+        resultingExpenses = baseExpenses;
+        resultingNetIncome = testValue - baseExpenses;
+        cashFlowImpact = (testValue - baseRevenue) * 0.8; // 80% flows through to cash
+        break;
+
+      case "Expenses":
+        baseValue = baseExpenses;
+        testValue = baseExpenses * (1 + changeValue / 100);
+        resultingRevenue = baseRevenue;
+        resultingExpenses = testValue;
+        resultingNetIncome = baseRevenue - testValue;
+        cashFlowImpact = -(testValue - baseExpenses) * 0.8; // Negative impact to cash
+        break;
+
+      case "Market Share":
+        baseValue = 100; // Market share in percentage
+        testValue = baseValue + changeValue;
+        // 1% market share increase typically increases revenue by ~0.5-1%
+        const marketShareRevenueFactor = changeValue * 15000;
+        resultingRevenue = baseRevenue + marketShareRevenueFactor;
+        resultingExpenses = baseExpenses + marketShareRevenueFactor * 0.3; // 30% expense increase
+        resultingNetIncome = resultingRevenue - resultingExpenses;
+        cashFlowImpact = marketShareRevenueFactor * 0.7;
+        break;
+
+      case "Interest Rates":
+        baseValue = 5; // Base interest rate
+        testValue = baseValue + changeValue;
+        // Interest rate impact on debt service (assume 20% of expenses)
+        const debtServiceExpense = baseExpenses * 0.2;
+        const rateChangeImpact = debtServiceExpense * (changeValue / 100);
+        resultingRevenue = baseRevenue;
+        resultingExpenses = baseExpenses + rateChangeImpact;
+        resultingNetIncome = resultingRevenue - resultingExpenses;
+        cashFlowImpact = -rateChangeImpact * 0.9;
+        break;
+
+      default:
+        baseValue = 0;
+        testValue = 0;
+        resultingRevenue = baseRevenue;
+        resultingExpenses = baseExpenses;
+        resultingNetIncome = baseNetIncome;
+        cashFlowImpact = 0;
+    }
+
+    // Calculate impact severity based on percentage change and impact magnitude
+    const impactMagnitude = Math.abs(resultingNetIncome - baseNetIncome);
+    const impactPercentage = (impactMagnitude / baseNetIncome) * 100;
+
+    let impactSeverity: "low" | "medium" | "high" | "critical";
+    if (impactPercentage > 30) {
+      impactSeverity = "critical";
+    } else if (impactPercentage > 15) {
+      impactSeverity = "high";
+    } else if (impactPercentage > 5) {
+      impactSeverity = "medium";
+    } else {
+      impactSeverity = "low";
+    }
+
+    // Calculate probability based on magnitude (extreme changes are less likely)
+    const probabilityBaseline = testType === "stress" ? 30 : 50;
+    const probability = Math.max(
+      5,
+      probabilityBaseline - Math.abs(changeValue) * 0.5,
+    );
 
     const newScenario = {
-      name: `${testVariable} ${changePercent}% Scenario`,
-      description: `${Math.abs(parseInt(changePercent))}% ${parseInt(changePercent) > 0 ? "increase" : "decrease"} in ${testVariable.toLowerCase()}`,
-      type: "stress" as const,
+      name: `${testVariable} ${changePercent}% Scenario (${testType})`,
+      description: `${Math.abs(changeValue)}% ${changeValue > 0 ? "increase" : "decrease"} in ${testVariable.toLowerCase()} using ${testType} testing methodology`,
+      type: testType,
       parameters: [
         {
           variable: testVariable,
           baseValue,
           testValue,
-          changePercent: parseInt(changePercent),
+          changePercent: changeValue,
         },
       ],
       results: {
-        revenue: testVariable === "Revenue" ? testValue : 2500000,
-        expenses: testVariable === "Expenses" ? testValue : 1500000,
-        netIncome:
-          (testVariable === "Revenue" ? testValue : 2500000) -
-          (testVariable === "Expenses" ? testValue : 1500000),
-        cashFlow: Math.random() * 500000,
-        impactSeverity:
-          Math.abs(parseInt(changePercent)) > 25
-            ? "critical"
-            : Math.abs(parseInt(changePercent)) > 15
-              ? "high"
-              : Math.abs(parseInt(changePercent)) > 5
-                ? "medium"
-                : "low",
+        revenue: Math.round(resultingRevenue),
+        expenses: Math.round(resultingExpenses),
+        netIncome: Math.round(resultingNetIncome),
+        cashFlow: Math.round(cashFlowImpact),
+        impactSeverity,
       },
-      probability: Math.max(5, 50 - Math.abs(parseInt(changePercent))),
+      probability: Math.round(probability),
     };
 
     onRunScenario(newScenario);
@@ -213,7 +290,10 @@ export function ScenarioTesting({
               <label className="text-sm font-medium text-gray-700">
                 Test Type
               </label>
-              <Select defaultValue="stress">
+              <Select
+                value={testType}
+                onValueChange={(value: any) => setTestType(value)}
+              >
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>

@@ -76,7 +76,17 @@ export interface RiskAssessment {
 export interface PerformanceDriver {
   id: string;
   name: string;
-  category: "revenue" | "cost" | "efficiency" | "growth";
+  description?: string;
+  category:
+    | "revenue"
+    | "cost"
+    | "efficiency"
+    | "growth"
+    | "financial"
+    | "operational"
+    | "sales"
+    | "productivity"
+    | "risk";
   currentValue: number;
   targetValue: number;
   unit: string;
@@ -87,6 +97,15 @@ export interface PerformanceDriver {
     date: string;
     value: number;
   }[];
+  driverType: "leading" | "lagging";
+  unitOfMeasure: "%" | "$" | "ratio" | "count" | "days" | "hours" | "score";
+  warningThreshold: number;
+  criticalThreshold: number;
+  dataSource: "manual" | "upload" | "auto_sync";
+  status: "on_track" | "at_risk" | "critical" | "exceeding_target";
+  driverLink: string[];
+  createdAt: string;
+  lastUpdated: string;
 }
 
 export interface AdvisoryInsight {
@@ -311,6 +330,7 @@ export const mockPerformanceDrivers: PerformanceDriver[] = [
   {
     id: "driver-1",
     name: "Gross Margin",
+    description: "Percentage of revenue remaining after COGS",
     category: "revenue",
     currentValue: 28,
     targetValue: 32,
@@ -324,10 +344,20 @@ export const mockPerformanceDrivers: PerformanceDriver[] = [
       { date: "2024-01-15", value: 27.8 },
       { date: "2024-01-22", value: 28.0 },
     ],
+    driverType: "lagging",
+    unitOfMeasure: "%",
+    warningThreshold: 30,
+    criticalThreshold: 25,
+    dataSource: "auto_sync",
+    status: "at_risk",
+    driverLink: ["Revenue Forecasts", "Cost Structure", "Pricing Strategy"],
+    createdAt: "2023-10-15T08:00:00Z",
+    lastUpdated: "2024-01-22T14:30:00Z",
   },
   {
     id: "driver-2",
     name: "Customer Acquisition Cost",
+    description: "Average cost to acquire a new customer",
     category: "cost",
     currentValue: 145,
     targetValue: 120,
@@ -341,6 +371,96 @@ export const mockPerformanceDrivers: PerformanceDriver[] = [
       { date: "2024-01-15", value: 152 },
       { date: "2024-01-22", value: 145 },
     ],
+    driverType: "leading",
+    unitOfMeasure: "$",
+    warningThreshold: 135,
+    criticalThreshold: 150,
+    dataSource: "manual",
+    status: "on_track",
+    driverLink: ["Marketing Budget", "Sales Operations", "Customer Growth"],
+    createdAt: "2023-11-20T10:15:00Z",
+    lastUpdated: "2024-01-22T10:00:00Z",
+  },
+  {
+    id: "driver-3",
+    name: "Customer Lifetime Value",
+    description: "Total revenue expected from a customer",
+    category: "revenue",
+    currentValue: 4200,
+    targetValue: 5000,
+    unit: "$",
+    trend: "improving",
+    impact: "high",
+    linkedBudgetItems: ["Revenue Per Customer", "Retention Rate"],
+    kpiHistory: [
+      { date: "2024-01-01", value: 3800 },
+      { date: "2024-01-08", value: 3950 },
+      { date: "2024-01-15", value: 4100 },
+      { date: "2024-01-22", value: 4200 },
+    ],
+    driverType: "lagging",
+    unitOfMeasure: "$",
+    warningThreshold: 4500,
+    criticalThreshold: 4000,
+    dataSource: "auto_sync",
+    status: "on_track",
+    driverLink: ["Revenue Model", "Customer Retention", "Upsell Strategy"],
+    createdAt: "2023-12-01T09:00:00Z",
+    lastUpdated: "2024-01-22T14:30:00Z",
+  },
+  {
+    id: "driver-4",
+    name: "Operating Expense Ratio",
+    description: "Operating expenses as percentage of revenue",
+    category: "cost",
+    currentValue: 42,
+    targetValue: 38,
+    unit: "%",
+    trend: "declining",
+    impact: "high",
+    linkedBudgetItems: ["Operating Expenses", "Revenue Budget"],
+    kpiHistory: [
+      { date: "2024-01-01", value: 45 },
+      { date: "2024-01-08", value: 43.5 },
+      { date: "2024-01-15", value: 42.8 },
+      { date: "2024-01-22", value: 42 },
+    ],
+    driverType: "lagging",
+    unitOfMeasure: "%",
+    warningThreshold: 40,
+    criticalThreshold: 45,
+    dataSource: "auto_sync",
+    status: "on_track",
+    driverLink: ["Operating Budget", "Cost Controls", "Efficiency Initiatives"],
+    createdAt: "2023-11-10T11:30:00Z",
+    lastUpdated: "2024-01-22T14:30:00Z",
+  },
+  {
+    id: "driver-5",
+    name: "Cash Conversion Cycle",
+    description: "Days between paying suppliers and collecting from customers",
+    category: "efficiency",
+    currentValue: 42,
+    targetValue: 35,
+    unit: "days",
+    trend: "improving",
+    impact: "medium",
+    linkedBudgetItems: ["Working Capital", "Receivables", "Payables"],
+    kpiHistory: [
+      { date: "2024-01-01", value: 48 },
+      { date: "2024-01-08", value: 46 },
+      { date: "2024-01-15", value: 44 },
+      { date: "2024-01-22", value: 42 },
+    ],
+    driverType: "lagging",
+    unitOfMeasure: "days",
+    warningThreshold: 40,
+    criticalThreshold: 50,
+    dataSource: "auto_sync",
+    status: "on_track",
+    driverLink: ["Inventory Management", "Receivables", "Payables Management"],
+    createdAt: "2023-12-05T13:00:00Z",
+    lastUpdated: "2024-01-22T14:30:00Z",
   },
 ];
 
