@@ -214,7 +214,7 @@ export function ScenarioTesting({
               <label className="text-sm font-medium text-gray-700">
                 Test Type
               </label>
-              <Select defaultValue="stress">
+              <Select value={testType} onValueChange={(value: any) => setTestType(value)}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
