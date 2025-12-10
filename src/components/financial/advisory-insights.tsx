@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { AdvisoryInsight } from "../../lib/financial-advisory-data";
+import { AdvisoryInsight, BudgetForecast, CashFlowProjection, PerformanceDriver, RiskAssessment } from "../../lib/financial-advisory-data";
+import { generateInsightsReport, GeneratedInsightReport } from "../../lib/ai-insights-engine";
+import { InsightsLoadingDialog } from "./insights-loading-dialog";
+import { InsightsReportPanel } from "./insights-report-panel";
 import {
   Card,
   CardContent,
@@ -43,20 +46,38 @@ interface AdvisoryInsightsProps {
     id: string,
     status: AdvisoryInsight["status"],
   ) => void;
+  budgets?: BudgetForecast[];
+  cashFlows?: CashFlowProjection[];
+  drivers?: PerformanceDriver[];
+  risks?: RiskAssessment[];
 }
 
 export function AdvisoryInsights({
   advisoryInsights,
   onUpdateInsightStatus,
+  budgets = [],
+  cashFlows = [],
+  drivers = [],
+  risks = [],
 }: AdvisoryInsightsProps) {
   const [selectedType, setSelectedType] = useState("all");
   const [selectedPriority, setSelectedPriority] = useState("all");
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [generatedReport, setGeneratedReport] = useState<GeneratedInsightReport | null>(null);
+  const [showReportPanel, setShowReportPanel] = useState(false);
 
-  const handleGenerateInsights = () => {
-    alert(
-      "Generate AI Insights:\n\nThis would analyze your financial data and generate new insights including:\n- Cost optimization opportunities\n- Revenue growth strategies\n- Investment recommendations\n- Risk mitigation plans\n\nProcessing time: 2-3 minutes",
-    );
+  const handleGenerateInsights = async () => {
+    setIsGenerating(true);
+
+    // Simulate processing time (2-3 seconds)
+    await new Promise(resolve => setTimeout(resolve, 3000));
+
+    // Generate the insights report
+    const report = generateInsightsReport(budgets, cashFlows, drivers, risks);
+    setGeneratedReport(report);
+    setShowReportPanel(true);
+    setIsGenerating(false);
   };
 
   const filteredInsights = advisoryInsights.filter((insight) => {
@@ -184,6 +205,9 @@ export function AdvisoryInsights({
 
   return (
     <TooltipProvider>
+      <InsightsLoadingDialog isOpen={isGenerating} />
+      <InsightsReportPanel report={generatedReport} onClose={() => setShowReportPanel(false)} />
+
       <div className="space-y-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">

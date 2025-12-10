@@ -65,6 +65,7 @@ export default function FinancialAdvisory() {
     updateInsightStatus,
     addCashFlowProjection,
     addRisk,
+    addPerformanceDriver,
   } = useFinancialAdvisoryData();
 
   const [activeTab, setActiveTab] = useState("strategic-budgeting");
@@ -550,6 +551,10 @@ Implement comprehensive KPI dashboard for financial performance tracking. Establ
               <AdvisoryInsights
                 advisoryInsights={advisoryInsights}
                 onUpdateInsightStatus={updateInsightStatus}
+                budgets={budgetForecasts}
+                cashFlows={currentCashFlows}
+                drivers={performanceDrivers}
+                risks={riskAssessments}
               />
             </TabsContent>
           </Tabs>

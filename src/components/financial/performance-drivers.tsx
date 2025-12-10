@@ -34,7 +34,20 @@ import {
   Activity,
   Minus,
   Plus,
+  MoreVertical,
+  Edit2,
+  Eye,
+  Users,
+  CheckCircle,
+  Trash2,
+  Clock,
 } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 interface PerformanceDriversProps {
   performanceDrivers: PerformanceDriver[];
@@ -286,6 +299,9 @@ export function PerformanceDrivers({
                   <th className="text-center py-3 px-4 font-medium text-gray-900 whitespace-nowrap">
                     Data Source
                   </th>
+                  <th className="text-center py-3 px-4 font-medium text-gray-900 whitespace-nowrap">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -415,6 +431,41 @@ export function PerformanceDrivers({
                         <Badge variant="secondary" className="text-xs">
                           {driver.dataSource.replace("_", " ")}
                         </Badge>
+                      </td>
+                      <td className="text-center py-3 px-4 whitespace-nowrap">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="sm">
+                              <MoreVertical className="h-4 w-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="w-56">
+                            <DropdownMenuItem className="flex items-center gap-2">
+                              <Edit2 className="h-4 w-4" />
+                              <span>Edit KPI</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center gap-2">
+                              <Eye className="h-4 w-4" />
+                              <span>View Details</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center gap-2">
+                              <Users className="h-4 w-4" />
+                              <span>Assign Owner</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center gap-2">
+                              <Clock className="h-4 w-4" />
+                              <span>Create Task/Reminder</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center gap-2">
+                              <CheckCircle className="h-4 w-4" />
+                              <span>Acknowledge/Approve</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className="flex items-center gap-2 text-red-600">
+                              <Trash2 className="h-4 w-4" />
+                              <span>Remove KPI</span>
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </td>
                     </tr>
                   );
