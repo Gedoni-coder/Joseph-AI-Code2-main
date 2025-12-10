@@ -40,14 +40,176 @@ interface CashFlowPlanningProps {
   onAddProjection: (projection: Omit<CashFlowProjection, "id">) => void;
 }
 
+type TimeScope = "weekly" | "monthly" | "yearly";
+
+const aggregateCashFlowsByMonth = (
+  cashFlows: CashFlowProjection[],
+): CashFlowProjection[] => {
+  const grouped: { [key: string]: CashFlowProjection[] } = {};
+
+  cashFlows.forEach((cf) => {
+    const date = new Date(cf.date);
+    const yearMonth = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
+
+    if (!grouped[yearMonth]) {
+      grouped[yearMonth] = [];
+    }
+    grouped[yearMonth].push(cf);
+  });
+
+  return Object.entries(grouped).map(([yearMonth, flows]) => {
+    const firstFlow = flows[0];
+    const lastFlow = flows[flows.length - 1];
+
+    const totalInflows = flows.reduce(
+      (sum, flow) =>
+        sum +
+        flow.inflows.operatingCash +
+        flow.inflows.accountsReceivable +
+        flow.inflows.otherIncome,
+      0,
+    );
+
+    const totalOutflows = flows.reduce(
+      (sum, flow) =>
+        sum +
+        flow.outflows.operatingExpenses +
+        flow.outflows.accountsPayable +
+        flow.outflows.capitalExpenditure +
+        flow.outflows.debtService,
+      0,
+    );
+
+    const avgLiquidityRatio =
+      flows.reduce((sum, flow) => sum + flow.liquidityRatio, 0) / flows.length;
+    const avgDaysOfCash =
+      flows.reduce((sum, flow) => sum + flow.daysOfCash, 0) / flows.length;
+
+    return {
+      id: `monthly-${yearMonth}`,
+      date: flows[Math.floor(flows.length / 2)].date,
+      openingBalance: firstFlow.openingBalance,
+      inflows: {
+        operatingCash: totalInflows * 0.65,
+        accountsReceivable: totalInflows * 0.25,
+        otherIncome: totalInflows * 0.1,
+      },
+      outflows: {
+        operatingExpenses: totalOutflows * 0.5,
+        accountsPayable: totalOutflows * 0.3,
+        capitalExpenditure: totalOutflows * 0.15,
+        debtService: totalOutflows * 0.05,
+      },
+      netCashFlow: totalInflows - totalOutflows,
+      closingBalance: lastFlow.closingBalance,
+      liquidityRatio: avgLiquidityRatio,
+      daysOfCash: Math.round(avgDaysOfCash),
+    };
+  });
+};
+
+const aggregateCashFlowsByYear = (
+  cashFlows: CashFlowProjection[],
+): CashFlowProjection[] => {
+  const grouped: { [key: string]: CashFlowProjection[] } = {};
+
+  cashFlows.forEach((cf) => {
+    const date = new Date(cf.date);
+    const year = date.getFullYear().toString();
+
+    if (!grouped[year]) {
+      grouped[year] = [];
+    }
+    grouped[year].push(cf);
+  });
+
+  return Object.entries(grouped).map(([year, flows]) => {
+    const firstFlow = flows[0];
+    const lastFlow = flows[flows.length - 1];
+
+    const totalInflows = flows.reduce(
+      (sum, flow) =>
+        sum +
+        flow.inflows.operatingCash +
+        flow.inflows.accountsReceivable +
+        flow.inflows.otherIncome,
+      0,
+    );
+
+    const totalOutflows = flows.reduce(
+      (sum, flow) =>
+        sum +
+        flow.outflows.operatingExpenses +
+        flow.outflows.accountsPayable +
+        flow.outflows.capitalExpenditure +
+        flow.outflows.debtService,
+      0,
+    );
+
+    const avgLiquidityRatio =
+      flows.reduce((sum, flow) => sum + flow.liquidityRatio, 0) / flows.length;
+    const avgDaysOfCash =
+      flows.reduce((sum, flow) => sum + flow.daysOfCash, 0) / flows.length;
+
+    return {
+      id: `yearly-${year}`,
+      date: flows[Math.floor(flows.length / 2)].date,
+      openingBalance: firstFlow.openingBalance,
+      inflows: {
+        operatingCash: totalInflows * 0.65,
+        accountsReceivable: totalInflows * 0.25,
+        otherIncome: totalInflows * 0.1,
+      },
+      outflows: {
+        operatingExpenses: totalOutflows * 0.5,
+        accountsPayable: totalOutflows * 0.3,
+        capitalExpenditure: totalOutflows * 0.15,
+        debtService: totalOutflows * 0.05,
+      },
+      netCashFlow: totalInflows - totalOutflows,
+      closingBalance: lastFlow.closingBalance,
+      liquidityRatio: avgLiquidityRatio,
+      daysOfCash: Math.round(avgDaysOfCash),
+    };
+  });
+};
+
+const getFilteredCashFlows = (
+  cashFlows: CashFlowProjection[],
+  scope: TimeScope,
+): CashFlowProjection[] => {
+  switch (scope) {
+    case "weekly":
+      return cashFlows;
+    case "monthly":
+      return aggregateCashFlowsByMonth(cashFlows);
+    case "yearly":
+      return aggregateCashFlowsByYear(cashFlows);
+    default:
+      return cashFlows;
+  }
+};
+
 export function CashFlowPlanning({
   currentCashFlows,
   cashFlowProjections,
   liquidityMetrics,
   onAddProjection,
 }: CashFlowPlanningProps) {
-  const [selectedTimeframe, setSelectedTimeframe] = useState("weekly");
+  const [currentCashFlowScope, setCurrentCashFlowScope] =
+    useState<TimeScope>("weekly");
+  const [projectionScope, setProjectionScope] = useState<TimeScope>("weekly");
   const [createProjectionOpen, setCreateProjectionOpen] = useState(false);
+
+  const filteredCurrentCashFlows = useMemo(
+    () => getFilteredCashFlows(currentCashFlows, currentCashFlowScope),
+    [currentCashFlows, currentCashFlowScope],
+  );
+
+  const filteredProjections = useMemo(
+    () => getFilteredCashFlows(cashFlowProjections, projectionScope),
+    [cashFlowProjections, projectionScope],
+  );
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
