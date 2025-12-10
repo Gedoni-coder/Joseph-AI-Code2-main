@@ -28,6 +28,7 @@ import {
   Zap,
   Activity,
   Minus,
+  Plus,
 } from "lucide-react";
 
 interface PerformanceDriversProps {
