@@ -508,6 +508,7 @@ Implement comprehensive KPI dashboard for financial performance tracking. Establ
 
             <TabsContent value="cash-flow" className="space-y-6">
               <CashFlowPlanning
+                currentCashFlows={currentCashFlows}
                 cashFlowProjections={cashFlowProjections}
                 liquidityMetrics={liquidityMetrics}
                 onAddProjection={addCashFlowProjection}
