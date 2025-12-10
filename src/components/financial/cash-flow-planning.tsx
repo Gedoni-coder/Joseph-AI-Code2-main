@@ -261,6 +261,125 @@ export function CashFlowPlanning({
         </CardContent>
       </Card>
 
+      {/* Current Cash Flow */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Current Cash Flow</CardTitle>
+          <CardDescription>
+            Existing cash flows with daily, weekly, monthly and yearly scope
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b">
+                  <th className="text-left py-3 px-4 font-medium text-gray-900">
+                    Date
+                  </th>
+                  <th className="text-right py-3 px-4 font-medium text-gray-900">
+                    Opening Balance
+                  </th>
+                  <th className="text-right py-3 px-4 font-medium text-gray-900">
+                    Total Inflows
+                  </th>
+                  <th className="text-right py-3 px-4 font-medium text-gray-900">
+                    Total Outflows
+                  </th>
+                  <th className="text-right py-3 px-4 font-medium text-gray-900">
+                    Net Cash Flow
+                  </th>
+                  <th className="text-right py-3 px-4 font-medium text-gray-900">
+                    Closing Balance
+                  </th>
+                  <th className="text-center py-3 px-4 font-medium text-gray-900">
+                    Liquidity Ratio
+                  </th>
+                  <th className="text-center py-3 px-4 font-medium text-gray-900">
+                    Days of Cash
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentCashFlows.map((cashFlow) => {
+                  const totalInflow =
+                    cashFlow.inflows.operatingCash +
+                    cashFlow.inflows.accountsReceivable +
+                    cashFlow.inflows.otherIncome;
+                  const totalOutflow =
+                    cashFlow.outflows.operatingExpenses +
+                    cashFlow.outflows.accountsPayable +
+                    cashFlow.outflows.capitalExpenditure +
+                    cashFlow.outflows.debtService;
+
+                  return (
+                    <tr
+                      key={cashFlow.id}
+                      className="border-b hover:bg-gray-50"
+                    >
+                      <td className="py-3 px-4">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="h-4 w-4 text-gray-400" />
+                          <span className="font-medium">
+                            {new Date(cashFlow.date).toLocaleDateString()}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="text-right py-3 px-4 font-medium">
+                        {formatCurrency(cashFlow.openingBalance)}
+                      </td>
+                      <td className="text-right py-3 px-4 font-medium text-green-600">
+                        {formatCurrency(totalInflow)}
+                      </td>
+                      <td className="text-right py-3 px-4 font-medium text-red-600">
+                        {formatCurrency(totalOutflow)}
+                      </td>
+                      <td className="text-right py-3 px-4 font-medium">
+                        <span
+                          className={
+                            cashFlow.netCashFlow >= 0
+                              ? "text-green-600"
+                              : "text-red-600"
+                          }
+                        >
+                          {formatCurrency(cashFlow.netCashFlow)}
+                        </span>
+                      </td>
+                      <td className="text-right py-3 px-4 font-bold">
+                        {formatCurrency(cashFlow.closingBalance)}
+                      </td>
+                      <td className="text-center py-3 px-4">
+                        <Badge
+                          className={
+                            cashFlow.liquidityRatio >= 2.5
+                              ? "bg-green-100 text-green-800"
+                              : cashFlow.liquidityRatio >= 1.5
+                                ? "bg-yellow-100 text-yellow-800"
+                                : "bg-red-100 text-red-800"
+                          }
+                        >
+                          {cashFlow.liquidityRatio.toFixed(1)}
+                        </Badge>
+                      </td>
+                      <td className="text-center py-3 px-4">
+                        <div className="flex items-center justify-center gap-1">
+                          <span className="font-medium">
+                            {cashFlow.daysOfCash}
+                          </span>
+                          {cashFlow.daysOfCash < 30 && (
+                            <AlertTriangle className="h-4 w-4 text-red-500" />
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Cash Flow Projections */}
       <Card>
         <CardHeader>
