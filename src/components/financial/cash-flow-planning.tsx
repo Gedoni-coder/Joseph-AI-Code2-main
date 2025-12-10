@@ -385,7 +385,7 @@ export function CashFlowPlanning({
                   Cash Reserves
                 </p>
                 <p className="text-2xl font-bold text-purple-600">
-                  {Math.round(cashFlowProjections[0]?.daysOfCash || 0)} days
+                  {Math.round(filteredProjections[0]?.daysOfCash || 0)} days
                 </p>
               </div>
               <Shield className="h-8 w-8 text-purple-600" />
