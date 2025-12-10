@@ -547,6 +547,23 @@ export function PerformanceDrivers({
           </CardContent>
         </Card>
       </div>
+
+      {/* Modals */}
+      <AddKPIModal
+        isOpen={showAddKPIModal}
+        onClose={() => setShowAddKPIModal(false)}
+        onSave={onAddDriver}
+        linkedBudgetItems={budgets?.map((b) => b.period) || []}
+      />
+
+      <GenerateInsightsModal
+        isOpen={showInsightsModal}
+        onClose={() => setShowInsightsModal(false)}
+        insights={insights}
+        performanceDrivers={performanceDrivers}
+        risks={risks}
+        budgets={budgets || []}
+      />
     </div>
   );
 }
