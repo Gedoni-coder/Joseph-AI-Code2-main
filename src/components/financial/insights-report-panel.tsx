@@ -174,13 +174,14 @@ export function InsightsReportPanel({
               </CardHeader>
               <CardContent className="text-sm space-y-2">
                 <p className="text-gray-700">
-                  Health score: <strong>
+                  Health score:{" "}
+                  <strong>
                     {report.executiveSummary.overallHealthScore}/100
                   </strong>
                 </p>
                 <p className="text-gray-600 text-xs">
-                  {report.executiveSummary.financialPosition} financial
-                  position with stable operations and identified optimization
+                  {report.executiveSummary.financialPosition} financial position
+                  with stable operations and identified optimization
                   opportunities.
                 </p>
               </CardContent>
