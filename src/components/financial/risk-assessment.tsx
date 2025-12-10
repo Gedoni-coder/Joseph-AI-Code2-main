@@ -43,9 +43,22 @@ interface RiskAssessmentProps {
 export function RiskAssessmentComponent({
   riskAssessments,
   onUpdateRiskStatus,
+  onAddRisk,
 }: RiskAssessmentProps) {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("all");
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [adding, setAdding] = useState(false);
+  const [form, setForm] = useState({
+    riskName: "",
+    description: "",
+    category: "operational" as RiskAssessment["category"],
+    probability: 50,
+    impact: 50,
+    status: "identified" as RiskAssessment["status"],
+    currentMitigation: "",
+    recommendedActions: "",
+  });
 
   const filteredRisks = riskAssessments.filter((risk) => {
     if (selectedCategory !== "all" && risk.category !== selectedCategory)
