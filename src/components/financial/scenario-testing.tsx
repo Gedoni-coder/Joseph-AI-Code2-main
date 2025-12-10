@@ -39,6 +39,7 @@ export function ScenarioTesting({
   const [selectedType, setSelectedType] = useState("all");
   const [testVariable, setTestVariable] = useState("Revenue");
   const [changePercent, setChangePercent] = useState("-30");
+  const [testType, setTestType] = useState<"stress" | "sensitivity">("stress");
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
