@@ -25,7 +25,7 @@ import { downloadBusinessPlan } from "@/lib/business-plan-export";
 const STORAGE_KEY = "joseph_business_plans_v1";
 
 export default function BusinessPlanningFlow() {
-  const { feasibilityId } = useParams<{ feasibilityId: string }>();
+  const { planId } = useParams<{ planId: string }>();
   const navigate = useNavigate();
 
   const [businessPlan, setBusinessPlan] = useState<BusinessPlan | null>(null);
@@ -36,26 +36,32 @@ export default function BusinessPlanningFlow() {
 
   // Load existing business plan or create new one
   useEffect(() => {
-    if (!feasibilityId) return;
+    if (!planId) return;
 
     const stored = localStorage.getItem(STORAGE_KEY);
     const plans: BusinessPlan[] = stored ? JSON.parse(stored) : [];
-    let plan = plans.find((p) => p.feasibilityId === feasibilityId);
+    let plan = plans.find((p) => p.id === planId);
 
+    // If not found by plan ID, try to find by feasibility ID (for backwards compatibility)
     if (!plan) {
-      // Get the feasibility report to extract idea
+      plan = plans.find((p) => p.feasibilityId === planId);
+    }
+
+    // If still not found, create new plan (standalone)
+    if (!plan && planId.startsWith("idea_")) {
+      // This is a feasibility ID, get the idea from feasibility reports
       const feasibilityStored = localStorage.getItem("joseph_feasibility_ideas_v1");
       const feasibilityReports: any[] = feasibilityStored ? JSON.parse(feasibilityStored) : [];
-      const feasibilityReport = feasibilityReports.find((r) => r.id === feasibilityId);
+      const feasibilityReport = feasibilityReports.find((r) => r.id === planId);
       const idea = feasibilityReport?.idea || "Business Idea";
 
-      plan = createEmptyBusinessPlan(feasibilityId, idea);
+      plan = createEmptyBusinessPlan(planId, idea);
       plan.businessName = extractBusinessName(idea);
       savePlan(plan);
     }
 
     setBusinessPlan(plan);
-  }, [feasibilityId]);
+  }, [planId]);
 
   const savePlan = (plan: BusinessPlan) => {
     const stored = localStorage.getItem(STORAGE_KEY);
