@@ -284,7 +284,7 @@ export default function BusinessFeasibility() {
                 className={cn("cursor-pointer transition-all hover:shadow-md hover:-translate-y-0.5 bg-gradient-to-br from-white to-muted/20")}
                 onClick={() => { try { (navigate as any)(`/business-feasibility/${r.id}`); } catch {} }}
               >
-                <CardContent className="p-4">
+                <CardContent className="p-4 space-y-3">
                   <div className="flex items-start gap-3">
                     <div className="p-2 rounded bg-green-100 text-green-700">
                       <CheckCircle className="h-4 w-4" />
@@ -302,6 +302,17 @@ export default function BusinessFeasibility() {
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
+                  <Button
+                    size="sm"
+                    variant="default"
+                    className="w-full"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/business-planning/${r.id}`);
+                    }}
+                  >
+                    Start Planning
+                  </Button>
                 </CardContent>
               </Card>
             ))}
