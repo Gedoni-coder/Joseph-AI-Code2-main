@@ -59,8 +59,10 @@ Base all numbers on realistic market data.`;
         context: "business-planning" 
       },
     ];
-    const text = await generateAIResponse(history, { 
-      system: "You are a market analyst. Provide realistic market data and analysis." 
+    const text = await generateAIResponse(history, {
+      system: "You are a market analyst. Provide realistic market data and analysis.",
+      performWebSearch: false,
+      includeAppContext: false
     });
     return text || generateMockMarketValidation(idea);
   } catch {
@@ -95,8 +97,10 @@ Provide specific, realistic entries for each block.`;
         context: "business-planning" 
       },
     ];
-    const text = await generateAIResponse(history, { 
-      system: "You are a business model consultant. Create detailed, realistic business model canvases." 
+    const text = await generateAIResponse(history, {
+      system: "You are a business model consultant. Create detailed, realistic business model canvases.",
+      performWebSearch: false,
+      includeAppContext: false
     });
     return text || generateMockBusinessModelCanvas(idea);
   } catch {
@@ -129,8 +133,10 @@ Make it realistic and executable.`;
         context: "business-planning" 
       },
     ];
-    const text = await generateAIResponse(history, { 
-      system: "You are an operations consultant. Provide detailed, executable operational plans." 
+    const text = await generateAIResponse(history, {
+      system: "You are an operations consultant. Provide detailed, executable operational plans.",
+      performWebSearch: false,
+      includeAppContext: false
     });
     return text || generateMockOperationalPlan(idea);
   } catch {
@@ -164,8 +170,10 @@ Use realistic numbers based on the business type.`;
         context: "business-planning" 
       },
     ];
-    const text = await generateAIResponse(history, { 
-      system: "You are a financial analyst. Generate realistic financial projections with detailed breakdowns." 
+    const text = await generateAIResponse(history, {
+      system: "You are a financial analyst. Generate realistic financial projections with detailed breakdowns.",
+      performWebSearch: false,
+      includeAppContext: false
     });
     return text || generateMockFinancialPlanning(idea);
   } catch {
@@ -198,8 +206,10 @@ Make it specific and actionable.`;
         context: "business-planning" 
       },
     ];
-    const text = await generateAIResponse(history, { 
-      system: "You are a go-to-market strategist. Create detailed, actionable GTM strategies." 
+    const text = await generateAIResponse(history, {
+      system: "You are a go-to-market strategist. Create detailed, actionable GTM strategies.",
+      performWebSearch: false,
+      includeAppContext: false
     });
     return text || generateMockGTMStrategy(idea);
   } catch {
@@ -232,8 +242,10 @@ Provide a practical, step-by-step guide.`;
         context: "business-planning" 
       },
     ];
-    const text = await generateAIResponse(history, { 
-      system: "You are a business compliance expert. Provide accurate, comprehensive compliance guidance." 
+    const text = await generateAIResponse(history, {
+      system: "You are a business compliance expert. Provide accurate, comprehensive compliance guidance.",
+      performWebSearch: false,
+      includeAppContext: false
     });
     return text || generateMockComplianceGuidance();
   } catch {
@@ -271,8 +283,10 @@ End with an overall assessment and action items.`;
         context: "business-planning" 
       },
     ];
-    const text = await generateAIResponse(history, { 
-      system: "You are a business plan evaluator. Provide comprehensive, constructive assessments with actionable improvements." 
+    const text = await generateAIResponse(history, {
+      system: "You are a business plan evaluator. Provide comprehensive, constructive assessments with actionable improvements.",
+      performWebSearch: false,
+      includeAppContext: false
     });
     return text || generateMockHealthCheck();
   } catch {
@@ -309,8 +323,10 @@ Make it compelling and investable.`;
         context: "business-planning" 
       },
     ];
-    const text = await generateAIResponse(history, { 
-      system: "You are an investment advisor. Create compelling investor pitch materials." 
+    const text = await generateAIResponse(history, {
+      system: "You are an investment advisor. Create compelling investor pitch materials.",
+      performWebSearch: false,
+      includeAppContext: false
     });
     return text || generateMockInvestorPitch(businessName);
   } catch {
