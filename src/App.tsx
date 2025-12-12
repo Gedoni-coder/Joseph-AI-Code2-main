@@ -267,6 +267,7 @@ function AppContent() {
           path="/business-feasibility/:id"
           element={<BusinessFeasibilityIdea />}
         />
+        <Route path="/business-planning/:feasibilityId" element={<BusinessPlanningFlow />} />
         <Route path="/sales-intelligence" element={<SalesIntelligence />} />
 
         {/* Additional Feature Routes */}
