@@ -1,4 +1,4 @@
-import type { FeasibilityReport } from "./business-feasibility-types";
+// Note: FeasibilityReport is defined in BusinessFeasibility.tsx component
 
 export type StepStatus = "pending" | "in_progress" | "completed" | "needs_update";
 
