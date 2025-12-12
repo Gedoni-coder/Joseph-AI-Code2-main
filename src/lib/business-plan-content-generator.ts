@@ -2,7 +2,7 @@ import { generateAIResponse } from "./ai";
 import type { ChatMessage } from "./chatbot-data";
 
 export async function generateBusinessPlanContent(idea: string, businessName: string): Promise<string> {
-  const prompt = `Create a comprehensive Executive Summary and Company Overview for a business plan. 
+  const prompt = `Create a comprehensive Executive Summary and Company Overview for a business plan.
 Business Idea: ${idea}
 Business Name: ${businessName}
 
@@ -15,16 +15,18 @@ Make it professional and investor-ready.`;
 
   try {
     const history: ChatMessage[] = [
-      { 
-        id: "u1", 
-        type: "user", 
-        content: prompt, 
-        timestamp: new Date(), 
-        context: "business-planning" 
+      {
+        id: "u1",
+        type: "user",
+        content: prompt,
+        timestamp: new Date(),
+        context: "business-planning"
       },
     ];
-    const text = await generateAIResponse(history, { 
-      system: "You are Joseph AI, an expert business planning consultant. Generate realistic, professional business plan content." 
+    const text = await generateAIResponse(history, {
+      system: "You are Joseph AI, an expert business planning consultant. Generate realistic, professional business plan content.",
+      performWebSearch: false,
+      includeAppContext: false
     });
     return text || generateMockBusinessPlan(idea, businessName);
   } catch {
