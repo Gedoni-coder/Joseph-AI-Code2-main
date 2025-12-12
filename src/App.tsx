@@ -32,6 +32,8 @@ import FinancialAdvisory from "./pages/FinancialAdvisory";
 import PolicyEconomicAnalysis from "./pages/PolicyEconomicAnalysis";
 import BusinessFeasibility from "./pages/BusinessFeasibility";
 import BusinessFeasibilityIdea from "./pages/BusinessFeasibilityIdea";
+import BusinessPlanningFlow from "./pages/BusinessPlanningFlow";
+import BusinessPlansList from "./pages/BusinessPlansList";
 import ImpactCalculator from "./pages/ImpactCalculator";
 import AiInsights from "./pages/AiInsights";
 import DocumentManager from "./pages/DocumentManager";
@@ -266,6 +268,8 @@ function AppContent() {
           path="/business-feasibility/:id"
           element={<BusinessFeasibilityIdea />}
         />
+        <Route path="/business-plans" element={<BusinessPlansList />} />
+        <Route path="/business-planning/:feasibilityId" element={<BusinessPlanningFlow />} />
         <Route path="/sales-intelligence" element={<SalesIntelligence />} />
 
         {/* Additional Feature Routes */}
