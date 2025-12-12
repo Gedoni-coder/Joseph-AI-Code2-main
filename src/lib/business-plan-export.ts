@@ -184,7 +184,9 @@ export async function exportBusinessPlanToPdf(businessPlan: BusinessPlan): Promi
 
   const element = document.createElement("div");
   element.innerHTML = htmlContent;
-  element.style.display = "none";
+  element.style.position = "absolute";
+  element.style.left = "-9999px";
+  element.style.width = "210mm";
   document.body.appendChild(element);
 
   try {
@@ -192,9 +194,13 @@ export async function exportBusinessPlanToPdf(businessPlan: BusinessPlan): Promi
       scale: 2,
       useCORS: true,
       allowTaint: true,
+      backgroundColor: "#ffffff",
+      logging: false,
     });
 
-    const imgData = canvas.toDataURL("image/png");
+    // Convert to JPEG instead of PNG for better compatibility with jsPDF
+    const imgData = canvas.toDataURL("image/jpeg", 0.95);
+
     const pdf = new jsPDF({
       orientation: "portrait",
       unit: "mm",
@@ -209,20 +215,35 @@ export async function exportBusinessPlanToPdf(businessPlan: BusinessPlan): Promi
     let heightLeft = imgHeight;
     let position = 10;
 
-    pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+    pdf.addImage(imgData, "JPEG", 10, position, imgWidth, imgHeight);
     heightLeft -= pageHeight - 20;
 
     while (heightLeft > 0) {
       position = heightLeft - imgHeight + 10;
       pdf.addPage();
-      pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+      pdf.addImage(imgData, "JPEG", 10, position, imgWidth, imgHeight);
       heightLeft -= pageHeight - 20;
     }
 
     pdf.save(`${businessPlan.businessName}-business-plan.pdf`);
   } catch (error) {
     console.error("PDF export error:", error);
-    throw error;
+    // Fallback: try downloading as DOCX instead
+    try {
+      const blob = await exportBusinessPlanToDocx(businessPlan);
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${businessPlan.businessName}-business-plan.docx`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      console.log("Fallback: DOCX export successful");
+    } catch (fallbackError) {
+      console.error("Fallback DOCX export also failed:", fallbackError);
+      throw fallbackError;
+    }
   } finally {
     document.body.removeChild(element);
   }
