@@ -216,6 +216,18 @@ export default function BusinessPlanningFlow() {
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
+          <div className="flex items-center gap-4 mb-4">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => navigate("/business-planning")}
+              className="gap-2"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Back to plans
+            </Button>
+          </div>
+
           <h1 className="text-3xl font-bold mb-2">{businessPlan.businessName}</h1>
           <p className="text-muted-foreground mb-4">Business Planning Workflow</p>
 
