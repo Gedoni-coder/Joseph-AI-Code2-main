@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CheckCircle, Gauge, CalendarClock, Tag, FileText, Trash2 } from "lucide-react";
+import { CheckCircle, Gauge, CalendarClock, Tag, FileText, Trash2, Lightbulb } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { generateAIResponse } from "@/lib/ai";
 import type { ChatMessage } from "@/lib/chatbot-data";
