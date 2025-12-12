@@ -323,36 +323,17 @@ export default function BusinessFeasibility() {
             </div>
           </TabsContent>
 
-          <TabsContent value="planning" className="space-y-8">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Lightbulb className="h-5 w-5" />
-                  Business Planning
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <p className="text-muted-foreground">
-                    The Business Planning module will help you create comprehensive, investor-ready business plans and validate your business ideas against real market data.
-                  </p>
-                  <div className="space-y-3">
-                    <div className="p-4 rounded-lg border border-blue-200 bg-blue-50">
-                      <h4 className="font-semibold text-blue-900 mb-2">Coming Soon</h4>
-                      <ul className="space-y-2 text-sm text-blue-800">
-                        <li>• <strong>Business Plan Generator</strong> - Create complete, investor-ready business plans</li>
-                        <li>• <strong>Market Validation</strong> - Validate business ideas against real market data</li>
-                        <li>• <strong>Business Model Canvas</strong> - Structure business models using proven frameworks</li>
-                        <li>• <strong>Financial Planning</strong> - Generate financial projections and startup costs</li>
-                        <li>• <strong>Go-To-Market Strategy</strong> - Design effective market entry strategies</li>
-                        <li>• <strong>Compliance Guidance</strong> - Navigate legal registrations and requirements</li>
-                        <li>• <strong>Pitch Preparation</strong> - Prepare for fundraising with investor materials</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+          <TabsContent value="planning">
+            <div className="flex flex-col items-center justify-center py-16">
+              <Lightbulb className="h-16 w-16 text-primary mb-4" />
+              <h3 className="text-2xl font-bold mb-2">Business Planning</h3>
+              <p className="text-muted-foreground text-center mb-8 max-w-md">
+                Create comprehensive, investor-ready business plans tailored to your business ideas.
+              </p>
+              <Button size="lg" onClick={() => navigate("/business-planning")}>
+                Go to Business Planning
+              </Button>
+            </div>
           </TabsContent>
         </Tabs>
       </main>
