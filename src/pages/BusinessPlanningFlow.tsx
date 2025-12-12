@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CheckCircle, AlertCircle, Download, Edit2, Check, ChevronRight, ChevronLeft, Loader2 } from "lucide-react";
+import { CheckCircle, AlertCircle, Download, Edit2, Check, ChevronRight, ChevronLeft, Loader2, ArrowLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { BusinessPlan, BusinessPlanStep, StepStatus } from "@/lib/business-planning-types";
 import { createEmptyBusinessPlan, BUSINESS_PLAN_STEPS } from "@/lib/business-planning-types";
