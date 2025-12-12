@@ -1,14 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { CheckCircle, AlertCircle, Download, Edit2, Check, ChevronRight, ChevronLeft, Loader2, ArrowLeft } from "lucide-react";
+import {
+  CheckCircle,
+  AlertCircle,
+  Download,
+  Edit2,
+  Check,
+  ChevronRight,
+  ChevronLeft,
+  Loader2,
+  ArrowLeft,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { BusinessPlan, BusinessPlanStep, StepStatus } from "@/lib/business-planning-types";
-import { createEmptyBusinessPlan, BUSINESS_PLAN_STEPS } from "@/lib/business-planning-types";
+import type {
+  BusinessPlan,
+  BusinessPlanStep,
+  StepStatus,
+} from "@/lib/business-planning-types";
+import {
+  createEmptyBusinessPlan,
+  BUSINESS_PLAN_STEPS,
+} from "@/lib/business-planning-types";
 import {
   generateBusinessPlanContent,
   generateMarketValidationContent,
@@ -50,8 +73,12 @@ export default function BusinessPlanningFlow() {
     // If still not found, create new plan (standalone)
     if (!plan && planId.startsWith("idea_")) {
       // This is a feasibility ID, get the idea from feasibility reports
-      const feasibilityStored = localStorage.getItem("joseph_feasibility_ideas_v1");
-      const feasibilityReports: any[] = feasibilityStored ? JSON.parse(feasibilityStored) : [];
+      const feasibilityStored = localStorage.getItem(
+        "joseph_feasibility_ideas_v1",
+      );
+      const feasibilityReports: any[] = feasibilityStored
+        ? JSON.parse(feasibilityStored)
+        : [];
       const feasibilityReport = feasibilityReports.find((r) => r.id === planId);
       const idea = feasibilityReport?.idea || "Business Idea";
 
@@ -87,11 +114,17 @@ export default function BusinessPlanningFlow() {
 
       switch (step.key) {
         case "business-plan-generator":
-          content = await generateBusinessPlanContent(businessPlan.idea, businessPlan.businessName);
+          content = await generateBusinessPlanContent(
+            businessPlan.idea,
+            businessPlan.businessName,
+          );
           businessPlan.fullDocument.executiveSummary = content;
           break;
         case "market-validation":
-          content = await generateMarketValidationContent(businessPlan.idea, businessPlan.businessName);
+          content = await generateMarketValidationContent(
+            businessPlan.idea,
+            businessPlan.businessName,
+          );
           businessPlan.fullDocument.marketAnalysis = content;
           break;
         case "business-model-canvas":
@@ -117,7 +150,10 @@ export default function BusinessPlanningFlow() {
           content = await generateHealthCheckContent(businessPlan.idea);
           break;
         case "investor-pitch":
-          content = await generateInvestorPitchContent(businessPlan.idea, businessPlan.businessName);
+          content = await generateInvestorPitchContent(
+            businessPlan.idea,
+            businessPlan.businessName,
+          );
           break;
       }
 
@@ -135,7 +171,7 @@ export default function BusinessPlanningFlow() {
                   status: "completed" as StepStatus,
                 },
               }
-            : s
+            : s,
         ),
         currentStep: Math.min(stepId + 1, businessPlan.steps.length),
         updatedAt: new Date().toISOString(),
@@ -161,12 +197,17 @@ export default function BusinessPlanningFlow() {
               ...s,
               content: s.content
                 ? { ...s.content, content: newContent }
-                : { title: s.name, content: newContent, generatedAt: new Date().toISOString(), status: "completed" as StepStatus },
+                : {
+                    title: s.name,
+                    content: newContent,
+                    generatedAt: new Date().toISOString(),
+                    status: "completed" as StepStatus,
+                  },
               status: "completed" as StepStatus,
             }
           : s.id > stepId
-          ? { ...s, status: "needs_update" as StepStatus }
-          : s
+            ? { ...s, status: "needs_update" as StepStatus }
+            : s,
       ),
       updatedAt: new Date().toISOString(),
     };
@@ -209,7 +250,11 @@ export default function BusinessPlanningFlow() {
   }
 
   const currentStep = businessPlan.steps[businessPlan.currentStep - 1];
-  const stepProgress = Math.round((businessPlan.steps.filter((s) => s.status === "completed").length / businessPlan.steps.length) * 100);
+  const stepProgress = Math.round(
+    (businessPlan.steps.filter((s) => s.status === "completed").length /
+      businessPlan.steps.length) *
+      100,
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
@@ -228,12 +273,18 @@ export default function BusinessPlanningFlow() {
             </Button>
           </div>
 
-          <h1 className="text-3xl font-bold mb-2">{businessPlan.businessName}</h1>
-          <p className="text-muted-foreground mb-4">Business Planning Workflow</p>
+          <h1 className="text-3xl font-bold mb-2">
+            {businessPlan.businessName}
+          </h1>
+          <p className="text-muted-foreground mb-4">
+            Business Planning Workflow
+          </p>
 
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-4">
-              <Badge variant="outline">Step {businessPlan.currentStep} of {businessPlan.steps.length}</Badge>
+              <Badge variant="outline">
+                Step {businessPlan.currentStep} of {businessPlan.steps.length}
+              </Badge>
               <Badge variant="secondary">{stepProgress}% Complete</Badge>
             </div>
             <div className="flex gap-2">
@@ -284,7 +335,8 @@ export default function BusinessPlanningFlow() {
                       businessPlan.currentStep === step.id
                         ? "border-primary bg-primary/10"
                         : "border-border hover:border-primary/50",
-                      step.status === "completed" && "bg-green-50 dark:bg-green-950"
+                      step.status === "completed" &&
+                        "bg-green-50 dark:bg-green-950",
                     )}
                   >
                     <div className="flex items-start gap-2">
@@ -296,8 +348,12 @@ export default function BusinessPlanningFlow() {
                         <div className="h-4 w-4 border-2 border-muted-foreground rounded-full mt-0.5 flex-shrink-0" />
                       )}
                       <div className="flex-1">
-                        <div className="font-medium">{step.id}. {step.name}</div>
-                        <div className="text-xs text-muted-foreground mt-1">{step.description}</div>
+                        <div className="font-medium">
+                          {step.id}. {step.name}
+                        </div>
+                        <div className="text-xs text-muted-foreground mt-1">
+                          {step.description}
+                        </div>
                       </div>
                     </div>
                   </button>
@@ -318,7 +374,8 @@ export default function BusinessPlanningFlow() {
                   <Alert className="border-yellow-200 bg-yellow-50 dark:bg-yellow-950">
                     <AlertCircle className="h-4 w-4 text-yellow-600" />
                     <AlertDescription className="text-yellow-800">
-                      This step needs to be updated based on changes made in previous steps.
+                      This step needs to be updated based on changes made in
+                      previous steps.
                     </AlertDescription>
                   </Alert>
                 )}
@@ -333,7 +390,9 @@ export default function BusinessPlanningFlow() {
                     />
                     <div className="flex gap-2">
                       <Button
-                        onClick={() => updateStepContent(currentStep.id, editContent)}
+                        onClick={() =>
+                          updateStepContent(currentStep.id, editContent)
+                        }
                         className="gap-2"
                       >
                         <Check className="h-4 w-4" />
@@ -361,7 +420,9 @@ export default function BusinessPlanningFlow() {
                             variant="outline"
                             onClick={() => {
                               setEditingStepId(currentStep.id);
-                              setEditContent(currentStep.content?.content || "");
+                              setEditContent(
+                                currentStep.content?.content || "",
+                              );
                             }}
                             className="gap-2"
                           >
@@ -386,7 +447,9 @@ export default function BusinessPlanningFlow() {
                       </div>
                     ) : (
                       <div className="text-center py-8">
-                        <p className="text-muted-foreground mb-4">No content generated yet</p>
+                        <p className="text-muted-foreground mb-4">
+                          No content generated yet
+                        </p>
                         <Button
                           onClick={() => generateStepContent(currentStep.id)}
                           disabled={loading}
@@ -411,7 +474,9 @@ export default function BusinessPlanningFlow() {
                 <div className="flex justify-between pt-6 border-t">
                   <Button
                     variant="outline"
-                    onClick={() => goToStep(Math.max(1, businessPlan.currentStep - 1))}
+                    onClick={() =>
+                      goToStep(Math.max(1, businessPlan.currentStep - 1))
+                    }
                     disabled={businessPlan.currentStep === 1}
                     className="gap-2"
                   >
@@ -420,16 +485,21 @@ export default function BusinessPlanningFlow() {
                   </Button>
 
                   <div className="text-sm text-muted-foreground">
-                    Step {businessPlan.currentStep} of {businessPlan.steps.length}
+                    Step {businessPlan.currentStep} of{" "}
+                    {businessPlan.steps.length}
                   </div>
 
                   <Button
                     onClick={() => {
-                      if (businessPlan.currentStep < businessPlan.steps.length) {
+                      if (
+                        businessPlan.currentStep < businessPlan.steps.length
+                      ) {
                         goToStep(businessPlan.currentStep + 1);
                       }
                     }}
-                    disabled={businessPlan.currentStep === businessPlan.steps.length}
+                    disabled={
+                      businessPlan.currentStep === businessPlan.steps.length
+                    }
                     className="gap-2"
                   >
                     Next

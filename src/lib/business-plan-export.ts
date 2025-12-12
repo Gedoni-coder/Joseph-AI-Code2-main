@@ -15,7 +15,9 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import type { BusinessPlan } from "./business-planning-types";
 
-export async function exportBusinessPlanToDocx(businessPlan: BusinessPlan): Promise<Blob> {
+export async function exportBusinessPlanToDocx(
+  businessPlan: BusinessPlan,
+): Promise<Blob> {
   const doc = new Document({
     sections: [
       {
@@ -43,7 +45,11 @@ export async function exportBusinessPlanToDocx(businessPlan: BusinessPlan): Prom
             spacing: { before: 200, after: 100 },
           }),
 
-          ...formatContent(businessPlan.fullDocument.executiveSummary || businessPlan.steps[0].content?.content || ""),
+          ...formatContent(
+            businessPlan.fullDocument.executiveSummary ||
+              businessPlan.steps[0].content?.content ||
+              "",
+          ),
 
           // Problem Statement
           new Paragraph({
@@ -53,12 +59,14 @@ export async function exportBusinessPlanToDocx(businessPlan: BusinessPlan): Prom
           }),
 
           new Paragraph({
-            text: businessPlan.fullDocument.problemStatement || "To be completed",
+            text:
+              businessPlan.fullDocument.problemStatement || "To be completed",
             spacing: { after: 100 },
           }),
 
           new Paragraph({
-            text: businessPlan.fullDocument.valueProposition || "To be completed",
+            text:
+              businessPlan.fullDocument.valueProposition || "To be completed",
             spacing: { after: 100 },
           }),
 
@@ -70,7 +78,9 @@ export async function exportBusinessPlanToDocx(businessPlan: BusinessPlan): Prom
           }),
 
           new Paragraph({
-            text: businessPlan.fullDocument.productServiceDescription || "To be completed",
+            text:
+              businessPlan.fullDocument.productServiceDescription ||
+              "To be completed",
             spacing: { after: 100 },
           }),
 
@@ -106,7 +116,9 @@ export async function exportBusinessPlanToDocx(businessPlan: BusinessPlan): Prom
           }),
 
           new Paragraph({
-            text: businessPlan.fullDocument.competitiveAnalysis || "To be completed",
+            text:
+              businessPlan.fullDocument.competitiveAnalysis ||
+              "To be completed",
             spacing: { after: 100 },
           }),
 
@@ -130,7 +142,9 @@ export async function exportBusinessPlanToDocx(businessPlan: BusinessPlan): Prom
           }),
 
           new Paragraph({
-            text: businessPlan.fullDocument.financialProjections || "To be completed",
+            text:
+              businessPlan.fullDocument.financialProjections ||
+              "To be completed",
             spacing: { after: 100 },
           }),
 
@@ -142,7 +156,9 @@ export async function exportBusinessPlanToDocx(businessPlan: BusinessPlan): Prom
           }),
 
           new Paragraph({
-            text: businessPlan.fullDocument.fundingRequirements || "To be completed",
+            text:
+              businessPlan.fullDocument.fundingRequirements ||
+              "To be completed",
             spacing: { after: 100 },
           }),
 
@@ -154,7 +170,8 @@ export async function exportBusinessPlanToDocx(businessPlan: BusinessPlan): Prom
           }),
 
           new Paragraph({
-            text: businessPlan.fullDocument.goToMarketStrategy || "To be completed",
+            text:
+              businessPlan.fullDocument.goToMarketStrategy || "To be completed",
             spacing: { after: 100 },
           }),
 
@@ -179,7 +196,9 @@ export async function exportBusinessPlanToDocx(businessPlan: BusinessPlan): Prom
   return blob;
 }
 
-export async function exportBusinessPlanToPdf(businessPlan: BusinessPlan): Promise<void> {
+export async function exportBusinessPlanToPdf(
+  businessPlan: BusinessPlan,
+): Promise<void> {
   const htmlContent = generateHtmlContent(businessPlan);
 
   const element = document.createElement("div");
@@ -251,7 +270,7 @@ export async function exportBusinessPlanToPdf(businessPlan: BusinessPlan): Promi
 
 export async function downloadBusinessPlan(
   businessPlan: BusinessPlan,
-  format: "docx" | "pdf" | "word"
+  format: "docx" | "pdf" | "word",
 ): Promise<void> {
   if (format === "pdf") {
     await exportBusinessPlanToPdf(businessPlan);
@@ -269,7 +288,8 @@ export async function downloadBusinessPlan(
 }
 
 function formatContent(content: string): Paragraph[] {
-  if (!content) return [new Paragraph({ text: "Content to be completed", italics: true })];
+  if (!content)
+    return [new Paragraph({ text: "Content to be completed", italics: true })];
 
   const lines = content.split("\n");
   return lines.map(
@@ -277,7 +297,7 @@ function formatContent(content: string): Paragraph[] {
       new Paragraph({
         text: line,
         spacing: { after: 100 },
-      })
+      }),
   );
 }
 

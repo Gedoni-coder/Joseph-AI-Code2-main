@@ -6,7 +6,15 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { CheckCircle, Gauge, CalendarClock, Tag, FileText, Trash2, Lightbulb } from "lucide-react";
+import {
+  CheckCircle,
+  Gauge,
+  CalendarClock,
+  Tag,
+  FileText,
+  Trash2,
+  Lightbulb,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { generateAIResponse } from "@/lib/ai";
 import type { ChatMessage } from "@/lib/chatbot-data";
@@ -63,7 +71,13 @@ function computeFeasibility(mode: Mode, inputs: Inputs): ModeResult {
 
   const thresholds = (
     {
-      Conservative: { risk: 1.0, time: 0.8, rate: 0.8, feasible: 60, borderline: 45 },
+      Conservative: {
+        risk: 1.0,
+        time: 0.8,
+        rate: 0.8,
+        feasible: 60,
+        borderline: 45,
+      },
       Safe: { risk: 0.7, time: 0.5, rate: 0.6, feasible: 50, borderline: 40 },
       Wild: { risk: 0.4, time: 0.3, rate: 0.4, feasible: 40, borderline: 30 },
     } as const
@@ -71,8 +85,9 @@ function computeFeasibility(mode: Mode, inputs: Inputs): ModeResult {
 
   const baseScore = 100 * pvFactor;
   const riskPenalty = risk * thresholds.risk;
-  const timelinePenalty = Math.max(0, roiTime - lengthTimeFactor) * thresholds.time;
-  const ratePenalty = (combinedRate * 100) * thresholds.rate;
+  const timelinePenalty =
+    Math.max(0, roiTime - lengthTimeFactor) * thresholds.time;
+  const ratePenalty = combinedRate * 100 * thresholds.rate;
   const rawScore = baseScore - riskPenalty - timelinePenalty - ratePenalty;
   const score = clamp(Number.isFinite(rawScore) ? rawScore : 0);
 
@@ -84,8 +99,8 @@ function computeFeasibility(mode: Mode, inputs: Inputs): ModeResult {
     verdict === "Feasible"
       ? "text-green-700 bg-green-100 border-green-200"
       : verdict === "Borderline"
-      ? "text-yellow-700 bg-yellow-100 border-yellow-200"
-      : "text-red-700 bg-red-100 border-red-200";
+        ? "text-yellow-700 bg-yellow-100 border-yellow-200"
+        : "text-red-700 bg-red-100 border-red-200";
 
   return {
     score: Math.round(score),
@@ -97,7 +112,10 @@ function computeFeasibility(mode: Mode, inputs: Inputs): ModeResult {
       riskPenalty: Math.round(riskPenalty),
       timelinePenalty: Math.round(timelinePenalty),
       ratePenalty: Math.round(ratePenalty),
-      thresholds: { feasible: thresholds.feasible, borderline: thresholds.borderline },
+      thresholds: {
+        feasible: thresholds.feasible,
+        borderline: thresholds.borderline,
+      },
     },
   };
 }
@@ -107,7 +125,29 @@ function extractKeywords(text: string): string[] {
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, " ")
     .split(/\s+/)
-    .filter((w) => w.length > 3 && !["with", "that", "this", "from", "your", "have", "will", "they", "them", "into", "about", "idea", "market", "users", "their", "more", "less"].includes(w));
+    .filter(
+      (w) =>
+        w.length > 3 &&
+        ![
+          "with",
+          "that",
+          "this",
+          "from",
+          "your",
+          "have",
+          "will",
+          "they",
+          "them",
+          "into",
+          "about",
+          "idea",
+          "market",
+          "users",
+          "their",
+          "more",
+          "less",
+        ].includes(w),
+    );
   const counts: Record<string, number> = {};
   for (const w of words) counts[w] = (counts[w] || 0) + 1;
   return Object.entries(counts)
@@ -124,24 +164,37 @@ function deriveInputsFromIdea(text: string): Inputs {
   const monthsMatch = lower.match(months);
 
   let interestRate = rateMatch ? clamp(parseFloat(rateMatch[1]), 0, 100) : 6.5;
-  let timeValue = interestRate > 0 ? Math.max(3, Math.min(interestRate, 12)) : 5;
+  let timeValue =
+    interestRate > 0 ? Math.max(3, Math.min(interestRate, 12)) : 5;
   let roiTime = monthsMatch ? clamp(parseInt(monthsMatch[1], 10), 0, 600) : 18;
 
   let risk = 35;
   if (/(high\s*risk|uncertain|unproven|new\s*market)/.test(lower)) risk = 60;
-  if (/(regulated|enterprise|long\s*cycle)/.test(lower)) risk = Math.max(risk, 50);
+  if (/(regulated|enterprise|long\s*cycle)/.test(lower))
+    risk = Math.max(risk, 50);
   if (/(recurring|existing\s*customers|loyal)/.test(lower)) risk = 25;
 
   let lengthTimeFactor = 12;
-  if (/(infrastructure|hardware|manufacturing)/.test(lower)) lengthTimeFactor = 24;
+  if (/(infrastructure|hardware|manufacturing)/.test(lower))
+    lengthTimeFactor = 24;
   if (/(software|saas|app)/.test(lower)) lengthTimeFactor = 12;
 
   return { risk, timeValue, roiTime, lengthTimeFactor, interestRate };
 }
 
-async function buildNarrative(idea: string, mode: Mode, res: ModeResult): Promise<string | undefined> {
+async function buildNarrative(
+  idea: string,
+  mode: Mode,
+  res: ModeResult,
+): Promise<string | undefined> {
   const history: ChatMessage[] = [
-    { id: "u1", type: "user", content: idea, timestamp: new Date(), context: "business-feasibility" },
+    {
+      id: "u1",
+      type: "user",
+      content: idea,
+      timestamp: new Date(),
+      context: "business-feasibility",
+    },
   ];
   const system = `You are Joseph AI. Create a concise business feasibility narrative for the ${mode} mode.
 Include: Risk, Time Value (NPV intuition), ROI Time, Length Time Factor, Interest Rate, and an overall verdict (${res.verdict}) with score ${res.score}/100. Avoid fluff.`;
@@ -158,7 +211,10 @@ export default function BusinessFeasibility() {
   const [ideaInput, setIdeaInput] = useState("");
   const [reports, setReports] = useState<FeasibilityReport[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const selectedReport = useMemo(() => reports.find((r) => r.id === selectedId) || null, [reports, selectedId]);
+  const selectedReport = useMemo(
+    () => reports.find((r) => r.id === selectedId) || null,
+    [reports, selectedId],
+  );
 
   // Load/save from localStorage
   useEffect(() => {
@@ -193,7 +249,13 @@ export default function BusinessFeasibility() {
         setReports((prev) =>
           prev.map((r) =>
             r.id === id
-              ? { ...r, resultsByMode: { ...r.resultsByMode, [m]: { ...r.resultsByMode[m], narrative: n } } }
+              ? {
+                  ...r,
+                  resultsByMode: {
+                    ...r.resultsByMode,
+                    [m]: { ...r.resultsByMode[m], narrative: n },
+                  },
+                }
               : r,
           ),
         );
@@ -242,7 +304,11 @@ export default function BusinessFeasibility() {
       />
 
       <main className="container mx-auto px-4 py-8">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+        <Tabs
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="space-y-6"
+        >
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="feasibility">Business Feasibility</TabsTrigger>
             <TabsTrigger value="planning">Business Planning</TabsTrigger>
@@ -251,75 +317,102 @@ export default function BusinessFeasibility() {
           <TabsContent value="feasibility" className="space-y-8">
             {/* Conversational Input */}
             <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <FileText className="h-5 w-5" />
-              Got an Idea?
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={analyzeIdea} className="flex gap-2">
-              <Input
-                value={ideaInput}
-                onChange={(e) => setIdeaInput(e.target.value)}
-                placeholder="Got an Idea?"
-              />
-              <Button type="submit">Analyze</Button>
-            </form>
-            <div className="text-xs text-muted-foreground mt-2">
-              Tip: include rough timelines (e.g., “18 months”) or rates (e.g., “8%”) to refine the analysis.
-            </div>
-            </CardContent>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="h-5 w-5" />
+                  Got an Idea?
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={analyzeIdea} className="flex gap-2">
+                  <Input
+                    value={ideaInput}
+                    onChange={(e) => setIdeaInput(e.target.value)}
+                    placeholder="Got an Idea?"
+                  />
+                  <Button type="submit">Analyze</Button>
+                </form>
+                <div className="text-xs text-muted-foreground mt-2">
+                  Tip: include rough timelines (e.g., “18 months”) or rates
+                  (e.g., “8%”) to refine the analysis.
+                </div>
+              </CardContent>
             </Card>
 
             <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold">Past Ideas</h3>
-            <Badge variant="secondary">{reports.length}</Badge>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {reports.map((r) => (
-              <Card
-                key={r.id}
-                className={cn("cursor-pointer transition-all hover:shadow-md hover:-translate-y-0.5 bg-gradient-to-br from-white to-muted/20")}
-                onClick={() => { try { (navigate as any)(`/business-feasibility/${r.id}`); } catch {} }}
-              >
-                <CardContent className="p-4 space-y-3">
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 rounded bg-green-100 text-green-700">
-                      <CheckCircle className="h-4 w-4" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="text-sm font-medium line-clamp-2">{r.idea}</div>
-                      <div className="text-xs text-muted-foreground mt-1">{new Date(r.createdAt).toLocaleString()}</div>
-                      <div className="flex flex-wrap gap-1 mt-2">
-                        {r.tags.map((t) => (
-                          <Badge key={t} variant="outline" className="text-2xs">#{t}</Badge>
-                        ))}
-                      </div>
-                    </div>
-                    <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={(e) => { e.stopPropagation(); deleteReport(r.id); }}>
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                  <Button
-                    size="sm"
-                    variant="default"
-                    className="w-full"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      navigate(`/business-planning/${r.id}`);
+              <div className="flex items-center justify-between">
+                <h3 className="text-sm font-semibold">Past Ideas</h3>
+                <Badge variant="secondary">{reports.length}</Badge>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                {reports.map((r) => (
+                  <Card
+                    key={r.id}
+                    className={cn(
+                      "cursor-pointer transition-all hover:shadow-md hover:-translate-y-0.5 bg-gradient-to-br from-white to-muted/20",
+                    )}
+                    onClick={() => {
+                      try {
+                        (navigate as any)(`/business-feasibility/${r.id}`);
+                      } catch {}
                     }}
                   >
-                    Start Planning
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-          {reports.length === 0 && (
-            <div className="text-xs text-muted-foreground">No ideas analyzed yet. Enter an idea above to get started.</div>
-          )}
+                    <CardContent className="p-4 space-y-3">
+                      <div className="flex items-start gap-3">
+                        <div className="p-2 rounded bg-green-100 text-green-700">
+                          <CheckCircle className="h-4 w-4" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="text-sm font-medium line-clamp-2">
+                            {r.idea}
+                          </div>
+                          <div className="text-xs text-muted-foreground mt-1">
+                            {new Date(r.createdAt).toLocaleString()}
+                          </div>
+                          <div className="flex flex-wrap gap-1 mt-2">
+                            {r.tags.map((t) => (
+                              <Badge
+                                key={t}
+                                variant="outline"
+                                className="text-2xs"
+                              >
+                                #{t}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-7 w-7 p-0"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            deleteReport(r.id);
+                          }}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      <Button
+                        size="sm"
+                        variant="default"
+                        className="w-full"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/business-planning/${r.id}`);
+                        }}
+                      >
+                        Start Planning
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+              {reports.length === 0 && (
+                <div className="text-xs text-muted-foreground">
+                  No ideas analyzed yet. Enter an idea above to get started.
+                </div>
+              )}
             </div>
           </TabsContent>
 
@@ -328,7 +421,8 @@ export default function BusinessFeasibility() {
               <Lightbulb className="h-16 w-16 text-primary mb-4" />
               <h3 className="text-2xl font-bold mb-2">Business Planning</h3>
               <p className="text-muted-foreground text-center mb-8 max-w-md">
-                Create comprehensive, investor-ready business plans tailored to your business ideas.
+                Create comprehensive, investor-ready business plans tailored to
+                your business ideas.
               </p>
               <Button size="lg" onClick={() => navigate("/business-planning")}>
                 Go to Business Planning

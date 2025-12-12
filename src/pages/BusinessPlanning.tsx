@@ -82,7 +82,8 @@ export default function BusinessPlanning() {
               <Button type="submit">Plan</Button>
             </form>
             <div className="text-xs text-muted-foreground mt-2">
-              Tip: describe your business idea or concept to get started with planning.
+              Tip: describe your business idea or concept to get started with
+              planning.
             </div>
           </CardContent>
         </Card>
@@ -94,14 +95,18 @@ export default function BusinessPlanning() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
             {plans.map((plan) => {
-              const completedSteps = plan.steps.filter((s) => s.status === "completed").length;
-              const progress = Math.round((completedSteps / plan.steps.length) * 100);
+              const completedSteps = plan.steps.filter(
+                (s) => s.status === "completed",
+              ).length;
+              const progress = Math.round(
+                (completedSteps / plan.steps.length) * 100,
+              );
 
               return (
                 <Card
                   key={plan.id}
                   className={cn(
-                    "cursor-pointer transition-all hover:shadow-md hover:-translate-y-0.5 bg-gradient-to-br from-white to-muted/20"
+                    "cursor-pointer transition-all hover:shadow-md hover:-translate-y-0.5 bg-gradient-to-br from-white to-muted/20",
                   )}
                   onClick={() => {
                     navigate(`/business-planning-flow/${plan.id}`);
@@ -113,8 +118,12 @@ export default function BusinessPlanning() {
                         <CheckCircle className="h-4 w-4" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="text-sm font-medium line-clamp-2">{plan.businessName || plan.idea}</div>
-                        <div className="text-xs text-muted-foreground mt-1">{new Date(plan.createdAt).toLocaleString()}</div>
+                        <div className="text-sm font-medium line-clamp-2">
+                          {plan.businessName || plan.idea}
+                        </div>
+                        <div className="text-xs text-muted-foreground mt-1">
+                          {new Date(plan.createdAt).toLocaleString()}
+                        </div>
                         <div className="text-xs text-muted-foreground mt-1">
                           {completedSteps}/{plan.steps.length} steps completed
                         </div>
@@ -134,7 +143,9 @@ export default function BusinessPlanning() {
                     <div className="space-y-1">
                       <div className="flex items-center justify-between">
                         <span className="text-xs font-medium">Progress</span>
-                        <span className="text-xs text-muted-foreground">{progress}%</span>
+                        <span className="text-xs text-muted-foreground">
+                          {progress}%
+                        </span>
                       </div>
                       <div className="w-full bg-secondary rounded-full h-2">
                         <div
@@ -161,7 +172,8 @@ export default function BusinessPlanning() {
           </div>
           {plans.length === 0 && (
             <div className="text-xs text-muted-foreground">
-              No business plans created yet. Enter a plan idea above to get started.
+              No business plans created yet. Enter a plan idea above to get
+              started.
             </div>
           )}
         </div>

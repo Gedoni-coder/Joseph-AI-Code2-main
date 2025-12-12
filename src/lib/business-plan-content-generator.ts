@@ -1,7 +1,10 @@
 import { generateAIResponse } from "./ai";
 import type { ChatMessage } from "./chatbot-data";
 
-export async function generateBusinessPlanContent(idea: string, businessName: string): Promise<string> {
+export async function generateBusinessPlanContent(
+  idea: string,
+  businessName: string,
+): Promise<string> {
   const prompt = `Create a comprehensive Executive Summary and Company Overview for a business plan.
 Business Idea: ${idea}
 Business Name: ${businessName}
@@ -20,13 +23,14 @@ Make it professional and investor-ready.`;
         type: "user",
         content: prompt,
         timestamp: new Date(),
-        context: "business-planning"
+        context: "business-planning",
       },
     ];
     const text = await generateAIResponse(history, {
-      system: "You are Joseph AI, an expert business planning consultant. Generate realistic, professional business plan content.",
+      system:
+        "You are Joseph AI, an expert business planning consultant. Generate realistic, professional business plan content.",
       performWebSearch: false,
-      includeAppContext: false
+      includeAppContext: false,
     });
     return text || generateMockBusinessPlan(idea, businessName);
   } catch {
@@ -34,7 +38,10 @@ Make it professional and investor-ready.`;
   }
 }
 
-export async function generateMarketValidationContent(idea: string, businessName: string): Promise<string> {
+export async function generateMarketValidationContent(
+  idea: string,
+  businessName: string,
+): Promise<string> {
   const prompt = `Provide Market Validation Analysis for this business idea:
 Business: ${idea}
 Name: ${businessName}
@@ -51,18 +58,19 @@ Base all numbers on realistic market data.`;
 
   try {
     const history: ChatMessage[] = [
-      { 
-        id: "u1", 
-        type: "user", 
-        content: prompt, 
-        timestamp: new Date(), 
-        context: "business-planning" 
+      {
+        id: "u1",
+        type: "user",
+        content: prompt,
+        timestamp: new Date(),
+        context: "business-planning",
       },
     ];
     const text = await generateAIResponse(history, {
-      system: "You are a market analyst. Provide realistic market data and analysis.",
+      system:
+        "You are a market analyst. Provide realistic market data and analysis.",
       performWebSearch: false,
-      includeAppContext: false
+      includeAppContext: false,
     });
     return text || generateMockMarketValidation(idea);
   } catch {
@@ -70,7 +78,9 @@ Base all numbers on realistic market data.`;
   }
 }
 
-export async function generateBusinessModelCanvasContent(idea: string): Promise<string> {
+export async function generateBusinessModelCanvasContent(
+  idea: string,
+): Promise<string> {
   const prompt = `Create a detailed Business Model Canvas for this business:
 ${idea}
 
@@ -89,18 +99,19 @@ Provide specific, realistic entries for each block.`;
 
   try {
     const history: ChatMessage[] = [
-      { 
-        id: "u1", 
-        type: "user", 
-        content: prompt, 
-        timestamp: new Date(), 
-        context: "business-planning" 
+      {
+        id: "u1",
+        type: "user",
+        content: prompt,
+        timestamp: new Date(),
+        context: "business-planning",
       },
     ];
     const text = await generateAIResponse(history, {
-      system: "You are a business model consultant. Create detailed, realistic business model canvases.",
+      system:
+        "You are a business model consultant. Create detailed, realistic business model canvases.",
       performWebSearch: false,
-      includeAppContext: false
+      includeAppContext: false,
     });
     return text || generateMockBusinessModelCanvas(idea);
   } catch {
@@ -108,7 +119,9 @@ Provide specific, realistic entries for each block.`;
   }
 }
 
-export async function generateOperationalPlanningContent(idea: string): Promise<string> {
+export async function generateOperationalPlanningContent(
+  idea: string,
+): Promise<string> {
   const prompt = `Create an Operational Planning document for this business:
 ${idea}
 
@@ -125,18 +138,19 @@ Make it realistic and executable.`;
 
   try {
     const history: ChatMessage[] = [
-      { 
-        id: "u1", 
-        type: "user", 
-        content: prompt, 
-        timestamp: new Date(), 
-        context: "business-planning" 
+      {
+        id: "u1",
+        type: "user",
+        content: prompt,
+        timestamp: new Date(),
+        context: "business-planning",
       },
     ];
     const text = await generateAIResponse(history, {
-      system: "You are an operations consultant. Provide detailed, executable operational plans.",
+      system:
+        "You are an operations consultant. Provide detailed, executable operational plans.",
       performWebSearch: false,
-      includeAppContext: false
+      includeAppContext: false,
     });
     return text || generateMockOperationalPlan(idea);
   } catch {
@@ -144,7 +158,9 @@ Make it realistic and executable.`;
   }
 }
 
-export async function generateFinancialPlanningContent(idea: string): Promise<string> {
+export async function generateFinancialPlanningContent(
+  idea: string,
+): Promise<string> {
   const prompt = `Create a Financial Planning section for this business plan:
 ${idea}
 
@@ -162,18 +178,19 @@ Use realistic numbers based on the business type.`;
 
   try {
     const history: ChatMessage[] = [
-      { 
-        id: "u1", 
-        type: "user", 
-        content: prompt, 
-        timestamp: new Date(), 
-        context: "business-planning" 
+      {
+        id: "u1",
+        type: "user",
+        content: prompt,
+        timestamp: new Date(),
+        context: "business-planning",
       },
     ];
     const text = await generateAIResponse(history, {
-      system: "You are a financial analyst. Generate realistic financial projections with detailed breakdowns.",
+      system:
+        "You are a financial analyst. Generate realistic financial projections with detailed breakdowns.",
       performWebSearch: false,
-      includeAppContext: false
+      includeAppContext: false,
     });
     return text || generateMockFinancialPlanning(idea);
   } catch {
@@ -181,7 +198,9 @@ Use realistic numbers based on the business type.`;
   }
 }
 
-export async function generateGTMStrategyContent(idea: string): Promise<string> {
+export async function generateGTMStrategyContent(
+  idea: string,
+): Promise<string> {
   const prompt = `Create a Go-To-Market Strategy for this business:
 ${idea}
 
@@ -198,18 +217,19 @@ Make it specific and actionable.`;
 
   try {
     const history: ChatMessage[] = [
-      { 
-        id: "u1", 
-        type: "user", 
-        content: prompt, 
-        timestamp: new Date(), 
-        context: "business-planning" 
+      {
+        id: "u1",
+        type: "user",
+        content: prompt,
+        timestamp: new Date(),
+        context: "business-planning",
       },
     ];
     const text = await generateAIResponse(history, {
-      system: "You are a go-to-market strategist. Create detailed, actionable GTM strategies.",
+      system:
+        "You are a go-to-market strategist. Create detailed, actionable GTM strategies.",
       performWebSearch: false,
-      includeAppContext: false
+      includeAppContext: false,
     });
     return text || generateMockGTMStrategy(idea);
   } catch {
@@ -217,7 +237,9 @@ Make it specific and actionable.`;
   }
 }
 
-export async function generateComplianceGuidanceContent(idea: string): Promise<string> {
+export async function generateComplianceGuidanceContent(
+  idea: string,
+): Promise<string> {
   const prompt = `Create Compliance & Registration Guidance for this business:
 ${idea}
 
@@ -234,18 +256,19 @@ Provide a practical, step-by-step guide.`;
 
   try {
     const history: ChatMessage[] = [
-      { 
-        id: "u1", 
-        type: "user", 
-        content: prompt, 
-        timestamp: new Date(), 
-        context: "business-planning" 
+      {
+        id: "u1",
+        type: "user",
+        content: prompt,
+        timestamp: new Date(),
+        context: "business-planning",
       },
     ];
     const text = await generateAIResponse(history, {
-      system: "You are a business compliance expert. Provide accurate, comprehensive compliance guidance.",
+      system:
+        "You are a business compliance expert. Provide accurate, comprehensive compliance guidance.",
       performWebSearch: false,
-      includeAppContext: false
+      includeAppContext: false,
     });
     return text || generateMockComplianceGuidance();
   } catch {
@@ -253,7 +276,9 @@ Provide a practical, step-by-step guide.`;
   }
 }
 
-export async function generateHealthCheckContent(idea: string): Promise<string> {
+export async function generateHealthCheckContent(
+  idea: string,
+): Promise<string> {
   const prompt = `Create a Business Plan Health Check Assessment for this business:
 ${idea}
 
@@ -275,18 +300,19 @@ End with an overall assessment and action items.`;
 
   try {
     const history: ChatMessage[] = [
-      { 
-        id: "u1", 
-        type: "user", 
-        content: prompt, 
-        timestamp: new Date(), 
-        context: "business-planning" 
+      {
+        id: "u1",
+        type: "user",
+        content: prompt,
+        timestamp: new Date(),
+        context: "business-planning",
       },
     ];
     const text = await generateAIResponse(history, {
-      system: "You are a business plan evaluator. Provide comprehensive, constructive assessments with actionable improvements.",
+      system:
+        "You are a business plan evaluator. Provide comprehensive, constructive assessments with actionable improvements.",
       performWebSearch: false,
-      includeAppContext: false
+      includeAppContext: false,
     });
     return text || generateMockHealthCheck();
   } catch {
@@ -294,7 +320,10 @@ End with an overall assessment and action items.`;
   }
 }
 
-export async function generateInvestorPitchContent(idea: string, businessName: string): Promise<string> {
+export async function generateInvestorPitchContent(
+  idea: string,
+  businessName: string,
+): Promise<string> {
   const prompt = `Create Investor Pitch Preparation materials for this business:
 Business: ${idea}
 Name: ${businessName}
@@ -315,18 +344,19 @@ Make it compelling and investable.`;
 
   try {
     const history: ChatMessage[] = [
-      { 
-        id: "u1", 
-        type: "user", 
-        content: prompt, 
-        timestamp: new Date(), 
-        context: "business-planning" 
+      {
+        id: "u1",
+        type: "user",
+        content: prompt,
+        timestamp: new Date(),
+        context: "business-planning",
       },
     ];
     const text = await generateAIResponse(history, {
-      system: "You are an investment advisor. Create compelling investor pitch materials.",
+      system:
+        "You are an investment advisor. Create compelling investor pitch materials.",
       performWebSearch: false,
-      includeAppContext: false
+      includeAppContext: false,
     });
     return text || generateMockInvestorPitch(businessName);
   } catch {
