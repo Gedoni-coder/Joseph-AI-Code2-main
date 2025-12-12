@@ -11,7 +11,8 @@ import {
   VerticalAlign,
   TextRun,
 } from "docx";
-import html2pdf from "html2pdf.js";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 import type { BusinessPlan } from "./business-planning-types";
 
 export async function exportBusinessPlanToDocx(businessPlan: BusinessPlan): Promise<Blob> {
