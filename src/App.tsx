@@ -33,6 +33,7 @@ import PolicyEconomicAnalysis from "./pages/PolicyEconomicAnalysis";
 import BusinessFeasibility from "./pages/BusinessFeasibility";
 import BusinessFeasibilityIdea from "./pages/BusinessFeasibilityIdea";
 import BusinessPlanningFlow from "./pages/BusinessPlanningFlow";
+import BusinessPlansList from "./pages/BusinessPlansList";
 import ImpactCalculator from "./pages/ImpactCalculator";
 import AiInsights from "./pages/AiInsights";
 import DocumentManager from "./pages/DocumentManager";
