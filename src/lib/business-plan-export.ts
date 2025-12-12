@@ -187,16 +187,42 @@ export async function exportBusinessPlanToPdf(businessPlan: BusinessPlan): Promi
   element.style.display = "none";
   document.body.appendChild(element);
 
-  const opt = {
-    margin: 10,
-    filename: `${businessPlan.businessName}-business-plan.pdf`,
-    image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 2 },
-    jsPDF: { orientation: "portrait", unit: "mm", format: "a4" },
-  };
-
   try {
-    await html2pdf().set(opt).from(element).save();
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      allowTaint: true,
+    });
+
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4",
+    });
+
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+    const imgWidth = pageWidth - 20;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    let heightLeft = imgHeight;
+    let position = 10;
+
+    pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight - 20;
+
+    while (heightLeft > 0) {
+      position = heightLeft - imgHeight + 10;
+      pdf.addPage();
+      pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight - 20;
+    }
+
+    pdf.save(`${businessPlan.businessName}-business-plan.pdf`);
+  } catch (error) {
+    console.error("PDF export error:", error);
+    throw error;
   } finally {
     document.body.removeChild(element);
   }
