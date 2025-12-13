@@ -13,7 +13,6 @@ import {
   Tag,
   FileText,
   Trash2,
-  Lightbulb,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { generateAIResponse } from "@/lib/ai";
