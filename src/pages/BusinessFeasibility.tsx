@@ -299,7 +299,7 @@ export default function BusinessFeasibility() {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <ModuleHeader
         icon={<CheckCircle className="h-6 w-6" />}
-        title="Business plan and Feasibility Analysis"
+        title="Business Plan and Feasibility Analysis"
         description="Evaluate and analyze business ideas for E-buy expansion, new categories, and strategic initiatives"
         showConnectionStatus={false}
       />
