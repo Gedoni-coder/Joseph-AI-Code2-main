@@ -28,7 +28,7 @@ export default function SignUp() {
         localStorage.setItem("joseph:signedUp", "true");
       } catch {}
       setLoading(false);
-      navigate("/secondlandingpage");
+      navigate("/home");
     }, 500);
   }
 
