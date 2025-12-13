@@ -18,6 +18,7 @@ import {
 import { cn } from "@/lib/utils";
 import { generateAIResponse } from "@/lib/ai";
 import type { ChatMessage } from "@/lib/chatbot-data";
+import { BusinessPlanningContent } from "./BusinessPlanning";
 
 // Modes
 type Mode = "Conservative" | "Safe" | "Wild";
