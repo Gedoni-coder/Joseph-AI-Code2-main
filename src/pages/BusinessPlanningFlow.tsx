@@ -156,6 +156,12 @@ export default function BusinessPlanningFlow() {
             businessPlan.businessName,
           );
           break;
+        case "continuous-updating":
+          content = await generateContinuousUpdatingContent(
+            businessPlan.idea,
+            businessPlan.businessName,
+          );
+          break;
       }
 
       const updatedPlan = {
