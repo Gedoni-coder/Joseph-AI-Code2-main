@@ -364,6 +364,50 @@ Make it compelling and investable.`;
   }
 }
 
+export async function generateContinuousUpdatingContent(
+  idea: string,
+  businessName: string,
+): Promise<string> {
+  const prompt = `Create a Continuous Plan Updating Strategy for this business:
+Business: ${businessName}
+Idea: ${idea}
+
+Include:
+- Quarterly Business Review Framework (what to evaluate)
+- Key Metrics to Monitor (leading and lagging indicators)
+- Trigger Points for Plan Revision (when to update major sections)
+- Document Update Schedule and Process
+- Feedback Collection Mechanisms (from team, customers, market)
+- Scenario Planning and Contingency Options
+- Annual Planning Checklist (items to review and update)
+- Dashboard and KPI Tracking System
+- Review Process Documentation (who reviews, how often, approval workflow)
+- Plan Versioning and Historical Tracking
+
+Provide a practical framework for keeping the business plan current as the business evolves.`;
+
+  try {
+    const history: ChatMessage[] = [
+      {
+        id: "u1",
+        type: "user",
+        content: prompt,
+        timestamp: new Date(),
+        context: "business-planning",
+      },
+    ];
+    const text = await generateAIResponse(history, {
+      system:
+        "You are a strategic planning expert. Create comprehensive continuous improvement frameworks for business plans.",
+      performWebSearch: false,
+      includeAppContext: false,
+    });
+    return text || generateMockContinuousUpdating(businessName);
+  } catch {
+    return generateMockContinuousUpdating(businessName);
+  }
+}
+
 // Mock content generators (fallback)
 function generateMockBusinessPlan(idea: string, businessName: string): string {
   return `EXECUTIVE SUMMARY & COMPANY OVERVIEW
