@@ -830,3 +830,128 @@ Investor Q&A (Top 10 Questions Answered)
 5. How will you spend the funding? [Use of funds]
 ...and more`;
 }
+
+function generateMockContinuousUpdating(businessName: string): string {
+  return `CONTINUOUS PLAN UPDATING STRATEGY
+
+Quarterly Business Review Framework
+Schedule: Every 3 months (Jan, Apr, Jul, Oct)
+
+Q1 Review Focus:
+- Market performance and competitive landscape
+- Customer feedback and satisfaction metrics
+- Financial performance vs. projections
+- Operational efficiency and staffing
+
+Q2 Review Focus:
+- Revenue trends and unit economics
+- Product/service performance and adoption
+- Team productivity and culture assessment
+- Strategic partnership progress
+
+Q3 Review Focus:
+- Funding needs and capital planning
+- Market expansion opportunities
+- Risk reassessment and mitigation
+- Technology and infrastructure scalability
+
+Q4 Review Focus:
+- Annual goal achievement assessment
+- Next year strategic priorities
+- Budget planning for year 2
+- Stakeholder communication and reporting
+
+Key Metrics to Monitor
+Leading Indicators (predictive):
+- Customer acquisition rate
+- Sales pipeline value
+- Product usage and engagement
+- Team hiring progress
+- Marketing campaign performance
+
+Lagging Indicators (historical):
+- Monthly recurring revenue (MRR)
+- Customer lifetime value (LTV)
+- Customer acquisition cost (CAC)
+- Gross and net margins
+- Cash runway
+
+Trigger Points for Plan Revision
+Major Revision Triggers (update multiple sections):
+- Miss revenue targets by >20% for 2 consecutive quarters
+- Significant market shift or new competitor entry
+- Major customer loss (>10% of revenue)
+- Substantial increase/decrease in funding availability
+- Pivot in business model or target market
+
+Minor Update Triggers (update specific sections):
+- Shift in product features or service offerings
+- New partnership or channel development
+- Organizational structure changes
+- Technology infrastructure upgrades
+- Pricing or packaging changes
+
+Document Update Schedule
+- Monthly: Financial metrics and KPI dashboard
+- Quarterly: Full business plan review and updates
+- Semi-annually: Competitive analysis and market research
+- Annually: Comprehensive strategic reassessment
+
+Feedback Collection Mechanisms
+Internal Feedback:
+- Monthly leadership team meetings
+- Quarterly all-hands company reviews
+- Bi-weekly management discussions
+- Anonymous employee surveys (semi-annually)
+- Board/investor feedback sessions
+
+External Feedback:
+- Customer advisory boards (quarterly)
+- Customer surveys and interviews (monthly)
+- Market research and trend monitoring (ongoing)
+- Industry analyst briefings (quarterly)
+- Competitive intelligence gathering (ongoing)
+
+Scenario Planning and Contingencies
+Best Case Scenario:
+- Revenue exceeds projections by 25%+
+- Market adoption faster than expected
+- Response: Accelerate hiring and expansion plans
+
+Base Case Scenario:
+- Achieve planned financial and growth targets
+- Market adoption on timeline
+- Response: Execute according to plan
+
+Worst Case Scenario:
+- Revenue falls 30% short of projections
+- Market adoption slower than expected
+- Response: Reduce burn rate, extend runway, reassess strategy
+
+Annual Planning Checklist
+□ Review and update market analysis
+□ Assess competitive positioning
+□ Update financial projections for next 3 years
+□ Review and update staffing plan
+□ Evaluate product roadmap and features
+□ Assess technology and infrastructure needs
+□ Update go-to-market strategy
+□ Review compliance and regulatory requirements
+□ Plan marketing and customer acquisition for next year
+□ Establish key performance targets and goals
+
+Business Plan Version Control
+- Maintain dated versions of all plan updates
+- Document what changed and why
+- Keep historical records for trend analysis
+- Archive old versions for reference
+- Timestamp all major updates
+
+Review Approval Workflow
+1. Operational team compiles updates
+2. Leadership team reviews and discusses
+3. CFO validates financial projections
+4. CEO approves major changes
+5. Board/investors notified of significant changes
+6. Updated plan distributed to stakeholders`;
+}
