@@ -417,18 +417,8 @@ export default function BusinessFeasibility() {
             </div>
           </TabsContent>
 
-          <TabsContent value="planning">
-            <div className="flex flex-col items-center justify-center py-16">
-              <Lightbulb className="h-16 w-16 text-primary mb-4" />
-              <h3 className="text-2xl font-bold mb-2">Business Planning</h3>
-              <p className="text-muted-foreground text-center mb-8 max-w-md">
-                Create comprehensive, investor-ready business plans tailored to
-                your business ideas.
-              </p>
-              <Button size="lg" onClick={() => navigate("/business-planning")}>
-                Go to Business Planning
-              </Button>
-            </div>
+          <TabsContent value="planning" className="space-y-8">
+            <BusinessPlanningContent />
           </TabsContent>
         </Tabs>
       </main>
