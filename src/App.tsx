@@ -32,6 +32,7 @@ import FinancialAdvisory from "./pages/FinancialAdvisory";
 import PolicyEconomicAnalysis from "./pages/PolicyEconomicAnalysis";
 import BusinessFeasibility from "./pages/BusinessFeasibility";
 import BusinessFeasibilityIdea from "./pages/BusinessFeasibilityIdea";
+import BusinessPlanning from "./pages/BusinessPlanning";
 import BusinessPlanningFlow from "./pages/BusinessPlanningFlow";
 import BusinessPlansList from "./pages/BusinessPlansList";
 import ImpactCalculator from "./pages/ImpactCalculator";
@@ -151,7 +152,7 @@ function TopDivisionNav({
   return (
     <nav className="w-full bg-white border-b shadow-sm px-4 py-3 sticky top-0 z-40 flex gap-2 items-center">
       <Link
-        to="/secondlandingpage"
+        to="/home"
         className="font-bold tracking-tight text-lg px-3 py-1 rounded hover:bg-muted/30 transition-colors"
       >
         Solutions
@@ -234,7 +235,7 @@ function AppContent() {
         <Route path="/" element={<PrimaryLanding />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/chatbot-test" element={<ChatbotTest />} />
-        <Route path="/secondlandingpage" element={<Landing />} />
+        <Route path="/home" element={<Landing />} />
         <Route path="/landing" element={<Landing />} />
 
         {/* Main 10 Module Routes - matching landing page links */}
@@ -268,8 +269,12 @@ function AppContent() {
           path="/business-feasibility/:id"
           element={<BusinessFeasibilityIdea />}
         />
+        <Route path="/business-planning" element={<BusinessPlanning />} />
+        <Route
+          path="/business-planning-flow/:planId"
+          element={<BusinessPlanningFlow />}
+        />
         <Route path="/business-plans" element={<BusinessPlansList />} />
-        <Route path="/business-planning/:feasibilityId" element={<BusinessPlanningFlow />} />
         <Route path="/sales-intelligence" element={<SalesIntelligence />} />
 
         {/* Additional Feature Routes */}

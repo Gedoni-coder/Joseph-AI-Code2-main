@@ -42,6 +42,7 @@ import {
   generateComplianceGuidanceContent,
   generateHealthCheckContent,
   generateInvestorPitchContent,
+  generateContinuousUpdatingContent,
 } from "@/lib/business-plan-content-generator";
 import { downloadBusinessPlan } from "@/lib/business-plan-export";
 
@@ -151,6 +152,12 @@ export default function BusinessPlanningFlow() {
           break;
         case "investor-pitch":
           content = await generateInvestorPitchContent(
+            businessPlan.idea,
+            businessPlan.businessName,
+          );
+          break;
+        case "continuous-updating":
+          content = await generateContinuousUpdatingContent(
             businessPlan.idea,
             businessPlan.businessName,
           );

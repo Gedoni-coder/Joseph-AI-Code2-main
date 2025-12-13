@@ -16,7 +16,9 @@ export default function SignUp() {
   });
   const [password, setPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  const googleClientId = import.meta.env?.VITE_GOOGLE_CLIENT_ID as string | undefined;
+  const googleClientId = import.meta.env?.VITE_GOOGLE_CLIENT_ID as
+    | string
+    | undefined;
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -28,7 +30,7 @@ export default function SignUp() {
         localStorage.setItem("joseph:signedUp", "true");
       } catch {}
       setLoading(false);
-      navigate("/secondlandingpage");
+      navigate("/home");
     }, 500);
   }
 
@@ -48,15 +50,18 @@ export default function SignUp() {
           callback: (response: any) => {
             try {
               localStorage.setItem("joseph:signedUp", "true");
-              localStorage.setItem("joseph:googleCredential", response?.credential || "");
+              localStorage.setItem(
+                "joseph:googleCredential",
+                response?.credential || "",
+              );
             } catch {}
-            navigate("/secondlandingpage");
+            navigate("/home");
           },
         });
         // @ts-ignore
         window.google.accounts.id.renderButton(
           document.getElementById("googleSignInBtn"),
-          { theme: "outline", size: "large", width: 360 }
+          { theme: "outline", size: "large", width: 360 },
         );
       }
     };
@@ -72,37 +77,64 @@ export default function SignUp() {
         <CardContent className="p-6">
           <div className="text-center mb-6">
             <div className="text-2xl font-bold">Create your Joseph account</div>
-            <div className="text-sm text-muted-foreground">Access Solutions, Infrastructure, and Learn</div>
+            <div className="text-sm text-muted-foreground">
+              Access Solutions, Infrastructure, and Learn
+            </div>
           </div>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm mb-1">Full name</label>
-              <Input value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Jane Doe" />
+              <Input
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder="Jane Doe"
+              />
             </div>
             <div>
               <label className="block text-sm mb-1">Email</label>
-              <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required />
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                required
+              />
             </div>
             <div>
               <label className="block text-sm mb-1">Password</label>
-              <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required />
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+                required
+              />
             </div>
             <Button type="submit" disabled={loading} className="w-full">
               {loading ? "Creating account…" : "Create account"}
             </Button>
-            <Button type="button" variant="secondary" className="w-full" onClick={() => navigate("/secondlandingpage")}>Skip for now</Button>
+            <Button
+              type="button"
+              variant="secondary"
+              className="w-full"
+              onClick={() => navigate("/home")}
+            >
+              Skip for now
+            </Button>
           </form>
           <div className="mt-6">
             {googleClientId ? (
               <div id="googleSignInBtn" className="flex justify-center" />
             ) : (
               <div className="text-xs text-muted-foreground text-center">
-                Set <b>VITE_GOOGLE_CLIENT_ID</b> in your environment to enable Google sign-in.
+                Set <b>VITE_GOOGLE_CLIENT_ID</b> in your environment to enable
+                Google sign-in.
               </div>
             )}
           </div>
           <div className="text-[11px] text-muted-foreground mt-4 text-center">
-            By continuing you agree to our Terms and acknowledge our Privacy Policy.
+            By continuing you agree to our Terms and acknowledge our Privacy
+            Policy.
           </div>
         </CardContent>
       </Card>
