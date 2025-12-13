@@ -270,7 +270,10 @@ function AppContent() {
           element={<BusinessFeasibilityIdea />}
         />
         <Route path="/business-planning" element={<BusinessPlanning />} />
-        <Route path="/business-planning-flow/:planId" element={<BusinessPlanningFlow />} />
+        <Route
+          path="/business-planning-flow/:planId"
+          element={<BusinessPlanningFlow />}
+        />
         <Route path="/business-plans" element={<BusinessPlansList />} />
         <Route path="/sales-intelligence" element={<SalesIntelligence />} />
 
