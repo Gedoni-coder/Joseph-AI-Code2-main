@@ -50,7 +50,7 @@ export default function SignUp() {
               localStorage.setItem("joseph:signedUp", "true");
               localStorage.setItem("joseph:googleCredential", response?.credential || "");
             } catch {}
-            navigate("/secondlandingpage");
+            navigate("/home");
           },
         });
         // @ts-ignore
