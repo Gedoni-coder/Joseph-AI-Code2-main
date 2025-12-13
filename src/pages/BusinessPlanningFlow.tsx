@@ -42,6 +42,7 @@ import {
   generateComplianceGuidanceContent,
   generateHealthCheckContent,
   generateInvestorPitchContent,
+  generateContinuousUpdatingContent,
 } from "@/lib/business-plan-content-generator";
 import { downloadBusinessPlan } from "@/lib/business-plan-export";
 
