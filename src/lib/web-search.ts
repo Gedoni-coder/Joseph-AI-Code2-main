@@ -83,25 +83,39 @@ export async function performWebSearch(query: string): Promise<SearchResult[]> {
 }
 
 export async function fetchWebPageText(rawUrl: string): Promise<string | null> {
-  try {
-    if (!navigator.onLine) return null;
+  if (!navigator.onLine) return null;
 
+  try {
     let url = rawUrl.trim();
     if (!/^https?:\/\//i.test(url)) {
       url = `https://${url}`;
     }
     const readerUrl = `https://r.jina.ai/${url}`;
-    const res = await fetch(readerUrl, {
-      method: "GET",
-      headers: {
-        Accept: "text/plain, text/markdown, */*",
-      },
-    });
-    if (!res.ok) return null;
-    const text = await res.text();
-    if (!text || !text.trim()) return null;
-    const maxLen = 8000;
-    return text.length > maxLen ? text.slice(0, maxLen) : text;
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+    try {
+      const res = await fetch(readerUrl, {
+        method: "GET",
+        headers: {
+          Accept: "text/plain, text/markdown, */*",
+        },
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!res.ok) return null;
+      const text = await res.text();
+      if (!text || !text.trim()) return null;
+      const maxLen = 8000;
+      return text.length > maxLen ? text.slice(0, maxLen) : text;
+    } catch (fetchError) {
+      clearTimeout(timeoutId);
+      // Silently fail on fetch errors - this is optional enhancement
+      return null;
+    }
   } catch {
     return null;
   }
