@@ -13,6 +13,7 @@ import { PolicySimplifier } from "../components/policy/policy-simplifier";
 import { EconomicPulseboard } from "../components/policy/economic-pulseboard";
 import { ScenarioSimulation } from "../components/policy/scenario-simulation";
 import { FiscalPolicyAnalyzer } from "../components/policy/fiscal-policy-analyzer";
+import ImpactCalculator from "./ImpactCalculator";
 import {
   Settings,
   Radio,
@@ -23,6 +24,7 @@ import {
   TrendingUp,
   Target,
   Shield,
+  Calculator,
 } from "lucide-react";
 
 export default function PolicyEconomicAnalysis() {
