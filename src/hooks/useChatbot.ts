@@ -183,16 +183,24 @@ export function useChatbot() {
         } catch {}
       }
       if (urls.length > 0) {
-        const firstTwo = urls.slice(0, 2);
-        const parts: string[] = [];
-        await Promise.all(firstTwo.map(async (u) => {
-          const txt = await fetchWebPageText(u);
-          if (txt) {
-            parts.push(`URL: ${u}\n${txt}`);
+        try {
+          const firstTwo = urls.slice(0, 2);
+          const parts: string[] = [];
+          await Promise.all(firstTwo.map(async (u) => {
+            try {
+              const txt = await fetchWebPageText(u);
+              if (txt) {
+                parts.push(`URL: ${u}\n${txt}`);
+              }
+            } catch {
+              // Individual URL fetch failed - continue with others
+            }
+          }));
+          if (parts.length) {
+            webContext = parts.join("\n\n---\n\n");
           }
-        }));
-        if (parts.length) {
-          webContext = parts.join("\n\n---\n\n");
+        } catch {
+          // URL content fetching failed - continue without it
         }
       }
 
