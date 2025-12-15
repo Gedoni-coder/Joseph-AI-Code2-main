@@ -26,7 +26,8 @@ export async function performWebSearch(query: string): Promise<SearchResult[]> {
         {
           method: "GET",
           headers: {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "User-Agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
           },
           mode: "no-cors",
           signal: controller.signal,

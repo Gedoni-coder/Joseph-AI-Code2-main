@@ -63,11 +63,16 @@ export function ComplianceCalendar() {
       agency: "Tax Authority",
       jurisdiction: "National",
       consequence: "high",
-      consequence_detail: "Interest accrual, penalties up to 10% of unpaid amount",
+      consequence_detail:
+        "Interest accrual, penalties up to 10% of unpaid amount",
       status: "pending",
       assignedTo: "Finance Manager",
       dependencies: ["invoice-reconciliation", "bank-reconciliation"],
-      documentationRequired: ["Sales Invoices", "Purchase Invoices", "Bank Statements"],
+      documentationRequired: [
+        "Sales Invoices",
+        "Purchase Invoices",
+        "Bank Statements",
+      ],
       priority: "high",
     },
     {
@@ -79,11 +84,16 @@ export function ComplianceCalendar() {
       agency: "Labor Authority",
       jurisdiction: "National",
       consequence: "critical",
-      consequence_detail: "Personal liability of officers, criminal penalties, employee claims",
+      consequence_detail:
+        "Personal liability of officers, criminal penalties, employee claims",
       status: "pending",
       assignedTo: "HR Manager",
       dependencies: ["payroll-processing", "employee-verification"],
-      documentationRequired: ["Payroll Register", "Employee Information", "Deduction Records"],
+      documentationRequired: [
+        "Payroll Register",
+        "Employee Information",
+        "Deduction Records",
+      ],
       priority: "critical",
     },
     {
@@ -98,8 +108,16 @@ export function ComplianceCalendar() {
       consequence_detail: "Audit triggers, penalties, interest on late payment",
       status: "pending",
       assignedTo: "Chief Financial Officer",
-      dependencies: ["financial-statements", "balance-sheet", "income-statement"],
-      documentationRequired: ["Audited Financial Statements", "Supporting Schedules", "Asset Register"],
+      dependencies: [
+        "financial-statements",
+        "balance-sheet",
+        "income-statement",
+      ],
+      documentationRequired: [
+        "Audited Financial Statements",
+        "Supporting Schedules",
+        "Asset Register",
+      ],
       priority: "high",
     },
     {
@@ -131,7 +149,11 @@ export function ComplianceCalendar() {
       status: "pending",
       assignedTo: "Legal Compliance Officer",
       dependencies: [],
-      documentationRequired: ["Previous License", "Identity Verification", "Address Proof"],
+      documentationRequired: [
+        "Previous License",
+        "Identity Verification",
+        "Address Proof",
+      ],
       priority: "high",
     },
     {
@@ -143,17 +165,25 @@ export function ComplianceCalendar() {
       agency: "Regulatory Authority",
       jurisdiction: "National",
       consequence: "medium",
-      consequence_detail: "Regulatory scrutiny, compliance certification delays",
+      consequence_detail:
+        "Regulatory scrutiny, compliance certification delays",
       status: "overdue",
       assignedTo: "Chief Financial Officer",
       dependencies: ["financial-statements", "internal-controls"],
-      documentationRequired: ["Audit Report", "Management Letter", "Financial Statements"],
+      documentationRequired: [
+        "Audit Report",
+        "Management Letter",
+        "Financial Statements",
+      ],
       priority: "critical",
     },
   ]);
 
-  const [selectedObligation, setSelectedObligation] = useState<ComplianceObligation | null>(null);
-  const [filter, setFilter] = useState<"all" | "pending" | "at-risk" | "overdue">("all");
+  const [selectedObligation, setSelectedObligation] =
+    useState<ComplianceObligation | null>(null);
+  const [filter, setFilter] = useState<
+    "all" | "pending" | "at-risk" | "overdue"
+  >("all");
   const [alerts, setAlerts] = useState<Alert[]>([
     {
       id: "alert-1",
@@ -308,7 +338,9 @@ export function ComplianceCalendar() {
           </TabsTrigger>
           <TabsTrigger value="alerts" className="flex items-center gap-2">
             <Bell className="h-4 w-4" />
-            <span className="hidden sm:inline">Alerts ({unreadAlertCount})</span>
+            <span className="hidden sm:inline">
+              Alerts ({unreadAlertCount})
+            </span>
           </TabsTrigger>
           <TabsTrigger value="dependencies" className="flex items-center gap-2">
             <Zap className="h-4 w-4" />
@@ -349,7 +381,9 @@ export function ComplianceCalendar() {
                 {filteredObligations.length === 0 ? (
                   <div className="text-center py-12">
                     <CheckCircle2 className="h-12 w-12 text-green-500 mx-auto mb-3" />
-                    <p className="text-gray-600">No obligations in this category</p>
+                    <p className="text-gray-600">
+                      No obligations in this category
+                    </p>
                   </div>
                 ) : (
                   filteredObligations.map((obl) => (
@@ -405,7 +439,9 @@ export function ComplianceCalendar() {
                         </div>
                         <div>
                           <span className="text-gray-600">Consequence:</span>
-                          <div className={`font-medium capitalize text-${obl.consequence}-600`}>
+                          <div
+                            className={`font-medium capitalize text-${obl.consequence}-600`}
+                          >
                             {obl.consequence}
                           </div>
                         </div>
@@ -418,7 +454,11 @@ export function ComplianceCalendar() {
                           </p>
                           <div className="flex flex-wrap gap-2">
                             {obl.dependencies.map((dep) => (
-                              <Badge key={dep} variant="secondary" className="text-xs">
+                              <Badge
+                                key={dep}
+                                variant="secondary"
+                                className="text-xs"
+                              >
                                 {dep}
                               </Badge>
                             ))}
@@ -457,7 +497,9 @@ export function ComplianceCalendar() {
                     <div className="space-y-2 text-sm">
                       <p>
                         <span className="text-gray-600">Status:</span>
-                        <Badge className={`ml-2 ${getStatusColor(selectedObligation.status)}`}>
+                        <Badge
+                          className={`ml-2 ${getStatusColor(selectedObligation.status)}`}
+                        >
                           {selectedObligation.status}
                         </Badge>
                       </p>
@@ -488,7 +530,9 @@ export function ComplianceCalendar() {
                     </h4>
                     <div className="space-y-2 text-sm">
                       <p>
-                        <span className="text-gray-600">Regulatory Agency:</span>
+                        <span className="text-gray-600">
+                          Regulatory Agency:
+                        </span>
                         <span className="ml-2 font-medium">
                           {selectedObligation.agency}
                         </span>
@@ -500,8 +544,12 @@ export function ComplianceCalendar() {
                         </span>
                       </p>
                       <p>
-                        <span className="text-gray-600">Non-Compliance Risk:</span>
-                        <span className={`ml-2 font-medium capitalize text-${selectedObligation.consequence}-600`}>
+                        <span className="text-gray-600">
+                          Non-Compliance Risk:
+                        </span>
+                        <span
+                          className={`ml-2 font-medium capitalize text-${selectedObligation.consequence}-600`}
+                        >
                           {selectedObligation.consequence}
                         </span>
                       </p>
@@ -517,12 +565,14 @@ export function ComplianceCalendar() {
                     Required Documentation
                   </h4>
                   <ul className="space-y-1 text-sm">
-                    {selectedObligation.documentationRequired.map((doc, idx) => (
-                      <li key={idx} className="flex items-center gap-2">
-                        <CheckCircle className="h-4 w-4 text-green-600" />
-                        {doc}
-                      </li>
-                    ))}
+                    {selectedObligation.documentationRequired.map(
+                      (doc, idx) => (
+                        <li key={idx} className="flex items-center gap-2">
+                          <CheckCircle className="h-4 w-4 text-green-600" />
+                          {doc}
+                        </li>
+                      ),
+                    )}
                   </ul>
                 </div>
 
@@ -533,7 +583,10 @@ export function ComplianceCalendar() {
                     </h4>
                     <div className="space-y-2">
                       {selectedObligation.dependencies.map((dep) => (
-                        <div key={dep} className="flex items-center gap-2 text-sm">
+                        <div
+                          key={dep}
+                          className="flex items-center gap-2 text-sm"
+                        >
                           <Clock className="h-4 w-4 text-yellow-600" />
                           <span>{dep}</span>
                         </div>
@@ -574,7 +627,7 @@ export function ComplianceCalendar() {
                 ) : (
                   alerts.map((alert) => {
                     const obligation = obligations.find(
-                      (o) => o.id === alert.obligationId
+                      (o) => o.id === alert.obligationId,
                     );
                     return (
                       <div
@@ -609,8 +662,8 @@ export function ComplianceCalendar() {
                             onClick={() => {
                               setAlerts(
                                 alerts.map((a) =>
-                                  a.id === alert.id ? { ...a, read: true } : a
-                                )
+                                  a.id === alert.id ? { ...a, read: true } : a,
+                                ),
                               );
                             }}
                           >
@@ -647,7 +700,7 @@ export function ComplianceCalendar() {
                 <div className="space-y-4">
                   {dependencyAlerts.map((alert) => {
                     const obligation = obligations.find(
-                      (o) => o.id === alert.obligationId
+                      (o) => o.id === alert.obligationId,
                     );
                     return (
                       <div
@@ -736,7 +789,9 @@ export function ComplianceCalendar() {
                           Due: {obl.dueDate.toLocaleDateString()}
                         </div>
                         <div className="flex gap-2 mt-1">
-                          <Badge className={`text-xs ${getStatusColor(obl.status)}`}>
+                          <Badge
+                            className={`text-xs ${getStatusColor(obl.status)}`}
+                          >
                             {obl.status}
                           </Badge>
                           {obl.dependencies.length > 0 && (

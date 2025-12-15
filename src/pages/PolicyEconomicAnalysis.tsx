@@ -43,66 +43,70 @@ export default function PolicyEconomicAnalysis() {
 
       <div className="container mx-auto py-6 space-y-6">
         {/* Main Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-7">
-          <TabsTrigger value="watchtower" className="flex items-center gap-2">
-            <Radio className="h-4 w-4" />
-            <span className="hidden sm:inline">Watchtower</span>
-          </TabsTrigger>
-          <TabsTrigger value="fiscal" className="flex items-center gap-2">
-            <DollarSign className="h-4 w-4" />
-            <span className="hidden sm:inline">Fiscal</span>
-          </TabsTrigger>
-          <TabsTrigger value="management" className="flex items-center gap-2">
-            <Settings className="h-4 w-4" />
-            <span className="hidden sm:inline">Management</span>
-          </TabsTrigger>
-          <TabsTrigger value="simplifier" className="flex items-center gap-2">
-            <BookOpen className="h-4 w-4" />
-            <span className="hidden sm:inline">Simplifier</span>
-          </TabsTrigger>
-          <TabsTrigger value="pulseboard" className="flex items-center gap-2">
-            <Activity className="h-4 w-4" />
-            <span className="hidden sm:inline">Pulseboard</span>
-          </TabsTrigger>
-          <TabsTrigger value="scenario" className="flex items-center gap-2">
-            <Zap className="h-4 w-4" />
-            <span className="hidden sm:inline">Scenario</span>
-          </TabsTrigger>
-          <TabsTrigger value="calculator" className="flex items-center gap-2">
-            <Calculator className="h-4 w-4" />
-            <span className="hidden sm:inline">Calculator</span>
-          </TabsTrigger>
-        </TabsList>
+        <Tabs
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="space-y-4"
+        >
+          <TabsList className="grid w-full grid-cols-7">
+            <TabsTrigger value="watchtower" className="flex items-center gap-2">
+              <Radio className="h-4 w-4" />
+              <span className="hidden sm:inline">Watchtower</span>
+            </TabsTrigger>
+            <TabsTrigger value="fiscal" className="flex items-center gap-2">
+              <DollarSign className="h-4 w-4" />
+              <span className="hidden sm:inline">Fiscal</span>
+            </TabsTrigger>
+            <TabsTrigger value="management" className="flex items-center gap-2">
+              <Settings className="h-4 w-4" />
+              <span className="hidden sm:inline">Management</span>
+            </TabsTrigger>
+            <TabsTrigger value="simplifier" className="flex items-center gap-2">
+              <BookOpen className="h-4 w-4" />
+              <span className="hidden sm:inline">Simplifier</span>
+            </TabsTrigger>
+            <TabsTrigger value="pulseboard" className="flex items-center gap-2">
+              <Activity className="h-4 w-4" />
+              <span className="hidden sm:inline">Pulseboard</span>
+            </TabsTrigger>
+            <TabsTrigger value="scenario" className="flex items-center gap-2">
+              <Zap className="h-4 w-4" />
+              <span className="hidden sm:inline">Scenario</span>
+            </TabsTrigger>
+            <TabsTrigger value="calculator" className="flex items-center gap-2">
+              <Calculator className="h-4 w-4" />
+              <span className="hidden sm:inline">Calculator</span>
+            </TabsTrigger>
+          </TabsList>
 
-        <TabsContent value="watchtower" className="space-y-4">
-          <PolicyWatchtower />
-        </TabsContent>
+          <TabsContent value="watchtower" className="space-y-4">
+            <PolicyWatchtower />
+          </TabsContent>
 
-        <TabsContent value="fiscal" className="space-y-4">
-          <FiscalPolicyAnalyzer />
-        </TabsContent>
+          <TabsContent value="fiscal" className="space-y-4">
+            <FiscalPolicyAnalyzer />
+          </TabsContent>
 
-        <TabsContent value="management" className="space-y-4">
-          <PolicyEconomicManagement />
-        </TabsContent>
+          <TabsContent value="management" className="space-y-4">
+            <PolicyEconomicManagement />
+          </TabsContent>
 
-        <TabsContent value="simplifier" className="space-y-4">
-          <PolicySimplifier />
-        </TabsContent>
+          <TabsContent value="simplifier" className="space-y-4">
+            <PolicySimplifier />
+          </TabsContent>
 
-        <TabsContent value="pulseboard" className="space-y-4">
-          <EconomicPulseboard />
-        </TabsContent>
+          <TabsContent value="pulseboard" className="space-y-4">
+            <EconomicPulseboard />
+          </TabsContent>
 
-        <TabsContent value="scenario" className="space-y-4">
-          <ScenarioSimulation />
-        </TabsContent>
+          <TabsContent value="scenario" className="space-y-4">
+            <ScenarioSimulation />
+          </TabsContent>
 
-        <TabsContent value="calculator" className="space-y-4">
-          <ImpactCalculator />
-        </TabsContent>
-      </Tabs>
+          <TabsContent value="calculator" className="space-y-4">
+            <ImpactCalculator />
+          </TabsContent>
+        </Tabs>
       </div>
 
       {/* Footer */}
@@ -115,7 +119,9 @@ export default function PolicyEconomicAnalysis() {
               <span>Data updated continuously</span>
             </div>
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <span>Analysis: Policy Impact, Economic Modeling, Strategic Planning</span>
+              <span>
+                Analysis: Policy Impact, Economic Modeling, Strategic Planning
+              </span>
             </div>
           </div>
         </div>
