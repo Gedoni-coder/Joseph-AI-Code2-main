@@ -41,8 +41,9 @@ export default function PolicyEconomicAnalysis() {
         showConnectionStatus={false}
       />
 
-      {/* Main Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+      <div className="container mx-auto py-6 space-y-6">
+        {/* Main Tabs */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
         <TabsList className="grid w-full grid-cols-7">
           <TabsTrigger value="management" className="flex items-center gap-2">
             <Settings className="h-4 w-4" />
@@ -102,6 +103,7 @@ export default function PolicyEconomicAnalysis() {
           <ImpactCalculator />
         </TabsContent>
       </Tabs>
+      </div>
 
       {/* Footer */}
       <footer className="border-t bg-muted/30 mt-16">
