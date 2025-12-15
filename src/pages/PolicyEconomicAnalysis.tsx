@@ -33,36 +33,13 @@ export default function PolicyEconomicAnalysis() {
   const [activeTab, setActiveTab] = useState("management");
 
   return (
-    <div className="container mx-auto py-6 space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Policy & Economic Impact Analysis</h1>
-          <p className="text-muted-foreground">
-            Comprehensive policy monitoring, regulatory compliance, economic forecasting, and strategic decision-making engine
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <Link to="/economic-indicators">
-            <Button variant="outline" size="sm" className="flex items-center gap-2">
-              <TrendingUp className="h-4 w-4" />
-              Economic Dashboard
-            </Button>
-          </Link>
-          <Link to="/business-forecast">
-            <Button variant="outline" size="sm" className="flex items-center gap-2">
-              <Target className="h-4 w-4" />
-              Business Forecast
-            </Button>
-          </Link>
-          <Link to="/tax-compliance">
-            <Button variant="outline" size="sm" className="flex items-center gap-2">
-              <Shield className="h-4 w-4" />
-              Tax & Compliance
-            </Button>
-          </Link>
-        </div>
-      </div>
+    <div className="space-y-6">
+      <ModuleHeader
+        icon={<AlertTriangle className="h-6 w-6" />}
+        title="Policy and Economic Impact"
+        description="Policy analysis, economic impact assessment, and regulatory compliance impact calculations for E-buy operations"
+        showConnectionStatus={false}
+      />
 
       {/* Main Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
