@@ -116,22 +116,31 @@ export async function generateAIResponse(
       try {
         const lastUserMessage = history[history.length - 1];
         if (lastUserMessage.type === "user") {
-          const shouldSearch = await shouldPerformWebSearch(
-            lastUserMessage.content,
-          );
-          if (shouldSearch) {
-            const webContext = await enhanceResponseWithWebContext(
+          try {
+            const shouldSearch = await shouldPerformWebSearch(
               lastUserMessage.content,
             );
-            if (webContext) {
-              enhancedWebContext = enhancedWebContext
-                ? `${enhancedWebContext}\n\n${webContext}`
-                : webContext;
+            if (shouldSearch) {
+              try {
+                const webContext = await enhanceResponseWithWebContext(
+                  lastUserMessage.content,
+                );
+                if (webContext) {
+                  enhancedWebContext = enhancedWebContext
+                    ? `${enhancedWebContext}\n\n${webContext}`
+                    : webContext;
+                }
+              } catch (searchError) {
+                // Web search context enhancement failed - continue without it
+                // This is non-critical and should not block response generation
+              }
             }
+          } catch (shouldSearchError) {
+            // Check whether to search failed - continue without it
           }
         }
-      } catch {
-        // Web search is optional - silently continue without it
+      } catch (outerError) {
+        // Outer error handling for any unexpected issues with web search
       }
     }
   } catch (e) {

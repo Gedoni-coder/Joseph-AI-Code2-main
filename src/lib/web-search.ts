@@ -10,60 +10,73 @@ export interface SearchResult {
 }
 
 export async function performWebSearch(query: string): Promise<SearchResult[]> {
+  // First check if browser is online
+  if (!navigator.onLine) {
+    return [];
+  }
+
   try {
-    // First check if browser is online
-    if (!navigator.onLine) {
-      return [];
-    }
-
     // Use DuckDuckGo Instant Answer API with no-cors mode
-    const response = await fetch(
-      `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_redirect=1`,
-      {
-        method: "GET",
-        headers: {
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
+    try {
+      const response = await fetch(
+        `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_redirect=1`,
+        {
+          method: "GET",
+          headers: {
+            "User-Agent":
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+          },
+          mode: "no-cors",
+          signal: controller.signal,
         },
-        mode: "no-cors",
-      },
-    );
+      );
 
-    // In no-cors mode, response type will be opaque and we can't access the body
-    // So we need to try a different approach or skip web search gracefully
-    if (response.type === "opaque") {
-      // CORS blocked - return empty results gracefully
+      clearTimeout(timeoutId);
+
+      // In no-cors mode, response type will be opaque and we can't access the body
+      // So we need to try a different approach or skip web search gracefully
+      if (response.type === "opaque") {
+        // CORS blocked - return empty results gracefully
+        return [];
+      }
+
+      if (!response.ok) {
+        return [];
+      }
+
+      const data = (await response.json()) as any;
+      const results: SearchResult[] = [];
+
+      // Parse DuckDuckGo response
+      if (data.AbstractText) {
+        results.push({
+          title: data.AbstractTitle || "Search Summary",
+          url: data.AbstractURL || "https://duckduckgo.com",
+          snippet: data.AbstractText,
+        });
+      }
+
+      if (data.RelatedTopics && Array.isArray(data.RelatedTopics)) {
+        data.RelatedTopics.slice(0, 3).forEach((topic: any) => {
+          if (topic.Text && topic.FirstURL) {
+            results.push({
+              title: topic.Text.split(" ")[0] || "Related",
+              url: topic.FirstURL,
+              snippet: topic.Text,
+            });
+          }
+        });
+      }
+
+      return results;
+    } catch (fetchError) {
+      clearTimeout(timeoutId);
+      // Silently fail on any fetch error - web search is optional enhancement
       return [];
     }
-
-    if (!response.ok) {
-      return [];
-    }
-
-    const data = (await response.json()) as any;
-    const results: SearchResult[] = [];
-
-    // Parse DuckDuckGo response
-    if (data.AbstractText) {
-      results.push({
-        title: data.AbstractTitle || "Search Summary",
-        url: data.AbstractURL || "https://duckduckgo.com",
-        snippet: data.AbstractText,
-      });
-    }
-
-    if (data.RelatedTopics && Array.isArray(data.RelatedTopics)) {
-      data.RelatedTopics.slice(0, 3).forEach((topic: any) => {
-        if (topic.Text && topic.FirstURL) {
-          results.push({
-            title: topic.Text.split(" ")[0] || "Related",
-            url: topic.FirstURL,
-            snippet: topic.Text,
-          });
-        }
-      });
-    }
-
-    return results;
   } catch (error) {
     // Silently fail - web search is optional enhancement, not critical
     return [];
@@ -71,25 +84,39 @@ export async function performWebSearch(query: string): Promise<SearchResult[]> {
 }
 
 export async function fetchWebPageText(rawUrl: string): Promise<string | null> {
-  try {
-    if (!navigator.onLine) return null;
+  if (!navigator.onLine) return null;
 
+  try {
     let url = rawUrl.trim();
     if (!/^https?:\/\//i.test(url)) {
       url = `https://${url}`;
     }
     const readerUrl = `https://r.jina.ai/${url}`;
-    const res = await fetch(readerUrl, {
-      method: "GET",
-      headers: {
-        Accept: "text/plain, text/markdown, */*",
-      },
-    });
-    if (!res.ok) return null;
-    const text = await res.text();
-    if (!text || !text.trim()) return null;
-    const maxLen = 8000;
-    return text.length > maxLen ? text.slice(0, maxLen) : text;
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+    try {
+      const res = await fetch(readerUrl, {
+        method: "GET",
+        headers: {
+          Accept: "text/plain, text/markdown, */*",
+        },
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!res.ok) return null;
+      const text = await res.text();
+      if (!text || !text.trim()) return null;
+      const maxLen = 8000;
+      return text.length > maxLen ? text.slice(0, maxLen) : text;
+    } catch (fetchError) {
+      clearTimeout(timeoutId);
+      // Silently fail on fetch errors - this is optional enhancement
+      return null;
+    }
   } catch {
     return null;
   }

@@ -81,7 +81,7 @@ const ModuleNavigation = () => {
     },
     {
       name: "Policy and Economic Impact",
-      link: "/impact-calculator",
+      link: "/policy-economic-analysis",
       icon: <AlertTriangle className="h-4 w-4" />,
       description: "Policy impact assessment",
     },

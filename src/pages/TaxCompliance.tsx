@@ -14,6 +14,7 @@ import { useTaxData } from "@/hooks/useTaxData";
 import { SmartTaxCalculator } from "@/components/tax/smart-tax-calculator";
 import { TaxRecommendations } from "@/components/tax/tax-recommendations";
 import { ComplianceUpdates } from "@/components/tax/compliance-updates";
+import { ComplianceCalendar } from "@/components/tax/compliance-calendar";
 import {
   Calculator,
   RefreshCw,
@@ -263,6 +264,15 @@ const TaxCompliance = () => {
           </TabsContent>
 
           <TabsContent value="compliance" className="space-y-8">
+            <section>
+              <LoadingOverlay
+                isLoading={isLoading}
+                loadingText="Loading compliance calendar and updates..."
+              >
+                <ComplianceCalendar />
+              </LoadingOverlay>
+            </section>
+
             <section>
               <LoadingOverlay
                 isLoading={isLoading}
