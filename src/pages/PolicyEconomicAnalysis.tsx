@@ -30,7 +30,7 @@ import {
 } from "lucide-react";
 
 export default function PolicyEconomicAnalysis() {
-  const [activeTab, setActiveTab] = useState("management");
+  const [activeTab, setActiveTab] = useState("watchtower");
 
   return (
     <div className="space-y-6">
@@ -45,13 +45,17 @@ export default function PolicyEconomicAnalysis() {
         {/* Main Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
         <TabsList className="grid w-full grid-cols-7">
-          <TabsTrigger value="management" className="flex items-center gap-2">
-            <Settings className="h-4 w-4" />
-            <span className="hidden sm:inline">Management</span>
-          </TabsTrigger>
           <TabsTrigger value="watchtower" className="flex items-center gap-2">
             <Radio className="h-4 w-4" />
             <span className="hidden sm:inline">Watchtower</span>
+          </TabsTrigger>
+          <TabsTrigger value="fiscal" className="flex items-center gap-2">
+            <DollarSign className="h-4 w-4" />
+            <span className="hidden sm:inline">Fiscal</span>
+          </TabsTrigger>
+          <TabsTrigger value="management" className="flex items-center gap-2">
+            <Settings className="h-4 w-4" />
+            <span className="hidden sm:inline">Management</span>
           </TabsTrigger>
           <TabsTrigger value="simplifier" className="flex items-center gap-2">
             <BookOpen className="h-4 w-4" />
@@ -65,22 +69,22 @@ export default function PolicyEconomicAnalysis() {
             <Zap className="h-4 w-4" />
             <span className="hidden sm:inline">Scenario</span>
           </TabsTrigger>
-          <TabsTrigger value="fiscal" className="flex items-center gap-2">
-            <DollarSign className="h-4 w-4" />
-            <span className="hidden sm:inline">Fiscal</span>
-          </TabsTrigger>
           <TabsTrigger value="calculator" className="flex items-center gap-2">
             <Calculator className="h-4 w-4" />
             <span className="hidden sm:inline">Calculator</span>
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="management" className="space-y-4">
-          <PolicyEconomicManagement />
-        </TabsContent>
-
         <TabsContent value="watchtower" className="space-y-4">
           <PolicyWatchtower />
+        </TabsContent>
+
+        <TabsContent value="fiscal" className="space-y-4">
+          <FiscalPolicyAnalyzer />
+        </TabsContent>
+
+        <TabsContent value="management" className="space-y-4">
+          <PolicyEconomicManagement />
         </TabsContent>
 
         <TabsContent value="simplifier" className="space-y-4">
@@ -93,10 +97,6 @@ export default function PolicyEconomicAnalysis() {
 
         <TabsContent value="scenario" className="space-y-4">
           <ScenarioSimulation />
-        </TabsContent>
-
-        <TabsContent value="fiscal" className="space-y-4">
-          <FiscalPolicyAnalyzer />
         </TabsContent>
 
         <TabsContent value="calculator" className="space-y-4">
