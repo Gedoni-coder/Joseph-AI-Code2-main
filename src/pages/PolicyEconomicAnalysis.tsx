@@ -7,6 +7,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "../components/ui/tabs";
+import ModuleHeader from "@/components/ui/module-header";
 import { PolicyEconomicManagement } from "../components/policy/policy-economic-management";
 import { PolicyWatchtower } from "../components/policy/policy-watchtower";
 import { PolicySimplifier } from "../components/policy/policy-simplifier";
@@ -25,6 +26,7 @@ import {
   Target,
   Shield,
   Calculator,
+  AlertTriangle,
 } from "lucide-react";
 
 export default function PolicyEconomicAnalysis() {
