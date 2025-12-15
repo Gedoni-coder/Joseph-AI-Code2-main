@@ -277,15 +277,7 @@ const ImpactCalculator = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      <ModuleHeader
-        icon={<AlertTriangle className="h-6 w-6" />}
-        title="Policy and Economic Impact"
-        description="Policy analysis, economic impact assessment, and regulatory compliance impact calculations for E-buy operations"
-        showConnectionStatus={false}
-      />
-
-      <main className="container mx-auto px-4 py-8 space-y-8">
+    <main className="container mx-auto px-4 py-8 space-y-8">
         {/* Calculator Type Selection */}
         <Card>
           <CardHeader>
@@ -812,8 +804,7 @@ const ImpactCalculator = () => {
             </div>
           </CardContent>
         </Card>
-      </main>
-    </div>
+    </main>
   );
 };
 
