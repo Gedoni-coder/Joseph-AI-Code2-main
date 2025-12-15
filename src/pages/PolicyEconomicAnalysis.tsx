@@ -64,7 +64,7 @@ export default function PolicyEconomicAnalysis() {
 
       {/* Main Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-6">
+        <TabsList className="grid w-full grid-cols-7">
           <TabsTrigger value="management" className="flex items-center gap-2">
             <Settings className="h-4 w-4" />
             <span className="hidden sm:inline">Management</span>
@@ -88,6 +88,10 @@ export default function PolicyEconomicAnalysis() {
           <TabsTrigger value="fiscal" className="flex items-center gap-2">
             <DollarSign className="h-4 w-4" />
             <span className="hidden sm:inline">Fiscal</span>
+          </TabsTrigger>
+          <TabsTrigger value="calculator" className="flex items-center gap-2">
+            <Calculator className="h-4 w-4" />
+            <span className="hidden sm:inline">Calculator</span>
           </TabsTrigger>
         </TabsList>
 
