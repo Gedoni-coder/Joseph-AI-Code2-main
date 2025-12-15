@@ -118,6 +118,10 @@ export default function PolicyEconomicAnalysis() {
         <TabsContent value="fiscal" className="space-y-4">
           <FiscalPolicyAnalyzer />
         </TabsContent>
+
+        <TabsContent value="calculator" className="space-y-4">
+          <ImpactCalculator />
+        </TabsContent>
       </Tabs>
 
       {/* Footer */}
