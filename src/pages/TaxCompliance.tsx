@@ -14,6 +14,7 @@ import { useTaxData } from "@/hooks/useTaxData";
 import { SmartTaxCalculator } from "@/components/tax/smart-tax-calculator";
 import { TaxRecommendations } from "@/components/tax/tax-recommendations";
 import { ComplianceUpdates } from "@/components/tax/compliance-updates";
+import { ComplianceCalendar } from "@/components/tax/compliance-calendar";
 import {
   Calculator,
   RefreshCw,
