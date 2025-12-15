@@ -5,13 +5,18 @@ import "./index.css";
 // Suppress recharts defaultProps warnings (library uses deprecated React pattern)
 const originalWarn = console.warn;
 console.warn = (...args: any[]) => {
+  const firstArg = String(args[0] || "");
+  const secondArg = String(args[1] || "");
+
+  // Filter out recharts defaultProps warnings for XAxis and YAxis
   if (
-    args[0]?.includes?.("defaultProps") &&
-    (args[1] === "XAxis" || args[1] === "YAxis")
+    firstArg.includes("defaultProps") &&
+    (secondArg === "XAxis" || secondArg === "YAxis")
   ) {
     return;
   }
-  originalWarn(...args);
+
+  originalWarn.apply(console, args);
 };
 
 createRoot(document.getElementById("root")!).render(<App />);
