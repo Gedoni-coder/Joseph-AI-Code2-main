@@ -374,7 +374,9 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <AppContent />
+          <CompanyInfoProvider>
+            <AppContent />
+          </CompanyInfoProvider>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
