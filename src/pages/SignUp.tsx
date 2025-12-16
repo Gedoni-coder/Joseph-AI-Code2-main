@@ -30,7 +30,7 @@ export default function SignUp() {
         localStorage.setItem("joseph:signedUp", "true");
       } catch {}
       setLoading(false);
-      navigate("/home");
+      navigate("/onboarding");
     }, 500);
   }
 
@@ -55,7 +55,7 @@ export default function SignUp() {
                 response?.credential || "",
               );
             } catch {}
-            navigate("/home");
+            navigate("/onboarding");
           },
         });
         // @ts-ignore
@@ -112,14 +112,6 @@ export default function SignUp() {
             </div>
             <Button type="submit" disabled={loading} className="w-full">
               {loading ? "Creating account…" : "Create account"}
-            </Button>
-            <Button
-              type="button"
-              variant="secondary"
-              className="w-full"
-              onClick={() => navigate("/home")}
-            >
-              Skip for now
             </Button>
           </form>
           <div className="mt-6">

@@ -118,8 +118,15 @@ export const competitors: Competitor[] = [
     founded: 2012,
     headquarters: "Lagos, Nigeria",
     website: "jumia.com",
-    description: "Africa's leading e-commerce marketplace with pan-African presence across 11 countries",
-    keyProducts: ["Electronics", "Fashion", "Home & Living", "Groceries", "Phones & Tablets"],
+    description:
+      "Africa's leading e-commerce marketplace with pan-African presence across 11 countries",
+    keyProducts: [
+      "Electronics",
+      "Fashion",
+      "Home & Living",
+      "Groceries",
+      "Phones & Tablets",
+    ],
     targetMarkets: ["Nigeria", "Kenya", "Egypt", "Ghana", "Morocco"],
     fundingStage: "Public",
     lastFunding: 240000000,
@@ -134,7 +141,8 @@ export const competitors: Competitor[] = [
     founded: 2012,
     headquarters: "Lagos, Nigeria",
     website: "konga.com",
-    description: "Nigerian-focused e-commerce platform known for trusted service and quality products",
+    description:
+      "Nigerian-focused e-commerce platform known for trusted service and quality products",
     keyProducts: ["Electronics", "Fashion", "Home & Garden", "Health & Beauty"],
     targetMarkets: ["Nigeria"],
     fundingStage: "Acquired",
@@ -150,8 +158,15 @@ export const competitors: Competitor[] = [
     founded: 2022,
     headquarters: "Boston, MA, USA",
     website: "temu.com",
-    description: "Ultra-low price marketplace with direct China sourcing and social commerce features",
-    keyProducts: ["Fashion", "Home Decor", "Electronics", "Beauty", "Accessories"],
+    description:
+      "Ultra-low price marketplace with direct China sourcing and social commerce features",
+    keyProducts: [
+      "Fashion",
+      "Home Decor",
+      "Electronics",
+      "Beauty",
+      "Accessories",
+    ],
     targetMarkets: ["Nigeria", "Global", "Cross-border"],
     fundingStage: "Private",
     lastFunding: 2000000000,
@@ -166,7 +181,8 @@ export const competitors: Competitor[] = [
     founded: 1994,
     headquarters: "Seattle, WA, USA",
     website: "amazon.com",
-    description: "Global e-commerce giant with international shipping to Nigeria, though limited local presence",
+    description:
+      "Global e-commerce giant with international shipping to Nigeria, though limited local presence",
     keyProducts: ["Everything", "Prime Services", "AWS", "Kindle", "Alexa"],
     targetMarkets: ["Global", "Nigeria (International)"],
     fundingStage: "Public",
@@ -181,8 +197,15 @@ export const competitors: Competitor[] = [
     founded: 2010,
     headquarters: "Hangzhou, China",
     website: "aliexpress.com",
-    description: "Global B2C marketplace owned by Alibaba, specializing in cross-border e-commerce",
-    keyProducts: ["Electronics", "Fashion", "Home & Garden", "Automotive", "Sports"],
+    description:
+      "Global B2C marketplace owned by Alibaba, specializing in cross-border e-commerce",
+    keyProducts: [
+      "Electronics",
+      "Fashion",
+      "Home & Garden",
+      "Automotive",
+      "Sports",
+    ],
     targetMarkets: ["Global", "Nigeria (Cross-border)"],
     fundingStage: "Public",
   },
@@ -195,19 +218,22 @@ export const swotAnalyses: SWOTAnalysis[] = [
     strengths: [
       {
         factor: "Pan-African Market Leadership",
-        description: "32.5% market share across 11 African countries. Established brand recognition and trust",
+        description:
+          "32.5% market share across 11 African countries. Established brand recognition and trust",
         impact: "high",
         confidence: 92,
       },
       {
         factor: "Strong Logistics Network",
-        description: "Built-in fulfillment and last-mile delivery infrastructure across major cities",
+        description:
+          "Built-in fulfillment and last-mile delivery infrastructure across major cities",
         impact: "high",
         confidence: 88,
       },
       {
         factor: "Diverse Product Catalog",
-        description: "Wide range across electronics, fashion, groceries, and services",
+        description:
+          "Wide range across electronics, fashion, groceries, and services",
         impact: "medium",
         confidence: 85,
       },
@@ -215,13 +241,15 @@ export const swotAnalyses: SWOTAnalysis[] = [
     weaknesses: [
       {
         factor: "High Customer Acquisition Costs",
-        description: "Marketing spend remains high due to intense competition and low brand awareness",
+        description:
+          "Marketing spend remains high due to intense competition and low brand awareness",
         impact: "medium",
         confidence: 83,
       },
       {
         factor: "Thin Profit Margins",
-        description: "Aggressive pricing and high fulfillment costs compress margins",
+        description:
+          "Aggressive pricing and high fulfillment costs compress margins",
         impact: "high",
         confidence: 90,
       },
@@ -229,13 +257,15 @@ export const swotAnalyses: SWOTAnalysis[] = [
     opportunities: [
       {
         factor: "Mobile-First Growth",
-        description: "85%+ transactions on mobile. Opportunity to enhance mobile experience and apps",
+        description:
+          "85%+ transactions on mobile. Opportunity to enhance mobile experience and apps",
         impact: "high",
         confidence: 88,
       },
       {
         factor: "Financial Services Integration",
-        description: "JumiaPay expansion into lending, insurance, and merchant financing",
+        description:
+          "JumiaPay expansion into lending, insurance, and merchant financing",
         impact: "high",
         confidence: 75,
       },
@@ -249,7 +279,8 @@ export const swotAnalyses: SWOTAnalysis[] = [
       },
       {
         factor: "Regulatory Changes",
-        description: "Potential e-commerce regulations affecting marketplace operations",
+        description:
+          "Potential e-commerce regulations affecting marketplace operations",
         impact: "medium",
         confidence: 70,
       },
@@ -263,13 +294,15 @@ export const swotAnalyses: SWOTAnalysis[] = [
     strengths: [
       {
         factor: "Nigerian Market Focus",
-        description: "Deep understanding of local consumer preferences and trusted brand",
+        description:
+          "Deep understanding of local consumer preferences and trusted brand",
         impact: "high",
         confidence: 88,
       },
       {
         factor: "Customer Service",
-        description: "Reputation for responsive customer support and dispute resolution",
+        description:
+          "Reputation for responsive customer support and dispute resolution",
         impact: "medium",
         confidence: 82,
       },
@@ -277,13 +310,15 @@ export const swotAnalyses: SWOTAnalysis[] = [
     weaknesses: [
       {
         factor: "Limited Geographic Expansion",
-        description: "Focused only on Nigeria, missing pan-African opportunities",
+        description:
+          "Focused only on Nigeria, missing pan-African opportunities",
         impact: "high",
         confidence: 90,
       },
       {
         factor: "Smaller GMV Scale",
-        description: "Lower transaction volume compared to Jumia limits economies of scale",
+        description:
+          "Lower transaction volume compared to Jumia limits economies of scale",
         impact: "medium",
         confidence: 85,
       },
@@ -299,7 +334,8 @@ export const swotAnalyses: SWOTAnalysis[] = [
     threats: [
       {
         factor: "Market Consolidation",
-        description: "Risk of being acquired or losing market share to larger players",
+        description:
+          "Risk of being acquired or losing market share to larger players",
         impact: "high",
         confidence: 78,
       },
@@ -313,13 +349,15 @@ export const swotAnalyses: SWOTAnalysis[] = [
     strengths: [
       {
         factor: "Ultra-Competitive Pricing",
-        description: "Direct China sourcing enables 30-50% lower prices than competitors",
+        description:
+          "Direct China sourcing enables 30-50% lower prices than competitors",
         impact: "high",
         confidence: 92,
       },
       {
         factor: "Social Commerce Integration",
-        description: "Viral marketing and social sharing features driving rapid growth",
+        description:
+          "Viral marketing and social sharing features driving rapid growth",
         impact: "high",
         confidence: 88,
       },
@@ -333,7 +371,8 @@ export const swotAnalyses: SWOTAnalysis[] = [
       },
       {
         factor: "Long Shipping Times",
-        description: "Cross-border fulfillment takes 7-21 days vs local 2-5 days",
+        description:
+          "Cross-border fulfillment takes 7-21 days vs local 2-5 days",
         impact: "high",
         confidence: 85,
       },
@@ -341,7 +380,8 @@ export const swotAnalyses: SWOTAnalysis[] = [
     opportunities: [
       {
         factor: "Young Demographics",
-        description: "Strong appeal to price-conscious Gen Z and Millennial shoppers",
+        description:
+          "Strong appeal to price-conscious Gen Z and Millennial shoppers",
         impact: "high",
         confidence: 82,
       },
@@ -349,7 +389,8 @@ export const swotAnalyses: SWOTAnalysis[] = [
     threats: [
       {
         factor: "Trade Policy Changes",
-        description: "Import duties or restrictions could impact cost advantage",
+        description:
+          "Import duties or restrictions could impact cost advantage",
         impact: "medium",
         confidence: 70,
       },
@@ -376,7 +417,8 @@ export const productComparisons: ProductComparison[] = [
         ourProduct: "excellent",
         competitor: "good",
         importance: "critical",
-        notes: "E-buy mobile-first design vs Jumia's traditional approach",
+        notes:
+          "Our platform's mobile-first design vs Jumia's traditional approach",
       },
       {
         feature: "Logistics Network",
@@ -404,7 +446,7 @@ export const productComparisons: ProductComparison[] = [
         ourProduct: "excellent",
         competitor: "good",
         importance: "critical",
-        notes: "E-buy provides better analytics and seller dashboard",
+        notes: "Our platform provides better analytics and seller dashboard",
       },
       {
         feature: "Customer Service",
@@ -466,7 +508,7 @@ export const marketPositions: MarketPosition[] = [
   },
   {
     id: "4",
-    competitor: "E-buy",
+    competitor: "Our Platform",
     position: { value: 7.8, price: 7.0, volume: 12.5 },
     quadrant: "challenger",
     movement: "rising",

@@ -12,6 +12,7 @@ import {
   useNavigate,
   Link,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 import { Radio } from "lucide-react";
 import { Switch } from "./components/ui/switch";
@@ -67,7 +68,10 @@ import BusinessIntelligenceLayer from "./pages/infrastructure/BusinessIntelligen
 import SupportSystems from "./pages/infrastructure/SupportSystems";
 import OpportunitiesMarketplace from "./pages/infrastructure/OpportunitiesMarketplace";
 import SignUp from "./pages/SignUp";
+import Onboarding from "./pages/Onboarding";
+import CompanySettings from "./pages/CompanySettings";
 import Learn from "./pages/learn/Learn";
+import { CompanyInfoProvider } from "./lib/company-context";
 import LearnDiscover from "./pages/learn/LearnDiscover";
 import LearnCourses from "./pages/learn/LearnCourses";
 import LearnCourseGenerate from "./pages/learn/LearnCourseGenerate";
@@ -76,6 +80,7 @@ import LearnQuizzes from "./pages/learn/LearnQuizzes";
 import LearnRecords from "./pages/learn/LearnRecords";
 import SalesIntelligence from "./pages/SalesIntelligence";
 import ChatbotTest from "./pages/ChatbotTest";
+import { useCompanyInfo } from "./lib/company-context";
 
 const queryClient = new QueryClient();
 
@@ -202,11 +207,23 @@ function TopDivisionNav({
   );
 }
 
+function ProtectedHomeRoute() {
+  const { isSetup } = useCompanyInfo();
+
+  if (!isSetup) {
+    return <Navigate to="/onboarding" replace />;
+  }
+
+  return <Landing />;
+}
+
 function AppContent() {
   const [conversationalMode, setConversationalMode] = React.useState(true);
   const location = useLocation();
   const isLandingPage =
-    location.pathname === "/" || location.pathname === "/signup";
+    location.pathname === "/" ||
+    location.pathname === "/signup" ||
+    location.pathname === "/onboarding";
 
   React.useEffect(() => {
     const saved = localStorage.getItem("conversationalMode");
@@ -234,8 +251,10 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<PrimaryLanding />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/company-settings" element={<CompanySettings />} />
         <Route path="/chatbot-test" element={<ChatbotTest />} />
-        <Route path="/home" element={<Landing />} />
+        <Route path="/home" element={<ProtectedHomeRoute />} />
         <Route path="/landing" element={<Landing />} />
 
         {/* Main 10 Module Routes - matching landing page links */}
@@ -355,7 +374,9 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <AppContent />
+          <CompanyInfoProvider>
+            <AppContent />
+          </CompanyInfoProvider>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

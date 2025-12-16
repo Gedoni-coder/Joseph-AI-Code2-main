@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { useFinancialAdvisoryData } from "../hooks/useFinancialAdvisoryData";
+import { useCompanyInfo } from "../lib/company-context";
 import ModuleNavigation from "../components/ui/module-navigation";
 import {
   Tabs,
@@ -45,6 +47,9 @@ import {
 } from "lucide-react";
 
 export default function FinancialAdvisory() {
+  const { companyInfo } = useCompanyInfo();
+  const companyName = companyInfo?.companyName || "E-buy";
+
   const {
     budgetForecasts,
     cashFlowProjections,
@@ -116,8 +121,8 @@ export default function FinancialAdvisory() {
                       Financial Advisory & Planning
                     </h1>
                     <p className="text-sm text-gray-600">
-                      E-buy strategic budgeting, cash flow management, and
-                      financial advisory insights for marketplace operations
+                      {companyName} strategic budgeting, cash flow management,
+                      and financial advisory insights for marketplace operations
                     </p>
                   </div>
                 </div>

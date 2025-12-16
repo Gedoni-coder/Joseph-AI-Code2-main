@@ -52,6 +52,17 @@ interface Alert {
   createdAt: Date;
 }
 
+interface TodoItem {
+  id: string;
+  task: string;
+  description: string;
+  completed: boolean;
+  obligationId: string;
+  obligationName: string;
+  priority: "low" | "medium" | "high" | "critical";
+  dueDate: Date;
+}
+
 export function ComplianceCalendar() {
   const [obligations, setObligations] = useState<ComplianceObligation[]>([
     {
@@ -217,6 +228,89 @@ export function ComplianceCalendar() {
     },
   ]);
 
+  const [todoItems, setTodoItems] = useState<TodoItem[]>([
+    {
+      id: "todo-1",
+      task: "Invoice Reconciliation",
+      description: "Reconcile all sales and purchase invoices for the month",
+      completed: false,
+      obligationId: "vat-001",
+      obligationName: "VAT Return Filing",
+      priority: "high",
+      dueDate: new Date(2025, 0, 10),
+    },
+    {
+      id: "todo-2",
+      task: "Bank Reconciliation",
+      description: "Reconcile bank statements with general ledger",
+      completed: false,
+      obligationId: "vat-001",
+      obligationName: "VAT Return Filing",
+      priority: "high",
+      dueDate: new Date(2025, 0, 10),
+    },
+    {
+      id: "todo-3",
+      task: "Payroll Processing",
+      description: "Process monthly payroll and calculate withholdings",
+      completed: false,
+      obligationId: "paye-001",
+      obligationName: "PAYE / Payroll Remittance",
+      priority: "critical",
+      dueDate: new Date(2025, 0, 8),
+    },
+    {
+      id: "todo-4",
+      task: "Employee Verification",
+      description: "Verify employee information and deduction records",
+      completed: true,
+      obligationId: "paye-001",
+      obligationName: "PAYE / Payroll Remittance",
+      priority: "critical",
+      dueDate: new Date(2025, 0, 5),
+    },
+    {
+      id: "todo-5",
+      task: "Financial Statements Preparation",
+      description: "Prepare audited financial statements and supporting schedules",
+      completed: false,
+      obligationId: "corporate-tax-001",
+      obligationName: "Corporate Income Tax Filing",
+      priority: "high",
+      dueDate: new Date(2025, 3, 20),
+    },
+    {
+      id: "todo-6",
+      task: "Balance Sheet Review",
+      description: "Review and finalize balance sheet with audit adjustments",
+      completed: false,
+      obligationId: "corporate-tax-001",
+      obligationName: "Corporate Income Tax Filing",
+      priority: "high",
+      dueDate: new Date(2025, 3, 20),
+    },
+    {
+      id: "todo-7",
+      task: "Contractor Invoice Processing",
+      description: "Process and verify all contractor invoices",
+      completed: false,
+      obligationId: "withholding-001",
+      obligationName: "Withholding Tax Filing",
+      priority: "medium",
+      dueDate: new Date(2025, 0, 15),
+    },
+    {
+      id: "todo-8",
+      task: "Audit Report Collection",
+      description: "Obtain final audit report and management letter",
+      completed: false,
+      obligationId: "audit-001",
+      obligationName: "Annual Audit Submission",
+      priority: "critical",
+      dueDate: new Date(2025, 4, 15),
+    },
+  ]);
+
   const filteredObligations = obligations.filter((obl) => {
     if (filter === "all") return true;
     return obl.status === filter;
@@ -331,7 +425,7 @@ export function ComplianceCalendar() {
 
       {/* Main Tabs */}
       <Tabs defaultValue="calendar" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="calendar" className="flex items-center gap-2">
             <Calendar className="h-4 w-4" />
             <span className="hidden sm:inline">Obligations Calendar</span>
@@ -341,6 +435,10 @@ export function ComplianceCalendar() {
             <span className="hidden sm:inline">
               Alerts ({unreadAlertCount})
             </span>
+          </TabsTrigger>
+          <TabsTrigger value="todo" className="flex items-center gap-2">
+            <CheckCircle className="h-4 w-4" />
+            <span className="hidden sm:inline">To-Do List</span>
           </TabsTrigger>
           <TabsTrigger value="dependencies" className="flex items-center gap-2">
             <Zap className="h-4 w-4" />
@@ -673,6 +771,116 @@ export function ComplianceCalendar() {
                       </div>
                     );
                   })
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* To-Do List Tab */}
+        <TabsContent value="todo" className="space-y-4">
+          <Card className="border-blue-200">
+            <CardHeader className="bg-blue-50">
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2 text-blue-900">
+                  <CheckCircle className="h-5 w-5" />
+                  Compliance To-Do List
+                </CardTitle>
+                <div className="text-sm text-gray-600">
+                  {todoItems.filter((t) => t.completed).length} of{" "}
+                  {todoItems.length} completed
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="p-6">
+              <div className="space-y-3">
+                {todoItems.length === 0 ? (
+                  <div className="text-center py-12">
+                    <CheckCircle2 className="h-12 w-12 text-green-500 mx-auto mb-3" />
+                    <p className="text-gray-600">All tasks completed!</p>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {todoItems.map((item) => (
+                      <div
+                        key={item.id}
+                        className={`p-4 border rounded-lg transition-all ${
+                          item.completed
+                            ? "bg-green-50 border-green-200"
+                            : "bg-white border-gray-200 hover:border-blue-200"
+                        }`}
+                      >
+                        <div className="flex items-start gap-3">
+                          <button
+                            onClick={() =>
+                              setTodoItems(
+                                todoItems.map((t) =>
+                                  t.id === item.id
+                                    ? { ...t, completed: !t.completed }
+                                    : t,
+                                ),
+                              )
+                            }
+                            className="flex-shrink-0 mt-1"
+                          >
+                            {item.completed ? (
+                              <CheckCircle className="h-5 w-5 text-green-600" />
+                            ) : (
+                              <div className="h-5 w-5 border-2 border-gray-300 rounded-full" />
+                            )}
+                          </button>
+                          <div className="flex-1 min-w-0">
+                            <div
+                              className={`font-medium ${
+                                item.completed
+                                  ? "text-gray-500 line-through"
+                                  : "text-gray-900"
+                              }`}
+                            >
+                              {item.task}
+                            </div>
+                            <p
+                              className={`text-sm ${
+                                item.completed
+                                  ? "text-gray-400"
+                                  : "text-gray-600"
+                              }`}
+                            >
+                              {item.description}
+                            </p>
+                            <div className="flex items-center gap-2 mt-2 flex-wrap">
+                              <Badge
+                                variant="outline"
+                                className="text-xs bg-white"
+                              >
+                                {item.obligationName}
+                              </Badge>
+                              <Badge
+                                className={`text-xs ${
+                                  item.priority === "critical"
+                                    ? "bg-red-100 text-red-800"
+                                    : item.priority === "high"
+                                      ? "bg-orange-100 text-orange-800"
+                                      : item.priority === "medium"
+                                        ? "bg-yellow-100 text-yellow-800"
+                                        : "bg-green-100 text-green-800"
+                                }`}
+                              >
+                                {item.priority}
+                              </Badge>
+                              <span className="text-xs text-gray-600">
+                                Due:{" "}
+                                {item.dueDate.toLocaleDateString("en-US", {
+                                  month: "short",
+                                  day: "numeric",
+                                })}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 )}
               </div>
             </CardContent>
