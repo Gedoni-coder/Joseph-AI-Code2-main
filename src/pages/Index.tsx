@@ -30,6 +30,7 @@ import { EconomicTable } from "@/components/economic/economic-table";
 import { ForecastPanel } from "@/components/economic/forecast-panel";
 import { UpcomingEvents } from "@/components/economic/upcoming-events";
 import { useEconomicData } from "@/hooks/useEconomicData";
+import { useCompanyInfo } from "@/lib/company-context";
 import { EconomicContext } from "@/lib/economic-data";
 import { COMPANY_NAME } from "@/lib/company-config";
 
