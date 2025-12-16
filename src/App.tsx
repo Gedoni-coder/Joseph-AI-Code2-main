@@ -83,18 +83,6 @@ import { useCompanyInfo } from "./lib/company-context";
 
 const queryClient = new QueryClient();
 
-// Protected route component that ensures company info is set before accessing home
-function ProtectedHomeRoute() {
-  const { isSetup } = useCompanyInfo();
-  const location = useLocation();
-
-  if (!isSetup && location.pathname === "/home") {
-    return <Navigate to="/onboarding" replace />;
-  }
-
-  return <Landing />;
-}
-
 const infraModules = [
   { slug: "networks", name: "Networks" },
   { slug: "jobs", name: "Jobs" },
