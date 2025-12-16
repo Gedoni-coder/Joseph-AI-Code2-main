@@ -252,8 +252,9 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<PrimaryLanding />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/chatbot-test" element={<ChatbotTest />} />
-        <Route path="/home" element={<Landing />} />
+        <Route path="/home" element={<ProtectedHomeRoute />} />
         <Route path="/landing" element={<Landing />} />
 
         {/* Main 10 Module Routes - matching landing page links */}
