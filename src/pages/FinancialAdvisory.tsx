@@ -47,6 +47,9 @@ import {
 } from "lucide-react";
 
 export default function FinancialAdvisory() {
+  const { companyInfo } = useCompanyInfo();
+  const companyName = companyInfo?.companyName || "E-buy";
+
   const {
     budgetForecasts,
     cashFlowProjections,
