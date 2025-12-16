@@ -376,7 +376,7 @@ export const productComparisons: ProductComparison[] = [
         ourProduct: "excellent",
         competitor: "good",
         importance: "critical",
-        notes: "E-buy mobile-first design vs Jumia's traditional approach",
+        notes: "Our platform's mobile-first design vs Jumia's traditional approach",
       },
       {
         feature: "Logistics Network",
@@ -404,7 +404,7 @@ export const productComparisons: ProductComparison[] = [
         ourProduct: "excellent",
         competitor: "good",
         importance: "critical",
-        notes: "E-buy provides better analytics and seller dashboard",
+        notes: "Our platform provides better analytics and seller dashboard",
       },
       {
         feature: "Customer Service",
@@ -466,7 +466,7 @@ export const marketPositions: MarketPosition[] = [
   },
   {
     id: "4",
-    competitor: "E-buy",
+    competitor: "Our Platform",
     position: { value: 7.8, price: 7.0, volume: 12.5 },
     quadrant: "challenger",
     movement: "rising",
