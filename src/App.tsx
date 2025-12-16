@@ -69,6 +69,7 @@ import SupportSystems from "./pages/infrastructure/SupportSystems";
 import OpportunitiesMarketplace from "./pages/infrastructure/OpportunitiesMarketplace";
 import SignUp from "./pages/SignUp";
 import Onboarding from "./pages/Onboarding";
+import CompanySettings from "./pages/CompanySettings";
 import Learn from "./pages/learn/Learn";
 import { CompanyInfoProvider } from "./lib/company-context";
 import LearnDiscover from "./pages/learn/LearnDiscover";
