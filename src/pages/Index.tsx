@@ -163,10 +163,10 @@ const Index = () => {
 
   const getContextDescription = (context: EconomicContext) => {
     const descriptions = {
-      local: `Real-time economic data and forecasts for E-buy's local market area`,
-      state: `Comprehensive state-level economic analysis and trends for E-buy operations`,
-      national: `Key national economic indicators and market insights for E-buy marketplace`,
-      international: `Global economic trends and international market data relevant to E-buy expansion`,
+      local: `Real-time economic data and forecasts for ${companyName}'s local market area`,
+      state: `Comprehensive state-level economic analysis and trends for ${companyName} operations`,
+      national: `Key national economic indicators and market insights for ${companyName} marketplace`,
+      international: `Global economic trends and international market data relevant to ${companyName} expansion`,
     };
     return descriptions[context];
   };
