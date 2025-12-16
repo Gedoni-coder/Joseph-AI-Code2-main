@@ -55,7 +55,7 @@ export default function SignUp() {
                 response?.credential || "",
               );
             } catch {}
-            navigate("/home");
+            navigate("/onboarding");
           },
         });
         // @ts-ignore
