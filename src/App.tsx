@@ -12,6 +12,7 @@ import {
   useNavigate,
   Link,
   useLocation,
+  Navigate,
 } from "react-router-dom";
 import { Radio } from "lucide-react";
 import { Switch } from "./components/ui/switch";
