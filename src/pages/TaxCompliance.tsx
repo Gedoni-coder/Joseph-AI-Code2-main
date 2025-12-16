@@ -267,21 +267,21 @@ const TaxCompliance = () => {
             <section>
               <LoadingOverlay
                 isLoading={isLoading}
-                loadingText="Loading compliance calendar and updates..."
-              >
-                <ComplianceCalendar />
-              </LoadingOverlay>
-            </section>
-
-            <section>
-              <LoadingOverlay
-                isLoading={isLoading}
                 loadingText="Fetching compliance updates..."
               >
                 <ComplianceUpdates
                   updates={complianceUpdates}
                   onUpdateStatus={updateComplianceStatus}
                 />
+              </LoadingOverlay>
+            </section>
+
+            <section>
+              <LoadingOverlay
+                isLoading={isLoading}
+                loadingText="Loading compliance calendar and updates..."
+              >
+                <ComplianceCalendar />
               </LoadingOverlay>
             </section>
           </TabsContent>
