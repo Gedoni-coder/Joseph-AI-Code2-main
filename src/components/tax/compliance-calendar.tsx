@@ -52,6 +52,17 @@ interface Alert {
   createdAt: Date;
 }
 
+interface TodoItem {
+  id: string;
+  task: string;
+  description: string;
+  completed: boolean;
+  obligationId: string;
+  obligationName: string;
+  priority: "low" | "medium" | "high" | "critical";
+  dueDate: Date;
+}
+
 export function ComplianceCalendar() {
   const [obligations, setObligations] = useState<ComplianceObligation[]>([
     {
