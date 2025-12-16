@@ -206,6 +206,16 @@ function TopDivisionNav({
   );
 }
 
+function ProtectedHomeRoute() {
+  const { isSetup } = useCompanyInfo();
+
+  if (!isSetup) {
+    return <Navigate to="/onboarding" replace />;
+  }
+
+  return <Landing />;
+}
+
 function AppContent() {
   const [conversationalMode, setConversationalMode] = React.useState(true);
   const location = useLocation();
