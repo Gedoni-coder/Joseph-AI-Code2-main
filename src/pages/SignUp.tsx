@@ -30,7 +30,7 @@ export default function SignUp() {
         localStorage.setItem("joseph:signedUp", "true");
       } catch {}
       setLoading(false);
-      navigate("/home");
+      navigate("/onboarding");
     }, 500);
   }
 
