@@ -127,19 +127,25 @@ const Index = () => {
   useEffect(() => {
     if (!isStreaming) return;
 
-    const streamInterval = setInterval(() => {
-      // Simulate random data updates
-      const updateTypes = ['metrics', 'news', 'forecasts'];
-      const randomUpdate = updateTypes[Math.floor(Math.random() * updateTypes.length)];
+    const streamInterval = setInterval(
+      () => {
+        // Simulate random data updates
+        const updateTypes = ["metrics", "news", "forecasts"];
+        const randomUpdate =
+          updateTypes[Math.floor(Math.random() * updateTypes.length)];
 
-      setActiveUpdates(prev => [...prev, randomUpdate]);
-      setLastDataUpdate(new Date());
+        setActiveUpdates((prev) => [...prev, randomUpdate]);
+        setLastDataUpdate(new Date());
 
-      // Clear update indicator after 3 seconds
-      setTimeout(() => {
-        setActiveUpdates(prev => prev.filter(update => update !== randomUpdate));
-      }, 3000);
-    }, 2000 + Math.random() * 3000);
+        // Clear update indicator after 3 seconds
+        setTimeout(() => {
+          setActiveUpdates((prev) =>
+            prev.filter((update) => update !== randomUpdate),
+          );
+        }, 3000);
+      },
+      2000 + Math.random() * 3000,
+    );
 
     return () => clearInterval(streamInterval);
   }, [isStreaming]);
@@ -199,11 +205,13 @@ const Index = () => {
                 variant={isConnected ? "default" : "destructive"}
                 className={cn(
                   "flex items-center gap-1 transition-all",
-                  isStreaming && "animate-pulse"
+                  isStreaming && "animate-pulse",
                 )}
               >
                 {isConnected ? (
-                  <Wifi className={cn("h-3 w-3", isStreaming && "animate-bounce")} />
+                  <Wifi
+                    className={cn("h-3 w-3", isStreaming && "animate-bounce")}
+                  />
                 ) : (
                   <Activity className="h-3 w-3" />
                 )}
@@ -214,18 +222,20 @@ const Index = () => {
                 variant="outline"
                 className={cn(
                   "flex items-center gap-1 transition-all",
-                  activeUpdates.includes('metrics') && "bg-green-100 border-green-300 animate-pulse"
+                  activeUpdates.includes("metrics") &&
+                    "bg-green-100 border-green-300 animate-pulse",
                 )}
               >
                 <TrendingUp className="h-3 w-3" />
-                {currentMetrics.filter((m) => m.trend === "up").length} Trending Up
+                {currentMetrics.filter((m) => m.trend === "up").length} Trending
+                Up
               </Badge>
 
               <Badge
                 variant="secondary"
                 className={cn(
                   "flex items-center gap-1",
-                  activeUpdates.length > 0 && "animate-pulse bg-blue-100"
+                  activeUpdates.length > 0 && "animate-pulse bg-blue-100",
                 )}
               >
                 <Activity className="h-3 w-3" />
@@ -253,7 +263,7 @@ const Index = () => {
                   "text-xs px-2 py-1 rounded-md transition-all hover:scale-105",
                   isStreaming
                     ? "bg-green-100 text-green-700 hover:bg-green-200"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200",
                 )}
               >
                 {isStreaming ? "🟢 Streaming" : "⏸️ Paused"}

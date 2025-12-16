@@ -121,8 +121,8 @@ export default function FinancialAdvisory() {
                       Financial Advisory & Planning
                     </h1>
                     <p className="text-sm text-gray-600">
-                      {companyName} strategic budgeting, cash flow management, and
-                      financial advisory insights for marketplace operations
+                      {companyName} strategic budgeting, cash flow management,
+                      and financial advisory insights for marketplace operations
                     </p>
                   </div>
                 </div>
