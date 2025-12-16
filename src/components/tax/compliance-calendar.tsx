@@ -331,7 +331,7 @@ export function ComplianceCalendar() {
 
       {/* Main Tabs */}
       <Tabs defaultValue="calendar" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="calendar" className="flex items-center gap-2">
             <Calendar className="h-4 w-4" />
             <span className="hidden sm:inline">Obligations Calendar</span>
@@ -341,6 +341,10 @@ export function ComplianceCalendar() {
             <span className="hidden sm:inline">
               Alerts ({unreadAlertCount})
             </span>
+          </TabsTrigger>
+          <TabsTrigger value="todo" className="flex items-center gap-2">
+            <CheckCircle className="h-4 w-4" />
+            <span className="hidden sm:inline">To-Do List</span>
           </TabsTrigger>
           <TabsTrigger value="dependencies" className="flex items-center gap-2">
             <Zap className="h-4 w-4" />
