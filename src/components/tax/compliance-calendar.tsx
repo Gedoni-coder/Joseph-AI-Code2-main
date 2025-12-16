@@ -777,6 +777,116 @@ export function ComplianceCalendar() {
           </Card>
         </TabsContent>
 
+        {/* To-Do List Tab */}
+        <TabsContent value="todo" className="space-y-4">
+          <Card className="border-blue-200">
+            <CardHeader className="bg-blue-50">
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2 text-blue-900">
+                  <CheckCircle className="h-5 w-5" />
+                  Compliance To-Do List
+                </CardTitle>
+                <div className="text-sm text-gray-600">
+                  {todoItems.filter((t) => t.completed).length} of{" "}
+                  {todoItems.length} completed
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="p-6">
+              <div className="space-y-3">
+                {todoItems.length === 0 ? (
+                  <div className="text-center py-12">
+                    <CheckCircle2 className="h-12 w-12 text-green-500 mx-auto mb-3" />
+                    <p className="text-gray-600">All tasks completed!</p>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {todoItems.map((item) => (
+                      <div
+                        key={item.id}
+                        className={`p-4 border rounded-lg transition-all ${
+                          item.completed
+                            ? "bg-green-50 border-green-200"
+                            : "bg-white border-gray-200 hover:border-blue-200"
+                        }`}
+                      >
+                        <div className="flex items-start gap-3">
+                          <button
+                            onClick={() =>
+                              setTodoItems(
+                                todoItems.map((t) =>
+                                  t.id === item.id
+                                    ? { ...t, completed: !t.completed }
+                                    : t,
+                                ),
+                              )
+                            }
+                            className="flex-shrink-0 mt-1"
+                          >
+                            {item.completed ? (
+                              <CheckCircle className="h-5 w-5 text-green-600" />
+                            ) : (
+                              <div className="h-5 w-5 border-2 border-gray-300 rounded-full" />
+                            )}
+                          </button>
+                          <div className="flex-1 min-w-0">
+                            <div
+                              className={`font-medium ${
+                                item.completed
+                                  ? "text-gray-500 line-through"
+                                  : "text-gray-900"
+                              }`}
+                            >
+                              {item.task}
+                            </div>
+                            <p
+                              className={`text-sm ${
+                                item.completed
+                                  ? "text-gray-400"
+                                  : "text-gray-600"
+                              }`}
+                            >
+                              {item.description}
+                            </p>
+                            <div className="flex items-center gap-2 mt-2 flex-wrap">
+                              <Badge
+                                variant="outline"
+                                className="text-xs bg-white"
+                              >
+                                {item.obligationName}
+                              </Badge>
+                              <Badge
+                                className={`text-xs ${
+                                  item.priority === "critical"
+                                    ? "bg-red-100 text-red-800"
+                                    : item.priority === "high"
+                                      ? "bg-orange-100 text-orange-800"
+                                      : item.priority === "medium"
+                                        ? "bg-yellow-100 text-yellow-800"
+                                        : "bg-green-100 text-green-800"
+                                }`}
+                              >
+                                {item.priority}
+                              </Badge>
+                              <span className="text-xs text-gray-600">
+                                Due:{" "}
+                                {item.dueDate.toLocaleDateString("en-US", {
+                                  month: "short",
+                                  day: "numeric",
+                                })}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
         {/* Dependencies Tab */}
         <TabsContent value="dependencies" className="space-y-4">
           <Card className="border-blue-200">
