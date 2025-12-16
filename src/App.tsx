@@ -222,7 +222,9 @@ function AppContent() {
   const [conversationalMode, setConversationalMode] = React.useState(true);
   const location = useLocation();
   const isLandingPage =
-    location.pathname === "/" || location.pathname === "/signup";
+    location.pathname === "/" ||
+    location.pathname === "/signup" ||
+    location.pathname === "/onboarding";
 
   React.useEffect(() => {
     const saved = localStorage.getItem("conversationalMode");
