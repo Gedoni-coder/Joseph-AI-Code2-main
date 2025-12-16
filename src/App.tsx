@@ -252,6 +252,7 @@ function AppContent() {
         <Route path="/" element={<PrimaryLanding />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/company-settings" element={<CompanySettings />} />
         <Route path="/chatbot-test" element={<ChatbotTest />} />
         <Route path="/home" element={<ProtectedHomeRoute />} />
         <Route path="/landing" element={<Landing />} />
