@@ -91,6 +91,9 @@ const Index = () => {
   const [lastDataUpdate, setLastDataUpdate] = useState(new Date());
   const [activeUpdates, setActiveUpdates] = useState<string[]>([]);
 
+  const { companyInfo } = useCompanyInfo();
+  const companyName = companyInfo?.companyName || "E-buy";
+
   const {
     metrics,
     news,
