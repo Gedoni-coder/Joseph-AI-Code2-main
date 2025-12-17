@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useFinancialAdvisoryData } from "../hooks/useFinancialAdvisoryData";
 import { useCompanyInfo } from "../lib/company-context";
+import { getCompanyName } from "../lib/get-company-name";
 import ModuleNavigation from "../components/ui/module-navigation";
 import {
   Tabs,
