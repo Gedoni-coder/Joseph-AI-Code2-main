@@ -93,7 +93,7 @@ const Index = () => {
   const [activeUpdates, setActiveUpdates] = useState<string[]>([]);
 
   const { companyInfo } = useCompanyInfo();
-  const companyName = companyInfo?.companyName || "E-buy";
+  const companyName = getCompanyName(companyInfo?.companyName);
 
   const {
     metrics,
