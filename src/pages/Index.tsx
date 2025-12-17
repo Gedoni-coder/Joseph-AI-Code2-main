@@ -33,6 +33,7 @@ import { useEconomicData } from "@/hooks/useEconomicData";
 import { useCompanyInfo } from "@/lib/company-context";
 import { EconomicContext } from "@/lib/economic-data";
 import { COMPANY_NAME } from "@/lib/company-config";
+import { getCompanyName } from "@/lib/get-company-name";
 
 // Type aliases to match component expectations
 type EconomicNews = {
