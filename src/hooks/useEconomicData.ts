@@ -447,7 +447,7 @@ function getMockNewsData(companyName: string = "E-buy"): Record<string, Economic
   };
 }
 
-function getMockForecastsData(): Record<string, EconomicForecast[]> {
+function getMockForecastsData(companyName: string = "E-buy"): Record<string, EconomicForecast[]> {
   return {
     national: [
       {
