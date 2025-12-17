@@ -115,7 +115,7 @@ export async function requestResetLink(email: string): Promise<void> {
  * Update password using reset token
  */
 export async function updatePassword(
-  data: ResetPasswordRequest
+  data: ResetPasswordRequest,
 ): Promise<void> {
   const response = await fetch(`${AUTH_API_BASE}/reset/update_password`, {
     method: "POST",
@@ -134,7 +134,9 @@ export async function updatePassword(
 /**
  * Login with magic token (password reset flow)
  */
-export async function loginWithMagicToken(token: string): Promise<AuthResponse> {
+export async function loginWithMagicToken(
+  token: string,
+): Promise<AuthResponse> {
   const response = await fetch(`${AUTH_API_BASE}/reset/magic-link-login`, {
     method: "POST",
     headers: {

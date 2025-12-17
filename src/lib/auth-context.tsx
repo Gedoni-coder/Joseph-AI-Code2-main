@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import * as authService from "./api/auth-service";
 import * as accountsService from "./api/accounts-service";
 
@@ -113,7 +119,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setError(null);
     try {
       const response = await authService.login({ email, password });
-      
+
       // Store token and set expiry (8 minutes)
       const tokenExpiry = Date.now() + 8 * 60 * 1000;
       localStorage.setItem(TOKEN_STORAGE_KEY, response.authToken);
@@ -133,30 +139,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const signup = useCallback(async (email: string, password: string, name: string) => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await authService.signup({ email, password, name });
-      
-      // Store token and set expiry (8 minutes)
-      const tokenExpiry = Date.now() + 8 * 60 * 1000;
-      localStorage.setItem(TOKEN_STORAGE_KEY, response.authToken);
-      localStorage.setItem(TOKEN_EXPIRY_KEY, tokenExpiry.toString());
+  const signup = useCallback(
+    async (email: string, password: string, name: string) => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await authService.signup({ email, password, name });
 
-      setUser({
-        id: response.user.id,
-        email: response.user.email,
-        name: response.user.name,
-      });
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Signup failed";
-      setError(errorMessage);
-      throw err;
-    } finally {
-      setIsLoading(false);
-    }
-  }, []);
+        // Store token and set expiry (8 minutes)
+        const tokenExpiry = Date.now() + 8 * 60 * 1000;
+        localStorage.setItem(TOKEN_STORAGE_KEY, response.authToken);
+        localStorage.setItem(TOKEN_EXPIRY_KEY, tokenExpiry.toString());
+
+        setUser({
+          id: response.user.id,
+          email: response.user.email,
+          name: response.user.name,
+        });
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : "Signup failed";
+        setError(errorMessage);
+        throw err;
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [],
+  );
 
   const logout = useCallback(() => {
     authService.logout();

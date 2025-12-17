@@ -56,7 +56,7 @@ export interface JoinAccountRequest {
  */
 export async function createAccount(
   token: string,
-  data: CreateAccountRequest
+  data: CreateAccountRequest,
 ): Promise<AccountDetails> {
   const response = await fetch(`${ACCOUNTS_API_BASE}/account`, {
     method: "POST",
@@ -79,7 +79,9 @@ export async function createAccount(
 /**
  * Get account details
  */
-export async function getAccountDetails(token: string): Promise<AccountDetails> {
+export async function getAccountDetails(
+  token: string,
+): Promise<AccountDetails> {
   const response = await fetch(`${ACCOUNTS_API_BASE}/account/details`, {
     method: "GET",
     headers: {
@@ -123,7 +125,7 @@ export async function getTeamMembers(token: string): Promise<TeamMember[]> {
  */
 export async function joinAccount(
   token: string,
-  data: JoinAccountRequest
+  data: JoinAccountRequest,
 ): Promise<AccountDetails> {
   const response = await fetch(`${ACCOUNTS_API_BASE}/user/join_account`, {
     method: "POST",
@@ -148,7 +150,7 @@ export async function joinAccount(
  */
 export async function updateUserProfile(
   token: string,
-  data: { name?: string; email?: string }
+  data: { name?: string; email?: string },
 ): Promise<void> {
   const response = await fetch(`${ACCOUNTS_API_BASE}/user/edit_profile`, {
     method: "PATCH",
@@ -172,7 +174,7 @@ export async function updateUserProfile(
 export async function updateUserRole(
   token: string,
   userId: string,
-  role: string
+  role: string,
 ): Promise<void> {
   const response = await fetch(`${ACCOUNTS_API_BASE}/admin/user_role`, {
     method: "POST",
