@@ -132,10 +132,10 @@ export function useEconomicData(companyName?: string) {
         const data = await response.json();
         return groupByContext<EconomicNews>(data);
       } catch {
-        return getMockNewsData();
+        return getMockNewsData(effectiveCompanyName);
       }
     },
-    [],
+    [effectiveCompanyName],
   );
 
   const fetchForecasts = useCallback(
