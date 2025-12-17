@@ -526,7 +526,7 @@ function getMockForecastsData(companyName: string = "E-buy"): Record<string, Eco
   };
 }
 
-function getMockEventsData(): Record<string, EconomicEvent[]> {
+function getMockEventsData(companyName: string = "E-buy"): Record<string, EconomicEvent[]> {
   const now = new Date();
   return {
     national: [
