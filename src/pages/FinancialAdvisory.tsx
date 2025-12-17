@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import { useFinancialAdvisoryData } from "../hooks/useFinancialAdvisoryData";
 import { useCompanyInfo } from "../lib/company-context";
+import { getCompanyName } from "../lib/get-company-name";
 import ModuleNavigation from "../components/ui/module-navigation";
 import {
   Tabs,
@@ -48,7 +48,7 @@ import {
 
 export default function FinancialAdvisory() {
   const { companyInfo } = useCompanyInfo();
-  const companyName = companyInfo?.companyName || "E-buy";
+  const companyName = getCompanyName(companyInfo?.companyName);
 
   const {
     budgetForecasts,

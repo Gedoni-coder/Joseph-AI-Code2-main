@@ -33,6 +33,7 @@ import { useEconomicData } from "@/hooks/useEconomicData";
 import { useCompanyInfo } from "@/lib/company-context";
 import { EconomicContext } from "@/lib/economic-data";
 import { COMPANY_NAME } from "@/lib/company-config";
+import { getCompanyName } from "@/lib/get-company-name";
 
 // Type aliases to match component expectations
 type EconomicNews = {
@@ -92,7 +93,7 @@ const Index = () => {
   const [activeUpdates, setActiveUpdates] = useState<string[]>([]);
 
   const { companyInfo } = useCompanyInfo();
-  const companyName = companyInfo?.companyName || "E-buy";
+  const companyName = getCompanyName(companyInfo?.companyName);
 
   const {
     metrics,
@@ -105,7 +106,7 @@ const Index = () => {
     isConnected,
     refreshData,
     reconnect,
-  } = useEconomicData();
+  } = useEconomicData(companyName);
 
   // Add null safety checks
   const currentMetrics = metrics[activeContext] || [];

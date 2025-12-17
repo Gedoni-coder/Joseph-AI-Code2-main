@@ -69,7 +69,7 @@ function groupByContext<T extends { context: string }>(
   );
 }
 
-export function useEconomicData() {
+export function useEconomicData(companyName?: string) {
   const [metrics, setMetrics] = useState<Record<string, EconomicMetric[]>>({});
   const [news, setNews] = useState<Record<string, EconomicNews[]>>({});
   const [forecasts, setForecasts] = useState<
@@ -80,6 +80,9 @@ export function useEconomicData() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isConnected, setIsConnected] = useState(false);
+
+  // Use default if not provided
+  const effectiveCompanyName = companyName || "E-buy";
 
   const RAW_API_BASE =
     (import.meta.env.VITE_API_BASE_URL as string | undefined)?.trim() || "";
@@ -110,10 +113,10 @@ export function useEconomicData() {
         const data = await response.json();
         return groupByContext<EconomicMetric>(data);
       } catch {
-        return getMockMetricsData();
+        return getMockMetricsData(effectiveCompanyName);
       }
     },
-    [],
+    [effectiveCompanyName],
   );
 
   const fetchNews = useCallback(
@@ -129,10 +132,10 @@ export function useEconomicData() {
         const data = await response.json();
         return groupByContext<EconomicNews>(data);
       } catch {
-        return getMockNewsData();
+        return getMockNewsData(effectiveCompanyName);
       }
     },
-    [],
+    [effectiveCompanyName],
   );
 
   const fetchForecasts = useCallback(
@@ -148,10 +151,10 @@ export function useEconomicData() {
         const data = await response.json();
         return groupByContext<EconomicForecast>(data);
       } catch {
-        return getMockForecastsData();
+        return getMockForecastsData(effectiveCompanyName);
       }
     },
-    [],
+    [effectiveCompanyName],
   );
 
   const fetchEvents = useCallback(
@@ -167,10 +170,10 @@ export function useEconomicData() {
         const data = await response.json();
         return groupByContext<EconomicEvent>(data);
       } catch {
-        return getMockEventsData();
+        return getMockEventsData(effectiveCompanyName);
       }
     },
-    [],
+    [effectiveCompanyName],
   );
 
   const fetchAllData = useCallback(
@@ -224,8 +227,8 @@ export function useEconomicData() {
   };
 }
 
-// Mock data functions for fallback - E-buy E-commerce Focus
-function getMockMetricsData(): Record<string, EconomicMetric[]> {
+// Mock data functions for fallback - E-commerce Focus
+function getMockMetricsData(companyName: string = "E-buy"): Record<string, EconomicMetric[]> {
   const now = new Date();
   return {
     national: [
@@ -359,20 +362,20 @@ function getMockMetricsData(): Record<string, EconomicMetric[]> {
   };
 }
 
-function getMockNewsData(): Record<string, EconomicNews[]> {
+function getMockNewsData(companyName: string = "E-buy"): Record<string, EconomicNews[]> {
   const now = new Date();
   const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
   const threeHoursAgo = new Date(now.getTime() - 3 * 60 * 60 * 1000);
   const sixHoursAgo = new Date(now.getTime() - 6 * 60 * 60 * 1000);
   const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-  
+
   return {
     national: [
       {
         id: 1,
         context: "national",
         title: "E-commerce Logistics Costs Decline 7% Month-over-Month",
-        summary: "Improved last-mile delivery infrastructure and bulk freight agreements reduce fulfillment costs for online marketplaces like E-buy. Logistics bottlenecks ease ahead of peak shopping seasons. Major courier services expand capacity in Lagos and Abuja.",
+        summary: `Improved last-mile delivery infrastructure and bulk freight agreements reduce fulfillment costs for online marketplaces like ${companyName}. Logistics bottlenecks ease ahead of peak shopping seasons. Major courier services expand capacity in Lagos and Abuja.`,
         source: "MarketWatch",
         timestamp: oneHourAgo.toISOString(),
         impact: "high",
@@ -382,7 +385,7 @@ function getMockNewsData(): Record<string, EconomicNews[]> {
         id: 2,
         context: "national",
         title: "Digital Payment Adoption Surges in Online Retail",
-        summary: "Wallet and BNPL (Buy Now Pay Later) share rises to 42% of marketplace checkouts. Mobile money transactions in e-commerce up 28% YoY, benefiting platforms like E-buy, Jumia, and Konga. Paystack and Flutterwave report record transaction volumes.",
+        summary: `Wallet and BNPL (Buy Now Pay Later) share rises to 42% of marketplace checkouts. Mobile money transactions in e-commerce up 28% YoY, benefiting platforms like ${companyName}, Jumia, and Konga. Paystack and Flutterwave report record transaction volumes.`,
         source: "FinDaily",
         timestamp: threeHoursAgo.toISOString(),
         impact: "high",
@@ -422,7 +425,7 @@ function getMockNewsData(): Record<string, EconomicNews[]> {
         id: 6,
         context: "national",
         title: "Holiday Shopping Season Boosts E-commerce GMV",
-        summary: "Black Friday and December sales drive 45% GMV increase for major marketplaces. E-buy, Jumia, and Konga report record daily transaction volumes. Consumer electronics and fashion lead categories.",
+        summary: `Black Friday and December sales drive 45% GMV increase for major marketplaces. ${companyName}, Jumia, and Konga report record daily transaction volumes. Consumer electronics and fashion lead categories.`,
         source: "BusinessDay",
         timestamp: oneDayAgo.toISOString(),
         impact: "high",
@@ -444,7 +447,7 @@ function getMockNewsData(): Record<string, EconomicNews[]> {
   };
 }
 
-function getMockForecastsData(): Record<string, EconomicForecast[]> {
+function getMockForecastsData(companyName: string = "E-buy"): Record<string, EconomicForecast[]> {
   return {
     national: [
       {
@@ -523,7 +526,7 @@ function getMockForecastsData(): Record<string, EconomicForecast[]> {
   };
 }
 
-function getMockEventsData(): Record<string, EconomicEvent[]> {
+function getMockEventsData(companyName: string = "E-buy"): Record<string, EconomicEvent[]> {
   const now = new Date();
   return {
     national: [
@@ -532,7 +535,7 @@ function getMockEventsData(): Record<string, EconomicEvent[]> {
         context: "national",
         title: "E-commerce Regulatory Framework Review",
         date: new Date(now.getFullYear(), 1, 15).toISOString().split('T')[0],
-        description: "Government review of online marketplace regulations, consumer protection, and digital payment policies affecting E-buy and competitors. Expected to clarify VAT treatment and seller liability rules.",
+        description: `Government review of online marketplace regulations, consumer protection, and digital payment policies affecting ${companyName} and competitors. Expected to clarify VAT treatment and seller liability rules.`,
         impact: "high",
         category: "Policy",
       },
@@ -541,7 +544,7 @@ function getMockEventsData(): Record<string, EconomicEvent[]> {
         context: "national",
         title: "Black Friday & Holiday Shopping Season",
         date: new Date(now.getFullYear(), 10, 29).toISOString().split('T')[0],
-        description: "Peak e-commerce sales period. Marketplaces expect 40-60% GMV increase. Logistics and payment systems under pressure. E-buy and competitors launching major promotional campaigns.",
+        description: `Peak e-commerce sales period. Marketplaces expect 40-60% GMV increase. Logistics and payment systems under pressure. ${companyName} and competitors launching major promotional campaigns.`,
         impact: "high",
         category: "Seasonal",
       },
@@ -559,7 +562,7 @@ function getMockEventsData(): Record<string, EconomicEvent[]> {
         context: "national",
         title: "Nigerian E-commerce Summit 2025",
         date: new Date(now.getFullYear(), 5, 20).toISOString().split('T')[0],
-        description: "Annual industry conference featuring E-buy, Jumia, Konga, and other major players. Focus on logistics innovation, payment solutions, and market growth strategies.",
+        description: `Annual industry conference featuring ${companyName}, Jumia, Konga, and other major players. Focus on logistics innovation, payment solutions, and market growth strategies.`,
         impact: "medium",
         category: "Industry Event",
       },
@@ -579,7 +582,7 @@ function getMockEventsData(): Record<string, EconomicEvent[]> {
         context: "international",
         title: "Global E-commerce Innovation Summit",
         date: new Date(now.getFullYear(), 8, 15).toISOString().split('T')[0],
-        description: "International conference on e-commerce trends, AI in retail, and cross-border trade. Insights relevant for E-buy's expansion strategy.",
+        description: `International conference on e-commerce trends, AI in retail, and cross-border trade. Insights relevant for ${companyName}'s expansion strategy.`,
         impact: "medium",
         category: "Global Event",
       },
