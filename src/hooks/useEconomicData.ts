@@ -425,7 +425,7 @@ function getMockNewsData(companyName: string = "E-buy"): Record<string, Economic
         id: 6,
         context: "national",
         title: "Holiday Shopping Season Boosts E-commerce GMV",
-        summary: "Black Friday and December sales drive 45% GMV increase for major marketplaces. E-buy, Jumia, and Konga report record daily transaction volumes. Consumer electronics and fashion lead categories.",
+        summary: `Black Friday and December sales drive 45% GMV increase for major marketplaces. ${companyName}, Jumia, and Konga report record daily transaction volumes. Consumer electronics and fashion lead categories.`,
         source: "BusinessDay",
         timestamp: oneDayAgo.toISOString(),
         impact: "high",
