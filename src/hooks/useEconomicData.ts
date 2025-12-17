@@ -69,7 +69,7 @@ function groupByContext<T extends { context: string }>(
   );
 }
 
-export function useEconomicData() {
+export function useEconomicData(companyName?: string) {
   const [metrics, setMetrics] = useState<Record<string, EconomicMetric[]>>({});
   const [news, setNews] = useState<Record<string, EconomicNews[]>>({});
   const [forecasts, setForecasts] = useState<
@@ -80,6 +80,9 @@ export function useEconomicData() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isConnected, setIsConnected] = useState(false);
+
+  // Use default if not provided
+  const effectiveCompanyName = companyName || "E-buy";
 
   const RAW_API_BASE =
     (import.meta.env.VITE_API_BASE_URL as string | undefined)?.trim() || "";
