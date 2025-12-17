@@ -151,10 +151,10 @@ export function useEconomicData(companyName?: string) {
         const data = await response.json();
         return groupByContext<EconomicForecast>(data);
       } catch {
-        return getMockForecastsData();
+        return getMockForecastsData(effectiveCompanyName);
       }
     },
-    [],
+    [effectiveCompanyName],
   );
 
   const fetchEvents = useCallback(
