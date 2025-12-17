@@ -170,10 +170,10 @@ export function useEconomicData(companyName?: string) {
         const data = await response.json();
         return groupByContext<EconomicEvent>(data);
       } catch {
-        return getMockEventsData();
+        return getMockEventsData(effectiveCompanyName);
       }
     },
-    [],
+    [effectiveCompanyName],
   );
 
   const fetchAllData = useCallback(
