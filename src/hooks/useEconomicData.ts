@@ -562,7 +562,7 @@ function getMockEventsData(companyName: string = "E-buy"): Record<string, Econom
         context: "national",
         title: "Nigerian E-commerce Summit 2025",
         date: new Date(now.getFullYear(), 5, 20).toISOString().split('T')[0],
-        description: "Annual industry conference featuring E-buy, Jumia, Konga, and other major players. Focus on logistics innovation, payment solutions, and market growth strategies.",
+        description: `Annual industry conference featuring ${companyName}, Jumia, Konga, and other major players. Focus on logistics innovation, payment solutions, and market growth strategies.`,
         impact: "medium",
         category: "Industry Event",
       },
