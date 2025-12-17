@@ -362,20 +362,20 @@ function getMockMetricsData(companyName: string = "E-buy"): Record<string, Econo
   };
 }
 
-function getMockNewsData(): Record<string, EconomicNews[]> {
+function getMockNewsData(companyName: string = "E-buy"): Record<string, EconomicNews[]> {
   const now = new Date();
   const oneHourAgo = new Date(now.getTime() - 60 * 60 * 1000);
   const threeHoursAgo = new Date(now.getTime() - 3 * 60 * 60 * 1000);
   const sixHoursAgo = new Date(now.getTime() - 6 * 60 * 60 * 1000);
   const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
-  
+
   return {
     national: [
       {
         id: 1,
         context: "national",
         title: "E-commerce Logistics Costs Decline 7% Month-over-Month",
-        summary: "Improved last-mile delivery infrastructure and bulk freight agreements reduce fulfillment costs for online marketplaces like E-buy. Logistics bottlenecks ease ahead of peak shopping seasons. Major courier services expand capacity in Lagos and Abuja.",
+        summary: `Improved last-mile delivery infrastructure and bulk freight agreements reduce fulfillment costs for online marketplaces like ${companyName}. Logistics bottlenecks ease ahead of peak shopping seasons. Major courier services expand capacity in Lagos and Abuja.`,
         source: "MarketWatch",
         timestamp: oneHourAgo.toISOString(),
         impact: "high",
@@ -385,7 +385,7 @@ function getMockNewsData(): Record<string, EconomicNews[]> {
         id: 2,
         context: "national",
         title: "Digital Payment Adoption Surges in Online Retail",
-        summary: "Wallet and BNPL (Buy Now Pay Later) share rises to 42% of marketplace checkouts. Mobile money transactions in e-commerce up 28% YoY, benefiting platforms like E-buy, Jumia, and Konga. Paystack and Flutterwave report record transaction volumes.",
+        summary: `Wallet and BNPL (Buy Now Pay Later) share rises to 42% of marketplace checkouts. Mobile money transactions in e-commerce up 28% YoY, benefiting platforms like ${companyName}, Jumia, and Konga. Paystack and Flutterwave report record transaction volumes.`,
         source: "FinDaily",
         timestamp: threeHoursAgo.toISOString(),
         impact: "high",
