@@ -106,7 +106,7 @@ const Index = () => {
     isConnected,
     refreshData,
     reconnect,
-  } = useEconomicData();
+  } = useEconomicData(companyName);
 
   // Add null safety checks
   const currentMetrics = metrics[activeContext] || [];
