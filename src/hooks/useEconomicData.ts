@@ -582,7 +582,7 @@ function getMockEventsData(companyName: string = "E-buy"): Record<string, Econom
         context: "international",
         title: "Global E-commerce Innovation Summit",
         date: new Date(now.getFullYear(), 8, 15).toISOString().split('T')[0],
-        description: "International conference on e-commerce trends, AI in retail, and cross-border trade. Insights relevant for E-buy's expansion strategy.",
+        description: `International conference on e-commerce trends, AI in retail, and cross-border trade. Insights relevant for ${companyName}'s expansion strategy.`,
         impact: "medium",
         category: "Global Event",
       },
