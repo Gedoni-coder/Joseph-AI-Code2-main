@@ -49,7 +49,7 @@ import {
 
 export default function FinancialAdvisory() {
   const { companyInfo } = useCompanyInfo();
-  const companyName = companyInfo?.companyName || "E-buy";
+  const companyName = getCompanyName(companyInfo?.companyName);
 
   const {
     budgetForecasts,
