@@ -227,8 +227,8 @@ export function useEconomicData(companyName?: string) {
   };
 }
 
-// Mock data functions for fallback - E-buy E-commerce Focus
-function getMockMetricsData(): Record<string, EconomicMetric[]> {
+// Mock data functions for fallback - E-commerce Focus
+function getMockMetricsData(companyName: string = "E-buy"): Record<string, EconomicMetric[]> {
   const now = new Date();
   return {
     national: [
