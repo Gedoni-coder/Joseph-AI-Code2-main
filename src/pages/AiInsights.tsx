@@ -1,392 +1,401 @@
-import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import ModuleHeader from "@/components/ui/module-header";
 import {
   Brain,
-  Send,
-  Plus,
-  Paperclip,
-  Mic,
-  MoreVertical,
-  Copy,
-  ThumbsUp,
-  ThumbsDown,
-  Activity,
-  Lightbulb,
-  FileText,
-  Image,
-  BarChart3,
-  TrendingUp,
-  Users,
-  Target,
-  Download,
-  Share,
-  Sparkles,
+  Search,
+  Pin,
+  Archive,
+  Share2,
+  Heart,
+  MessageCircle,
+  Bookmark,
+  Clock,
+  MapPin,
+  User,
+  ChevronRight,
+  X,
 } from "lucide-react";
 
-const AiInsights = () => {
-  const [messages, setMessages] = useState([
+interface Advice {
+  id: string;
+  message: string;
+  timestamp: Date;
+  category: string;
+  source: string; // Module/rep context
+  avatar: string;
+  isSaved: boolean;
+  isPinned: boolean;
+  reactions: {
+    helpful: number;
+    notHelpful: number;
+  };
+}
+
+const AdviceHub = () => {
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [savedAdvices, setSavedAdvices] = useState<string[]>([]);
+  const [pinnedAdvices, setPinnedAdvices] = useState<string[]>(["advice-1"]);
+
+  const categories = [
+    { id: "all", name: "All Advices", icon: "💬" },
+    { id: "sales", name: "Sales Strategy", icon: "📈" },
+    { id: "revenue", name: "Revenue Optimization", icon: "💰" },
+    { id: "pipeline", name: "Pipeline Management", icon: "🎯" },
+    { id: "engagement", name: "Customer Engagement", icon: "🤝" },
+    { id: "coaching", name: "Team Coaching", icon: "🎓" },
+    { id: "forecasting", name: "Forecasting", icon: "📊" },
+    { id: "risk", name: "Risk Management", icon: "⚠️" },
+  ];
+
+  const mockAdvices: Advice[] = [
     {
-      id: 1,
-      type: "assistant",
-      content: "Hello! I'm Joseph, your AI business advisor. I'm here to help you with strategic insights, data analysis, business planning, and much more. What would you like to explore today?",
-      timestamp: new Date(Date.now() - 5 * 60 * 1000),
-      suggestions: [
-        "Analyze my Q1 financial performance",
-        "Help me plan market expansion strategy",
-        "Review risk factors in my business",
-        "Create a growth forecast"
-      ]
-    }
-  ]);
-  
-  const [inputMessage, setInputMessage] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
-  const [uploadedFiles, setUploadedFiles] = useState([]);
-  const messagesEndRef = useRef(null);
-  const fileInputRef = useRef(null);
+      id: "advice-1",
+      message:
+        "For Sarah Johnson's team: Focus on the top 3 accounts in your pipeline representing 45% of potential revenue. Implement daily check-ins for these deals and assign a dedicated account manager. This approach has shown a 23% improvement in close rates.",
+      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
+      category: "sales",
+      source: "Sarah Johnson - Sales Rep",
+      avatar: "SJ",
+      isSaved: false,
+      isPinned: true,
+      reactions: { helpful: 12, notHelpful: 1 },
+    },
+    {
+      id: "advice-2",
+      message:
+        "Revenue opportunity identified: Your engagement score on WhatsApp is 95% vs 52% on Email. Reallocate 30% of email budget to WhatsApp campaigns. Projected additional revenue: $125K over Q2.",
+      timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000),
+      category: "revenue",
+      source: "Engagement Analytics",
+      avatar: "EA",
+      isSaved: false,
+      isPinned: false,
+      reactions: { helpful: 8, notHelpful: 0 },
+    },
+    {
+      id: "advice-3",
+      message:
+        "Mike Chen shows potential to reach top performer status. His deal size is 23% higher than team average. Coaching recommendation: Focus on follow-up consistency. Expected improvement: 15% in closing ratio within 30 days.",
+      timestamp: new Date(Date.now() - 6 * 60 * 60 * 1000),
+      category: "coaching",
+      source: "Team Performance Analysis",
+      avatar: "TP",
+      isSaved: false,
+      isPinned: false,
+      reactions: { helpful: 5, notHelpful: 0 },
+    },
+    {
+      id: "advice-4",
+      message:
+        "3 deals at risk detected in your pipeline. Recommended rescue strategy: Send personalized value ROI summary + decision reminder within 24 hours. Success rate: 68% for similar scenarios. Total recoverable value: $180K.",
+      timestamp: new Date(Date.now() - 8 * 60 * 60 * 1000),
+      category: "pipeline",
+      source: "Lead Intelligence Module",
+      avatar: "LI",
+      isSaved: false,
+      isPinned: false,
+      reactions: { helpful: 15, notHelpful: 0 },
+    },
+    {
+      id: "advice-5",
+      message:
+        "Customer retention insight: Customers acquired through referrals have 42% higher lifetime value. Recommendation: Create referral incentive program with 15% discount on next service. ROI projection: 340% within 6 months.",
+      timestamp: new Date(Date.now() - 10 * 60 * 60 * 1000),
+      category: "engagement",
+      source: "Marketing Intelligence",
+      avatar: "MI",
+      isSaved: false,
+      isPinned: false,
+      reactions: { helpful: 20, notHelpful: 0 },
+    },
+    {
+      id: "advice-6",
+      message:
+        "Forecast alert: Based on current pipeline and conversion rates, you'll achieve 82% of Q2 target by month-end. Action required: Increase prospecting activity by 25% to hit 100% target. Recommended focus: Enterprise segment (4.2x higher deal value).",
+      timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000),
+      category: "forecasting",
+      source: "Target Tracking Module",
+      avatar: "TT",
+      isSaved: false,
+      isPinned: false,
+      reactions: { helpful: 9, notHelpful: 0 },
+    },
+    {
+      id: "advice-7",
+      message:
+        "Risk identified: 2 key customers showing reduced engagement (30% below average). Proactive measures: Schedule executive check-ins this week and offer service optimization review. Retention probability with intervention: 78%.",
+      timestamp: new Date(Date.now() - 14 * 60 * 60 * 1000),
+      category: "risk",
+      source: "Risk Management Engine",
+      avatar: "RM",
+      isSaved: false,
+      isPinned: false,
+      reactions: { helpful: 7, notHelpful: 0 },
+    },
+    {
+      id: "advice-8",
+      message:
+        "Lisa Rodriguez - Performance boost opportunity: Your proposal turnaround time is 3.2 days vs team average of 1.8 days. Implementing the AI proposal generator can reduce this to <24 hours. Expected win rate improvement: 12%.",
+      timestamp: new Date(Date.now() - 16 * 60 * 60 * 1000),
+      category: "coaching",
+      source: "Sales Assets Analysis",
+      avatar: "SA",
+      isSaved: false,
+      isPinned: false,
+      reactions: { helpful: 6, notHelpful: 0 },
+    },
+  ];
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  const filteredAdvices = mockAdvices.filter((advice) => {
+    const matchesCategory =
+      selectedCategory === "all" || advice.category === selectedCategory;
+    const matchesSearch =
+      searchQuery === "" ||
+      advice.message.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      advice.source.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  const pinnedList = filteredAdvices.filter((a) => pinnedAdvices.includes(a.id));
+  const unpinnedList = filteredAdvices.filter((a) => !pinnedAdvices.includes(a.id));
+
+  const toggleSave = (adviceId: string) => {
+    setSavedAdvices((prev) =>
+      prev.includes(adviceId)
+        ? prev.filter((id) => id !== adviceId)
+        : [...prev, adviceId]
+    );
   };
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const handleSendMessage = async () => {
-    if (!inputMessage.trim()) return;
-
-    const userMessage = {
-      id: Date.now(),
-      type: "user",
-      content: inputMessage,
-      timestamp: new Date(),
-      files: uploadedFiles.length > 0 ? [...uploadedFiles] : undefined
-    };
-
-    setMessages(prev => [...prev, userMessage]);
-    setInputMessage("");
-    setUploadedFiles([]);
-    setIsTyping(true);
-
-    // Simulate AI response
-    setTimeout(() => {
-      const responses = [
-        {
-          content: "I've analyzed your request and here are my insights:\n\n**Key Findings:**\n• Revenue growth trajectory shows positive momentum\n• Market opportunities in 3 untapped segments\n• Operational efficiency can be improved by 15%\n\n**Recommendations:**\n1. Focus on customer retention strategies\n2. Explore strategic partnerships\n3. Invest in digital transformation\n\nWould you like me to dive deeper into any of these areas?",
-          suggestions: ["Show detailed revenue analysis", "Explain partnership opportunities", "Create action plan"]
-        },
-        {
-          content: "Based on current market conditions and your business data, I recommend the following strategy:\n\n**Growth Strategy Framework:**\n\n🎯 **Primary Focus:** Customer acquisition in emerging markets\n📊 **Investment:** $500K over 6 months\n📈 **Expected ROI:** 250% within 12 months\n\n**Implementation Steps:**\n1. Market research and segmentation\n2. Product positioning optimization\n3. Marketing campaign launch\n4. Performance monitoring\n\nShall I create a detailed implementation timeline for you?",
-          suggestions: ["Create timeline", "Analyze market segments", "Show budget breakdown"]
-        },
-        {
-          content: "I've processed your data and identified several key insights:\n\n**Financial Health Score: 8.5/10** ✅\n\n**Strengths:**\n• Strong cash flow management\n• Diversified revenue streams\n• Low debt-to-equity ratio\n\n**Areas for Improvement:**\n• Inventory turnover rate\n• Customer acquisition cost\n• Market penetration in key demographics\n\n**Next Steps:**\nWould you like me to create a personalized action plan to address these opportunities?",
-          suggestions: ["Create action plan", "Analyze competitors", "Forecast scenarios"]
-        }
-      ];
-
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-      
-      const aiMessage = {
-        id: Date.now() + 1,
-        type: "assistant",
-        content: randomResponse.content,
-        timestamp: new Date(),
-        suggestions: randomResponse.suggestions
-      };
-
-      setMessages(prev => [...prev, aiMessage]);
-      setIsTyping(false);
-    }, 1500 + Math.random() * 1000);
+  const togglePin = (adviceId: string) => {
+    setPinnedAdvices((prev) =>
+      prev.includes(adviceId)
+        ? prev.filter((id) => id !== adviceId)
+        : [...prev, adviceId]
+    );
   };
 
-  const handleSuggestionClick = (suggestion) => {
-    setInputMessage(suggestion);
+  const formatTime = (date: Date) => {
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 1) return "just now";
+    if (diffMins < 60) return `${diffMins}m ago`;
+    if (diffHours < 24) return `${diffHours}h ago`;
+    if (diffDays < 7) return `${diffDays}d ago`;
+    return date.toLocaleDateString();
   };
 
-  const handleFileUpload = (event) => {
-    const files = Array.from(event.target.files);
-    const fileData = files.map(file => ({
-      id: Date.now() + Math.random(),
-      name: file.name,
-      size: file.size,
-      type: file.type
-    }));
-    setUploadedFiles(prev => [...prev, ...fileData]);
-  };
+  const AdviceCard = ({ advice }: { advice: Advice }) => (
+    <div className="p-4 bg-white rounded-lg border border-gray-100 hover:shadow-md transition-shadow">
+      {/* Header */}
+      <div className="flex items-start justify-between mb-3">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 text-white text-sm font-semibold flex items-center justify-center">
+            {advice.avatar}
+          </div>
+          <div className="flex-1">
+            <p className="font-medium text-gray-900 text-sm">{advice.source}</p>
+            <p className="text-xs text-gray-500 flex items-center gap-1 mt-0.5">
+              <Clock className="h-3 w-3" />
+              {formatTime(advice.timestamp)}
+            </p>
+          </div>
+        </div>
+        <Badge variant="outline" className="text-xs">
+          {categories.find((c) => c.id === advice.category)?.icon}{" "}
+          {categories.find((c) => c.id === advice.category)?.name}
+        </Badge>
+      </div>
 
-  const removeFile = (fileId) => {
-    setUploadedFiles(prev => prev.filter(f => f.id !== fileId));
-  };
+      {/* Message Bubble */}
+      <div className="mb-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+        <p className="text-gray-800 text-sm leading-relaxed">{advice.message}</p>
+      </div>
 
-  const getFileIcon = (type) => {
-    if (type.includes('image')) return <Image className="h-4 w-4" />;
-    if (type.includes('pdf') || type.includes('document')) return <FileText className="h-4 w-4" />;
-    if (type.includes('spreadsheet') || type.includes('excel')) return <BarChart3 className="h-4 w-4" />;
-    return <FileText className="h-4 w-4" />;
-  };
-
-  const formatFileSize = (bytes) => {
-    if (bytes === 0) return '0 Bytes';
-    const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-    const i = Math.floor(Math.log(bytes) / Math.log(k));
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-  };
+      {/* Actions */}
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => toggleSave(advice.id)}
+            className={`flex items-center gap-1 px-2 py-1 rounded transition-colors text-xs ${
+              savedAdvices.includes(advice.id)
+                ? "bg-red-50 text-red-600"
+                : "text-gray-600 hover:bg-gray-100"
+            }`}
+          >
+            <Heart
+              className="h-3.5 w-3.5"
+              fill={savedAdvices.includes(advice.id) ? "currentColor" : "none"}
+            />
+            Save
+          </button>
+          <button className="flex items-center gap-1 px-2 py-1 rounded transition-colors text-xs text-gray-600 hover:bg-gray-100">
+            <Share2 className="h-3.5 w-3.5" />
+            Share
+          </button>
+          <button
+            onClick={() => togglePin(advice.id)}
+            className={`flex items-center gap-1 px-2 py-1 rounded transition-colors text-xs ${
+              pinnedAdvices.includes(advice.id)
+                ? "bg-yellow-50 text-yellow-600"
+                : "text-gray-600 hover:bg-gray-100"
+            }`}
+          >
+            <Pin
+              className="h-3.5 w-3.5"
+              fill={pinnedAdvices.includes(advice.id) ? "currentColor" : "none"}
+            />
+            Pin
+          </button>
+        </div>
+        <div className="flex items-center gap-2 text-xs text-gray-500">
+          <span>{advice.reactions.helpful} helpful</span>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="h-screen flex flex-col bg-gray-50">
       <ModuleHeader
         icon={<Brain className="h-6 w-6" />}
-        title="Joseph AI Assistant"
-        description="Your intelligent business advisor for strategic insights and data analysis"
+        title="Advice Hub"
+        description="Repository of AI-powered advice and recommendations from Joseph AI"
         isConnected={true}
         lastUpdated={new Date()}
-        connectionLabel="AI Active"
+        connectionLabel="Live"
       />
 
-      {/* Chat Messages */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-6">
-        <div className="max-w-4xl mx-auto space-y-6">
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex gap-4 ${message.type === "user" ? "justify-end" : "justify-start"}`}
-            >
-              {message.type === "assistant" && (
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center">
-                    <Sparkles className="h-4 w-4 text-white" />
-                  </div>
-                </div>
-              )}
-              
-              <div className={`max-w-3xl ${message.type === "user" ? "order-first" : ""}`}>
-                <div
-                  className={`rounded-2xl px-4 py-3 ${
-                    message.type === "user"
-                      ? "bg-blue-600 text-white ml-auto"
-                      : "bg-white border shadow-sm"
+      {/* Main Content */}
+      <div className="flex-1 overflow-hidden flex gap-4 p-4">
+        {/* Left Sidebar */}
+        <div className="w-72 bg-white rounded-lg border border-gray-200 flex flex-col overflow-hidden">
+          {/* Search */}
+          <div className="p-4 border-b border-gray-200">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search advice..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+          </div>
+
+          {/* Categories */}
+          <div className="flex-1 overflow-y-auto">
+            <div className="p-2 space-y-1">
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id)}
+                  className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors flex items-center justify-between group ${
+                    selectedCategory === category.id
+                      ? "bg-blue-50 text-blue-700"
+                      : "text-gray-700 hover:bg-gray-100"
                   }`}
                 >
-                  {/* File attachments for user messages */}
-                  {message.files && message.files.length > 0 && (
-                    <div className="mb-3 space-y-2">
-                      {message.files.map((file) => (
-                        <div key={file.id} className="flex items-center gap-2 p-2 bg-white/10 rounded-lg">
-                          {getFileIcon(file.type)}
-                          <span className="text-sm">{file.name}</span>
-                          <span className="text-xs opacity-75">({formatFileSize(file.size)})</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  
-                  <div className="whitespace-pre-wrap text-sm leading-relaxed">
-                    {message.content}
-                  </div>
-                </div>
-                
-                {/* Suggestions for assistant messages */}
-                {message.type === "assistant" && message.suggestions && (
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {message.suggestions.map((suggestion, index) => (
-                      <button
-                        key={index}
-                        onClick={() => handleSuggestionClick(suggestion)}
-                        className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
-                      >
-                        {suggestion}
-                      </button>
-                    ))}
-                  </div>
-                )}
-                
-                {/* Message actions */}
-                <div className="flex items-center gap-2 mt-2">
-                  <span className="text-xs text-muted-foreground">
-                    {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  <span>
+                    <span className="mr-2">{category.icon}</span>
+                    {category.name}
                   </span>
-                  {message.type === "assistant" && (
-                    <div className="flex items-center gap-1 ml-2">
-                      <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                        <Copy className="h-3 w-3" />
-                      </Button>
-                      <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                        <ThumbsUp className="h-3 w-3" />
-                      </Button>
-                      <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                        <ThumbsDown className="h-3 w-3" />
-                      </Button>
-                      <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
-                        <Share className="h-3 w-3" />
-                      </Button>
-                    </div>
-                  )}
-                </div>
+                  <span className={`text-xs opacity-0 group-hover:opacity-100 transition-opacity ${
+                    selectedCategory === category.id ? "opacity-100" : ""
+                  }`}>
+                    <ChevronRight className="h-4 w-4" />
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Stats Footer */}
+          <div className="p-4 border-t border-gray-200 bg-gray-50">
+            <div className="text-xs text-gray-600 space-y-2">
+              <div className="flex justify-between">
+                <span>Total Advice</span>
+                <span className="font-semibold">{mockAdvices.length}</span>
               </div>
-              
-              {message.type === "user" && (
-                <div className="flex-shrink-0">
-                  <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center text-white text-sm font-medium">
-                    U
+              <div className="flex justify-between">
+                <span>Saved</span>
+                <span className="font-semibold text-red-600">{savedAdvices.length}</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Pinned</span>
+                <span className="font-semibold text-yellow-600">{pinnedAdvices.length}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Content Area */}
+        <div className="flex-1 bg-white rounded-lg border border-gray-200 flex flex-col overflow-hidden">
+          {/* Header */}
+          <div className="p-4 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-blue-100">
+            <h2 className="font-semibold text-gray-900">
+              {categories.find((c) => c.id === selectedCategory)?.icon}{" "}
+              {categories.find((c) => c.id === selectedCategory)?.name}
+            </h2>
+            <p className="text-xs text-gray-600 mt-1">
+              {filteredAdvices.length} advice{filteredAdvices.length !== 1 ? "s" : ""} found
+            </p>
+          </div>
+
+          {/* Advice Messages */}
+          <div className="flex-1 overflow-y-auto p-4">
+            <div className="space-y-4">
+              {/* Pinned Section */}
+              {pinnedList.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-2 px-2 mb-3">
+                    <Pin className="h-4 w-4 text-yellow-600" />
+                    <span className="text-xs font-semibold text-gray-600">PINNED</span>
+                  </div>
+                  <div className="space-y-3">
+                    {pinnedList.map((advice) => (
+                      <AdviceCard key={advice.id} advice={advice} />
+                    ))}
                   </div>
                 </div>
               )}
-            </div>
-          ))}
-          
-          {/* Typing indicator */}
-          {isTyping && (
-            <div className="flex gap-4">
-              <div className="flex-shrink-0">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center">
-                  <Sparkles className="h-4 w-4 text-white" />
-                </div>
-              </div>
-              <div className="bg-white border shadow-sm rounded-2xl px-4 py-3">
-                <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
-                </div>
-              </div>
-            </div>
-          )}
-          
-          <div ref={messagesEndRef} />
-        </div>
-      </div>
 
-      {/* Input Area */}
-      <div className="border-t bg-white p-6 flex-shrink-0">
-        <div className="max-w-4xl mx-auto">
-          {/* File Upload Preview */}
-          {uploadedFiles.length > 0 && (
-            <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-              <div className="flex items-center gap-2 mb-2">
-                <Paperclip className="h-4 w-4" />
-                <span className="text-sm font-medium">Attached Files:</span>
-              </div>
-              <div className="space-y-2">
-                {uploadedFiles.map((file) => (
-                  <div key={file.id} className="flex items-center gap-2 p-2 bg-white rounded border">
-                    {getFileIcon(file.type)}
-                    <span className="text-sm flex-1">{file.name}</span>
-                    <span className="text-xs text-muted-foreground">({formatFileSize(file.size)})</span>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => removeFile(file.id)}
-                      className="h-6 w-6 p-0"
-                    >
-                      ×
-                    </Button>
+              {/* All Advice Section */}
+              {unpinnedList.length > 0 && (
+                <div>
+                  {pinnedList.length > 0 && (
+                    <div className="flex items-center gap-2 px-2 mb-3 mt-4">
+                      <MessageCircle className="h-4 w-4 text-gray-400" />
+                      <span className="text-xs font-semibold text-gray-600">ALL ADVICE</span>
+                    </div>
+                  )}
+                  <div className="space-y-3">
+                    {unpinnedList.map((advice) => (
+                      <AdviceCard key={advice.id} advice={advice} />
+                    ))}
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
-          
-          {/* Input Box */}
-          <div className="flex gap-3 items-end">
-            <div className="flex-1">
-              <div className="relative border rounded-2xl bg-white shadow-sm">
-                <textarea
-                  value={inputMessage}
-                  onChange={(e) => setInputMessage(e.target.value)}
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                      e.preventDefault();
-                      handleSendMessage();
-                    }
-                  }}
-                  placeholder="Ask Joseph about your business strategy, data analysis, market insights, or anything else..."
-                  className="w-full p-4 pr-20 resize-none border-0 focus:ring-0 focus:outline-none rounded-2xl"
-                  rows={1}
-                  style={{
-                    minHeight: '52px',
-                    maxHeight: '200px',
-                    height: 'auto'
-                  }}
-                />
-                
-                <div className="absolute bottom-2 right-2 flex items-center gap-1">
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    onChange={handleFileUpload}
-                    multiple
-                    className="hidden"
-                    accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg,.csv"
-                  />
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => fileInputRef.current?.click()}
-                    className="h-8 w-8 p-0"
-                  >
-                    <Paperclip className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-8 w-8 p-0"
-                  >
-                    <Mic className="h-4 w-4" />
-                  </Button>
                 </div>
-              </div>
+              )}
+
+              {/* Empty State */}
+              {filteredAdvices.length === 0 && (
+                <div className="flex flex-col items-center justify-center h-full text-center py-12">
+                  <MessageCircle className="h-12 w-12 text-gray-300 mb-3" />
+                  <p className="text-gray-600 font-medium mb-1">No advice found</p>
+                  <p className="text-xs text-gray-500">
+                    Try adjusting your search or category filters
+                  </p>
+                </div>
+              )}
             </div>
-            
-            <Button
-              onClick={handleSendMessage}
-              disabled={!inputMessage.trim() || isTyping}
-              className="h-12 w-12 rounded-xl"
-            >
-              <Send className="h-4 w-4" />
-            </Button>
-          </div>
-          
-          {/* Quick Actions */}
-          <div className="mt-4 flex flex-wrap gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleSuggestionClick("Analyze my business performance")}
-            >
-              <BarChart3 className="h-4 w-4 mr-2" />
-              Business Analysis
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleSuggestionClick("Help me create a growth strategy")}
-            >
-              <TrendingUp className="h-4 w-4 mr-2" />
-              Growth Strategy
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleSuggestionClick("Review my market opportunities")}
-            >
-              <Target className="h-4 w-4 mr-2" />
-              Market Analysis
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleSuggestionClick("Create financial projections")}
-            >
-              <Activity className="h-4 w-4 mr-2" />
-              Financial Planning
-            </Button>
           </div>
         </div>
       </div>
@@ -394,4 +403,4 @@ const AiInsights = () => {
   );
 };
 
-export default AiInsights;
+export default AdviceHub;
