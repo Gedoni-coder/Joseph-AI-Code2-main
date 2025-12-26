@@ -221,7 +221,7 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                 <PopoverContent className="w-80" align="end">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <h4 className="font-semibold">AI Insights</h4>
+                      <h4 className="font-semibold">Advice</h4>
                       <Button
                         variant="ghost"
                         size="sm"
