@@ -209,13 +209,13 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                         size="sm"
                         className="flex items-center gap-2"
                       >
-                        <Lightbulb className="h-4 w-4" />
-                        <span className="hidden sm:inline">Ideas</span>
+                        <HelpCircle className="h-4 w-4" />
+                        <span className="hidden sm:inline">Advice</span>
                       </Button>
                     </PopoverTrigger>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>AI-powered suggestions and insights</p>
+                    <p>Get expert advice and recommendations</p>
                   </TooltipContent>
                 </Tooltip>
                 <PopoverContent className="w-80" align="end">
