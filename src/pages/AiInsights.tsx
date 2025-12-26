@@ -638,8 +638,16 @@ const AdviceHub = () => {
         </div>
 
         {/* Right Side - Messages List */}
-        <div className="flex-1 overflow-y-auto bg-white">
-          {filteredMessages.length === 0 ? (
+        <div className="flex-1 overflow-y-auto bg-white flex flex-col">
+          {/* Messages Header */}
+          <div className="px-6 py-4 border-b border-gray-200 bg-white flex items-center gap-2 flex-shrink-0">
+            <span className="text-xl">💡</span>
+            <h3 className="font-semibold text-gray-900">Latest Advice</h3>
+          </div>
+
+          {/* Messages Content */}
+          <div className="flex-1 overflow-y-auto">
+            {filteredMessages.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full">
               <MessageCircle className="h-12 w-12 text-gray-300 mb-3" />
               <p className="text-gray-600 font-medium">No messages</p>
@@ -704,6 +712,7 @@ const AdviceHub = () => {
                 ))}
             </div>
           )}
+          </div>
         </div>
       </div>
     </div>
