@@ -199,7 +199,7 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                 </PopoverContent>
               </Popover>
 
-              {/* Ideas */}
+              {/* Advice */}
               <Popover open={ideasOpen} onOpenChange={setIdeasOpen}>
                 <Tooltip>
                   <TooltipTrigger asChild>
