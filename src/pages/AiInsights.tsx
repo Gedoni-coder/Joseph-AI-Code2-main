@@ -15,6 +15,8 @@ import {
   MessageCircle,
   Clock,
   ChevronRight,
+  Search,
+  X,
 } from "lucide-react";
 
 interface AdviceMessage {
@@ -45,32 +47,33 @@ interface ChatMessage {
 
 const AdviceHub = () => {
   const [selectedMessageId, setSelectedMessageId] = useState<string | null>(null);
+  const [selectedModuleFilter, setSelectedModuleFilter] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
 
-  const modules: ModuleInfo[] = [
-    { id: "module-1", module: "Sales Strategy", moduleKey: "sales", icon: "📈", color: "from-blue-400 to-blue-600" },
-    { id: "module-2", module: "Lead Management", moduleKey: "leads", icon: "🎯", color: "from-green-400 to-green-600" },
-    { id: "module-3", module: "Customer Engagement", moduleKey: "engagement", icon: "🤝", color: "from-purple-400 to-purple-600" },
-    { id: "module-4", module: "Revenue Optimization", moduleKey: "revenue", icon: "💰", color: "from-yellow-400 to-yellow-600" },
-    { id: "module-5", module: "Pipeline Management", moduleKey: "pipeline", icon: "📊", color: "from-red-400 to-red-600" },
-    { id: "module-6", module: "Team Coaching", moduleKey: "coaching", icon: "🎓", color: "from-indigo-400 to-indigo-600" },
-    { id: "module-7", module: "Forecasting", moduleKey: "forecast", icon: "📈", color: "from-cyan-400 to-cyan-600" },
-    { id: "module-8", module: "Risk Management", moduleKey: "risk", icon: "⚠️", color: "from-orange-400 to-orange-600" },
-    { id: "module-9", module: "Performance Analytics", moduleKey: "analytics", icon: "📉", color: "from-teal-400 to-teal-600" },
-    { id: "module-10", module: "Market Insights", moduleKey: "market", icon: "🌍", color: "from-pink-400 to-pink-600" },
-    { id: "module-11", module: "Proposal Generation", moduleKey: "proposals", icon: "📄", color: "from-lime-400 to-lime-600" },
-    { id: "module-12", module: "CRM Intelligence", moduleKey: "crm", icon: "💎", color: "from-violet-400 to-violet-600" },
+  const modulesList = [
+    { id: "econ-forecast", name: "Economic Forecasting", icon: "📊" },
+    { id: "biz-forecast", name: "Business Forecasting", icon: "📈" },
+    { id: "market-analysis", name: "Market Analysis", icon: "🌍" },
+    { id: "pricing-strategy", name: "Pricing Strategy", icon: "💰" },
+    { id: "revenue-strategy", name: "Revenue Strategy", icon: "💵" },
+    { id: "funding-loans", name: "Funding and Loan Hub", icon: "🏦" },
+    { id: "inventory-supply", name: "Inventory and Supply Chain", icon: "📦" },
+    { id: "policy-impact", name: "Policy and Economic Impact", icon: "⚖️" },
+    { id: "business-feasibility", name: "Business Feasibility", icon: "✅" },
+    { id: "tax-compliance", name: "Tax and Compliance", icon: "📋" },
+    { id: "sales-intelligence", name: "Sales Intelligence", icon: "🎯" },
   ];
 
   const [adviceMessages, setAdviceMessages] = useState<AdviceMessage[]>([
     {
       id: "msg-1",
-      moduleId: "module-1",
-      moduleName: "Sales Strategy",
-      moduleIcon: "📈",
+      moduleId: "sales-intelligence",
+      moduleName: "Sales Intelligence",
+      moduleIcon: "🎯",
       title: "Focus on top 3 accounts for better pipeline management",
       content:
         "Focus on the top 3 accounts in your pipeline representing 45% of potential revenue. Implement daily check-ins for these deals and assign a dedicated account manager. This approach has shown a 23% improvement in close rates.",
@@ -79,8 +82,8 @@ const AdviceHub = () => {
     },
     {
       id: "msg-2",
-      moduleId: "module-2",
-      moduleName: "Lead Management",
+      moduleId: "sales-intelligence",
+      moduleName: "Sales Intelligence",
       moduleIcon: "🎯",
       title: "3 deals at risk - immediate rescue strategy recommended",
       content:
@@ -90,9 +93,9 @@ const AdviceHub = () => {
     },
     {
       id: "msg-3",
-      moduleId: "module-3",
-      moduleName: "Customer Engagement",
-      moduleIcon: "🤝",
+      moduleId: "revenue-strategy",
+      moduleName: "Revenue Strategy",
+      moduleIcon: "💵",
       title: "Reallocate budget to WhatsApp for higher engagement",
       content:
         "Your engagement score on WhatsApp is 95% vs 52% on Email. Reallocate 30% of email budget to WhatsApp campaigns. Projected additional revenue: $125K over Q2.",
@@ -101,9 +104,9 @@ const AdviceHub = () => {
     },
     {
       id: "msg-4",
-      moduleId: "module-4",
-      moduleName: "Revenue Optimization",
-      moduleIcon: "💰",
+      moduleId: "revenue-strategy",
+      moduleName: "Revenue Strategy",
+      moduleIcon: "💵",
       title: "Referral customers have 42% higher lifetime value",
       content:
         "Customer retention insight: Customers acquired through referrals have 42% higher lifetime value. Create referral incentive program with 15% discount. ROI projection: 340% within 6 months.",
@@ -112,9 +115,9 @@ const AdviceHub = () => {
     },
     {
       id: "msg-5",
-      moduleId: "module-5",
-      moduleName: "Pipeline Management",
-      moduleIcon: "📊",
+      moduleId: "biz-forecast",
+      moduleName: "Business Forecasting",
+      moduleIcon: "📈",
       title: "Pipeline health declining - deal size and closure rate down",
       content:
         "Pipeline health score: 8.5/10. Two key risks identified: Deal closure rate declining and average deal size trending down. Recommend immediate intervention.",
@@ -123,78 +126,78 @@ const AdviceHub = () => {
     },
     {
       id: "msg-6",
-      moduleId: "module-6",
-      moduleName: "Team Coaching",
-      moduleIcon: "🎓",
-      title: "Mike Chen has high potential - focus on follow-up consistency",
+      moduleId: "sales-intelligence",
+      moduleName: "Sales Intelligence",
+      moduleIcon: "🎯",
+      title: "Team member performance analysis - coaching opportunity",
       content:
-        "Mike Chen shows potential to reach top performer status. His deal size is 23% higher than team average. Focus coaching on follow-up consistency. Expected improvement: 15% in closing ratio.",
+        "Sales rep shows potential to reach top performer status. His deal size is 23% higher than team average. Focus coaching on follow-up consistency. Expected improvement: 15% in closing ratio.",
       timestamp: new Date(Date.now() - 12 * 60 * 60 * 1000),
       isRead: false,
     },
     {
       id: "msg-7",
-      moduleId: "module-7",
-      moduleName: "Forecasting",
-      moduleIcon: "📈",
-      title: "Q2 projection at 82% - increase prospecting activity",
+      moduleId: "econ-forecast",
+      moduleName: "Economic Forecasting",
+      moduleIcon: "📊",
+      title: "Q2 economic trends - interest rates impact analysis",
       content:
-        "Q2 projection: You'll achieve 82% of target by month-end. Action needed: Increase prospecting activity by 25% to hit 100%. Focus on Enterprise segment (4.2x higher deal value).",
+        "Q2 projection: Based on current economic trends and interest rate environment, expect 82% of forecasted targets. Action needed: Adjust spending by 15%. Focus on sectors with high resilience (4.2x growth potential).",
       timestamp: new Date(Date.now() - 14 * 60 * 60 * 1000),
       isRead: true,
     },
     {
       id: "msg-8",
-      moduleId: "module-8",
-      moduleName: "Risk Management",
-      moduleIcon: "⚠️",
-      title: "2 key customers showing reduced engagement",
+      moduleId: "tax-compliance",
+      moduleName: "Tax and Compliance",
+      moduleIcon: "📋",
+      title: "2024 tax regulations update - compliance checklist",
       content:
-        "Risk alert: 2 key customers showing reduced engagement (30% below average). Schedule executive check-ins this week. Retention probability with intervention: 78%.",
+        "New tax regulations effective Q3: Your business needs to implement enhanced documentation for 2 key areas. Schedule compliance review this quarter. Retention probability with intervention: 78% penalty avoidance.",
       timestamp: new Date(Date.now() - 16 * 60 * 60 * 1000),
       isRead: false,
     },
     {
       id: "msg-9",
-      moduleId: "module-9",
-      moduleName: "Performance Analytics",
-      moduleIcon: "📉",
-      title: "Team win rate improved to 34% - continue current strategy",
+      moduleId: "market-analysis",
+      moduleName: "Market Analysis",
+      moduleIcon: "🌍",
+      title: "Market growth trending upward - 5% quarter-over-quarter",
       content:
-        "Team performance dashboard: Overall win rate improved to 34% (+5% vs last month). Top performer: Sarah Johnson at 125% target achievement. Continue current strategy.",
+        "Market analysis dashboard: Overall market growth improved to 5% quarter-over-quarter (+3% vs last quarter). Your market share position improved. Continue current strategy while monitoring competitor moves.",
       timestamp: new Date(Date.now() - 18 * 60 * 60 * 1000),
       isRead: true,
     },
     {
       id: "msg-10",
-      moduleId: "module-10",
-      moduleName: "Market Insights",
-      moduleIcon: "🌍",
-      title: "3 emerging market opportunities identified - $8.5M addressable",
+      moduleId: "pricing-strategy",
+      moduleName: "Pricing Strategy",
+      moduleIcon: "💰",
+      title: "Price optimization - elasticity analysis suggests 8% increase",
       content:
-        "Market analysis: 3 emerging opportunities identified in untapped segments. Combined addressable market: $8.5M. Recommended approach: Pilot program with 2-week test in highest-potential segment.",
+        "Pricing analysis: 3 product lines show pricing optimization opportunities. Combined addressable revenue increase: $8.5M. Recommended approach: Pilot price increase on highest-margin segment with 2-week test period.",
       timestamp: new Date(Date.now() - 20 * 60 * 60 * 1000),
       isRead: false,
     },
     {
       id: "msg-11",
-      moduleId: "module-11",
-      moduleName: "Proposal Generation",
-      moduleIcon: "📄",
-      title: "Lisa Rodriguez - reduce proposal turnaround to <24 hours",
+      moduleId: "inventory-supply",
+      moduleName: "Inventory and Supply Chain",
+      moduleIcon: "📦",
+      title: "Supply chain optimization - reduce lead times by 3 days",
       content:
-        "Lisa Rodriguez - Proposal turnaround: Currently 3.2 days vs team average of 1.8 days. AI proposal generator can reduce to <24 hours. Expected win rate improvement: 12%.",
+        "Supply chain review: Current lead time: 12 days, industry average: 9 days. AI analysis suggests 3 key optimizations. Expected cost savings: 18%. ROI on implementation: 320% within 6 months.",
       timestamp: new Date(Date.now() - 22 * 60 * 60 * 1000),
       isRead: true,
     },
     {
       id: "msg-12",
-      moduleId: "module-12",
-      moduleName: "CRM Intelligence",
-      moduleIcon: "💎",
-      title: "CRM data quality at 76% - clean duplicates and missing fields",
+      moduleId: "funding-loans",
+      moduleName: "Funding and Loan Hub",
+      moduleIcon: "🏦",
+      title: "Financing opportunity - $2M credit facility at favorable terms",
       content:
-        "CRM data quality score: 76%. Recommendation: Clean duplicate contacts (342 found) and update 18% of records missing key fields. Estimated impact on forecasting accuracy: +8%.",
+        "New financing option available: $2M credit facility approved at 6.2% APR. Perfect timing for expansion plans. Application deadline: 30 days. Impact: Can accelerate growth initiatives by 6 months.",
       timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000),
       isRead: false,
     },
@@ -277,6 +280,17 @@ const AdviceHub = () => {
 
   const unreadCount = adviceMessages.filter((m) => !m.isRead).length;
   const selectedMessage = adviceMessages.find((m) => m.id === selectedMessageId);
+
+  // Filter messages based on selected module and search query
+  const filteredMessages = adviceMessages.filter((message) => {
+    const matchesModule = !selectedModuleFilter || message.moduleId === selectedModuleFilter;
+    const matchesSearch =
+      !searchQuery ||
+      message.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      message.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      message.moduleName.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesModule && matchesSearch;
+  });
 
   // ===== DETAIL/CHAT VIEW =====
   if (selectedMessageId && selectedMessage) {
@@ -476,56 +490,114 @@ const AdviceHub = () => {
               </Badge>
             )}
           </div>
-
-          {/* Horizontal Scrollable Circles */}
-          <div className="flex gap-6 overflow-x-auto pb-2">
-            {modules.map((module) => {
-              const moduleMessages = adviceMessages.filter((m) => m.moduleId === module.id);
-              const unreadInModule = moduleMessages.filter((m) => !m.isRead);
-              const hasUnread = unreadInModule.length > 0;
-
-              return (
-                <button
-                  key={module.id}
-                  className="flex-shrink-0 focus:outline-none group transition-all"
-                >
-                  <div
-                    className={`relative w-20 h-20 rounded-full flex items-center justify-center cursor-pointer transition-all ${
-                      hasUnread
-                        ? `bg-gradient-to-br ${module.color} ring-4 ring-offset-2 ring-offset-white ring-yellow-400`
-                        : `bg-gradient-to-br ${module.color}`
-                    }`}
-                  >
-                    <span className="text-3xl">{module.icon}</span>
-
-                    {hasUnread && (
-                      <div className="absolute top-0 right-0 w-5 h-5 bg-yellow-400 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white animate-pulse">
-                        {unreadInModule.length}
-                      </div>
-                    )}
-                  </div>
-
-                  <p className="text-center text-xs font-medium text-gray-700 mt-2 truncate w-20">
-                    {module.module.split(" ")[0]}
-                  </p>
-                </button>
-              );
-            })}
-          </div>
         </div>
       </div>
 
-      {/* Messages List - Gmail/Messenger Inbox Style */}
-      <div className="flex-1 overflow-y-auto">
-        <div className="max-w-4xl mx-auto">
-          {adviceMessages.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-64">
+      {/* Main Content - Sidebar + Messages */}
+      <div className="flex-1 overflow-hidden flex">
+        {/* Left Sidebar - Module Filters */}
+        <div className="w-72 border-r border-gray-200 bg-white flex flex-col overflow-hidden">
+          {/* Search Bar */}
+          <div className="p-4 border-b border-gray-200">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search messages..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-8 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2"
+                >
+                  <X className="h-4 w-4 text-gray-400" />
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Module Filters */}
+          <div className="flex-1 overflow-y-auto">
+            <div className="p-2 space-y-1">
+              {/* All Modules Button */}
+              <button
+                onClick={() => setSelectedModuleFilter(null)}
+                className={`w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                  selectedModuleFilter === null
+                    ? "bg-blue-50 text-blue-700"
+                    : "text-gray-700 hover:bg-gray-100"
+                }`}
+              >
+                All Modules
+                <span className="float-right text-xs opacity-60">
+                  ({adviceMessages.length})
+                </span>
+              </button>
+
+              {/* Individual Module Filters */}
+              {modulesList.map((module) => {
+                const moduleMessages = adviceMessages.filter((m) => m.moduleId === module.id);
+                const unreadInModule = moduleMessages.filter((m) => !m.isRead).length;
+
+                return (
+                  <button
+                    key={module.id}
+                    onClick={() => setSelectedModuleFilter(module.id)}
+                    className={`w-full text-left px-4 py-3 rounded-lg text-sm transition-colors flex items-center justify-between group ${
+                      selectedModuleFilter === module.id
+                        ? "bg-blue-50 text-blue-700 font-medium"
+                        : "text-gray-700 hover:bg-gray-100"
+                    }`}
+                  >
+                    <span>
+                      <span className="mr-2">{module.icon}</span>
+                      {module.name}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs opacity-60">({moduleMessages.length})</span>
+                      {unreadInModule > 0 && (
+                        <Badge variant="destructive" className="text-xs px-1.5">
+                          {unreadInModule}
+                        </Badge>
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Sidebar Footer - Stats */}
+          <div className="p-4 border-t border-gray-200 bg-gray-50 text-xs text-gray-600 space-y-2">
+            <div className="flex justify-between">
+              <span>Total</span>
+              <span className="font-semibold">{adviceMessages.length}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Unread</span>
+              <span className="font-semibold text-blue-600">{unreadCount}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Side - Messages List */}
+        <div className="flex-1 overflow-y-auto bg-white">
+          {filteredMessages.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-full">
               <MessageCircle className="h-12 w-12 text-gray-300 mb-3" />
               <p className="text-gray-600 font-medium">No messages</p>
+              <p className="text-xs text-gray-500">
+                {selectedModuleFilter
+                  ? "No messages in this module"
+                  : "Check back soon for updates"}
+              </p>
             </div>
           ) : (
-            <div className="bg-white divide-y divide-gray-200">
-              {adviceMessages
+            <div className="divide-y divide-gray-200">
+              {filteredMessages
                 .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
                 .map((message) => (
                   <button
