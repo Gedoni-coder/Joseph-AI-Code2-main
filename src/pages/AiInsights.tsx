@@ -477,7 +477,7 @@ const AdviceHub = () => {
       {/* Module Circles Section */}
       <div className="bg-white border-b border-gray-200 px-6 py-6">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-lg font-semibold text-gray-900">Module Updates</h2>
               <p className="text-sm text-gray-600">
@@ -489,6 +489,60 @@ const AdviceHub = () => {
                 {unreadCount} unread
               </Badge>
             )}
+          </div>
+
+          {/* Module Status Circles */}
+          <div className="flex gap-6 overflow-x-auto pb-2">
+            {modulesList.map((module) => {
+              const moduleMessages = adviceMessages.filter((m) => m.moduleId === module.id);
+              const unreadInModule = moduleMessages.filter((m) => !m.isRead);
+              const hasUnread = unreadInModule.length > 0;
+
+              // Color mapping for modules
+              const colorMap: { [key: string]: string } = {
+                "econ-forecast": "from-blue-400 to-blue-600",
+                "biz-forecast": "from-cyan-400 to-cyan-600",
+                "market-analysis": "from-green-400 to-green-600",
+                "pricing-strategy": "from-yellow-400 to-yellow-600",
+                "revenue-strategy": "from-orange-400 to-orange-600",
+                "funding-loans": "from-purple-400 to-purple-600",
+                "inventory-supply": "from-pink-400 to-pink-600",
+                "policy-impact": "from-red-400 to-red-600",
+                "business-feasibility": "from-indigo-400 to-indigo-600",
+                "tax-compliance": "from-teal-400 to-teal-600",
+                "sales-intelligence": "from-lime-400 to-lime-600",
+              };
+
+              return (
+                <button
+                  key={module.id}
+                  onClick={() => setSelectedModuleFilter(module.id)}
+                  className="flex-shrink-0 focus:outline-none group transition-all"
+                >
+                  <div
+                    className={`relative w-20 h-20 rounded-full flex items-center justify-center cursor-pointer transition-all bg-gradient-to-br ${
+                      colorMap[module.id] || "from-gray-400 to-gray-600"
+                    } ${
+                      hasUnread
+                        ? "ring-4 ring-offset-2 ring-offset-white ring-yellow-400"
+                        : ""
+                    }`}
+                  >
+                    <span className="text-3xl">{module.icon}</span>
+
+                    {hasUnread && (
+                      <div className="absolute top-0 right-0 w-5 h-5 bg-yellow-400 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-gray-900 animate-pulse">
+                        {unreadInModule.length}
+                      </div>
+                    )}
+                  </div>
+
+                  <p className="text-center text-xs font-medium text-gray-700 mt-2 truncate w-20 group-hover:text-gray-900 transition-colors">
+                    {module.name.split(" ")[0]}
+                  </p>
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
