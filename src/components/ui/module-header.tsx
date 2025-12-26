@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/tooltip";
 import ModuleNavigation from "@/components/ui/module-navigation";
 import { ConnectionStatus } from "@/components/ui/connection-status";
-import { Bell, Lightbulb, X, Radio, AlertCircle, Zap, Target } from "lucide-react";
+import { Bell, HelpCircle, X, Radio, AlertCircle, Zap, Target } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 
 interface ModuleHeaderProps {
