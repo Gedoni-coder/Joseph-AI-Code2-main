@@ -252,7 +252,7 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                     </div>
                     <Link to="/ai-insights">
                       <Button variant="outline" className="w-full" size="sm">
-                        Generate More Ideas
+                        Get More Advice
                       </Button>
                     </Link>
                   </div>
