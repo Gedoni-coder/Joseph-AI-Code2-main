@@ -14,7 +14,15 @@ import {
 } from "@/components/ui/tooltip";
 import ModuleNavigation from "@/components/ui/module-navigation";
 import { ConnectionStatus } from "@/components/ui/connection-status";
-import { Bell, Lightbulb, X, Radio, AlertCircle, Zap, Target } from "lucide-react";
+import {
+  Bell,
+  HelpCircle,
+  X,
+  Radio,
+  AlertCircle,
+  Zap,
+  Target,
+} from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 
 interface ModuleHeaderProps {
@@ -102,7 +110,11 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{conversationalMode ? "Conversational Mode ON" : "Conversational Mode OFF"}</p>
+                  <p>
+                    {conversationalMode
+                      ? "Conversational Mode ON"
+                      : "Conversational Mode OFF"}
+                  </p>
                 </TooltipContent>
               </Tooltip>
 
@@ -174,8 +186,12 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                           <AlertCircle className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium">Data Updated</p>
-                            <p className="text-xs text-muted-foreground">New analysis data available</p>
-                            <p className="text-xs text-muted-foreground mt-1">15 minutes ago</p>
+                            <p className="text-xs text-muted-foreground">
+                              New analysis data available
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              15 minutes ago
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -184,8 +200,12 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                           <Zap className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" />
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium">Alert</p>
-                            <p className="text-xs text-muted-foreground">Review required for analysis variance</p>
-                            <p className="text-xs text-muted-foreground mt-1">1 hour ago</p>
+                            <p className="text-xs text-muted-foreground">
+                              Review required for analysis variance
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              1 hour ago
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -199,7 +219,7 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                 </PopoverContent>
               </Popover>
 
-              {/* Ideas */}
+              {/* Advice */}
               <Popover open={ideasOpen} onOpenChange={setIdeasOpen}>
                 <Tooltip>
                   <TooltipTrigger asChild>
@@ -209,19 +229,19 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                         size="sm"
                         className="flex items-center gap-2"
                       >
-                        <Lightbulb className="h-4 w-4" />
-                        <span className="hidden sm:inline">Ideas</span>
+                        <HelpCircle className="h-4 w-4" />
+                        <span className="hidden sm:inline">Advice</span>
                       </Button>
                     </PopoverTrigger>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>AI-powered suggestions and insights</p>
+                    <p>Get expert advice and recommendations</p>
                   </TooltipContent>
                 </Tooltip>
                 <PopoverContent className="w-80" align="end">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <h4 className="font-semibold">AI Insights</h4>
+                      <h4 className="font-semibold">Advice</h4>
                       <Button
                         variant="ghost"
                         size="sm"
@@ -233,10 +253,14 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                     <div className="space-y-3">
                       <div className="p-3 rounded-lg border bg-card">
                         <div className="flex items-start gap-3">
-                          <Lightbulb className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" />
+                          <HelpCircle className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium">Optimization Opportunity</p>
-                            <p className="text-xs text-muted-foreground">Consider refining your analysis parameters</p>
+                            <p className="text-sm font-medium">
+                              Optimization Opportunity
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              Consider refining your analysis parameters
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -244,15 +268,19 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                         <div className="flex items-start gap-3">
                           <Target className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium">Performance Insight</p>
-                            <p className="text-xs text-muted-foreground">Analysis accuracy has improved significantly</p>
+                            <p className="text-sm font-medium">
+                              Performance Insight
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              Analysis accuracy has improved significantly
+                            </p>
                           </div>
                         </div>
                       </div>
                     </div>
                     <Link to="/ai-insights">
                       <Button variant="outline" className="w-full" size="sm">
-                        Generate More Ideas
+                        Get More Advice
                       </Button>
                     </Link>
                   </div>
