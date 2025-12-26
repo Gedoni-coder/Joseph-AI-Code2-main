@@ -46,8 +46,12 @@ interface ChatMessage {
 }
 
 const AdviceHub = () => {
-  const [selectedMessageId, setSelectedMessageId] = useState<string | null>(null);
-  const [selectedModuleFilter, setSelectedModuleFilter] = useState<string | null>(null);
+  const [selectedMessageId, setSelectedMessageId] = useState<string | null>(
+    null,
+  );
+  const [selectedModuleFilter, setSelectedModuleFilter] = useState<
+    string | null
+  >(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState("");
@@ -216,7 +220,7 @@ const AdviceHub = () => {
     const message = adviceMessages.find((m) => m.id === messageId);
     if (message) {
       setAdviceMessages((prev) =>
-        prev.map((m) => (m.id === messageId ? { ...m, isRead: true } : m))
+        prev.map((m) => (m.id === messageId ? { ...m, isRead: true } : m)),
       );
       setChatMessages([
         {
@@ -243,25 +247,29 @@ const AdviceHub = () => {
     setInputMessage("");
     setIsTyping(true);
 
-    setTimeout(() => {
-      const josephResponses = [
-        "That's an excellent observation. Based on the current metrics, I recommend prioritizing this approach for optimal results.",
-        "I've analyzed your input and cross-referenced it with the data. This aligns well with the recommended strategy.",
-        "Great question. The data strongly supports this direction. Would you like me to provide more detailed implementation steps?",
-        "I see what you're getting at. This is consistent with the trends we're observing. Let me help you with the next steps.",
-        "Excellent thinking. This complements the existing insights perfectly. Shall I create a specific action plan?",
-      ];
+    setTimeout(
+      () => {
+        const josephResponses = [
+          "That's an excellent observation. Based on the current metrics, I recommend prioritizing this approach for optimal results.",
+          "I've analyzed your input and cross-referenced it with the data. This aligns well with the recommended strategy.",
+          "Great question. The data strongly supports this direction. Would you like me to provide more detailed implementation steps?",
+          "I see what you're getting at. This is consistent with the trends we're observing. Let me help you with the next steps.",
+          "Excellent thinking. This complements the existing insights perfectly. Shall I create a specific action plan?",
+        ];
 
-      const response: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        role: "joseph",
-        content: josephResponses[Math.floor(Math.random() * josephResponses.length)],
-        timestamp: new Date(),
-      };
+        const response: ChatMessage = {
+          id: (Date.now() + 1).toString(),
+          role: "joseph",
+          content:
+            josephResponses[Math.floor(Math.random() * josephResponses.length)],
+          timestamp: new Date(),
+        };
 
-      setChatMessages((prev) => [...prev, response]);
-      setIsTyping(false);
-    }, 1000 + Math.random() * 500);
+        setChatMessages((prev) => [...prev, response]);
+        setIsTyping(false);
+      },
+      1000 + Math.random() * 500,
+    );
   };
 
   const formatTime = (date: Date) => {
@@ -279,11 +287,14 @@ const AdviceHub = () => {
   };
 
   const unreadCount = adviceMessages.filter((m) => !m.isRead).length;
-  const selectedMessage = adviceMessages.find((m) => m.id === selectedMessageId);
+  const selectedMessage = adviceMessages.find(
+    (m) => m.id === selectedMessageId,
+  );
 
   // Filter messages based on selected module and search query
   const filteredMessages = adviceMessages.filter((message) => {
-    const matchesModule = !selectedModuleFilter || message.moduleId === selectedModuleFilter;
+    const matchesModule =
+      !selectedModuleFilter || message.moduleId === selectedModuleFilter;
     const matchesSearch =
       !searchQuery ||
       message.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -320,7 +331,8 @@ const AdviceHub = () => {
                 <span className="text-sm">{selectedMessage.title}</span>
               </h2>
               <p className="text-xs text-gray-500">
-                [{selectedMessage.moduleName}] • {formatTime(selectedMessage.timestamp)}
+                [{selectedMessage.moduleName}] •{" "}
+                {formatTime(selectedMessage.timestamp)}
               </p>
             </div>
           </div>
@@ -345,7 +357,9 @@ const AdviceHub = () => {
                   </div>
                 )}
 
-                <div className={`max-w-xl ${message.role === "user" ? "order-first" : ""}`}>
+                <div
+                  className={`max-w-xl ${message.role === "user" ? "order-first" : ""}`}
+                >
                   <div
                     className={`rounded-2xl px-4 py-3 ${
                       message.role === "user"
@@ -479,9 +493,13 @@ const AdviceHub = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">Module Updates</h2>
+              <h2 className="text-lg font-semibold text-gray-900">
+                Module Updates
+              </h2>
               <p className="text-sm text-gray-600">
-                {unreadCount === 0 ? "All advice read" : `${unreadCount} new advice`}
+                {unreadCount === 0
+                  ? "All advice read"
+                  : `${unreadCount} new advice`}
               </p>
             </div>
             {unreadCount > 0 && (
@@ -494,7 +512,9 @@ const AdviceHub = () => {
           {/* Module Status Circles */}
           <div className="flex gap-6 overflow-x-auto pb-2">
             {modulesList.map((module) => {
-              const moduleMessages = adviceMessages.filter((m) => m.moduleId === module.id);
+              const moduleMessages = adviceMessages.filter(
+                (m) => m.moduleId === module.id,
+              );
               const unreadInModule = moduleMessages.filter((m) => !m.isRead);
               const hasUnread = unreadInModule.length > 0;
 
@@ -593,8 +613,12 @@ const AdviceHub = () => {
 
               {/* Individual Module Filters */}
               {modulesList.map((module) => {
-                const moduleMessages = adviceMessages.filter((m) => m.moduleId === module.id);
-                const unreadInModule = moduleMessages.filter((m) => !m.isRead).length;
+                const moduleMessages = adviceMessages.filter(
+                  (m) => m.moduleId === module.id,
+                );
+                const unreadInModule = moduleMessages.filter(
+                  (m) => !m.isRead,
+                ).length;
 
                 return (
                   <button
@@ -611,7 +635,9 @@ const AdviceHub = () => {
                       {module.name}
                     </span>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs opacity-60">({moduleMessages.length})</span>
+                      <span className="text-xs opacity-60">
+                        ({moduleMessages.length})
+                      </span>
                       {unreadInModule > 0 && (
                         <Badge variant="destructive" className="text-xs px-1.5">
                           {unreadInModule}
@@ -648,70 +674,75 @@ const AdviceHub = () => {
           {/* Messages Content */}
           <div className="flex-1 overflow-y-auto">
             {filteredMessages.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full">
-              <MessageCircle className="h-12 w-12 text-gray-300 mb-3" />
-              <p className="text-gray-600 font-medium">No messages</p>
-              <p className="text-xs text-gray-500">
-                {selectedModuleFilter
-                  ? "No messages in this module"
-                  : "Check back soon for updates"}
-              </p>
-            </div>
-          ) : (
-            <div className="divide-y divide-gray-200">
-              {filteredMessages
-                .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
-                .map((message) => (
-                  <button
-                    key={message.id}
-                    onClick={() => handleMessageClick(message.id)}
-                    className={`w-full text-left px-6 py-4 hover:bg-gray-50 transition-colors group flex items-center justify-between ${
-                      !message.isRead ? "bg-blue-50" : ""
-                    }`}
-                  >
-                    {/* Left Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-3 mb-2">
-                        <span className="text-2xl flex-shrink-0">{message.moduleIcon}</span>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2">
-                            <h3
-                              className={`text-sm ${
-                                !message.isRead
-                                  ? "font-bold text-gray-900"
-                                  : "font-medium text-gray-900"
-                              } truncate`}
-                            >
-                              {message.title}
-                            </h3>
-                            {!message.isRead && (
-                              <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></div>
-                            )}
+              <div className="flex flex-col items-center justify-center h-full">
+                <MessageCircle className="h-12 w-12 text-gray-300 mb-3" />
+                <p className="text-gray-600 font-medium">No messages</p>
+                <p className="text-xs text-gray-500">
+                  {selectedModuleFilter
+                    ? "No messages in this module"
+                    : "Check back soon for updates"}
+                </p>
+              </div>
+            ) : (
+              <div className="divide-y divide-gray-200">
+                {filteredMessages
+                  .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
+                  .map((message) => (
+                    <button
+                      key={message.id}
+                      onClick={() => handleMessageClick(message.id)}
+                      className={`w-full text-left px-6 py-4 hover:bg-gray-50 transition-colors group flex items-center justify-between ${
+                        !message.isRead ? "bg-blue-50" : ""
+                      }`}
+                    >
+                      {/* Left Content */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-3 mb-2">
+                          <span className="text-2xl flex-shrink-0">
+                            {message.moduleIcon}
+                          </span>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              <h3
+                                className={`text-sm ${
+                                  !message.isRead
+                                    ? "font-bold text-gray-900"
+                                    : "font-medium text-gray-900"
+                                } truncate`}
+                              >
+                                {message.title}
+                              </h3>
+                              {!message.isRead && (
+                                <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></div>
+                              )}
+                            </div>
+                            <p className="text-xs text-gray-500 mt-0.5">
+                              <Badge
+                                variant="outline"
+                                className="text-xs font-normal"
+                              >
+                                [{message.moduleName}]
+                              </Badge>
+                            </p>
                           </div>
-                          <p className="text-xs text-gray-500 mt-0.5">
-                            <Badge variant="outline" className="text-xs font-normal">
-                              [{message.moduleName}]
-                            </Badge>
-                          </p>
                         </div>
+
+                        <p className="text-sm text-gray-600 line-clamp-2 ml-11">
+                          {message.content}
+                        </p>
                       </div>
 
-                      <p className="text-sm text-gray-600 line-clamp-2 ml-11">
-                        {message.content}
-                      </p>
-                    </div>
-
-                    {/* Right Side - Timestamp & Chevron */}
-                    <div className="flex items-center gap-3 ml-4 flex-shrink-0">
-                      <span className="text-xs text-gray-500 whitespace-nowrap">
-                        {formatTime(message.timestamp)}
-                      </span>
-                      <ChevronRight className="h-5 w-5 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </div>
-                  </button>
-                ))}
-            </div>
-          )}
+                      {/* Right Side - Timestamp & Chevron */}
+                      <div className="flex items-center gap-3 ml-4 flex-shrink-0">
+                        <span className="text-xs text-gray-500 whitespace-nowrap">
+                          {formatTime(message.timestamp)}
+                        </span>
+                        <ChevronRight className="h-5 w-5 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                    </button>
+                  ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

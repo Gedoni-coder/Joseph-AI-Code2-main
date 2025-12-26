@@ -14,7 +14,15 @@ import {
 } from "@/components/ui/tooltip";
 import ModuleNavigation from "@/components/ui/module-navigation";
 import { ConnectionStatus } from "@/components/ui/connection-status";
-import { Bell, HelpCircle, X, Radio, AlertCircle, Zap, Target } from "lucide-react";
+import {
+  Bell,
+  HelpCircle,
+  X,
+  Radio,
+  AlertCircle,
+  Zap,
+  Target,
+} from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 
 interface ModuleHeaderProps {
@@ -102,7 +110,11 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                   </div>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{conversationalMode ? "Conversational Mode ON" : "Conversational Mode OFF"}</p>
+                  <p>
+                    {conversationalMode
+                      ? "Conversational Mode ON"
+                      : "Conversational Mode OFF"}
+                  </p>
                 </TooltipContent>
               </Tooltip>
 
@@ -174,8 +186,12 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                           <AlertCircle className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium">Data Updated</p>
-                            <p className="text-xs text-muted-foreground">New analysis data available</p>
-                            <p className="text-xs text-muted-foreground mt-1">15 minutes ago</p>
+                            <p className="text-xs text-muted-foreground">
+                              New analysis data available
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              15 minutes ago
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -184,8 +200,12 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                           <Zap className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" />
                           <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium">Alert</p>
-                            <p className="text-xs text-muted-foreground">Review required for analysis variance</p>
-                            <p className="text-xs text-muted-foreground mt-1">1 hour ago</p>
+                            <p className="text-xs text-muted-foreground">
+                              Review required for analysis variance
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              1 hour ago
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -235,8 +255,12 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                         <div className="flex items-start gap-3">
                           <HelpCircle className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium">Optimization Opportunity</p>
-                            <p className="text-xs text-muted-foreground">Consider refining your analysis parameters</p>
+                            <p className="text-sm font-medium">
+                              Optimization Opportunity
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              Consider refining your analysis parameters
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -244,8 +268,12 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                         <div className="flex items-start gap-3">
                           <Target className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium">Performance Insight</p>
-                            <p className="text-xs text-muted-foreground">Analysis accuracy has improved significantly</p>
+                            <p className="text-sm font-medium">
+                              Performance Insight
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              Analysis accuracy has improved significantly
+                            </p>
                           </div>
                         </div>
                       </div>
