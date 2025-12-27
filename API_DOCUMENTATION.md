@@ -7,12 +7,13 @@
 ## Table of Contents
 
 1. [Project Architecture Overview](#project-architecture-overview)
-2. [Backend Module Structure](#backend-module-structure)
-3. [Frontend Data Consumption](#frontend-data-consumption)
-4. [Complete Data Flow Mapping](#complete-data-flow-mapping)
-5. [Integration Status & Implementation Details](#integration-status--implementation-details)
-6. [Environment Configuration](#environment-configuration)
-7. [Quick Reference Guide](#quick-reference-guide)
+2. [Frontend Architecture](#frontend-architecture)
+3. [Backend Module Structure](#backend-module-structure)
+4. [Frontend Data Consumption](#frontend-data-consumption)
+5. [Complete Data Flow Mapping](#complete-data-flow-mapping)
+6. [Integration Status & Implementation Details](#integration-status--implementation-details)
+7. [Environment Configuration](#environment-configuration)
+8. [Quick Reference Guide](#quick-reference-guide)
 
 ---
 
