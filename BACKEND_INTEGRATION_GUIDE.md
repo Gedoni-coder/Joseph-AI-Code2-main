@@ -102,56 +102,56 @@
 ```typescript
 // Hook File: src/hooks/useEconomicData.ts
 export function useEconomicData(companyName?: string) {
-  const [metrics, setMetrics] = useState<Record<string, EconomicMetric[]>>({})
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
+  const [metrics, setMetrics] = useState<Record<string, EconomicMetric[]>>({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   const fetchMetrics = useCallback(async (context?: string) => {
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL
-      const endpoint = import.meta.env.VITE_ECONOMIC_API_ENDPOINT
-      const enabled = import.meta.env.VITE_ECONOMIC_API_ENABLED
+      const baseUrl = import.meta.env.VITE_API_BASE_URL;
+      const endpoint = import.meta.env.VITE_ECONOMIC_API_ENDPOINT;
+      const enabled = import.meta.env.VITE_ECONOMIC_API_ENABLED;
 
       if (!enabled || !baseUrl) {
-        throw new Error('API not configured')
+        throw new Error("API not configured");
       }
 
-      const url = context 
+      const url = context
         ? `${baseUrl}${endpoint}/metrics/?context=${context}`
-        : `${baseUrl}${endpoint}/metrics/`
+        : `${baseUrl}${endpoint}/metrics/`;
 
-      const response = await fetch(url)
-      
+      const response = await fetch(url);
+
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
 
-      const data = await response.json()
-      const grouped = groupByContext(data)
-      setMetrics(grouped)
-      return data
+      const data = await response.json();
+      const grouped = groupByContext(data);
+      setMetrics(grouped);
+      return data;
     } catch (err) {
-      console.error('Failed to fetch metrics:', err)
-      setError(err as Error)
+      console.error("Failed to fetch metrics:", err);
+      setError(err as Error);
       // Fallback to mock data
-      const mockData = getMockMetricsData()
-      setMetrics(groupByContext(mockData))
-      return mockData
+      const mockData = getMockMetricsData();
+      setMetrics(groupByContext(mockData));
+      return mockData;
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    fetchMetrics()
-  }, [fetchMetrics])
+    fetchMetrics();
+  }, [fetchMetrics]);
 
   return {
     metrics,
     isLoading,
     error,
-    refreshData: fetchMetrics
-  }
+    refreshData: fetchMetrics,
+  };
 }
 ```
 
@@ -160,100 +160,100 @@ export function useEconomicData(companyName?: string) {
 ```typescript
 // Hook File: src/hooks/useBusinessData.ts (to be updated)
 export function useBusinessData() {
-  const baseUrl = import.meta.env.VITE_API_BASE_URL
-  const [kpis, setKpis] = useState<KPI[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+  const [kpis, setKpis] = useState<KPI[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   // READ: Fetch all KPIs
   useEffect(() => {
     const fetchKPIs = async () => {
       try {
-        setIsLoading(true)
-        const response = await fetch(`${baseUrl}/api/business/kpis/`)
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch KPIs: ${response.statusText}`)
-        }
-        
-        const data = await response.json()
-        setKpis(Array.isArray(data) ? data : data.results || [])
-      } catch (err) {
-        setError(err as Error)
-        setKpis([])  // Empty state on error
-      } finally {
-        setIsLoading(false)
-      }
-    }
+        setIsLoading(true);
+        const response = await fetch(`${baseUrl}/api/business/kpis/`);
 
-    fetchKPIs()
-  }, [baseUrl])
+        if (!response.ok) {
+          throw new Error(`Failed to fetch KPIs: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        setKpis(Array.isArray(data) ? data : data.results || []);
+      } catch (err) {
+        setError(err as Error);
+        setKpis([]); // Empty state on error
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchKPIs();
+  }, [baseUrl]);
 
   // CREATE: Add new KPI
-  const createKPI = async (kpiData: Omit<KPI, 'id'>) => {
+  const createKPI = async (kpiData: Omit<KPI, "id">) => {
     try {
       const response = await fetch(`${baseUrl}/api/business/kpis/`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(kpiData),
-      })
+      });
 
       if (!response.ok) {
-        throw new Error(`Failed to create KPI: ${response.statusText}`)
+        throw new Error(`Failed to create KPI: ${response.statusText}`);
       }
 
-      const newKPI = await response.json()
-      setKpis(prev => [...prev, newKPI])
-      return newKPI
+      const newKPI = await response.json();
+      setKpis((prev) => [...prev, newKPI]);
+      return newKPI;
     } catch (err) {
-      setError(err as Error)
-      throw err
+      setError(err as Error);
+      throw err;
     }
-  }
+  };
 
   // UPDATE: Modify existing KPI (partial update)
   const updateKPI = async (id: string, updates: Partial<KPI>) => {
     try {
       const response = await fetch(`${baseUrl}/api/business/kpis/${id}/`, {
-        method: 'PATCH',  // PATCH for partial update
+        method: "PATCH", // PATCH for partial update
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(updates),
-      })
+      });
 
       if (!response.ok) {
-        throw new Error(`Failed to update KPI: ${response.statusText}`)
+        throw new Error(`Failed to update KPI: ${response.statusText}`);
       }
 
-      const updated = await response.json()
-      setKpis(prev => prev.map(kpi => kpi.id === id ? updated : kpi))
-      return updated
+      const updated = await response.json();
+      setKpis((prev) => prev.map((kpi) => (kpi.id === id ? updated : kpi)));
+      return updated;
     } catch (err) {
-      setError(err as Error)
-      throw err
+      setError(err as Error);
+      throw err;
     }
-  }
+  };
 
   // DELETE: Remove KPI
   const deleteKPI = async (id: string) => {
     try {
       const response = await fetch(`${baseUrl}/api/business/kpis/${id}/`, {
-        method: 'DELETE',
-      })
+        method: "DELETE",
+      });
 
       if (!response.ok && response.status !== 204) {
-        throw new Error(`Failed to delete KPI: ${response.statusText}`)
+        throw new Error(`Failed to delete KPI: ${response.statusText}`);
       }
 
-      setKpis(prev => prev.filter(kpi => kpi.id !== id))
+      setKpis((prev) => prev.filter((kpi) => kpi.id !== id));
     } catch (err) {
-      setError(err as Error)
-      throw err
+      setError(err as Error);
+      throw err;
     }
-  }
+  };
 
   return {
     kpis,
@@ -262,7 +262,7 @@ export function useBusinessData() {
     createKPI,
     updateKPI,
     deleteKPI,
-  }
+  };
 }
 ```
 
@@ -271,29 +271,29 @@ export function useBusinessData() {
 ```typescript
 // Component: src/components/business/documents-section.tsx
 async function uploadDocument(file: File) {
-  const baseUrl = import.meta.env.VITE_API_BASE_URL
-  
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
   try {
     // Create FormData (required for file uploads)
-    const formData = new FormData()
-    formData.append('file', file)
-    
+    const formData = new FormData();
+    formData.append("file", file);
+
     const response = await fetch(`${baseUrl}/api/business/documents/`, {
-      method: 'POST',
-      body: formData,  // Don't set Content-Type header with FormData
-    })
+      method: "POST",
+      body: formData, // Don't set Content-Type header with FormData
+    });
 
     if (!response.ok) {
-      throw new Error(`Upload failed: ${response.statusText}`)
+      throw new Error(`Upload failed: ${response.statusText}`);
     }
 
-    const document = await response.json()
+    const document = await response.json();
     // Update UI with new document
-    setDocuments(prev => [...prev, document])
-    return document
+    setDocuments((prev) => [...prev, document]);
+    return document;
   } catch (err) {
-    console.error('Document upload error:', err)
-    throw err
+    console.error("Document upload error:", err);
+    throw err;
   }
 }
 ```
@@ -303,21 +303,21 @@ async function uploadDocument(file: File) {
 ```typescript
 // Fetching with filters
 async function fetchMetricsByContext(context: string) {
-  const baseUrl = import.meta.env.VITE_API_BASE_URL
-  
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
   try {
     // Build URL with query parameters
-    const url = new URL(`${baseUrl}/api/economic/metrics/`)
-    url.searchParams.append('context', context)
-    url.searchParams.append('limit', '100')  // Pagination
-    url.searchParams.append('offset', '0')
-    
-    const response = await fetch(url.toString())
-    const data = await response.json()
-    return data
+    const url = new URL(`${baseUrl}/api/economic/metrics/`);
+    url.searchParams.append("context", context);
+    url.searchParams.append("limit", "100"); // Pagination
+    url.searchParams.append("offset", "0");
+
+    const response = await fetch(url.toString());
+    const data = await response.json();
+    return data;
   } catch (err) {
-    console.error('Fetch error:', err)
-    return []
+    console.error("Fetch error:", err);
+    return [];
   }
 }
 ```
@@ -337,124 +337,134 @@ async function fetchMetricsByContext(context: string) {
 Replace the mock implementation with:
 
 ```typescript
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback } from "react";
 
 interface CustomerProfile {
-  id: string
-  segment: string
-  demand_assumption: number
-  growth_rate: number
-  retention: number
-  avg_order_value: number
-  seasonality: string
+  id: string;
+  segment: string;
+  demand_assumption: number;
+  growth_rate: number;
+  retention: number;
+  avg_order_value: number;
+  seasonality: string;
 }
 
 interface RevenueProjection {
-  id: string
-  period: string
-  projected: number
-  conservative: number
-  optimistic: number
-  actual_to_date: number
-  confidence: number
+  id: string;
+  period: string;
+  projected: number;
+  conservative: number;
+  optimistic: number;
+  actual_to_date: number;
+  confidence: number;
 }
 
 interface KPI {
-  id: string
-  name: string
-  current_value: number
-  target_value: number
-  unit: string
-  status: string
+  id: string;
+  name: string;
+  current_value: number;
+  target_value: number;
+  unit: string;
+  status: string;
 }
 
 export function useBusinessData() {
-  const baseUrl = import.meta.env.VITE_API_BASE_URL || ''
-  
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
+
   // State
-  const [customerProfiles, setCustomerProfiles] = useState<CustomerProfile[]>([])
-  const [revenueProjections, setRevenueProjections] = useState<RevenueProjection[]>([])
-  const [kpis, setKpis] = useState<KPI[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
+  const [customerProfiles, setCustomerProfiles] = useState<CustomerProfile[]>(
+    [],
+  );
+  const [revenueProjections, setRevenueProjections] = useState<
+    RevenueProjection[]
+  >([]);
+  const [kpis, setKpis] = useState<KPI[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   // Fetch all data
   const fetchData = useCallback(async () => {
     if (!baseUrl) {
-      console.warn('VITE_API_BASE_URL not configured')
-      setIsLoading(false)
-      return
+      console.warn("VITE_API_BASE_URL not configured");
+      setIsLoading(false);
+      return;
     }
 
     try {
-      setIsLoading(true)
-      setError(null)
+      setIsLoading(true);
+      setError(null);
 
       const [profilesRes, projectionsRes, kpisRes] = await Promise.all([
         fetch(`${baseUrl}/api/business/customer-profiles/`),
         fetch(`${baseUrl}/api/business/revenue-projections/`),
         fetch(`${baseUrl}/api/business/kpis/`),
-      ])
+      ]);
 
       // Check all responses
       if (!profilesRes.ok || !projectionsRes.ok || !kpisRes.ok) {
-        throw new Error('One or more API requests failed')
+        throw new Error("One or more API requests failed");
       }
 
       const [profilesData, projectionsData, kpisData] = await Promise.all([
         profilesRes.json(),
         projectionsRes.json(),
         kpisRes.json(),
-      ])
+      ]);
 
       // Handle paginated responses (DRF returns { results: [] } or just [])
-      setCustomerProfiles(Array.isArray(profilesData) ? profilesData : profilesData.results || [])
-      setRevenueProjections(Array.isArray(projectionsData) ? projectionsData : projectionsData.results || [])
-      setKpis(Array.isArray(kpisData) ? kpisData : kpisData.results || [])
+      setCustomerProfiles(
+        Array.isArray(profilesData) ? profilesData : profilesData.results || [],
+      );
+      setRevenueProjections(
+        Array.isArray(projectionsData)
+          ? projectionsData
+          : projectionsData.results || [],
+      );
+      setKpis(Array.isArray(kpisData) ? kpisData : kpisData.results || []);
     } catch (err) {
-      console.error('Failed to fetch business data:', err)
-      setError(err as Error)
+      console.error("Failed to fetch business data:", err);
+      setError(err as Error);
       // Clear states on error (or set to empty arrays)
-      setCustomerProfiles([])
-      setRevenueProjections([])
-      setKpis([])
+      setCustomerProfiles([]);
+      setRevenueProjections([]);
+      setKpis([]);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }, [baseUrl])
+  }, [baseUrl]);
 
   // Initial fetch
   useEffect(() => {
-    fetchData()
-  }, [fetchData])
+    fetchData();
+  }, [fetchData]);
 
   // Update KPI (PATCH request)
   const updateKPI = useCallback(
     async (id: string, value: number) => {
-      if (!baseUrl) return
+      if (!baseUrl) return;
 
       try {
         const response = await fetch(`${baseUrl}/api/business/kpis/${id}/`, {
-          method: 'PATCH',
+          method: "PATCH",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ current_value: value }),
-        })
+        });
 
         if (!response.ok) {
-          throw new Error(`Failed to update KPI: ${response.statusText}`)
+          throw new Error(`Failed to update KPI: ${response.statusText}`);
         }
 
-        const updated = await response.json()
-        setKpis(prev => prev.map(kpi => kpi.id === id ? updated : kpi))
+        const updated = await response.json();
+        setKpis((prev) => prev.map((kpi) => (kpi.id === id ? updated : kpi)));
       } catch (err) {
-        console.error('Error updating KPI:', err)
-        setError(err as Error)
+        console.error("Error updating KPI:", err);
+        setError(err as Error);
       }
     },
-    [baseUrl]
-  )
+    [baseUrl],
+  );
 
   return {
     customerProfiles,
@@ -465,24 +475,27 @@ export function useBusinessData() {
     updateKPI,
     refreshData: fetchData,
     reconnect: fetchData,
-  }
+  };
 }
 ```
 
 #### Step 2: Test the Integration
 
 1. **Start backend**:
+
 ```bash
 cd backend
 python manage.py runserver
 ```
 
 2. **Start frontend**:
+
 ```bash
 npm run dev
 ```
 
 3. **Check browser DevTools**:
+
    - Network tab: Look for requests to `http://localhost:8000/api/business/`
    - Console: Check for any error messages
 
@@ -498,65 +511,71 @@ npm run dev
 **File**: `src/hooks/useMarketData.ts`
 
 ```typescript
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback } from "react";
 
 interface MarketSegment {
-  id: string
-  name: string
-  tam: number  // Total Addressable Market
-  sam: number  // Serviceable Addressable Market
-  growth_rate: number
-  characteristics: Record<string, any>
+  id: string;
+  name: string;
+  tam: number; // Total Addressable Market
+  sam: number; // Serviceable Addressable Market
+  growth_rate: number;
+  characteristics: Record<string, any>;
 }
 
 interface Competitor {
-  id: string
-  name: string
-  market_segment: string
-  market_share: number
-  strengths: string
-  weaknesses: string
-  pricing_strategy: string
+  id: string;
+  name: string;
+  market_segment: string;
+  market_share: number;
+  strengths: string;
+  weaknesses: string;
+  pricing_strategy: string;
 }
 
 export function useMarketData() {
-  const baseUrl = import.meta.env.VITE_API_BASE_URL || ''
-  const [marketSegments, setMarketSegments] = useState<MarketSegment[]>([])
-  const [competitors, setCompetitors] = useState<Competitor[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
+  const [marketSegments, setMarketSegments] = useState<MarketSegment[]>([]);
+  const [competitors, setCompetitors] = useState<Competitor[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   const fetchData = useCallback(async () => {
-    if (!baseUrl) return
+    if (!baseUrl) return;
 
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const [segmentsRes, competitorsRes] = await Promise.all([
         fetch(`${baseUrl}/api/market/market-segments/`),
         fetch(`${baseUrl}/api/market/competitors/`),
-      ])
+      ]);
 
       if (!segmentsRes.ok || !competitorsRes.ok) {
-        throw new Error('Market API request failed')
+        throw new Error("Market API request failed");
       }
 
-      const segmentsData = await segmentsRes.json()
-      const competitorsData = await competitorsRes.json()
+      const segmentsData = await segmentsRes.json();
+      const competitorsData = await competitorsRes.json();
 
-      setMarketSegments(Array.isArray(segmentsData) ? segmentsData : segmentsData.results || [])
-      setCompetitors(Array.isArray(competitorsData) ? competitorsData : competitorsData.results || [])
+      setMarketSegments(
+        Array.isArray(segmentsData) ? segmentsData : segmentsData.results || [],
+      );
+      setCompetitors(
+        Array.isArray(competitorsData)
+          ? competitorsData
+          : competitorsData.results || [],
+      );
     } catch (err) {
-      setError(err as Error)
+      setError(err as Error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }, [baseUrl])
+  }, [baseUrl]);
 
   useEffect(() => {
-    fetchData()
-  }, [fetchData])
+    fetchData();
+  }, [fetchData]);
 
-  const totalTAM = marketSegments.reduce((sum, seg) => sum + seg.tam, 0)
+  const totalTAM = marketSegments.reduce((sum, seg) => sum + seg.tam, 0);
 
   return {
     marketSegments,
@@ -565,7 +584,7 @@ export function useMarketData() {
     isLoading,
     error,
     refreshData: fetchData,
-  }
+  };
 }
 ```
 
@@ -576,84 +595,90 @@ export function useMarketData() {
 **File**: `src/hooks/useLoanData.ts`
 
 ```typescript
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback } from "react";
 
 interface FundingOption {
-  id: string
-  type: string  // 'bank_loan', 'venture_capital', 'grant'
-  provider: string
-  amount: number
-  interest_rate: number
-  term: number  // months
-  description: string
+  id: string;
+  type: string; // 'bank_loan', 'venture_capital', 'grant'
+  provider: string;
+  amount: number;
+  interest_rate: number;
+  term: number; // months
+  description: string;
 }
 
 interface LoanComparison {
-  id: string
-  option1_id: string
-  option2_id: string
-  analysis: Record<string, any>
+  id: string;
+  option1_id: string;
+  option2_id: string;
+  analysis: Record<string, any>;
 }
 
 export function useLoanData() {
-  const baseUrl = import.meta.env.VITE_API_BASE_URL || ''
-  const [fundingOptions, setFundingOptions] = useState<FundingOption[]>([])
-  const [loanComparisons, setLoanComparisons] = useState<LoanComparison[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
+  const [fundingOptions, setFundingOptions] = useState<FundingOption[]>([]);
+  const [loanComparisons, setLoanComparisons] = useState<LoanComparison[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   const fetchData = useCallback(async () => {
-    if (!baseUrl) return
+    if (!baseUrl) return;
 
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const [optionsRes, comparisonsRes] = await Promise.all([
         fetch(`${baseUrl}/api/loan/funding-options/`),
         fetch(`${baseUrl}/api/loan/loan-comparisons/`),
-      ])
+      ]);
 
       if (!optionsRes.ok || !comparisonsRes.ok) {
-        throw new Error('Loan API request failed')
+        throw new Error("Loan API request failed");
       }
 
-      const optionsData = await optionsRes.json()
-      const comparisonsData = await comparisonsRes.json()
+      const optionsData = await optionsRes.json();
+      const comparisonsData = await comparisonsRes.json();
 
-      setFundingOptions(Array.isArray(optionsData) ? optionsData : optionsData.results || [])
-      setLoanComparisons(Array.isArray(comparisonsData) ? comparisonsData : comparisonsData.results || [])
+      setFundingOptions(
+        Array.isArray(optionsData) ? optionsData : optionsData.results || [],
+      );
+      setLoanComparisons(
+        Array.isArray(comparisonsData)
+          ? comparisonsData
+          : comparisonsData.results || [],
+      );
     } catch (err) {
-      setError(err as Error)
+      setError(err as Error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }, [baseUrl])
+  }, [baseUrl]);
 
   useEffect(() => {
-    fetchData()
-  }, [fetchData])
+    fetchData();
+  }, [fetchData]);
 
   // Create new funding option
   const addFundingOption = useCallback(
-    async (optionData: Omit<FundingOption, 'id'>) => {
+    async (optionData: Omit<FundingOption, "id">) => {
       try {
         const response = await fetch(`${baseUrl}/api/loan/funding-options/`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(optionData),
-        })
+        });
 
-        if (!response.ok) throw new Error('Failed to create funding option')
+        if (!response.ok) throw new Error("Failed to create funding option");
 
-        const newOption = await response.json()
-        setFundingOptions(prev => [...prev, newOption])
-        return newOption
+        const newOption = await response.json();
+        setFundingOptions((prev) => [...prev, newOption]);
+        return newOption;
       } catch (err) {
-        setError(err as Error)
-        throw err
+        setError(err as Error);
+        throw err;
       }
     },
-    [baseUrl]
-  )
+    [baseUrl],
+  );
 
   return {
     fundingOptions,
@@ -662,7 +687,7 @@ export function useLoanData() {
     error,
     addFundingOption,
     refreshData: fetchData,
-  }
+  };
 }
 ```
 
@@ -677,9 +702,9 @@ Create a utility function for consistent error handling:
 ```typescript
 // src/lib/api-error-handler.ts
 export interface ApiError {
-  status: number
-  message: string
-  details?: Record<string, any>
+  status: number;
+  message: string;
+  details?: Record<string, any>;
 }
 
 export async function handleApiResponse<T>(response: Response): Promise<T> {
@@ -687,30 +712,30 @@ export async function handleApiResponse<T>(response: Response): Promise<T> {
     const error: ApiError = {
       status: response.status,
       message: `HTTP ${response.status}: ${response.statusText}`,
-    }
+    };
 
     // Try to parse error details from response body
     try {
-      const body = await response.json()
-      error.details = body
+      const body = await response.json();
+      error.details = body;
     } catch {
       // If response body is not JSON, ignore
     }
 
-    throw error
+    throw error;
   }
 
   try {
-    return await response.json()
+    return await response.json();
   } catch {
-    throw new Error('Failed to parse response')
+    throw new Error("Failed to parse response");
   }
 }
 
 // Usage in hook:
 const data = await handleApiResponse<KPI[]>(
-  await fetch(`${baseUrl}/api/business/kpis/`)
-)
+  await fetch(`${baseUrl}/api/business/kpis/`),
+);
 ```
 
 ### Pattern 2: Retry Logic
@@ -721,30 +746,30 @@ export async function fetchWithRetry(
   url: string,
   options: RequestInit = {},
   maxRetries: number = 3,
-  delay: number = 1000
+  delay: number = 1000,
 ): Promise<Response> {
   for (let i = 0; i < maxRetries; i++) {
     try {
-      const response = await fetch(url, options)
-      
+      const response = await fetch(url, options);
+
       // Don't retry on 4xx errors (user error)
       if (response.status >= 400 && response.status < 500) {
-        return response
+        return response;
       }
-      
+
       // Retry on 5xx (server error) and network errors
-      if (response.ok) return response
-      
+      if (response.ok) return response;
+
       if (i < maxRetries - 1) {
-        await new Promise(resolve => setTimeout(resolve, delay * (i + 1)))
+        await new Promise((resolve) => setTimeout(resolve, delay * (i + 1)));
       }
     } catch (err) {
-      if (i === maxRetries - 1) throw err
-      await new Promise(resolve => setTimeout(resolve, delay * (i + 1)))
+      if (i === maxRetries - 1) throw err;
+      await new Promise((resolve) => setTimeout(resolve, delay * (i + 1)));
     }
   }
 
-  throw new Error(`Failed after ${maxRetries} retries`)
+  throw new Error(`Failed after ${maxRetries} retries`);
 }
 ```
 
@@ -799,6 +824,7 @@ catch (err) {
 ### Manual Testing Steps
 
 1. **Check Backend Endpoints**:
+
 ```bash
 # In terminal, test endpoints directly
 curl http://localhost:8000/api/business/kpis/
@@ -807,6 +833,7 @@ curl http://localhost:8000/api/loan/funding-options/
 ```
 
 2. **Check Frontend Network Calls**:
+
    - Open DevTools → Network tab
    - Interact with page
    - Verify requests to backend endpoints
@@ -821,51 +848,51 @@ curl http://localhost:8000/api/loan/funding-options/
 
 ```typescript
 // src/hooks/__tests__/useBusinessData.test.ts
-import { renderHook, waitFor } from '@testing-library/react'
-import { useBusinessData } from '../useBusinessData'
+import { renderHook, waitFor } from "@testing-library/react";
+import { useBusinessData } from "../useBusinessData";
 
-describe('useBusinessData', () => {
+describe("useBusinessData", () => {
   beforeEach(() => {
-    global.fetch = jest.fn()
-  })
+    global.fetch = jest.fn();
+  });
 
-  it('fetches KPIs on mount', async () => {
+  it("fetches KPIs on mount", async () => {
     const mockKpis = [
-      { id: '1', name: 'Revenue', current_value: 100, target_value: 150 }
-    ]
+      { id: "1", name: "Revenue", current_value: 100, target_value: 150 },
+    ];
 
     global.fetch.mockResolvedValueOnce({
       ok: true,
       json: async () => mockKpis,
-    })
+    });
 
-    const { result } = renderHook(() => useBusinessData())
+    const { result } = renderHook(() => useBusinessData());
 
     // Initially loading
-    expect(result.current.isLoading).toBe(true)
+    expect(result.current.isLoading).toBe(true);
 
     // Wait for data to load
     await waitFor(() => {
-      expect(result.current.isLoading).toBe(false)
-    })
+      expect(result.current.isLoading).toBe(false);
+    });
 
     // Check data
-    expect(result.current.kpis).toEqual(mockKpis)
-  })
+    expect(result.current.kpis).toEqual(mockKpis);
+  });
 
-  it('handles API errors gracefully', async () => {
-    global.fetch.mockRejectedValueOnce(new Error('Network error'))
+  it("handles API errors gracefully", async () => {
+    global.fetch.mockRejectedValueOnce(new Error("Network error"));
 
-    const { result } = renderHook(() => useBusinessData())
+    const { result } = renderHook(() => useBusinessData());
 
     await waitFor(() => {
-      expect(result.current.isLoading).toBe(false)
-    })
+      expect(result.current.isLoading).toBe(false);
+    });
 
-    expect(result.current.error).toBeDefined()
-    expect(result.current.kpis).toEqual([])
-  })
-})
+    expect(result.current.error).toBeDefined();
+    expect(result.current.kpis).toEqual([]);
+  });
+});
 ```
 
 ---
@@ -895,6 +922,7 @@ GEMINI_API_KEY=your-production-key
 ### Docker Deployment
 
 **Dockerfile.frontend**:
+
 ```dockerfile
 FROM node:18-alpine
 
@@ -920,8 +948,9 @@ CMD ["npm", "run", "preview"]
 ```
 
 **docker-compose.yml**:
+
 ```yaml
-version: '3.8'
+version: "3.8"
 
 services:
   db:
@@ -941,10 +970,10 @@ services:
       sh -c "python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
     environment:
-      DEBUG: 'False'
-      DJANGO_SECRET_KEY: 'your-secret-key'
-      DATABASE_URL: 'postgresql://joseph_user:secure_password@db:5432/joseph_db'
-      ALLOWED_HOSTS: 'localhost,127.0.0.1,api.yourdomain.com'
+      DEBUG: "False"
+      DJANGO_SECRET_KEY: "your-secret-key"
+      DATABASE_URL: "postgresql://joseph_user:secure_password@db:5432/joseph_db"
+      ALLOWED_HOSTS: "localhost,127.0.0.1,api.yourdomain.com"
     ports:
       - "8000:8000"
     depends_on:
@@ -955,8 +984,8 @@ services:
       context: .
       dockerfile: Dockerfile.frontend
       args:
-        VITE_API_BASE_URL: 'https://api.yourdomain.com'
-        VITE_CHATBOT_BACKEND_URL: 'https://api.yourdomain.com'
+        VITE_API_BASE_URL: "https://api.yourdomain.com"
+        VITE_CHATBOT_BACKEND_URL: "https://api.yourdomain.com"
     ports:
       - "3000:3000"
     depends_on:

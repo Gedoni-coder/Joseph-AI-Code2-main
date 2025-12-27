@@ -149,35 +149,39 @@ export function ModulePage() {
 
 **Page → Hook → Components**:
 
-| Page | Hook | Components | Route |
-|------|------|------------|-------|
-| Index | useEconomicData | MetricsDashboard, EconomicTable, ForecastPanel | `/economic-indicators` |
-| BusinessForecast | useBusinessData | RevenueProjections, KPIDashboard, CustomerProfile | `/business-forecast` |
-| MarketCompetitiveAnalysis | useMarketData, useCompetitiveData | MarketAnalysis, CompetitiveAnalysis | `/market-competitive-analysis` |
-| LoanFunding | useLoanData | LoanComparison, FundingStrategy, InvestorMatching | `/loan-research` |
-| RevenueStrategy | useRevenueData | RevenueStreams, ChurnAnalysis, RevenueForecasting | `/revenue-forecasting` |
-| FinancialAdvisory | useFinancialAdvisoryData | BudgetValidation, CashFlowPlanning, RiskAssessment | `/financial-advisory` |
-| InventorySupplyChain | useInventoryData, useSupplyChainData | StockMonitoring, DemandForecasting | `/supply-chain-analytics` |
-| PricingStrategy | usePricingData | PricingStrategies, CompetitiveAnalysis, DynamicPricing | `/pricing-strategies` |
-| TaxCompliance | useTaxData | SmartTaxCalculator, ComplianceCalendar | `/tax-compliance` |
+| Page                      | Hook                                 | Components                                             | Route                          |
+| ------------------------- | ------------------------------------ | ------------------------------------------------------ | ------------------------------ |
+| Index                     | useEconomicData                      | MetricsDashboard, EconomicTable, ForecastPanel         | `/economic-indicators`         |
+| BusinessForecast          | useBusinessData                      | RevenueProjections, KPIDashboard, CustomerProfile      | `/business-forecast`           |
+| MarketCompetitiveAnalysis | useMarketData, useCompetitiveData    | MarketAnalysis, CompetitiveAnalysis                    | `/market-competitive-analysis` |
+| LoanFunding               | useLoanData                          | LoanComparison, FundingStrategy, InvestorMatching      | `/loan-research`               |
+| RevenueStrategy           | useRevenueData                       | RevenueStreams, ChurnAnalysis, RevenueForecasting      | `/revenue-forecasting`         |
+| FinancialAdvisory         | useFinancialAdvisoryData             | BudgetValidation, CashFlowPlanning, RiskAssessment     | `/financial-advisory`          |
+| InventorySupplyChain      | useInventoryData, useSupplyChainData | StockMonitoring, DemandForecasting                     | `/supply-chain-analytics`      |
+| PricingStrategy           | usePricingData                       | PricingStrategies, CompetitiveAnalysis, DynamicPricing | `/pricing-strategies`          |
+| TaxCompliance             | useTaxData                           | SmartTaxCalculator, ComplianceCalendar                 | `/tax-compliance`              |
 
 ### Special Pages
 
 **Landing** (`/home`):
+
 - Protected route (redirects to `/onboarding` if company not setup)
 - Shows grid of all available modules
 - Uses StaticContent + CardGrid
 
 **Onboarding** (`/onboarding`):
+
 - Company setup flow
 - Multi-step form
 - Saves to localStorage via useCompanyInfo
 
 **Login/SignUp** (`/login`, `/signup`):
+
 - Auth pages using auth-service
 - Redirects to `/home` on success
 
 **CompanySettings** (`/company-settings`):
+
 - Edit company info
 - Uses useCompanyInfo hook
 - Updates localStorage
@@ -193,6 +197,7 @@ Located in `src/components/ui/`, these are the building blocks for all pages.
 #### Basic Components
 
 **Button**:
+
 ```typescript
 import { Button } from '@/components/ui/button'
 
@@ -203,6 +208,7 @@ import { Button } from '@/components/ui/button'
 ```
 
 **Card**:
+
 ```typescript
 import { Card } from '@/components/ui/card'
 
@@ -215,6 +221,7 @@ import { Card } from '@/components/ui/card'
 ```
 
 **Input**:
+
 ```typescript
 import { Input } from '@/components/ui/input'
 
@@ -223,6 +230,7 @@ import { Input } from '@/components/ui/input'
 ```
 
 **Select**:
+
 ```typescript
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
@@ -238,6 +246,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 ```
 
 **Tabs**:
+
 ```typescript
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
@@ -252,6 +261,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 ```
 
 **Table**:
+
 ```typescript
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
@@ -274,6 +284,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 #### Complex Components
 
 **Dialog (Modal)**:
+
 ```typescript
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 
@@ -288,10 +299,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 ```
 
 **ModuleHeader**:
+
 ```typescript
 import { ModuleHeader } from '@/components/ui/module-header'
 
-<ModuleHeader 
+<ModuleHeader
   title="Market Analysis"
   description="Analyze market segments and competitors"
   breadcrumbs={[{ label: 'Home', href: '/home' }]}
@@ -299,6 +311,7 @@ import { ModuleHeader } from '@/components/ui/module-header'
 ```
 
 **ModuleNavigation**:
+
 ```typescript
 import { ModuleNavigation } from '@/components/ui/module-navigation'
 
@@ -442,13 +455,13 @@ To enable dark theme:
 
 ```typescript
 // Anywhere in your app
-document.documentElement.classList.add('dark')
+document.documentElement.classList.add("dark");
 
 // To disable
-document.documentElement.classList.remove('dark')
+document.documentElement.classList.remove("dark");
 
 // Persist to localStorage
-localStorage.setItem('theme', 'dark')
+localStorage.setItem("theme", "dark");
 ```
 
 CSS automatically switches colors based on `.dark` class in index.css.
@@ -466,16 +479,16 @@ CSS automatically switches colors based on `.dark` class in index.css.
     <Route path="/" element={<PrimaryLanding />} />
     <Route path="/signup" element={<SignUp />} />
     <Route path="/login" element={<Login />} />
-    
+
     {/* Protected routes */}
     <Route path="/home" element={<ProtectedHomeRoute />} />
     <Route path="/onboarding" element={<Onboarding />} />
-    
+
     {/* Module routes */}
     <Route path="/economic-indicators" element={<Index />} />
     <Route path="/business-forecast" element={<BusinessForecast />} />
     {/* ... more module routes */}
-    
+
     {/* Catch all */}
     <Route path="*" element={<NotFound />} />
   </Routes>
@@ -507,11 +520,11 @@ function MyComponent() {
 ```typescript
 function ProtectedRoute({ children }) {
   const { isAuthenticated } = useAuth()
-  
+
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />
   }
-  
+
   return children
 }
 
@@ -534,7 +547,7 @@ function MyComponent() {
 
   return (
     <dialog open={isOpen} onClose={() => setIsOpen(false)}>
-      <input 
+      <input
         value={formData.name}
         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
       />
@@ -550,19 +563,19 @@ For data specific to a module:
 ```typescript
 // src/hooks/useBusinessData.ts
 export function useBusinessData() {
-  const [kpis, setKpis] = useState<KPI[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [kpis, setKpis] = useState<KPI[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const updateKPI = async (id: string, value: number) => {
     // Update logic
-  }
+  };
 
-  return { kpis, isLoading, updateKPI }
+  return { kpis, isLoading, updateKPI };
 }
 
 // In page
 function BusinessForecast() {
-  const { kpis, updateKPI } = useBusinessData()
+  const { kpis, updateKPI } = useBusinessData();
   // Use data and methods
 }
 ```
@@ -615,21 +628,21 @@ function LoginPage() {
 For data that should survive page reloads:
 
 ```typescript
-const STORAGE_KEY = 'myapp:companyInfo'
+const STORAGE_KEY = "myapp:companyInfo";
 
 export function useCompanyInfo() {
   const [info, setInfo] = useState(() => {
-    const saved = localStorage.getItem(STORAGE_KEY)
-    return saved ? JSON.parse(saved) : null
-  })
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : null;
+  });
 
   const updateInfo = (newInfo: Partial<CompanyInfo>) => {
-    const updated = { ...info, ...newInfo }
-    setInfo(updated)
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
-  }
+    const updated = { ...info, ...newInfo };
+    setInfo(updated);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+  };
 
-  return { info, updateInfo }
+  return { info, updateInfo };
 }
 ```
 
@@ -643,30 +656,30 @@ export function useCompanyInfo() {
 
 ```typescript
 export function useEconomicData() {
-  const [data, setData] = useState<Metric[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
+  const [data, setData] = useState<Metric[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   const refreshData = useCallback(async () => {
     try {
-      setIsLoading(true)
-      const response = await fetch(`${baseUrl}/api/economic/metrics/`)
-      if (!response.ok) throw new Error('Failed to fetch')
-      const json = await response.json()
-      setData(Array.isArray(json) ? json : json.results || [])
+      setIsLoading(true);
+      const response = await fetch(`${baseUrl}/api/economic/metrics/`);
+      if (!response.ok) throw new Error("Failed to fetch");
+      const json = await response.json();
+      setData(Array.isArray(json) ? json : json.results || []);
     } catch (err) {
-      setError(err as Error)
-      setData([]) // Fallback
+      setError(err as Error);
+      setData([]); // Fallback
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }, [baseUrl])
+  }, [baseUrl]);
 
   useEffect(() => {
-    refreshData()
-  }, [refreshData])
+    refreshData();
+  }, [refreshData]);
 
-  return { data, isLoading, error, refreshData }
+  return { data, isLoading, error, refreshData };
 }
 ```
 
@@ -674,52 +687,52 @@ export function useEconomicData() {
 
 ```typescript
 export function useLoanData() {
-  const baseUrl = import.meta.env.VITE_API_BASE_URL || ''
-  const [items, setItems] = useState<LoanOption[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || "";
+  const [items, setItems] = useState<LoanOption[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // READ
   useEffect(() => {
     const fetch = async () => {
-      const res = await fetch(`${baseUrl}/api/loan/funding-options/`)
-      setItems(await res.json())
-    }
-    fetch()
-  }, [baseUrl])
+      const res = await fetch(`${baseUrl}/api/loan/funding-options/`);
+      setItems(await res.json());
+    };
+    fetch();
+  }, [baseUrl]);
 
   // CREATE
-  const addItem = async (item: Omit<LoanOption, 'id'>) => {
+  const addItem = async (item: Omit<LoanOption, "id">) => {
     const res = await fetch(`${baseUrl}/api/loan/funding-options/`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(item),
-    })
-    const newItem = await res.json()
-    setItems(prev => [...prev, newItem])
-    return newItem
-  }
+    });
+    const newItem = await res.json();
+    setItems((prev) => [...prev, newItem]);
+    return newItem;
+  };
 
   // UPDATE
   const updateItem = async (id: string, updates: Partial<LoanOption>) => {
     const res = await fetch(`${baseUrl}/api/loan/funding-options/${id}/`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updates),
-    })
-    const updated = await res.json()
-    setItems(prev => prev.map(i => i.id === id ? updated : i))
-    return updated
-  }
+    });
+    const updated = await res.json();
+    setItems((prev) => prev.map((i) => (i.id === id ? updated : i)));
+    return updated;
+  };
 
   // DELETE
   const deleteItem = async (id: string) => {
     await fetch(`${baseUrl}/api/loan/funding-options/${id}/`, {
-      method: 'DELETE',
-    })
-    setItems(prev => prev.filter(i => i.id !== id))
-  }
+      method: "DELETE",
+    });
+    setItems((prev) => prev.filter((i) => i.id !== id));
+  };
 
-  return { items, isLoading, addItem, updateItem, deleteItem }
+  return { items, isLoading, addItem, updateItem, deleteItem };
 }
 ```
 
@@ -750,14 +763,14 @@ function MyComponent() {
 ```typescript
 const fetchData = async () => {
   try {
-    const res = await fetch(url)
-    if (!res.ok) throw new Error('API error')
-    return await res.json()
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("API error");
+    return await res.json();
   } catch (err) {
-    console.warn('API failed, using mock data')
-    return getMockData() // Fallback
+    console.warn("API failed, using mock data");
+    return getMockData(); // Fallback
   }
-}
+};
 ```
 
 ---
@@ -920,14 +933,14 @@ export function MyComponent({ data, onAction }: MyComponentProps) {
 
 ```typescript
 export function useMyHook() {
-  const [data, setData] = useState<DataType[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [data, setData] = useState<DataType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     // Fetch or initialize data
-  }, [])
+  }, []);
 
-  return { data, isLoading }
+  return { data, isLoading };
 }
 ```
 
@@ -939,15 +952,15 @@ export function useMyHook() {
 2. Update hook in `src/hooks/useBusinessData.ts`:
 
 ```typescript
-const [kpis, setKpis] = useState<KPI[]>([])
+const [kpis, setKpis] = useState<KPI[]>([]);
 
 useEffect(() => {
   const fetch = async () => {
-    const res = await fetch(`${baseUrl}/api/business/kpis/`)
-    setKpis(await res.json())
-  }
-  fetch()
-}, [baseUrl])
+    const res = await fetch(`${baseUrl}/api/business/kpis/`);
+    setKpis(await res.json());
+  };
+  fetch();
+}, [baseUrl]);
 ```
 
 3. Test with backend running

@@ -9,6 +9,7 @@
 ## Summary Table: All Endpoints & Functions
 
 ### Legend
+
 - ✅ = Connected to frontend
 - ⚠️ = Backend ready, frontend using mock data
 - 🔴 = Not implemented yet
@@ -19,21 +20,21 @@
 
 ### Endpoints
 
-| Method | Endpoint | Function | Status |
-|--------|----------|----------|--------|
-| GET | `/api/economic/metrics/` | `EconomicMetricViewSet.list()` | ✅ |
-| GET | `/api/economic/metrics/?context={context}` | Filter by context | ✅ |
-| POST | `/api/economic/metrics/` | `EconomicMetricViewSet.create()` | ✅ |
-| GET | `/api/economic/metrics/{id}/` | `EconomicMetricViewSet.retrieve()` | ✅ |
-| PUT | `/api/economic/metrics/{id}/` | `EconomicMetricViewSet.update()` | ✅ |
-| PATCH | `/api/economic/metrics/{id}/` | `EconomicMetricViewSet.partial_update()` | ✅ |
-| DELETE | `/api/economic/metrics/{id}/` | `EconomicMetricViewSet.destroy()` | ✅ |
-| GET | `/api/economic/news/` | `EconomicNewsViewSet.list()` | ✅ |
-| POST | `/api/economic/news/` | `EconomicNewsViewSet.create()` | ✅ |
-| GET | `/api/economic/forecasts/` | `EconomicForecastViewSet.list()` | ✅ |
-| POST | `/api/economic/forecasts/` | `EconomicForecastViewSet.create()` | ✅ |
-| GET | `/api/economic/events/` | `EconomicEventViewSet.list()` | ✅ |
-| POST | `/api/economic/events/` | `EconomicEventViewSet.create()` | ✅ |
+| Method | Endpoint                                   | Function                                 | Status |
+| ------ | ------------------------------------------ | ---------------------------------------- | ------ |
+| GET    | `/api/economic/metrics/`                   | `EconomicMetricViewSet.list()`           | ✅     |
+| GET    | `/api/economic/metrics/?context={context}` | Filter by context                        | ✅     |
+| POST   | `/api/economic/metrics/`                   | `EconomicMetricViewSet.create()`         | ✅     |
+| GET    | `/api/economic/metrics/{id}/`              | `EconomicMetricViewSet.retrieve()`       | ✅     |
+| PUT    | `/api/economic/metrics/{id}/`              | `EconomicMetricViewSet.update()`         | ✅     |
+| PATCH  | `/api/economic/metrics/{id}/`              | `EconomicMetricViewSet.partial_update()` | ✅     |
+| DELETE | `/api/economic/metrics/{id}/`              | `EconomicMetricViewSet.destroy()`        | ✅     |
+| GET    | `/api/economic/news/`                      | `EconomicNewsViewSet.list()`             | ✅     |
+| POST   | `/api/economic/news/`                      | `EconomicNewsViewSet.create()`           | ✅     |
+| GET    | `/api/economic/forecasts/`                 | `EconomicForecastViewSet.list()`         | ✅     |
+| POST   | `/api/economic/forecasts/`                 | `EconomicForecastViewSet.create()`       | ✅     |
+| GET    | `/api/economic/events/`                    | `EconomicEventViewSet.list()`            | ✅     |
+| POST   | `/api/economic/events/`                    | `EconomicEventViewSet.create()`          | ✅     |
 
 ### Frontend Hook & Functions
 
@@ -51,7 +52,7 @@ export function useEconomicData(companyName?: string) {
   isLoading: boolean
   error: Error | null
   isConnected: boolean
-  
+
   // Methods
   refreshData: (context?: string) => Promise<void>
   reconnect: () => Promise<void>
@@ -68,9 +69,11 @@ getMockEventData(): EconomicEvent[]
 ```
 
 ### Used By
+
 - `src/pages/Index.tsx` - Displays metrics, news, forecasts on dashboard
 
 ### Environment Variables
+
 ```bash
 VITE_API_BASE_URL=http://localhost:8000
 VITE_ECONOMIC_API_ENDPOINT=/api/economic
@@ -83,24 +86,24 @@ VITE_ECONOMIC_API_ENABLED=true
 
 ### Endpoints
 
-| Method | Endpoint | Function | Status |
-|--------|----------|----------|--------|
-| GET | `/chatbot/messages/` | `ChatMessageViewSet.list()` | ✅ |
-| POST | `/chatbot/messages/` | `ChatMessageViewSet.create()` | ✅ |
-| GET | `/chatbot/conversations/` | `ModuleConversationViewSet.list()` | ✅ |
-| GET | `/chatbot/conversations/?module={module}` | Filter by module | ✅ |
-| POST | `/chatbot/conversations/` | `ModuleConversationViewSet.create()` | ✅ |
-| GET | `/chatbot/conversations/{id}/` | `ModuleConversationViewSet.retrieve()` | ✅ |
-| POST | `/chatbot/module-chat/` | `module_chat(request, module)` | ✅ |
-| POST | `/chatbot/generate-response/` | `generate_response(messages, context)` | ✅ |
-| POST | `/chatbot/agent/start/` | `agent_start()` | ✅ |
-| POST | `/chatbot/agent/stop/` | `agent_stop()` | ✅ |
-| GET | `/chatbot/agent/status/` | `agent_status()` | ✅ |
-| POST | `/chatbot/agent/command/` | `agent_command(command)` | ✅ |
-| POST | `/chatbot/agent/tool-call/` | `agent_tool_call(tool_name, params)` | ✅ |
-| POST | `/chatbot/agent/ingest-url/` | `agent_ingest_url(url)` | ✅ |
-| POST | `/chatbot/agent/ingest-text/` | `agent_ingest_text(text)` | ✅ |
-| POST | `/chatbot/agent/query/` | `agent_query(module, query)` | ✅ |
+| Method | Endpoint                                  | Function                               | Status |
+| ------ | ----------------------------------------- | -------------------------------------- | ------ |
+| GET    | `/chatbot/messages/`                      | `ChatMessageViewSet.list()`            | ✅     |
+| POST   | `/chatbot/messages/`                      | `ChatMessageViewSet.create()`          | ✅     |
+| GET    | `/chatbot/conversations/`                 | `ModuleConversationViewSet.list()`     | ✅     |
+| GET    | `/chatbot/conversations/?module={module}` | Filter by module                       | ✅     |
+| POST   | `/chatbot/conversations/`                 | `ModuleConversationViewSet.create()`   | ✅     |
+| GET    | `/chatbot/conversations/{id}/`            | `ModuleConversationViewSet.retrieve()` | ✅     |
+| POST   | `/chatbot/module-chat/`                   | `module_chat(request, module)`         | ✅     |
+| POST   | `/chatbot/generate-response/`             | `generate_response(messages, context)` | ✅     |
+| POST   | `/chatbot/agent/start/`                   | `agent_start()`                        | ✅     |
+| POST   | `/chatbot/agent/stop/`                    | `agent_stop()`                         | ✅     |
+| GET    | `/chatbot/agent/status/`                  | `agent_status()`                       | ✅     |
+| POST   | `/chatbot/agent/command/`                 | `agent_command(command)`               | ✅     |
+| POST   | `/chatbot/agent/tool-call/`               | `agent_tool_call(tool_name, params)`   | ✅     |
+| POST   | `/chatbot/agent/ingest-url/`              | `agent_ingest_url(url)`                | ✅     |
+| POST   | `/chatbot/agent/ingest-text/`             | `agent_ingest_text(text)`              | ✅     |
+| POST   | `/chatbot/agent/query/`                   | `agent_query(module, query)`           | ✅     |
 
 ### Frontend Hooks & Functions
 
@@ -117,12 +120,12 @@ export function useChatbot() {
   currentContext: ModuleContext
   selectedTool: EconomicTool | null
   isToolOpen: boolean
-  
+
   // Methods
   sendMessage: (content: string, context?: string) => Promise<void>
     // Tries local AI first, then POST /chatbot/generate-response/
     // May POST /chatbot/agent/query/ for module knowledge
-  
+
   explainElement: (desc: string, data?: any) => Promise<void>
   switchContext: (contextId: string) => void
   openTool: (tool: EconomicTool) => void
@@ -145,7 +148,7 @@ export function useAgent() {
   isLoading: boolean
   error: Error | null
   status: AgentStatus                        // { is_running, pending_tasks, ... }
-  
+
   // Methods
   startAgent: () => Promise<void>            // POST /chatbot/agent/start/
   stopAgent: () => Promise<void>             // POST /chatbot/agent/stop/
@@ -166,14 +169,14 @@ class AutonomousAgent:
   stop() -> None                             # Stop agent loop
   get_status() -> dict                       # Return status
   add_task(task: dict) -> None               # Queue task
-  
+
   # Internal methods
   _run_agent_loop() -> None                  # Main loop
   _process_pending_tasks() -> None           # Task processor
   _execute_task(task: dict) -> dict          # Execute single task
   _register_builtin_tools() -> None          # Register built-in tools
   _execute_tool(name: str, params: dict)     # Execute tool
-  
+
   # Built-in tool methods
   _perform_web_search(query: str) -> list
   _retrieve_information(module: str, query: str) -> dict
@@ -218,12 +221,14 @@ def _groq_chat(messages, system, knowledge) -> str:
 ```
 
 ### Used By
+
 - `src/components/chatbot/chatbot-container.tsx` - Chat UI
 - `src/components/chatbot/agent-panel.tsx` - Agent controls
 - `src/components/conversation/module-conversation.tsx` - Module chat
 - `src/components/competitive/competitive-strategy.tsx` - Agent tasks
 
 ### Environment Variables
+
 ```bash
 VITE_CHATBOT_BACKEND_URL=http://localhost:8000
 # Backend only:
@@ -237,25 +242,25 @@ GROQ_API_KEY=<your-groq-key>  # Optional
 
 ### Endpoints
 
-| Method | Endpoint | Function | Status |
-|--------|----------|----------|--------|
-| GET | `/api/business/customer-profiles/` | `CustomerProfileViewSet.list()` | ⚠️ |
-| POST | `/api/business/customer-profiles/` | `CustomerProfileViewSet.create()` | ⚠️ |
-| GET | `/api/business/revenue-projections/` | `RevenueProjectionViewSet.list()` | ⚠️ |
-| POST | `/api/business/revenue-projections/` | `RevenueProjectionViewSet.create()` | ⚠️ |
-| GET | `/api/business/cost-structures/` | `CostStructureViewSet.list()` | ⚠️ |
-| POST | `/api/business/cost-structures/` | `CostStructureViewSet.create()` | ⚠️ |
-| GET | `/api/business/cash-flow-forecasts/` | `CashFlowForecastViewSet.list()` | ⚠️ |
-| POST | `/api/business/cash-flow-forecasts/` | `CashFlowForecastViewSet.create()` | ⚠️ |
-| GET | `/api/business/kpis/` | `KPIViewSet.list()` | ⚠️ |
-| POST | `/api/business/kpis/` | `KPIViewSet.create()` | ⚠️ |
-| PATCH | `/api/business/kpis/{id}/` | `KPIViewSet.partial_update()` | ⚠️ |
-| GET | `/api/business/scenario-plannings/` | `ScenarioPlanningViewSet.list()` | ⚠️ |
-| POST | `/api/business/scenario-plannings/` | `ScenarioPlanningViewSet.create()` | ⚠️ |
-| GET | `/api/business/documents/` | `DocumentViewSet.list()` | ⚠️ |
-| POST | `/api/business/documents/` | `DocumentViewSet.create()` (file upload) | ⚠️ |
-| DELETE | `/api/business/documents/{id}/` | `DocumentViewSet.destroy()` | ⚠️ |
-| GET | `/api/business/documents/list_documents/` | `list_documents()` (custom action) | ⚠️ |
+| Method | Endpoint                                  | Function                                 | Status |
+| ------ | ----------------------------------------- | ---------------------------------------- | ------ |
+| GET    | `/api/business/customer-profiles/`        | `CustomerProfileViewSet.list()`          | ⚠️     |
+| POST   | `/api/business/customer-profiles/`        | `CustomerProfileViewSet.create()`        | ⚠️     |
+| GET    | `/api/business/revenue-projections/`      | `RevenueProjectionViewSet.list()`        | ⚠️     |
+| POST   | `/api/business/revenue-projections/`      | `RevenueProjectionViewSet.create()`      | ⚠️     |
+| GET    | `/api/business/cost-structures/`          | `CostStructureViewSet.list()`            | ⚠️     |
+| POST   | `/api/business/cost-structures/`          | `CostStructureViewSet.create()`          | ⚠️     |
+| GET    | `/api/business/cash-flow-forecasts/`      | `CashFlowForecastViewSet.list()`         | ⚠️     |
+| POST   | `/api/business/cash-flow-forecasts/`      | `CashFlowForecastViewSet.create()`       | ⚠️     |
+| GET    | `/api/business/kpis/`                     | `KPIViewSet.list()`                      | ⚠️     |
+| POST   | `/api/business/kpis/`                     | `KPIViewSet.create()`                    | ⚠️     |
+| PATCH  | `/api/business/kpis/{id}/`                | `KPIViewSet.partial_update()`            | ⚠️     |
+| GET    | `/api/business/scenario-plannings/`       | `ScenarioPlanningViewSet.list()`         | ⚠️     |
+| POST   | `/api/business/scenario-plannings/`       | `ScenarioPlanningViewSet.create()`       | ⚠️     |
+| GET    | `/api/business/documents/`                | `DocumentViewSet.list()`                 | ⚠️     |
+| POST   | `/api/business/documents/`                | `DocumentViewSet.create()` (file upload) | ⚠️     |
+| DELETE | `/api/business/documents/{id}/`           | `DocumentViewSet.destroy()`              | ⚠️     |
+| GET    | `/api/business/documents/list_documents/` | `list_documents()` (custom action)       | ⚠️     |
 
 ### Frontend Hook & Functions
 
@@ -272,7 +277,7 @@ export function useBusinessData() {
   scenarios: ScenarioPlanning[]
   isLoading: boolean
   error: Error | null
-  
+
   // Methods
   updateKPI: (id: string, value: number) => void
   updateScenario: (id: string, data: any) => void
@@ -284,46 +289,62 @@ export function useBusinessData() {
 ### To Connect to Backend
 
 Replace with:
+
 ```typescript
 // In useBusinessData.ts
 export function useBusinessData() {
-  const [customerProfiles, setCustomerProfiles] = useState<CustomerProfile[]>([])
-  const [revenueProjections, setRevenueProjections] = useState<RevenueProjection[]>([])
+  const [customerProfiles, setCustomerProfiles] = useState<CustomerProfile[]>(
+    [],
+  );
+  const [revenueProjections, setRevenueProjections] = useState<
+    RevenueProjection[]
+  >([]);
   // ... other states
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<Error | null>(null)
-  
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setIsLoading(true)
-        const baseUrl = import.meta.env.VITE_API_BASE_URL
-        
-        const [profiles, projections, costs, cashflow, kpis, scenarios] = await Promise.all([
-          fetch(`${baseUrl}/api/business/customer-profiles/`).then(r => r.json()),
-          fetch(`${baseUrl}/api/business/revenue-projections/`).then(r => r.json()),
-          fetch(`${baseUrl}/api/business/cost-structures/`).then(r => r.json()),
-          fetch(`${baseUrl}/api/business/cash-flow-forecasts/`).then(r => r.json()),
-          fetch(`${baseUrl}/api/business/kpis/`).then(r => r.json()),
-          fetch(`${baseUrl}/api/business/scenario-plannings/`).then(r => r.json()),
-        ])
-        
-        setCustomerProfiles(profiles)
-        setRevenueProjections(projections)
-        setCostStructures(costs)
-        setCashFlowForecasts(cashflow)
-        setKpis(kpis)
-        setScenarios(scenarios)
+        setIsLoading(true);
+        const baseUrl = import.meta.env.VITE_API_BASE_URL;
+
+        const [profiles, projections, costs, cashflow, kpis, scenarios] =
+          await Promise.all([
+            fetch(`${baseUrl}/api/business/customer-profiles/`).then((r) =>
+              r.json(),
+            ),
+            fetch(`${baseUrl}/api/business/revenue-projections/`).then((r) =>
+              r.json(),
+            ),
+            fetch(`${baseUrl}/api/business/cost-structures/`).then((r) =>
+              r.json(),
+            ),
+            fetch(`${baseUrl}/api/business/cash-flow-forecasts/`).then((r) =>
+              r.json(),
+            ),
+            fetch(`${baseUrl}/api/business/kpis/`).then((r) => r.json()),
+            fetch(`${baseUrl}/api/business/scenario-plannings/`).then((r) =>
+              r.json(),
+            ),
+          ]);
+
+        setCustomerProfiles(profiles);
+        setRevenueProjections(projections);
+        setCostStructures(costs);
+        setCashFlowForecasts(cashflow);
+        setKpis(kpis);
+        setScenarios(scenarios);
       } catch (err) {
-        setError(err as Error)
+        setError(err as Error);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
-    
-    fetchData()
-  }, [])
-  
+    };
+
+    fetchData();
+  }, []);
+
   return {
     customerProfiles,
     revenueProjections,
@@ -334,19 +355,20 @@ export function useBusinessData() {
     isLoading,
     error,
     updateKPI: async (id: string, value: number) => {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL
+      const baseUrl = import.meta.env.VITE_API_BASE_URL;
       await fetch(`${baseUrl}/api/business/kpis/${id}/`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ current_value: value })
-      })
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ current_value: value }),
+      });
     },
     // ... other methods
-  }
+  };
 }
 ```
 
 ### Used By
+
 - `src/pages/BusinessForecast.tsx`
 - Components: RevenueProjections, KPIDashboard, CostAnalysis, CashFlowChart
 
@@ -356,18 +378,19 @@ export function useBusinessData() {
 
 ### Endpoints
 
-| Method | Endpoint | Function | Status |
-|--------|----------|----------|--------|
-| GET | `/api/market/market-segments/` | `MarketSegmentViewSet.list()` | ⚠️ |
-| POST | `/api/market/market-segments/` | `MarketSegmentViewSet.create()` | ⚠️ |
-| GET | `/api/market/competitors/` | `CompetitorViewSet.list()` | ⚠️ |
-| POST | `/api/market/competitors/` | `CompetitorViewSet.create()` | ⚠️ |
-| GET | `/api/market/market-trends/` | `MarketTrendViewSet.list()` | ⚠️ |
-| POST | `/api/market/market-trends/` | `MarketTrendViewSet.create()` | ⚠️ |
+| Method | Endpoint                       | Function                        | Status |
+| ------ | ------------------------------ | ------------------------------- | ------ |
+| GET    | `/api/market/market-segments/` | `MarketSegmentViewSet.list()`   | ⚠️     |
+| POST   | `/api/market/market-segments/` | `MarketSegmentViewSet.create()` | ⚠️     |
+| GET    | `/api/market/competitors/`     | `CompetitorViewSet.list()`      | ⚠️     |
+| POST   | `/api/market/competitors/`     | `CompetitorViewSet.create()`    | ⚠️     |
+| GET    | `/api/market/market-trends/`   | `MarketTrendViewSet.list()`     | ⚠️     |
+| POST   | `/api/market/market-trends/`   | `MarketTrendViewSet.create()`   | ⚠️     |
 
 ### Frontend Hooks
 
 **Hook 1**: `src/hooks/useMarketData.ts` (MOCK)
+
 ```typescript
 export function useMarketData() {
   return {
@@ -383,6 +406,7 @@ export function useMarketData() {
 ```
 
 **Hook 2**: `src/hooks/useCompetitiveData.ts` (MOCK)
+
 ```typescript
 export function useCompetitiveData() {
   return {
@@ -396,6 +420,7 @@ export function useCompetitiveData() {
 ```
 
 ### Used By
+
 - `src/pages/MarketCompetitiveAnalysis.tsx`
 - `src/pages/CompetitorWhitePaper.tsx`
 - `src/pages/SwotWhitePaper.tsx`
@@ -406,18 +431,19 @@ export function useCompetitiveData() {
 
 ### Key Endpoints
 
-| Method | Endpoint | Function | Status |
-|--------|----------|----------|--------|
-| GET | `/api/loan/loan-eligibility/` | `LoanEligibilityViewSet.list()` | ⚠️ |
-| GET | `/api/loan/funding-options/` | `FundingOptionViewSet.list()` | ⚠️ |
-| GET | `/api/loan/loan-comparisons/` | `LoanComparisonViewSet.list()` | ⚠️ |
-| GET | `/api/loan/business-plans/` | `BusinessPlanViewSet.list()` | ⚠️ |
-| GET | `/api/loan/funding-strategy/` | `FundingStrategyViewSet.list()` | ⚠️ |
-| GET | `/api/loan/investor-matches/` | `InvestorMatchViewSet.list()` | ⚠️ |
+| Method | Endpoint                      | Function                        | Status |
+| ------ | ----------------------------- | ------------------------------- | ------ |
+| GET    | `/api/loan/loan-eligibility/` | `LoanEligibilityViewSet.list()` | ⚠️     |
+| GET    | `/api/loan/funding-options/`  | `FundingOptionViewSet.list()`   | ⚠️     |
+| GET    | `/api/loan/loan-comparisons/` | `LoanComparisonViewSet.list()`  | ⚠️     |
+| GET    | `/api/loan/business-plans/`   | `BusinessPlanViewSet.list()`    | ⚠️     |
+| GET    | `/api/loan/funding-strategy/` | `FundingStrategyViewSet.list()` | ⚠️     |
+| GET    | `/api/loan/investor-matches/` | `InvestorMatchViewSet.list()`   | ⚠️     |
 
 ### Frontend Hook
 
 **Hook**: `src/hooks/useLoanData.ts` (MOCK)
+
 ```typescript
 export function useLoanData() {
   return {
@@ -435,6 +461,7 @@ export function useLoanData() {
 ```
 
 ### Used By
+
 - `src/pages/LoanFunding.tsx`
 
 ---
@@ -443,18 +470,19 @@ export function useLoanData() {
 
 ### Key Endpoints
 
-| Method | Endpoint | Function | Status |
-|--------|----------|----------|--------|
-| GET | `/api/revenue/revenue-streams/` | `RevenueStreamViewSet.list()` | ⚠️ |
-| GET | `/api/revenue/revenue-scenarios/` | `RevenueScenarioViewSet.list()` | ⚠️ |
-| GET | `/api/revenue/churn-analyses/` | `ChurnAnalysisViewSet.list()` | ⚠️ |
-| GET | `/api/revenue/upsell-opportunities/` | `UpsellOpportunityViewSet.list()` | ⚠️ |
-| GET | `/api/revenue/revenue-metrics/` | `RevenueMetricViewSet.list()` | ⚠️ |
-| GET | `/api/revenue/channel-performances/` | `ChannelPerformanceViewSet.list()` | ⚠️ |
+| Method | Endpoint                             | Function                           | Status |
+| ------ | ------------------------------------ | ---------------------------------- | ------ |
+| GET    | `/api/revenue/revenue-streams/`      | `RevenueStreamViewSet.list()`      | ⚠️     |
+| GET    | `/api/revenue/revenue-scenarios/`    | `RevenueScenarioViewSet.list()`    | ⚠️     |
+| GET    | `/api/revenue/churn-analyses/`       | `ChurnAnalysisViewSet.list()`      | ⚠️     |
+| GET    | `/api/revenue/upsell-opportunities/` | `UpsellOpportunityViewSet.list()`  | ⚠️     |
+| GET    | `/api/revenue/revenue-metrics/`      | `RevenueMetricViewSet.list()`      | ⚠️     |
+| GET    | `/api/revenue/channel-performances/` | `ChannelPerformanceViewSet.list()` | ⚠️     |
 
 ### Frontend Hook
 
 **Hook**: `src/hooks/useRevenueData.ts` (MOCK)
+
 ```typescript
 export function useRevenueData() {
   return {
@@ -471,6 +499,7 @@ export function useRevenueData() {
 ```
 
 ### Used By
+
 - `src/pages/RevenueStrategy.tsx`
 
 ---
@@ -479,18 +508,19 @@ export function useRevenueData() {
 
 ### Key Endpoints
 
-| Method | Endpoint | Function | Status |
-|--------|----------|----------|--------|
-| GET | `/api/financial/budget-forecasts/` | `BudgetForecastViewSet.list()` | ⚠️ |
-| GET | `/api/financial/cash-flow-projections/` | `CashFlowProjectionViewSet.list()` | ⚠️ |
-| GET | `/api/financial/scenario-tests/` | `ScenarioTestViewSet.list()` | ⚠️ |
-| GET | `/api/financial/risk-assessments/` | `RiskAssessmentViewSet.list()` | ⚠️ |
-| GET | `/api/financial/advisory-insights/` | `AdvisoryInsightViewSet.list()` | ⚠️ |
-| GET | `/api/financial/liquidity-metrics/` | `LiquidityMetricViewSet.list()` | ⚠️ |
+| Method | Endpoint                                | Function                           | Status |
+| ------ | --------------------------------------- | ---------------------------------- | ------ |
+| GET    | `/api/financial/budget-forecasts/`      | `BudgetForecastViewSet.list()`     | ⚠️     |
+| GET    | `/api/financial/cash-flow-projections/` | `CashFlowProjectionViewSet.list()` | ⚠️     |
+| GET    | `/api/financial/scenario-tests/`        | `ScenarioTestViewSet.list()`       | ⚠️     |
+| GET    | `/api/financial/risk-assessments/`      | `RiskAssessmentViewSet.list()`     | ⚠️     |
+| GET    | `/api/financial/advisory-insights/`     | `AdvisoryInsightViewSet.list()`    | ⚠️     |
+| GET    | `/api/financial/liquidity-metrics/`     | `LiquidityMetricViewSet.list()`    | ⚠️     |
 
 ### Frontend Hook
 
 **Hook**: `src/hooks/useFinancialAdvisoryData.ts` (MOCK)
+
 ```typescript
 export function useFinancialAdvisoryData() {
   return {
@@ -507,6 +537,7 @@ export function useFinancialAdvisoryData() {
 ```
 
 ### Used By
+
 - `src/pages/FinancialAdvisory.tsx`
 
 ---
@@ -515,16 +546,17 @@ export function useFinancialAdvisoryData() {
 
 ### Key Endpoints
 
-| Method | Endpoint | Function | Status |
-|--------|----------|----------|--------|
-| GET | `/api/pricing/price-settings/` | `PriceSettingViewSet.list()` | ⚠️ |
-| GET | `/api/pricing/pricing-rules/` | `PricingRuleViewSet.list()` | ⚠️ |
-| GET | `/api/pricing/price-forecasts/` | `PriceForecastViewSet.list()` | ⚠️ |
-| GET | `/api/pricing/status/` | `pricing_status()` | ⚠️ |
+| Method | Endpoint                        | Function                      | Status |
+| ------ | ------------------------------- | ----------------------------- | ------ |
+| GET    | `/api/pricing/price-settings/`  | `PriceSettingViewSet.list()`  | ⚠️     |
+| GET    | `/api/pricing/pricing-rules/`   | `PricingRuleViewSet.list()`   | ⚠️     |
+| GET    | `/api/pricing/price-forecasts/` | `PriceForecastViewSet.list()` | ⚠️     |
+| GET    | `/api/pricing/status/`          | `pricing_status()`            | ⚠️     |
 
 ### Frontend Hook
 
 **Hook**: `src/hooks/usePricingData.ts` (MOCK)
+
 ```typescript
 export function usePricingData() {
   return {
@@ -538,6 +570,7 @@ export function usePricingData() {
 ```
 
 ### Used By
+
 - `src/pages/PricingStrategy.tsx`
 
 ---
@@ -546,15 +579,16 @@ export function usePricingData() {
 
 ### Key Endpoints
 
-| Method | Endpoint | Function | Status |
-|--------|----------|----------|--------|
-| GET | `/api/tax/` | `tax_home()` | ⚠️ |
-| GET | `/api/tax/tax-records/` | `TaxRecordViewSet.list()` | ⚠️ |
-| GET | `/api/tax/compliance-reports/` | `ComplianceReportViewSet.list()` | ⚠️ |
+| Method | Endpoint                       | Function                         | Status |
+| ------ | ------------------------------ | -------------------------------- | ------ |
+| GET    | `/api/tax/`                    | `tax_home()`                     | ⚠️     |
+| GET    | `/api/tax/tax-records/`        | `TaxRecordViewSet.list()`        | ⚠️     |
+| GET    | `/api/tax/compliance-reports/` | `ComplianceReportViewSet.list()` | ⚠️     |
 
 ### Frontend Hook
 
 **Hook**: `src/hooks/useTaxData.ts` (MOCK)
+
 ```typescript
 export function useTaxData() {
   return {
@@ -567,6 +601,7 @@ export function useTaxData() {
 ```
 
 ### Used By
+
 - `src/pages/TaxCompliance.tsx`
 
 ---
@@ -575,15 +610,16 @@ export function useTaxData() {
 
 ### Key Endpoints
 
-| Method | Endpoint | Function | Status |
-|--------|----------|----------|--------|
-| GET | `/api/policy/external-policies/` | `ExternalPolicyViewSet.list()` | ⚠️ |
-| GET | `/api/policy/internal-policies/` | `InternalPolicyViewSet.list()` | ⚠️ |
-| GET | `/api/policy/strategy-recommendations/` | `StrategyRecommendationViewSet.list()` | ⚠️ |
+| Method | Endpoint                                | Function                               | Status |
+| ------ | --------------------------------------- | -------------------------------------- | ------ |
+| GET    | `/api/policy/external-policies/`        | `ExternalPolicyViewSet.list()`         | ⚠️     |
+| GET    | `/api/policy/internal-policies/`        | `InternalPolicyViewSet.list()`         | ⚠️     |
+| GET    | `/api/policy/strategy-recommendations/` | `StrategyRecommendationViewSet.list()` | ⚠️     |
 
 ### Frontend Hook
 
 **Hook**: `src/hooks/usePolicyEconomicData.ts` (MOCK)
+
 ```typescript
 export function usePolicyEconomicData() {
   return {
@@ -602,17 +638,18 @@ export function usePolicyEconomicData() {
 
 ### Key Endpoints
 
-| Method | Endpoint | Function | Status |
-|--------|----------|----------|--------|
-| GET | `/api/inventory/inventory-items/` | `InventoryItemViewSet.list()` | ⚠️ |
-| GET | `/api/inventory/stock-movements/` | `StockMovementViewSet.list()` | ⚠️ |
-| GET | `/api/inventory/suppliers/` | `SupplierViewSet.list()` | ⚠️ |
-| GET | `/api/inventory/procurement-orders/` | `ProcurementOrderViewSet.list()` | ⚠️ |
-| GET | `/api/inventory/logistics-metrics/` | `LogisticsMetricViewSet.list()` | ⚠️ |
+| Method | Endpoint                             | Function                         | Status |
+| ------ | ------------------------------------ | -------------------------------- | ------ |
+| GET    | `/api/inventory/inventory-items/`    | `InventoryItemViewSet.list()`    | ⚠️     |
+| GET    | `/api/inventory/stock-movements/`    | `StockMovementViewSet.list()`    | ⚠️     |
+| GET    | `/api/inventory/suppliers/`          | `SupplierViewSet.list()`         | ⚠️     |
+| GET    | `/api/inventory/procurement-orders/` | `ProcurementOrderViewSet.list()` | ⚠️     |
+| GET    | `/api/inventory/logistics-metrics/`  | `LogisticsMetricViewSet.list()`  | ⚠️     |
 
 ### Frontend Hooks
 
 **Hook 1**: `src/hooks/useInventoryData.ts` (MOCK)
+
 ```typescript
 export function useInventoryData() {
   return {
@@ -627,6 +664,7 @@ export function useInventoryData() {
 ```
 
 **Hook 2**: `src/hooks/useSupplyChainData.ts` (MOCK)
+
 ```typescript
 export function useSupplyChainData() {
   return {
@@ -641,6 +679,7 @@ export function useSupplyChainData() {
 ```
 
 ### Used By
+
 - `src/pages/InventorySupplyChain.tsx`
 
 ---
@@ -690,20 +729,23 @@ DELETE /api/business/documents/{id}/
 ### For Each Hook:
 
 1. **State Variables**: Replace mock data with `useState`
+
    ```typescript
-   const [data, setData] = useState<Type[]>([])
+   const [data, setData] = useState<Type[]>([]);
    ```
 
 2. **Data Fetching**: Add `useEffect` for initial load
+
    ```typescript
    useEffect(() => {
      fetch(`${baseUrl}/api/...`)
-       .then(r => r.json())
-       .then(data => setData(data))
-   }, [])
+       .then((r) => r.json())
+       .then((data) => setData(data));
+   }, []);
    ```
 
 3. **Methods**: Implement update/delete methods with real API calls
+
    ```typescript
    const updateItem = async (id: string, newData: any) => {
      await fetch(`${baseUrl}/api/.../` id}/`, {
@@ -715,7 +757,7 @@ DELETE /api/business/documents/{id}/
 
 4. **Error Handling**: Use try/catch
    ```typescript
-   const [error, setError] = useState<Error | null>(null)
+   const [error, setError] = useState<Error | null>(null);
    // ... in fetch: catch(e) => setError(e)
    ```
 

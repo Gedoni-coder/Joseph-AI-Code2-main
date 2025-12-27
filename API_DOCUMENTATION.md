@@ -2,7 +2,7 @@
 
 **Project**: Joseph-AI-Code2-main  
 **Last Updated**: 2025  
-**Version**: 1.0  
+**Version**: 1.0
 
 ## Table of Contents
 
@@ -22,12 +22,14 @@
 ### Technology Stack
 
 **Backend**:
+
 - Django REST Framework
 - Python with async support
 - 11 main modules + 1 chatbot/agent system
 - SQLite (development) / PostgreSQL (production recommended)
 
 **Frontend**:
+
 - React 18 with TypeScript
 - React Router 6 (SPA mode)
 - TailwindCSS 3 for styling
@@ -87,12 +89,14 @@
 ### Frontend Technology Stack
 
 **Framework & Build Tools**:
+
 - React 18 with TypeScript
 - React Router 6 (SPA mode)
 - Vite (bundler & dev server)
 - TailwindCSS 3 (utility-first CSS)
 
 **UI Components & Libraries**:
+
 - Radix UI (accessible primitives)
 - Class Variance Authority (CVA) (component variants)
 - Lucide React (icons)
@@ -100,12 +104,14 @@
 - React Query (data caching - available but partially used)
 
 **State Management**:
+
 - React Hooks (useState, useEffect, useContext)
 - Custom Hooks for domain data (useBusinessData, useEconomicData, etc.)
 - React Context (Auth, Company Info)
 - localStorage (persistence)
 
 **HTTP Client**:
+
 - Fetch API (no axios)
 - Environment-based base URLs
 
@@ -272,42 +278,44 @@ src/
 
 **Dashboard Pages** (main entry points):
 
-| Page | Route | Purpose | Data Hook | Status |
-|------|-------|---------|-----------|--------|
-| Index | `/economic-indicators` | Economic indicators dashboard | useEconomicData | ✅ Connected |
-| BusinessForecast | `/business-forecast` | Business forecasting | useBusinessData | ⚠️ Mock |
-| MarketCompetitiveAnalysis | `/market-competitive-analysis` | Market & competitive analysis | useMarketData, useCompetitiveData | ⚠️ Mock |
-| LoanFunding | `/loan-research` | Loan research hub | useLoanData | ⚠️ Mock |
-| RevenueStrategy | `/revenue-forecasting` | Revenue forecasting | useRevenueData | ⚠️ Mock |
-| FinancialAdvisory | `/financial-advisory` | Financial planning & advisory | useFinancialAdvisoryData | ⚠️ Mock |
-| InventorySupplyChain | `/supply-chain-analytics` | Inventory & supply chain | useInventoryData, useSupplyChainData | ⚠️ Mock |
-| PricingStrategy | `/pricing-strategies` | Pricing strategies | usePricingData | ⚠️ Mock |
-| TaxCompliance | `/tax-compliance` | Tax & regulatory compliance | useTaxData | ⚠️ Mock |
+| Page                      | Route                          | Purpose                       | Data Hook                            | Status       |
+| ------------------------- | ------------------------------ | ----------------------------- | ------------------------------------ | ------------ |
+| Index                     | `/economic-indicators`         | Economic indicators dashboard | useEconomicData                      | ✅ Connected |
+| BusinessForecast          | `/business-forecast`           | Business forecasting          | useBusinessData                      | ⚠️ Mock      |
+| MarketCompetitiveAnalysis | `/market-competitive-analysis` | Market & competitive analysis | useMarketData, useCompetitiveData    | ⚠️ Mock      |
+| LoanFunding               | `/loan-research`               | Loan research hub             | useLoanData                          | ⚠️ Mock      |
+| RevenueStrategy           | `/revenue-forecasting`         | Revenue forecasting           | useRevenueData                       | ⚠️ Mock      |
+| FinancialAdvisory         | `/financial-advisory`          | Financial planning & advisory | useFinancialAdvisoryData             | ⚠️ Mock      |
+| InventorySupplyChain      | `/supply-chain-analytics`      | Inventory & supply chain      | useInventoryData, useSupplyChainData | ⚠️ Mock      |
+| PricingStrategy           | `/pricing-strategies`          | Pricing strategies            | usePricingData                       | ⚠️ Mock      |
+| TaxCompliance             | `/tax-compliance`              | Tax & regulatory compliance   | useTaxData                           | ⚠️ Mock      |
 
 **Special Pages**:
 
-| Page | Route | Purpose |
-|------|-------|---------|
-| Landing | `/home` (protected) | Product landing & module navigation |
-| Onboarding | `/onboarding` | Company setup flow |
-| SignUp | `/signup` | User registration |
-| Login | `/login` | User authentication |
-| CompanySettings | `/company-settings` | Company info editor |
-| DocumentManager | `/document-manager` | Document upload/library |
-| AllReports | `/all-reports` | Reports dashboard |
-| ChatbotTest | `/chatbot-test` | AI testing playground |
+| Page            | Route               | Purpose                             |
+| --------------- | ------------------- | ----------------------------------- |
+| Landing         | `/home` (protected) | Product landing & module navigation |
+| Onboarding      | `/onboarding`       | Company setup flow                  |
+| SignUp          | `/signup`           | User registration                   |
+| Login           | `/login`            | User authentication                 |
+| CompanySettings | `/company-settings` | Company info editor                 |
+| DocumentManager | `/document-manager` | Document upload/library             |
+| AllReports      | `/all-reports`      | Reports dashboard                   |
+| ChatbotTest     | `/chatbot-test`     | AI testing playground               |
 
 ### UI Component Library
 
 The app includes a comprehensive set of reusable UI components under `src/components/ui/`:
 
 **Form Components**:
+
 - Input, Textarea
 - Select, MultiSelect
 - Checkbox, RadioGroup, Switch
 - Form (wrapper for react-hook-form)
 
 **Layout Components**:
+
 - Card (container)
 - Button (with variants: primary, secondary, ghost, outline, destructive)
 - Badge (tags/labels)
@@ -318,6 +326,7 @@ The app includes a comprehensive set of reusable UI components under `src/compon
 - Tooltip
 
 **Data Display**:
+
 - Table (data tables with sorting/filtering)
 - Chart (wrapper for chart libraries)
 - Pagination
@@ -327,6 +336,7 @@ The app includes a comprehensive set of reusable UI components under `src/compon
 - Breadcrumb
 
 **Specialized**:
+
 - ModuleHeader (page title + breadcrumbs + actions)
 - ModuleNavigation (tabs for module sections)
 - LoadingSpinner (loading indicator)
@@ -335,6 +345,7 @@ The app includes a comprehensive set of reusable UI components under `src/compon
 - NavigationMenu
 
 **Notifications**:
+
 - Toast (custom in-memory store in use-toast.ts)
 - Toaster (renders toast stack)
 - Sonner (alternative toast library)
@@ -499,7 +510,9 @@ export function BusinessForecast() {
 }
 
 @layer components {
-  .text-primary { @apply text-[hsl(var(--primary))]; }
+  .text-primary {
+    @apply text-[hsl(var(--primary))];
+  }
   /* Custom utility classes */
 }
 
@@ -512,10 +525,7 @@ export function BusinessForecast() {
 
 ```typescript
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -532,20 +542,20 @@ export default {
       },
     },
   },
-}
+};
 ```
 
 **Theme Switching**:
 
 ```typescript
 // In components or hooks
-function setTheme(theme: 'light' | 'dark') {
-  if (theme === 'dark') {
-    document.documentElement.classList.add('dark')
+function setTheme(theme: "light" | "dark") {
+  if (theme === "dark") {
+    document.documentElement.classList.add("dark");
   } else {
-    document.documentElement.classList.remove('dark')
+    document.documentElement.classList.remove("dark");
   }
-  localStorage.setItem('theme', theme)
+  localStorage.setItem("theme", theme);
 }
 ```
 
@@ -635,8 +645,8 @@ function ProtectedHomeRoute() {
 
 ```typescript
 function MyComponent() {
-  const [count, setCount] = useState(0)
-  const [isOpen, setIsOpen] = useState(false)
+  const [count, setCount] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
   // ...
 }
 ```
@@ -709,23 +719,23 @@ export function useAuth() {
 
 ```typescript
 // Company info persisted to localStorage
-const STORAGE_KEY = 'joseph:companyInfo'
+const STORAGE_KEY = "joseph:companyInfo";
 
 export function useCompanyInfo() {
   const [companyInfo, setCompanyInfo] = useState(() => {
-    const saved = localStorage.getItem(STORAGE_KEY)
-    return saved ? JSON.parse(saved) : null
-  })
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : null;
+  });
 
   const updateCompanyInfo = (info: Partial<CompanyInfo>) => {
-    setCompanyInfo(prev => {
-      const updated = { ...prev, ...info }
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
-      return updated
-    })
-  }
+    setCompanyInfo((prev) => {
+      const updated = { ...prev, ...info };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      return updated;
+    });
+  };
 
-  return { companyInfo, updateCompanyInfo, isSetup: !!companyInfo }
+  return { companyInfo, updateCompanyInfo, isSetup: !!companyInfo };
 }
 ```
 
@@ -776,65 +786,69 @@ export function useCompanyInfo() {
 ### Key Conventions
 
 **File Naming**:
+
 - Components: PascalCase (e.g., `BusinessForecast.tsx`)
 - Utilities: camelCase (e.g., `utils.ts`, `web-scraper.ts`)
 - Hooks: camelCase with `use` prefix (e.g., `useBusinessData.ts`)
 - Page components: PascalCase (e.g., `Index.tsx`, `Landing.tsx`)
 
 **Component Props**:
+
 ```typescript
 interface ComponentProps {
   // Data props
-  data: SomeType[]
-  isLoading?: boolean
-  error?: Error | null
+  data: SomeType[];
+  isLoading?: boolean;
+  error?: Error | null;
 
   // Event handlers (on prefix)
-  onClick?: () => void
-  onChange?: (value: string) => void
-  onUpdate?: (id: string, value: any) => void
+  onClick?: () => void;
+  onChange?: (value: string) => void;
+  onUpdate?: (id: string, value: any) => void;
 
   // Style/Display
-  className?: string
-  variant?: 'default' | 'secondary'
+  className?: string;
+  variant?: "default" | "secondary";
 
   // Children
-  children?: React.ReactNode
+  children?: React.ReactNode;
 }
 ```
 
 **Hook Return Value**:
+
 ```typescript
 interface UseXDataReturn {
   // Data
-  data: DataType[]
+  data: DataType[];
 
   // State
-  isLoading: boolean
-  error: Error | null
-  isConnected?: boolean
+  isLoading: boolean;
+  error: Error | null;
+  isConnected?: boolean;
 
   // Methods
-  refreshData: () => Promise<void>
-  reconnect?: () => Promise<void>
-  updateItem?: (id: string, value: any) => Promise<void>
+  refreshData: () => Promise<void>;
+  reconnect?: () => Promise<void>;
+  updateItem?: (id: string, value: any) => Promise<void>;
 }
 ```
 
 **Error Handling Pattern**:
+
 ```typescript
 try {
-  const response = await fetch(url)
-  if (!response.ok) throw new Error(`HTTP ${response.status}`)
-  const data = await response.json()
-  setData(data)
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`HTTP ${response.status}`);
+  const data = await response.json();
+  setData(data);
 } catch (err) {
-  console.error('Error:', err)
-  setError(err as Error)
+  console.error("Error:", err);
+  setError(err as Error);
   // Fallback to mock data or empty state
-  setData([])
+  setData([]);
 } finally {
-  setIsLoading(false)
+  setIsLoading(false);
 }
 ```
 
@@ -848,20 +862,20 @@ try {
 
 **Endpoints**:
 
-| HTTP Method | Endpoint | Handler | Purpose |
-|-------------|----------|---------|---------|
-| GET | `/api/economic/metrics/` | EconomicMetricViewSet.list() | Retrieve all economic metrics |
-| POST | `/api/economic/metrics/` | EconomicMetricViewSet.create() | Create new metric |
-| GET | `/api/economic/metrics/{id}/` | EconomicMetricViewSet.retrieve() | Get specific metric |
-| PUT | `/api/economic/metrics/{id}/` | EconomicMetricViewSet.update() | Update metric |
-| PATCH | `/api/economic/metrics/{id}/` | EconomicMetricViewSet.partial_update() | Partial metric update |
-| DELETE | `/api/economic/metrics/{id}/` | EconomicMetricViewSet.destroy() | Delete metric |
-| GET | `/api/economic/news/` | EconomicNewsViewSet.list() | Retrieve economic news |
-| POST | `/api/economic/news/` | EconomicNewsViewSet.create() | Create news item |
-| GET | `/api/economic/forecasts/` | EconomicForecastViewSet.list() | Get economic forecasts |
-| POST | `/api/economic/forecasts/` | EconomicForecastViewSet.create() | Create forecast |
-| GET | `/api/economic/events/` | EconomicEventViewSet.list() | Get economic events |
-| POST | `/api/economic/events/` | EconomicEventViewSet.create() | Create event |
+| HTTP Method | Endpoint                      | Handler                                | Purpose                       |
+| ----------- | ----------------------------- | -------------------------------------- | ----------------------------- |
+| GET         | `/api/economic/metrics/`      | EconomicMetricViewSet.list()           | Retrieve all economic metrics |
+| POST        | `/api/economic/metrics/`      | EconomicMetricViewSet.create()         | Create new metric             |
+| GET         | `/api/economic/metrics/{id}/` | EconomicMetricViewSet.retrieve()       | Get specific metric           |
+| PUT         | `/api/economic/metrics/{id}/` | EconomicMetricViewSet.update()         | Update metric                 |
+| PATCH       | `/api/economic/metrics/{id}/` | EconomicMetricViewSet.partial_update() | Partial metric update         |
+| DELETE      | `/api/economic/metrics/{id}/` | EconomicMetricViewSet.destroy()        | Delete metric                 |
+| GET         | `/api/economic/news/`         | EconomicNewsViewSet.list()             | Retrieve economic news        |
+| POST        | `/api/economic/news/`         | EconomicNewsViewSet.create()           | Create news item              |
+| GET         | `/api/economic/forecasts/`    | EconomicForecastViewSet.list()         | Get economic forecasts        |
+| POST        | `/api/economic/forecasts/`    | EconomicForecastViewSet.create()       | Create forecast               |
+| GET         | `/api/economic/events/`       | EconomicEventViewSet.list()            | Get economic events           |
+| POST        | `/api/economic/events/`       | EconomicEventViewSet.create()          | Create event                  |
 
 **Models**:
 
@@ -913,15 +927,15 @@ try {
 // src/hooks/useEconomicData.ts
 export function useEconomicData(companyName?: string) {
   // Fetches from backend endpoints
-  const fetchMetrics = (context?: string) 
+  const fetchMetrics = (context?: string)
     => GET /api/economic/metrics/?context={context}
-  const fetchNews = (context?: string) 
+  const fetchNews = (context?: string)
     => GET /api/economic/news/?context={context}
-  const fetchForecasts = (context?: string) 
+  const fetchForecasts = (context?: string)
     => GET /api/economic/forecasts/?context={context}
-  const fetchEvents = (context?: string) 
+  const fetchEvents = (context?: string)
     => GET /api/economic/events/?context={context}
-  
+
   return {
     metrics: Record<string, EconomicMetric[]>,  // Grouped by context
     news: Record<string, EconomicNews[]>,
@@ -938,10 +952,12 @@ export function useEconomicData(companyName?: string) {
 ```
 
 **Used By**:
+
 - `src/pages/Index.tsx` - Main economic dashboard displays metrics, news, forecasts
 - `src/hooks/useEconomicData.ts` - Direct hook for economic data
 
 **Key Functions**:
+
 - `groupByContext<T>(items: T[]): Record<string, T[]>` - Groups data by context field
 - `getMockMetricsData()` - Fallback mock data when API unavailable
 - `getMockNewsData()` - Fallback mock data
@@ -956,23 +972,23 @@ export function useEconomicData(companyName?: string) {
 
 **Endpoints**:
 
-| HTTP Method | Endpoint | Handler | Purpose |
-|-------------|----------|---------|---------|
-| GET | `/chatbot/messages/` | ChatMessageViewSet.list() | List chat messages |
-| POST | `/chatbot/messages/` | ChatMessageViewSet.create() | Create message |
-| GET | `/chatbot/conversations/` | ModuleConversationViewSet.list() | Get conversations |
-| POST | `/chatbot/conversations/` | ModuleConversationViewSet.create() | Create conversation |
-| GET | `/chatbot/conversations/{id}/` | ModuleConversationViewSet.retrieve() | Get specific conversation |
-| POST | `/chatbot/module-chat/` | module_chat() | Send chat message to module context |
-| POST | `/chatbot/generate-response/` | generate_response() | Generate AI response using Groq/Gemini |
-| POST | `/chatbot/agent/start/` | agent_start() | Start autonomous agent |
-| POST | `/chatbot/agent/stop/` | agent_stop() | Stop autonomous agent |
-| GET | `/chatbot/agent/status/` | agent_status() | Get agent status |
-| POST | `/chatbot/agent/command/` | agent_command() | Send command to agent |
-| POST | `/chatbot/agent/tool-call/` | agent_tool_call() | Execute tool via agent |
-| POST | `/chatbot/agent/ingest-url/` | agent_ingest_url() | Ingest web page content |
-| POST | `/chatbot/agent/ingest-text/` | agent_ingest_text() | Ingest text content |
-| POST | `/chatbot/agent/query/` | agent_query() | Query agent for insights |
+| HTTP Method | Endpoint                       | Handler                              | Purpose                                |
+| ----------- | ------------------------------ | ------------------------------------ | -------------------------------------- |
+| GET         | `/chatbot/messages/`           | ChatMessageViewSet.list()            | List chat messages                     |
+| POST        | `/chatbot/messages/`           | ChatMessageViewSet.create()          | Create message                         |
+| GET         | `/chatbot/conversations/`      | ModuleConversationViewSet.list()     | Get conversations                      |
+| POST        | `/chatbot/conversations/`      | ModuleConversationViewSet.create()   | Create conversation                    |
+| GET         | `/chatbot/conversations/{id}/` | ModuleConversationViewSet.retrieve() | Get specific conversation              |
+| POST        | `/chatbot/module-chat/`        | module_chat()                        | Send chat message to module context    |
+| POST        | `/chatbot/generate-response/`  | generate_response()                  | Generate AI response using Groq/Gemini |
+| POST        | `/chatbot/agent/start/`        | agent_start()                        | Start autonomous agent                 |
+| POST        | `/chatbot/agent/stop/`         | agent_stop()                         | Stop autonomous agent                  |
+| GET         | `/chatbot/agent/status/`       | agent_status()                       | Get agent status                       |
+| POST        | `/chatbot/agent/command/`      | agent_command()                      | Send command to agent                  |
+| POST        | `/chatbot/agent/tool-call/`    | agent_tool_call()                    | Execute tool via agent                 |
+| POST        | `/chatbot/agent/ingest-url/`   | agent_ingest_url()                   | Ingest web page content                |
+| POST        | `/chatbot/agent/ingest-text/`  | agent_ingest_text()                  | Ingest text content                    |
+| POST        | `/chatbot/agent/query/`        | agent_query()                        | Query agent for insights               |
 
 **Models**:
 
@@ -1037,7 +1053,7 @@ export function useAgent() {
   const stopAgent = () => POST /chatbot/agent/stop/
   const getAgentStatus = () => GET /chatbot/agent/status/
   const addAgentTask = (task: any) => POST /chatbot/generate-response/
-  
+
   return {
     isLoading: boolean,
     error: Error | null,
@@ -1057,11 +1073,11 @@ export function useChatbot() {
     // Falls back to POST /chatbot/generate-response/
     // May call POST /chatbot/agent/query/ for module knowledge
   }
-  
+
   const explainElement = (description: string, data?: any) => {
     // Generate explanation for UI element
   }
-  
+
   return {
     isOpen: boolean,
     isMinimized: boolean,
@@ -1087,25 +1103,25 @@ export function useChatbot() {
 class AutonomousAgent:
   def start(self) -> None
     # Starts background thread running _run_agent_loop()
-  
+
   def stop(self) -> None
     # Stops agent thread
-  
+
   def get_status(self) -> dict
     # Returns: { is_running, last_updates, pending_tasks, completed_tasks, memory_size }
-  
+
   def add_task(self, task: dict) -> None
     # Queue task for execution
-  
+
   def _run_agent_loop(self) -> None
     # Main agent loop: process tasks, execute tools, update modules
-  
+
   def _execute_task(self, task: dict) -> dict
     # Execute individual task with tool calls
-  
+
   def _execute_tool(self, tool_name: str, params: dict) -> dict
     # Execute registered tool (built-ins or custom)
-  
+
   # Built-in tools:
   def _perform_web_search(self, query: str) -> list
   def _retrieve_information(self, module: str, query: str) -> dict
@@ -1120,12 +1136,14 @@ agent = AutonomousAgent()
 ```
 
 **Used By**:
+
 - `src/components/chatbot/chatbot-container.tsx` - Chat UI
 - `src/components/chatbot/agent-panel.tsx` - Agent control panel
 - `src/components/competitive/competitive-strategy.tsx` - Agent tasks
 - `src/pages/Index.tsx` - Joseph AI live badge
 
 **Key Functions**:
+
 - `module_chat(request, module)` - Builds system prompt, calls Groq/Gemini, persists messages
 - `generate_response(messages, context)` - General response generation
 - `_build_knowledge_pack(module)` - Compile module knowledge for context
@@ -1140,25 +1158,25 @@ agent = AutonomousAgent()
 
 **Endpoints**:
 
-| HTTP Method | Endpoint | Handler | Purpose |
-|-------------|----------|---------|---------|
-| GET | `/api/business/customer-profiles/` | CustomerProfileViewSet.list() | List customer profiles |
-| POST | `/api/business/customer-profiles/` | CustomerProfileViewSet.create() | Create profile |
-| GET | `/api/business/revenue-projections/` | RevenueProjectionViewSet.list() | List revenue projections |
-| POST | `/api/business/revenue-projections/` | RevenueProjectionViewSet.create() | Create projection |
-| GET | `/api/business/cost-structures/` | CostStructureViewSet.list() | List cost structures |
-| POST | `/api/business/cost-structures/` | CostStructureViewSet.create() | Create cost structure |
-| GET | `/api/business/cash-flow-forecasts/` | CashFlowForecastViewSet.list() | List cash flow forecasts |
-| POST | `/api/business/cash-flow-forecasts/` | CashFlowForecastViewSet.create() | Create forecast |
-| GET | `/api/business/kpis/` | KPIViewSet.list() | List KPIs |
-| POST | `/api/business/kpis/` | KPIViewSet.create() | Create KPI |
-| PATCH | `/api/business/kpis/{id}/` | KPIViewSet.partial_update() | Update KPI value |
-| GET | `/api/business/scenario-plannings/` | ScenarioPlanningViewSet.list() | List scenarios |
-| POST | `/api/business/scenario-plannings/` | ScenarioPlanningViewSet.create() | Create scenario |
-| GET | `/api/business/documents/` | DocumentViewSet.list() | List documents |
-| POST | `/api/business/documents/` | DocumentViewSet.create() | Upload document |
-| DELETE | `/api/business/documents/{id}/` | DocumentViewSet.destroy() | Delete document |
-| GET | `/api/business/documents/list_documents/` | list_documents() | Custom action: list all documents |
+| HTTP Method | Endpoint                                  | Handler                           | Purpose                           |
+| ----------- | ----------------------------------------- | --------------------------------- | --------------------------------- |
+| GET         | `/api/business/customer-profiles/`        | CustomerProfileViewSet.list()     | List customer profiles            |
+| POST        | `/api/business/customer-profiles/`        | CustomerProfileViewSet.create()   | Create profile                    |
+| GET         | `/api/business/revenue-projections/`      | RevenueProjectionViewSet.list()   | List revenue projections          |
+| POST        | `/api/business/revenue-projections/`      | RevenueProjectionViewSet.create() | Create projection                 |
+| GET         | `/api/business/cost-structures/`          | CostStructureViewSet.list()       | List cost structures              |
+| POST        | `/api/business/cost-structures/`          | CostStructureViewSet.create()     | Create cost structure             |
+| GET         | `/api/business/cash-flow-forecasts/`      | CashFlowForecastViewSet.list()    | List cash flow forecasts          |
+| POST        | `/api/business/cash-flow-forecasts/`      | CashFlowForecastViewSet.create()  | Create forecast                   |
+| GET         | `/api/business/kpis/`                     | KPIViewSet.list()                 | List KPIs                         |
+| POST        | `/api/business/kpis/`                     | KPIViewSet.create()               | Create KPI                        |
+| PATCH       | `/api/business/kpis/{id}/`                | KPIViewSet.partial_update()       | Update KPI value                  |
+| GET         | `/api/business/scenario-plannings/`       | ScenarioPlanningViewSet.list()    | List scenarios                    |
+| POST        | `/api/business/scenario-plannings/`       | ScenarioPlanningViewSet.create()  | Create scenario                   |
+| GET         | `/api/business/documents/`                | DocumentViewSet.list()            | List documents                    |
+| POST        | `/api/business/documents/`                | DocumentViewSet.create()          | Upload document                   |
+| DELETE      | `/api/business/documents/{id}/`           | DocumentViewSet.destroy()         | Delete document                   |
+| GET         | `/api/business/documents/list_documents/` | list_documents()                  | Custom action: list all documents |
 
 **Models**:
 
@@ -1240,10 +1258,12 @@ export function useBusinessData() {
 ```
 
 **Used By**:
+
 - `src/pages/BusinessForecast.tsx` - Business forecast dashboard
 - Components: RevenueProjections, KPIDashboard, CostAnalysis, CashFlowChart
 
 **Key Functions**:
+
 - DocumentViewSet.create() - Handles file upload via FormData
 - DocumentViewSet.get_serializer_context() - Passes request context
 - Document.delete() - Removes file from storage
@@ -1256,14 +1276,14 @@ export function useBusinessData() {
 
 **Endpoints**:
 
-| HTTP Method | Endpoint | Handler | Purpose |
-|-------------|----------|---------|---------|
-| GET | `/api/market/market-segments/` | MarketSegmentViewSet.list() | List market segments |
-| POST | `/api/market/market-segments/` | MarketSegmentViewSet.create() | Create segment |
-| GET | `/api/market/competitors/` | CompetitorViewSet.list() | List competitors |
-| POST | `/api/market/competitors/` | CompetitorViewSet.create() | Add competitor |
-| GET | `/api/market/market-trends/` | MarketTrendViewSet.list() | List trends |
-| POST | `/api/market/market-trends/` | MarketTrendViewSet.create() | Create trend |
+| HTTP Method | Endpoint                       | Handler                       | Purpose              |
+| ----------- | ------------------------------ | ----------------------------- | -------------------- |
+| GET         | `/api/market/market-segments/` | MarketSegmentViewSet.list()   | List market segments |
+| POST        | `/api/market/market-segments/` | MarketSegmentViewSet.create() | Create segment       |
+| GET         | `/api/market/competitors/`     | CompetitorViewSet.list()      | List competitors     |
+| POST        | `/api/market/competitors/`     | CompetitorViewSet.create()    | Add competitor       |
+| GET         | `/api/market/market-trends/`   | MarketTrendViewSet.list()     | List trends          |
+| POST        | `/api/market/market-trends/`   | MarketTrendViewSet.create()   | Create trend         |
 
 **Models**:
 
@@ -1323,6 +1343,7 @@ export function useCompetitiveData() {
 ```
 
 **Used By**:
+
 - `src/pages/MarketCompetitiveAnalysis.tsx` - Market and competitive analysis dashboard
 - `src/pages/CompetitorWhitePaper.tsx` - Competitor analysis report
 - `src/pages/SwotWhitePaper.tsx` - SWOT analysis report
@@ -1335,24 +1356,24 @@ export function useCompetitiveData() {
 
 **Endpoints**:
 
-| HTTP Method | Endpoint | Handler | Purpose |
-|-------------|----------|---------|---------|
-| GET | `/api/loan/loan-eligibility/` | LoanEligibilityViewSet.list() | List eligibility criteria |
-| POST | `/api/loan/loan-eligibility/` | LoanEligibilityViewSet.create() | Create eligibility |
-| GET | `/api/loan/funding-options/` | FundingOptionViewSet.list() | List funding options |
-| POST | `/api/loan/funding-options/` | FundingOptionViewSet.create() | Add funding option |
-| GET | `/api/loan/loan-fees/` | LoanFeeViewSet.list() | List loan fees |
-| POST | `/api/loan/loan-fees/` | LoanFeeViewSet.create() | Add fee |
-| GET | `/api/loan/loan-comparisons/` | LoanComparisonViewSet.list() | Compare loans |
-| POST | `/api/loan/loan-comparisons/` | LoanComparisonViewSet.create() | Create comparison |
-| GET | `/api/loan/business-plans/` | BusinessPlanViewSet.list() | List business plans |
-| POST | `/api/loan/business-plans/` | BusinessPlanViewSet.create() | Create plan |
-| GET | `/api/loan/funding-strategy/` | FundingStrategyViewSet.list() | List strategies |
-| POST | `/api/loan/funding-strategy/` | FundingStrategyViewSet.create() | Create strategy |
-| GET | `/api/loan/investor-matches/` | InvestorMatchViewSet.list() | Find investor matches |
-| POST | `/api/loan/investor-matches/` | InvestorMatchViewSet.create() | Create match |
-| GET | `/api/loan/watchlists/` | WatchlistViewSet.list() | List watchlists |
-| POST | `/api/loan/watchlists/` | WatchlistViewSet.create() | Create watchlist |
+| HTTP Method | Endpoint                      | Handler                         | Purpose                   |
+| ----------- | ----------------------------- | ------------------------------- | ------------------------- |
+| GET         | `/api/loan/loan-eligibility/` | LoanEligibilityViewSet.list()   | List eligibility criteria |
+| POST        | `/api/loan/loan-eligibility/` | LoanEligibilityViewSet.create() | Create eligibility        |
+| GET         | `/api/loan/funding-options/`  | FundingOptionViewSet.list()     | List funding options      |
+| POST        | `/api/loan/funding-options/`  | FundingOptionViewSet.create()   | Add funding option        |
+| GET         | `/api/loan/loan-fees/`        | LoanFeeViewSet.list()           | List loan fees            |
+| POST        | `/api/loan/loan-fees/`        | LoanFeeViewSet.create()         | Add fee                   |
+| GET         | `/api/loan/loan-comparisons/` | LoanComparisonViewSet.list()    | Compare loans             |
+| POST        | `/api/loan/loan-comparisons/` | LoanComparisonViewSet.create()  | Create comparison         |
+| GET         | `/api/loan/business-plans/`   | BusinessPlanViewSet.list()      | List business plans       |
+| POST        | `/api/loan/business-plans/`   | BusinessPlanViewSet.create()    | Create plan               |
+| GET         | `/api/loan/funding-strategy/` | FundingStrategyViewSet.list()   | List strategies           |
+| POST        | `/api/loan/funding-strategy/` | FundingStrategyViewSet.create() | Create strategy           |
+| GET         | `/api/loan/investor-matches/` | InvestorMatchViewSet.list()     | Find investor matches     |
+| POST        | `/api/loan/investor-matches/` | InvestorMatchViewSet.create()   | Create match              |
+| GET         | `/api/loan/watchlists/`       | WatchlistViewSet.list()         | List watchlists           |
+| POST        | `/api/loan/watchlists/`       | WatchlistViewSet.create()       | Create watchlist          |
 
 **Models**:
 
@@ -1430,6 +1451,7 @@ export function useLoanData() {
 ```
 
 **Used By**:
+
 - `src/pages/LoanFunding.tsx` - Loan and funding dashboard
 
 ---
@@ -1440,20 +1462,20 @@ export function useLoanData() {
 
 **Endpoints**:
 
-| HTTP Method | Endpoint | Handler | Purpose |
-|-------------|----------|---------|---------|
-| GET | `/api/revenue/revenue-streams/` | RevenueStreamViewSet.list() | List revenue streams |
-| POST | `/api/revenue/revenue-streams/` | RevenueStreamViewSet.create() | Create stream |
-| GET | `/api/revenue/revenue-scenarios/` | RevenueScenarioViewSet.list() | List scenarios |
-| POST | `/api/revenue/revenue-scenarios/` | RevenueScenarioViewSet.create() | Create scenario |
-| GET | `/api/revenue/churn-analyses/` | ChurnAnalysisViewSet.list() | Analyze churn |
-| POST | `/api/revenue/churn-analyses/` | ChurnAnalysisViewSet.create() | Create analysis |
-| GET | `/api/revenue/upsell-opportunities/` | UpsellOpportunityViewSet.list() | List opportunities |
-| POST | `/api/revenue/upsell-opportunities/` | UpsellOpportunityViewSet.create() | Add opportunity |
-| GET | `/api/revenue/revenue-metrics/` | RevenueMetricViewSet.list() | Get metrics |
-| POST | `/api/revenue/revenue-metrics/` | RevenueMetricViewSet.create() | Create metric |
-| GET | `/api/revenue/channel-performances/` | ChannelPerformanceViewSet.list() | Get channel data |
-| POST | `/api/revenue/channel-performances/` | ChannelPerformanceViewSet.create() | Add channel data |
+| HTTP Method | Endpoint                             | Handler                            | Purpose              |
+| ----------- | ------------------------------------ | ---------------------------------- | -------------------- |
+| GET         | `/api/revenue/revenue-streams/`      | RevenueStreamViewSet.list()        | List revenue streams |
+| POST        | `/api/revenue/revenue-streams/`      | RevenueStreamViewSet.create()      | Create stream        |
+| GET         | `/api/revenue/revenue-scenarios/`    | RevenueScenarioViewSet.list()      | List scenarios       |
+| POST        | `/api/revenue/revenue-scenarios/`    | RevenueScenarioViewSet.create()    | Create scenario      |
+| GET         | `/api/revenue/churn-analyses/`       | ChurnAnalysisViewSet.list()        | Analyze churn        |
+| POST        | `/api/revenue/churn-analyses/`       | ChurnAnalysisViewSet.create()      | Create analysis      |
+| GET         | `/api/revenue/upsell-opportunities/` | UpsellOpportunityViewSet.list()    | List opportunities   |
+| POST        | `/api/revenue/upsell-opportunities/` | UpsellOpportunityViewSet.create()  | Add opportunity      |
+| GET         | `/api/revenue/revenue-metrics/`      | RevenueMetricViewSet.list()        | Get metrics          |
+| POST        | `/api/revenue/revenue-metrics/`      | RevenueMetricViewSet.create()      | Create metric        |
+| GET         | `/api/revenue/channel-performances/` | ChannelPerformanceViewSet.list()   | Get channel data     |
+| POST        | `/api/revenue/channel-performances/` | ChannelPerformanceViewSet.create() | Add channel data     |
 
 **Models**:
 
@@ -1516,6 +1538,7 @@ export function useRevenueData() {
 ```
 
 **Used By**:
+
 - `src/pages/RevenueStrategy.tsx` - Revenue strategy dashboard
 
 ---
@@ -1526,22 +1549,22 @@ export function useRevenueData() {
 
 **Endpoints**:
 
-| HTTP Method | Endpoint | Handler | Purpose |
-|-------------|----------|---------|---------|
-| GET | `/api/financial/budget-forecasts/` | BudgetForecastViewSet.list() | List budget forecasts |
-| POST | `/api/financial/budget-forecasts/` | BudgetForecastViewSet.create() | Create budget |
-| GET | `/api/financial/cash-flow-projections/` | CashFlowProjectionViewSet.list() | List projections |
-| POST | `/api/financial/cash-flow-projections/` | CashFlowProjectionViewSet.create() | Create projection |
-| GET | `/api/financial/scenario-tests/` | ScenarioTestViewSet.list() | List tests |
-| POST | `/api/financial/scenario-tests/` | ScenarioTestViewSet.create() | Create test |
-| GET | `/api/financial/risk-assessments/` | RiskAssessmentViewSet.list() | List assessments |
-| POST | `/api/financial/risk-assessments/` | RiskAssessmentViewSet.create() | Create assessment |
-| GET | `/api/financial/performance-drivers/` | PerformanceDriverViewSet.list() | List drivers |
-| POST | `/api/financial/performance-drivers/` | PerformanceDriverViewSet.create() | Create driver |
-| GET | `/api/financial/advisory-insights/` | AdvisoryInsightViewSet.list() | Get insights |
-| POST | `/api/financial/advisory-insights/` | AdvisoryInsightViewSet.create() | Add insight |
-| GET | `/api/financial/liquidity-metrics/` | LiquidityMetricViewSet.list() | Get liquidity data |
-| POST | `/api/financial/liquidity-metrics/` | LiquidityMetricViewSet.create() | Add metric |
+| HTTP Method | Endpoint                                | Handler                            | Purpose               |
+| ----------- | --------------------------------------- | ---------------------------------- | --------------------- |
+| GET         | `/api/financial/budget-forecasts/`      | BudgetForecastViewSet.list()       | List budget forecasts |
+| POST        | `/api/financial/budget-forecasts/`      | BudgetForecastViewSet.create()     | Create budget         |
+| GET         | `/api/financial/cash-flow-projections/` | CashFlowProjectionViewSet.list()   | List projections      |
+| POST        | `/api/financial/cash-flow-projections/` | CashFlowProjectionViewSet.create() | Create projection     |
+| GET         | `/api/financial/scenario-tests/`        | ScenarioTestViewSet.list()         | List tests            |
+| POST        | `/api/financial/scenario-tests/`        | ScenarioTestViewSet.create()       | Create test           |
+| GET         | `/api/financial/risk-assessments/`      | RiskAssessmentViewSet.list()       | List assessments      |
+| POST        | `/api/financial/risk-assessments/`      | RiskAssessmentViewSet.create()     | Create assessment     |
+| GET         | `/api/financial/performance-drivers/`   | PerformanceDriverViewSet.list()    | List drivers          |
+| POST        | `/api/financial/performance-drivers/`   | PerformanceDriverViewSet.create()  | Create driver         |
+| GET         | `/api/financial/advisory-insights/`     | AdvisoryInsightViewSet.list()      | Get insights          |
+| POST        | `/api/financial/advisory-insights/`     | AdvisoryInsightViewSet.create()    | Add insight           |
+| GET         | `/api/financial/liquidity-metrics/`     | LiquidityMetricViewSet.list()      | Get liquidity data    |
+| POST        | `/api/financial/liquidity-metrics/`     | LiquidityMetricViewSet.create()    | Add metric            |
 
 **Models**:
 
@@ -1610,6 +1633,7 @@ export function useFinancialAdvisoryData() {
 ```
 
 **Used By**:
+
 - `src/pages/FinancialAdvisory.tsx` - Financial advisory dashboard
 
 ---
@@ -1620,15 +1644,15 @@ export function useFinancialAdvisoryData() {
 
 **Endpoints**:
 
-| HTTP Method | Endpoint | Handler | Purpose |
-|-------------|----------|---------|---------|
-| GET | `/api/pricing/price-settings/` | PriceSettingViewSet.list() | List price settings |
-| POST | `/api/pricing/price-settings/` | PriceSettingViewSet.create() | Create setting |
-| GET | `/api/pricing/pricing-rules/` | PricingRuleViewSet.list() | List rules |
-| POST | `/api/pricing/pricing-rules/` | PricingRuleViewSet.create() | Create rule |
-| GET | `/api/pricing/price-forecasts/` | PriceForecastViewSet.list() | List forecasts |
-| POST | `/api/pricing/price-forecasts/` | PriceForecastViewSet.create() | Create forecast |
-| GET | `/api/pricing/status/` | pricing_status() | Get pricing status |
+| HTTP Method | Endpoint                        | Handler                       | Purpose             |
+| ----------- | ------------------------------- | ----------------------------- | ------------------- |
+| GET         | `/api/pricing/price-settings/`  | PriceSettingViewSet.list()    | List price settings |
+| POST        | `/api/pricing/price-settings/`  | PriceSettingViewSet.create()  | Create setting      |
+| GET         | `/api/pricing/pricing-rules/`   | PricingRuleViewSet.list()     | List rules          |
+| POST        | `/api/pricing/pricing-rules/`   | PricingRuleViewSet.create()   | Create rule         |
+| GET         | `/api/pricing/price-forecasts/` | PriceForecastViewSet.list()   | List forecasts      |
+| POST        | `/api/pricing/price-forecasts/` | PriceForecastViewSet.create() | Create forecast     |
+| GET         | `/api/pricing/status/`          | pricing_status()              | Get pricing status  |
 
 **Models**:
 
@@ -1671,6 +1695,7 @@ export function usePricingData() {
 ```
 
 **Used By**:
+
 - `src/pages/PricingStrategy.tsx` - Pricing strategy dashboard
 
 ---
@@ -1681,13 +1706,13 @@ export function usePricingData() {
 
 **Endpoints**:
 
-| HTTP Method | Endpoint | Handler | Purpose |
-|-------------|----------|---------|---------|
-| GET | `/api/tax/` | tax_home() | API root with endpoints list |
-| GET | `/api/tax/tax-records/` | TaxRecordViewSet.list() | List tax records |
-| POST | `/api/tax/tax-records/` | TaxRecordViewSet.create() | Create record |
-| GET | `/api/tax/compliance-reports/` | ComplianceReportViewSet.list() | List reports |
-| POST | `/api/tax/compliance-reports/` | ComplianceReportViewSet.create() | Create report |
+| HTTP Method | Endpoint                       | Handler                          | Purpose                      |
+| ----------- | ------------------------------ | -------------------------------- | ---------------------------- |
+| GET         | `/api/tax/`                    | tax_home()                       | API root with endpoints list |
+| GET         | `/api/tax/tax-records/`        | TaxRecordViewSet.list()          | List tax records             |
+| POST        | `/api/tax/tax-records/`        | TaxRecordViewSet.create()        | Create record                |
+| GET         | `/api/tax/compliance-reports/` | ComplianceReportViewSet.list()   | List reports                 |
+| POST        | `/api/tax/compliance-reports/` | ComplianceReportViewSet.create() | Create report                |
 
 **Models**:
 
@@ -1724,6 +1749,7 @@ export function useTaxData() {
 ```
 
 **Used By**:
+
 - `src/pages/TaxCompliance.tsx` - Tax compliance dashboard
 
 ---
@@ -1734,16 +1760,16 @@ export function useTaxData() {
 
 **Endpoints**:
 
-| HTTP Method | Endpoint | Handler | Purpose |
-|-------------|----------|---------|---------|
-| GET | `/api/policy/external-policies/` | ExternalPolicyViewSet.list() | List external policies |
-| POST | `/api/policy/external-policies/` | ExternalPolicyViewSet.create() | Add policy |
-| GET | `/api/policy/internal-policies/` | InternalPolicyViewSet.list() | List internal policies |
-| POST | `/api/policy/internal-policies/` | InternalPolicyViewSet.create() | Create policy |
-| GET | `/api/policy/policy-reports/` | PolicyReportViewSet.list() | List reports |
-| POST | `/api/policy/policy-reports/` | PolicyReportViewSet.create() | Create report |
-| GET | `/api/policy/strategy-recommendations/` | StrategyRecommendationViewSet.list() | Get recommendations |
-| POST | `/api/policy/strategy-recommendations/` | StrategyRecommendationViewSet.create() | Add recommendation |
+| HTTP Method | Endpoint                                | Handler                                | Purpose                |
+| ----------- | --------------------------------------- | -------------------------------------- | ---------------------- |
+| GET         | `/api/policy/external-policies/`        | ExternalPolicyViewSet.list()           | List external policies |
+| POST        | `/api/policy/external-policies/`        | ExternalPolicyViewSet.create()         | Add policy             |
+| GET         | `/api/policy/internal-policies/`        | InternalPolicyViewSet.list()           | List internal policies |
+| POST        | `/api/policy/internal-policies/`        | InternalPolicyViewSet.create()         | Create policy          |
+| GET         | `/api/policy/policy-reports/`           | PolicyReportViewSet.list()             | List reports           |
+| POST        | `/api/policy/policy-reports/`           | PolicyReportViewSet.create()           | Create report          |
+| GET         | `/api/policy/strategy-recommendations/` | StrategyRecommendationViewSet.list()   | Get recommendations    |
+| POST        | `/api/policy/strategy-recommendations/` | StrategyRecommendationViewSet.create() | Add recommendation     |
 
 **Models**:
 
@@ -1799,26 +1825,26 @@ export function usePolicyEconomicData() {
 
 **Endpoints**:
 
-| HTTP Method | Endpoint | Handler | Purpose |
-|-------------|----------|---------|---------|
-| GET | `/api/inventory/inventory-items/` | InventoryItemViewSet.list() | List items |
-| POST | `/api/inventory/inventory-items/` | InventoryItemViewSet.create() | Add item |
-| GET | `/api/inventory/stock-movements/` | StockMovementViewSet.list() | Track movements |
-| POST | `/api/inventory/stock-movements/` | StockMovementViewSet.create() | Record movement |
-| GET | `/api/inventory/demand-forecasts/` | DemandForecastViewSet.list() | Get forecasts |
-| POST | `/api/inventory/demand-forecasts/` | DemandForecastViewSet.create() | Create forecast |
-| GET | `/api/inventory/inventory-valuations/` | InventoryValuationViewSet.list() | Get valuations |
-| POST | `/api/inventory/inventory-valuations/` | InventoryValuationViewSet.create() | Create valuation |
-| GET | `/api/inventory/suppliers/` | SupplierViewSet.list() | List suppliers |
-| POST | `/api/inventory/suppliers/` | SupplierViewSet.create() | Add supplier |
-| GET | `/api/inventory/procurement-orders/` | ProcurementOrderViewSet.list() | List orders |
-| POST | `/api/inventory/procurement-orders/` | ProcurementOrderViewSet.create() | Create order |
-| GET | `/api/inventory/warehouse-operations/` | WarehouseOperationViewSet.list() | Get operations |
-| POST | `/api/inventory/warehouse-operations/` | WarehouseOperationViewSet.create() | Record operation |
-| GET | `/api/inventory/logistics-metrics/` | LogisticsMetricViewSet.list() | Get metrics |
-| POST | `/api/inventory/logistics-metrics/` | LogisticsMetricViewSet.create() | Add metric |
-| GET | `/api/inventory/disruption-risks/` | DisruptionRiskViewSet.list() | List risks |
-| POST | `/api/inventory/disruption-risks/` | DisruptionRiskViewSet.create() | Add risk |
+| HTTP Method | Endpoint                               | Handler                            | Purpose          |
+| ----------- | -------------------------------------- | ---------------------------------- | ---------------- |
+| GET         | `/api/inventory/inventory-items/`      | InventoryItemViewSet.list()        | List items       |
+| POST        | `/api/inventory/inventory-items/`      | InventoryItemViewSet.create()      | Add item         |
+| GET         | `/api/inventory/stock-movements/`      | StockMovementViewSet.list()        | Track movements  |
+| POST        | `/api/inventory/stock-movements/`      | StockMovementViewSet.create()      | Record movement  |
+| GET         | `/api/inventory/demand-forecasts/`     | DemandForecastViewSet.list()       | Get forecasts    |
+| POST        | `/api/inventory/demand-forecasts/`     | DemandForecastViewSet.create()     | Create forecast  |
+| GET         | `/api/inventory/inventory-valuations/` | InventoryValuationViewSet.list()   | Get valuations   |
+| POST        | `/api/inventory/inventory-valuations/` | InventoryValuationViewSet.create() | Create valuation |
+| GET         | `/api/inventory/suppliers/`            | SupplierViewSet.list()             | List suppliers   |
+| POST        | `/api/inventory/suppliers/`            | SupplierViewSet.create()           | Add supplier     |
+| GET         | `/api/inventory/procurement-orders/`   | ProcurementOrderViewSet.list()     | List orders      |
+| POST        | `/api/inventory/procurement-orders/`   | ProcurementOrderViewSet.create()   | Create order     |
+| GET         | `/api/inventory/warehouse-operations/` | WarehouseOperationViewSet.list()   | Get operations   |
+| POST        | `/api/inventory/warehouse-operations/` | WarehouseOperationViewSet.create() | Record operation |
+| GET         | `/api/inventory/logistics-metrics/`    | LogisticsMetricViewSet.list()      | Get metrics      |
+| POST        | `/api/inventory/logistics-metrics/`    | LogisticsMetricViewSet.create()    | Add metric       |
+| GET         | `/api/inventory/disruption-risks/`     | DisruptionRiskViewSet.list()       | List risks       |
+| POST        | `/api/inventory/disruption-risks/`     | DisruptionRiskViewSet.create()     | Add risk         |
 
 **Models**:
 
@@ -1908,6 +1934,7 @@ export function useSupplyChainData() {
 ```
 
 **Used By**:
+
 - `src/pages/InventorySupplyChain.tsx` - Inventory and supply chain dashboard
 
 ---
@@ -1921,21 +1948,25 @@ Frontend uses **custom React hooks** for all data management. No Redux/MobX. Sta
 #### Active Network Hooks (Real Backend Calls)
 
 1. **useEconomicData** (`src/hooks/useEconomicData.ts`)
+
    - Calls: `/api/economic/metrics/`, `/api/economic/news/`, `/api/economic/forecasts/`, `/api/economic/events/`
    - Used by: `Index.tsx`
    - Fallback: Mock data when API unavailable
 
 2. **useChatbot** (`src/hooks/useChatbot.ts`)
+
    - Calls: `/chatbot/generate-response/`, `/chatbot/agent/query/`, `/chatbot/module-chat/`, `/chatbot/agent/command/`
    - Used by: `chatbot-container.tsx`, chat-related components
    - Fallback: Local AI generation via `generateAIResponse()` from `src/lib/ai.ts`
 
 3. **useAgent** (`src/hooks/useAgent.ts`)
+
    - Calls: `/chatbot/agent/start/`, `/chatbot/agent/stop/`, `/chatbot/agent/status/`
    - Used by: `agent-panel.tsx`, `competitive-strategy.tsx`
    - Fallback: Error state with retry capability
 
 4. **module-conversation** (`src/components/conversation/module-conversation.tsx`)
+
    - Calls: `GET /chatbot/conversations/?module={module}`, `POST /chatbot/conversations/`, `POST /chatbot/module-chat/`
    - Direct API calls (not in hook)
    - Fallback: Creates local conversation object if API fails
@@ -2085,25 +2116,26 @@ To connect:
 
 ### Current Implementation Status
 
-| Module | Backend Endpoints | Frontend Hook | Status | Notes |
-|--------|-------------------|---------------|--------|-------|
-| Economic Forecast | ✅ Fully implemented | useEconomicData | ✅ CONNECTED | Environment variable controlled |
-| Chatbot & Agent | ✅ Fully implemented | useChatbot, useAgent | ✅ CONNECTED | Groq/Gemini fallback |
-| Business Forecast | ✅ Fully implemented | useBusinessData | ⚠️ MOCK | Backend ready, frontend using mock |
-| Market Analysis | ✅ Fully implemented | useMarketData | ⚠️ MOCK | Backend ready, frontend using mock |
-| Loan & Funding | ✅ Fully implemented | useLoanData | ⚠️ MOCK | Backend ready, frontend using mock |
-| Revenue Strategy | ✅ Fully implemented | useRevenueData | ⚠️ MOCK | Backend ready, frontend using mock |
-| Financial Advisory | ✅ Fully implemented | useFinancialAdvisoryData | ⚠️ MOCK | Backend ready, frontend using mock |
-| Pricing Strategy | ✅ Fully implemented | usePricingData | ⚠️ MOCK | Backend ready, frontend using mock |
-| Tax Compliance | ✅ Fully implemented | useTaxData | ⚠️ MOCK | Backend ready, frontend using mock |
-| Policy & Compliance | ✅ Fully implemented | usePolicyEconomicData | ⚠️ MOCK | Backend ready, frontend using mock |
-| Inventory & Supply Chain | ✅ Fully implemented | useInventoryData, useSupplyChainData | ⚠️ MOCK | Backend ready, frontend using mock |
+| Module                   | Backend Endpoints    | Frontend Hook                        | Status       | Notes                              |
+| ------------------------ | -------------------- | ------------------------------------ | ------------ | ---------------------------------- |
+| Economic Forecast        | ✅ Fully implemented | useEconomicData                      | ✅ CONNECTED | Environment variable controlled    |
+| Chatbot & Agent          | ✅ Fully implemented | useChatbot, useAgent                 | ✅ CONNECTED | Groq/Gemini fallback               |
+| Business Forecast        | ✅ Fully implemented | useBusinessData                      | ⚠️ MOCK      | Backend ready, frontend using mock |
+| Market Analysis          | ✅ Fully implemented | useMarketData                        | ⚠️ MOCK      | Backend ready, frontend using mock |
+| Loan & Funding           | ✅ Fully implemented | useLoanData                          | ⚠️ MOCK      | Backend ready, frontend using mock |
+| Revenue Strategy         | ✅ Fully implemented | useRevenueData                       | ⚠️ MOCK      | Backend ready, frontend using mock |
+| Financial Advisory       | ✅ Fully implemented | useFinancialAdvisoryData             | ⚠️ MOCK      | Backend ready, frontend using mock |
+| Pricing Strategy         | ✅ Fully implemented | usePricingData                       | ⚠️ MOCK      | Backend ready, frontend using mock |
+| Tax Compliance           | ✅ Fully implemented | useTaxData                           | ⚠️ MOCK      | Backend ready, frontend using mock |
+| Policy & Compliance      | ✅ Fully implemented | usePolicyEconomicData                | ⚠️ MOCK      | Backend ready, frontend using mock |
+| Inventory & Supply Chain | ✅ Fully implemented | useInventoryData, useSupplyChainData | ⚠️ MOCK      | Backend ready, frontend using mock |
 
 ### Backend API Server Configuration
 
 **Location**: `backend/backend_project/`
 
 **Files**:
+
 - `urls.py` - Main URL router (mounts all app endpoints)
 - `settings.py` - Django configuration
 - `wsgi.py` - WSGI application
@@ -2154,6 +2186,7 @@ VITE_DEV_MODE=true
 ```
 
 **Key Files**:
+
 - `src/hooks/useEconomicData.ts` - Reads VITE_API_BASE_URL, VITE_ECONOMIC_API_ENDPOINT, VITE_ECONOMIC_API_ENABLED
 - `src/hooks/useChatbot.ts` - Reads VITE_CHATBOT_BACKEND_URL
 - `src/hooks/useAgent.ts` - Reads VITE_CHATBOT_BACKEND_URL
@@ -2199,20 +2232,20 @@ docker-compose up --build
 
 ### Environment Variables Summary
 
-| Variable | Purpose | Default | Required |
-|----------|---------|---------|----------|
-| VITE_API_BASE_URL | Backend API base | http://localhost:8000 | Yes |
-| VITE_ECONOMIC_API_ENDPOINT | Economic API path | /api/economic | Yes |
-| VITE_ECONOMIC_API_ENABLED | Toggle economic API | true | No |
-| VITE_CHATBOT_BACKEND_URL | Chatbot API | http://localhost:8000 | Yes |
-| VITE_AUTH_API_BASE | Auth API | http://localhost:8000 | No |
-| VITE_ACCOUNTS_API_BASE | Accounts API | http://localhost:8000 | No |
-| VITE_DEV_MODE | Enable dev logging | false | No |
-| DJANGO_SECRET_KEY | Django secret | - | Yes (prod) |
-| DEBUG | Django debug mode | True | Yes |
-| ALLOWED_HOSTS | CORS hosts | localhost,127.0.0.1 | Yes |
-| GEMINI_API_KEY | Google Gemini API | - | No |
-| GROQ_API_KEY | Groq API (optional) | - | No |
+| Variable                   | Purpose             | Default               | Required   |
+| -------------------------- | ------------------- | --------------------- | ---------- |
+| VITE_API_BASE_URL          | Backend API base    | http://localhost:8000 | Yes        |
+| VITE_ECONOMIC_API_ENDPOINT | Economic API path   | /api/economic         | Yes        |
+| VITE_ECONOMIC_API_ENABLED  | Toggle economic API | true                  | No         |
+| VITE_CHATBOT_BACKEND_URL   | Chatbot API         | http://localhost:8000 | Yes        |
+| VITE_AUTH_API_BASE         | Auth API            | http://localhost:8000 | No         |
+| VITE_ACCOUNTS_API_BASE     | Accounts API        | http://localhost:8000 | No         |
+| VITE_DEV_MODE              | Enable dev logging  | false                 | No         |
+| DJANGO_SECRET_KEY          | Django secret       | -                     | Yes (prod) |
+| DEBUG                      | Django debug mode   | True                  | Yes        |
+| ALLOWED_HOSTS              | CORS hosts          | localhost,127.0.0.1   | Yes        |
+| GEMINI_API_KEY             | Google Gemini API   | -                     | No         |
+| GROQ_API_KEY               | Groq API (optional) | -                     | No         |
 
 ---
 
@@ -2221,6 +2254,7 @@ docker-compose up --build
 ### Module-by-Module Summary
 
 #### 1. Economic Forecast Module
+
 - **Backend Path**: `backend/economic_forecast/`
 - **API Prefix**: `/api/economic/`
 - **Resources**: metrics, news, forecasts, events
@@ -2229,6 +2263,7 @@ docker-compose up --build
 - **Query Params**: `context=` to filter by context
 
 #### 2. Business Forecast Module
+
 - **Backend Path**: `backend/business_forecast/`
 - **API Prefix**: `/api/business/`
 - **Resources**: customer-profiles, revenue-projections, cost-structures, cash-flow-forecasts, kpis, scenario-plannings, documents
@@ -2236,12 +2271,14 @@ docker-compose up --build
 - **Special**: Document upload with FormData, file storage, deletion
 
 #### 3. Market Analysis Module
+
 - **Backend Path**: `backend/market_analysis/`
 - **API Prefix**: `/api/market/`
 - **Resources**: market-segments, competitors, market-trends
 - **Frontend**: `useMarketData()` hook (mock data)
 
 #### 4. Loan & Funding Module
+
 - **Backend Path**: `backend/loan_funding/`
 - **API Prefix**: `/api/loan/`
 - **Resources**: loan-eligibility, funding-options, loan-fees, loan-comparisons, business-plans, funding-strategy, investor-matches, watchlists
@@ -2249,18 +2286,21 @@ docker-compose up --build
 - **Special**: LoanComparison includes related LoanFee objects
 
 #### 5. Revenue Strategy Module
+
 - **Backend Path**: `backend/revenue_strategy/`
 - **API Prefix**: `/api/revenue/`
 - **Resources**: revenue-streams, revenue-scenarios, churn-analyses, upsell-opportunities, revenue-metrics, channel-performances
 - **Frontend**: `useRevenueData()` hook (mock data)
 
 #### 6. Financial Advisory Module
+
 - **Backend Path**: `backend/financial_advisory/`
 - **API Prefix**: `/api/financial/`
 - **Resources**: budget-forecasts, cash-flow-projections, scenario-tests, risk-assessments, performance-drivers, advisory-insights, liquidity-metrics
 - **Frontend**: `useFinancialAdvisoryData()` hook (mock data)
 
 #### 7. Pricing Strategy Module
+
 - **Backend Path**: `backend/pricing_strategy/`
 - **API Prefix**: `/api/pricing/`
 - **Resources**: price-settings, pricing-rules, price-forecasts
@@ -2268,6 +2308,7 @@ docker-compose up --build
 - **Special**: `/api/pricing/status/` endpoint for health check
 
 #### 8. Tax Compliance Module
+
 - **Backend Path**: `backend/tax_compliance/`
 - **API Prefix**: `/api/tax/`
 - **Resources**: tax-records, compliance-reports
@@ -2275,18 +2316,21 @@ docker-compose up --build
 - **Special**: Root endpoint `/api/tax/` returns API documentation
 
 #### 9. Policy & Compliance Module
+
 - **Backend Path**: `backend/policy/`
 - **API Prefix**: `/api/policy/`
 - **Resources**: external-policies, internal-policies, policy-reports, economic-indicators, internal-impacts, strategy-recommendations
 - **Frontend**: `usePolicyEconomicData()` hook (mock data)
 
 #### 10. Inventory & Supply Chain Module
+
 - **Backend Path**: `backend/inventory_supply_chain/`
 - **API Prefix**: `/api/inventory/`
 - **Resources**: inventory-items, stock-movements, demand-forecasts, inventory-valuations, suppliers, procurement-orders, warehouse-operations, logistics-metrics, disruption-risks, sustainability-metrics
 - **Frontend**: `useInventoryData()`, `useSupplyChainData()` hooks (mock data)
 
 #### 11. Chatbot & Agent Module
+
 - **Backend Path**: `backend/chatbot/`
 - **API Prefix**: `/chatbot/`
 - **Resources**: messages, conversations, module-conversations, economic-tools
@@ -2396,13 +2440,13 @@ To connect a module from mock to real backend:
 
 ### Common Issues
 
-| Issue | Solution |
-|-------|----------|
-| API calls return 404 | Check backend server is running on correct port, URL env vars are correct |
-| CORS errors | Ensure Django CORS_ALLOWED_ORIGINS includes frontend URL |
-| Environment variables not loading | Check `.env` file in root directory, restart dev server |
-| Mock data showing instead of real data | Check if API is reachable, check browser console for fetch errors |
-| Agent not responding | Verify Gemini API key set (GEMINI_API_KEY), check backend logs |
+| Issue                                  | Solution                                                                  |
+| -------------------------------------- | ------------------------------------------------------------------------- |
+| API calls return 404                   | Check backend server is running on correct port, URL env vars are correct |
+| CORS errors                            | Ensure Django CORS_ALLOWED_ORIGINS includes frontend URL                  |
+| Environment variables not loading      | Check `.env` file in root directory, restart dev server                   |
+| Mock data showing instead of real data | Check if API is reachable, check browser console for fetch errors         |
+| Agent not responding                   | Verify Gemini API key set (GEMINI_API_KEY), check backend logs            |
 
 ### Debugging Tips
 
