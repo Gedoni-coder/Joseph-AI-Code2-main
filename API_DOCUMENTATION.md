@@ -82,6 +82,764 @@
 
 ---
 
+## Frontend Architecture
+
+### Frontend Technology Stack
+
+**Framework & Build Tools**:
+- React 18 with TypeScript
+- React Router 6 (SPA mode)
+- Vite (bundler & dev server)
+- TailwindCSS 3 (utility-first CSS)
+
+**UI Components & Libraries**:
+- Radix UI (accessible primitives)
+- Class Variance Authority (CVA) (component variants)
+- Lucide React (icons)
+- Sonner (toast notifications)
+- React Query (data caching - available but partially used)
+
+**State Management**:
+- React Hooks (useState, useEffect, useContext)
+- Custom Hooks for domain data (useBusinessData, useEconomicData, etc.)
+- React Context (Auth, Company Info)
+- localStorage (persistence)
+
+**HTTP Client**:
+- Fetch API (no axios)
+- Environment-based base URLs
+
+### Frontend Directory Structure
+
+```
+src/
+├── App.tsx                    # Root component with routing, providers
+├── main.tsx                   # Entry point
+├── index.css                  # Global styles, CSS variables, Tailwind directives
+├── vite-env.d.ts             # Vite environment type definitions
+│
+├── pages/                     # Page components (~40+ pages)
+│   ├── Index.tsx             # Economic indicators dashboard
+│   ├── BusinessForecast.tsx   # Business forecasting page
+│   ├── MarketCompetitiveAnalysis.tsx  # Market & competitive analysis
+│   ├── LoanFunding.tsx        # Loan research hub
+│   ├── RevenueStrategy.tsx    # Revenue forecasting
+│   ├── FinancialAdvisory.tsx  # Financial planning
+│   ├── InventorySupplyChain.tsx  # Inventory management
+│   ├── PricingStrategy.tsx    # Pricing strategies
+│   ├── TaxCompliance.tsx      # Tax & compliance
+│   ├── Landing.tsx            # Product landing page
+│   ├── Onboarding.tsx         # Company setup flow
+│   ├── SignUp.tsx / Login.tsx # Authentication pages
+│   ├── CompanySettings.tsx    # Settings page
+│   ├── DocumentManager.tsx    # Document upload/management
+│   ├── AllReports.tsx         # Reports dashboard
+│   ├── infrastructure/        # Infrastructure module pages
+│   ├── learn/                 # Learning/LMS pages
+│   └── ...more pages
+│
+├── components/
+│   ├── ui/                    # Design system components
+│   │   ├── button.tsx         # Button component (with variants)
+│   │   ├── card.tsx           # Card container
+│   │   ├── input.tsx          # Input fields
+│   │   ├── tabs.tsx           # Tab navigation
+│   │   ├── table.tsx          # Data tables
+│   │   ├── dialog.tsx         # Modal dialogs
+│   │   ├── popover.tsx        # Popover tooltips
+│   │   ├── module-header.tsx  # Module page header
+│   │   ├── module-navigation.tsx  # Module nav tabs
+│   │   ├── loading-spinner.tsx    # Loading indicator
+│   │   ├── toast.tsx / toaster.tsx  # Toast notifications
+│   │   ├── badge.tsx          # Badges/tags
+│   │   ├── select.tsx         # Select/dropdown
+│   │   ├── chart.tsx          # Chart wrapper
+│   │   └── ...40+ more UI components
+│   │
+│   ├── chatbot/               # Chatbot & AI components
+│   │   ├── chatbot-container.tsx  # Main chat UI
+│   │   ├── chat-interface.tsx
+│   │   ├── agent-panel.tsx    # Agent control panel
+│   │   ├── tool-modal.tsx
+│   │   ├── tools-dock.tsx
+│   │   └── module-context-switcher.tsx
+│   │
+│   ├── business/              # Business forecast components
+│   │   ├── customer-profile.tsx
+│   │   ├── revenue-projections.tsx
+│   │   ├── kpi-dashboard.tsx
+│   │   ├── documents-section.tsx
+│   │   ├── scenario-planning.tsx
+│   │   └── ...more
+│   │
+│   ├── market/                # Market analysis components
+│   │   ├── market-analysis.tsx
+│   │   ├── report-notes.tsx
+│   │   └── action-plan-dialog.tsx
+│   │
+│   ├── competitive/           # Competitive analysis components
+│   │   ├── competitive-analysis.tsx
+│   │   └── competitive-strategy.tsx
+│   │
+│   ├── financial/             # Financial advisory components
+│   │   ├── budget-validation.tsx
+│   │   ├── cash-flow-planning.tsx
+│   │   ├── risk-assessment.tsx
+│   │   ├── advisory-insights.tsx
+│   │   └── ...more
+│   │
+│   ├── loan/                  # Loan & funding components
+│   │   ├── loan-eligibility.tsx
+│   │   ├── funding-options.tsx
+│   │   ├── loan-comparison.tsx
+│   │   ├── investor-matching.tsx
+│   │   └── ...more
+│   │
+│   ├── revenue/               # Revenue strategy components
+│   │   ├── revenue-streams.tsx
+│   │   ├── churn-analysis.tsx
+│   │   ├── revenue-forecasting.tsx
+│   │   └── upsell-opportunities.tsx
+│   │
+│   ├── inventory/             # Inventory & supply chain components
+│   │   ├── stock-monitoring.tsx
+│   │   ├── demand-forecasting.tsx
+│   │   ├── inventory-analytics.tsx
+│   │   └── valuation-tracking.tsx
+│   │
+│   ├── policy/                # Policy analysis components
+│   │   ├── external-policy-analysis.tsx
+│   │   ├── internal-policy-analysis.tsx
+│   │   ├── policy-watchtower.tsx
+│   │   └── ...more
+│   │
+│   ├── pricing/               # Pricing strategy components
+│   │   ├── pricing-strategies.tsx
+│   │   ├── competitive-analysis.tsx
+│   │   └── dynamic-pricing.tsx
+│   │
+│   ├── tax/                   # Tax compliance components
+│   │   ├── smart-tax-calculator.tsx
+│   │   ├── compliance-calendar.tsx
+│   │   └── tax-recommendations.tsx
+│   │
+│   ├── conversation/          # Conversation components
+│   │   └── module-conversation.tsx
+│   │
+│   └── module/                # Generic module components
+│       ├── summary-section.tsx
+│       └── recommendation-section.tsx
+│
+├── hooks/                     # Custom React hooks
+│   ├── useEconomicData.ts     # Economic data hook (CONNECTED)
+│   ├── useChatbot.ts          # Chatbot state & actions (CONNECTED)
+│   ├── useAgent.ts            # Agent control (CONNECTED)
+│   ├── useBusinessData.ts     # Business data (mock)
+│   ├── useMarketData.ts       # Market data (mock)
+│   ├── useCompetitiveData.ts  # Competitive data (mock)
+│   ├── useLoanData.ts         # Loan data (mock)
+│   ├── useRevenueData.ts      # Revenue data (mock)
+│   ├── useFinancialAdvisoryData.ts  # Financial data (mock)
+│   ├── useInventoryData.ts    # Inventory data (mock)
+│   ├── useSupplyChainData.ts  # Supply chain data (mock)
+│   ├── usePricingData.ts      # Pricing data (mock)
+│   ├── useTaxData.ts          # Tax data (mock)
+│   ├── usePolicyEconomicData.ts  # Policy data (mock)
+│   ├── useConversationalMode.ts  # Conversation mode toggle
+│   ├── use-toast.ts           # Toast notification store
+│   └── use-mobile.tsx         # Mobile detection
+│
+├── lib/                       # Utilities & helpers
+│   ├── utils.ts               # cn() utility (Tailwind merge)
+│   ├── ai.ts                  # AI orchestration (Groq/OpenAI/Gemini)
+│   ├── app-context.ts         # Get app context for AI grounding
+│   ├── company-context.tsx    # Company info provider & hook
+│   ├── auth-context.tsx       # Authentication provider & hook
+│   ├── web-scraper.ts         # URL extraction & web page fetching
+│   ├── web-search.ts          # Web search integration
+│   ├── api/
+│   │   ├── auth-service.ts    # Login/signup API calls
+│   │   └── accounts-service.ts  # Account API calls
+│   ├── *-data.ts files        # Mock data (business-forecast-data, economic-data, etc.)
+│   ├── *-generator.ts files   # Generators (pdf-generator, business-plan-content-generator, etc.)
+│   ├── feasibility.ts         # Business feasibility helpers
+│   └── ...other helpers
+│
+└── vite-env.d.ts              # Environment variable types
+```
+
+### Pages Overview
+
+**Dashboard Pages** (main entry points):
+
+| Page | Route | Purpose | Data Hook | Status |
+|------|-------|---------|-----------|--------|
+| Index | `/economic-indicators` | Economic indicators dashboard | useEconomicData | ✅ Connected |
+| BusinessForecast | `/business-forecast` | Business forecasting | useBusinessData | ⚠️ Mock |
+| MarketCompetitiveAnalysis | `/market-competitive-analysis` | Market & competitive analysis | useMarketData, useCompetitiveData | ⚠️ Mock |
+| LoanFunding | `/loan-research` | Loan research hub | useLoanData | ⚠️ Mock |
+| RevenueStrategy | `/revenue-forecasting` | Revenue forecasting | useRevenueData | ⚠️ Mock |
+| FinancialAdvisory | `/financial-advisory` | Financial planning & advisory | useFinancialAdvisoryData | ⚠️ Mock |
+| InventorySupplyChain | `/supply-chain-analytics` | Inventory & supply chain | useInventoryData, useSupplyChainData | ⚠️ Mock |
+| PricingStrategy | `/pricing-strategies` | Pricing strategies | usePricingData | ⚠️ Mock |
+| TaxCompliance | `/tax-compliance` | Tax & regulatory compliance | useTaxData | ⚠️ Mock |
+
+**Special Pages**:
+
+| Page | Route | Purpose |
+|------|-------|---------|
+| Landing | `/home` (protected) | Product landing & module navigation |
+| Onboarding | `/onboarding` | Company setup flow |
+| SignUp | `/signup` | User registration |
+| Login | `/login` | User authentication |
+| CompanySettings | `/company-settings` | Company info editor |
+| DocumentManager | `/document-manager` | Document upload/library |
+| AllReports | `/all-reports` | Reports dashboard |
+| ChatbotTest | `/chatbot-test` | AI testing playground |
+
+### UI Component Library
+
+The app includes a comprehensive set of reusable UI components under `src/components/ui/`:
+
+**Form Components**:
+- Input, Textarea
+- Select, MultiSelect
+- Checkbox, RadioGroup, Switch
+- Form (wrapper for react-hook-form)
+
+**Layout Components**:
+- Card (container)
+- Button (with variants: primary, secondary, ghost, outline, destructive)
+- Badge (tags/labels)
+- Separator (divider)
+- Sidebar, Drawer, Sheet
+- Dialog (modal)
+- Popover, HoverCard
+- Tooltip
+
+**Data Display**:
+- Table (data tables with sorting/filtering)
+- Chart (wrapper for chart libraries)
+- Pagination
+- Accordion
+- Tabs
+- Progress
+- Breadcrumb
+
+**Specialized**:
+- ModuleHeader (page title + breadcrumbs + actions)
+- ModuleNavigation (tabs for module sections)
+- LoadingSpinner (loading indicator)
+- ConnectionStatus (online/offline indicator)
+- Speedometer (gauge visualization)
+- NavigationMenu
+
+**Notifications**:
+- Toast (custom in-memory store in use-toast.ts)
+- Toaster (renders toast stack)
+- Sonner (alternative toast library)
+
+### Component Patterns
+
+**UI Component Pattern** (e.g., Button):
+
+```typescript
+// src/components/ui/button.tsx
+import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "@/lib/utils"
+
+const buttonVariants = cva(
+  "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
+        outline: "border border-input bg-background hover:bg-accent",
+        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+      },
+      size: {
+        default: "h-10 px-4 py-2",
+        sm: "h-9 rounded-md px-3",
+        lg: "h-11 rounded-md px-8",
+        icon: "h-10 w-10",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  }
+)
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, ...props }, ref) => (
+    <button
+      className={cn(buttonVariants({ variant, size, className }))}
+      ref={ref}
+      {...props}
+    />
+  )
+)
+```
+
+**Domain Component Pattern** (e.g., RevenueProjections):
+
+```typescript
+// src/components/business/revenue-projections.tsx
+import { Card } from "@/components/ui/card"
+import { Chart } from "@/components/ui/chart"
+import type { RevenueProjection } from "@/hooks/useBusinessData"
+
+interface RevenueProjectionsProps {
+  data: RevenueProjection[]
+  isLoading?: boolean
+  onUpdate?: (id: string, value: number) => void
+}
+
+export function RevenueProjections({
+  data,
+  isLoading,
+  onUpdate
+}: RevenueProjectionsProps) {
+  return (
+    <Card>
+      <div className="p-6">
+        <h3 className="text-lg font-semibold mb-4">Revenue Projections</h3>
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <Chart data={data} type="line" />
+        )}
+      </div>
+    </Card>
+  )
+}
+```
+
+**Page Pattern** (e.g., BusinessForecast):
+
+```typescript
+// src/pages/BusinessForecast.tsx
+import { useBusinessData } from "@/hooks/useBusinessData"
+import { ModuleHeader } from "@/components/ui/module-header"
+import { ModuleNavigation } from "@/components/ui/module-navigation"
+import { RevenueProjections } from "@/components/business/revenue-projections"
+import { KPIDashboard } from "@/components/business/kpi-dashboard"
+
+export function BusinessForecast() {
+  const {
+    revenueProjections,
+    kpis,
+    isLoading,
+    error,
+    updateKPI
+  } = useBusinessData()
+
+  if (isLoading) return <LoadingSpinner />
+  if (error) return <ErrorAlert error={error} />
+
+  return (
+    <div className="space-y-6">
+      <ModuleHeader
+        title="Business Forecast"
+        description="Revenue projections and KPI tracking"
+      />
+
+      <ModuleNavigation
+        tabs={[
+          { label: "Overview", value: "overview" },
+          { label: "Projections", value: "projections" },
+          { label: "KPIs", value: "kpis" },
+        ]}
+      />
+
+      <RevenueProjections data={revenueProjections} />
+      <KPIDashboard data={kpis} onUpdate={updateKPI} />
+    </div>
+  )
+}
+```
+
+### Styling System
+
+**Design Tokens** (src/index.css):
+
+```css
+@layer base {
+  :root {
+    /* Colors - HSL format for runtime theme switching */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --primary: 221.2 83.2% 53.3%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --accent: 217.2 91.2% 59.8%;
+    --accent-foreground: 210 40% 98%;
+    --success: 142.4 71.8% 29.2%;
+    --warning: 38.6 92.1% 50.2%;
+    --destructive: 0 84.2% 60.2%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    /* ...more dark mode variables */
+  }
+}
+
+@layer components {
+  .text-primary { @apply text-[hsl(var(--primary))]; }
+  /* Custom utility classes */
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+**TailwindCSS Configuration** (tailwind.config.ts):
+
+```typescript
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: "hsl(var(--primary))",
+        secondary: "hsl(var(--secondary))",
+        // ...more colors
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+    },
+  },
+}
+```
+
+**Theme Switching**:
+
+```typescript
+// In components or hooks
+function setTheme(theme: 'light' | 'dark') {
+  if (theme === 'dark') {
+    document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+  }
+  localStorage.setItem('theme', theme)
+}
+```
+
+### Routing System
+
+**Route Configuration** (src/App.tsx):
+
+```typescript
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { TooltipProvider } from '@/components/ui/tooltip'
+import { Toaster } from '@/components/ui/toaster'
+import { AuthProvider } from '@/lib/auth-context'
+import { CompanyInfoProvider } from '@/lib/company-context'
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <AuthProvider>
+          <CompanyInfoProvider>
+            <BrowserRouter>
+              <Routes>
+                {/* Public routes */}
+                <Route path="/" element={<PrimaryLanding />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/login" element={<Login />} />
+
+                {/* Protected routes */}
+                <Route path="/home" element={<ProtectedHomeRoute />} />
+                <Route path="/onboarding" element={<Onboarding />} />
+                <Route path="/company-settings" element={<CompanySettings />} />
+
+                {/* Module routes */}
+                <Route path="/economic-indicators" element={<Index />} />
+                <Route path="/business-forecast" element={<BusinessForecast />} />
+                <Route path="/market-competitive-analysis" element={<MarketCompetitiveAnalysis />} />
+                <Route path="/loan-research" element={<LoanFunding />} />
+                <Route path="/revenue-forecasting" element={<RevenueStrategy />} />
+                <Route path="/financial-advisory" element={<FinancialAdvisory />} />
+                <Route path="/pricing-strategies" element={<PricingStrategy />} />
+                <Route path="/supply-chain-analytics" element={<InventorySupplyChain />} />
+                <Route path="/tax-compliance" element={<TaxCompliance />} />
+
+                {/* Special routes */}
+                <Route path="/document-manager" element={<DocumentManager />} />
+                <Route path="/all-reports" element={<AllReports />} />
+
+                {/* Infrastructure module routes */}
+                {infraModules.map((module) => (
+                  <Route
+                    key={module}
+                    path={`/infrastructure/${module}`}
+                    element={
+                      infraRouteComp[module] ?
+                        React.createElement(infraRouteComp[module]) :
+                        <InfraModulePage module={module} />
+                    }
+                  />
+                ))}
+
+                {/* Catch-all */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+
+              <ChatbotContainer />
+              <Toaster />
+            </BrowserRouter>
+          </CompanyInfoProvider>
+        </AuthProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  )
+}
+
+// Protected route example
+function ProtectedHomeRoute() {
+  const { isSetup } = useCompanyInfo()
+  if (!isSetup) return <Navigate to="/onboarding" />
+  return <Landing />
+}
+```
+
+### State Management Patterns
+
+**1. Local Component State**:
+
+```typescript
+function MyComponent() {
+  const [count, setCount] = useState(0)
+  const [isOpen, setIsOpen] = useState(false)
+  // ...
+}
+```
+
+**2. Custom Data Hook**:
+
+```typescript
+// src/hooks/useBusinessData.ts
+export function useBusinessData() {
+  const [kpis, setKpis] = useState<KPI[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<Error | null>(null)
+
+  const updateKPI = async (id: string, value: number) => {
+    try {
+      // Make API call or local update
+      setKpis(prev => prev.map(k => k.id === id ? { ...k, current_value: value } : k))
+    } catch (err) {
+      setError(err as Error)
+    }
+  }
+
+  useEffect(() => {
+    // Initial fetch
+  }, [])
+
+  return { kpis, isLoading, error, updateKPI, refreshData: () => {} }
+}
+
+// Usage in page
+function BusinessForecast() {
+  const { kpis, updateKPI } = useBusinessData()
+  return <KPIDashboard data={kpis} onUpdate={updateKPI} />
+}
+```
+
+**3. React Context**:
+
+```typescript
+// src/lib/auth-context.tsx
+interface AuthContextType {
+  user: User | null
+  isAuthenticated: boolean
+  isLoading: boolean
+  login: (email: string, password: string) => Promise<void>
+  logout: () => void
+}
+
+const AuthContext = createContext<AuthContextType | null>(null)
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<User | null>(null)
+  // ... state logic
+
+  return (
+    <AuthContext.Provider value={{ user, isAuthenticated, isLoading, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  )
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext)
+  if (!context) throw new Error('useAuth must be used within AuthProvider')
+  return context
+}
+```
+
+**4. localStorage Persistence**:
+
+```typescript
+// Company info persisted to localStorage
+const STORAGE_KEY = 'joseph:companyInfo'
+
+export function useCompanyInfo() {
+  const [companyInfo, setCompanyInfo] = useState(() => {
+    const saved = localStorage.getItem(STORAGE_KEY)
+    return saved ? JSON.parse(saved) : null
+  })
+
+  const updateCompanyInfo = (info: Partial<CompanyInfo>) => {
+    setCompanyInfo(prev => {
+      const updated = { ...prev, ...info }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
+      return updated
+    })
+  }
+
+  return { companyInfo, updateCompanyInfo, isSetup: !!companyInfo }
+}
+```
+
+### Data Flow Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      USER INTERACTION                        │
+│                    (Click, Input, etc.)                     │
+└──────────────────────────┬──────────────────────────────────┘
+                           │
+        ┌──────────────────┴──────────────────┐
+        │                                     │
+        ▼                                     ▼
+  ┌──────────────┐                  ┌────────────────┐
+  │  Component   │                  │  Custom Hook   │
+  │  onClick()   │                  │  (Page level)  │
+  └──────┬───────┘                  └────────┬───────┘
+         │                                    │
+         └──────────────────┬─────────────────┘
+                            │
+                 ┌──────────▼───────────┐
+                 │  State Update        │
+                 │  (useState)          │
+                 └──────────┬───────────┘
+                            │
+         ┌──────────────────┼──────────────────┐
+         │                  │                  │
+         ▼                  ▼                  ▼
+    ┌─────────┐        ┌────────┐        ┌──────────┐
+    │ localStorage  │  │ Context │  │ Component    │
+    │ (persistence) │  │ (shared) │  │ (local)      │
+    └─────────┘        └────────┘        └──────────┘
+         │                  │                  │
+         └──────────────────┼──────────────────┘
+                            │
+                 ┌──────────▼───────────┐
+                 │ Component Re-render   │
+                 │ (with new state)      │
+                 └──────────┬───────────┘
+                            │
+                            ▼
+                    ┌───────────────┐
+                    │  Updated UI   │
+                    └───────────────┘
+```
+
+### Key Conventions
+
+**File Naming**:
+- Components: PascalCase (e.g., `BusinessForecast.tsx`)
+- Utilities: camelCase (e.g., `utils.ts`, `web-scraper.ts`)
+- Hooks: camelCase with `use` prefix (e.g., `useBusinessData.ts`)
+- Page components: PascalCase (e.g., `Index.tsx`, `Landing.tsx`)
+
+**Component Props**:
+```typescript
+interface ComponentProps {
+  // Data props
+  data: SomeType[]
+  isLoading?: boolean
+  error?: Error | null
+
+  // Event handlers (on prefix)
+  onClick?: () => void
+  onChange?: (value: string) => void
+  onUpdate?: (id: string, value: any) => void
+
+  // Style/Display
+  className?: string
+  variant?: 'default' | 'secondary'
+
+  // Children
+  children?: React.ReactNode
+}
+```
+
+**Hook Return Value**:
+```typescript
+interface UseXDataReturn {
+  // Data
+  data: DataType[]
+
+  // State
+  isLoading: boolean
+  error: Error | null
+  isConnected?: boolean
+
+  // Methods
+  refreshData: () => Promise<void>
+  reconnect?: () => Promise<void>
+  updateItem?: (id: string, value: any) => Promise<void>
+}
+```
+
+**Error Handling Pattern**:
+```typescript
+try {
+  const response = await fetch(url)
+  if (!response.ok) throw new Error(`HTTP ${response.status}`)
+  const data = await response.json()
+  setData(data)
+} catch (err) {
+  console.error('Error:', err)
+  setError(err as Error)
+  // Fallback to mock data or empty state
+  setData([])
+} finally {
+  setIsLoading(false)
+}
+```
+
+---
+
 ## Backend Module Structure
 
 ### 1. Economic Forecast Module (`/api/economic/`)
