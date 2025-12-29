@@ -78,7 +78,7 @@ export default function PricingStrategy() {
       <ModuleHeader
         icon={<Target className="h-6 w-6" />}
         title="Pricing Strategy"
-        description="E-buy dynamic pricing models, competitive analysis, and optimization strategies for maximum profitability in the e-commerce marketplace"
+        description={`${companyName} dynamic pricing models, competitive analysis, and optimization strategies for maximum profitability in the e-commerce marketplace`}
         isConnected={isConnected}
         lastUpdated={lastUpdated}
         onReconnect={refreshData}
