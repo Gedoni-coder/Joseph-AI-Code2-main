@@ -259,7 +259,6 @@ export default function FinancialAdvisory() {
                               </p>
                               <p className="text-xs text-muted-foreground">
                                 Consider refining your analysis parameters
-                                ROI
                               </p>
                             </div>
                           </div>
@@ -269,11 +268,10 @@ export default function FinancialAdvisory() {
                             <Target className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium">
-                                Cash Flow Strategy
+                                Performance Insight
                               </p>
                               <p className="text-xs text-muted-foreground">
-                                Consider negotiating 45-day payment terms with
-                                suppliers
+                                Analysis accuracy has improved significantly
                               </p>
                             </div>
                           </div>
@@ -281,7 +279,7 @@ export default function FinancialAdvisory() {
                       </div>
                       <Link to="/ai-insights">
                         <Button variant="outline" className="w-full" size="sm">
-                          Generate More Ideas
+                          Get More Advice
                         </Button>
                       </Link>
                     </div>
