@@ -7,6 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LoadingOverlay } from "@/components/ui/loading-spinner";
 import ModuleHeader from "@/components/ui/module-header";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { useCompanyInfo } from "@/lib/company-context";
+import { getCompanyName } from "@/lib/get-company-name";
 import { useBusinessData } from "@/hooks/useBusinessData";
 import { CustomerProfileComponent } from "@/components/business/customer-profile";
 import { RevenueProjections } from "@/components/business/revenue-projections";
@@ -40,6 +42,9 @@ import {
 } from "lucide-react";
 
 const BusinessForecast = () => {
+  const { companyInfo } = useCompanyInfo();
+  const companyName = getCompanyName(companyInfo?.companyName);
+
   const {
     customerProfiles,
     revenueProjections,
@@ -65,7 +70,7 @@ const BusinessForecast = () => {
         <ModuleHeader
           icon={<TrendingUp className="h-6 w-6" />}
           title="Business Forecasting"
-          description="Advanced predictive analytics for E-buy revenue projections, growth forecasts, and comprehensive business planning"
+          description={`Advanced predictive analytics for ${companyName} revenue projections, growth forecasts, and comprehensive business planning`}
           isConnected={isConnected}
           lastUpdated={lastUpdated}
           onReconnect={reconnect}
@@ -150,7 +155,7 @@ const BusinessForecast = () => {
                 <TabsList className="contents">
                   <TabsTrigger value="overview" className="w-full justify-center">Overview</TabsTrigger>
                   <TabsTrigger value="summary-recommendation" className="w-full justify-center">
-                    Summary & Recommendation
+                    Summary & Rec
                   </TabsTrigger>
                   <TabsTrigger value="tables" className="w-full justify-center">Tables</TabsTrigger>
                   <TabsTrigger value="revenue" className="w-full justify-center">Revenue</TabsTrigger>

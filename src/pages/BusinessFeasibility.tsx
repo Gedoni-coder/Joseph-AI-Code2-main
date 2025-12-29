@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ModuleHeader from "@/components/ui/module-header";
+import { useCompanyInfo } from "@/lib/company-context";
+import { getCompanyName } from "@/lib/get-company-name";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -208,6 +210,9 @@ Include: Risk, Time Value (NPV intuition), ROI Time, Length Time Factor, Interes
 
 export default function BusinessFeasibility() {
   const navigate = useNavigate();
+  const { companyInfo } = useCompanyInfo();
+  const companyName = getCompanyName(companyInfo?.companyName);
+
   const [ideaInput, setIdeaInput] = useState("");
   const [reports, setReports] = useState<FeasibilityReport[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -299,7 +304,7 @@ export default function BusinessFeasibility() {
       <ModuleHeader
         icon={<CheckCircle className="h-6 w-6" />}
         title="Business Plan and Feasibility Analysis"
-        description="Evaluate and analyze business ideas for E-buy expansion, new categories, and strategic initiatives"
+        description={`Evaluate and analyze business ideas for ${companyName} expansion, new categories, and strategic initiatives`}
         showConnectionStatus={false}
       />
 

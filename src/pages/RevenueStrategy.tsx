@@ -12,6 +12,8 @@ import { Badge } from "@/components/ui/badge";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ConnectionStatus } from "@/components/ui/connection-status";
 import ModuleHeader from "@/components/ui/module-header";
+import { useCompanyInfo } from "@/lib/company-context";
+import { getCompanyName } from "@/lib/get-company-name";
 import { useRevenueData } from "@/hooks/useRevenueData";
 import { RevenueStreams } from "@/components/revenue/revenue-streams";
 import { RevenueForecasting } from "@/components/revenue/revenue-forecasting";
@@ -33,6 +35,9 @@ import {
 import { Link } from "react-router-dom";
 
 export default function RevenueStrategy() {
+  const { companyInfo } = useCompanyInfo();
+  const companyName = getCompanyName(companyInfo?.companyName);
+
   const {
     streams: initialStreams,
     scenarios,
@@ -82,7 +87,7 @@ export default function RevenueStrategy() {
       <ModuleHeader
         icon={<TrendingUp className="h-6 w-6" />}
         title="Revenue Strategy & Analysis"
-        description="Grow and protect E-buy revenue across marketplace products, seller commissions, and advertising channels"
+        description={`Grow and protect ${companyName} revenue across marketplace products, seller commissions, and advertising channels`}
         isConnected={isConnected}
         lastUpdated={lastUpdated}
         onReconnect={refreshData}

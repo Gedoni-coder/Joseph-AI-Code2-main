@@ -44,6 +44,7 @@ import {
   Bell,
   X,
   Activity,
+  HelpCircle,
 } from "lucide-react";
 
 export default function FinancialAdvisory() {
@@ -217,7 +218,7 @@ export default function FinancialAdvisory() {
                   </PopoverContent>
                 </Popover>
 
-                {/* Ideas Tab */}
+                {/* Advice Tab */}
                 <Popover open={ideasOpen} onOpenChange={setIdeasOpen}>
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -227,19 +228,19 @@ export default function FinancialAdvisory() {
                           size="sm"
                           className="flex items-center gap-2"
                         >
-                          <Lightbulb className="h-4 w-4" />
-                          <span className="hidden sm:inline">Ideas</span>
+                          <HelpCircle className="h-4 w-4" />
+                          <span className="hidden sm:inline">Advice</span>
                         </Button>
                       </PopoverTrigger>
                     </TooltipTrigger>
                     <TooltipContent>
-                      <p>AI-powered financial insights</p>
+                      <p>Get expert advice and recommendations</p>
                     </TooltipContent>
                   </Tooltip>
                   <PopoverContent className="w-80" align="end">
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <h4 className="font-semibold">Financial Ideas</h4>
+                        <h4 className="font-semibold">Advice</h4>
                         <Button
                           variant="ghost"
                           size="sm"
@@ -251,14 +252,13 @@ export default function FinancialAdvisory() {
                       <div className="space-y-3">
                         <div className="p-3 rounded-lg border bg-card">
                           <div className="flex items-start gap-3">
-                            <Lightbulb className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" />
+                            <HelpCircle className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium">
-                                Budget Optimization
+                                Optimization Opportunity
                               </p>
                               <p className="text-xs text-muted-foreground">
-                                Reallocate 8% from marketing to R&D for better
-                                ROI
+                                Consider refining your analysis parameters
                               </p>
                             </div>
                           </div>
@@ -268,11 +268,10 @@ export default function FinancialAdvisory() {
                             <Target className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium">
-                                Cash Flow Strategy
+                                Performance Insight
                               </p>
                               <p className="text-xs text-muted-foreground">
-                                Consider negotiating 45-day payment terms with
-                                suppliers
+                                Analysis accuracy has improved significantly
                               </p>
                             </div>
                           </div>
@@ -280,7 +279,7 @@ export default function FinancialAdvisory() {
                       </div>
                       <Link to="/ai-insights">
                         <Button variant="outline" className="w-full" size="sm">
-                          Generate More Ideas
+                          Get More Advice
                         </Button>
                       </Link>
                     </div>
@@ -313,9 +312,7 @@ export default function FinancialAdvisory() {
                 className="flex items-center gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
               >
                 <BarChart3 className="w-4 h-4" />
-                <span className="hidden sm:inline">
-                  Summary & Recommendation
-                </span>
+                <span className="hidden sm:inline">Summary & Rec</span>
                 <span className="sm:hidden">Summary</span>
               </TabsTrigger>
 

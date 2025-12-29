@@ -22,6 +22,8 @@ import { ProcurementTracking } from "@/components/supply-chain/procurement-track
 import { ProductionPlanning } from "@/components/supply-chain/production-planning";
 import { SupplyChainAnalytics } from "@/components/supply-chain/supply-chain-analytics";
 import ModuleHeader from "@/components/ui/module-header";
+import { useCompanyInfo } from "@/lib/company-context";
+import { getCompanyName } from "@/lib/get-company-name";
 import { SummaryRecommendationSection } from "@/components/module/summary-recommendation-section";
 import {
   Package,
@@ -40,6 +42,9 @@ import {
 import { Link } from "react-router-dom";
 
 export default function InventorySupplyChain() {
+  const { companyInfo } = useCompanyInfo();
+  const companyName = getCompanyName(companyInfo?.companyName);
+
   const {
     inventoryItems,
     stockMovements,
@@ -141,7 +146,7 @@ export default function InventorySupplyChain() {
       <ModuleHeader
         icon={<Package className="h-6 w-6" />}
         title="Inventory & Supply Chain Management"
-        description="E-buy comprehensive inventory management and supply chain optimization for marketplace fulfillment"
+        description={`${companyName} comprehensive inventory management and supply chain optimization for marketplace fulfillment`}
         isConnected={isConnected}
         lastUpdated={lastUpdated}
         onReconnect={refreshData}
@@ -166,7 +171,7 @@ export default function InventorySupplyChain() {
               value="summary-recommendation"
               className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
             >
-              Summary & Recommendation
+              Summary & Rec
             </TabsTrigger>
             <TabsTrigger
               value="stock-monitoring"

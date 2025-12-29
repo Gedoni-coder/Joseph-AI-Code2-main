@@ -10,6 +10,8 @@ import {
   DataFreshness,
 } from "@/components/ui/connection-status";
 import ModuleHeader from "@/components/ui/module-header";
+import { useCompanyInfo } from "@/lib/company-context";
+import { getCompanyName } from "@/lib/get-company-name";
 import { useTaxData } from "@/hooks/useTaxData";
 import { SmartTaxCalculator } from "@/components/tax/smart-tax-calculator";
 import { TaxRecommendations } from "@/components/tax/tax-recommendations";
@@ -31,6 +33,9 @@ import {
 } from "lucide-react";
 
 const TaxCompliance = () => {
+  const { companyInfo } = useCompanyInfo();
+  const companyName = getCompanyName(companyInfo?.companyName);
+
   const {
     calculations,
     recommendations,
@@ -80,7 +85,7 @@ const TaxCompliance = () => {
       <ModuleHeader
         icon={<Scale className="h-6 w-6" />}
         title="Tax & Compliance Module"
-        description="E-buy smart tax planning and automated compliance management for e-commerce operations"
+        description={`${companyName} smart tax planning and automated compliance management for e-commerce operations`}
         isConnected={isConnected}
         lastUpdated={lastUpdated}
         onReconnect={reconnect}

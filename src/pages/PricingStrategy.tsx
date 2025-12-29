@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import ModuleHeader from "@/components/ui/module-header";
+import { useCompanyInfo } from "@/lib/company-context";
+import { getCompanyName } from "@/lib/get-company-name";
 import { usePricingData } from "@/hooks/usePricingData";
 import { PricingStrategies } from "@/components/pricing/pricing-strategies";
 import { CompetitiveAnalysis } from "@/components/pricing/competitive-analysis";
@@ -31,6 +33,9 @@ import {
 import { Link } from "react-router-dom";
 
 export default function PricingStrategy() {
+  const { companyInfo } = useCompanyInfo();
+  const companyName = getCompanyName(companyInfo?.companyName);
+
   const {
     strategies,
     competitors,
@@ -73,7 +78,7 @@ export default function PricingStrategy() {
       <ModuleHeader
         icon={<Target className="h-6 w-6" />}
         title="Pricing Strategy"
-        description="E-buy dynamic pricing models, competitive analysis, and optimization strategies for maximum profitability in the e-commerce marketplace"
+        description={`${companyName} dynamic pricing models, competitive analysis, and optimization strategies for maximum profitability in the e-commerce marketplace`}
         isConnected={isConnected}
         lastUpdated={lastUpdated}
         onReconnect={refreshData}
@@ -97,7 +102,7 @@ export default function PricingStrategy() {
               value="summary-recommendation"
               className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
             >
-              Summary & Recommendation
+              Summary & Rec
             </TabsTrigger>
             <TabsTrigger
               value="strategies"

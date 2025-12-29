@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import ModuleHeader from "@/components/ui/module-header";
+import { useCompanyInfo } from "@/lib/company-context";
+import { getCompanyName } from "@/lib/get-company-name";
 import { useMarketData } from "@/hooks/useMarketData";
 import { useCompetitiveData } from "@/hooks/useCompetitiveData";
 import { MarketAnalysis } from "@/components/market/market-analysis";
@@ -34,6 +36,9 @@ import {
 import { Link } from "react-router-dom";
 
 export default function MarketCompetitiveAnalysis() {
+  const { companyInfo } = useCompanyInfo();
+  const companyName = getCompanyName(companyInfo?.companyName);
+
   const {
     marketSizes,
     customerSegments,
@@ -104,7 +109,7 @@ export default function MarketCompetitiveAnalysis() {
       <ModuleHeader
         icon={<BarChart3 className="h-6 w-6" />}
         title="Market Analysis"
-        description="E-buy competitive intelligence, e-commerce market trends, and strategic positioning analysis for informed business decisions"
+        description={`${companyName} competitive intelligence, e-commerce market trends, and strategic positioning analysis for informed business decisions`}
         isConnected={isConnected}
         lastUpdated={lastUpdated}
         onReconnect={refreshData}
@@ -129,7 +134,7 @@ export default function MarketCompetitiveAnalysis() {
               value="summary-recommendation"
               className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
             >
-              Summary & Recommendation
+              Summary & Rec
             </TabsTrigger>
             <TabsTrigger
               value="market"
