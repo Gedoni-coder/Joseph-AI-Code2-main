@@ -115,38 +115,38 @@ export default function PrimaryLanding() {
       </div>
 
       {/* Navigation */}
-      <nav className="relative z-40 flex items-center justify-between px-6 lg:px-12 py-6 backdrop-blur-sm border-b border-[#4d7fd9]/10">
-        <div className="text-2xl font-bold text-white">Joseph AI</div>
+      <nav className="relative z-40 flex items-center justify-between px-4 sm:px-6 lg:px-12 py-4 sm:py-6 backdrop-blur-sm border-b border-[#4d7fd9]/10">
+        <div className="text-lg sm:text-2xl font-bold text-white truncate">Joseph AI</div>
 
         <div className="hidden lg:flex items-center gap-8">
           <button
             onClick={() => scrollToSection("features")}
-            className="text-gray-300 hover:text-[#4d7fd9] transition-colors font-medium"
+            className="text-gray-300 hover:text-[#4d7fd9] transition-colors font-medium text-sm"
           >
             Features
           </button>
           <button
             onClick={() => scrollToSection("pricing")}
-            className="text-gray-300 hover:text-[#4d7fd9] transition-colors font-medium"
+            className="text-gray-300 hover:text-[#4d7fd9] transition-colors font-medium text-sm"
           >
             Pricing
           </button>
           <button
             onClick={() => scrollToSection("about")}
-            className="text-gray-300 hover:text-[#4d7fd9] transition-colors font-medium"
+            className="text-gray-300 hover:text-[#4d7fd9] transition-colors font-medium text-sm"
           >
             About
           </button>
           <button
             onClick={() => scrollToSection("contact")}
-            className="text-gray-300 hover:text-[#4d7fd9] transition-colors font-medium"
+            className="text-gray-300 hover:text-[#4d7fd9] transition-colors font-medium text-sm"
           >
             Contact
           </button>
         </div>
 
         <Button
-          className="bg-transparent border border-[#4d7fd9]/30 text-[#4d7fd9] hover:bg-[#4d7fd9]/10 hover:border-[#4d7fd9]/60 transition-all duration-300"
+          className="bg-transparent border border-[#4d7fd9]/30 text-[#4d7fd9] hover:bg-[#4d7fd9]/10 hover:border-[#4d7fd9]/60 transition-all duration-300 text-xs sm:text-sm px-3 sm:px-6 h-9 sm:h-10"
           onClick={() => navigate("/signup")}
         >
           Get Started
