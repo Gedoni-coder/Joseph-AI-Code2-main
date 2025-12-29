@@ -10,6 +10,8 @@ import {
   DataFreshness,
 } from "@/components/ui/connection-status";
 import ModuleHeader from "@/components/ui/module-header";
+import { useCompanyInfo } from "@/lib/company-context";
+import { getCompanyName } from "@/lib/get-company-name";
 import { useTaxData } from "@/hooks/useTaxData";
 import { SmartTaxCalculator } from "@/components/tax/smart-tax-calculator";
 import { TaxRecommendations } from "@/components/tax/tax-recommendations";
