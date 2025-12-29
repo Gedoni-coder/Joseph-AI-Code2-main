@@ -533,53 +533,49 @@ export default function PrimaryLanding() {
       {/* About Section */}
       <div
         id="about"
-        className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20"
+        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-12 sm:py-20"
       >
-        <div className="space-y-12">
+        <div className="space-y-10 sm:space-y-12">
           <div className="text-center space-y-4">
-            <h2 className="text-4xl lg:text-5xl font-bold text-white">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
               About Us
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto px-2">
               Learn more about our mission, vision, and the values that drive us
               forward.
             </p>
           </div>
 
-          <div className="p-12 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/20 to-[#3d6dc4]/10 border border-[#4d7fd9]/30 backdrop-blur-sm space-y-8">
+          <div className="p-6 sm:p-8 lg:p-12 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/20 to-[#3d6dc4]/10 border border-[#4d7fd9]/30 backdrop-blur-sm space-y-6 sm:space-y-8">
             <div>
-              <h3 className="text-2xl font-bold text-white mb-4">
+              <h3 className="text-lg sm:text-2xl font-bold text-white mb-3 sm:mb-4">
                 Our Mission
               </h3>
-              <p className="text-lg text-gray-300 leading-relaxed">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-300 leading-relaxed">
                 <span className="font-semibold text-[#4d7fd9]">
                   Driving Global Economic Revival and Building the Connected
                   Economy Using Agentic AI
                 </span>
               </p>
-              <p className="text-gray-300 mt-4 leading-relaxed">
+              <p className="text-sm sm:text-base text-gray-300 mt-3 sm:mt-4 leading-relaxed">
                 At Joseph AI, we empower MSMEs, entrepreneurs, and enterprises
                 across Africa to make smarter financial, policy, and market
-                choices using Agentic AI — a new class of artificial
-                intelligence that learns, reasons, and acts autonomously. By
-                combining economic intelligence, predictive analytics, and
-                AI-powered automation, Joseph AI helps businesses cut losses,
-                access funding, optimize pricing, and grow sustainably. Our goal
-                is to transform local business performance into national
-                economic growth, one enterprise at a time.
+                choices using Agentic AI. By combining economic intelligence, predictive analytics, and
+                AI-powered automation, we help businesses cut losses,
+                access funding, optimize pricing, and grow sustainably.
               </p>
             </div>
 
             <div>
-              <h3 className="text-2xl font-bold text-white mb-4">
+              <h3 className="text-lg sm:text-2xl font-bold text-white mb-3 sm:mb-4">
                 Core Values
               </h3>
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-2 sm:gap-4">
                 {["Innovation", "Integrity", "Revival", "Satisfaction"].map(
                   (value, index) => (
                     <div
                       key={index}
-                      className="px-4 py-2 rounded-lg bg-[#4d7fd9]/20 border border-[#4d7fd9]/50 text-white font-semibold"
+                      className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg bg-[#4d7fd9]/20 border border-[#4d7fd9]/50 text-white text-xs sm:text-sm font-semibold"
                     >
                       {value}
                     </div>
