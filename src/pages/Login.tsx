@@ -53,7 +53,9 @@ export default function Login() {
         <Card className="shadow-2xl border-0">
           <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 sm:p-6">
             <div>
-              <CardTitle className="text-xl sm:text-2xl mb-1 sm:mb-2">Welcome Back</CardTitle>
+              <CardTitle className="text-xl sm:text-2xl mb-1 sm:mb-2">
+                Welcome Back
+              </CardTitle>
               <p className="text-blue-100 text-xs sm:text-sm">
                 Sign in to your account to continue to Joseph AI
               </p>
@@ -65,7 +67,9 @@ export default function Login() {
             {(localError || error) && (
               <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2 sm:gap-3">
                 <AlertCircle className="h-4 sm:h-5 w-4 sm:w-5 text-red-500 flex-shrink-0 mt-0.5" />
-                <p className="text-xs sm:text-sm text-red-800">{localError || error}</p>
+                <p className="text-xs sm:text-sm text-red-800">
+                  {localError || error}
+                </p>
               </div>
             )}
 
@@ -73,7 +77,10 @@ export default function Login() {
             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
               {/* Email Field */}
               <div>
-                <Label htmlFor="email" className="text-xs sm:text-sm font-medium">
+                <Label
+                  htmlFor="email"
+                  className="text-xs sm:text-sm font-medium"
+                >
                   Email Address
                 </Label>
                 <div className="relative mt-1.5 sm:mt-2">
@@ -96,7 +103,10 @@ export default function Login() {
               {/* Password Field */}
               <div>
                 <div className="flex items-center justify-between gap-2">
-                  <Label htmlFor="password" className="text-xs sm:text-sm font-medium">
+                  <Label
+                    htmlFor="password"
+                    className="text-xs sm:text-sm font-medium"
+                  >
                     Password
                   </Label>
                   <Button

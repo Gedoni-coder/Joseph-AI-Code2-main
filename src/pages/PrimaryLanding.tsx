@@ -116,7 +116,9 @@ export default function PrimaryLanding() {
 
       {/* Navigation */}
       <nav className="relative z-40 flex items-center justify-between px-4 sm:px-6 lg:px-12 py-4 sm:py-6 backdrop-blur-sm border-b border-[#4d7fd9]/10">
-        <div className="text-lg sm:text-2xl font-bold text-white truncate">Joseph AI</div>
+        <div className="text-lg sm:text-2xl font-bold text-white truncate">
+          Joseph AI
+        </div>
 
         <div className="hidden lg:flex items-center gap-8">
           <button
@@ -160,35 +162,48 @@ export default function PrimaryLanding() {
           <div className="space-y-4 sm:space-y-6">
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight">
               <span className="font-bold">Plan.</span>
-              <span className="italic text-[#4d7fd9] ml-2 sm:ml-3">Decide.</span>
+              <span className="italic text-[#4d7fd9] ml-2 sm:ml-3">
+                Decide.
+              </span>
               <span className="font-bold text-white ml-2 sm:ml-3">Grow.</span>
             </h1>
 
             <div className="flex flex-col lg:flex-row items-center gap-6 sm:gap-8 max-w-5xl mx-auto">
               <div className="flex-1">
                 <p className="text-sm sm:text-base lg:text-lg text-gray-300 leading-relaxed">
-                  Agentic Economic Intelligence System built to guide businesses,
-                  policymakers, and enterprises toward smarter financial, market,
-                  and operational decisions. From micro to macro, Joseph helps you
-                  grow sustainably — and drive real economic growth.
+                  Agentic Economic Intelligence System built to guide
+                  businesses, policymakers, and enterprises toward smarter
+                  financial, market, and operational decisions. From micro to
+                  macro, Joseph helps you grow sustainably — and drive real
+                  economic growth.
                 </p>
               </div>
 
               {/* Floating Metrics Cards */}
               <div className="hidden sm:flex gap-4 lg:gap-6 flex-shrink-0 lg:ml-4">
                 {/* Card 1 */}
-                <div className="relative animate-float-card" style={{ animationDelay: '0s' }}>
+                <div
+                  className="relative animate-float-card"
+                  style={{ animationDelay: "0s" }}
+                >
                   <div className="absolute inset-0 bg-gradient-to-r from-[#4d7fd9] to-[#3d6dc4] rounded-2xl blur-lg opacity-30 animate-pulse" />
                   <div className="relative w-28 sm:w-32 h-36 sm:h-40 px-3 sm:px-4 py-5 sm:py-6 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/25 to-[#3d6dc4]/15 border border-[#4d7fd9]/50 backdrop-blur-md flex flex-col items-center justify-center text-center">
-                    <div className="text-xs sm:text-sm font-semibold text-white leading-tight">Top 10 in competitive market</div>
+                    <div className="text-xs sm:text-sm font-semibold text-white leading-tight">
+                      Top 10 in competitive market
+                    </div>
                   </div>
                 </div>
 
                 {/* Card 2 */}
-                <div className="relative animate-float-card" style={{ animationDelay: '0.5s' }}>
+                <div
+                  className="relative animate-float-card"
+                  style={{ animationDelay: "0.5s" }}
+                >
                   <div className="absolute inset-0 bg-gradient-to-r from-[#4d7fd9] to-[#3d6dc4] rounded-2xl blur-lg opacity-30 animate-pulse" />
                   <div className="relative w-28 sm:w-32 h-36 sm:h-40 px-3 sm:px-4 py-5 sm:py-6 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/25 to-[#3d6dc4]/15 border border-[#4d7fd9]/50 backdrop-blur-md flex flex-col items-center justify-center text-center">
-                    <div className="text-xs sm:text-sm font-semibold text-white leading-tight">+100% Revenue growth</div>
+                    <div className="text-xs sm:text-sm font-semibold text-white leading-tight">
+                      +100% Revenue growth
+                    </div>
                   </div>
                 </div>
               </div>
@@ -197,31 +212,33 @@ export default function PrimaryLanding() {
 
           {/* Email Signup with Pricing Button */}
           <div className="space-y-3">
-            <p className="text-center text-xs sm:text-sm text-gray-400 font-medium px-2">Enter your email in the email box</p>
+            <p className="text-center text-xs sm:text-sm text-gray-400 font-medium px-2">
+              Enter your email in the email box
+            </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-2xl mx-auto px-2">
-            <form onSubmit={handleEmailSignup} className="w-full sm:flex-1">
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-r from-[#4d7fd9]/40 via-[#3d6dc4]/20 to-[#4d7fd9]/40 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="relative flex items-center bg-[#0a1449]/80 border border-[#4d7fd9]/20 rounded-xl px-4 sm:px-6 py-2.5 sm:py-3.5 backdrop-blur-md hover:border-[#4d7fd9]/50 hover:bg-[#0a1449]/90 transition-all duration-300 shadow-lg hover:shadow-lg hover:shadow-[#4d7fd9]/10">
-                  <Input
-                    type="email"
-                    placeholder="your@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="bg-transparent border-0 text-white placeholder:text-gray-500/70 focus:outline-none text-xs sm:text-base w-full"
-                    required
-                  />
+              <form onSubmit={handleEmailSignup} className="w-full sm:flex-1">
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#4d7fd9]/40 via-[#3d6dc4]/20 to-[#4d7fd9]/40 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="relative flex items-center bg-[#0a1449]/80 border border-[#4d7fd9]/20 rounded-xl px-4 sm:px-6 py-2.5 sm:py-3.5 backdrop-blur-md hover:border-[#4d7fd9]/50 hover:bg-[#0a1449]/90 transition-all duration-300 shadow-lg hover:shadow-lg hover:shadow-[#4d7fd9]/10">
+                    <Input
+                      type="email"
+                      placeholder="your@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="bg-transparent border-0 text-white placeholder:text-gray-500/70 focus:outline-none text-xs sm:text-base w-full"
+                      required
+                    />
+                  </div>
                 </div>
-              </div>
-            </form>
+              </form>
 
-            <Button
-              className="bg-transparent border border-[#4d7fd9]/30 text-white hover:bg-[#4d7fd9]/10 hover:border-[#4d7fd9]/60 rounded-lg px-4 sm:px-6 h-10 sm:h-12 font-semibold w-full sm:w-auto text-xs sm:text-sm whitespace-nowrap transition-all duration-300"
-              onClick={() => scrollToSection("pricing")}
-            >
-              View Pricing
-            </Button>
-          </div>
+              <Button
+                className="bg-transparent border border-[#4d7fd9]/30 text-white hover:bg-[#4d7fd9]/10 hover:border-[#4d7fd9]/60 rounded-lg px-4 sm:px-6 h-10 sm:h-12 font-semibold w-full sm:w-auto text-xs sm:text-sm whitespace-nowrap transition-all duration-300"
+                onClick={() => scrollToSection("pricing")}
+              >
+                View Pricing
+              </Button>
+            </div>
           </div>
 
           {/* CTA Button */}
@@ -235,7 +252,8 @@ export default function PrimaryLanding() {
                 <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
                 <>
-                  <span>Get Started</span> <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5 hidden sm:inline" />
+                  <span>Get Started</span>{" "}
+                  <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5 hidden sm:inline" />
                 </>
               )}
             </Button>
@@ -310,7 +328,9 @@ export default function PrimaryLanding() {
                 <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
                   {feature.title}
                 </h3>
-                <p className="text-gray-300 text-xs sm:text-sm">{feature.description}</p>
+                <p className="text-gray-300 text-xs sm:text-sm">
+                  {feature.description}
+                </p>
               </div>
             ))}
           </div>
@@ -337,11 +357,19 @@ export default function PrimaryLanding() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
             {/* FREE Plan */}
             <div className="p-6 sm:p-8 rounded-xl bg-gradient-to-br from-[#4d7fd9]/10 to-[#3d6dc4]/5 border border-[#4d7fd9]/20 hover:border-[#4d7fd9]/50 backdrop-blur-sm transition-all duration-300">
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-2">FREE</h3>
-              <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-6">Get Started</p>
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
+                FREE
+              </h3>
+              <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-6">
+                Get Started
+              </p>
               <div className="mb-4 sm:mb-6">
-                <span className="text-2xl sm:text-3xl font-bold text-white">$0</span>
-                <span className="text-gray-400 text-xs sm:text-sm ml-2">/month</span>
+                <span className="text-2xl sm:text-3xl font-bold text-white">
+                  $0
+                </span>
+                <span className="text-gray-400 text-xs sm:text-sm ml-2">
+                  /month
+                </span>
               </div>
               <Button className="w-full bg-[#4d7fd9]/20 border border-[#4d7fd9]/50 text-white hover:bg-[#4d7fd9]/30 rounded-lg mb-4 sm:mb-6 text-xs sm:text-sm h-9 sm:h-10">
                 Get Started
@@ -376,11 +404,19 @@ export default function PrimaryLanding() {
 
             {/* PREMIUM Plan */}
             <div className="p-6 sm:p-8 rounded-xl bg-gradient-to-br from-[#4d7fd9]/20 to-[#3d6dc4]/10 border border-[#4d7fd9]/50 backdrop-blur-sm transition-all duration-300 ring-2 ring-[#4d7fd9]/50">
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-2">PREMIUM</h3>
-              <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-6">Subscribe</p>
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
+                PREMIUM
+              </h3>
+              <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-6">
+                Subscribe
+              </p>
               <div className="mb-2">
-                <span className="text-2xl sm:text-3xl font-bold text-white">$6</span>
-                <span className="text-gray-400 text-xs sm:text-sm ml-2">/month</span>
+                <span className="text-2xl sm:text-3xl font-bold text-white">
+                  $6
+                </span>
+                <span className="text-gray-400 text-xs sm:text-sm ml-2">
+                  /month
+                </span>
               </div>
               <p className="text-gray-400 text-xs mb-4 sm:mb-6">or $60/year</p>
               <Button className="w-full bg-[#4d7fd9] hover:bg-[#5d8fe9] text-white rounded-lg mb-4 sm:mb-6 text-xs sm:text-sm h-9 sm:h-10">
@@ -416,11 +452,19 @@ export default function PrimaryLanding() {
 
             {/* TEAM Plan */}
             <div className="p-6 sm:p-8 rounded-xl bg-gradient-to-br from-[#4d7fd9]/15 to-[#3d6dc4]/8 border border-[#4d7fd9]/30 hover:border-[#4d7fd9]/50 backdrop-blur-sm transition-all duration-300">
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-2">TEAM</h3>
-              <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-6">Subscribe</p>
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
+                TEAM
+              </h3>
+              <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-6">
+                Subscribe
+              </p>
               <div className="mb-2">
-                <span className="text-2xl sm:text-3xl font-bold text-white">$60</span>
-                <span className="text-gray-400 text-xs sm:text-sm ml-2">/user/mo</span>
+                <span className="text-2xl sm:text-3xl font-bold text-white">
+                  $60
+                </span>
+                <span className="text-gray-400 text-xs sm:text-sm ml-2">
+                  /user/mo
+                </span>
               </div>
               <Button className="w-full bg-[#4d7fd9]/20 border border-[#4d7fd9]/50 text-white hover:bg-[#4d7fd9]/30 rounded-lg mb-4 sm:mb-6 text-xs sm:text-sm h-9 sm:h-10">
                 Subscribe
@@ -455,11 +499,19 @@ export default function PrimaryLanding() {
 
             {/* BUSINESS Plan */}
             <div className="p-6 sm:p-8 rounded-xl bg-gradient-to-br from-[#4d7fd9]/15 to-[#3d6dc4]/8 border border-[#4d7fd9]/30 hover:border-[#4d7fd9]/50 backdrop-blur-sm transition-all duration-300">
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-2">BUSINESS</h3>
-              <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-6">Subscribe</p>
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
+                BUSINESS
+              </h3>
+              <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-6">
+                Subscribe
+              </p>
               <div className="mb-2">
-                <span className="text-2xl sm:text-3xl font-bold text-white">$200</span>
-                <span className="text-gray-400 text-xs sm:text-sm ml-2">/user/mo</span>
+                <span className="text-2xl sm:text-3xl font-bold text-white">
+                  $200
+                </span>
+                <span className="text-gray-400 text-xs sm:text-sm ml-2">
+                  /user/mo
+                </span>
               </div>
               <Button className="w-full bg-[#4d7fd9]/20 border border-[#4d7fd9]/50 text-white hover:bg-[#4d7fd9]/30 rounded-lg mb-4 sm:mb-6 text-xs sm:text-sm h-9 sm:h-10">
                 Subscribe
@@ -494,8 +546,12 @@ export default function PrimaryLanding() {
 
             {/* ENTERPRISE Plan */}
             <div className="p-6 sm:p-8 rounded-xl bg-gradient-to-br from-[#4d7fd9]/15 to-[#3d6dc4]/8 border border-[#4d7fd9]/30 hover:border-[#4d7fd9]/50 backdrop-blur-sm transition-all duration-300">
-              <h3 className="text-lg sm:text-xl font-bold text-white mb-2">ENTERPRISE</h3>
-              <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-6">Contact Sales</p>
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
+                ENTERPRISE
+              </h3>
+              <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-6">
+                Contact Sales
+              </p>
               <Button className="w-full bg-[#4d7fd9]/20 border border-[#4d7fd9]/50 text-white hover:bg-[#4d7fd9]/30 rounded-lg mb-4 sm:mb-6 text-xs sm:text-sm h-9 sm:h-10">
                 Contact Us
               </Button>
@@ -560,9 +616,10 @@ export default function PrimaryLanding() {
               <p className="text-sm sm:text-base text-gray-300 mt-3 sm:mt-4 leading-relaxed">
                 At Joseph AI, we empower MSMEs, entrepreneurs, and enterprises
                 across Africa to make smarter financial, policy, and market
-                choices using Agentic AI. By combining economic intelligence, predictive analytics, and
-                AI-powered automation, we help businesses cut losses,
-                access funding, optimize pricing, and grow sustainably.
+                choices using Agentic AI. By combining economic intelligence,
+                predictive analytics, and AI-powered automation, we help
+                businesses cut losses, access funding, optimize pricing, and
+                grow sustainably.
               </p>
             </div>
 
@@ -600,9 +657,8 @@ export default function PrimaryLanding() {
                 Get in touch
               </h2>
               <p className="text-sm sm:text-lg lg:text-xl text-gray-300">
-                If you have any questions or need help,
-                please fill out the form here. We respond within
-                1 business day.
+                If you have any questions or need help, please fill out the form
+                here. We respond within 1 business day.
               </p>
             </div>
 
@@ -610,24 +666,36 @@ export default function PrimaryLanding() {
               <div className="flex items-start gap-3 sm:gap-4">
                 <Mail className="w-5 sm:w-6 h-5 sm:h-6 text-[#4d7fd9] mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-white mb-1 text-sm sm:text-base">Email</h3>
-                  <p className="text-gray-300 text-xs sm:text-sm">support@josephai.site</p>
+                  <h3 className="font-semibold text-white mb-1 text-sm sm:text-base">
+                    Email
+                  </h3>
+                  <p className="text-gray-300 text-xs sm:text-sm">
+                    support@josephai.site
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3 sm:gap-4">
                 <Phone className="w-5 sm:w-6 h-5 sm:h-6 text-[#4d7fd9] mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-white mb-1 text-sm sm:text-base">Phone</h3>
-                  <p className="text-gray-300 text-xs sm:text-sm">+234 708 811 4692</p>
+                  <h3 className="font-semibold text-white mb-1 text-sm sm:text-base">
+                    Phone
+                  </h3>
+                  <p className="text-gray-300 text-xs sm:text-sm">
+                    +234 708 811 4692
+                  </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3 sm:gap-4">
                 <MapPin className="w-5 sm:w-6 h-5 sm:h-6 text-[#4d7fd9] mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-white mb-1 text-sm sm:text-base">Address</h3>
-                  <p className="text-gray-300 text-xs sm:text-sm">Lagos, Nigeria</p>
+                  <h3 className="font-semibold text-white mb-1 text-sm sm:text-base">
+                    Address
+                  </h3>
+                  <p className="text-gray-300 text-xs sm:text-sm">
+                    Lagos, Nigeria
+                  </p>
                 </div>
               </div>
             </div>

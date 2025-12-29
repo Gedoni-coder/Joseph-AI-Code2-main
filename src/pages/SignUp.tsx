@@ -76,14 +76,18 @@ export default function SignUp() {
       <Card className="w-full max-w-md shadow">
         <CardContent className="p-4 sm:p-6">
           <div className="text-center mb-4 sm:mb-6">
-            <div className="text-lg sm:text-2xl font-bold">Create your Joseph account</div>
+            <div className="text-lg sm:text-2xl font-bold">
+              Create your Joseph account
+            </div>
             <div className="text-xs sm:text-sm text-muted-foreground mt-1">
               Access Solutions, Infrastructure, and Learn
             </div>
           </div>
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div>
-              <label className="block text-xs sm:text-sm mb-1.5">Full name</label>
+              <label className="block text-xs sm:text-sm mb-1.5">
+                Full name
+              </label>
               <Input
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
@@ -103,7 +107,9 @@ export default function SignUp() {
               />
             </div>
             <div>
-              <label className="block text-xs sm:text-sm mb-1.5">Password</label>
+              <label className="block text-xs sm:text-sm mb-1.5">
+                Password
+              </label>
               <Input
                 type="password"
                 value={password}
@@ -113,7 +119,11 @@ export default function SignUp() {
                 className="text-xs sm:text-sm h-9 sm:h-10"
               />
             </div>
-            <Button type="submit" disabled={loading} className="w-full h-9 sm:h-10 text-xs sm:text-sm">
+            <Button
+              type="submit"
+              disabled={loading}
+              className="w-full h-9 sm:h-10 text-xs sm:text-sm"
+            >
               {loading ? "Creating account…" : "Create account"}
             </Button>
           </form>

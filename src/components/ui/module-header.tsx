@@ -156,7 +156,9 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                         className="flex items-center gap-1.5 sm:gap-2 relative px-2 sm:px-3"
                       >
                         <Bell className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
-                        <span className="hidden md:inline text-xs sm:text-sm">Notifications</span>
+                        <span className="hidden md:inline text-xs sm:text-sm">
+                          Notifications
+                        </span>
                         <Badge
                           variant="destructive"
                           className="absolute -top-2 -right-2 h-4 sm:h-5 w-4 sm:w-5 rounded-full p-0 flex items-center justify-center text-xs"
@@ -232,7 +234,9 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                         className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3"
                       >
                         <HelpCircle className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
-                        <span className="hidden md:inline text-xs sm:text-sm">Advice</span>
+                        <span className="hidden md:inline text-xs sm:text-sm">
+                          Advice
+                        </span>
                       </Button>
                     </PopoverTrigger>
                   </TooltipTrigger>

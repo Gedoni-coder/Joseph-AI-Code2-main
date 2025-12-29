@@ -120,7 +120,9 @@ const ModuleNavigation = () => {
           className="w-auto bg-white/80 backdrop-blur-sm border-gray-200 hover:bg-white hover:border-blue-300 transition-all text-xs sm:text-sm px-2 sm:px-4 h-9 sm:h-10"
         >
           <Navigation className="h-3.5 sm:h-4 w-3.5 sm:w-4 mr-1 sm:mr-2" />
-          <span className="hidden sm:inline truncate max-w-[120px]">{currentModuleName}</span>
+          <span className="hidden sm:inline truncate max-w-[120px]">
+            {currentModuleName}
+          </span>
           <span className="sm:hidden">Menu</span>
           <ChevronDown className="h-3.5 sm:h-4 w-3.5 sm:w-4 ml-1 sm:ml-2" />
         </Button>
