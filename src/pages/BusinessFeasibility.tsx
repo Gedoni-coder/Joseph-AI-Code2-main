@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ModuleHeader from "@/components/ui/module-header";
+import { useCompanyInfo } from "@/lib/company-context";
+import { getCompanyName } from "@/lib/get-company-name";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
