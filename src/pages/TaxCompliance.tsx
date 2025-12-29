@@ -85,7 +85,7 @@ const TaxCompliance = () => {
       <ModuleHeader
         icon={<Scale className="h-6 w-6" />}
         title="Tax & Compliance Module"
-        description="E-buy smart tax planning and automated compliance management for e-commerce operations"
+        description={`${companyName} smart tax planning and automated compliance management for e-commerce operations`}
         isConnected={isConnected}
         lastUpdated={lastUpdated}
         onReconnect={reconnect}
