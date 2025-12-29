@@ -149,11 +149,11 @@ export default function Login() {
               </Button>
 
               {/* Divider */}
-              <div className="relative my-6">
+              <div className="relative my-4 sm:my-6">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-gray-300" />
                 </div>
-                <div className="relative flex justify-center text-sm">
+                <div className="relative flex justify-center text-xs sm:text-sm">
                   <span className="px-2 bg-white text-gray-500">
                     Or continue with
                   </span>
@@ -166,10 +166,10 @@ export default function Login() {
                 variant="outline"
                 onClick={handleGoogleSignIn}
                 disabled={isLoading}
-                className="w-full h-11 border-gray-300"
+                className="w-full h-9 sm:h-11 border-gray-300 text-xs sm:text-sm"
               >
                 <svg
-                  className="h-5 w-5 mr-2"
+                  className="h-3.5 sm:h-5 w-3.5 sm:w-5 mr-2"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -178,16 +178,16 @@ export default function Login() {
                   <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
                   <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                 </svg>
-                Google
+                <span className="hidden sm:inline">Google</span>
               </Button>
             </form>
 
             {/* Sign Up Link */}
-            <p className="text-center text-sm text-gray-600 mt-6">
+            <p className="text-center text-xs sm:text-sm text-gray-600 mt-4 sm:mt-6">
               Don't have an account?{" "}
               <Button
                 variant="link"
-                className="text-blue-600 hover:text-blue-700 p-0 h-auto font-semibold"
+                className="text-blue-600 hover:text-blue-700 p-0 h-auto font-semibold text-xs sm:text-sm"
                 onClick={() => navigate("/signup")}
               >
                 Sign up
@@ -197,7 +197,7 @@ export default function Login() {
         </Card>
 
         {/* Footer */}
-        <p className="text-center text-xs text-gray-500 mt-6">
+        <p className="text-center text-xs text-gray-500 mt-4 sm:mt-6">
           © 2024 Joseph AI. All rights reserved.
         </p>
       </div>
