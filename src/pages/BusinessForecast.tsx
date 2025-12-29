@@ -42,6 +42,9 @@ import {
 } from "lucide-react";
 
 const BusinessForecast = () => {
+  const { companyInfo } = useCompanyInfo();
+  const companyName = getCompanyName(companyInfo?.companyName);
+
   const {
     customerProfiles,
     revenueProjections,
