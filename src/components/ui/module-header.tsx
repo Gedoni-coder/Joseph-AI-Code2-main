@@ -153,13 +153,13 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                       <Button
                         variant="outline"
                         size="sm"
-                        className="flex items-center gap-2 relative"
+                        className="flex items-center gap-1.5 sm:gap-2 relative px-2 sm:px-3"
                       >
-                        <Bell className="h-4 w-4" />
-                        <span className="hidden sm:inline">Notifications</span>
+                        <Bell className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
+                        <span className="hidden md:inline text-xs sm:text-sm">Notifications</span>
                         <Badge
                           variant="destructive"
-                          className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
+                          className="absolute -top-2 -right-2 h-4 sm:h-5 w-4 sm:w-5 rounded-full p-0 flex items-center justify-center text-xs"
                         >
                           2
                         </Badge>
@@ -170,7 +170,7 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                     <p>View recent notifications and alerts</p>
                   </TooltipContent>
                 </Tooltip>
-                <PopoverContent className="w-80" align="end">
+                <PopoverContent className="w-72 sm:w-80" align="end">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <h4 className="font-semibold">Notifications</h4>
