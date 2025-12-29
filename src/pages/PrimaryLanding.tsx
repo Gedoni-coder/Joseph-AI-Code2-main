@@ -197,18 +197,18 @@ export default function PrimaryLanding() {
 
           {/* Email Signup with Pricing Button */}
           <div className="space-y-3">
-            <p className="text-center text-sm text-gray-400 font-medium">Enter your email in the email box</p>
-            <div className="flex flex-col lg:flex-row items-center justify-center gap-4 max-w-2xl mx-auto">
-            <form onSubmit={handleEmailSignup} className="w-full lg:flex-1">
+            <p className="text-center text-xs sm:text-sm text-gray-400 font-medium px-2">Enter your email in the email box</p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-2xl mx-auto px-2">
+            <form onSubmit={handleEmailSignup} className="w-full sm:flex-1">
               <div className="relative group">
                 <div className="absolute inset-0 bg-gradient-to-r from-[#4d7fd9]/40 via-[#3d6dc4]/20 to-[#4d7fd9]/40 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="relative flex items-center bg-[#0a1449]/80 border border-[#4d7fd9]/20 rounded-xl px-6 py-3.5 backdrop-blur-md hover:border-[#4d7fd9]/50 hover:bg-[#0a1449]/90 transition-all duration-300 shadow-lg hover:shadow-lg hover:shadow-[#4d7fd9]/10">
+                <div className="relative flex items-center bg-[#0a1449]/80 border border-[#4d7fd9]/20 rounded-xl px-4 sm:px-6 py-2.5 sm:py-3.5 backdrop-blur-md hover:border-[#4d7fd9]/50 hover:bg-[#0a1449]/90 transition-all duration-300 shadow-lg hover:shadow-lg hover:shadow-[#4d7fd9]/10">
                   <Input
                     type="email"
                     placeholder="your@email.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="bg-transparent border-0 text-white placeholder:text-gray-500/70 focus:outline-none text-base w-full"
+                    className="bg-transparent border-0 text-white placeholder:text-gray-500/70 focus:outline-none text-xs sm:text-base w-full"
                     required
                   />
                 </div>
@@ -216,30 +216,30 @@ export default function PrimaryLanding() {
             </form>
 
             <Button
-              className="bg-transparent border border-[#4d7fd9]/30 text-white hover:bg-[#4d7fd9]/10 hover:border-[#4d7fd9]/60 rounded-lg px-6 h-12 font-semibold w-full lg:w-auto whitespace-nowrap transition-all duration-300"
+              className="bg-transparent border border-[#4d7fd9]/30 text-white hover:bg-[#4d7fd9]/10 hover:border-[#4d7fd9]/60 rounded-lg px-4 sm:px-6 h-10 sm:h-12 font-semibold w-full sm:w-auto text-xs sm:text-sm whitespace-nowrap transition-all duration-300"
               onClick={() => scrollToSection("pricing")}
             >
-              View Plan and Pricing
+              View Pricing
             </Button>
           </div>
           </div>
 
           {/* CTA Button */}
-          <div>
+          <div className="px-2">
             <Button
               onClick={() => handleEmailSignup()}
               disabled={isLoading}
-              className="bg-gradient-to-r from-[#4d7fd9] to-[#3d6dc4] hover:from-[#5d8fe9] hover:to-[#4d7dd4] text-white rounded-lg px-8 h-12 font-semibold inline-flex items-center gap-2 text-lg"
+              className="bg-gradient-to-r from-[#4d7fd9] to-[#3d6dc4] hover:from-[#5d8fe9] hover:to-[#4d7dd4] text-white rounded-lg px-6 sm:px-8 h-10 sm:h-12 font-semibold inline-flex items-center gap-2 text-sm sm:text-lg"
             >
               {isLoading ? (
                 <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
                 <>
-                  Get Started Free <ArrowRight className="w-5 h-5" />
+                  <span>Get Started</span> <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5 hidden sm:inline" />
                 </>
               )}
             </Button>
-            <p className="text-sm text-gray-400 mt-3">
+            <p className="text-xs sm:text-sm text-gray-400 mt-2 sm:mt-3">
               14-day free trial • No credit card required
             </p>
           </div>
