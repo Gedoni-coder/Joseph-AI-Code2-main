@@ -36,6 +36,9 @@ import {
 import { Link } from "react-router-dom";
 
 export default function MarketCompetitiveAnalysis() {
+  const { companyInfo } = useCompanyInfo();
+  const companyName = getCompanyName(companyInfo?.companyName);
+
   const {
     marketSizes,
     customerSegments,
