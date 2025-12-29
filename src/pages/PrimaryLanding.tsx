@@ -154,19 +154,19 @@ export default function PrimaryLanding() {
       </nav>
 
       {/* Hero Section */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-12 py-20 lg:py-32">
-        <div className="text-center space-y-12">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-12 py-12 sm:py-20 lg:py-32">
+        <div className="text-center space-y-8 sm:space-y-12">
           {/* Main Tagline */}
-          <div className="space-y-6">
-            <h1 className="text-6xl lg:text-7xl font-bold text-white leading-tight">
+          <div className="space-y-4 sm:space-y-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white leading-tight">
               <span className="font-bold">Plan.</span>
-              <span className="italic text-[#4d7fd9] ml-3">Decide.</span>
-              <span className="font-bold text-white ml-3">Grow.</span>
+              <span className="italic text-[#4d7fd9] ml-2 sm:ml-3">Decide.</span>
+              <span className="font-bold text-white ml-2 sm:ml-3">Grow.</span>
             </h1>
 
-            <div className="flex flex-col lg:flex-row items-center gap-8 max-w-5xl mx-auto">
+            <div className="flex flex-col lg:flex-row items-center gap-6 sm:gap-8 max-w-5xl mx-auto">
               <div className="flex-1">
-                <p className="text-lg text-gray-300 leading-relaxed">
+                <p className="text-sm sm:text-base lg:text-lg text-gray-300 leading-relaxed">
                   Agentic Economic Intelligence System built to guide businesses,
                   policymakers, and enterprises toward smarter financial, market,
                   and operational decisions. From micro to macro, Joseph helps you
@@ -175,20 +175,20 @@ export default function PrimaryLanding() {
               </div>
 
               {/* Floating Metrics Cards */}
-              <div className="flex gap-6 flex-shrink-0 lg:ml-4">
+              <div className="hidden sm:flex gap-4 lg:gap-6 flex-shrink-0 lg:ml-4">
                 {/* Card 1 */}
                 <div className="relative animate-float-card" style={{ animationDelay: '0s' }}>
                   <div className="absolute inset-0 bg-gradient-to-r from-[#4d7fd9] to-[#3d6dc4] rounded-2xl blur-lg opacity-30 animate-pulse" />
-                  <div className="relative w-32 h-40 px-4 py-6 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/25 to-[#3d6dc4]/15 border border-[#4d7fd9]/50 backdrop-blur-md flex flex-col items-center justify-center text-center">
-                    <div className="text-sm font-semibold text-white leading-tight">Top 10 in competitive market</div>
+                  <div className="relative w-28 sm:w-32 h-36 sm:h-40 px-3 sm:px-4 py-5 sm:py-6 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/25 to-[#3d6dc4]/15 border border-[#4d7fd9]/50 backdrop-blur-md flex flex-col items-center justify-center text-center">
+                    <div className="text-xs sm:text-sm font-semibold text-white leading-tight">Top 10 in competitive market</div>
                   </div>
                 </div>
 
                 {/* Card 2 */}
                 <div className="relative animate-float-card" style={{ animationDelay: '0.5s' }}>
                   <div className="absolute inset-0 bg-gradient-to-r from-[#4d7fd9] to-[#3d6dc4] rounded-2xl blur-lg opacity-30 animate-pulse" />
-                  <div className="relative w-32 h-40 px-4 py-6 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/25 to-[#3d6dc4]/15 border border-[#4d7fd9]/50 backdrop-blur-md flex flex-col items-center justify-center text-center">
-                    <div className="text-sm font-semibold text-white leading-tight">+100% Revenue growth</div>
+                  <div className="relative w-28 sm:w-32 h-36 sm:h-40 px-3 sm:px-4 py-5 sm:py-6 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/25 to-[#3d6dc4]/15 border border-[#4d7fd9]/50 backdrop-blur-md flex flex-col items-center justify-center text-center">
+                    <div className="text-xs sm:text-sm font-semibold text-white leading-tight">+100% Revenue growth</div>
                   </div>
                 </div>
               </div>
