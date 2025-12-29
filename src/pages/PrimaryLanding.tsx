@@ -415,38 +415,38 @@ export default function PrimaryLanding() {
             </div>
 
             {/* TEAM Plan */}
-            <div className="p-8 rounded-xl bg-gradient-to-br from-[#4d7fd9]/15 to-[#3d6dc4]/8 border border-[#4d7fd9]/30 hover:border-[#4d7fd9]/50 backdrop-blur-sm transition-all duration-300">
-              <h3 className="text-xl font-bold text-white mb-2">TEAM</h3>
-              <p className="text-gray-300 text-sm mb-6">Subscribe</p>
+            <div className="p-6 sm:p-8 rounded-xl bg-gradient-to-br from-[#4d7fd9]/15 to-[#3d6dc4]/8 border border-[#4d7fd9]/30 hover:border-[#4d7fd9]/50 backdrop-blur-sm transition-all duration-300">
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-2">TEAM</h3>
+              <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-6">Subscribe</p>
               <div className="mb-2">
-                <span className="text-3xl font-bold text-white">$60</span>
-                <span className="text-gray-400 text-sm ml-2">/user/month</span>
+                <span className="text-2xl sm:text-3xl font-bold text-white">$60</span>
+                <span className="text-gray-400 text-xs sm:text-sm ml-2">/user/mo</span>
               </div>
-              <Button className="w-full bg-[#4d7fd9]/20 border border-[#4d7fd9]/50 text-white hover:bg-[#4d7fd9]/30 rounded-lg mb-6">
+              <Button className="w-full bg-[#4d7fd9]/20 border border-[#4d7fd9]/50 text-white hover:bg-[#4d7fd9]/30 rounded-lg mb-4 sm:mb-6 text-xs sm:text-sm h-9 sm:h-10">
                 Subscribe
               </Button>
-              <ul className="space-y-3">
+              <ul className="space-y-2 sm:space-y-3">
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300 text-sm">
+                  <Check className="w-3 sm:w-4 h-3 sm:h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-xs sm:text-sm">
                     $60 monthly AI credits per user
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300 text-sm">
+                  <Check className="w-3 sm:w-4 h-3 sm:h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-xs sm:text-sm">
                     Centralized dashboards
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300 text-sm">
-                    Collaborative financial analysis
+                  <Check className="w-3 sm:w-4 h-3 sm:h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-xs sm:text-sm">
+                    Collaborative analysis
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300 text-sm">
+                  <Check className="w-3 sm:w-4 h-3 sm:h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-xs sm:text-sm">
                     Shared project data
                   </span>
                 </li>
