@@ -146,7 +146,7 @@ export default function InventorySupplyChain() {
       <ModuleHeader
         icon={<Package className="h-6 w-6" />}
         title="Inventory & Supply Chain Management"
-        description="E-buy comprehensive inventory management and supply chain optimization for marketplace fulfillment"
+        description={`${companyName} comprehensive inventory management and supply chain optimization for marketplace fulfillment`}
         isConnected={isConnected}
         lastUpdated={lastUpdated}
         onReconnect={refreshData}
