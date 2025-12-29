@@ -11,6 +11,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import ModuleHeader from "@/components/ui/module-header";
+import { useCompanyInfo } from "@/lib/company-context";
+import { getCompanyName } from "@/lib/get-company-name";
 import { usePricingData } from "@/hooks/usePricingData";
 import { PricingStrategies } from "@/components/pricing/pricing-strategies";
 import { CompetitiveAnalysis } from "@/components/pricing/competitive-analysis";
