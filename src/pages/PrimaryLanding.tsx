@@ -320,21 +320,21 @@ export default function PrimaryLanding() {
       {/* Pricing Section */}
       <div
         id="pricing"
-        className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20"
+        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-12 sm:py-20"
       >
-        <div className="space-y-12">
+        <div className="space-y-10 sm:space-y-12">
           <div className="text-center space-y-4">
-            <h2 className="text-4xl lg:text-5xl font-bold text-white">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
               Plans and Pricing
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto px-2">
               Choose the perfect plan for your needs. From individual creators
               to enterprise teams, we have flexible pricing options to help you
               succeed.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
             {/* FREE Plan */}
             <div className="p-8 rounded-xl bg-gradient-to-br from-[#4d7fd9]/10 to-[#3d6dc4]/5 border border-[#4d7fd9]/20 hover:border-[#4d7fd9]/50 backdrop-blur-sm transition-all duration-300">
               <h3 className="text-xl font-bold text-white mb-2">FREE</h3>
