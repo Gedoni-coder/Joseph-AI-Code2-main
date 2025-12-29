@@ -375,39 +375,39 @@ export default function PrimaryLanding() {
             </div>
 
             {/* PREMIUM Plan */}
-            <div className="p-8 rounded-xl bg-gradient-to-br from-[#4d7fd9]/20 to-[#3d6dc4]/10 border border-[#4d7fd9]/50 backdrop-blur-sm transition-all duration-300 ring-2 ring-[#4d7fd9]/50">
-              <h3 className="text-xl font-bold text-white mb-2">PREMIUM</h3>
-              <p className="text-gray-300 text-sm mb-6">Subscribe</p>
+            <div className="p-6 sm:p-8 rounded-xl bg-gradient-to-br from-[#4d7fd9]/20 to-[#3d6dc4]/10 border border-[#4d7fd9]/50 backdrop-blur-sm transition-all duration-300 ring-2 ring-[#4d7fd9]/50">
+              <h3 className="text-lg sm:text-xl font-bold text-white mb-2">PREMIUM</h3>
+              <p className="text-gray-300 text-xs sm:text-sm mb-4 sm:mb-6">Subscribe</p>
               <div className="mb-2">
-                <span className="text-3xl font-bold text-white">$6</span>
-                <span className="text-gray-400 text-sm ml-2">/month</span>
+                <span className="text-2xl sm:text-3xl font-bold text-white">$6</span>
+                <span className="text-gray-400 text-xs sm:text-sm ml-2">/month</span>
               </div>
-              <p className="text-gray-400 text-xs mb-6">or $60/year</p>
-              <Button className="w-full bg-[#4d7fd9] hover:bg-[#5d8fe9] text-white rounded-lg mb-6">
+              <p className="text-gray-400 text-xs mb-4 sm:mb-6">or $60/year</p>
+              <Button className="w-full bg-[#4d7fd9] hover:bg-[#5d8fe9] text-white rounded-lg mb-4 sm:mb-6 text-xs sm:text-sm h-9 sm:h-10">
                 Subscribe
               </Button>
-              <ul className="space-y-3">
+              <ul className="space-y-2 sm:space-y-3">
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300 text-sm">
+                  <Check className="w-3 sm:w-4 h-3 sm:h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-xs sm:text-sm">
                     $20 monthly AI credits
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300 text-sm">
-                    Advanced module access (finance, market, tax)
+                  <Check className="w-3 sm:w-4 h-3 sm:h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-xs sm:text-sm">
+                    Advanced module access
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300 text-sm">
+                  <Check className="w-3 sm:w-4 h-3 sm:h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-xs sm:text-sm">
                     Custom business insights
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <Check className="w-4 h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
-                  <span className="text-gray-300 text-sm">
+                  <Check className="w-3 sm:w-4 h-3 sm:h-4 text-[#4d7fd9] mt-0.5 flex-shrink-0" />
+                  <span className="text-gray-300 text-xs sm:text-sm">
                     Higher data upload limits
                   </span>
                 </li>
