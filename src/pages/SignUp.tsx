@@ -72,49 +72,52 @@ export default function SignUp() {
   }, [googleClientId, navigate]);
 
   return (
-    <div className="min-h-[70vh] flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center px-3 sm:px-4 py-8">
       <Card className="w-full max-w-md shadow">
-        <CardContent className="p-6">
-          <div className="text-center mb-6">
-            <div className="text-2xl font-bold">Create your Joseph account</div>
-            <div className="text-sm text-muted-foreground">
+        <CardContent className="p-4 sm:p-6">
+          <div className="text-center mb-4 sm:mb-6">
+            <div className="text-lg sm:text-2xl font-bold">Create your Joseph account</div>
+            <div className="text-xs sm:text-sm text-muted-foreground mt-1">
               Access Solutions, Infrastructure, and Learn
             </div>
           </div>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div>
-              <label className="block text-sm mb-1">Full name</label>
+              <label className="block text-xs sm:text-sm mb-1.5">Full name</label>
               <Input
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Jane Doe"
+                className="text-xs sm:text-sm h-9 sm:h-10"
               />
             </div>
             <div>
-              <label className="block text-sm mb-1">Email</label>
+              <label className="block text-xs sm:text-sm mb-1.5">Email</label>
               <Input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
                 required
+                className="text-xs sm:text-sm h-9 sm:h-10"
               />
             </div>
             <div>
-              <label className="block text-sm mb-1">Password</label>
+              <label className="block text-xs sm:text-sm mb-1.5">Password</label>
               <Input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
+                className="text-xs sm:text-sm h-9 sm:h-10"
               />
             </div>
-            <Button type="submit" disabled={loading} className="w-full">
+            <Button type="submit" disabled={loading} className="w-full h-9 sm:h-10 text-xs sm:text-sm">
               {loading ? "Creating account…" : "Create account"}
             </Button>
           </form>
-          <div className="mt-6">
+          <div className="mt-4 sm:mt-6">
             {googleClientId ? (
               <div id="googleSignInBtn" className="flex justify-center" />
             ) : (
@@ -124,7 +127,7 @@ export default function SignUp() {
               </div>
             )}
           </div>
-          <div className="text-[11px] text-muted-foreground mt-4 text-center">
+          <div className="text-[10px] sm:text-xs text-muted-foreground mt-3 sm:mt-4 text-center leading-relaxed">
             By continuing you agree to our Terms and acknowledge our Privacy
             Policy.
           </div>
