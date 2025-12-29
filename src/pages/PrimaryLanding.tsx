@@ -590,44 +590,44 @@ export default function PrimaryLanding() {
       {/* Contact Section */}
       <div
         id="contact"
-        className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20"
+        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-12 sm:py-20"
       >
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
           {/* Contact Info */}
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             <div>
-              <h2 className="text-4xl lg:text-5xl font-bold text-white mb-4">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
                 Get in touch
               </h2>
-              <p className="text-xl text-gray-300">
-                If you have any questions regarding our Services or need help,
-                please fill out the form here. We do our best to respond within
+              <p className="text-sm sm:text-lg lg:text-xl text-gray-300">
+                If you have any questions or need help,
+                please fill out the form here. We respond within
                 1 business day.
               </p>
             </div>
 
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <Mail className="w-6 h-6 text-[#4d7fd9] mt-1 flex-shrink-0" />
+            <div className="space-y-4 sm:space-y-6">
+              <div className="flex items-start gap-3 sm:gap-4">
+                <Mail className="w-5 sm:w-6 h-5 sm:h-6 text-[#4d7fd9] mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-white mb-1">Email</h3>
-                  <p className="text-gray-300">support@josephai.site</p>
+                  <h3 className="font-semibold text-white mb-1 text-sm sm:text-base">Email</h3>
+                  <p className="text-gray-300 text-xs sm:text-sm">support@josephai.site</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <Phone className="w-6 h-6 text-[#4d7fd9] mt-1 flex-shrink-0" />
+              <div className="flex items-start gap-3 sm:gap-4">
+                <Phone className="w-5 sm:w-6 h-5 sm:h-6 text-[#4d7fd9] mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-white mb-1">Phone</h3>
-                  <p className="text-gray-300">+234 708 811 4692</p>
+                  <h3 className="font-semibold text-white mb-1 text-sm sm:text-base">Phone</h3>
+                  <p className="text-gray-300 text-xs sm:text-sm">+234 708 811 4692</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <MapPin className="w-6 h-6 text-[#4d7fd9] mt-1 flex-shrink-0" />
+              <div className="flex items-start gap-3 sm:gap-4">
+                <MapPin className="w-5 sm:w-6 h-5 sm:h-6 text-[#4d7fd9] mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="font-semibold text-white mb-1">Address</h3>
-                  <p className="text-gray-300">Lagos, Nigeria</p>
+                  <h3 className="font-semibold text-white mb-1 text-sm sm:text-base">Address</h3>
+                  <p className="text-gray-300 text-xs sm:text-sm">Lagos, Nigeria</p>
                 </div>
               </div>
             </div>
@@ -637,10 +637,10 @@ export default function PrimaryLanding() {
           <div>
             <form
               onSubmit={handleContactSubmit}
-              className="space-y-6 p-8 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/15 to-[#3d6dc4]/8 border border-[#4d7fd9]/30 backdrop-blur-sm"
+              className="space-y-4 sm:space-y-6 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-[#4d7fd9]/15 to-[#3d6dc4]/8 border border-[#4d7fd9]/30 backdrop-blur-sm"
             >
               <div>
-                <label className="block text-sm font-medium text-white mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-white mb-2">
                   Name
                 </label>
                 <Input
@@ -650,13 +650,13 @@ export default function PrimaryLanding() {
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
-                  className="bg-[#0a1449] border-[#4d7fd9]/30 text-white placeholder:text-gray-500"
+                  className="bg-[#0a1449] border-[#4d7fd9]/30 text-white placeholder:text-gray-500 text-xs sm:text-sm"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-white mb-2">
                   Email
                 </label>
                 <Input
@@ -666,13 +666,13 @@ export default function PrimaryLanding() {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="bg-[#0a1449] border-[#4d7fd9]/30 text-white placeholder:text-gray-500"
+                  className="bg-[#0a1449] border-[#4d7fd9]/30 text-white placeholder:text-gray-500 text-xs sm:text-sm"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-white mb-2">
                   Phone
                 </label>
                 <Input
@@ -682,12 +682,12 @@ export default function PrimaryLanding() {
                   onChange={(e) =>
                     setFormData({ ...formData, phone: e.target.value })
                   }
-                  className="bg-[#0a1449] border-[#4d7fd9]/30 text-white placeholder:text-gray-500"
+                  className="bg-[#0a1449] border-[#4d7fd9]/30 text-white placeholder:text-gray-500 text-xs sm:text-sm"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-white mb-2">
+                <label className="block text-xs sm:text-sm font-medium text-white mb-2">
                   Message
                 </label>
                 <textarea
@@ -696,8 +696,8 @@ export default function PrimaryLanding() {
                   onChange={(e) =>
                     setFormData({ ...formData, message: e.target.value })
                   }
-                  rows={5}
-                  className="bg-[#0a1449] border border-[#4d7fd9]/30 text-white placeholder:text-gray-500 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-[#4d7fd9]"
+                  rows={4}
+                  className="bg-[#0a1449] border border-[#4d7fd9]/30 text-white placeholder:text-gray-500 rounded-lg px-4 py-3 w-full focus:outline-none focus:border-[#4d7fd9] text-xs sm:text-sm"
                   required
                 />
               </div>
@@ -705,7 +705,7 @@ export default function PrimaryLanding() {
               <Button
                 type="submit"
                 disabled={contactLoading}
-                className="w-full bg-[#4d7fd9] hover:bg-[#5d8fe9] text-white rounded-lg py-3 font-semibold"
+                className="w-full bg-[#4d7fd9] hover:bg-[#5d8fe9] text-white rounded-lg py-2.5 sm:py-3 font-semibold text-xs sm:text-sm"
               >
                 {contactLoading ? "Sending..." : "Submit"}
               </Button>
