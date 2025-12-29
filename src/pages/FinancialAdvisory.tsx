@@ -44,6 +44,7 @@ import {
   Bell,
   X,
   Activity,
+  HelpCircle,
 } from "lucide-react";
 
 export default function FinancialAdvisory() {
