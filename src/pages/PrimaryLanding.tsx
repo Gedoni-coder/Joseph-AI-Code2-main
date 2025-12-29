@@ -715,10 +715,10 @@ export default function PrimaryLanding() {
       </div>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-[#4d7fd9]/10 mt-20 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
+      <footer className="relative z-10 border-t border-[#4d7fd9]/10 mt-12 sm:mt-20 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-8 sm:py-12">
           <div className="text-center">
-            <p className="text-gray-400">
+            <p className="text-gray-400 text-xs sm:text-sm">
               © 2024 Joseph AI. All rights reserved.
             </p>
           </div>
