@@ -264,37 +264,37 @@ export default function PrimaryLanding() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {[
               {
-                icon: <DollarSign className="w-8 h-8" />,
+                icon: <DollarSign className="w-6 sm:w-8 h-6 sm:h-8" />,
                 title: "Real-time Financial Insights",
                 description:
                   "Analyze finance in real time with AI-powered analytics.",
               },
               {
-                icon: <Target className="w-8 h-8" />,
+                icon: <Target className="w-6 sm:w-8 h-6 sm:h-8" />,
                 title: "Smart Pricing Optimization",
                 description:
                   "Optimize revenue and pricing strategies intelligently.",
               },
               {
-                icon: <TrendingDown className="w-8 h-8" />,
+                icon: <TrendingDown className="w-6 sm:w-8 h-6 sm:h-8" />,
                 title: "Loan & Funding Advisory",
                 description:
                   "Access tools to help secure funding and manage loans.",
               },
               {
-                icon: <Truck className="w-8 h-8" />,
+                icon: <Truck className="w-6 sm:w-8 h-6 sm:h-8" />,
                 title: "Predictive Supply Chain",
                 description:
                   "AI-driven supply chain forecasting and optimization.",
               },
               {
-                icon: <TrendingUp className="w-8 h-8" />,
+                icon: <TrendingUp className="w-6 sm:w-8 h-6 sm:h-8" />,
                 title: "Policy & Market Forecasting",
                 description:
                   "Predict market and policy trends with intelligence.",
               },
               {
-                icon: <Lock className="w-8 h-8" />,
+                icon: <Lock className="w-6 sm:w-8 h-6 sm:h-8" />,
                 title: "Secure Data Management",
                 description:
                   "Enterprise-grade security with continuous updates.",
