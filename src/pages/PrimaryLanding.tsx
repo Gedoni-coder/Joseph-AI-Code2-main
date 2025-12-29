@@ -249,19 +249,19 @@ export default function PrimaryLanding() {
       {/* Features Section */}
       <div
         id="features"
-        className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 py-20"
+        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-12 sm:py-20"
       >
-        <div className="space-y-16">
+        <div className="space-y-12 sm:space-y-16">
           {/* Intro */}
           <div className="text-center space-y-4">
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto px-2">
               Joseph AI connects data, insight, and action to help businesses
               grow smarter. Powered by Agentic AI.
             </p>
           </div>
 
           {/* Features Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {[
               {
                 icon: <DollarSign className="w-8 h-8" />,
