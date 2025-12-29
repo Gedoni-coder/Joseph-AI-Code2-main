@@ -7,6 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LoadingOverlay } from "@/components/ui/loading-spinner";
 import ModuleHeader from "@/components/ui/module-header";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { useCompanyInfo } from "@/lib/company-context";
+import { getCompanyName } from "@/lib/get-company-name";
 import { useBusinessData } from "@/hooks/useBusinessData";
 import { CustomerProfileComponent } from "@/components/business/customer-profile";
 import { RevenueProjections } from "@/components/business/revenue-projections";
