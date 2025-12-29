@@ -229,10 +229,10 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                       <Button
                         variant="outline"
                         size="sm"
-                        className="flex items-center gap-2"
+                        className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3"
                       >
-                        <HelpCircle className="h-4 w-4" />
-                        <span className="hidden sm:inline">Advice</span>
+                        <HelpCircle className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
+                        <span className="hidden md:inline text-xs sm:text-sm">Advice</span>
                       </Button>
                     </PopoverTrigger>
                   </TooltipTrigger>
@@ -240,7 +240,7 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                     <p>Get expert advice and recommendations</p>
                   </TooltipContent>
                 </Tooltip>
-                <PopoverContent className="w-80" align="end">
+                <PopoverContent className="w-72 sm:w-80" align="end">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <h4 className="font-semibold">Advice</h4>
