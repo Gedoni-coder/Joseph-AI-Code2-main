@@ -70,7 +70,7 @@ const BusinessForecast = () => {
         <ModuleHeader
           icon={<TrendingUp className="h-6 w-6" />}
           title="Business Forecasting"
-          description="Advanced predictive analytics for E-buy revenue projections, growth forecasts, and comprehensive business planning"
+          description={`Advanced predictive analytics for ${companyName} revenue projections, growth forecasts, and comprehensive business planning`}
           isConnected={isConnected}
           lastUpdated={lastUpdated}
           onReconnect={reconnect}
