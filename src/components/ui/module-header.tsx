@@ -75,25 +75,25 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
 
   return (
     <header className="bg-white/60 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex flex-col gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 lg:px-8 py-3 sm:py-4">
+        <div className="flex flex-col gap-3 sm:gap-4">
           {/* Main Title Section */}
-          <div className="flex items-center gap-4">
-            <div className="flex items-center justify-center w-12 h-12 bg-blue-600 rounded-xl text-white">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="flex items-center justify-center w-10 sm:w-12 h-10 sm:h-12 bg-blue-600 rounded-lg sm:rounded-xl text-white flex-shrink-0">
               {icon}
             </div>
-            <div className="flex-1">
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
+            <div className="flex-1 min-w-0">
+              <h1 className="text-lg sm:text-2xl md:text-3xl font-bold text-gray-900 tracking-tight truncate">
                 {title}
               </h1>
-              <p className="text-sm md:text-base text-gray-600 mt-1">
+              <p className="text-xs sm:text-sm md:text-base text-gray-600 mt-0.5 sm:mt-1 line-clamp-2">
                 {description}
               </p>
             </div>
           </div>
 
           {/* Navigation and Controls */}
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center justify-between gap-2 sm:gap-4 overflow-x-auto">
             <div className="flex items-center gap-3">
               <ModuleNavigation />
 
