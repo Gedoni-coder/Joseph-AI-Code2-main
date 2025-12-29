@@ -87,7 +87,7 @@ export default function RevenueStrategy() {
       <ModuleHeader
         icon={<TrendingUp className="h-6 w-6" />}
         title="Revenue Strategy & Analysis"
-        description="Grow and protect E-buy revenue across marketplace products, seller commissions, and advertising channels"
+        description={`Grow and protect ${companyName} revenue across marketplace products, seller commissions, and advertising channels`}
         isConnected={isConnected}
         lastUpdated={lastUpdated}
         onReconnect={refreshData}
