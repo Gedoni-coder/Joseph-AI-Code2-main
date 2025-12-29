@@ -94,18 +94,20 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
 
           {/* Navigation and Controls */}
           <div className="flex items-center justify-between gap-2 sm:gap-4 overflow-x-auto">
-            <div className="flex items-center gap-3">
-              <ModuleNavigation />
+            <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
+              <div className="hidden md:block">
+                <ModuleNavigation />
+              </div>
 
               {/* Conversational Mode Toggle */}
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="flex items-center gap-2 px-2 py-1 hover:bg-primary/10 rounded transition-all cursor-pointer">
-                    <Radio className="h-4 w-4 text-primary" />
+                  <div className="flex items-center gap-1.5 px-1.5 sm:px-2 py-1 hover:bg-primary/10 rounded transition-all cursor-pointer hidden sm:flex">
+                    <Radio className="h-3 sm:h-4 w-3 sm:w-4 text-primary" />
                     <Switch
                       checked={conversationalMode}
                       onCheckedChange={handleConversationalModeChange}
-                      className="scale-75"
+                      className="scale-75 sm:scale-100"
                     />
                   </div>
                 </TooltipTrigger>
@@ -119,19 +121,19 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
               </Tooltip>
 
               {showConnectionStatus && (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 sm:gap-2 hidden sm:flex">
                   <Badge
                     variant={isConnected ? "default" : "destructive"}
-                    className={
+                    className={`text-xs ${
                       isConnected
                         ? "bg-green-100 text-green-800 hover:bg-green-200"
                         : ""
-                    }
+                    }`}
                   >
                     {isConnected ? connectionLabel : "Offline"}
                   </Badge>
                   {lastUpdated && (
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-gray-500 hidden lg:inline">
                       Updated {lastUpdated.toLocaleTimeString()}
                     </span>
                   )}
@@ -139,7 +141,7 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
               )}
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
               {/* Notifications */}
               <Popover
                 open={notificationsOpen}
