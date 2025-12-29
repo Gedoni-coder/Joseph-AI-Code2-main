@@ -302,15 +302,15 @@ export default function PrimaryLanding() {
             ].map((feature, index) => (
               <div
                 key={index}
-                className="p-8 rounded-xl bg-gradient-to-br from-[#4d7fd9]/15 to-[#3d6dc4]/10 border border-[#4d7fd9]/20 hover:border-[#4d7fd9]/50 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-[#4d7fd9]/20"
+                className="p-6 sm:p-8 rounded-xl bg-gradient-to-br from-[#4d7fd9]/15 to-[#3d6dc4]/10 border border-[#4d7fd9]/20 hover:border-[#4d7fd9]/50 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:shadow-[#4d7fd9]/20"
               >
-                <div className="w-14 h-14 rounded-lg bg-gradient-to-br from-[#4d7fd9] to-[#3d6dc4] flex items-center justify-center text-white mb-4 group-hover:shadow-lg group-hover:shadow-[#4d7fd9]/50 transition-all duration-300">
+                <div className="w-12 sm:w-14 h-12 sm:h-14 rounded-lg bg-gradient-to-br from-[#4d7fd9] to-[#3d6dc4] flex items-center justify-center text-white mb-3 sm:mb-4 group-hover:shadow-lg group-hover:shadow-[#4d7fd9]/50 transition-all duration-300">
                   {feature.icon}
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">
+                <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
                   {feature.title}
                 </h3>
-                <p className="text-gray-300 text-sm">{feature.description}</p>
+                <p className="text-gray-300 text-xs sm:text-sm">{feature.description}</p>
               </div>
             ))}
           </div>
