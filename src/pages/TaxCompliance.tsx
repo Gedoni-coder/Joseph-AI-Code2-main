@@ -33,6 +33,9 @@ import {
 } from "lucide-react";
 
 const TaxCompliance = () => {
+  const { companyInfo } = useCompanyInfo();
+  const companyName = getCompanyName(companyInfo?.companyName);
+
   const {
     calculations,
     recommendations,
