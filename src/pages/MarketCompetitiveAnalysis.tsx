@@ -109,7 +109,7 @@ export default function MarketCompetitiveAnalysis() {
       <ModuleHeader
         icon={<BarChart3 className="h-6 w-6" />}
         title="Market Analysis"
-        description="E-buy competitive intelligence, e-commerce market trends, and strategic positioning analysis for informed business decisions"
+        description={`${companyName} competitive intelligence, e-commerce market trends, and strategic positioning analysis for informed business decisions`}
         isConnected={isConnected}
         lastUpdated={lastUpdated}
         onReconnect={refreshData}
