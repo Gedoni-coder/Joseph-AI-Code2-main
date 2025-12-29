@@ -304,7 +304,7 @@ export default function BusinessFeasibility() {
       <ModuleHeader
         icon={<CheckCircle className="h-6 w-6" />}
         title="Business Plan and Feasibility Analysis"
-        description="Evaluate and analyze business ideas for E-buy expansion, new categories, and strategic initiatives"
+        description={`Evaluate and analyze business ideas for ${companyName} expansion, new categories, and strategic initiatives`}
         showConnectionStatus={false}
       />
 
