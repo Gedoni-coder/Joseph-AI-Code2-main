@@ -150,7 +150,7 @@ const BusinessForecast = () => {
                 <TabsList className="contents">
                   <TabsTrigger value="overview" className="w-full justify-center">Overview</TabsTrigger>
                   <TabsTrigger value="summary-recommendation" className="w-full justify-center">
-                    Summary & Recommendation
+                    Summary & Rec
                   </TabsTrigger>
                   <TabsTrigger value="tables" className="w-full justify-center">Tables</TabsTrigger>
                   <TabsTrigger value="revenue" className="w-full justify-center">Revenue</TabsTrigger>
