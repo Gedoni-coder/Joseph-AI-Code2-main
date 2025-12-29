@@ -166,7 +166,7 @@ export default function InventorySupplyChain() {
               value="summary-recommendation"
               className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
             >
-              Summary & Recommendation
+              Summary & Rec
             </TabsTrigger>
             <TabsTrigger
               value="stock-monitoring"
