@@ -12,6 +12,8 @@ import { Badge } from "@/components/ui/badge";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ConnectionStatus } from "@/components/ui/connection-status";
 import ModuleHeader from "@/components/ui/module-header";
+import { useCompanyInfo } from "@/lib/company-context";
+import { getCompanyName } from "@/lib/get-company-name";
 import { useRevenueData } from "@/hooks/useRevenueData";
 import { RevenueStreams } from "@/components/revenue/revenue-streams";
 import { RevenueForecasting } from "@/components/revenue/revenue-forecasting";
