@@ -129,7 +129,7 @@ export default function MarketCompetitiveAnalysis() {
               value="summary-recommendation"
               className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
             >
-              Summary & Recommendation
+              Summary & Rec
             </TabsTrigger>
             <TabsTrigger
               value="market"
