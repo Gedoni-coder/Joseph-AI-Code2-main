@@ -164,32 +164,6 @@ const BusinessForecast = () => {
                 </TabsList>
               </div>
 
-              <div className="flex items-center gap-2">
-                <Badge
-                  variant={isConnected ? "default" : "destructive"}
-                  className="flex items-center gap-1"
-                >
-                  {isConnected ? (
-                    <Wifi className="h-3 w-3" />
-                  ) : (
-                    <Activity className="h-3 w-3" />
-                  )}
-                  {isConnected ? "Live Data" : "Offline Mode"}
-                </Badge>
-                <Badge variant="outline" className="flex items-center gap-1">
-                  <TrendingUp className="h-3 w-3" />
-                  Forecast Active
-                </Badge>
-                {error && (
-                  <Badge
-                    variant="destructive"
-                    className="flex items-center gap-1"
-                  >
-                    <AlertTriangle className="h-3 w-3" />
-                    Data Sync Issue
-                  </Badge>
-                )}
-              </div>
             </div>
 
             <TabsContent value="overview" className="space-y-8">
