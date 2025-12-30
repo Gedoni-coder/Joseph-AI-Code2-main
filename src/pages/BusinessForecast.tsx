@@ -149,21 +149,18 @@ const BusinessForecast = () => {
           </div>
 
           {/* Main Content Tabs */}
-          <Tabs defaultValue="overview" className="space-y-4 sm:space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
-              <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-1 sm:gap-2 w-full sm:flex-1 rounded-md bg-muted p-1 text-muted-foreground text-xs sm:text-sm">
-                <TabsList className="contents">
-                  <TabsTrigger value="overview" className="w-full justify-center text-xs sm:text-sm px-1 sm:px-2"><span className="line-clamp-1">Overview</span></TabsTrigger>
-                  <TabsTrigger value="summary-recommendation" className="w-full justify-center text-xs sm:text-sm px-1 sm:px-2 hidden sm:flex"><span className="line-clamp-1">Summary</span></TabsTrigger>
-                  <TabsTrigger value="tables" className="w-full justify-center text-xs sm:text-sm px-1 sm:px-2"><span className="line-clamp-1">Tables</span></TabsTrigger>
-                  <TabsTrigger value="revenue" className="w-full justify-center text-xs sm:text-sm px-1 sm:px-2 hidden md:flex"><span className="line-clamp-1">Revenue</span></TabsTrigger>
-                  <TabsTrigger value="costs" className="w-full justify-center text-xs sm:text-sm px-1 sm:px-2 hidden md:flex"><span className="line-clamp-1">Costs</span></TabsTrigger>
-                  <TabsTrigger value="planning" className="w-full justify-center text-xs sm:text-sm px-1 sm:px-2 hidden md:flex"><span className="line-clamp-1">Planning</span></TabsTrigger>
-                  <TabsTrigger value="analytics" className="w-full justify-center text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"><span className="line-clamp-1">Analytics</span></TabsTrigger>
-                  <TabsTrigger value="documents" className="w-full justify-center text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"><span className="line-clamp-1">Docs</span></TabsTrigger>
-                </TabsList>
-              </div>
-
+          <Tabs defaultValue="overview" className="space-y-6">
+            <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+              <TabsList className="contents">
+                <TabsTrigger value="overview" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Overview</TabsTrigger>
+                <TabsTrigger value="summary-recommendation" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Summary & Rec</TabsTrigger>
+                <TabsTrigger value="tables" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Tables</TabsTrigger>
+                <TabsTrigger value="revenue" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Revenue</TabsTrigger>
+                <TabsTrigger value="costs" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Costs</TabsTrigger>
+                <TabsTrigger value="planning" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Planning</TabsTrigger>
+                <TabsTrigger value="analytics" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Analytics</TabsTrigger>
+                <TabsTrigger value="documents" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Documents</TabsTrigger>
+              </TabsList>
             </div>
 
             <TabsContent value="overview" className="space-y-8">
