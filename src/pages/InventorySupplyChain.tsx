@@ -163,69 +163,69 @@ export default function InventorySupplyChain() {
           <TabsList className="grid w-full grid-cols-11 bg-white border text-sm">
             <TabsTrigger
               value="overview"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2"
             >
-              Overview
+              <span className="line-clamp-1">Overview</span>
             </TabsTrigger>
             <TabsTrigger
               value="summary-recommendation"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden sm:flex"
             >
-              Summary & Rec
+              <span className="line-clamp-1">Summary</span>
             </TabsTrigger>
             <TabsTrigger
               value="stock-monitoring"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2"
             >
-              Stock
+              <span className="line-clamp-1">Stock</span>
             </TabsTrigger>
             <TabsTrigger
               value="demand-forecasting"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden md:flex"
             >
-              Demand
+              <span className="line-clamp-1">Demand</span>
             </TabsTrigger>
             <TabsTrigger
               value="valuation"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden md:flex"
             >
-              Valuation
+              <span className="line-clamp-1">Valuation</span>
             </TabsTrigger>
             <TabsTrigger
               value="suppliers"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"
             >
-              Suppliers
+              <span className="line-clamp-1">Suppliers</span>
             </TabsTrigger>
             <TabsTrigger
               value="procurement"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"
             >
-              Procurement
+              <span className="line-clamp-1">Procurement</span>
             </TabsTrigger>
             <TabsTrigger
               value="production"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"
             >
-              Production
+              <span className="line-clamp-1">Production</span>
             </TabsTrigger>
             <TabsTrigger
               value="supply-analytics"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"
             >
-              SC Analytics
+              <span className="line-clamp-1">SC Analytics</span>
             </TabsTrigger>
             <TabsTrigger
               value="inventory-analytics"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"
             >
-              Inv Analytics
+              <span className="line-clamp-1">Inv Analytics</span>
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="overview" className="space-y-6">
+          <TabsContent value="overview" className="space-y-4 sm:space-y-6">
             {/* Key Metrics Dashboard */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
               <Card className="bg-blue-50 border-blue-200">
                 <CardContent className="p-6">
                   <div className="flex items-center space-x-2">
@@ -288,7 +288,7 @@ export default function InventorySupplyChain() {
             </div>
 
             {/* Quick Insights */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
