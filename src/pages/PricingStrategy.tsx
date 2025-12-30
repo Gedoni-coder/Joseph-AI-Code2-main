@@ -85,59 +85,59 @@ export default function PricingStrategy() {
         connectionLabel="Live"
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8">
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
-          className="space-y-6"
+          className="space-y-4 sm:space-y-6"
         >
-          <TabsList className="grid w-full grid-cols-8 bg-white border">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 md:grid-cols-7 bg-white border text-xs sm:text-sm">
             <TabsTrigger
               value="overview"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2"
             >
-              Overview
+              <span className="line-clamp-1">Overview</span>
             </TabsTrigger>
             <TabsTrigger
               value="summary-recommendation"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden sm:flex"
             >
-              Summary & Rec
+              <span className="line-clamp-1">Summary</span>
             </TabsTrigger>
             <TabsTrigger
               value="strategies"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2"
             >
-              Strategies
+              <span className="line-clamp-1">Strategies</span>
             </TabsTrigger>
             <TabsTrigger
               value="competitive"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden md:flex"
             >
-              Competitive
+              <span className="line-clamp-1">Competitive</span>
             </TabsTrigger>
             <TabsTrigger
               value="testing"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden md:flex"
             >
-              Testing
+              <span className="line-clamp-1">Testing</span>
             </TabsTrigger>
             <TabsTrigger
               value="dynamic"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden md:flex"
             >
-              Dynamic
+              <span className="line-clamp-1">Dynamic</span>
             </TabsTrigger>
             <TabsTrigger
               value="conversation"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"
             >
-              JOSEPH
+              <span className="line-clamp-1">JOSEPH</span>
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <TabsContent value="overview" className="space-y-4 sm:space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
               {metrics.map((metric) => (
                 <Card key={metric.id}>
                   <CardContent className="p-6">
@@ -175,7 +175,7 @@ export default function PricingStrategy() {
               ))}
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
