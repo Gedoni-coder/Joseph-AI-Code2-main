@@ -297,77 +297,75 @@ export default function FinancialAdvisory() {
             onValueChange={setActiveTab}
             className="space-y-6"
           >
-            <TabsList className="grid w-full grid-cols-9 bg-white shadow-sm">
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-5 lg:grid-cols-9 bg-white shadow-sm text-xs sm:text-sm overflow-x-auto">
               <TabsTrigger
                 value="strategic-budgeting"
-                className="flex items-center gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+                className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
               >
-                <TrendingUp className="w-4 h-4" />
-                <span className="hidden sm:inline">Strategic Budgeting</span>
-                <span className="sm:hidden">Budgeting</span>
+                <TrendingUp className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
+                <span className="hidden lg:inline line-clamp-1">Strategic Budgeting</span>
+                <span className="hidden sm:inline lg:hidden line-clamp-1">Budgeting</span>
+                <span className="sm:hidden line-clamp-1">Budget</span>
               </TabsTrigger>
 
               <TabsTrigger
                 value="summary-recommendation"
-                className="flex items-center gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+                className="hidden sm:flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
               >
-                <BarChart3 className="w-4 h-4" />
-                <span className="hidden sm:inline">Summary & Rec</span>
-                <span className="sm:hidden">Summary</span>
+                <BarChart3 className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
+                <span className="hidden lg:inline line-clamp-1">Summary & Rec</span>
+                <span className="lg:hidden line-clamp-1">Summary</span>
               </TabsTrigger>
 
               <TabsTrigger
                 value="cash-flow"
-                className="flex items-center gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+                className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
               >
-                <Target className="w-4 h-4" />
-                <span className="hidden sm:inline">Cash Flow</span>
-                <span className="sm:hidden">Cash</span>
+                <Target className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
+                <span className="hidden lg:inline line-clamp-1">Cash Flow</span>
+                <span className="lg:hidden line-clamp-1">Cash</span>
               </TabsTrigger>
 
               <TabsTrigger
                 value="budget-validation"
-                className="flex items-center gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+                className="hidden sm:flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
               >
-                <BarChart3 className="w-4 h-4" />
-                <span className="hidden sm:inline">Validation</span>
-                <span className="sm:hidden">Validation</span>
+                <BarChart3 className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
+                <span className="hidden lg:inline line-clamp-1">Validation</span>
+                <span className="lg:hidden line-clamp-1">Val</span>
               </TabsTrigger>
 
               <TabsTrigger
                 value="scenario-testing"
-                className="flex items-center gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+                className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
               >
-                <Calculator className="w-4 h-4" />
-                <span className="hidden sm:inline">Scenarios</span>
-                <span className="sm:hidden">Scenarios</span>
+                <Calculator className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
+                <span className="hidden lg:inline line-clamp-1">Scenarios</span>
+                <span className="lg:hidden line-clamp-1">Scenarios</span>
               </TabsTrigger>
 
               <TabsTrigger
                 value="risk-assessment"
-                className="flex items-center gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+                className="hidden lg:flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
               >
-                <Shield className="w-4 h-4" />
-                <span className="hidden sm:inline">Risk</span>
-                <span className="sm:hidden">Risk</span>
+                <Shield className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
+                <span className="line-clamp-1">Risk</span>
               </TabsTrigger>
 
               <TabsTrigger
                 value="performance-drivers"
-                className="flex items-center gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+                className="hidden lg:flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
               >
-                <Target className="w-4 h-4" />
-                <span className="hidden sm:inline">Performance</span>
-                <span className="sm:hidden">KPIs</span>
+                <Target className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
+                <span className="line-clamp-1">KPIs</span>
               </TabsTrigger>
 
               <TabsTrigger
                 value="advisory-insights"
-                className="flex items-center gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+                className="hidden lg:flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
               >
-                <Lightbulb className="w-4 h-4" />
-                <span className="hidden sm:inline">Insights</span>
-                <span className="sm:hidden">Insights</span>
+                <Lightbulb className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
+                <span className="line-clamp-1">Insights</span>
               </TabsTrigger>
             </TabsList>
 
