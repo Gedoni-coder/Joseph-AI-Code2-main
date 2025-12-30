@@ -101,53 +101,53 @@ export default function RevenueStrategy() {
           onValueChange={setActiveTab}
           className="space-y-4 sm:space-y-6"
         >
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 bg-white border gap-1">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 bg-white border gap-1 text-xs sm:text-sm">
             <TabsTrigger
               value="overview"
-              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 md:px-3"
             >
-              Overview
+              <span className="line-clamp-1">Overview</span>
             </TabsTrigger>
             <TabsTrigger
               value="summary-recommendation"
-              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden sm:inline-flex"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 md:px-3 hidden sm:inline-flex"
             >
-              Summary & Rec
+              <span className="line-clamp-1">Summary</span>
             </TabsTrigger>
             <TabsTrigger
               value="streams"
-              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 md:px-3"
             >
-              Streams
+              <span className="line-clamp-1">Streams</span>
             </TabsTrigger>
             <TabsTrigger
               value="forecasting"
-              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden sm:inline-flex"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 md:px-3 hidden sm:inline-flex"
             >
-              Forecast
+              <span className="line-clamp-1">Forecast</span>
             </TabsTrigger>
             <TabsTrigger
               value="churn"
-              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden md:inline-flex"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 md:px-3 hidden md:inline-flex"
             >
-              Churn
+              <span className="line-clamp-1">Churn</span>
             </TabsTrigger>
             <TabsTrigger
               value="upsell"
-              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden md:inline-flex"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 md:px-3 hidden md:inline-flex"
             >
-              Upsell
+              <span className="line-clamp-1">Upsell</span>
             </TabsTrigger>
             <TabsTrigger
               value="conversation"
-              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden lg:inline-flex"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 md:px-3 hidden lg:inline-flex"
             >
-              JOSEPH
+              <span className="line-clamp-1">JOSEPH</span>
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-4 sm:space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
               {metrics.slice(0, 6).map((metric) => (
                 <Card key={metric.id}>
                   <CardContent className="p-3 sm:p-4 md:p-6">
@@ -188,7 +188,7 @@ export default function RevenueStrategy() {
               ))}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
