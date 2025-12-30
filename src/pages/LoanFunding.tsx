@@ -106,60 +106,60 @@ export default function LoanFunding() {
         connectionLabel="Live"
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8">
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
-          className="space-y-6"
+          className="space-y-4 sm:space-y-6"
         >
-          <TabsList className="grid w-full grid-cols-7 bg-white border text-sm">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 bg-white border text-xs sm:text-sm">
             <TabsTrigger
               value="overview"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2"
             >
-              Overview
+              <span className="line-clamp-1">Overview</span>
             </TabsTrigger>
             <TabsTrigger
               value="eligibility"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2"
             >
-              Eligibility
+              <span className="line-clamp-1">Eligibility</span>
             </TabsTrigger>
             <TabsTrigger
               value="options"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2"
             >
-              Options
+              <span className="line-clamp-1">Options</span>
             </TabsTrigger>
             <TabsTrigger
               value="comparison"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden sm:flex"
             >
-              Compare
+              <span className="line-clamp-1">Compare</span>
             </TabsTrigger>
             <TabsTrigger
               value="application"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden md:flex"
             >
-              Application
+              <span className="line-clamp-1">Application</span>
             </TabsTrigger>
             <TabsTrigger
               value="strategy"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"
             >
-              Strategy
+              <span className="line-clamp-1">Strategy</span>
             </TabsTrigger>
             <TabsTrigger
               value="research"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"
             >
-              Research
+              <span className="line-clamp-1">Research</span>
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="overview" className="space-y-6">
+          <TabsContent value="overview" className="space-y-4 sm:space-y-6">
             {/* Key Metrics */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
               <Card>
                 <CardContent className="p-6">
                   <div className="flex items-center space-x-2">
@@ -224,7 +224,7 @@ export default function LoanFunding() {
             </div>
 
             {/* Quick Actions */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">
