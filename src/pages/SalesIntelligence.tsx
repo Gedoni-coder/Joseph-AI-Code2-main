@@ -138,46 +138,47 @@ const SalesIntelligence = () => {
         connectionLabel="Live"
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8">
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
-          className="space-y-6"
+          className="space-y-4 sm:space-y-6"
         >
-          <TabsList className="grid w-full grid-cols-6 bg-white border">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 bg-white border text-xs sm:text-sm overflow-x-auto">
             <TabsTrigger
               value="overview"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 line-clamp-1"
             >
               Overview
             </TabsTrigger>
             <TabsTrigger
               value="lead-pipeline"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 line-clamp-1"
             >
-              Lead Intelligence
+              <span className="hidden lg:inline">Lead Intelligence</span>
+              <span className="lg:hidden">Leads</span>
             </TabsTrigger>
             <TabsTrigger
               value="engagement"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="hidden sm:flex data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 line-clamp-1"
             >
               Engagement
             </TabsTrigger>
             <TabsTrigger
               value="targets"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="hidden sm:flex data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 line-clamp-1"
             >
               Targets
             </TabsTrigger>
             <TabsTrigger
               value="assets"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="hidden lg:flex data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 line-clamp-1"
             >
               Assets
             </TabsTrigger>
             <TabsTrigger
               value="insights"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
+              className="hidden lg:flex data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 line-clamp-1"
             >
               Insights
             </TabsTrigger>
