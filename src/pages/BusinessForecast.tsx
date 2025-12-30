@@ -78,9 +78,9 @@ const BusinessForecast = () => {
           connectionLabel="Live"
         />
 
-        <main className="container mx-auto px-4 py-8 space-y-8">
+        <main className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8 space-y-6 sm:space-y-8">
           {/* Quick Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <Card>
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
@@ -149,20 +149,18 @@ const BusinessForecast = () => {
           </div>
 
           {/* Main Content Tabs */}
-          <Tabs defaultValue="overview" className="space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full sm:flex-1 rounded-md bg-muted p-1 text-muted-foreground">
+          <Tabs defaultValue="overview" className="space-y-4 sm:space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-1 sm:gap-2 w-full sm:flex-1 rounded-md bg-muted p-1 text-muted-foreground text-xs sm:text-sm">
                 <TabsList className="contents">
-                  <TabsTrigger value="overview" className="w-full justify-center">Overview</TabsTrigger>
-                  <TabsTrigger value="summary-recommendation" className="w-full justify-center">
-                    Summary & Rec
-                  </TabsTrigger>
-                  <TabsTrigger value="tables" className="w-full justify-center">Tables</TabsTrigger>
-                  <TabsTrigger value="revenue" className="w-full justify-center">Revenue</TabsTrigger>
-                  <TabsTrigger value="costs" className="w-full justify-center">Costs</TabsTrigger>
-                  <TabsTrigger value="planning" className="w-full justify-center">Planning</TabsTrigger>
-                  <TabsTrigger value="analytics" className="w-full justify-center">Analytics</TabsTrigger>
-                  <TabsTrigger value="documents" className="w-full justify-center">Documents</TabsTrigger>
+                  <TabsTrigger value="overview" className="w-full justify-center text-xs sm:text-sm px-1 sm:px-2"><span className="line-clamp-1">Overview</span></TabsTrigger>
+                  <TabsTrigger value="summary-recommendation" className="w-full justify-center text-xs sm:text-sm px-1 sm:px-2 hidden sm:flex"><span className="line-clamp-1">Summary</span></TabsTrigger>
+                  <TabsTrigger value="tables" className="w-full justify-center text-xs sm:text-sm px-1 sm:px-2"><span className="line-clamp-1">Tables</span></TabsTrigger>
+                  <TabsTrigger value="revenue" className="w-full justify-center text-xs sm:text-sm px-1 sm:px-2 hidden md:flex"><span className="line-clamp-1">Revenue</span></TabsTrigger>
+                  <TabsTrigger value="costs" className="w-full justify-center text-xs sm:text-sm px-1 sm:px-2 hidden md:flex"><span className="line-clamp-1">Costs</span></TabsTrigger>
+                  <TabsTrigger value="planning" className="w-full justify-center text-xs sm:text-sm px-1 sm:px-2 hidden md:flex"><span className="line-clamp-1">Planning</span></TabsTrigger>
+                  <TabsTrigger value="analytics" className="w-full justify-center text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"><span className="line-clamp-1">Analytics</span></TabsTrigger>
+                  <TabsTrigger value="documents" className="w-full justify-center text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"><span className="line-clamp-1">Docs</span></TabsTrigger>
                 </TabsList>
               </div>
 
@@ -737,15 +735,15 @@ Identify 2-3 new market segments or geographies for expansion in next 12 months.
         </main>
 
         {/* Footer */}
-        <footer className="border-t bg-muted/30 mt-16">
-          <div className="container mx-auto px-4 py-6">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+        <footer className="border-t bg-muted/30 mt-12 sm:mt-16">
+          <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
                 <span>© 2024 Business Forecast Platform</span>
-                <span>•</span>
+                <span className="hidden sm:inline">•</span>
                 <span>Data updated every hour</span>
               </div>
-              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
                 <span>
                   Models: Monte Carlo, Linear Regression, Scenario Analysis
                 </span>
