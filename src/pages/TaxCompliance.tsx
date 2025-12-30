@@ -168,42 +168,45 @@ const TaxCompliance = () => {
         </div>
 
         {/* Main Content Tabs */}
-        <Tabs defaultValue="calculator" className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <TabsList className="grid grid-cols-6 w-full sm:w-auto bg-blue-50 border border-blue-200">
+        <Tabs defaultValue="calculator" className="space-y-4 sm:space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 overflow-x-auto">
+            <TabsList className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 w-full sm:w-auto bg-blue-50 border border-blue-200 text-xs sm:text-sm flex-shrink-0">
               <TabsTrigger
                 value="calculator"
-                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-xs sm:text-sm px-2 sm:px-3 line-clamp-1"
               >
-                Calculator
+                <span className="hidden sm:inline">Calculator</span>
+                <span className="sm:hidden">Calc</span>
               </TabsTrigger>
               <TabsTrigger
                 value="recommendations"
-                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-xs sm:text-sm px-2 sm:px-3 line-clamp-1"
               >
-                Recommendations
+                <span className="hidden lg:inline">Recommendations</span>
+                <span className="lg:hidden">Recommend</span>
               </TabsTrigger>
               <TabsTrigger
                 value="compliance"
-                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                className="hidden sm:flex data-[state=active]:bg-blue-600 data-[state=active]:text-white text-xs sm:text-sm px-2 sm:px-3 line-clamp-1"
               >
                 Compliance
               </TabsTrigger>
               <TabsTrigger
                 value="planning"
-                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                className="hidden sm:flex data-[state=active]:bg-blue-600 data-[state=active]:text-white text-xs sm:text-sm px-2 sm:px-3 line-clamp-1"
               >
                 Planning
               </TabsTrigger>
               <TabsTrigger
                 value="audit"
-                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                className="hidden lg:flex data-[state=active]:bg-blue-600 data-[state=active]:text-white text-xs sm:text-sm px-2 sm:px-3 line-clamp-1"
               >
-                Audit Trail
+                <span className="hidden xl:inline">Audit Trail</span>
+                <span className="xl:hidden">Audit</span>
               </TabsTrigger>
               <TabsTrigger
                 value="documents"
-                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                className="hidden lg:flex data-[state=active]:bg-blue-600 data-[state=active]:text-white text-xs sm:text-sm px-2 sm:px-3 line-clamp-1"
               >
                 Documents
               </TabsTrigger>
