@@ -117,19 +117,22 @@ const ModuleNavigation = () => {
       <DropdownMenuTrigger asChild>
         <Button
           variant="outline"
-          className="w-full md:w-auto bg-white/80 backdrop-blur-sm border-gray-200 hover:bg-white hover:border-blue-300 transition-all"
+          className="w-auto bg-white/80 backdrop-blur-sm border-gray-200 hover:bg-white hover:border-blue-300 transition-all text-xs sm:text-sm px-2 sm:px-4 h-9 sm:h-10"
         >
-          <Navigation className="h-4 w-4 mr-2" />
-          {currentModuleName}
-          <ChevronDown className="h-4 w-4 ml-2" />
+          <Navigation className="h-3.5 sm:h-4 w-3.5 sm:w-4 mr-1 sm:mr-2" />
+          <span className="hidden sm:inline truncate max-w-[120px]">
+            {currentModuleName}
+          </span>
+          <span className="sm:hidden">Menu</span>
+          <ChevronDown className="h-3.5 sm:h-4 w-3.5 sm:w-4 ml-1 sm:ml-2" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-80 bg-white/95 backdrop-blur-sm border-gray-200"
+        className="w-72 sm:w-80 bg-white/95 backdrop-blur-sm border-gray-200"
         align="start"
       >
-        <DropdownMenuLabel className="flex items-center gap-2 text-blue-800 font-semibold">
-          <Navigation className="h-4 w-4" />
+        <DropdownMenuLabel className="flex items-center gap-2 text-blue-800 font-semibold text-xs sm:text-sm">
+          <Navigation className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
           Joseph AI Modules
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -142,34 +145,34 @@ const ModuleNavigation = () => {
               <DropdownMenuItem key={index} asChild>
                 <Link
                   to={module.link}
-                  className={`flex items-start gap-3 p-3 cursor-pointer transition-all hover:bg-blue-50 ${
+                  className={`flex items-start gap-2 sm:gap-3 p-2 sm:p-3 cursor-pointer transition-all hover:bg-blue-50 ${
                     isCurrentPage
                       ? "bg-blue-100 border-l-4 border-blue-500"
                       : ""
                   }`}
                 >
                   <div
-                    className={`p-1.5 rounded ${isCurrentPage ? "bg-blue-200 text-blue-700" : "bg-gray-100 text-gray-600"}`}
+                    className={`p-1 sm:p-1.5 rounded flex-shrink-0 ${isCurrentPage ? "bg-blue-200 text-blue-700" : "bg-gray-100 text-gray-600"}`}
                   >
                     {module.icon}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="flex items-center gap-2 mb-0.5">
                       <span
-                        className={`font-medium text-sm ${isCurrentPage ? "text-blue-800" : "text-gray-900"}`}
+                        className={`font-medium text-xs sm:text-sm truncate ${isCurrentPage ? "text-blue-800" : "text-gray-900"}`}
                       >
                         {module.name}
                       </span>
                       {isCurrentPage && (
                         <Badge
                           variant="secondary"
-                          className="text-xs bg-blue-100 text-blue-700"
+                          className="text-xs bg-blue-100 text-blue-700 flex-shrink-0"
                         >
                           Current
                         </Badge>
                       )}
                     </div>
-                    <p className="text-xs text-gray-600 leading-tight">
+                    <p className="text-xs text-gray-600 leading-tight line-clamp-2">
                       {module.description}
                     </p>
                   </div>
@@ -183,9 +186,9 @@ const ModuleNavigation = () => {
         <DropdownMenuItem asChild>
           <Link
             to="/"
-            className="flex items-center gap-2 p-3 cursor-pointer text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all"
+            className="flex items-center gap-2 p-2 sm:p-3 cursor-pointer text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all text-xs sm:text-sm"
           >
-            <Navigation className="h-4 w-4" />
+            <Navigation className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
             <span className="font-medium">Back to Home</span>
           </Link>
         </DropdownMenuItem>

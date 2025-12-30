@@ -75,37 +75,39 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
 
   return (
     <header className="bg-white/60 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex flex-col gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 lg:px-8 py-3 sm:py-4">
+        <div className="flex flex-col gap-3 sm:gap-4">
           {/* Main Title Section */}
-          <div className="flex items-center gap-4">
-            <div className="flex items-center justify-center w-12 h-12 bg-blue-600 rounded-xl text-white">
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="flex items-center justify-center w-10 sm:w-12 h-10 sm:h-12 bg-blue-600 rounded-lg sm:rounded-xl text-white flex-shrink-0">
               {icon}
             </div>
-            <div className="flex-1">
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
+            <div className="flex-1 min-w-0">
+              <h1 className="text-lg sm:text-2xl md:text-3xl font-bold text-gray-900 tracking-tight truncate">
                 {title}
               </h1>
-              <p className="text-sm md:text-base text-gray-600 mt-1">
+              <p className="text-xs sm:text-sm md:text-base text-gray-600 mt-0.5 sm:mt-1 line-clamp-2">
                 {description}
               </p>
             </div>
           </div>
 
           {/* Navigation and Controls */}
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <ModuleNavigation />
+          <div className="flex items-center justify-between gap-2 sm:gap-4 overflow-x-auto">
+            <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
+              <div className="hidden md:block">
+                <ModuleNavigation />
+              </div>
 
               {/* Conversational Mode Toggle */}
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <div className="flex items-center gap-2 px-2 py-1 hover:bg-primary/10 rounded transition-all cursor-pointer">
-                    <Radio className="h-4 w-4 text-primary" />
+                  <div className="flex items-center gap-1.5 px-1.5 sm:px-2 py-1 hover:bg-primary/10 rounded transition-all cursor-pointer hidden sm:flex">
+                    <Radio className="h-3 sm:h-4 w-3 sm:w-4 text-primary" />
                     <Switch
                       checked={conversationalMode}
                       onCheckedChange={handleConversationalModeChange}
-                      className="scale-75"
+                      className="scale-75 sm:scale-100"
                     />
                   </div>
                 </TooltipTrigger>
@@ -119,19 +121,19 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
               </Tooltip>
 
               {showConnectionStatus && (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 sm:gap-2 hidden sm:flex">
                   <Badge
                     variant={isConnected ? "default" : "destructive"}
-                    className={
+                    className={`text-xs ${
                       isConnected
                         ? "bg-green-100 text-green-800 hover:bg-green-200"
                         : ""
-                    }
+                    }`}
                   >
                     {isConnected ? connectionLabel : "Offline"}
                   </Badge>
                   {lastUpdated && (
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-gray-500 hidden lg:inline">
                       Updated {lastUpdated.toLocaleTimeString()}
                     </span>
                   )}
@@ -139,7 +141,7 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
               )}
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
               {/* Notifications */}
               <Popover
                 open={notificationsOpen}
@@ -151,13 +153,15 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                       <Button
                         variant="outline"
                         size="sm"
-                        className="flex items-center gap-2 relative"
+                        className="flex items-center gap-1.5 sm:gap-2 relative px-2 sm:px-3"
                       >
-                        <Bell className="h-4 w-4" />
-                        <span className="hidden sm:inline">Notifications</span>
+                        <Bell className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
+                        <span className="hidden md:inline text-xs sm:text-sm">
+                          Notifications
+                        </span>
                         <Badge
                           variant="destructive"
-                          className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs"
+                          className="absolute -top-2 -right-2 h-4 sm:h-5 w-4 sm:w-5 rounded-full p-0 flex items-center justify-center text-xs"
                         >
                           2
                         </Badge>
@@ -168,7 +172,7 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                     <p>View recent notifications and alerts</p>
                   </TooltipContent>
                 </Tooltip>
-                <PopoverContent className="w-80" align="end">
+                <PopoverContent className="w-72 sm:w-80" align="end">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <h4 className="font-semibold">Notifications</h4>
@@ -227,10 +231,12 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                       <Button
                         variant="outline"
                         size="sm"
-                        className="flex items-center gap-2"
+                        className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3"
                       >
-                        <HelpCircle className="h-4 w-4" />
-                        <span className="hidden sm:inline">Advice</span>
+                        <HelpCircle className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
+                        <span className="hidden md:inline text-xs sm:text-sm">
+                          Advice
+                        </span>
                       </Button>
                     </PopoverTrigger>
                   </TooltipTrigger>
@@ -238,7 +244,7 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                     <p>Get expert advice and recommendations</p>
                   </TooltipContent>
                 </Tooltip>
-                <PopoverContent className="w-80" align="end">
+                <PopoverContent className="w-72 sm:w-80" align="end">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
                       <h4 className="font-semibold">Advice</h4>

@@ -48,36 +48,43 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 flex items-center justify-center py-8 px-3 sm:px-4 lg:px-8">
       <div className="w-full max-w-md">
         <Card className="shadow-2xl border-0">
-          <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+          <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 sm:p-6">
             <div>
-              <CardTitle className="text-2xl mb-2">Welcome Back</CardTitle>
-              <p className="text-blue-100 text-sm">
+              <CardTitle className="text-xl sm:text-2xl mb-1 sm:mb-2">
+                Welcome Back
+              </CardTitle>
+              <p className="text-blue-100 text-xs sm:text-sm">
                 Sign in to your account to continue to Joseph AI
               </p>
             </div>
           </CardHeader>
 
-          <CardContent className="p-8">
+          <CardContent className="p-4 sm:p-8">
             {/* Error Message */}
             {(localError || error) && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
-                <AlertCircle className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
-                <p className="text-sm text-red-800">{localError || error}</p>
+              <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2 sm:gap-3">
+                <AlertCircle className="h-4 sm:h-5 w-4 sm:w-5 text-red-500 flex-shrink-0 mt-0.5" />
+                <p className="text-xs sm:text-sm text-red-800">
+                  {localError || error}
+                </p>
               </div>
             )}
 
             {/* Login Form */}
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
               {/* Email Field */}
               <div>
-                <Label htmlFor="email" className="text-sm font-medium">
+                <Label
+                  htmlFor="email"
+                  className="text-xs sm:text-sm font-medium"
+                >
                   Email Address
                 </Label>
-                <div className="relative mt-2">
-                  <Mail className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
+                <div className="relative mt-1.5 sm:mt-2">
+                  <Mail className="absolute left-3 top-2.5 sm:top-3 h-4 sm:h-5 w-4 sm:w-5 text-gray-400" />
                   <Input
                     id="email"
                     type="email"
@@ -87,7 +94,7 @@ export default function Login() {
                       setLocalError("");
                     }}
                     placeholder="you@example.com"
-                    className="pl-10 h-11"
+                    className="pl-9 sm:pl-10 h-9 sm:h-11 text-xs sm:text-sm"
                     disabled={isLoading}
                   />
                 </div>
@@ -95,8 +102,11 @@ export default function Login() {
 
               {/* Password Field */}
               <div>
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="password" className="text-sm font-medium">
+                <div className="flex items-center justify-between gap-2">
+                  <Label
+                    htmlFor="password"
+                    className="text-xs sm:text-sm font-medium"
+                  >
                     Password
                   </Label>
                   <Button
@@ -105,11 +115,11 @@ export default function Login() {
                     className="text-xs text-blue-600 hover:text-blue-700 p-0 h-auto"
                     onClick={() => navigate("/forgot-password")}
                   >
-                    Forgot password?
+                    Forgot?
                   </Button>
                 </div>
-                <div className="relative mt-2">
-                  <Lock className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
+                <div className="relative mt-1.5 sm:mt-2">
+                  <Lock className="absolute left-3 top-2.5 sm:top-3 h-4 sm:h-5 w-4 sm:w-5 text-gray-400" />
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
@@ -119,13 +129,13 @@ export default function Login() {
                       setLocalError("");
                     }}
                     placeholder="••••••••"
-                    className="pl-10 pr-10 h-11"
+                    className="pl-9 sm:pl-10 pr-12 h-9 sm:h-11 text-xs sm:text-sm"
                     disabled={isLoading}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-3.5 text-gray-400 hover:text-gray-600"
+                    className="absolute right-2.5 sm:right-3 top-2.5 sm:top-3 text-xs text-gray-400 hover:text-gray-600"
                   >
                     {showPassword ? "Hide" : "Show"}
                   </button>
@@ -136,11 +146,11 @@ export default function Login() {
               <Button
                 type="submit"
                 disabled={isLoading || !email || !password}
-                className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white font-medium"
+                className="w-full h-9 sm:h-11 bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs sm:text-sm"
               >
                 {isLoading ? (
                   <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    <Loader2 className="h-3.5 sm:h-4 w-3.5 sm:w-4 mr-2 animate-spin" />
                     Signing in...
                   </>
                 ) : (
@@ -149,11 +159,11 @@ export default function Login() {
               </Button>
 
               {/* Divider */}
-              <div className="relative my-6">
+              <div className="relative my-4 sm:my-6">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-gray-300" />
                 </div>
-                <div className="relative flex justify-center text-sm">
+                <div className="relative flex justify-center text-xs sm:text-sm">
                   <span className="px-2 bg-white text-gray-500">
                     Or continue with
                   </span>
@@ -166,10 +176,10 @@ export default function Login() {
                 variant="outline"
                 onClick={handleGoogleSignIn}
                 disabled={isLoading}
-                className="w-full h-11 border-gray-300"
+                className="w-full h-9 sm:h-11 border-gray-300 text-xs sm:text-sm"
               >
                 <svg
-                  className="h-5 w-5 mr-2"
+                  className="h-3.5 sm:h-5 w-3.5 sm:w-5 mr-2"
                   viewBox="0 0 24 24"
                   fill="currentColor"
                 >
@@ -178,16 +188,16 @@ export default function Login() {
                   <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
                   <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                 </svg>
-                Google
+                <span className="hidden sm:inline">Google</span>
               </Button>
             </form>
 
             {/* Sign Up Link */}
-            <p className="text-center text-sm text-gray-600 mt-6">
+            <p className="text-center text-xs sm:text-sm text-gray-600 mt-4 sm:mt-6">
               Don't have an account?{" "}
               <Button
                 variant="link"
-                className="text-blue-600 hover:text-blue-700 p-0 h-auto font-semibold"
+                className="text-blue-600 hover:text-blue-700 p-0 h-auto font-semibold text-xs sm:text-sm"
                 onClick={() => navigate("/signup")}
               >
                 Sign up
@@ -197,7 +207,7 @@ export default function Login() {
         </Card>
 
         {/* Footer */}
-        <p className="text-center text-xs text-gray-500 mt-6">
+        <p className="text-center text-xs text-gray-500 mt-4 sm:mt-6">
           © 2024 Joseph AI. All rights reserved.
         </p>
       </div>
