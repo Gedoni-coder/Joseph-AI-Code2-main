@@ -154,13 +154,14 @@ export default function InventorySupplyChain() {
         connectionLabel="Live"
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8">
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
-          className="space-y-6"
+          className="space-y-4 sm:space-y-6"
         >
-          <TabsList className="grid w-full grid-cols-11 bg-white border text-sm">
+          <div className="w-full overflow-x-auto">
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-11 bg-white border text-xs sm:text-sm">
             <TabsTrigger
               value="overview"
               className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2"
@@ -221,7 +222,8 @@ export default function InventorySupplyChain() {
             >
               <span className="line-clamp-1">Inv Analytics</span>
             </TabsTrigger>
-          </TabsList>
+            </TabsList>
+          </div>
 
           <TabsContent value="overview" className="space-y-4 sm:space-y-6">
             {/* Key Metrics Dashboard */}
