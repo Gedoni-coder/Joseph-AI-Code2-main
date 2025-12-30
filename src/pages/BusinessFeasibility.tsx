@@ -308,13 +308,13 @@ export default function BusinessFeasibility() {
         showConnectionStatus={false}
       />
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8">
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
-          className="space-y-6"
+          className="space-y-4 sm:space-y-6"
         >
-          <TabsList className="grid w-full grid-cols-2">
+          <TabsList className="grid w-full grid-cols-2 text-xs sm:text-sm">
             <TabsTrigger value="feasibility">Business Feasibility</TabsTrigger>
             <TabsTrigger value="planning">Business Planning</TabsTrigger>
           </TabsList>
