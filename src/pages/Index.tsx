@@ -192,9 +192,10 @@ const Index = () => {
           connectionLabel={isStreaming ? "Live Streaming" : "Live"}
         />
 
-        <main className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8 space-y-6 sm:space-y-8">
+        <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+          {/* Economic Indicators Note: Index.tsx doesn't have tab navigation like other modules */}
           {/* Context Switcher */}
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 sm:gap-4">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <ContextSwitcher
               activeContext={activeContext}
               onContextChange={handleContextChange}
