@@ -326,11 +326,13 @@ export function PolicyWatchtower() {
 
       {/* Main Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="feed">Live Policy Feed</TabsTrigger>
-          <TabsTrigger value="compliance">Compliance Costs</TabsTrigger>
-          <TabsTrigger value="impact">Impact Mapping</TabsTrigger>
-        </TabsList>
+        <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+          <TabsList className="contents">
+            <TabsTrigger value="feed" className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3">Live Feed</TabsTrigger>
+            <TabsTrigger value="compliance" className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3">Costs</TabsTrigger>
+            <TabsTrigger value="impact" className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3">Impact</TabsTrigger>
+          </TabsList>
+        </div>
 
         {/* Live Policy Feed Tab */}
         <TabsContent value="feed" className="space-y-4">
