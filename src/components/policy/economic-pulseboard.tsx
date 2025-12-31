@@ -273,11 +273,13 @@ export function EconomicPulseboard() {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="indicators">Live Indicators</TabsTrigger>
-          <TabsTrigger value="sector">Sector Dynamics</TabsTrigger>
-          <TabsTrigger value="forecast">Sectoral Forecast</TabsTrigger>
-        </TabsList>
+        <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+          <TabsList className="contents">
+            <TabsTrigger value="indicators" className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3">Indicators</TabsTrigger>
+            <TabsTrigger value="sector" className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3">Sector</TabsTrigger>
+            <TabsTrigger value="forecast" className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3">Forecast</TabsTrigger>
+          </TabsList>
+        </div>
 
         {/* Live Indicators Tab */}
         <TabsContent value="indicators" className="space-y-4">
