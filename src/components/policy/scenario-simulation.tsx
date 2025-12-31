@@ -227,11 +227,13 @@ export function ScenarioSimulation() {
   return (
     <div className="space-y-6">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="simulator">What-If Simulator</TabsTrigger>
-          <TabsTrigger value="heat-map">Risk Heat Map</TabsTrigger>
-          <TabsTrigger value="absorption">Shock Absorption</TabsTrigger>
-        </TabsList>
+        <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+          <TabsList className="contents">
+            <TabsTrigger value="simulator" className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3">What-If</TabsTrigger>
+            <TabsTrigger value="heat-map" className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3">Heat Map</TabsTrigger>
+            <TabsTrigger value="absorption" className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3">Absorption</TabsTrigger>
+          </TabsList>
+        </div>
 
         {/* What-If Simulator Tab */}
         <TabsContent value="simulator" className="space-y-4">
