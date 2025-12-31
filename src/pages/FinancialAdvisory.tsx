@@ -311,7 +311,7 @@ export default function FinancialAdvisory() {
 
               <TabsTrigger
                 value="summary-recommendation"
-                className="hidden sm:flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
+                className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
               >
                 <BarChart3 className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
                 <span className="hidden lg:inline line-clamp-1">Summary & Rec</span>
@@ -329,7 +329,7 @@ export default function FinancialAdvisory() {
 
               <TabsTrigger
                 value="budget-validation"
-                className="hidden sm:flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
+                className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
               >
                 <BarChart3 className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
                 <span className="hidden lg:inline line-clamp-1">Validation</span>
@@ -342,31 +342,34 @@ export default function FinancialAdvisory() {
               >
                 <Calculator className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
                 <span className="hidden lg:inline line-clamp-1">Scenarios</span>
-                <span className="lg:hidden line-clamp-1">Scenarios</span>
+                <span className="lg:hidden line-clamp-1">Scenario</span>
               </TabsTrigger>
 
               <TabsTrigger
                 value="risk-assessment"
-                className="hidden lg:flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
+                className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
               >
                 <Shield className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
-                <span className="line-clamp-1">Risk</span>
+                <span className="hidden lg:inline line-clamp-1">Risk Assessment</span>
+                <span className="lg:hidden line-clamp-1">Risk</span>
               </TabsTrigger>
 
               <TabsTrigger
                 value="performance-drivers"
-                className="hidden lg:flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
+                className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
               >
                 <Target className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
-                <span className="line-clamp-1">KPIs</span>
+                <span className="hidden lg:inline line-clamp-1">Performance KPIs</span>
+                <span className="lg:hidden line-clamp-1">KPIs</span>
               </TabsTrigger>
 
               <TabsTrigger
                 value="advisory-insights"
-                className="hidden lg:flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
+                className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
               >
                 <Lightbulb className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
-                <span className="line-clamp-1">Insights</span>
+                <span className="hidden lg:inline line-clamp-1">Advisory Insights</span>
+                <span className="lg:hidden line-clamp-1">Insights</span>
               </TabsTrigger>
               </TabsList>
             </div>
