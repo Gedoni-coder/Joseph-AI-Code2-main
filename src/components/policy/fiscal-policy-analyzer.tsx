@@ -210,34 +210,87 @@ export function FiscalPolicyAnalyzer() {
   ];
 
   const revenueForecast = [
-    { month: "Current", baseRevenue: 5250000000, forecastedRevenue: 5250000000, loss: 0 },
-    { month: "Month 1", baseRevenue: 5250000000, forecastedRevenue: 5145000000, loss: 105000000 },
-    { month: "Month 2", baseRevenue: 5250000000, forecastedRevenue: 5082000000, loss: 168000000 },
-    { month: "Month 3", baseRevenue: 5250000000, forecastedRevenue: 5040000000, loss: 210000000 },
-    { month: "Month 4", baseRevenue: 5250000000, forecastedRevenue: 5097000000, loss: 153000000 },
-    { month: "Month 5", baseRevenue: 5250000000, forecastedRevenue: 5175000000, loss: 75000000 },
+    {
+      month: "Current",
+      baseRevenue: 5250000000,
+      forecastedRevenue: 5250000000,
+      loss: 0,
+    },
+    {
+      month: "Month 1",
+      baseRevenue: 5250000000,
+      forecastedRevenue: 5145000000,
+      loss: 105000000,
+    },
+    {
+      month: "Month 2",
+      baseRevenue: 5250000000,
+      forecastedRevenue: 5082000000,
+      loss: 168000000,
+    },
+    {
+      month: "Month 3",
+      baseRevenue: 5250000000,
+      forecastedRevenue: 5040000000,
+      loss: 210000000,
+    },
+    {
+      month: "Month 4",
+      baseRevenue: 5250000000,
+      forecastedRevenue: 5097000000,
+      loss: 153000000,
+    },
+    {
+      month: "Month 5",
+      baseRevenue: 5250000000,
+      forecastedRevenue: 5175000000,
+      loss: 75000000,
+    },
   ];
 
   const calculateOptimalPrice = () => {
     const inflationRate = 0.285; // 28.5% CPI
     const taxIncrease = 0.03; // 3% corporate tax increase
     const customsDutyIncrease = 0.05; // 5% customs duty increase
-    
+
     const inflationImpact = basePrice * inflationRate;
     const totalCostIncrease = basePrice * (taxIncrease + customsDutyIncrease);
-    const optimalPrice = Math.round(basePrice + inflationImpact + totalCostIncrease * 0.5);
-    
+    const optimalPrice = Math.round(
+      basePrice + inflationImpact + totalCostIncrease * 0.5,
+    );
+
     return optimalPrice;
   };
 
   return (
     <div className="space-y-6">
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="tax-breakdown">Tax Breakdown</TabsTrigger>
-          <TabsTrigger value="pricing">Pricing Analysis</TabsTrigger>
-          <TabsTrigger value="profitability">Profitability Test</TabsTrigger>
-        </TabsList>
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="space-y-4"
+      >
+        <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+          <TabsList className="contents">
+            <TabsTrigger
+              value="tax-breakdown"
+              className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3"
+            >
+              Tax
+            </TabsTrigger>
+            <TabsTrigger
+              value="pricing"
+              className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3"
+            >
+              Pricing
+            </TabsTrigger>
+            <TabsTrigger
+              value="profitability"
+              className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3 hidden sm:flex"
+            >
+              Profit
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
         {/* Tax Policy Breakdown Tab */}
         <TabsContent value="tax-breakdown" className="space-y-4">
@@ -245,14 +298,20 @@ export function FiscalPolicyAnalyzer() {
             <CardHeader>
               <CardTitle>Tax Policy Breakdown</CardTitle>
               <CardDescription>
-                AI-powered analysis of fiscal policies and their impact on your business
+                AI-powered analysis of fiscal policies and their impact on your
+                business
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
                 <div className="bg-red-50 p-4 rounded-lg border border-red-200">
                   <div className="text-2xl font-bold text-red-600">
-                    ₦{taxPolicies.reduce((sum, p) => sum + Math.max(0, p.estimatedImpact), 0) / 1000000}M
+                    ₦
+                    {taxPolicies.reduce(
+                      (sum, p) => sum + Math.max(0, p.estimatedImpact),
+                      0,
+                    ) / 1000000}
+                    M
                   </div>
                   <p className="text-sm text-muted-foreground">
                     Total tax impact
@@ -295,9 +354,7 @@ export function FiscalPolicyAnalyzer() {
                   <div className="text-2xl font-bold text-green-600">
                     {taxPolicies.filter((p) => p.change === 0).length}
                   </div>
-                  <p className="text-sm text-muted-foreground">
-                    Unchanged
-                  </p>
+                  <p className="text-sm text-muted-foreground">Unchanged</p>
                 </div>
               </div>
 
@@ -356,7 +413,8 @@ export function FiscalPolicyAnalyzer() {
                                   : "text-green-600"
                               }`}
                             >
-                              {policy.change > 0 ? "+" : ""}{policy.change}%
+                              {policy.change > 0 ? "+" : ""}
+                              {policy.change}%
                             </p>
                           </div>
                         </div>
@@ -376,7 +434,8 @@ export function FiscalPolicyAnalyzer() {
                                     : "text-green-600 font-semibold"
                                 }
                               >
-                                ₦{(policy.estimatedImpact / 1000000).toFixed(1)}M
+                                ₦{(policy.estimatedImpact / 1000000).toFixed(1)}
+                                M
                               </span>
                             </p>
                           </div>
@@ -396,7 +455,8 @@ export function FiscalPolicyAnalyzer() {
             <CardHeader>
               <CardTitle>Price Sensitivity & Revenue Forecast</CardTitle>
               <CardDescription>
-                Analyze how inflation and fiscal policy affect optimal pricing and revenue
+                Analyze how inflation and fiscal policy affect optimal pricing
+                and revenue
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -413,7 +473,9 @@ export function FiscalPolicyAnalyzer() {
                       className="flex-1"
                     />
                     <div className="bg-blue-50 p-3 rounded border border-blue-200 text-right min-w-[200px]">
-                      <p className="text-xs text-muted-foreground">Optimal Price</p>
+                      <p className="text-xs text-muted-foreground">
+                        Optimal Price
+                      </p>
                       <p className="text-xl font-bold text-blue-600">
                         ₦{calculateOptimalPrice().toLocaleString()}
                       </p>
@@ -426,7 +488,13 @@ export function FiscalPolicyAnalyzer() {
               <ResponsiveContainer width="100%" height={300}>
                 <AreaChart data={revenueForecast}>
                   <defs>
-                    <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient
+                      id="colorRevenue"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
                       <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8} />
                       <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
                     </linearGradient>
@@ -482,19 +550,25 @@ export function FiscalPolicyAnalyzer() {
 
                         <div className="grid grid-cols-3 gap-3 text-sm">
                           <div>
-                            <p className="text-muted-foreground">Current Price</p>
+                            <p className="text-muted-foreground">
+                              Current Price
+                            </p>
                             <p className="font-semibold">
                               ₦{month.currentPrice.toLocaleString()}
                             </p>
                           </div>
                           <div>
-                            <p className="text-muted-foreground">Optimal Price</p>
+                            <p className="text-muted-foreground">
+                              Optimal Price
+                            </p>
                             <p className="font-semibold text-blue-600">
                               ₦{month.optimizedPrice.toLocaleString()}
                             </p>
                           </div>
                           <div>
-                            <p className="text-muted-foreground">Est. Profit Margin</p>
+                            <p className="text-muted-foreground">
+                              Est. Profit Margin
+                            </p>
                             <p className="font-semibold text-green-600">
                               {month.profitMargin}%
                             </p>
@@ -515,10 +589,17 @@ export function FiscalPolicyAnalyzer() {
                       Revenue Impact Under Fiscal Regime
                     </p>
                     <p className="text-sm text-red-900">
-                      Without pricing adjustments, you could lose approximately ₦{(revenueForecast.reduce((sum, m) => sum + m.loss, 0) / 1000000000).toFixed(1)}B in revenue over 5 months.
+                      Without pricing adjustments, you could lose approximately
+                      ₦
+                      {(
+                        revenueForecast.reduce((sum, m) => sum + m.loss, 0) /
+                        1000000000
+                      ).toFixed(1)}
+                      B in revenue over 5 months.
                     </p>
                     <p className="text-sm text-red-900 font-semibold">
-                      Strategic price optimization can recover 60-80% of this loss.
+                      Strategic price optimization can recover 60-80% of this
+                      loss.
                     </p>
                   </div>
                 </CardContent>
@@ -533,7 +614,8 @@ export function FiscalPolicyAnalyzer() {
             <CardHeader>
               <CardTitle>Profitability Stress Test</CardTitle>
               <CardDescription>
-                Simulate different scenarios and their impact on profit stability
+                Simulate different scenarios and their impact on profit
+                stability
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -541,14 +623,37 @@ export function FiscalPolicyAnalyzer() {
               <ResponsiveContainer width="100%" height={350}>
                 <BarChart data={profitabilityScenarios}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="scenario" angle={-45} textAnchor="end" height={100} />
-                  <YAxis label={{ value: "Profit Margin (%)", angle: -90, position: "insideLeft" }} />
+                  <XAxis
+                    dataKey="scenario"
+                    angle={-45}
+                    textAnchor="end"
+                    height={100}
+                  />
+                  <YAxis
+                    label={{
+                      value: "Profit Margin (%)",
+                      angle: -90,
+                      position: "insideLeft",
+                    }}
+                  />
                   <Tooltip />
                   <Legend />
-                  <Bar dataKey="baseProfitMargin" fill="#10b981" name="Base Margin" />
+                  <Bar
+                    dataKey="baseProfitMargin"
+                    fill="#10b981"
+                    name="Base Margin"
+                  />
                   <Bar dataKey="afterTax" fill="#f97316" name="After Tax" />
-                  <Bar dataKey="afterInflation" fill="#ef4444" name="After Inflation" />
-                  <Bar dataKey="finalProfit" fill="#3b82f6" name="Final Profit" />
+                  <Bar
+                    dataKey="afterInflation"
+                    fill="#ef4444"
+                    name="After Inflation"
+                  />
+                  <Bar
+                    dataKey="finalProfit"
+                    fill="#3b82f6"
+                    name="Final Profit"
+                  />
                 </BarChart>
               </ResponsiveContainer>
 
@@ -585,22 +690,36 @@ export function FiscalPolicyAnalyzer() {
                         <div className="grid grid-cols-2 md:grid-cols-5 gap-2 text-sm">
                           <div>
                             <p className="text-muted-foreground">Base Margin</p>
-                            <p className="font-semibold">{scenario.baseProfitMargin}%</p>
+                            <p className="font-semibold">
+                              {scenario.baseProfitMargin}%
+                            </p>
                           </div>
                           <div>
                             <p className="text-muted-foreground">After Tax</p>
-                            <p className="font-semibold">{scenario.afterTax}%</p>
+                            <p className="font-semibold">
+                              {scenario.afterTax}%
+                            </p>
                           </div>
                           <div>
-                            <p className="text-muted-foreground">After Inflation</p>
-                            <p className="font-semibold">{scenario.afterInflation}%</p>
+                            <p className="text-muted-foreground">
+                              After Inflation
+                            </p>
+                            <p className="font-semibold">
+                              {scenario.afterInflation}%
+                            </p>
                           </div>
                           <div>
-                            <p className="text-muted-foreground">After Customer</p>
-                            <p className="font-semibold">{scenario.afterCustomerReaction}%</p>
+                            <p className="text-muted-foreground">
+                              After Customer
+                            </p>
+                            <p className="font-semibold">
+                              {scenario.afterCustomerReaction}%
+                            </p>
                           </div>
                           <div>
-                            <p className="text-muted-foreground">Final Profit</p>
+                            <p className="text-muted-foreground">
+                              Final Profit
+                            </p>
                             <p
                               className={`font-semibold ${
                                 scenario.finalProfit > 15
@@ -638,34 +757,45 @@ export function FiscalPolicyAnalyzer() {
               {/* Recommendations */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-base">Profit Maximization Strategy</CardTitle>
+                  <CardTitle className="text-base">
+                    Profit Maximization Strategy
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="font-semibold text-sm">Pricing Optimization</p>
+                        <p className="font-semibold text-sm">
+                          Pricing Optimization
+                        </p>
                         <p className="text-xs text-muted-foreground">
-                          Implement dynamic pricing based on demand curves and competitor analysis
+                          Implement dynamic pricing based on demand curves and
+                          competitor analysis
                         </p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="font-semibold text-sm">Cost Optimization</p>
+                        <p className="font-semibold text-sm">
+                          Cost Optimization
+                        </p>
                         <p className="text-xs text-muted-foreground">
-                          Reduce operational costs by 15-20% through process automation
+                          Reduce operational costs by 15-20% through process
+                          automation
                         </p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="font-semibold text-sm">Revenue Diversification</p>
+                        <p className="font-semibold text-sm">
+                          Revenue Diversification
+                        </p>
                         <p className="text-xs text-muted-foreground">
-                          Develop new product lines or service offerings to cushion tax impact
+                          Develop new product lines or service offerings to
+                          cushion tax impact
                         </p>
                       </div>
                     </div>
@@ -674,7 +804,8 @@ export function FiscalPolicyAnalyzer() {
                       <div>
                         <p className="font-semibold text-sm">Tax Planning</p>
                         <p className="text-xs text-muted-foreground">
-                          Explore legitimate tax deductions and incentive programs available to your sector
+                          Explore legitimate tax deductions and incentive
+                          programs available to your sector
                         </p>
                       </div>
                     </div>
@@ -690,7 +821,9 @@ export function FiscalPolicyAnalyzer() {
                       Recommended Scenario: "Full Mitigation Strategy"
                     </p>
                     <p className="text-sm text-blue-900">
-                      This approach maintains 82% profit stability by combining strategic pricing, cost optimization, and tax planning to offset fiscal policy impacts.
+                      This approach maintains 82% profit stability by combining
+                      strategic pricing, cost optimization, and tax planning to
+                      offset fiscal policy impacts.
                     </p>
                   </div>
                 </CardContent>

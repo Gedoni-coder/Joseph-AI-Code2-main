@@ -85,59 +85,61 @@ export default function PricingStrategy() {
         connectionLabel="Live"
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8">
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
           className="space-y-6"
         >
-          <TabsList className="grid w-full grid-cols-8 bg-white border">
-            <TabsTrigger
-              value="overview"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
-            >
-              Overview
-            </TabsTrigger>
-            <TabsTrigger
-              value="summary-recommendation"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
-            >
-              Summary & Rec
-            </TabsTrigger>
-            <TabsTrigger
-              value="strategies"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
-            >
-              Strategies
-            </TabsTrigger>
-            <TabsTrigger
-              value="competitive"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
-            >
-              Competitive
-            </TabsTrigger>
-            <TabsTrigger
-              value="testing"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
-            >
-              Testing
-            </TabsTrigger>
-            <TabsTrigger
-              value="dynamic"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
-            >
-              Dynamic
-            </TabsTrigger>
-            <TabsTrigger
-              value="conversation"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
-            >
-              JOSEPH
-            </TabsTrigger>
-          </TabsList>
+          <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+            <TabsList className="contents">
+              <TabsTrigger
+                value="overview"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Overview
+              </TabsTrigger>
+              <TabsTrigger
+                value="summary-recommendation"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Summary & Rec
+              </TabsTrigger>
+              <TabsTrigger
+                value="strategies"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Strategies
+              </TabsTrigger>
+              <TabsTrigger
+                value="competitive"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Competitive
+              </TabsTrigger>
+              <TabsTrigger
+                value="testing"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Testing
+              </TabsTrigger>
+              <TabsTrigger
+                value="dynamic"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Dynamic
+              </TabsTrigger>
+              <TabsTrigger
+                value="conversation"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                JOSEPH
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
-          <TabsContent value="overview" className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <TabsContent value="overview" className="space-y-4 sm:space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
               {metrics.map((metric) => (
                 <Card key={metric.id}>
                   <CardContent className="p-6">
@@ -175,7 +177,7 @@ export default function PricingStrategy() {
               ))}
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">

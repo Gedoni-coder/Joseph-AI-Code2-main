@@ -260,37 +260,63 @@ export function EconomicPulseboard() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">Economic Pulseboard</h2>
-          <p className="text-muted-foreground">Real-time economic indicators and sector dynamics</p>
+          <p className="text-muted-foreground">
+            Real-time economic indicators and sector dynamics
+          </p>
         </div>
-        <Button
-          onClick={handleRefresh}
-          variant="outline"
-          disabled={refreshing}
-        >
-          <RefreshCw className={`h-4 w-4 mr-2 ${refreshing ? "animate-spin" : ""}`} />
+        <Button onClick={handleRefresh} variant="outline" disabled={refreshing}>
+          <RefreshCw
+            className={`h-4 w-4 mr-2 ${refreshing ? "animate-spin" : ""}`}
+          />
           Refresh
         </Button>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="indicators">Live Indicators</TabsTrigger>
-          <TabsTrigger value="sector">Sector Dynamics</TabsTrigger>
-          <TabsTrigger value="forecast">Sectoral Forecast</TabsTrigger>
-        </TabsList>
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="space-y-4"
+      >
+        <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+          <TabsList className="contents">
+            <TabsTrigger
+              value="indicators"
+              className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3"
+            >
+              Indicators
+            </TabsTrigger>
+            <TabsTrigger
+              value="sector"
+              className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3"
+            >
+              Sector
+            </TabsTrigger>
+            <TabsTrigger
+              value="forecast"
+              className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3"
+            >
+              Forecast
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
         {/* Live Indicators Tab */}
         <TabsContent value="indicators" className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {liveIndicators.map((indicator) => (
-              <Card key={indicator.name} className={getStatusBg(indicator.status)}>
+              <Card
+                key={indicator.name}
+                className={getStatusBg(indicator.status)}
+              >
                 <CardContent className="pt-6">
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
                       <p className="text-sm font-medium text-muted-foreground">
                         {indicator.name}
                       </p>
-                      <div className={`p-2 rounded ${getStatusBg(indicator.status)}`}>
+                      <div
+                        className={`p-2 rounded ${getStatusBg(indicator.status)}`}
+                      >
                         {indicator.icon}
                       </div>
                     </div>
@@ -329,7 +355,9 @@ export function EconomicPulseboard() {
                     </div>
 
                     <div className="pt-2 border-t">
-                      <p className="text-xs text-muted-foreground">Previous Value</p>
+                      <p className="text-xs text-muted-foreground">
+                        Previous Value
+                      </p>
                       <p className="text-sm font-semibold">
                         {indicator.previousValue.toLocaleString()}
                       </p>
@@ -390,9 +418,7 @@ export function EconomicPulseboard() {
                   >
                     <div className="flex items-center justify-between">
                       <h4 className="font-semibold text-lg">{sector.sector}</h4>
-                      <Badge variant="outline">
-                        {sector.seasonalTrend}
-                      </Badge>
+                      <Badge variant="outline">{sector.seasonalTrend}</Badge>
                     </div>
 
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -518,13 +544,12 @@ export function EconomicPulseboard() {
 
                     <div className="bg-blue-50 p-2 rounded text-sm">
                       <p className="text-muted-foreground">
-                        <strong>Insight:</strong> {
-                          sector.demandPressure > 70
-                            ? "High demand opportunity - consider market expansion"
-                            : sector.demandPressure > 50
-                              ? "Moderate demand - stable growth potential"
-                              : "Low demand - focus on efficiency"
-                        }
+                        <strong>Insight:</strong>{" "}
+                        {sector.demandPressure > 70
+                          ? "High demand opportunity - consider market expansion"
+                          : sector.demandPressure > 50
+                            ? "Moderate demand - stable growth potential"
+                            : "Low demand - focus on efficiency"}
                       </p>
                     </div>
                   </div>
@@ -537,9 +562,7 @@ export function EconomicPulseboard() {
           <Card>
             <CardHeader>
               <CardTitle>Sector Performance Distribution</CardTitle>
-              <CardDescription>
-                Growth rate by industry
-              </CardDescription>
+              <CardDescription>Growth rate by industry</CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
@@ -657,16 +680,20 @@ export function EconomicPulseboard() {
                         </p>
                         <ul className="text-sm text-blue-900 space-y-1">
                           <li>
-                            • <strong>Q1-Q2:</strong> Moderate growth expected with manageable risks
+                            • <strong>Q1-Q2:</strong> Moderate growth expected
+                            with manageable risks
                           </li>
                           <li>
-                            • <strong>Q3-Q4:</strong> Increased opportunities due to seasonal demand
+                            • <strong>Q3-Q4:</strong> Increased opportunities
+                            due to seasonal demand
                           </li>
                           <li>
-                            • <strong>Risk Mitigation:</strong> Monitor exchange rates and policy changes
+                            • <strong>Risk Mitigation:</strong> Monitor exchange
+                            rates and policy changes
                           </li>
                           <li>
-                            • <strong>Recommendation:</strong> Build operational resilience and diversify revenue streams
+                            • <strong>Recommendation:</strong> Build operational
+                            resilience and diversify revenue streams
                           </li>
                         </ul>
                       </div>

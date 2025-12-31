@@ -169,46 +169,49 @@ const TaxCompliance = () => {
 
         {/* Main Content Tabs */}
         <Tabs defaultValue="calculator" className="space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <TabsList className="grid grid-cols-6 w-full sm:w-auto bg-blue-50 border border-blue-200">
+          <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+            <TabsList className="contents">
               <TabsTrigger
                 value="calculator"
-                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
               >
                 Calculator
               </TabsTrigger>
               <TabsTrigger
                 value="recommendations"
-                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
               >
                 Recommendations
               </TabsTrigger>
               <TabsTrigger
                 value="compliance"
-                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
               >
                 Compliance
               </TabsTrigger>
               <TabsTrigger
                 value="planning"
-                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
               >
                 Planning
               </TabsTrigger>
               <TabsTrigger
                 value="audit"
-                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
               >
                 Audit Trail
               </TabsTrigger>
               <TabsTrigger
                 value="documents"
-                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
               >
                 Documents
               </TabsTrigger>
             </TabsList>
+          </div>
 
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+            <div></div>
             <div className="flex items-center gap-2">
               <Badge
                 variant={isConnected ? "default" : "destructive"}

@@ -248,8 +248,7 @@ KEY DEADLINES:
 
   const filteredIncentives = mockIncentives.filter(
     (incentive) =>
-      incentive.businessQualifies ||
-      incentive.successLikelihood > 50,
+      incentive.businessQualifies || incentive.successLikelihood > 50,
   );
 
   const getIncentiveColor = (type: string) => {
@@ -275,17 +274,41 @@ KEY DEADLINES:
 
   return (
     <div className="space-y-6">
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="interpreter" className="flex items-center gap-2">
-            <BookOpen className="h-4 w-4" />
-            <span className="hidden sm:inline">Policy Interpreter</span>
-          </TabsTrigger>
-          <TabsTrigger value="incentives" className="flex items-center gap-2">
-            <DollarSign className="h-4 w-4" />
-            <span className="hidden sm:inline">Incentive Scanner</span>
-          </TabsTrigger>
-        </TabsList>
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="space-y-4"
+      >
+        <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+          <TabsList className="contents">
+            <TabsTrigger
+              value="interpreter"
+              className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-1 sm:px-2"
+            >
+              <BookOpen className="h-3 sm:h-4 w-3 sm:w-4 flex-shrink-0" />
+              <span className="hidden lg:inline line-clamp-1">
+                Policy Interpreter
+              </span>
+              <span className="hidden sm:inline lg:hidden line-clamp-1">
+                Interpreter
+              </span>
+              <span className="sm:hidden line-clamp-1">Policy</span>
+            </TabsTrigger>
+            <TabsTrigger
+              value="incentives"
+              className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-1 sm:px-2"
+            >
+              <DollarSign className="h-3 sm:h-4 w-3 sm:w-4 flex-shrink-0" />
+              <span className="hidden lg:inline line-clamp-1">
+                Incentive Scanner
+              </span>
+              <span className="hidden sm:inline lg:hidden line-clamp-1">
+                Incentives
+              </span>
+              <span className="sm:hidden line-clamp-1">Incentive</span>
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
         {/* Policy Interpreter Tab */}
         <TabsContent value="interpreter" className="space-y-4">
@@ -293,7 +316,8 @@ KEY DEADLINES:
             <CardHeader>
               <CardTitle>AI Policy Interpreter</CardTitle>
               <CardDescription>
-                Upload or paste government policy documents for instant interpretation
+                Upload or paste government policy documents for instant
+                interpretation
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -327,7 +351,10 @@ KEY DEADLINES:
                   <label className="text-sm font-semibold mb-2 block">
                     Interpretation Language
                   </label>
-                  <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
+                  <Select
+                    value={selectedLanguage}
+                    onValueChange={setSelectedLanguage}
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -367,14 +394,18 @@ KEY DEADLINES:
             <CardHeader>
               <CardTitle>Eligibility Scanner for Incentives</CardTitle>
               <CardDescription>
-                Discover grants, funds, and incentives your business qualifies for
+                Discover grants, funds, and incentives your business qualifies
+                for
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
                 <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
                   <div className="text-2xl font-bold text-blue-600">
-                    {filteredIncentives.filter((i) => i.businessQualifies).length}
+                    {
+                      filteredIncentives.filter((i) => i.businessQualifies)
+                        .length
+                    }
                   </div>
                   <p className="text-sm text-muted-foreground">
                     You likely qualify
@@ -382,7 +413,14 @@ KEY DEADLINES:
                 </div>
                 <div className="bg-green-50 p-4 rounded-lg border border-green-200">
                   <div className="text-2xl font-bold text-green-600">
-                    ₦{(filteredIncentives.reduce((sum, i) => sum + i.expectedBenefit, 0) / 1000000).toFixed(0)}M
+                    ₦
+                    {(
+                      filteredIncentives.reduce(
+                        (sum, i) => sum + i.expectedBenefit,
+                        0,
+                      ) / 1000000
+                    ).toFixed(0)}
+                    M
                   </div>
                   <p className="text-sm text-muted-foreground">
                     Potential benefits
@@ -390,18 +428,19 @@ KEY DEADLINES:
                 </div>
                 <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
                   <div className="text-2xl font-bold text-orange-600">
-                    {filteredIncentives.filter((i) => {
-                      const today = new Date();
-                      const deadline = new Date(i.deadline);
-                      const daysLeft = Math.floor(
-                        (deadline.getTime() - today.getTime()) / (1000 * 60 * 60 * 24),
-                      );
-                      return daysLeft < 60 && daysLeft > 0;
-                    }).length}
+                    {
+                      filteredIncentives.filter((i) => {
+                        const today = new Date();
+                        const deadline = new Date(i.deadline);
+                        const daysLeft = Math.floor(
+                          (deadline.getTime() - today.getTime()) /
+                            (1000 * 60 * 60 * 24),
+                        );
+                        return daysLeft < 60 && daysLeft > 0;
+                      }).length
+                    }
                   </div>
-                  <p className="text-sm text-muted-foreground">
-                    Ending soon
-                  </p>
+                  <p className="text-sm text-muted-foreground">Ending soon</p>
                 </div>
                 <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
                   <div className="text-2xl font-bold text-purple-600">
@@ -413,7 +452,11 @@ KEY DEADLINES:
                 </div>
                 <div className="bg-red-50 p-4 rounded-lg border border-red-200">
                   <div className="text-2xl font-bold text-red-600">
-                    {filteredIncentives.filter((i) => i.missingRequirements.length > 0).length}
+                    {
+                      filteredIncentives.filter(
+                        (i) => i.missingRequirements.length > 0,
+                      ).length
+                    }
                   </div>
                   <p className="text-sm text-muted-foreground">
                     Need documents
@@ -436,7 +479,10 @@ KEY DEADLINES:
                                 {incentive.title}
                               </h3>
                               {incentive.businessQualifies && (
-                                <Badge variant="outline" className="bg-green-50 text-green-700 border-green-300">
+                                <Badge
+                                  variant="outline"
+                                  className="bg-green-50 text-green-700 border-green-300"
+                                >
                                   <CheckCircle2 className="h-3 w-3 mr-1" />
                                   You Qualify
                                 </Badge>
@@ -446,7 +492,10 @@ KEY DEADLINES:
                               {incentive.description}
                             </p>
                           </div>
-                          <Dialog open={openInterpretDialog} onOpenChange={setOpenInterpretDialog}>
+                          <Dialog
+                            open={openInterpretDialog}
+                            onOpenChange={setOpenInterpretDialog}
+                          >
                             <DialogTrigger asChild>
                               <Button
                                 variant="outline"
@@ -458,7 +507,9 @@ KEY DEADLINES:
                             </DialogTrigger>
                             <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
                               <DialogHeader>
-                                <DialogTitle>{selectedIncentive?.title}</DialogTitle>
+                                <DialogTitle>
+                                  {selectedIncentive?.title}
+                                </DialogTitle>
                                 <DialogDescription>
                                   {selectedIncentive?.description}
                                 </DialogDescription>
@@ -470,7 +521,12 @@ KEY DEADLINES:
                                       Expected Benefit
                                     </h4>
                                     <div className="text-3xl font-bold text-green-600">
-                                      ₦{(selectedIncentive.expectedBenefit / 1000000).toFixed(1)}M
+                                      ₦
+                                      {(
+                                        selectedIncentive.expectedBenefit /
+                                        1000000
+                                      ).toFixed(1)}
+                                      M
                                     </div>
                                   </div>
 
@@ -493,7 +549,10 @@ KEY DEADLINES:
                                             />
                                           </div>
                                           <span className="font-semibold">
-                                            {selectedIncentive.successLikelihood}%
+                                            {
+                                              selectedIncentive.successLikelihood
+                                            }
+                                            %
                                           </span>
                                         </div>
                                       </div>
@@ -507,7 +566,10 @@ KEY DEADLINES:
                                     <ul className="space-y-1">
                                       {selectedIncentive.qualifyingFactors.map(
                                         (factor, idx) => (
-                                          <li key={idx} className="text-sm flex items-start gap-2">
+                                          <li
+                                            key={idx}
+                                            className="text-sm flex items-start gap-2"
+                                          >
                                             <CheckCircle2 className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
                                             <span>{factor}</span>
                                           </li>
@@ -516,7 +578,8 @@ KEY DEADLINES:
                                     </ul>
                                   </div>
 
-                                  {selectedIncentive.missingRequirements.length > 0 && (
+                                  {selectedIncentive.missingRequirements
+                                    .length > 0 && (
                                     <div>
                                       <h4 className="font-semibold mb-2 flex items-center gap-2">
                                         <AlertTriangle className="h-4 w-4 text-orange-600" />
@@ -525,7 +588,10 @@ KEY DEADLINES:
                                       <ul className="space-y-1">
                                         {selectedIncentive.missingRequirements.map(
                                           (req, idx) => (
-                                            <li key={idx} className="text-sm flex items-start gap-2">
+                                            <li
+                                              key={idx}
+                                              className="text-sm flex items-start gap-2"
+                                            >
                                               <AlertCircle className="h-4 w-4 text-orange-600 mt-0.5 flex-shrink-0" />
                                               <span>{req}</span>
                                             </li>
@@ -543,7 +609,10 @@ KEY DEADLINES:
                                     <ol className="space-y-2">
                                       {selectedIncentive.applicationProcess.map(
                                         (step, idx) => (
-                                          <li key={idx} className="text-sm flex items-start gap-2">
+                                          <li
+                                            key={idx}
+                                            className="text-sm flex items-start gap-2"
+                                          >
                                             <span className="font-semibold text-blue-600">
                                               {idx + 1}.
                                             </span>
@@ -557,7 +626,10 @@ KEY DEADLINES:
                                   <div className="bg-red-50 p-3 rounded border border-red-200">
                                     <p className="text-sm font-semibold text-red-900 flex items-center gap-2">
                                       <Clock className="h-4 w-4" />
-                                      Deadline: {new Date(selectedIncentive.deadline).toLocaleDateString()}
+                                      Deadline:{" "}
+                                      {new Date(
+                                        selectedIncentive.deadline,
+                                      ).toLocaleDateString()}
                                     </p>
                                   </div>
 
@@ -572,25 +644,37 @@ KEY DEADLINES:
 
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
                           <div>
-                            <span className="text-muted-foreground">Expected Benefit</span>
+                            <span className="text-muted-foreground">
+                              Expected Benefit
+                            </span>
                             <p className="font-semibold text-green-600">
-                              ₦{(incentive.expectedBenefit / 1000000).toFixed(1)}M
+                              ₦
+                              {(incentive.expectedBenefit / 1000000).toFixed(1)}
+                              M
                             </p>
                           </div>
                           <div>
-                            <span className="text-muted-foreground">Deadline</span>
+                            <span className="text-muted-foreground">
+                              Deadline
+                            </span>
                             <p className="font-semibold">
-                              {new Date(incentive.deadline).toLocaleDateString()}
+                              {new Date(
+                                incentive.deadline,
+                              ).toLocaleDateString()}
                             </p>
                           </div>
                           <div>
-                            <span className="text-muted-foreground">Success Rate</span>
+                            <span className="text-muted-foreground">
+                              Success Rate
+                            </span>
                             <p className="font-semibold">
                               {incentive.successLikelihood}%
                             </p>
                           </div>
                           <div>
-                            <span className="text-muted-foreground">Status</span>
+                            <span className="text-muted-foreground">
+                              Status
+                            </span>
                             <Badge
                               variant="outline"
                               className={

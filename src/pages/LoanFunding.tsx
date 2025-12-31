@@ -106,60 +106,62 @@ export default function LoanFunding() {
         connectionLabel="Live"
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8">
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
           className="space-y-6"
         >
-          <TabsList className="grid w-full grid-cols-7 bg-white border text-sm">
-            <TabsTrigger
-              value="overview"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
-            >
-              Overview
-            </TabsTrigger>
-            <TabsTrigger
-              value="eligibility"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
-            >
-              Eligibility
-            </TabsTrigger>
-            <TabsTrigger
-              value="options"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
-            >
-              Options
-            </TabsTrigger>
-            <TabsTrigger
-              value="comparison"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
-            >
-              Compare
-            </TabsTrigger>
-            <TabsTrigger
-              value="application"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
-            >
-              Application
-            </TabsTrigger>
-            <TabsTrigger
-              value="strategy"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
-            >
-              Strategy
-            </TabsTrigger>
-            <TabsTrigger
-              value="research"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700"
-            >
-              Research
-            </TabsTrigger>
-          </TabsList>
+          <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+            <TabsList className="contents">
+              <TabsTrigger
+                value="overview"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Overview
+              </TabsTrigger>
+              <TabsTrigger
+                value="eligibility"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Eligibility
+              </TabsTrigger>
+              <TabsTrigger
+                value="options"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Options
+              </TabsTrigger>
+              <TabsTrigger
+                value="comparison"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Compare
+              </TabsTrigger>
+              <TabsTrigger
+                value="application"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Application
+              </TabsTrigger>
+              <TabsTrigger
+                value="strategy"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Strategy
+              </TabsTrigger>
+              <TabsTrigger
+                value="research"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Research
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
-          <TabsContent value="overview" className="space-y-6">
+          <TabsContent value="overview" className="space-y-4 sm:space-y-6">
             {/* Key Metrics */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
               <Card>
                 <CardContent className="p-6">
                   <div className="flex items-center space-x-2">
@@ -224,7 +226,7 @@ export default function LoanFunding() {
             </div>
 
             {/* Quick Actions */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">

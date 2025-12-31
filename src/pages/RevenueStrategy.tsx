@@ -99,55 +99,57 @@ export default function RevenueStrategy() {
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
-          className="space-y-4 sm:space-y-6"
+          className="space-y-6"
         >
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 bg-white border gap-1">
-            <TabsTrigger
-              value="overview"
-              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3"
-            >
-              Overview
-            </TabsTrigger>
-            <TabsTrigger
-              value="summary-recommendation"
-              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden sm:inline-flex"
-            >
-              Summary & Rec
-            </TabsTrigger>
-            <TabsTrigger
-              value="streams"
-              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3"
-            >
-              Streams
-            </TabsTrigger>
-            <TabsTrigger
-              value="forecasting"
-              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden sm:inline-flex"
-            >
-              Forecast
-            </TabsTrigger>
-            <TabsTrigger
-              value="churn"
-              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden md:inline-flex"
-            >
-              Churn
-            </TabsTrigger>
-            <TabsTrigger
-              value="upsell"
-              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden md:inline-flex"
-            >
-              Upsell
-            </TabsTrigger>
-            <TabsTrigger
-              value="conversation"
-              className="text-xs sm:text-sm data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 hidden lg:inline-flex"
-            >
-              JOSEPH
-            </TabsTrigger>
-          </TabsList>
+          <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+            <TabsList className="contents">
+              <TabsTrigger
+                value="overview"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Overview
+              </TabsTrigger>
+              <TabsTrigger
+                value="summary-recommendation"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Summary & Rec
+              </TabsTrigger>
+              <TabsTrigger
+                value="streams"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Streams
+              </TabsTrigger>
+              <TabsTrigger
+                value="forecasting"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Forecasting
+              </TabsTrigger>
+              <TabsTrigger
+                value="churn"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Churn
+              </TabsTrigger>
+              <TabsTrigger
+                value="upsell"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Upsell
+              </TabsTrigger>
+              <TabsTrigger
+                value="conversation"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                JOSEPH
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           <TabsContent value="overview" className="space-y-4 sm:space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
               {metrics.slice(0, 6).map((metric) => (
                 <Card key={metric.id}>
                   <CardContent className="p-3 sm:p-4 md:p-6">
@@ -188,7 +190,7 @@ export default function RevenueStrategy() {
               ))}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-5 lg:gap-6">
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">

@@ -78,9 +78,9 @@ const BusinessForecast = () => {
           connectionLabel="Live"
         />
 
-        <main className="container mx-auto px-4 py-8 space-y-8">
+        <main className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8 space-y-6 sm:space-y-8">
           {/* Quick Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             <Card>
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
@@ -150,48 +150,17 @@ const BusinessForecast = () => {
 
           {/* Main Content Tabs */}
           <Tabs defaultValue="overview" className="space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-              <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full sm:flex-1 rounded-md bg-muted p-1 text-muted-foreground">
-                <TabsList className="contents">
-                  <TabsTrigger value="overview" className="w-full justify-center">Overview</TabsTrigger>
-                  <TabsTrigger value="summary-recommendation" className="w-full justify-center">
-                    Summary & Rec
-                  </TabsTrigger>
-                  <TabsTrigger value="tables" className="w-full justify-center">Tables</TabsTrigger>
-                  <TabsTrigger value="revenue" className="w-full justify-center">Revenue</TabsTrigger>
-                  <TabsTrigger value="costs" className="w-full justify-center">Costs</TabsTrigger>
-                  <TabsTrigger value="planning" className="w-full justify-center">Planning</TabsTrigger>
-                  <TabsTrigger value="analytics" className="w-full justify-center">Analytics</TabsTrigger>
-                  <TabsTrigger value="documents" className="w-full justify-center">Documents</TabsTrigger>
-                </TabsList>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <Badge
-                  variant={isConnected ? "default" : "destructive"}
-                  className="flex items-center gap-1"
-                >
-                  {isConnected ? (
-                    <Wifi className="h-3 w-3" />
-                  ) : (
-                    <Activity className="h-3 w-3" />
-                  )}
-                  {isConnected ? "Live Data" : "Offline Mode"}
-                </Badge>
-                <Badge variant="outline" className="flex items-center gap-1">
-                  <TrendingUp className="h-3 w-3" />
-                  Forecast Active
-                </Badge>
-                {error && (
-                  <Badge
-                    variant="destructive"
-                    className="flex items-center gap-1"
-                  >
-                    <AlertTriangle className="h-3 w-3" />
-                    Data Sync Issue
-                  </Badge>
-                )}
-              </div>
+            <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+              <TabsList className="contents">
+                <TabsTrigger value="overview" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Overview</TabsTrigger>
+                <TabsTrigger value="summary-recommendation" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Summary & Rec</TabsTrigger>
+                <TabsTrigger value="tables" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Tables</TabsTrigger>
+                <TabsTrigger value="revenue" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Revenue</TabsTrigger>
+                <TabsTrigger value="costs" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Costs</TabsTrigger>
+                <TabsTrigger value="planning" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Planning</TabsTrigger>
+                <TabsTrigger value="analytics" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Analytics</TabsTrigger>
+                <TabsTrigger value="documents" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Documents</TabsTrigger>
+              </TabsList>
             </div>
 
             <TabsContent value="overview" className="space-y-8">
@@ -737,15 +706,15 @@ Identify 2-3 new market segments or geographies for expansion in next 12 months.
         </main>
 
         {/* Footer */}
-        <footer className="border-t bg-muted/30 mt-16">
-          <div className="container mx-auto px-4 py-6">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+        <footer className="border-t bg-muted/30 mt-12 sm:mt-16">
+          <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
                 <span>© 2024 Business Forecast Platform</span>
-                <span>•</span>
+                <span className="hidden sm:inline">•</span>
                 <span>Data updated every hour</span>
               </div>
-              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
                 <span>
                   Models: Monte Carlo, Linear Regression, Scenario Analysis
                 </span>

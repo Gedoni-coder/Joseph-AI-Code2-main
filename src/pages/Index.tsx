@@ -192,7 +192,8 @@ const Index = () => {
           connectionLabel={isStreaming ? "Live Streaming" : "Live"}
         />
 
-        <main className="container mx-auto px-4 py-8 space-y-8">
+        <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+          {/* Economic Indicators Note: Index.tsx doesn't have tab navigation like other modules */}
           {/* Context Switcher */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <ContextSwitcher
@@ -201,7 +202,7 @@ const Index = () => {
               isLoading={isLoading}
             />
 
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-2 flex-wrap text-xs sm:text-sm">
               <Badge
                 variant={isConnected ? "default" : "destructive"}
                 className={cn(
@@ -417,15 +418,15 @@ const Index = () => {
         </main>
 
         {/* Footer */}
-        <footer className="border-t bg-muted/30 mt-16">
-          <div className="container mx-auto px-4 py-6">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+        <footer className="border-t bg-muted/30 mt-12 sm:mt-16">
+          <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
                 <span>© 2024 Economic Forecasting Platform</span>
-                <span>•</span>
+                <span className="hidden sm:inline">•</span>
                 <span>Data updated every 15 minutes</span>
               </div>
-              <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
                 <span>
                   Sources: Federal Reserve, BLS, BEA, International
                   Organizations

@@ -41,33 +41,83 @@ export function PolicyEconomicManagement() {
   return (
     <div className="space-y-4">
       {/* Nested Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-6">
-          <TabsTrigger value="external-policy" className="flex items-center gap-2">
-            <Globe className="h-4 w-4" />
-            <span className="hidden sm:inline">External Policy</span>
-          </TabsTrigger>
-          <TabsTrigger value="internal-policy" className="flex items-center gap-2">
-            <Building className="h-4 w-4" />
-            <span className="hidden sm:inline">Internal Policy</span>
-          </TabsTrigger>
-          <TabsTrigger value="policy-reports" className="flex items-center gap-2">
-            <FileText className="h-4 w-4" />
-            <span className="hidden sm:inline">Reports</span>
-          </TabsTrigger>
-          <TabsTrigger value="economic-impact" className="flex items-center gap-2">
-            <TrendingUp className="h-4 w-4" />
-            <span className="hidden sm:inline">Economic Impact</span>
-          </TabsTrigger>
-          <TabsTrigger value="internal-impact" className="flex items-center gap-2">
-            <Target className="h-4 w-4" />
-            <span className="hidden sm:inline">Internal Impact</span>
-          </TabsTrigger>
-          <TabsTrigger value="strategy" className="flex items-center gap-2">
-            <Shield className="h-4 w-4" />
-            <span className="hidden sm:inline">Strategy</span>
-          </TabsTrigger>
-        </TabsList>
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="space-y-4"
+      >
+        <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+          <TabsList className="contents">
+            <TabsTrigger
+              value="external-policy"
+              className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-1 sm:px-2"
+            >
+              <Globe className="h-3 sm:h-4 w-3 sm:w-4 flex-shrink-0" />
+              <span className="hidden lg:inline line-clamp-1">
+                External Policy
+              </span>
+              <span className="hidden sm:inline lg:hidden line-clamp-1">
+                External
+              </span>
+              <span className="sm:hidden line-clamp-1">External</span>
+            </TabsTrigger>
+            <TabsTrigger
+              value="internal-policy"
+              className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-1 sm:px-2"
+            >
+              <Building className="h-3 sm:h-4 w-3 sm:w-4 flex-shrink-0" />
+              <span className="hidden lg:inline line-clamp-1">
+                Internal Policy
+              </span>
+              <span className="hidden sm:inline lg:hidden line-clamp-1">
+                Internal
+              </span>
+              <span className="sm:hidden line-clamp-1">Internal</span>
+            </TabsTrigger>
+            <TabsTrigger
+              value="policy-reports"
+              className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-1 sm:px-2"
+            >
+              <FileText className="h-3 sm:h-4 w-3 sm:w-4 flex-shrink-0" />
+              <span className="hidden lg:inline line-clamp-1">Reports</span>
+              <span className="lg:hidden line-clamp-1">Reports</span>
+            </TabsTrigger>
+            <TabsTrigger
+              value="economic-impact"
+              className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-1 sm:px-2"
+            >
+              <TrendingUp className="h-3 sm:h-4 w-3 sm:w-4 flex-shrink-0" />
+              <span className="hidden lg:inline line-clamp-1">
+                Economic Impact
+              </span>
+              <span className="hidden sm:inline lg:hidden line-clamp-1">
+                Economic
+              </span>
+              <span className="sm:hidden line-clamp-1">Impact</span>
+            </TabsTrigger>
+            <TabsTrigger
+              value="internal-impact"
+              className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-1 sm:px-2"
+            >
+              <Target className="h-3 sm:h-4 w-3 sm:w-4 flex-shrink-0" />
+              <span className="hidden lg:inline line-clamp-1">
+                Internal Impact
+              </span>
+              <span className="hidden sm:inline lg:hidden line-clamp-1">
+                Int.Impact
+              </span>
+              <span className="sm:hidden line-clamp-1">Internal</span>
+            </TabsTrigger>
+            <TabsTrigger
+              value="strategy"
+              className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-1 sm:px-2"
+            >
+              <Shield className="h-3 sm:h-4 w-3 sm:w-4 flex-shrink-0" />
+              <span className="hidden lg:inline line-clamp-1">Strategy</span>
+              <span className="lg:hidden line-clamp-1">Strategy</span>
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
         <TabsContent value="external-policy" className="space-y-4">
           <ExternalPolicyAnalysis
