@@ -276,16 +276,22 @@ KEY DEADLINES:
   return (
     <div className="space-y-6">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="interpreter" className="flex items-center gap-2">
-            <BookOpen className="h-4 w-4" />
-            <span className="hidden sm:inline">Policy Interpreter</span>
-          </TabsTrigger>
-          <TabsTrigger value="incentives" className="flex items-center gap-2">
-            <DollarSign className="h-4 w-4" />
-            <span className="hidden sm:inline">Incentive Scanner</span>
-          </TabsTrigger>
-        </TabsList>
+        <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+          <TabsList className="contents">
+            <TabsTrigger value="interpreter" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-1 sm:px-2">
+              <BookOpen className="h-3 sm:h-4 w-3 sm:w-4 flex-shrink-0" />
+              <span className="hidden lg:inline line-clamp-1">Policy Interpreter</span>
+              <span className="hidden sm:inline lg:hidden line-clamp-1">Interpreter</span>
+              <span className="sm:hidden line-clamp-1">Policy</span>
+            </TabsTrigger>
+            <TabsTrigger value="incentives" className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-1 sm:px-2">
+              <DollarSign className="h-3 sm:h-4 w-3 sm:w-4 flex-shrink-0" />
+              <span className="hidden lg:inline line-clamp-1">Incentive Scanner</span>
+              <span className="hidden sm:inline lg:hidden line-clamp-1">Incentives</span>
+              <span className="sm:hidden line-clamp-1">Incentive</span>
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
         {/* Policy Interpreter Tab */}
         <TabsContent value="interpreter" className="space-y-4">
