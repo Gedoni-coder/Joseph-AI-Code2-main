@@ -142,47 +142,18 @@ const SalesIntelligence = () => {
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
-          className="space-y-4 sm:space-y-6"
+          className="space-y-6"
         >
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 bg-white border text-xs sm:text-sm overflow-x-auto">
-            <TabsTrigger
-              value="overview"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 line-clamp-1"
-            >
-              Overview
-            </TabsTrigger>
-            <TabsTrigger
-              value="lead-pipeline"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 line-clamp-1"
-            >
-              <span className="hidden lg:inline">Lead Intelligence</span>
-              <span className="lg:hidden">Leads</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="engagement"
-              className="hidden sm:flex data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 line-clamp-1"
-            >
-              Engagement
-            </TabsTrigger>
-            <TabsTrigger
-              value="targets"
-              className="hidden sm:flex data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 line-clamp-1"
-            >
-              Targets
-            </TabsTrigger>
-            <TabsTrigger
-              value="assets"
-              className="hidden lg:flex data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 line-clamp-1"
-            >
-              Assets
-            </TabsTrigger>
-            <TabsTrigger
-              value="insights"
-              className="hidden lg:flex data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 line-clamp-1"
-            >
-              Insights
-            </TabsTrigger>
-          </TabsList>
+          <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+            <TabsList className="contents">
+              <TabsTrigger value="overview" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Overview</TabsTrigger>
+              <TabsTrigger value="lead-pipeline" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Lead Pipeline</TabsTrigger>
+              <TabsTrigger value="engagement" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Engagement</TabsTrigger>
+              <TabsTrigger value="targets" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Targets</TabsTrigger>
+              <TabsTrigger value="assets" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Assets</TabsTrigger>
+              <TabsTrigger value="insights" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Insights</TabsTrigger>
+            </TabsList>
+          </div>
 
           {/* Overview Tab */}
           <TabsContent value="overview" className="space-y-6">
