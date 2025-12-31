@@ -168,50 +168,20 @@ const TaxCompliance = () => {
         </div>
 
         {/* Main Content Tabs */}
-        <Tabs defaultValue="calculator" className="space-y-4 sm:space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 overflow-x-auto">
-            <TabsList className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 w-full sm:w-auto bg-blue-50 border border-blue-200 text-xs sm:text-sm flex-shrink-0">
-              <TabsTrigger
-                value="calculator"
-                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-xs sm:text-sm px-2 sm:px-3 line-clamp-1"
-              >
-                <span className="hidden sm:inline">Calculator</span>
-                <span className="sm:hidden">Calc</span>
-              </TabsTrigger>
-              <TabsTrigger
-                value="recommendations"
-                className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-xs sm:text-sm px-2 sm:px-3 line-clamp-1"
-              >
-                <span className="hidden lg:inline">Recommendations</span>
-                <span className="lg:hidden">Recommend</span>
-              </TabsTrigger>
-              <TabsTrigger
-                value="compliance"
-                className="hidden sm:flex data-[state=active]:bg-blue-600 data-[state=active]:text-white text-xs sm:text-sm px-2 sm:px-3 line-clamp-1"
-              >
-                Compliance
-              </TabsTrigger>
-              <TabsTrigger
-                value="planning"
-                className="hidden sm:flex data-[state=active]:bg-blue-600 data-[state=active]:text-white text-xs sm:text-sm px-2 sm:px-3 line-clamp-1"
-              >
-                Planning
-              </TabsTrigger>
-              <TabsTrigger
-                value="audit"
-                className="hidden lg:flex data-[state=active]:bg-blue-600 data-[state=active]:text-white text-xs sm:text-sm px-2 sm:px-3 line-clamp-1"
-              >
-                <span className="hidden xl:inline">Audit Trail</span>
-                <span className="xl:hidden">Audit</span>
-              </TabsTrigger>
-              <TabsTrigger
-                value="documents"
-                className="hidden lg:flex data-[state=active]:bg-blue-600 data-[state=active]:text-white text-xs sm:text-sm px-2 sm:px-3 line-clamp-1"
-              >
-                Documents
-              </TabsTrigger>
+        <Tabs defaultValue="calculator" className="space-y-6">
+          <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+            <TabsList className="contents">
+              <TabsTrigger value="calculator" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Calculator</TabsTrigger>
+              <TabsTrigger value="recommendations" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Recommendations</TabsTrigger>
+              <TabsTrigger value="compliance" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Compliance</TabsTrigger>
+              <TabsTrigger value="planning" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Planning</TabsTrigger>
+              <TabsTrigger value="audit" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Audit Trail</TabsTrigger>
+              <TabsTrigger value="documents" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Documents</TabsTrigger>
             </TabsList>
+          </div>
 
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+            <div></div>
             <div className="flex items-center gap-2">
               <Badge
                 variant={isConnected ? "default" : "destructive"}
