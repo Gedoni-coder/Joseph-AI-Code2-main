@@ -316,8 +316,18 @@ export default function BusinessFeasibility() {
         >
           <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
             <TabsList className="contents">
-              <TabsTrigger value="feasibility" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Business Feasibility</TabsTrigger>
-              <TabsTrigger value="planning" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Business Planning</TabsTrigger>
+              <TabsTrigger
+                value="feasibility"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Business Feasibility
+              </TabsTrigger>
+              <TabsTrigger
+                value="planning"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Business Planning
+              </TabsTrigger>
             </TabsList>
           </div>
 

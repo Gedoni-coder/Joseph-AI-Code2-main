@@ -114,13 +114,48 @@ export default function LoanFunding() {
         >
           <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
             <TabsList className="contents">
-              <TabsTrigger value="overview" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Overview</TabsTrigger>
-              <TabsTrigger value="eligibility" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Eligibility</TabsTrigger>
-              <TabsTrigger value="options" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Options</TabsTrigger>
-              <TabsTrigger value="comparison" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Compare</TabsTrigger>
-              <TabsTrigger value="application" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Application</TabsTrigger>
-              <TabsTrigger value="strategy" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Strategy</TabsTrigger>
-              <TabsTrigger value="research" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Research</TabsTrigger>
+              <TabsTrigger
+                value="overview"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Overview
+              </TabsTrigger>
+              <TabsTrigger
+                value="eligibility"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Eligibility
+              </TabsTrigger>
+              <TabsTrigger
+                value="options"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Options
+              </TabsTrigger>
+              <TabsTrigger
+                value="comparison"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Compare
+              </TabsTrigger>
+              <TabsTrigger
+                value="application"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Application
+              </TabsTrigger>
+              <TabsTrigger
+                value="strategy"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Strategy
+              </TabsTrigger>
+              <TabsTrigger
+                value="research"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Research
+              </TabsTrigger>
             </TabsList>
           </div>
 

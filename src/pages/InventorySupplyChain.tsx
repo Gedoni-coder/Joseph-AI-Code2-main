@@ -162,20 +162,70 @@ export default function InventorySupplyChain() {
         >
           <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
             <TabsList className="contents">
-              <TabsTrigger value="overview" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Overview</TabsTrigger>
-              <TabsTrigger value="summary-recommendation" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Summary & Rec</TabsTrigger>
-              <TabsTrigger value="stock-monitoring" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Stock</TabsTrigger>
-              <TabsTrigger value="demand-forecasting" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Demand</TabsTrigger>
-              <TabsTrigger value="valuation" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Valuation</TabsTrigger>
-              <TabsTrigger value="suppliers" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Suppliers</TabsTrigger>
-              <TabsTrigger value="procurement" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Procurement</TabsTrigger>
-              <TabsTrigger value="production" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Production</TabsTrigger>
+              <TabsTrigger
+                value="overview"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Overview
+              </TabsTrigger>
+              <TabsTrigger
+                value="summary-recommendation"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Summary & Rec
+              </TabsTrigger>
+              <TabsTrigger
+                value="stock-monitoring"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Stock
+              </TabsTrigger>
+              <TabsTrigger
+                value="demand-forecasting"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Demand
+              </TabsTrigger>
+              <TabsTrigger
+                value="valuation"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Valuation
+              </TabsTrigger>
+              <TabsTrigger
+                value="suppliers"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Suppliers
+              </TabsTrigger>
+              <TabsTrigger
+                value="procurement"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Procurement
+              </TabsTrigger>
+              <TabsTrigger
+                value="production"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Production
+              </TabsTrigger>
             </TabsList>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
             <TabsList className="contents">
-              <TabsTrigger value="supply-analytics" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">SC Analytics</TabsTrigger>
-              <TabsTrigger value="inventory-analytics" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Inv Analytics</TabsTrigger>
+              <TabsTrigger
+                value="supply-analytics"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                SC Analytics
+              </TabsTrigger>
+              <TabsTrigger
+                value="inventory-analytics"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Inv Analytics
+              </TabsTrigger>
             </TabsList>
           </div>
 

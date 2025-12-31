@@ -171,12 +171,42 @@ const TaxCompliance = () => {
         <Tabs defaultValue="calculator" className="space-y-6">
           <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
             <TabsList className="contents">
-              <TabsTrigger value="calculator" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Calculator</TabsTrigger>
-              <TabsTrigger value="recommendations" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Recommendations</TabsTrigger>
-              <TabsTrigger value="compliance" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Compliance</TabsTrigger>
-              <TabsTrigger value="planning" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Planning</TabsTrigger>
-              <TabsTrigger value="audit" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Audit Trail</TabsTrigger>
-              <TabsTrigger value="documents" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Documents</TabsTrigger>
+              <TabsTrigger
+                value="calculator"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Calculator
+              </TabsTrigger>
+              <TabsTrigger
+                value="recommendations"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Recommendations
+              </TabsTrigger>
+              <TabsTrigger
+                value="compliance"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Compliance
+              </TabsTrigger>
+              <TabsTrigger
+                value="planning"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Planning
+              </TabsTrigger>
+              <TabsTrigger
+                value="audit"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Audit Trail
+              </TabsTrigger>
+              <TabsTrigger
+                value="documents"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Documents
+              </TabsTrigger>
             </TabsList>
           </div>
 

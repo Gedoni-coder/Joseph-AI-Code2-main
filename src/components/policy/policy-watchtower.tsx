@@ -74,7 +74,8 @@ export function PolicyWatchtower() {
       id: "1",
       type: "regulation",
       title: "New Environmental Compliance Standards",
-      summary: "All manufacturing facilities must meet new emission standards by Q3 2024",
+      summary:
+        "All manufacturing facilities must meet new emission standards by Q3 2024",
       source: "Federal Environmental Agency",
       timestamp: "2024-01-15T10:30:00Z",
       reliabilityScore: 98,
@@ -84,7 +85,8 @@ export function PolicyWatchtower() {
       id: "2",
       type: "amendment",
       title: "Tax Credit Amendment for Digital Investments",
-      summary: "Updated tax credits available for companies investing in digital infrastructure",
+      summary:
+        "Updated tax credits available for companies investing in digital infrastructure",
       source: "Tax Authority",
       timestamp: "2024-01-14T14:20:00Z",
       reliabilityScore: 95,
@@ -94,7 +96,8 @@ export function PolicyWatchtower() {
       id: "3",
       type: "circular",
       title: "Sector-Specific Import Guidelines Update",
-      summary: "New guidelines for importation of raw materials in manufacturing sector",
+      summary:
+        "New guidelines for importation of raw materials in manufacturing sector",
       source: "Trade Ministry",
       timestamp: "2024-01-13T09:15:00Z",
       reliabilityScore: 92,
@@ -104,7 +107,8 @@ export function PolicyWatchtower() {
       id: "4",
       type: "trade",
       title: "Trade Agreement Modifications",
-      summary: "Updated trade terms with regional partners effective next quarter",
+      summary:
+        "Updated trade terms with regional partners effective next quarter",
       source: "International Trade Commission",
       timestamp: "2024-01-12T16:45:00Z",
       reliabilityScore: 97,
@@ -114,7 +118,8 @@ export function PolicyWatchtower() {
       id: "5",
       type: "fiscal",
       title: "Monetary Policy Rate Adjustment",
-      summary: "Central Bank announces interest rate changes affecting borrowing costs",
+      summary:
+        "Central Bank announces interest rate changes affecting borrowing costs",
       source: "Central Bank",
       timestamp: "2024-01-11T11:00:00Z",
       reliabilityScore: 99,
@@ -257,7 +262,9 @@ export function PolicyWatchtower() {
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Policies</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Total Policies
+            </CardTitle>
             <Shield className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -268,28 +275,43 @@ export function PolicyWatchtower() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Critical Issues</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Critical Issues
+            </CardTitle>
             <AlertTriangle className="h-4 w-4 text-red-500" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {mockPolicyFeed.filter((p) => p.urgencyLevel === "critical")
-                .length}
+              {
+                mockPolicyFeed.filter((p) => p.urgencyLevel === "critical")
+                  .length
+              }
             </div>
-            <p className="text-xs text-muted-foreground">Require immediate action</p>
+            <p className="text-xs text-muted-foreground">
+              Require immediate action
+            </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Compliance Cost</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Total Compliance Cost
+            </CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              ₦{mockComplianceCosts.reduce((sum, c) => sum + c.estimatedCost, 0) / 1000000}M
+              ₦
+              {mockComplianceCosts.reduce(
+                (sum, c) => sum + c.estimatedCost,
+                0,
+              ) / 1000000}
+              M
             </div>
-            <p className="text-xs text-muted-foreground">Estimated investment</p>
+            <p className="text-xs text-muted-foreground">
+              Estimated investment
+            </p>
           </CardContent>
         </Card>
 
@@ -302,13 +324,17 @@ export function PolicyWatchtower() {
             <div className="text-2xl font-bold">
               {mockComplianceCosts.reduce((sum, c) => sum + c.hiringNeeds, 0)}
             </div>
-            <p className="text-xs text-muted-foreground">New positions required</p>
+            <p className="text-xs text-muted-foreground">
+              New positions required
+            </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Avg Reliability</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Avg Reliability
+            </CardTitle>
             <Shield className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -325,12 +351,31 @@ export function PolicyWatchtower() {
       </div>
 
       {/* Main Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="space-y-4"
+      >
         <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
           <TabsList className="contents">
-            <TabsTrigger value="feed" className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3">Live Feed</TabsTrigger>
-            <TabsTrigger value="compliance" className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3">Costs</TabsTrigger>
-            <TabsTrigger value="impact" className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3">Impact</TabsTrigger>
+            <TabsTrigger
+              value="feed"
+              className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3"
+            >
+              Live Feed
+            </TabsTrigger>
+            <TabsTrigger
+              value="compliance"
+              className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3"
+            >
+              Costs
+            </TabsTrigger>
+            <TabsTrigger
+              value="impact"
+              className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3"
+            >
+              Impact
+            </TabsTrigger>
           </TabsList>
         </div>
 
@@ -407,9 +452,7 @@ export function PolicyWatchtower() {
                     >
                       <div className="flex items-start justify-between">
                         <div className="flex items-start gap-3 flex-1">
-                          <div className="mt-1">
-                            {getTypeIcon(policy.type)}
-                          </div>
+                          <div className="mt-1">{getTypeIcon(policy.type)}</div>
                           <div className="flex-1">
                             <h4 className="font-semibold">{policy.title}</h4>
                             <p className="text-sm text-muted-foreground mt-1">
@@ -430,22 +473,44 @@ export function PolicyWatchtower() {
                           </div>
                           <div className="flex items-center gap-1 text-muted-foreground">
                             <Clock className="h-3 w-3" />
-                            <span>{new Date(policy.timestamp).toLocaleDateString()}</span>
+                            <span>
+                              {new Date(policy.timestamp).toLocaleDateString()}
+                            </span>
                           </div>
                         </div>
                         <div className="flex items-center gap-1">
-                          <span className="text-muted-foreground">Reliability:</span>
-                          <span className="font-semibold">{policy.reliabilityScore}%</span>
+                          <span className="text-muted-foreground">
+                            Reliability:
+                          </span>
+                          <span className="font-semibold">
+                            {policy.reliabilityScore}%
+                          </span>
                         </div>
                       </div>
 
                       <div className="bg-muted/50 p-2 rounded text-sm">
                         <p className="font-semibold mb-1">AI Analysis:</p>
                         <ul className="space-y-1 text-muted-foreground">
-                          <li>• <strong>What changed:</strong> Updated compliance requirements</li>
-                          <li>• <strong>Who it affects:</strong> All operations in this sector</li>
-                          <li>• <strong>Action items:</strong> Conduct compliance audit within 30 days</li>
-                          <li>• <strong>Disruption level:</strong> <Badge>{policy.urgencyLevel === "critical" ? "High" : "Medium"}</Badge></li>
+                          <li>
+                            • <strong>What changed:</strong> Updated compliance
+                            requirements
+                          </li>
+                          <li>
+                            • <strong>Who it affects:</strong> All operations in
+                            this sector
+                          </li>
+                          <li>
+                            • <strong>Action items:</strong> Conduct compliance
+                            audit within 30 days
+                          </li>
+                          <li>
+                            • <strong>Disruption level:</strong>{" "}
+                            <Badge>
+                              {policy.urgencyLevel === "critical"
+                                ? "High"
+                                : "Medium"}
+                            </Badge>
+                          </li>
                         </ul>
                       </div>
                     </div>
@@ -468,7 +533,10 @@ export function PolicyWatchtower() {
             <CardContent>
               <div className="space-y-4">
                 {mockComplianceCosts.map((cost) => (
-                  <Card key={cost.id} className="border-l-4 border-l-orange-500">
+                  <Card
+                    key={cost.id}
+                    className="border-l-4 border-l-orange-500"
+                  >
                     <CardContent className="pt-6">
                       <div className="space-y-4">
                         <h3 className="font-semibold">{cost.description}</h3>
@@ -500,8 +568,8 @@ export function PolicyWatchtower() {
                                   : "text-green-600"
                               }`}
                             >
-                              {cost.operationalCostChange > 0 ? "+" : ""}
-                              ₦{(cost.operationalCostChange / 1000).toFixed(0)}K
+                              {cost.operationalCostChange > 0 ? "+" : ""}₦
+                              {(cost.operationalCostChange / 1000).toFixed(0)}K
                             </p>
                           </div>
 
@@ -517,13 +585,17 @@ export function PolicyWatchtower() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t">
                           <div>
-                            <p className="text-sm font-semibold mb-2">Documentation Required</p>
+                            <p className="text-sm font-semibold mb-2">
+                              Documentation Required
+                            </p>
                             <p className="text-sm text-muted-foreground">
                               {cost.documentationReq}
                             </p>
                           </div>
                           <div>
-                            <p className="text-sm font-semibold mb-2">Time to Comply</p>
+                            <p className="text-sm font-semibold mb-2">
+                              Time to Comply
+                            </p>
                             <Badge variant="outline">{cost.timeToComply}</Badge>
                           </div>
                         </div>
@@ -573,7 +645,9 @@ export function PolicyWatchtower() {
                     <div className="space-y-2">
                       <div className="flex items-center justify-between text-sm">
                         <span>Impact Severity</span>
-                        <span className="font-semibold">{metric.percentage}%</span>
+                        <span className="font-semibold">
+                          {metric.percentage}%
+                        </span>
                       </div>
                       <div className="w-full bg-gray-200 rounded-full h-2">
                         <div

@@ -74,8 +74,11 @@ interface RiskMetric {
 
 export function ScenarioSimulation() {
   const [activeTab, setActiveTab] = useState("simulator");
-  const [selectedScenario, setSelectedScenario] = useState<string>("tax-policy");
-  const [simulationResults, setSimulationResults] = useState<SimulationResult[]>([]);
+  const [selectedScenario, setSelectedScenario] =
+    useState<string>("tax-policy");
+  const [simulationResults, setSimulationResults] = useState<
+    SimulationResult[]
+  >([]);
   const [showResults, setShowResults] = useState(false);
 
   const scenarios: Scenario[] = [
@@ -226,12 +229,31 @@ export function ScenarioSimulation() {
 
   return (
     <div className="space-y-6">
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+      <Tabs
+        value={activeTab}
+        onValueChange={setActiveTab}
+        className="space-y-4"
+      >
         <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
           <TabsList className="contents">
-            <TabsTrigger value="simulator" className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3">What-If</TabsTrigger>
-            <TabsTrigger value="heat-map" className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3">Heat Map</TabsTrigger>
-            <TabsTrigger value="absorption" className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3">Absorption</TabsTrigger>
+            <TabsTrigger
+              value="simulator"
+              className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3"
+            >
+              What-If
+            </TabsTrigger>
+            <TabsTrigger
+              value="heat-map"
+              className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3"
+            >
+              Heat Map
+            </TabsTrigger>
+            <TabsTrigger
+              value="absorption"
+              className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3"
+            >
+              Absorption
+            </TabsTrigger>
           </TabsList>
         </div>
 
@@ -251,7 +273,10 @@ export function ScenarioSimulation() {
                   <label className="text-sm font-semibold mb-2 block">
                     Select Scenario
                   </label>
-                  <Select value={selectedScenario} onValueChange={setSelectedScenario}>
+                  <Select
+                    value={selectedScenario}
+                    onValueChange={setSelectedScenario}
+                  >
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -268,11 +293,16 @@ export function ScenarioSimulation() {
                     {scenarios.find((s) => s.id === selectedScenario) && (
                       <div className="space-y-2">
                         <p className="text-sm font-semibold">
-                          {scenarios.find((s) => s.id === selectedScenario)?.name}
+                          {
+                            scenarios.find((s) => s.id === selectedScenario)
+                              ?.name
+                          }
                         </p>
                         <p className="text-sm text-muted-foreground">
-                          {scenarios.find((s) => s.id === selectedScenario)
-                            ?.description}
+                          {
+                            scenarios.find((s) => s.id === selectedScenario)
+                              ?.description
+                          }
                         </p>
                         <div className="flex items-center gap-2 pt-2">
                           <span className="text-xs text-muted-foreground">
@@ -298,13 +328,19 @@ export function ScenarioSimulation() {
                   <div className="space-y-3">
                     <div className="flex items-center gap-2">
                       <Checkbox id="revenue" defaultChecked />
-                      <label htmlFor="revenue" className="text-sm cursor-pointer">
+                      <label
+                        htmlFor="revenue"
+                        className="text-sm cursor-pointer"
+                      >
                         Include revenue impact
                       </label>
                     </div>
                     <div className="flex items-center gap-2">
                       <Checkbox id="demand" defaultChecked />
-                      <label htmlFor="demand" className="text-sm cursor-pointer">
+                      <label
+                        htmlFor="demand"
+                        className="text-sm cursor-pointer"
+                      >
                         Calculate demand changes
                       </label>
                     </div>
@@ -316,13 +352,19 @@ export function ScenarioSimulation() {
                     </div>
                     <div className="flex items-center gap-2">
                       <Checkbox id="pricing" defaultChecked />
-                      <label htmlFor="pricing" className="text-sm cursor-pointer">
+                      <label
+                        htmlFor="pricing"
+                        className="text-sm cursor-pointer"
+                      >
                         Assess pricing reactions
                       </label>
                     </div>
                     <div className="flex items-center gap-2">
                       <Checkbox id="employment" defaultChecked />
-                      <label htmlFor="employment" className="text-sm cursor-pointer">
+                      <label
+                        htmlFor="employment"
+                        className="text-sm cursor-pointer"
+                      >
                         Employment impact analysis
                       </label>
                     </div>
@@ -347,8 +389,16 @@ export function ScenarioSimulation() {
                       <YAxis />
                       <Tooltip />
                       <Legend />
-                      <Bar dataKey="revenueImpact" fill="#ef4444" name="Revenue Impact %" />
-                      <Bar dataKey="costImpact" fill="#f97316" name="Cost Impact %" />
+                      <Bar
+                        dataKey="revenueImpact"
+                        fill="#ef4444"
+                        name="Revenue Impact %"
+                      />
+                      <Bar
+                        dataKey="costImpact"
+                        fill="#f97316"
+                        name="Cost Impact %"
+                      />
                       <Bar
                         dataKey="employmentChange"
                         fill="#8b5cf6"
@@ -359,7 +409,10 @@ export function ScenarioSimulation() {
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {simulationResults.map((result) => (
-                      <Card key={result.scenario} className="border-l-4 border-l-orange-500">
+                      <Card
+                        key={result.scenario}
+                        className="border-l-4 border-l-orange-500"
+                      >
                         <CardContent className="pt-4">
                           <div className="space-y-3">
                             <p className="font-semibold text-center">
@@ -425,9 +478,10 @@ export function ScenarioSimulation() {
                   <Card className="bg-blue-50 border-blue-200">
                     <CardContent className="pt-4">
                       <p className="text-sm text-blue-900">
-                        <strong>Recommendation:</strong> The moderate impact scenario
-                        is most likely. Begin contingency planning with focus on cost
-                        optimization and customer retention strategies.
+                        <strong>Recommendation:</strong> The moderate impact
+                        scenario is most likely. Begin contingency planning with
+                        focus on cost optimization and customer retention
+                        strategies.
                       </p>
                     </CardContent>
                   </Card>
@@ -443,7 +497,8 @@ export function ScenarioSimulation() {
             <CardHeader>
               <CardTitle>Risk Heat Map</CardTitle>
               <CardDescription>
-                Comprehensive view of business vulnerabilities and exposure points
+                Comprehensive view of business vulnerabilities and exposure
+                points
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -493,7 +548,9 @@ export function ScenarioSimulation() {
                                 }}
                               />
                             </div>
-                            <p className={`text-xs font-semibold mt-1 ${getRiskTextColor(metric.vulnerability)}`}>
+                            <p
+                              className={`text-xs font-semibold mt-1 ${getRiskTextColor(metric.vulnerability)}`}
+                            >
                               {metric.vulnerability}
                             </p>
                           </div>
@@ -516,7 +573,9 @@ export function ScenarioSimulation() {
                                 }}
                               />
                             </div>
-                            <p className={`text-xs font-semibold mt-1 ${getRiskTextColor(metric.exposure)}`}>
+                            <p
+                              className={`text-xs font-semibold mt-1 ${getRiskTextColor(metric.exposure)}`}
+                            >
                               {metric.exposure}
                             </p>
                           </div>
@@ -539,7 +598,9 @@ export function ScenarioSimulation() {
                                 }}
                               />
                             </div>
-                            <p className={`text-xs font-semibold mt-1 ${getRiskTextColor(metric.threat)}`}>
+                            <p
+                              className={`text-xs font-semibold mt-1 ${getRiskTextColor(metric.threat)}`}
+                            >
                               {metric.threat}
                             </p>
                           </div>
@@ -562,7 +623,9 @@ export function ScenarioSimulation() {
                                 }}
                               />
                             </div>
-                            <p className={`text-xs font-semibold mt-1 ${getRiskTextColor(metric.fragility)}`}>
+                            <p
+                              className={`text-xs font-semibold mt-1 ${getRiskTextColor(metric.fragility)}`}
+                            >
                               {metric.fragility}
                             </p>
                           </div>
@@ -682,12 +745,15 @@ export function ScenarioSimulation() {
                       Overall Resilience Assessment
                     </h4>
                     <p className="text-sm text-blue-900">
-                      Your business has moderate shock absorption capacity. Focus on:
+                      Your business has moderate shock absorption capacity.
+                      Focus on:
                     </p>
                     <ul className="text-sm text-blue-900 space-y-1 list-disc list-inside">
                       <li>Building cash reserves for unexpected costs</li>
                       <li>Diversifying supplier and customer base</li>
-                      <li>Developing contingency plans for high-impact scenarios</li>
+                      <li>
+                        Developing contingency plans for high-impact scenarios
+                      </li>
                       <li>Regular stress-testing of operations</li>
                       <li>Insurance coverage for key business interruptions</li>
                     </ul>
@@ -698,14 +764,18 @@ export function ScenarioSimulation() {
               {/* Recommendations */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-base">Strengthening Resilience</CardTitle>
+                  <CardTitle className="text-base">
+                    Strengthening Resilience
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="font-semibold text-sm">Operational Redundancy</p>
+                        <p className="font-semibold text-sm">
+                          Operational Redundancy
+                        </p>
                         <p className="text-xs text-muted-foreground">
                           Create backup suppliers and distribution channels
                         </p>
@@ -714,7 +784,9 @@ export function ScenarioSimulation() {
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="font-semibold text-sm">Financial Cushion</p>
+                        <p className="font-semibold text-sm">
+                          Financial Cushion
+                        </p>
                         <p className="text-xs text-muted-foreground">
                           Maintain 3-6 months operating costs in reserves
                         </p>
@@ -723,7 +795,9 @@ export function ScenarioSimulation() {
                     <div className="flex items-start gap-3">
                       <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
                       <div>
-                        <p className="font-semibold text-sm">Market Diversification</p>
+                        <p className="font-semibold text-sm">
+                          Market Diversification
+                        </p>
                         <p className="text-xs text-muted-foreground">
                           Expand to new geographies or customer segments
                         </p>
