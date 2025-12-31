@@ -370,7 +370,7 @@ export default function BusinessPlanningFlow() {
           </div>
 
           {/* Business Plan Generator - Right */}
-          <div>
+          <div className="lg:col-span-3">
             <Card>
               <CardHeader>
                 <CardTitle>{currentStep.name}</CardTitle>
