@@ -48,7 +48,8 @@ export default function PolicyEconomicAnalysis() {
           onValueChange={setActiveTab}
           className="space-y-4"
         >
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 text-xs sm:text-sm overflow-x-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+            <TabsList className="contents">
             <TabsTrigger value="watchtower" className="flex items-center gap-1 sm:gap-2 px-1 sm:px-2 min-w-0">
               <Radio className="h-3 sm:h-4 w-3 sm:w-4 flex-shrink-0" />
               <span className="hidden lg:inline line-clamp-1">Watchtower</span>
@@ -80,7 +81,8 @@ export default function PolicyEconomicAnalysis() {
               <Calculator className="h-3 sm:h-4 w-3 sm:w-4 flex-shrink-0" />
               <span className="line-clamp-1">Calculator</span>
             </TabsTrigger>
-          </TabsList>
+            </TabsList>
+          </div>
 
           <TabsContent value="watchtower" className="space-y-4">
             <PolicyWatchtower />

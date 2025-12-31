@@ -158,70 +158,24 @@ export default function InventorySupplyChain() {
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
-          className="space-y-4 sm:space-y-6"
+          className="space-y-6"
         >
-          <div className="w-full overflow-x-auto">
-            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-11 bg-white border text-xs sm:text-sm">
-            <TabsTrigger
-              value="overview"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2"
-            >
-              <span className="line-clamp-1">Overview</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="summary-recommendation"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden sm:flex"
-            >
-              <span className="line-clamp-1">Summary</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="stock-monitoring"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2"
-            >
-              <span className="line-clamp-1">Stock</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="demand-forecasting"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden md:flex"
-            >
-              <span className="line-clamp-1">Demand</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="valuation"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden md:flex"
-            >
-              <span className="line-clamp-1">Valuation</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="suppliers"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"
-            >
-              <span className="line-clamp-1">Suppliers</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="procurement"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"
-            >
-              <span className="line-clamp-1">Procurement</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="production"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"
-            >
-              <span className="line-clamp-1">Production</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="supply-analytics"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"
-            >
-              <span className="line-clamp-1">SC Analytics</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="inventory-analytics"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"
-            >
-              <span className="line-clamp-1">Inv Analytics</span>
-            </TabsTrigger>
+          <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+            <TabsList className="contents">
+              <TabsTrigger value="overview" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Overview</TabsTrigger>
+              <TabsTrigger value="summary-recommendation" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Summary & Rec</TabsTrigger>
+              <TabsTrigger value="stock-monitoring" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Stock</TabsTrigger>
+              <TabsTrigger value="demand-forecasting" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Demand</TabsTrigger>
+              <TabsTrigger value="valuation" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Valuation</TabsTrigger>
+              <TabsTrigger value="suppliers" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Suppliers</TabsTrigger>
+              <TabsTrigger value="procurement" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Procurement</TabsTrigger>
+              <TabsTrigger value="production" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Production</TabsTrigger>
+            </TabsList>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-2 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+            <TabsList className="contents">
+              <TabsTrigger value="supply-analytics" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">SC Analytics</TabsTrigger>
+              <TabsTrigger value="inventory-analytics" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Inv Analytics</TabsTrigger>
             </TabsList>
           </div>
 

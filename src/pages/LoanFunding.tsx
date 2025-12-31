@@ -110,52 +110,19 @@ export default function LoanFunding() {
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
-          className="space-y-4 sm:space-y-6"
+          className="space-y-6"
         >
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 bg-white border text-xs sm:text-sm">
-            <TabsTrigger
-              value="overview"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2"
-            >
-              <span className="line-clamp-1">Overview</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="eligibility"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2"
-            >
-              <span className="line-clamp-1">Eligibility</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="options"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2"
-            >
-              <span className="line-clamp-1">Options</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="comparison"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden sm:flex"
-            >
-              <span className="line-clamp-1">Compare</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="application"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden md:flex"
-            >
-              <span className="line-clamp-1">Application</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="strategy"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"
-            >
-              <span className="line-clamp-1">Strategy</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value="research"
-              className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-xs sm:text-sm px-1 sm:px-2 hidden lg:flex"
-            >
-              <span className="line-clamp-1">Research</span>
-            </TabsTrigger>
-          </TabsList>
+          <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+            <TabsList className="contents">
+              <TabsTrigger value="overview" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Overview</TabsTrigger>
+              <TabsTrigger value="eligibility" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Eligibility</TabsTrigger>
+              <TabsTrigger value="options" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Options</TabsTrigger>
+              <TabsTrigger value="comparison" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Compare</TabsTrigger>
+              <TabsTrigger value="application" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Application</TabsTrigger>
+              <TabsTrigger value="strategy" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Strategy</TabsTrigger>
+              <TabsTrigger value="research" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Research</TabsTrigger>
+            </TabsList>
+          </div>
 
           <TabsContent value="overview" className="space-y-4 sm:space-y-6">
             {/* Key Metrics */}

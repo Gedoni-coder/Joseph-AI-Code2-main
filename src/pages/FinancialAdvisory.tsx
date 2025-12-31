@@ -297,7 +297,8 @@ export default function FinancialAdvisory() {
             onValueChange={setActiveTab}
             className="space-y-6"
           >
-            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-5 lg:grid-cols-9 bg-white shadow-sm text-xs sm:text-sm overflow-x-auto">
+            <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+              <TabsList className="contents">
               <TabsTrigger
                 value="strategic-budgeting"
                 className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
@@ -367,7 +368,8 @@ export default function FinancialAdvisory() {
                 <Lightbulb className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
                 <span className="line-clamp-1">Insights</span>
               </TabsTrigger>
-            </TabsList>
+              </TabsList>
+            </div>
 
             <TabsContent value="strategic-budgeting" className="space-y-4 sm:space-y-6">
               <StrategicBudgeting
