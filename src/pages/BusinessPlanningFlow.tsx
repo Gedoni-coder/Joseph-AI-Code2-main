@@ -485,9 +485,7 @@ export default function BusinessPlanningFlow() {
         <div className="flex justify-between items-center pt-6 mt-6 border-t">
           <Button
             variant="outline"
-            onClick={() =>
-              goToStep(Math.max(1, businessPlan.currentStep - 1))
-            }
+            onClick={() => goToStep(Math.max(1, businessPlan.currentStep - 1))}
             disabled={businessPlan.currentStep === 1}
             className="gap-2"
           >
@@ -496,21 +494,16 @@ export default function BusinessPlanningFlow() {
           </Button>
 
           <div className="text-sm text-muted-foreground">
-            Step {businessPlan.currentStep} of{" "}
-            {businessPlan.steps.length}
+            Step {businessPlan.currentStep} of {businessPlan.steps.length}
           </div>
 
           <Button
             onClick={() => {
-              if (
-                businessPlan.currentStep < businessPlan.steps.length
-              ) {
+              if (businessPlan.currentStep < businessPlan.steps.length) {
                 goToStep(businessPlan.currentStep + 1);
               }
             }}
-            disabled={
-              businessPlan.currentStep === businessPlan.steps.length
-            }
+            disabled={businessPlan.currentStep === businessPlan.steps.length}
             className="gap-2"
           >
             Next
