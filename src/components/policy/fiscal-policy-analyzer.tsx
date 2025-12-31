@@ -233,11 +233,13 @@ export function FiscalPolicyAnalyzer() {
   return (
     <div className="space-y-6">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="tax-breakdown">Tax Breakdown</TabsTrigger>
-          <TabsTrigger value="pricing">Pricing Analysis</TabsTrigger>
-          <TabsTrigger value="profitability">Profitability Test</TabsTrigger>
-        </TabsList>
+        <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
+          <TabsList className="contents">
+            <TabsTrigger value="tax-breakdown" className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3">Tax</TabsTrigger>
+            <TabsTrigger value="pricing" className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3">Pricing</TabsTrigger>
+            <TabsTrigger value="profitability" className="flex items-center gap-2 data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm px-2 sm:px-3 hidden sm:flex">Profit</TabsTrigger>
+          </TabsList>
+        </div>
 
         {/* Tax Policy Breakdown Tab */}
         <TabsContent value="tax-breakdown" className="space-y-4">
