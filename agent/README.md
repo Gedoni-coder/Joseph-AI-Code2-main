@@ -66,14 +66,15 @@ agent/
 
 ## Module Overview
 
-### `core/agent.py` - Agent Orchestrator
+### Core Intelligence
+**`core/agent.py` - Agent Orchestrator**
 Main entry point for the agent. Coordinates:
 - Input processing (user queries, scheduled triggers, document uploads)
 - ReACT loop execution
 - Tool/action selection and execution
 - Response generation
 
-### `core/memory.py` - RAG Brain
+**`core/memory.py` - RAG Brain**
 Knowledge management and context grounding. Provides:
 - Document indexing and retrieval
 - Economic data storage
@@ -81,7 +82,7 @@ Knowledge management and context grounding. Provides:
 - Context for informed reasoning
 - Hallucination prevention
 
-### `core/planner.py` - ReACT Planner
+**`core/planner.py` - ReACT Planner**
 Intelligent reasoning and action selection. Implements:
 - Intent analysis
 - Tool selection logic
@@ -89,7 +90,82 @@ Intelligent reasoning and action selection. Implements:
 - Outcome verification
 - Decision-making
 
-### `tools/api_tools.py` - System API Integration
+### Retrieval System (RAG Backend)
+**`retrieval/retriever.py` - Context Retrieval**
+Retrieves relevant context to ground reasoning:
+- Semantic search over documents
+- Historical data lookup
+- Economic intelligence retrieval
+- User preferences and history
+- Business rules and constraints
+
+**`retrieval/sources.py` - Knowledge Sources**
+Manages all data sources feeding the RAG brain:
+- Database connections for business data
+- Document storage (processed uploads)
+- Scraped economic data repositories
+- Historical insights
+- User context and preferences
+
+**`retrieval/ranker.py` - Relevance Ranking**
+Ensures high-quality context for reasoning:
+- Semantic similarity scoring
+- Recency weighting
+- Source credibility scoring
+- Duplicate filtering
+- Context window optimization
+
+### Document Processing Pipeline
+**`document_processing/ingest.py` - File Intake**
+First stage of processing:
+- PDF, DOCX, XLSX, CSV, images support (OCR)
+- Virus/malware scanning
+- Format detection
+- Temporary storage management
+
+**`document_processing/extract.py` - Text/Data Extraction**
+Second stage:
+- PDF text extraction
+- Table extraction from spreadsheets
+- Form parsing
+- Image OCR
+- Language detection
+
+**`document_processing/normalize.py` - Content Normalization**
+Third stage:
+- Text cleaning
+- Data standardization
+- Business rule validation
+- Format standardization
+- Type conversion
+
+**`document_processing/metadata.py` - Metadata Management**
+Tagging and categorization:
+- Document type classification
+- Owner and user association
+- Content tags and keywords
+- Processing pipeline metadata
+- Data lineage tracking
+
+### Language Model Integration
+**`llm/client.py` - LLM Client Wrapper**
+Abstraction for LLM interactions:
+- Multi-provider support (OpenAI, Claude, etc.)
+- Prompt templating
+- Response parsing
+- Streaming and batch processing
+- Retry logic and error handling
+
+**`llm/cost_guard.py` - Cost & Token Management**
+Prevents runaway costs:
+- Token counting and cost calculation
+- Per-request budget enforcement
+- Daily/weekly/monthly quota management
+- Cost alerting and warnings
+- Fallback to cheaper models
+
+### Action Tools
+**`tools/api_tools.py` - System API Integration**
 Interface to all backend system APIs. Enables:
 - Data creation/updates/validation
 - Forecast generation
@@ -98,7 +174,7 @@ Interface to all backend system APIs. Enables:
 - Alert triggering
 - Workflow execution
 
-### `tools/scraper.py` - Economic Intelligence Harvesting
+**`tools/scraper.py` - Economic Intelligence Harvesting**
 Autonomous web scraping for economic data. Handles:
 - ~20 approved economic news sources
 - Macro signal extraction
@@ -106,22 +182,23 @@ Autonomous web scraping for economic data. Handles:
 - Market risk identification
 - Content cleaning and summarization
 
-### `tools/documents.py` - Document Processing
+**`tools/documents.py` - Document Processing Trigger**
 Automatic document analysis on user upload. Performs:
-- File format handling (PDF, spreadsheet, text, etc.)
+- File format handling
 - Predefined information extraction
 - Data validation and normalization
 - API integration for storage
 - Trigger follow-up actions
 
-### `schedules/cron.py` - Autonomous Task Scheduler
+### Infrastructure
+**`schedules/cron.py` - Autonomous Task Scheduler**
 Background task execution without user input. Manages:
-- 8 daily execution times
+- 8 daily execution times (12am, 3am, 6am, 9am, 12pm, 3pm, 6pm, 9pm)
 - Scraper invocation
 - Data pipeline updates
 - Knowledge base refresh
 
-### `config.py` - Central Configuration
+**`config.py` - Central Configuration**
 Centralized settings for:
 - API credentials and endpoints
 - LLM model parameters
