@@ -234,6 +234,46 @@ Centralized settings for:
    - Prepare response or next step
 ```
 
+### RAG Brain (Retrieval-Augmented Generation)
+
+The brain is a three-layer system:
+
+```
+User Query or Document Upload
+         ↓
+┌─────────────────────────────┐
+│  Document Processing        │
+│  - Ingest uploaded files    │
+│  - Extract text/data        │
+│  - Normalize content        │
+│  - Tag metadata             │
+└──────────────┬──────────────┘
+               ↓
+┌─────────────────────────────┐
+│  Knowledge Sources          │
+│  - Database storage         │
+│  - Vector embeddings        │
+│  - Economic data repository │
+│  - Historical insights      │
+└──────────────┬──────────────┘
+               ↓
+┌─────────────────────────────┐
+│  Retrieval & Ranking        │
+│  - Semantic search          │
+│  - Relevance scoring        │
+│  - Source credibility       │
+│  - Context filtering        │
+└──────────────┬──────────────┘
+               ↓
+         Grounded Context
+               ↓
+      LLM Reasoning + ReACT
+               ↓
+          Agent Response
+```
+
+**Key Insight**: The agent never reasons in a vacuum. Every decision is grounded in retrieved context, reducing hallucinations and ensuring business-rule compliance.
+
 ### Operational Modes
 
 #### Autonomous Mode (8× Daily)
