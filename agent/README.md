@@ -22,7 +22,25 @@ agent/
 │   ├── planner.py          # ReACT reasoning & action selection
 │   └── __init__.py
 │
-├── tools/                   # Action tools for system integration
+├── retrieval/              # RAG retrieval system (the brain's memory)
+│   ├── retriever.py        # Context retrieval from sources
+│   ├── sources.py          # Knowledge sources (DB, docs, scraped data)
+│   ├── ranker.py           # Relevance scoring & filtering
+│   └── __init__.py
+│
+├── document_processing/    # Document ingestion & processing pipeline
+│   ├── ingest.py           # File intake (PDF, DOCX, CSV, images)
+│   ├── extract.py          # Text/data extraction
+│   ├── normalize.py        # Clean + structure content
+│   ├── metadata.py         # Tags, dates, owners, categories
+│   └── __init__.py
+│
+├── llm/                    # Language model integration
+│   ├── client.py           # OpenAI / LLM client wrapper
+│   ├── cost_guard.py       # Token & credit enforcement
+│   └── __init__.py
+│
+├── tools/                  # Action tools for system integration
 │   ├── api_tools.py        # Internal system API calls
 │   ├── scraper.py          # Economic news web scraping
 │   ├── documents.py        # User document processing & extraction
