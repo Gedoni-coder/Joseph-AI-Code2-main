@@ -325,14 +325,14 @@ export default function BusinessPlanningFlow() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* Steps Sidebar */}
-          <div className="lg:col-span-1">
-            <Card className="sticky top-4">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+          {/* Steps Sidebar - Left */}
+          <div className="lg:col-span-2">
+            <Card className="sticky top-4 h-fit">
               <CardHeader>
                 <CardTitle className="text-lg">Steps</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2">
+              <CardContent className="space-y-2 max-h-[calc(100vh-200px)] overflow-y-auto">
                 {businessPlan.steps.map((step) => (
                   <button
                     key={step.id}
@@ -369,7 +369,7 @@ export default function BusinessPlanningFlow() {
             </Card>
           </div>
 
-          {/* Main Content */}
+          {/* Business Plan Generator - Right */}
           <div className="lg:col-span-3">
             <Card>
               <CardHeader>
@@ -476,46 +476,39 @@ export default function BusinessPlanningFlow() {
                     )}
                   </div>
                 )}
-
-                {/* Navigation */}
-                <div className="flex justify-between pt-6 border-t">
-                  <Button
-                    variant="outline"
-                    onClick={() =>
-                      goToStep(Math.max(1, businessPlan.currentStep - 1))
-                    }
-                    disabled={businessPlan.currentStep === 1}
-                    className="gap-2"
-                  >
-                    <ChevronLeft className="h-4 w-4" />
-                    Previous
-                  </Button>
-
-                  <div className="text-sm text-muted-foreground">
-                    Step {businessPlan.currentStep} of{" "}
-                    {businessPlan.steps.length}
-                  </div>
-
-                  <Button
-                    onClick={() => {
-                      if (
-                        businessPlan.currentStep < businessPlan.steps.length
-                      ) {
-                        goToStep(businessPlan.currentStep + 1);
-                      }
-                    }}
-                    disabled={
-                      businessPlan.currentStep === businessPlan.steps.length
-                    }
-                    className="gap-2"
-                  >
-                    Next
-                    <ChevronRight className="h-4 w-4" />
-                  </Button>
-                </div>
               </CardContent>
             </Card>
           </div>
+        </div>
+
+        {/* Navigation - Below Both Panes */}
+        <div className="flex justify-between items-center pt-6 mt-6 border-t">
+          <Button
+            variant="outline"
+            onClick={() => goToStep(Math.max(1, businessPlan.currentStep - 1))}
+            disabled={businessPlan.currentStep === 1}
+            className="gap-2"
+          >
+            <ChevronLeft className="h-4 w-4" />
+            Previous
+          </Button>
+
+          <div className="text-sm text-muted-foreground">
+            Step {businessPlan.currentStep} of {businessPlan.steps.length}
+          </div>
+
+          <Button
+            onClick={() => {
+              if (businessPlan.currentStep < businessPlan.steps.length) {
+                goToStep(businessPlan.currentStep + 1);
+              }
+            }}
+            disabled={businessPlan.currentStep === businessPlan.steps.length}
+            className="gap-2"
+          >
+            Next
+            <ChevronRight className="h-4 w-4" />
+          </Button>
         </div>
       </div>
     </div>

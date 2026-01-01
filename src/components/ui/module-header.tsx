@@ -93,13 +93,176 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
           </div>
 
           {/* Navigation and Controls */}
-          <div className="flex items-center justify-between gap-2 sm:gap-3 lg:gap-4 overflow-x-auto flex-wrap">
-            <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-3 flex-shrink-0">
-              <ModuleNavigation />
+          <div className="flex flex-col gap-2 sm:gap-3">
+            {/* Top Row - Navigation and Right Actions */}
+            <div className="flex items-center justify-between gap-2 sm:gap-3 lg:gap-4">
+              <div className="flex items-center flex-shrink-0">
+                <ModuleNavigation />
+              </div>
 
+              <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
+                {/* Notifications */}
+                <Popover
+                  open={notificationsOpen}
+                  onOpenChange={setNotificationsOpen}
+                >
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="flex items-center gap-1.5 sm:gap-2 relative px-2 sm:px-3"
+                        >
+                          <Bell className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
+                          <span className="hidden md:inline text-xs sm:text-sm">
+                            Notifications
+                          </span>
+                          <Badge
+                            variant="destructive"
+                            className="absolute -top-2 -right-2 h-4 sm:h-5 w-4 sm:w-5 rounded-full p-0 flex items-center justify-center text-xs"
+                          >
+                            2
+                          </Badge>
+                        </Button>
+                      </PopoverTrigger>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>View recent notifications and alerts</p>
+                    </TooltipContent>
+                  </Tooltip>
+                  <PopoverContent className="w-72 sm:w-80" align="end">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <h4 className="font-semibold">Notifications</h4>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setNotificationsOpen(false)}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="p-3 rounded-lg border bg-card">
+                          <div className="flex items-start gap-3">
+                            <AlertCircle className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium">
+                                Data Updated
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                New analysis data available
+                              </p>
+                              <p className="text-xs text-muted-foreground mt-1">
+                                15 minutes ago
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="p-3 rounded-lg border bg-card">
+                          <div className="flex items-start gap-3">
+                            <Zap className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium">Alert</p>
+                              <p className="text-xs text-muted-foreground">
+                                Review required for analysis variance
+                              </p>
+                              <p className="text-xs text-muted-foreground mt-1">
+                                1 hour ago
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <Link to="/notifications">
+                        <Button variant="outline" className="w-full" size="sm">
+                          View All Notifications
+                        </Button>
+                      </Link>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+
+                {/* Advice */}
+                <Popover open={ideasOpen} onOpenChange={setIdeasOpen}>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3"
+                        >
+                          <HelpCircle className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
+                          <span className="hidden md:inline text-xs sm:text-sm">
+                            Advice
+                          </span>
+                        </Button>
+                      </PopoverTrigger>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Get expert advice and recommendations</p>
+                    </TooltipContent>
+                  </Tooltip>
+                  <PopoverContent className="w-72 sm:w-80" align="end">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <h4 className="font-semibold">Advice</h4>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setIdeasOpen(false)}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="p-3 rounded-lg border bg-card">
+                          <div className="flex items-start gap-3">
+                            <HelpCircle className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium">
+                                Optimization Opportunity
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                Consider refining your analysis parameters
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="p-3 rounded-lg border bg-card">
+                          <div className="flex items-start gap-3">
+                            <Target className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium">
+                                Performance Insight
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                Analysis accuracy has improved significantly
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <Link to="/ai-insights">
+                        <Button variant="outline" className="w-full" size="sm">
+                          Get More Advice
+                        </Button>
+                      </Link>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </div>
+            </div>
+
+            {/* Bottom Row - Divisions and Chat (visible on all screens, moves below on mobile) */}
+            <div className="flex items-center gap-2 sm:gap-3">
               {/* Divisions Label */}
-              <div className="hidden sm:flex items-center gap-2 px-2 sm:px-3 py-1 border-l border-border">
-                <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">Divisions</span>
+              <div className="flex items-center gap-2 px-2 sm:px-3 py-1 border-l border-border">
+                <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">
+                  Divisions
+                </span>
               </div>
 
               {/* Conversational Mode Toggle - Chat Switch */}
@@ -107,7 +270,9 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                 <TooltipTrigger asChild>
                   <div className="flex items-center gap-1.5 px-1.5 sm:px-2 py-1 hover:bg-primary/10 rounded transition-all cursor-pointer">
                     <Radio className="h-3 sm:h-4 w-3 sm:w-4 text-primary flex-shrink-0" />
-                    <span className="text-xs text-muted-foreground font-medium hidden sm:inline whitespace-nowrap">Chat</span>
+                    <span className="text-xs text-muted-foreground font-medium sm:inline whitespace-nowrap">
+                      Chat
+                    </span>
                     <Switch
                       checked={conversationalMode}
                       onCheckedChange={handleConversationalModeChange}
@@ -143,159 +308,6 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                   )}
                 </div>
               )}
-            </div>
-
-            <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
-              {/* Notifications */}
-              <Popover
-                open={notificationsOpen}
-                onOpenChange={setNotificationsOpen}
-              >
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="flex items-center gap-1.5 sm:gap-2 relative px-2 sm:px-3"
-                      >
-                        <Bell className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
-                        <span className="hidden md:inline text-xs sm:text-sm">
-                          Notifications
-                        </span>
-                        <Badge
-                          variant="destructive"
-                          className="absolute -top-2 -right-2 h-4 sm:h-5 w-4 sm:w-5 rounded-full p-0 flex items-center justify-center text-xs"
-                        >
-                          2
-                        </Badge>
-                      </Button>
-                    </PopoverTrigger>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>View recent notifications and alerts</p>
-                  </TooltipContent>
-                </Tooltip>
-                <PopoverContent className="w-72 sm:w-80" align="end">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-semibold">Notifications</h4>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setNotificationsOpen(false)}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </div>
-                    <div className="space-y-3">
-                      <div className="p-3 rounded-lg border bg-card">
-                        <div className="flex items-start gap-3">
-                          <AlertCircle className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium">Data Updated</p>
-                            <p className="text-xs text-muted-foreground">
-                              New analysis data available
-                            </p>
-                            <p className="text-xs text-muted-foreground mt-1">
-                              15 minutes ago
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="p-3 rounded-lg border bg-card">
-                        <div className="flex items-start gap-3">
-                          <Zap className="h-4 w-4 text-yellow-500 mt-0.5 flex-shrink-0" />
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium">Alert</p>
-                            <p className="text-xs text-muted-foreground">
-                              Review required for analysis variance
-                            </p>
-                            <p className="text-xs text-muted-foreground mt-1">
-                              1 hour ago
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <Link to="/notifications">
-                      <Button variant="outline" className="w-full" size="sm">
-                        View All Notifications
-                      </Button>
-                    </Link>
-                  </div>
-                </PopoverContent>
-              </Popover>
-
-              {/* Advice */}
-              <Popover open={ideasOpen} onOpenChange={setIdeasOpen}>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3"
-                      >
-                        <HelpCircle className="h-3.5 sm:h-4 w-3.5 sm:w-4" />
-                        <span className="hidden md:inline text-xs sm:text-sm">
-                          Advice
-                        </span>
-                      </Button>
-                    </PopoverTrigger>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Get expert advice and recommendations</p>
-                  </TooltipContent>
-                </Tooltip>
-                <PopoverContent className="w-72 sm:w-80" align="end">
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <h4 className="font-semibold">Advice</h4>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setIdeasOpen(false)}
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </div>
-                    <div className="space-y-3">
-                      <div className="p-3 rounded-lg border bg-card">
-                        <div className="flex items-start gap-3">
-                          <HelpCircle className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium">
-                              Optimization Opportunity
-                            </p>
-                            <p className="text-xs text-muted-foreground">
-                              Consider refining your analysis parameters
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="p-3 rounded-lg border bg-card">
-                        <div className="flex items-start gap-3">
-                          <Target className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium">
-                              Performance Insight
-                            </p>
-                            <p className="text-xs text-muted-foreground">
-                              Analysis accuracy has improved significantly
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <Link to="/ai-insights">
-                      <Button variant="outline" className="w-full" size="sm">
-                        Get More Advice
-                      </Button>
-                    </Link>
-                  </div>
-                </PopoverContent>
-              </Popover>
             </div>
           </div>
         </div>
