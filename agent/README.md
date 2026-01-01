@@ -299,12 +299,42 @@ Responds to:
 5. **Conversational Interface**: Natural language interaction with reasoning transparency
 6. **Autonomous Operations**: Background intelligence gathering without user involvement
 
+## Document Processing Pipeline
+
+When a user uploads a document, it flows through this automated pipeline:
+
+```
+User Upload
+    ↓
+INGEST ────────────────────────── Validate file type, scan for malware
+    ↓
+EXTRACT ──────────────────────── Parse PDF/DOCX/CSV, OCR images
+    ↓
+NORMALIZE ────────────────────── Clean text, standardize data, validate
+    ↓
+METADATA ────────────────────── Tag type, owner, category, confidence
+    ↓
+STORAGE ──────────────────────── Store in knowledge base with embeddings
+    ↓
+TRIGGER ACTIONS ───────────── Push to APIs, update forecasts, send alerts
+    ↓
+User sees results in Frontend (zero additional action needed)
+```
+
+**No User Instruction Needed**: Document upload is the implicit trigger. The agent automatically:
+- Detects document type
+- Extracts predefined information
+- Validates against business rules
+- Stores and indexes for future retrieval
+- Triggers any dependent workflows
+
 ## Integration Points
 
 - **Frontend**: The React UI (in `../src/`) communicates with the agent via REST APIs
 - **Backend APIs**: JOSEPH AI calls all system endpoints for data and actions
 - **External Services**: Web scraping, LLM calls, database access
 - **Database**: Stores processed documents, extracted insights, economic data
+- **LLM Providers**: OpenAI, Claude, or other LLM services (with cost controls)
 
 ## Getting Started
 
