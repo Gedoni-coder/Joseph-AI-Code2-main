@@ -148,7 +148,9 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                           <div className="flex items-start gap-3">
                             <AlertCircle className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium">Data Updated</p>
+                              <p className="text-sm font-medium">
+                                Data Updated
+                              </p>
                               <p className="text-xs text-muted-foreground">
                                 New analysis data available
                               </p>
@@ -258,7 +260,9 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
             <div className="flex items-center gap-2 sm:gap-3">
               {/* Divisions Label */}
               <div className="flex items-center gap-2 px-2 sm:px-3 py-1 border-l border-border">
-                <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">Divisions</span>
+                <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">
+                  Divisions
+                </span>
               </div>
 
               {/* Conversational Mode Toggle - Chat Switch */}
@@ -266,7 +270,9 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                 <TooltipTrigger asChild>
                   <div className="flex items-center gap-1.5 px-1.5 sm:px-2 py-1 hover:bg-primary/10 rounded transition-all cursor-pointer">
                     <Radio className="h-3 sm:h-4 w-3 sm:w-4 text-primary flex-shrink-0" />
-                    <span className="text-xs text-muted-foreground font-medium sm:inline whitespace-nowrap">Chat</span>
+                    <span className="text-xs text-muted-foreground font-medium sm:inline whitespace-nowrap">
+                      Chat
+                    </span>
                     <Switch
                       checked={conversationalMode}
                       onCheckedChange={handleConversationalModeChange}
