@@ -22,6 +22,15 @@ import { UpsellOpportunities } from "@/components/revenue/upsell-opportunities";
 import { ModuleConversation } from "@/components/conversation/module-conversation";
 import { SummaryRecommendationSection } from "@/components/module/summary-recommendation-section";
 import {
+  getSummaryContent,
+  SUMMARY_DESCRIPTION,
+  getRecommendationContent,
+  RECOMMENDATION_DESCRIPTION,
+  DEFAULT_REVENUE_ACTION_ITEMS,
+  DEFAULT_REVENUE_NEXT_STEPS,
+  getSummaryMetrics,
+} from "@/lib/revenue-content";
+import {
   DollarSign,
   TrendingUp,
   Users,
