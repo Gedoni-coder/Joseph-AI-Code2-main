@@ -437,14 +437,16 @@ const ImpactCalculator = () => {
                         onChange={(e) =>
                           setPolicyInputs({
                             ...policyInputs,
-                            reputationalImpact: e.target.value,
+                            reputationalImpact: e.target.value as PolicyInputs["reputationalImpact"],
                           })
                         }
                         className="w-full px-3 py-2 border rounded-md"
                       >
-                        <option value="Low">Low</option>
-                        <option value="Medium">Medium</option>
-                        <option value="High">High</option>
+                        {REPUTATIONAL_IMPACT_OPTIONS.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
