@@ -269,32 +269,41 @@ export default function FinancialAdvisory() {
                         </Button>
                       </div>
                       <div className="space-y-3">
-                        <div className="p-3 rounded-lg border bg-card">
-                          <div className="flex items-start gap-3">
-                            <HelpCircle className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium">
-                                Optimization Opportunity
-                              </p>
-                              <p className="text-xs text-muted-foreground">
-                                Consider refining your analysis parameters
-                              </p>
+                        {DEFAULT_ADVICE.map((advice) => {
+                          const iconMap = {
+                            "help-circle": HelpCircle,
+                            target: Target,
+                            shield: Shield,
+                            "trending-up": TrendingUp,
+                          };
+                          const Icon = iconMap[advice.icon as keyof typeof iconMap];
+                          const colorMap = {
+                            optimization: "text-blue-500",
+                            performance: "text-green-500",
+                            risk: "text-red-500",
+                            strategic: "text-purple-500",
+                          };
+                          return (
+                            <div
+                              key={advice.id}
+                              className="p-3 rounded-lg border bg-card"
+                            >
+                              <div className="flex items-start gap-3">
+                                <Icon
+                                  className={`h-4 w-4 ${colorMap[advice.type]} mt-0.5 flex-shrink-0`}
+                                />
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-sm font-medium">
+                                    {advice.title}
+                                  </p>
+                                  <p className="text-xs text-muted-foreground">
+                                    {advice.message}
+                                  </p>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                        <div className="p-3 rounded-lg border bg-card">
-                          <div className="flex items-start gap-3">
-                            <Target className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium">
-                                Performance Insight
-                              </p>
-                              <p className="text-xs text-muted-foreground">
-                                Analysis accuracy has improved significantly
-                              </p>
-                            </div>
-                          </div>
-                        </div>
+                          );
+                        })}
                       </div>
                       <Link to="/ai-insights">
                         <Button variant="outline" className="w-full" size="sm">
