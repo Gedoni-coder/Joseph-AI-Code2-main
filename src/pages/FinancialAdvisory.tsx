@@ -187,38 +187,46 @@ export default function FinancialAdvisory() {
                         </Button>
                       </div>
                       <div className="space-y-3">
-                        <div className="p-3 rounded-lg border bg-card">
-                          <div className="flex items-start gap-3">
-                            <Calculator className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium">
-                                Budget Alert
-                              </p>
-                              <p className="text-xs text-muted-foreground">
-                                Q2 budget variance exceeds threshold
-                              </p>
-                              <p className="text-xs text-muted-foreground mt-1">
-                                15 minutes ago
-                              </p>
+                        {DEFAULT_NOTIFICATIONS.map((notification) => {
+                          const iconMap = {
+                            calculator: Calculator,
+                            "trending-up": TrendingUp,
+                            target: Target,
+                            lightbulb: Lightbulb,
+                          };
+                          const Icon =
+                            iconMap[
+                              notification.icon as keyof typeof iconMap
+                            ];
+                          const colorMap = {
+                            alert: "text-blue-500",
+                            update: "text-green-500",
+                            insight: "text-orange-500",
+                          };
+                          return (
+                            <div
+                              key={notification.id}
+                              className="p-3 rounded-lg border bg-card"
+                            >
+                              <div className="flex items-start gap-3">
+                                <Icon
+                                  className={`h-4 w-4 ${colorMap[notification.type]} mt-0.5 flex-shrink-0`}
+                                />
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-sm font-medium">
+                                    {notification.title}
+                                  </p>
+                                  <p className="text-xs text-muted-foreground">
+                                    {notification.message}
+                                  </p>
+                                  <p className="text-xs text-muted-foreground mt-1">
+                                    {notification.timeAgo}
+                                  </p>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                        <div className="p-3 rounded-lg border bg-card">
-                          <div className="flex items-start gap-3">
-                            <TrendingUp className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium">
-                                Cash Flow Update
-                              </p>
-                              <p className="text-xs text-muted-foreground">
-                                Monthly projections updated successfully
-                              </p>
-                              <p className="text-xs text-muted-foreground mt-1">
-                                1 hour ago
-                              </p>
-                            </div>
-                          </div>
-                        </div>
+                          );
+                        })}
                       </div>
                       <Link to="/notifications">
                         <Button variant="outline" className="w-full" size="sm">
