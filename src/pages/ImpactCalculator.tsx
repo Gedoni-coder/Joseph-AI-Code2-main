@@ -233,8 +233,8 @@ const ImpactCalculator = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {(calculationType === "policy"
-              ? policyScenarios
-              : economicScenarios
+              ? POLICY_SCENARIOS
+              : ECONOMIC_SCENARIOS
             ).map((scenario, index) => (
               <Card
                 key={index}
