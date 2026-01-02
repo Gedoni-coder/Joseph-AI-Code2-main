@@ -102,7 +102,9 @@ const BusinessForecast = () => {
                     <div className="text-sm text-muted-foreground">
                       Annual Revenue Target
                     </div>
-                    <div className="text-lg font-bold">$13.7M</div>
+                    <div className="text-lg font-bold">
+                      {BUSINESS_FORECAST_DEFAULTS.ANNUAL_REVENUE_TARGET}
+                    </div>
                   </div>
                 </div>
               </CardContent>
