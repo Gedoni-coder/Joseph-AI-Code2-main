@@ -372,7 +372,10 @@ const Index = () => {
                     <h4 className="font-semibold text-sm">Key Takeaways</h4>
                     <ul className="space-y-2 text-sm text-muted-foreground">
                       {KEY_TAKEAWAYS.map((takeaway) => (
-                        <li key={takeaway.id} className="flex items-start gap-2">
+                        <li
+                          key={takeaway.id}
+                          className="flex items-start gap-2"
+                        >
                           <div
                             className={`w-1.5 h-1.5 rounded-full bg-${SENTIMENT_COLOR_MAP[takeaway.sentiment]} mt-2 flex-shrink-0`}
                           />

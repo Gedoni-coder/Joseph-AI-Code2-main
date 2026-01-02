@@ -64,7 +64,7 @@ export default function RevenueStrategy() {
   const [activeTab, setActiveTab] = useState("overview");
   const [streams, setStreams] = useState(initialStreams);
 
-  const handleAddStream = (newStream: typeof initialStreams[0]) => {
+  const handleAddStream = (newStream: (typeof initialStreams)[0]) => {
     setStreams([...streams, newStream]);
   };
 
@@ -347,13 +347,17 @@ export default function RevenueStrategy() {
             <SummaryRecommendationSection
               summaryTitle="Revenue Strategy Summary"
               summaryDescription={SUMMARY_DESCRIPTION}
-              summaryText={getSummaryContent(streams.length, churn.length, upsells.length)}
+              summaryText={getSummaryContent(
+                streams.length,
+                churn.length,
+                upsells.length,
+              )}
               summaryMetrics={getSummaryMetrics(
                 streams.length,
                 metrics.length,
                 metrics.reduce((a, m) => a + m.value, 0),
                 upsells.length,
-                channels.length
+                channels.length,
               )}
               recommendationTitle="Revenue Strategy Recommendations"
               recommendationDescription={RECOMMENDATION_DESCRIPTION}

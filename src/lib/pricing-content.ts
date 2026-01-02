@@ -20,7 +20,8 @@ export const MARKET_PREMIUM_MAX = 12;
 export const COMPETITIVE_PREMIUM_RANGE = {
   min: 5,
   max: 15,
-  description: "Price premium versus market average, justified by value delivered",
+  description:
+    "Price premium versus market average, justified by value delivered",
 };
 
 /**
@@ -29,7 +30,7 @@ export const COMPETITIVE_PREMIUM_RANGE = {
 export const getSummaryContent = (
   strategiesLength: number,
   metricsLength: number,
-  runningTestsCount: number
+  runningTestsCount: number,
 ) => `1. CURRENT PRICING MODEL
 The organization employs a ${strategiesLength > 0 ? "multi-strategy" : "value-based"} pricing model across ${metricsLength} key pricing metrics. Prices are optimized based on customer segment, competitive positioning, and willingness to pay analysis.
 
@@ -157,7 +158,7 @@ export const DEFAULT_PRICING_NEXT_STEPS = [
 export const getSummaryMetrics = (
   averagePrice: number,
   strategiesCount: number,
-  runningTests: number
+  runningTests: number,
 ) => [
   {
     index: 1,

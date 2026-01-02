@@ -17,7 +17,7 @@ export const INCREMENTAL_REVENUE_ESTIMATE = "5-8M";
 export const getSummaryContent = (
   streamsLength: number,
   churnLength: number,
-  upsellsLength: number
+  upsellsLength: number,
 ) => `1. REVENUE OVERVIEW
 Total revenue streams are performing well with ${streamsLength} active channels contributing to top-line growth. Revenue mix shows healthy diversification across customer segments and product lines, reducing dependency on any single source.
 
@@ -147,7 +147,7 @@ export const getSummaryMetrics = (
   metricsLength: number,
   metricsTotal: number,
   upsellsLength: number,
-  channelsLength: number
+  channelsLength: number,
 ) => [
   {
     index: 1,

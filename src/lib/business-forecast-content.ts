@@ -28,7 +28,7 @@ export const BUSINESS_FORECAST_DEFAULTS = {
 export const getSummaryContent = (
   customerCount: number,
   scenarioCount: number,
-  kpiCount: number
+  kpiCount: number,
 ) => `1. REVENUE OVERVIEW
 Current annual revenue target is set at ${BUSINESS_FORECAST_DEFAULTS.ANNUAL_REVENUE_TARGET} with ${customerCount} distinct customer segments identified. The forecast includes ${scenarioCount} scenario models to cover conservative, base, and aggressive growth cases.
 
@@ -181,7 +181,7 @@ export const GROWTH_TRAJECTORY = [
 export const getSummaryMetrics = (
   customerCount: number,
   kpiCount: number,
-  scenarioCount: number
+  scenarioCount: number,
 ) => [
   {
     index: 1,

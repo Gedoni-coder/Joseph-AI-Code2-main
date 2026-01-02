@@ -47,10 +47,10 @@ const ImpactCalculator = () => {
 
   // Initialize with mock data from data file
   const [policyInputs, setPolicyInputs] = useState<PolicyInputs>(
-    DEFAULT_POLICY_INPUTS
+    DEFAULT_POLICY_INPUTS,
   );
   const [economicInputs, setEconomicInputs] = useState<EconomicInputs>(
-    DEFAULT_ECONOMIC_INPUTS
+    DEFAULT_ECONOMIC_INPUTS,
   );
 
   const calculateImpact = async () => {
@@ -437,7 +437,8 @@ const ImpactCalculator = () => {
                         onChange={(e) =>
                           setPolicyInputs({
                             ...policyInputs,
-                            reputationalImpact: e.target.value as PolicyInputs["reputationalImpact"],
+                            reputationalImpact: e.target
+                              .value as PolicyInputs["reputationalImpact"],
                           })
                         }
                         className="w-full px-3 py-2 border rounded-md"
@@ -611,7 +612,8 @@ const ImpactCalculator = () => {
                         onChange={(e) =>
                           setEconomicInputs({
                             ...economicInputs,
-                            sectorImpact: e.target.value as EconomicInputs["sectorImpact"],
+                            sectorImpact: e.target
+                              .value as EconomicInputs["sectorImpact"],
                           })
                         }
                         className="w-full px-3 py-2 border rounded-md"

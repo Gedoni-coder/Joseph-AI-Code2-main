@@ -265,14 +265,14 @@ export default function PricingStrategy() {
               summaryText={getSummaryContent(
                 strategies.length,
                 metrics.length,
-                tests.filter((t) => t.status === "running").length
+                tests.filter((t) => t.status === "running").length,
               )}
               summaryMetrics={getSummaryMetrics(
                 metrics.length > 0
                   ? metrics.reduce((a, m) => a + m.value, 0) / metrics.length
                   : 0,
                 strategies.length,
-                tests.filter((t) => t.status === "running").length
+                tests.filter((t) => t.status === "running").length,
               )}
               recommendationTitle="Pricing Recommendations"
               recommendationDescription={RECOMMENDATION_DESCRIPTION}

@@ -165,14 +165,54 @@ const BusinessForecast = () => {
           <Tabs defaultValue="overview" className="space-y-6">
             <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
               <TabsList className="contents">
-                <TabsTrigger value="overview" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Overview</TabsTrigger>
-                <TabsTrigger value="summary-recommendation" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Summary & Rec</TabsTrigger>
-                <TabsTrigger value="tables" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Tables</TabsTrigger>
-                <TabsTrigger value="revenue" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Revenue</TabsTrigger>
-                <TabsTrigger value="costs" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Costs</TabsTrigger>
-                <TabsTrigger value="planning" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Planning</TabsTrigger>
-                <TabsTrigger value="analytics" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Analytics</TabsTrigger>
-                <TabsTrigger value="documents" className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm">Documents</TabsTrigger>
+                <TabsTrigger
+                  value="overview"
+                  className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                >
+                  Overview
+                </TabsTrigger>
+                <TabsTrigger
+                  value="summary-recommendation"
+                  className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                >
+                  Summary & Rec
+                </TabsTrigger>
+                <TabsTrigger
+                  value="tables"
+                  className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                >
+                  Tables
+                </TabsTrigger>
+                <TabsTrigger
+                  value="revenue"
+                  className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                >
+                  Revenue
+                </TabsTrigger>
+                <TabsTrigger
+                  value="costs"
+                  className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                >
+                  Costs
+                </TabsTrigger>
+                <TabsTrigger
+                  value="planning"
+                  className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                >
+                  Planning
+                </TabsTrigger>
+                <TabsTrigger
+                  value="analytics"
+                  className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                >
+                  Analytics
+                </TabsTrigger>
+                <TabsTrigger
+                  value="documents"
+                  className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+                >
+                  Documents
+                </TabsTrigger>
               </TabsList>
             </div>
 
@@ -218,12 +258,12 @@ const BusinessForecast = () => {
                 summaryText={getSummaryContent(
                   customerProfiles.length,
                   scenarios.length,
-                  kpis.length
+                  kpis.length,
                 )}
                 summaryMetrics={getSummaryMetrics(
                   customerProfiles.length,
                   kpis.length,
-                  scenarios.length
+                  scenarios.length,
                 )}
                 recommendationTitle="Business Forecast Recommendations"
                 recommendationDescription={RECOMMENDATION_DESCRIPTION}
