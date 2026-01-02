@@ -297,10 +297,11 @@ const BusinessForecast = () => {
                           Growth Trajectory
                         </h4>
                         <div className="space-y-2 text-sm text-muted-foreground">
-                          <p>• Q1 2025: Foundation building phase</p>
-                          <p>• Q2 2025: Accelerated growth period</p>
-                          <p>• Q3 2025: Market expansion phase</p>
-                          <p>• Q4 2025: Optimization and scaling</p>
+                          {GROWTH_TRAJECTORY.map((item) => (
+                            <p key={item.quarter}>
+                              • {item.quarter}: {item.description}
+                            </p>
+                          ))}
                           <div className="mt-3">
                             <Link to="/growth-planning">
                               <Button
