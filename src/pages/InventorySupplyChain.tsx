@@ -500,132 +500,33 @@ export default function InventorySupplyChain() {
           <TabsContent value="summary-recommendation" className="space-y-8">
             <SummaryRecommendationSection
               summaryTitle="Inventory & Supply Chain Summary"
-              summaryDescription="Key observations across inventory levels, supplier performance, and risk profile"
-              summaryText={`1. INVENTORY VALUE
-Total on-hand inventory value stands at ${formatCurrency(totalInventoryValue)} across ${locations.length} locations.
-
-2. STOCK STATUS
-There are ${lowStockItems} items in low/out-of-stock status requiring attention. Inventory audits recorded ${inventoryAudits.length} recent entries.
-
-3. SUPPLIER PERFORMANCE
-Average supplier performance score is ${avgSupplierPerformance.toFixed(1)}% across ${suppliers.length} active suppliers.
-
-4. RISK OVERVIEW
-${highRiskDisruptions} high-risk disruption alerts identified. Market volatility and regulatory changes are being monitored.
-
-5. OPERATIONS OUTLOOK
-Production plans: ${productionPlans.length}. Procurement orders pending: ${procurementOrders.filter((o) => o.status === "pending").length}. Focus remains on service levels and turnover improvement.`}
-              summaryMetrics={[
-                {
-                  index: 1,
-                  title: "Inventory Value",
-                  value: formatCurrency(totalInventoryValue),
-                  insight: "Current total value of inventory",
-                },
-                {
-                  index: 2,
-                  title: "Low/Out-of-Stock Items",
-                  value: lowStockItems,
-                  insight: "SKUs needing replenishment",
-                },
-                {
-                  index: 3,
-                  title: "Avg Supplier Score",
-                  value: `${avgSupplierPerformance.toFixed(1)}%`,
-                  unit: "%",
-                  insight: "Overall supplier performance",
-                },
-                {
-                  index: 4,
-                  title: "High-Risk Disruptions",
-                  value: highRiskDisruptions,
-                  insight: "Risks requiring mitigation",
-                },
-              ]}
+              summaryDescription={SUMMARY_DESCRIPTION}
+              summaryText={getSummaryContent(
+                formatCurrency(totalInventoryValue),
+                locations.length,
+                lowStockItems,
+                inventoryAudits.length,
+                avgSupplierPerformance,
+                suppliers.length,
+                highRiskDisruptions,
+                productionPlans.length,
+                procurementOrders.filter((o) => o.status === "pending").length
+              )}
+              summaryMetrics={getSummaryMetrics(
+                formatCurrency(totalInventoryValue),
+                lowStockItems,
+                avgSupplierPerformance,
+                highRiskDisruptions
+              )}
               recommendationTitle="Inventory & Supply Chain Recommendations"
-              recommendationDescription="Practical actions to improve availability, efficiency, and resilience"
-              recommendationText={`1. REPLENISHMENT & FORECASTING
-Tighten reorder points using recent demand forecasts and lead-time variability. Prioritize ${lowStockItems} low/out-of-stock items.
-
-2. SUPPLIER PERFORMANCE PROGRAM
-Engage suppliers below target to improve on-time delivery and quality; expand scorecards and quarterly reviews.
-
-3. RISK MITIGATION
-Create mitigation plans for ${highRiskDisruptions} high-risk disruptions; diversify lanes and review safety stock.
-
-4. PRODUCTION & PROCUREMENT ALIGNMENT
-Synchronize production plans (${productionPlans.length}) with procurement orders to reduce bottlenecks and expedite critical materials.
-
-5. ANALYTICS & GOVERNANCE
-Enhance inventory analytics, turnover monitoring, and audit cadence; set weekly dashboards and alerts.`}
-              actionItems={[
-                {
-                  index: 1,
-                  title: "Reorder Point Review",
-                  description:
-                    "Recalculate reorder points using demand forecast error and supplier lead-time variability",
-                  priority: "high",
-                  timeline: "This Month",
-                },
-                {
-                  index: 2,
-                  title: "Supplier QBRs",
-                  description:
-                    "Run quarterly business reviews for underperforming suppliers and agree on improvement plans",
-                  priority: "high",
-                  timeline: "Quarterly",
-                },
-                {
-                  index: 3,
-                  title: "Risk Playbooks",
-                  description:
-                    "Draft disruption playbooks for top risk scenarios; pre-approve alternates and routes",
-                  priority: "medium",
-                  timeline: "Next 6 Weeks",
-                },
-                {
-                  index: 4,
-                  title: "Demand-Procurement Sync",
-                  description:
-                    "Align MRP with latest forecasts and production constraints to reduce expedite costs",
-                  priority: "medium",
-                  timeline: "Biweekly",
-                },
-                {
-                  index: 5,
-                  title: "Turnover Dashboard",
-                  description:
-                    "Deploy SKU-level turnover and dead-stock dashboard with alerting",
-                  priority: "low",
-                  timeline: "Next Quarter",
-                },
-              ]}
-              nextSteps={[
-                {
-                  index: 1,
-                  step: "Publish replenishment list for low/out-of-stock SKUs",
-                  owner: "Inventory Ops",
-                  dueDate: "End of Week 1",
-                },
-                {
-                  index: 2,
-                  step: "Run supplier performance review and notify corrective actions",
-                  owner: "Procurement",
-                  dueDate: "End of Week 2",
-                },
-                {
-                  index: 3,
-                  step: "Approve risk mitigation plans and safety stock updates",
-                  owner: "Supply Chain Director",
-                  dueDate: "Mid-Month",
-                },
-                {
-                  index: 4,
-                  step: "Sync production and procurement schedules",
-                  owner: "Planning",
-                  dueDate: "Weekly",
-                },
-              ]}
+              recommendationDescription={RECOMMENDATION_DESCRIPTION}
+              recommendationText={getRecommendationContent(
+                lowStockItems,
+                highRiskDisruptions,
+                productionPlans.length
+              )}
+              actionItems={DEFAULT_ACTION_ITEMS}
+              nextSteps={DEFAULT_NEXT_STEPS}
             />
           </TabsContent>
 
