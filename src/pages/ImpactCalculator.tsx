@@ -611,19 +611,16 @@ const ImpactCalculator = () => {
                         onChange={(e) =>
                           setEconomicInputs({
                             ...economicInputs,
-                            sectorImpact: e.target.value,
+                            sectorImpact: e.target.value as EconomicInputs["sectorImpact"],
                           })
                         }
                         className="w-full px-3 py-2 border rounded-md"
                       >
-                        <option value="Technology">Technology</option>
-                        <option value="Financial Services">
-                          Financial Services
-                        </option>
-                        <option value="Healthcare">Healthcare</option>
-                        <option value="Manufacturing">Manufacturing</option>
-                        <option value="Retail">Retail</option>
-                        <option value="All Sectors">All Sectors</option>
+                        {SECTOR_OPTIONS.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
