@@ -26,6 +26,15 @@ import { useCompanyInfo } from "@/lib/company-context";
 import { getCompanyName } from "@/lib/get-company-name";
 import { SummaryRecommendationSection } from "@/components/module/summary-recommendation-section";
 import {
+  SUMMARY_DESCRIPTION,
+  getSummaryContent,
+  getSummaryMetrics,
+  RECOMMENDATION_DESCRIPTION,
+  getRecommendationContent,
+  DEFAULT_ACTION_ITEMS,
+  DEFAULT_NEXT_STEPS,
+} from "@/lib/inventory-content";
+import {
   Package,
   TrendingUp,
   AlertTriangle,
