@@ -23,6 +23,17 @@ import {
   cashFlowForecast as mockCashFlow,
 } from "@/lib/business-forecast-data";
 import {
+  BUSINESS_FORECAST_DEFAULTS,
+  getSummaryContent,
+  SUMMARY_DESCRIPTION,
+  getRecommendationContent,
+  RECOMMENDATION_DESCRIPTION,
+  DEFAULT_ACTION_ITEMS,
+  DEFAULT_NEXT_STEPS,
+  GROWTH_TRAJECTORY,
+  getSummaryMetrics,
+} from "@/lib/business-forecast-content";
+import {
   Building2,
   RefreshCw,
   Calendar,
