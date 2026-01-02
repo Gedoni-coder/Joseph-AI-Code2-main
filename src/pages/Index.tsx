@@ -371,21 +371,14 @@ const Index = () => {
                   <div className="space-y-3">
                     <h4 className="font-semibold text-sm">Key Takeaways</h4>
                     <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-economic-positive mt-2 flex-shrink-0" />
-                        Economic growth maintains moderate pace with positive
-                        employment trends
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-economic-warning mt-2 flex-shrink-0" />
-                        Inflation pressures showing signs of moderation but
-                        remain elevated
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                        Market volatility expected to continue amid policy
-                        uncertainty
-                      </li>
+                      {KEY_TAKEAWAYS.map((takeaway) => (
+                        <li key={takeaway.id} className="flex items-start gap-2">
+                          <div
+                            className={`w-1.5 h-1.5 rounded-full bg-${SENTIMENT_COLOR_MAP[takeaway.sentiment]} mt-2 flex-shrink-0`}
+                          />
+                          {takeaway.text}
+                        </li>
+                      ))}
                     </ul>
                   </div>
 
