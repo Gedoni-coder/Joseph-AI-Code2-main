@@ -22,6 +22,15 @@ import { CompetitiveStrategy } from "@/components/competitive/competitive-strate
 import { ModuleConversation } from "@/components/conversation/module-conversation";
 import { SummaryRecommendationSection } from "@/components/module/summary-recommendation-section";
 import {
+  SUMMARY_DESCRIPTION,
+  getSummaryContent,
+  getSummaryMetrics,
+  RECOMMENDATION_DESCRIPTION,
+  getRecommendationContent,
+  DEFAULT_ACTION_ITEMS,
+  DEFAULT_NEXT_STEPS,
+} from "@/lib/market-content";
+import {
   BarChart3,
   TrendingUp,
   Target,
