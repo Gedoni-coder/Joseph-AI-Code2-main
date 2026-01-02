@@ -34,6 +34,14 @@ import { useCompanyInfo } from "@/lib/company-context";
 import { EconomicContext } from "@/lib/economic-data";
 import { COMPANY_NAME } from "@/lib/company-config";
 import { getCompanyName } from "@/lib/get-company-name";
+import {
+  MARKET_ALERTS,
+  KEY_TAKEAWAYS,
+  ECONOMIC_OUTLOOK,
+  ECONOMIC_FOOTER,
+  SENTIMENT_COLOR_MAP,
+  ALERT_STYLE_MAP,
+} from "@/lib/economic-content";
 
 // Type aliases to match component expectations
 type EconomicNews = {
@@ -314,44 +322,36 @@ const Index = () => {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <div className="p-4 rounded-lg border border-economic-positive/20 bg-economic-positive/5">
-                    <div className="flex items-center gap-2 mb-2">
-                      <TrendingUp className="h-4 w-4 text-economic-positive" />
-                      <span className="text-sm font-medium text-economic-positive">
-                        Positive Signal
-                      </span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      Manufacturing sector shows strong growth momentum with
-                      increasing orders.
-                    </p>
-                  </div>
+                  {MARKET_ALERTS.map((alert, index) => {
+                    const iconMap = {
+                      positive: TrendingUp,
+                      warning: AlertTriangle,
+                      update: BarChart3,
+                    };
+                    const Icon = iconMap[alert.type];
+                    const styles = ALERT_STYLE_MAP[alert.type];
 
-                  <div className="p-4 rounded-lg border border-economic-warning/20 bg-economic-warning/5">
-                    <div className="flex items-center gap-2 mb-2">
-                      <AlertTriangle className="h-4 w-4 text-economic-warning" />
-                      <span className="text-sm font-medium text-economic-warning">
-                        Watch Signal
-                      </span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      Inflation indicators showing mixed signals requiring close
-                      monitoring.
-                    </p>
-                  </div>
-
-                  <div className="p-4 rounded-lg border border-primary/20 bg-primary/5">
-                    <div className="flex items-center gap-2 mb-2">
-                      <BarChart3 className="h-4 w-4 text-primary" />
-                      <span className="text-sm font-medium text-primary">
-                        Market Update
-                      </span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      Central bank maintains current monetary policy stance as
-                      expected.
-                    </p>
-                  </div>
+                    return (
+                      <div
+                        key={index}
+                        className={`p-4 rounded-lg border border-${styles.borderColor} bg-${styles.backgroundColor}`}
+                      >
+                        <div className="flex items-center gap-2 mb-2">
+                          <Icon
+                            className={`h-4 w-4 text-${styles.textColor}`}
+                          />
+                          <span
+                            className={`text-sm font-medium text-${styles.textColor}`}
+                          >
+                            {alert.title}
+                          </span>
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          {alert.message}
+                        </p>
+                      </div>
+                    );
+                  })}
                 </div>
               </CardContent>
             </Card>
@@ -371,38 +371,31 @@ const Index = () => {
                   <div className="space-y-3">
                     <h4 className="font-semibold text-sm">Key Takeaways</h4>
                     <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-economic-positive mt-2 flex-shrink-0" />
-                        Economic growth maintains moderate pace with positive
-                        employment trends
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-economic-warning mt-2 flex-shrink-0" />
-                        Inflation pressures showing signs of moderation but
-                        remain elevated
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                        Market volatility expected to continue amid policy
-                        uncertainty
-                      </li>
+                      {KEY_TAKEAWAYS.map((takeaway) => (
+                        <li
+                          key={takeaway.id}
+                          className="flex items-start gap-2"
+                        >
+                          <div
+                            className={`w-1.5 h-1.5 rounded-full bg-${SENTIMENT_COLOR_MAP[takeaway.sentiment]} mt-2 flex-shrink-0`}
+                          />
+                          {takeaway.text}
+                        </li>
+                      ))}
                     </ul>
                   </div>
 
                   <div className="space-y-3">
                     <h4 className="font-semibold text-sm">Outlook</h4>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      The economic landscape shows resilience despite global
-                      headwinds. Continued monitoring of key indicators will be
-                      essential for policy makers and market participants as we
-                      navigate through changing economic conditions.
+                      {ECONOMIC_OUTLOOK.summary}
                     </p>
                     <div className="flex gap-2 pt-2">
                       <Badge variant="outline" className="text-xs">
-                        Risk Assessment: Moderate
+                        Risk Assessment: {ECONOMIC_OUTLOOK.riskAssessment}
                       </Badge>
                       <Badge variant="outline" className="text-xs">
-                        Confidence: High
+                        Confidence: {ECONOMIC_OUTLOOK.confidence}
                       </Badge>
                     </div>
                   </div>
@@ -422,15 +415,12 @@ const Index = () => {
           <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4">
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
-                <span>© 2024 Economic Forecasting Platform</span>
+                <span>{ECONOMIC_FOOTER.copyright}</span>
                 <span className="hidden sm:inline">•</span>
-                <span>Data updated every 15 minutes</span>
+                <span>{ECONOMIC_FOOTER.updateFrequency}</span>
               </div>
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
-                <span>
-                  Sources: Federal Reserve, BLS, BEA, International
-                  Organizations
-                </span>
+                <span>Sources: {ECONOMIC_FOOTER.dataSources}</span>
               </div>
             </div>
           </div>

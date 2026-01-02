@@ -29,142 +29,29 @@ import {
   Brain,
   FileText,
 } from "lucide-react";
+import {
+  DEFAULT_POLICY_INPUTS,
+  DEFAULT_ECONOMIC_INPUTS,
+  POLICY_SCENARIOS,
+  ECONOMIC_SCENARIOS,
+  SECTOR_OPTIONS,
+  REPUTATIONAL_IMPACT_OPTIONS,
+  PolicyInputs,
+  EconomicInputs,
+} from "@/lib/impact-scenarios";
 
 const ImpactCalculator = () => {
   const [calculationType, setCalculationType] = useState("policy");
   const [isCalculating, setIsCalculating] = useState(false);
   const [results, setResults] = useState(null);
 
-  // Policy Impact Inputs
-  const [policyInputs, setPolicyInputs] = useState({
-    complianceCost: 75000,
-    implementationTime: 8,
-    affectedEmployees: 150,
-    trainingCost: 25000,
-    systemUpgrades: 50000,
-    consultingFees: 35000,
-    ongoingMaintenance: 15000,
-    riskReduction: 75,
-    regulatoryFines: 250000,
-    reputationalImpact: "Medium",
-  });
-
-  // Economic Impact Inputs
-  const [economicInputs, setEconomicInputs] = useState({
-    gdpChange: 2.5,
-    inflationRate: 3.2,
-    interestRates: 4.5,
-    unemploymentRate: 3.8,
-    marketVolatility: 15,
-    consumerConfidence: 120,
-    businessInvestment: 1500000,
-    tradeBalance: -25000,
-    currencyStrength: 105,
-    sectorImpact: "Technology",
-  });
-
-  // Pre-defined scenarios
-  const policyScenarios = [
-    {
-      name: "GDPR Compliance",
-      description: "Full GDPR compliance implementation",
-      inputs: {
-        complianceCost: 85000,
-        implementationTime: 6,
-        affectedEmployees: 200,
-        trainingCost: 30000,
-        systemUpgrades: 65000,
-        consultingFees: 45000,
-        ongoingMaintenance: 20000,
-        riskReduction: 85,
-        regulatoryFines: 500000,
-        reputationalImpact: "High",
-      },
-    },
-    {
-      name: "SOX Compliance Update",
-      description: "Sarbanes-Oxley compliance enhancement",
-      inputs: {
-        complianceCost: 120000,
-        implementationTime: 10,
-        affectedEmployees: 100,
-        trainingCost: 40000,
-        systemUpgrades: 80000,
-        consultingFees: 60000,
-        ongoingMaintenance: 25000,
-        riskReduction: 90,
-        regulatoryFines: 1000000,
-        reputationalImpact: "High",
-      },
-    },
-    {
-      name: "Tax Rate Change",
-      description: "Corporate tax rate increase impact",
-      inputs: {
-        complianceCost: 35000,
-        implementationTime: 4,
-        affectedEmployees: 50,
-        trainingCost: 15000,
-        systemUpgrades: 25000,
-        consultingFees: 20000,
-        ongoingMaintenance: 8000,
-        riskReduction: 60,
-        regulatoryFines: 150000,
-        reputationalImpact: "Low",
-      },
-    },
-  ];
-
-  const economicScenarios = [
-    {
-      name: "Economic Recession",
-      description: "Moderate economic downturn scenario",
-      inputs: {
-        gdpChange: -1.5,
-        inflationRate: 2.1,
-        interestRates: 2.0,
-        unemploymentRate: 6.5,
-        marketVolatility: 35,
-        consumerConfidence: 85,
-        businessInvestment: 800000,
-        tradeBalance: -45000,
-        currencyStrength: 95,
-        sectorImpact: "All Sectors",
-      },
-    },
-    {
-      name: "Economic Growth",
-      description: "Strong economic expansion scenario",
-      inputs: {
-        gdpChange: 4.2,
-        inflationRate: 2.8,
-        interestRates: 5.5,
-        unemploymentRate: 2.8,
-        marketVolatility: 8,
-        consumerConfidence: 140,
-        businessInvestment: 2200000,
-        tradeBalance: 15000,
-        currencyStrength: 115,
-        sectorImpact: "Technology",
-      },
-    },
-    {
-      name: "Market Volatility",
-      description: "High market uncertainty scenario",
-      inputs: {
-        gdpChange: 1.1,
-        inflationRate: 4.5,
-        interestRates: 6.0,
-        unemploymentRate: 4.2,
-        marketVolatility: 45,
-        consumerConfidence: 95,
-        businessInvestment: 1000000,
-        tradeBalance: -18000,
-        currencyStrength: 98,
-        sectorImpact: "Financial Services",
-      },
-    },
-  ];
+  // Initialize with mock data from data file
+  const [policyInputs, setPolicyInputs] = useState<PolicyInputs>(
+    DEFAULT_POLICY_INPUTS,
+  );
+  const [economicInputs, setEconomicInputs] = useState<EconomicInputs>(
+    DEFAULT_ECONOMIC_INPUTS,
+  );
 
   const calculateImpact = async () => {
     setIsCalculating(true);
@@ -253,31 +140,9 @@ const ImpactCalculator = () => {
   const resetCalculation = () => {
     setResults(null);
     if (calculationType === "policy") {
-      setPolicyInputs({
-        complianceCost: 75000,
-        implementationTime: 8,
-        affectedEmployees: 150,
-        trainingCost: 25000,
-        systemUpgrades: 50000,
-        consultingFees: 35000,
-        ongoingMaintenance: 15000,
-        riskReduction: 75,
-        regulatoryFines: 250000,
-        reputationalImpact: "Medium",
-      });
+      setPolicyInputs(DEFAULT_POLICY_INPUTS);
     } else {
-      setEconomicInputs({
-        gdpChange: 2.5,
-        inflationRate: 3.2,
-        interestRates: 4.5,
-        unemploymentRate: 3.8,
-        marketVolatility: 15,
-        consumerConfidence: 120,
-        businessInvestment: 1500000,
-        tradeBalance: -25000,
-        currencyStrength: 105,
-        sectorImpact: "Technology",
-      });
+      setEconomicInputs(DEFAULT_ECONOMIC_INPUTS);
     }
   };
 
@@ -368,8 +233,8 @@ const ImpactCalculator = () => {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {(calculationType === "policy"
-              ? policyScenarios
-              : economicScenarios
+              ? POLICY_SCENARIOS
+              : ECONOMIC_SCENARIOS
             ).map((scenario, index) => (
               <Card
                 key={index}
@@ -572,14 +437,17 @@ const ImpactCalculator = () => {
                         onChange={(e) =>
                           setPolicyInputs({
                             ...policyInputs,
-                            reputationalImpact: e.target.value,
+                            reputationalImpact: e.target
+                              .value as PolicyInputs["reputationalImpact"],
                           })
                         }
                         className="w-full px-3 py-2 border rounded-md"
                       >
-                        <option value="Low">Low</option>
-                        <option value="Medium">Medium</option>
-                        <option value="High">High</option>
+                        {REPUTATIONAL_IMPACT_OPTIONS.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -744,19 +612,17 @@ const ImpactCalculator = () => {
                         onChange={(e) =>
                           setEconomicInputs({
                             ...economicInputs,
-                            sectorImpact: e.target.value,
+                            sectorImpact: e.target
+                              .value as EconomicInputs["sectorImpact"],
                           })
                         }
                         className="w-full px-3 py-2 border rounded-md"
                       >
-                        <option value="Technology">Technology</option>
-                        <option value="Financial Services">
-                          Financial Services
-                        </option>
-                        <option value="Healthcare">Healthcare</option>
-                        <option value="Manufacturing">Manufacturing</option>
-                        <option value="Retail">Retail</option>
-                        <option value="All Sectors">All Sectors</option>
+                        {SECTOR_OPTIONS.map((option) => (
+                          <option key={option} value={option}>
+                            {option}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>

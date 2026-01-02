@@ -155,7 +155,7 @@ function TopDivisionNav({
   onConversationalModeChange,
 }: TopDivisionNavProps) {
   return (
-    <nav className="w-full bg-white border-b shadow-sm px-4 py-3 sticky top-0 z-40 flex gap-2 items-center">
+    <nav className="hidden md:flex w-full bg-white border-b shadow-sm px-4 py-3 sticky top-0 z-40 gap-2 items-center">
       <Link
         to="/home"
         className="font-bold tracking-tight text-lg px-3 py-1 rounded hover:bg-muted/30 transition-colors"
