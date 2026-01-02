@@ -21,6 +21,16 @@ import { DynamicPricingComponent } from "@/components/pricing/dynamic-pricing";
 import { ModuleConversation } from "@/components/conversation/module-conversation";
 import { SummaryRecommendationSection } from "@/components/module/summary-recommendation-section";
 import {
+  MARKET_PREMIUM,
+  getSummaryContent,
+  SUMMARY_DESCRIPTION,
+  getRecommendationContent,
+  RECOMMENDATION_DESCRIPTION,
+  DEFAULT_PRICING_ACTION_ITEMS,
+  DEFAULT_PRICING_NEXT_STEPS,
+  getSummaryMetrics,
+} from "@/lib/pricing-content";
+import {
   DollarSign,
   Target,
   TrendingUp,
