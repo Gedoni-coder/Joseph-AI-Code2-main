@@ -385,17 +385,14 @@ const Index = () => {
                   <div className="space-y-3">
                     <h4 className="font-semibold text-sm">Outlook</h4>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      The economic landscape shows resilience despite global
-                      headwinds. Continued monitoring of key indicators will be
-                      essential for policy makers and market participants as we
-                      navigate through changing economic conditions.
+                      {ECONOMIC_OUTLOOK.summary}
                     </p>
                     <div className="flex gap-2 pt-2">
                       <Badge variant="outline" className="text-xs">
-                        Risk Assessment: Moderate
+                        Risk Assessment: {ECONOMIC_OUTLOOK.riskAssessment}
                       </Badge>
                       <Badge variant="outline" className="text-xs">
-                        Confidence: High
+                        Confidence: {ECONOMIC_OUTLOOK.confidence}
                       </Badge>
                     </div>
                   </div>
