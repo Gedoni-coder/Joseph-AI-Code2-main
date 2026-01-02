@@ -140,31 +140,9 @@ const ImpactCalculator = () => {
   const resetCalculation = () => {
     setResults(null);
     if (calculationType === "policy") {
-      setPolicyInputs({
-        complianceCost: 75000,
-        implementationTime: 8,
-        affectedEmployees: 150,
-        trainingCost: 25000,
-        systemUpgrades: 50000,
-        consultingFees: 35000,
-        ongoingMaintenance: 15000,
-        riskReduction: 75,
-        regulatoryFines: 250000,
-        reputationalImpact: "Medium",
-      });
+      setPolicyInputs(DEFAULT_POLICY_INPUTS);
     } else {
-      setEconomicInputs({
-        gdpChange: 2.5,
-        inflationRate: 3.2,
-        interestRates: 4.5,
-        unemploymentRate: 3.8,
-        marketVolatility: 15,
-        consumerConfidence: 120,
-        businessInvestment: 1500000,
-        tradeBalance: -25000,
-        currencyStrength: 105,
-        sectorImpact: "Technology",
-      });
+      setEconomicInputs(DEFAULT_ECONOMIC_INPUTS);
     }
   };
 
