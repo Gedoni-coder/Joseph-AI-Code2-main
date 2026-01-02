@@ -34,6 +34,14 @@ import { useCompanyInfo } from "@/lib/company-context";
 import { EconomicContext } from "@/lib/economic-data";
 import { COMPANY_NAME } from "@/lib/company-config";
 import { getCompanyName } from "@/lib/get-company-name";
+import {
+  MARKET_ALERTS,
+  KEY_TAKEAWAYS,
+  ECONOMIC_OUTLOOK,
+  ECONOMIC_FOOTER,
+  SENTIMENT_COLOR_MAP,
+  ALERT_STYLE_MAP,
+} from "@/lib/economic-content";
 
 // Type aliases to match component expectations
 type EconomicNews = {
