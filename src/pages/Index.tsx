@@ -412,15 +412,12 @@ const Index = () => {
           <div className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4">
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
-                <span>© 2024 Economic Forecasting Platform</span>
+                <span>{ECONOMIC_FOOTER.copyright}</span>
                 <span className="hidden sm:inline">•</span>
-                <span>Data updated every 15 minutes</span>
+                <span>{ECONOMIC_FOOTER.updateFrequency}</span>
               </div>
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
-                <span>
-                  Sources: Federal Reserve, BLS, BEA, International
-                  Organizations
-                </span>
+                <span>Sources: {ECONOMIC_FOOTER.dataSources}</span>
               </div>
             </div>
           </div>
