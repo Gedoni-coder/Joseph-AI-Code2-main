@@ -24,6 +24,17 @@ import {
   PopoverTrigger,
 } from "../components/ui/popover";
 import { ConnectionStatus } from "../components/ui/connection-status";
+import {
+  DEFAULT_NOTIFICATIONS,
+  DEFAULT_ADVICE,
+  SUMMARY_DESCRIPTION,
+  getSummaryContent,
+  RECOMMENDATION_DESCRIPTION,
+  getRecommendationContent,
+  DEFAULT_ACTION_ITEMS,
+  DEFAULT_NEXT_STEPS,
+  getSummaryMetrics,
+} from "../lib/financial-advisory-content";
 import { StrategicBudgeting } from "../components/financial/strategic-budgeting";
 import { CashFlowPlanning } from "../components/financial/cash-flow-planning";
 import { BudgetValidation } from "../components/financial/budget-validation";
@@ -176,38 +187,46 @@ export default function FinancialAdvisory() {
                         </Button>
                       </div>
                       <div className="space-y-3">
-                        <div className="p-3 rounded-lg border bg-card">
-                          <div className="flex items-start gap-3">
-                            <Calculator className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium">
-                                Budget Alert
-                              </p>
-                              <p className="text-xs text-muted-foreground">
-                                Q2 budget variance exceeds threshold
-                              </p>
-                              <p className="text-xs text-muted-foreground mt-1">
-                                15 minutes ago
-                              </p>
+                        {DEFAULT_NOTIFICATIONS.map((notification) => {
+                          const iconMap = {
+                            calculator: Calculator,
+                            "trending-up": TrendingUp,
+                            target: Target,
+                            lightbulb: Lightbulb,
+                          };
+                          const Icon =
+                            iconMap[
+                              notification.icon as keyof typeof iconMap
+                            ];
+                          const colorMap = {
+                            alert: "text-blue-500",
+                            update: "text-green-500",
+                            insight: "text-orange-500",
+                          };
+                          return (
+                            <div
+                              key={notification.id}
+                              className="p-3 rounded-lg border bg-card"
+                            >
+                              <div className="flex items-start gap-3">
+                                <Icon
+                                  className={`h-4 w-4 ${colorMap[notification.type]} mt-0.5 flex-shrink-0`}
+                                />
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-sm font-medium">
+                                    {notification.title}
+                                  </p>
+                                  <p className="text-xs text-muted-foreground">
+                                    {notification.message}
+                                  </p>
+                                  <p className="text-xs text-muted-foreground mt-1">
+                                    {notification.timeAgo}
+                                  </p>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                        <div className="p-3 rounded-lg border bg-card">
-                          <div className="flex items-start gap-3">
-                            <TrendingUp className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium">
-                                Cash Flow Update
-                              </p>
-                              <p className="text-xs text-muted-foreground">
-                                Monthly projections updated successfully
-                              </p>
-                              <p className="text-xs text-muted-foreground mt-1">
-                                1 hour ago
-                              </p>
-                            </div>
-                          </div>
-                        </div>
+                          );
+                        })}
                       </div>
                       <Link to="/notifications">
                         <Button variant="outline" className="w-full" size="sm">
@@ -250,32 +269,41 @@ export default function FinancialAdvisory() {
                         </Button>
                       </div>
                       <div className="space-y-3">
-                        <div className="p-3 rounded-lg border bg-card">
-                          <div className="flex items-start gap-3">
-                            <HelpCircle className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium">
-                                Optimization Opportunity
-                              </p>
-                              <p className="text-xs text-muted-foreground">
-                                Consider refining your analysis parameters
-                              </p>
+                        {DEFAULT_ADVICE.map((advice) => {
+                          const iconMap = {
+                            "help-circle": HelpCircle,
+                            target: Target,
+                            shield: Shield,
+                            "trending-up": TrendingUp,
+                          };
+                          const Icon = iconMap[advice.icon as keyof typeof iconMap];
+                          const colorMap = {
+                            optimization: "text-blue-500",
+                            performance: "text-green-500",
+                            risk: "text-red-500",
+                            strategic: "text-purple-500",
+                          };
+                          return (
+                            <div
+                              key={advice.id}
+                              className="p-3 rounded-lg border bg-card"
+                            >
+                              <div className="flex items-start gap-3">
+                                <Icon
+                                  className={`h-4 w-4 ${colorMap[advice.type]} mt-0.5 flex-shrink-0`}
+                                />
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-sm font-medium">
+                                    {advice.title}
+                                  </p>
+                                  <p className="text-xs text-muted-foreground">
+                                    {advice.message}
+                                  </p>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                        <div className="p-3 rounded-lg border bg-card">
-                          <div className="flex items-start gap-3">
-                            <Target className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium">
-                                Performance Insight
-                              </p>
-                              <p className="text-xs text-muted-foreground">
-                                Analysis accuracy has improved significantly
-                              </p>
-                            </div>
-                          </div>
-                        </div>
+                          );
+                        })}
                       </div>
                       <Link to="/ai-insights">
                         <Button variant="outline" className="w-full" size="sm">
@@ -407,131 +435,23 @@ export default function FinancialAdvisory() {
             <TabsContent value="summary-recommendation" className="space-y-8">
               <SummaryRecommendationSection
                 summaryTitle="Financial Advisory Summary"
-                summaryDescription="Executive summary of financial position and key metrics"
-                summaryText={`1. FINANCIAL POSITION OVERVIEW
-The organization maintains a strong financial position with healthy liquidity and profitability metrics. Cash flow projections show positive trends with adequate reserves to support operational needs and strategic investments.
-
-2. BUDGET PERFORMANCE
-Current budget execution shows ${budgetForecasts.length} active forecasts tracking within acceptable variance ranges. Actual spending aligns with planning assumptions, indicating strong cost controls and forecast accuracy.
-
-3. CASH FLOW MANAGEMENT
-Monthly cash flow projections indicate stable operational liquidity with ${liquidityMetrics.length} key metrics within target parameters. Working capital management is efficient with appropriate levels of inventory and receivables.
-
-4. FINANCIAL RISKS
-${riskAssessments.length} financial risks have been identified and are being actively monitored. Mitigation strategies are in place for material risks. Scenario analysis shows resilience across multiple stress test scenarios.
-
-5. STRATEGIC FINANCIAL INITIATIVES
-Performance drivers analysis indicates key areas for financial optimization. Recommended initiatives focus on improving profitability, optimizing capital deployment, and enhancing shareholder value.`}
-                summaryMetrics={[
-                  {
-                    index: 1,
-                    title: "Budget Forecasts",
-                    value: budgetForecasts.length,
-                    insight: "Active financial forecasts being tracked",
-                  },
-                  {
-                    index: 2,
-                    title: "Cash Flow Projections",
-                    value: cashFlowProjections.length,
-                    insight: "Monthly cash flow forecasts available",
-                  },
-                  {
-                    index: 3,
-                    title: "Scenario Tests",
-                    value: scenarioTests.length,
-                    insight: "Financial scenario models for planning",
-                  },
-                  {
-                    index: 4,
-                    title: "Risk Assessments",
-                    value: riskAssessments.length,
-                    insight: "Financial risks under active review",
-                  },
-                ]}
+                summaryDescription={SUMMARY_DESCRIPTION}
+                summaryText={getSummaryContent(
+                  budgetForecasts.length,
+                  liquidityMetrics.length,
+                  riskAssessments.length
+                )}
+                summaryMetrics={getSummaryMetrics(
+                  budgetForecasts.length,
+                  cashFlowProjections.length,
+                  scenarioTests.length,
+                  riskAssessments.length
+                )}
                 recommendationTitle="Financial Advisory Recommendations"
-                recommendationDescription="Strategic recommendations for financial optimization and risk management"
-                recommendationText={`1. BUDGET OPTIMIZATION
-Implement zero-based budgeting approach for discretionary spending categories. Establish monthly variance analysis with accountability for budget managers. Consider rolling forecasts to improve planning accuracy and flexibility.
-
-2. CASH FLOW MANAGEMENT
-Implement daily cash position monitoring and forecasting. Optimize working capital through improved payables management and receivables collection. Establish cash reserve policy to ensure adequate liquidity buffers.
-
-3. FINANCIAL PLANNING
-Develop integrated financial plan linking operational and strategic objectives. Implement quarterly business reviews to track progress and adjust plans. Build scenario planning capability for strategic decision-making.
-
-4. RISK MANAGEMENT
-Implement enhanced financial risk monitoring and reporting. Develop mitigation strategies for material financial risks. Establish governance process for financial risk decisions.
-
-5. PERFORMANCE MANAGEMENT
-Implement comprehensive KPI dashboard for financial performance tracking. Establish targets and accountability for key financial drivers. Conduct regular variance analysis with root cause assessment.`}
-                actionItems={[
-                  {
-                    index: 1,
-                    title: "Enhanced Budget Forecasting",
-                    description:
-                      "Implement advanced budgeting system with rolling forecasts and monthly variance tracking",
-                    priority: "high",
-                    timeline: "Q1 2025",
-                  },
-                  {
-                    index: 2,
-                    title: "Cash Flow Optimization Program",
-                    description:
-                      "Launch comprehensive working capital optimization initiative to improve cash conversion and liquidity",
-                    priority: "high",
-                    timeline: "Q1 2025",
-                  },
-                  {
-                    index: 3,
-                    title: "Financial Risk Framework",
-                    description:
-                      "Develop and implement financial risk management framework with regular monitoring and reporting",
-                    priority: "medium",
-                    timeline: "Q2 2025",
-                  },
-                  {
-                    index: 4,
-                    title: "Performance Dashboard Implementation",
-                    description:
-                      "Build comprehensive financial performance dashboard with real-time KPI tracking and alerts",
-                    priority: "medium",
-                    timeline: "Q2 2025",
-                  },
-                  {
-                    index: 5,
-                    title: "Strategic Planning Process",
-                    description:
-                      "Establish integrated strategic planning process linking financial and operational objectives",
-                    priority: "low",
-                    timeline: "Q2-Q3 2025",
-                  },
-                ]}
-                nextSteps={[
-                  {
-                    index: 1,
-                    step: "Review and validate all budget assumptions and forecasts",
-                    owner: "Finance Team",
-                    dueDate: "End of Week 1",
-                  },
-                  {
-                    index: 2,
-                    step: "Conduct financial risk assessment and prioritize risks",
-                    owner: "Risk Management Team",
-                    dueDate: "End of Week 2",
-                  },
-                  {
-                    index: 3,
-                    step: "Develop financial recommendations for executive review",
-                    owner: "CFO",
-                    dueDate: "Mid-Month",
-                  },
-                  {
-                    index: 4,
-                    step: "Establish monthly financial review cadence",
-                    owner: "Controller",
-                    dueDate: "Ongoing",
-                  },
-                ]}
+                recommendationDescription={RECOMMENDATION_DESCRIPTION}
+                recommendationText={getRecommendationContent()}
+                actionItems={DEFAULT_ACTION_ITEMS}
+                nextSteps={DEFAULT_NEXT_STEPS}
               />
             </TabsContent>
 
