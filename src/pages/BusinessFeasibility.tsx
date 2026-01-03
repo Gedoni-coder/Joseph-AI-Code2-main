@@ -186,8 +186,8 @@ async function buildNarrative(
       context: "business-feasibility",
     },
   ];
-  const system = `You are Joseph AI. Create a concise business feasibility narrative for the ${mode} mode.
-Include: Risk, Time Value (NPV intuition), ROI Time, Length Time Factor, Interest Rate, and an overall verdict (${res.verdict}) with score ${res.score}/100. Avoid fluff.`;
+  // Get AI prompt from mock data configuration
+  const system = getModePrompt(mode);
   try {
     const text = await generateAIResponse(history, { system });
     return text || undefined;
