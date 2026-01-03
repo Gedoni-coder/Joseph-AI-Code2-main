@@ -21,6 +21,8 @@ import { FundingStrategyAnalysis } from "@/components/loan/funding-strategy";
 import { InvestorMatchingEngine } from "@/components/loan/investor-matching";
 import { LoanResearchUpdates } from "@/components/loan/loan-research";
 import { type FundingOption } from "@/lib/loan-data";
+import { useCompanyInfo } from "@/lib/company-context";
+import { getCompanyName } from "@/lib/get-company-name";
 import {
   DollarSign,
   TrendingUp,
