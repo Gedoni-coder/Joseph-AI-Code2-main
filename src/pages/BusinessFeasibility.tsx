@@ -333,7 +333,7 @@ export default function BusinessFeasibility() {
                   <Input
                     value={ideaInput}
                     onChange={(e) => setIdeaInput(e.target.value)}
-                    placeholder="Got an Idea?"
+                    placeholder={FEASIBILITY_UI_LABELS.formPlaceholder}
                   />
                   <Button type="submit">Analyze</Button>
                 </form>
