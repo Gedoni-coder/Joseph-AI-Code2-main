@@ -20,6 +20,17 @@ import { cn } from "@/lib/utils";
 import { generateAIResponse } from "@/lib/ai";
 import type { ChatMessage } from "@/lib/chatbot-data";
 import { BusinessPlanningContent } from "./BusinessPlanning";
+import { STORAGE_KEYS } from "@/lib/app-config";
+import {
+  FEASIBILITY_MODE_THRESHOLDS,
+  FEASIBILITY_INPUT_DEFAULTS,
+  FEASIBILITY_STOP_WORDS,
+  FEASIBILITY_UI_LABELS,
+  FEASIBILITY_AI_PROMPTS,
+  getModeThresholds,
+  getModePrompt,
+  useLargeTimeFactor,
+} from "@/lib/feasibility-config";
 
 // Modes
 type Mode = "Conservative" | "Safe" | "Wild";
