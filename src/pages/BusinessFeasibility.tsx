@@ -335,7 +335,7 @@ export default function BusinessFeasibility() {
                     onChange={(e) => setIdeaInput(e.target.value)}
                     placeholder={FEASIBILITY_UI_LABELS.formPlaceholder}
                   />
-                  <Button type="submit">Analyze</Button>
+                  <Button type="submit">{FEASIBILITY_UI_LABELS.formButtonText}</Button>
                 </form>
                 <div className="text-xs text-muted-foreground mt-2">
                   Tip: include rough timelines (e.g., “18 months”) or rates
