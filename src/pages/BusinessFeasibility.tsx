@@ -149,21 +149,25 @@ function deriveInputsFromIdea(text: string): Inputs {
   const rateMatch = lower.match(pct);
   const monthsMatch = lower.match(months);
 
-  let interestRate = rateMatch ? clamp(parseFloat(rateMatch[1]), 0, 100) : 6.5;
-  let timeValue =
-    interestRate > 0 ? Math.max(3, Math.min(interestRate, 12)) : 5;
-  let roiTime = monthsMatch ? clamp(parseInt(monthsMatch[1], 10), 0, 600) : 18;
+  // Use mock data defaults from configuration
+  const defaults = FEASIBILITY_INPUT_DEFAULTS;
 
-  let risk = 35;
+  let interestRate = rateMatch ? clamp(parseFloat(rateMatch[1]), 0, 100) : defaults.interestRate;
+  let timeValue =
+    interestRate > 0 ? Math.max(defaults.timeValueMin, Math.min(interestRate, defaults.timeValueMax)) : 5;
+  let roiTime = monthsMatch ? clamp(parseInt(monthsMatch[1], 10), 0, 600) : defaults.roiTime;
+
+  let risk = defaults.defaultRisk;
   if (/(high\s*risk|uncertain|unproven|new\s*market)/.test(lower)) risk = 60;
   if (/(regulated|enterprise|long\s*cycle)/.test(lower))
     risk = Math.max(risk, 50);
   if (/(recurring|existing\s*customers|loyal)/.test(lower)) risk = 25;
 
-  let lengthTimeFactor = 12;
-  if (/(infrastructure|hardware|manufacturing)/.test(lower))
-    lengthTimeFactor = 24;
-  if (/(software|saas|app)/.test(lower)) lengthTimeFactor = 12;
+  // Check if text mentions large time factor categories using config helper
+  let lengthTimeFactor = defaults.lengthTimeFactor;
+  if (useLargeTimeFactor(text)) {
+    lengthTimeFactor = defaults.lengthTimeFactorLarge;
+  }
 
   return { risk, timeValue, roiTime, lengthTimeFactor, interestRate };
 }
