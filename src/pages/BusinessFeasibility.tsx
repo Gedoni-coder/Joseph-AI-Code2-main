@@ -83,19 +83,8 @@ function computeFeasibility(mode: Mode, inputs: Inputs): ModeResult {
   const years = Math.max(roiTime, 0) / 12;
   const pvFactor = 1 / Math.pow(1 + combinedRate, years || 0);
 
-  const thresholds = (
-    {
-      Conservative: {
-        risk: 1.0,
-        time: 0.8,
-        rate: 0.8,
-        feasible: 60,
-        borderline: 45,
-      },
-      Safe: { risk: 0.7, time: 0.5, rate: 0.6, feasible: 50, borderline: 40 },
-      Wild: { risk: 0.4, time: 0.3, rate: 0.4, feasible: 40, borderline: 30 },
-    } as const
-  )[mode];
+  // Get thresholds from mock data configuration
+  const thresholds = getModeThresholds(mode);
 
   const baseScore = 100 * pvFactor;
   const riskPenalty = risk * thresholds.risk;
