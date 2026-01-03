@@ -124,6 +124,7 @@ function computeFeasibility(mode: Mode, inputs: Inputs): ModeResult {
 }
 
 function extractKeywords(text: string): string[] {
+  // Use stop words from mock data configuration
   const words = text
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, " ")
@@ -131,25 +132,7 @@ function extractKeywords(text: string): string[] {
     .filter(
       (w) =>
         w.length > 3 &&
-        ![
-          "with",
-          "that",
-          "this",
-          "from",
-          "your",
-          "have",
-          "will",
-          "they",
-          "them",
-          "into",
-          "about",
-          "idea",
-          "market",
-          "users",
-          "their",
-          "more",
-          "less",
-        ].includes(w),
+        !FEASIBILITY_STOP_WORDS.includes(w),
     );
   const counts: Record<string, number> = {};
   for (const w of words) counts[w] = (counts[w] || 0) + 1;
