@@ -70,7 +70,8 @@ interface FeasibilityReport {
   resultsByMode: Record<Mode, ModeResult>;
 }
 
-const STORAGE_KEY = "joseph_feasibility_ideas_v1";
+// Use mock data configuration for storage key
+const STORAGE_KEY = STORAGE_KEYS.FEASIBILITY_IDEAS;
 
 function clamp(n: number, min = 0, max = 100) {
   return Math.max(min, Math.min(max, n));
