@@ -346,7 +346,7 @@ export default function BusinessFeasibility() {
 
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-semibold">Past Ideas</h3>
+                <h3 className="text-sm font-semibold">{FEASIBILITY_UI_LABELS.pastIdeasHeading}</h3>
                 <Badge variant="secondary">{reports.length}</Badge>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
