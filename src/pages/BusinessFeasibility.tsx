@@ -415,7 +415,7 @@ export default function BusinessFeasibility() {
               </div>
               {reports.length === 0 && (
                 <div className="text-xs text-muted-foreground">
-                  No ideas analyzed yet. Enter an idea above to get started.
+                  {FEASIBILITY_UI_LABELS.emptyStateText}
                 </div>
               )}
             </div>
