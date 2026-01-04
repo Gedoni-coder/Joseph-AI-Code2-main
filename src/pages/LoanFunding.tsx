@@ -21,6 +21,8 @@ import { FundingStrategyAnalysis } from "@/components/loan/funding-strategy";
 import { InvestorMatchingEngine } from "@/components/loan/investor-matching";
 import { LoanResearchUpdates } from "@/components/loan/loan-research";
 import { type FundingOption } from "@/lib/loan-data";
+import { useCompanyInfo } from "@/lib/company-context";
+import { getCompanyName } from "@/lib/get-company-name";
 import {
   DollarSign,
   TrendingUp,
@@ -38,6 +40,9 @@ import {
 import { Link } from "react-router-dom";
 
 export default function LoanFunding() {
+  const { companyInfo } = useCompanyInfo();
+  const companyName = getCompanyName(companyInfo?.companyName);
+
   const {
     eligibility,
     fundingOptions,
@@ -98,7 +103,7 @@ export default function LoanFunding() {
       <ModuleHeader
         icon={<DollarSign className="h-6 w-6" />}
         title="Funding and Loan Hub"
-        description="Complete financing solutions and funding opportunities for E-buy expansion, operations, and strategic growth"
+        description={`Complete financing solutions and funding opportunities for ${companyName} expansion, operations, and strategic growth`}
         isConnected={isConnected}
         lastUpdated={lastUpdated}
         onReconnect={refreshData}
