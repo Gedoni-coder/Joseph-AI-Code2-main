@@ -126,9 +126,7 @@ const Index = () => {
     await refreshData(activeContext);
     // Show user feedback
     setTimeout(() => {
-      alert(
-        "Economic data refreshed successfully!\n\nUpdated:\n- All economic indicators\n- Market forecasts\n- Regional data\n- International trends",
-      );
+      alert(ECONOMIC_REFRESH_ALERT);
     }, 500);
   };
 
@@ -139,9 +137,8 @@ const Index = () => {
     const streamInterval = setInterval(
       () => {
         // Simulate random data updates
-        const updateTypes = ["metrics", "news", "forecasts"];
         const randomUpdate =
-          updateTypes[Math.floor(Math.random() * updateTypes.length)];
+          UPDATE_TYPES[Math.floor(Math.random() * UPDATE_TYPES.length)];
 
         setActiveUpdates((prev) => [...prev, randomUpdate]);
         setLastDataUpdate(new Date());
@@ -151,9 +148,9 @@ const Index = () => {
           setActiveUpdates((prev) =>
             prev.filter((update) => update !== randomUpdate),
           );
-        }, 3000);
+        }, ACTIVE_UPDATE_TIMEOUT);
       },
-      2000 + Math.random() * 3000,
+      STREAM_UPDATE_INTERVAL + Math.random() * STREAM_JITTER,
     );
 
     return () => clearInterval(streamInterval);
@@ -167,23 +164,14 @@ const Index = () => {
   };
 
   const getContextTitle = (context: EconomicContext) => {
-    const titles = {
-      local: "Local Economic Dashboard",
-      state: "State Economic Overview",
-      national: "National Economic Indicators",
-      international: "Global Economic Monitor",
-    };
-    return titles[context];
+    const config = ECONOMIC_CONTEXT_CONFIG.find((c) => c.context === context);
+    return config?.titleBase || "Economic Dashboard";
   };
 
   const getContextDescription = (context: EconomicContext) => {
-    const descriptions = {
-      local: `Real-time economic data and forecasts for ${companyName}'s local market area`,
-      state: `Comprehensive state-level economic analysis and trends for ${companyName} operations`,
-      national: `Key national economic indicators and market insights for ${companyName} marketplace`,
-      international: `Global economic trends and international market data relevant to ${companyName} expansion`,
-    };
-    return descriptions[context];
+    const config = ECONOMIC_CONTEXT_CONFIG.find((c) => c.context === context);
+    if (!config) return "";
+    return config.descriptionTemplate.replace("{companyName}", companyName);
   };
 
   return (
