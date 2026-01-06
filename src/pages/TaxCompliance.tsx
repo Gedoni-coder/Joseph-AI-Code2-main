@@ -17,6 +17,7 @@ import { SmartTaxCalculator } from "@/components/tax/smart-tax-calculator";
 import { TaxRecommendations } from "@/components/tax/tax-recommendations";
 import { ComplianceUpdates } from "@/components/tax/compliance-updates";
 import { ComplianceCalendar } from "@/components/tax/compliance-calendar";
+import { CURRENCY_CONFIG, FOOTER_COMPLIANCE_TEXT, FOOTER_DATA_SECURITY } from "@/mocks/tax-compliance";
 import {
   Calculator,
   RefreshCw,
