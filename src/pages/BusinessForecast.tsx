@@ -34,6 +34,11 @@ import {
   getSummaryMetrics,
 } from "@/lib/business-forecast-content";
 import {
+  KEY_ASSUMPTIONS,
+  KEY_RISKS,
+  COMPETITIVE_METRICS,
+} from "@/mocks/business-forecast";
+import {
   Building2,
   RefreshCw,
   Calendar,
