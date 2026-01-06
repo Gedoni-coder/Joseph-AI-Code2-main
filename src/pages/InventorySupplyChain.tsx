@@ -34,6 +34,7 @@ import {
   DEFAULT_ACTION_ITEMS,
   DEFAULT_NEXT_STEPS,
 } from "@/lib/inventory-content";
+import { INVENTORY_CONFIG } from "@/mocks/inventory-supply-chain";
 import {
   Package,
   TrendingUp,
