@@ -42,6 +42,14 @@ import {
   SENTIMENT_COLOR_MAP,
   ALERT_STYLE_MAP,
 } from "@/lib/economic-content";
+import {
+  ECONOMIC_CONTEXT_CONFIG,
+  ECONOMIC_REFRESH_ALERT,
+  UPDATE_TYPES,
+  STREAM_UPDATE_INTERVAL,
+  STREAM_JITTER,
+  ACTIVE_UPDATE_TIMEOUT,
+} from "@/mocks/economic-indicators";
 
 // Type aliases to match component expectations
 type EconomicNews = {
