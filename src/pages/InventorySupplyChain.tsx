@@ -128,11 +128,12 @@ export default function InventorySupplyChain() {
   }
 
   const formatCurrency = (amount: number) => {
-    if (amount >= 1000000) {
-      return `$${(amount / 1000000).toFixed(1)}M`;
+    const { millions, millions_suffix, thousands, thousands_suffix } = INVENTORY_CONFIG.currencyFormat;
+    if (amount >= millions) {
+      return `$${(amount / millions).toFixed(1)}${millions_suffix}`;
     }
-    if (amount >= 1000) {
-      return `$${(amount / 1000).toFixed(0)}K`;
+    if (amount >= thousands) {
+      return `$${(amount / thousands).toFixed(0)}${thousands_suffix}`;
     }
     return `$${amount.toLocaleString()}`;
   };
