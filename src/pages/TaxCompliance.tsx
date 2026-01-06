@@ -73,9 +73,9 @@ const TaxCompliance = () => {
     .reduce((sum, rec) => sum + rec.potentialSavings, 0);
 
   const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat("en-US", {
+    return new Intl.NumberFormat(CURRENCY_CONFIG.locale, {
       style: "currency",
-      currency: "USD",
+      currency: CURRENCY_CONFIG.currency,
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(value);
