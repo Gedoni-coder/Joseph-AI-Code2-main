@@ -548,10 +548,9 @@ const BusinessForecast = () => {
                           Key Assumptions
                         </h4>
                         <div className="space-y-2 text-sm text-muted-foreground">
-                          <p>• Market growth rate: 15% annually</p>
-                          <p>• Customer retention: 85% average</p>
-                          <p>• Cost inflation: 3-5% per year</p>
-                          <p>• Technology adoption: 25% improvement</p>
+                          {KEY_ASSUMPTIONS.map((assumption, idx) => (
+                            <p key={idx}>• {assumption.label}: {assumption.value}</p>
+                          ))}
                           <div className="mt-3">
                             <Link to="/risk-management">
                               <Button
