@@ -594,39 +594,23 @@ const BusinessForecast = () => {
                   <CardContent>
                     <div className="space-y-4">
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <Card className="p-4">
-                          <div className="space-y-2">
-                            <h4 className="font-medium text-sm">
-                              Market Share
-                            </h4>
-                            <div className="text-2xl font-bold">12.5%</div>
-                            <div className="text-xs text-muted-foreground">
-                              Target: 15%
+                        {COMPETITIVE_METRICS.map((metric, idx) => (
+                          <Card key={idx} className="p-4">
+                            <div className="space-y-2">
+                              <h4 className="font-medium text-sm">
+                                {metric.label}
+                              </h4>
+                              <div className="text-2xl font-bold">
+                                {metric.currentValue}{metric.unit}
+                              </div>
+                              {metric.targetValue && (
+                                <div className="text-xs text-muted-foreground">
+                                  Target: {metric.targetValue}{metric.unit}
+                                </div>
+                              )}
                             </div>
-                          </div>
-                        </Card>
-                        <Card className="p-4">
-                          <div className="space-y-2">
-                            <h4 className="font-medium text-sm">
-                              Competitive Position
-                            </h4>
-                            <div className="text-2xl font-bold">#3</div>
-                            <div className="text-xs text-muted-foreground">
-                              In target market
-                            </div>
-                          </div>
-                        </Card>
-                        <Card className="p-4">
-                          <div className="space-y-2">
-                            <h4 className="font-medium text-sm">
-                              Price Premium
-                            </h4>
-                            <div className="text-2xl font-bold">+8%</div>
-                            <div className="text-xs text-muted-foreground">
-                              vs. market average
-                            </div>
-                          </div>
-                        </Card>
+                          </Card>
+                        ))}
                       </div>
                       <div className="mt-6 text-center">
                         <Link to="/market-competitive-analysis">
