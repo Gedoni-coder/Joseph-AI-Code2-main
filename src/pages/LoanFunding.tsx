@@ -13,6 +13,7 @@ import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ConnectionStatus } from "@/components/ui/connection-status";
 import ModuleHeader from "@/components/ui/module-header";
 import { useLoanData } from "@/hooks/useLoanData";
+import { CURRENCY_FORMATTING } from "@/mocks/loan-funding";
 import { LoanEligibilityAssessment } from "@/components/loan/loan-eligibility";
 import { FundingOptionsExplorer } from "@/components/loan/funding-options";
 import { SmartLoanComparison } from "@/components/loan/loan-comparison";
