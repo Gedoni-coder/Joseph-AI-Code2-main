@@ -147,7 +147,7 @@ export default function InventorySupplyChain() {
     suppliers.reduce((acc, s) => acc + s.performanceMetrics.overallScore, 0) /
     suppliers.length;
   const highRiskDisruptions = disruptionRisks.filter(
-    (risk) => risk.riskScore > 20,
+    (risk) => risk.riskScore > INVENTORY_CONFIG.riskThreshold,
   ).length;
 
   return (
