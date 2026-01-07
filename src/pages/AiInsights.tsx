@@ -322,6 +322,8 @@ const AdviceHub = ({ conversationalMode, onConversationalModeChange }: AdviceHub
           isConnected={true}
           lastUpdated={new Date()}
           connectionLabel="Live"
+          conversationalMode={conversationalMode}
+          onConversationalModeChange={onConversationalModeChange}
         />
 
         {/* Chat Header */}
