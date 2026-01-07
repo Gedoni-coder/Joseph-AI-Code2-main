@@ -165,7 +165,7 @@ export default function FinancialAdvisory() {
                             variant="destructive"
                             className="absolute -top-2 -right-2 px-1.5 py-0.5 text-xs min-w-5 h-5 flex items-center justify-center rounded-full"
                           >
-                            2
+                            {DEFAULT_NOTIFICATIONS.length}
                           </Badge>
                         </Button>
                       </PopoverTrigger>
