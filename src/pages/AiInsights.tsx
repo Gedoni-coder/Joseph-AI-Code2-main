@@ -703,7 +703,7 @@ const AdviceHub = () => {
         {/* Right Side - Messages List */}
         <div className="flex-1 overflow-y-auto bg-white flex flex-col">
           {/* Messages Header */}
-          <div className="px-6 py-4 border-b border-gray-200 bg-white flex items-center gap-2 flex-shrink-0">
+          <div className="px-4 sm:px-6 py-4 border-b border-gray-200 bg-white flex items-center gap-2 flex-shrink-0 mt-14 md:mt-0">
             <span className="text-xl">💡</span>
             <h3 className="font-semibold text-gray-900">Latest Advice</h3>
           </div>
