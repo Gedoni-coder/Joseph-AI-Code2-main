@@ -277,11 +277,11 @@ const Notifications = () => {
           <div className="flex-1">
             <Card>
               <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <div className="flex items-center gap-3 sm:gap-4">
                     <button
                       onClick={selectAllMessages}
-                      className="p-1 hover:bg-gray-100 rounded"
+                      className="p-1 hover:bg-gray-100 rounded flex-shrink-0"
                     >
                       {selectedMessages.length === filteredNotifications.length && filteredNotifications.length > 0 ? (
                         <CheckSquare className="h-4 w-4" />
@@ -289,18 +289,20 @@ const Notifications = () => {
                         <Square className="h-4 w-4" />
                       )}
                     </button>
-                    <CardTitle className="capitalize">{selectedCategory}</CardTitle>
+                    <CardTitle className="capitalize text-base sm:text-lg">{selectedCategory}</CardTitle>
                   </div>
-                  
+
                   {selectedMessages.length > 0 && (
-                    <div className="flex items-center gap-2">
-                      <Button variant="outline" size="sm">
-                        <Archive className="h-4 w-4 mr-2" />
-                        Archive ({selectedMessages.length})
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
+                      <Button variant="outline" size="sm" className="text-xs w-full sm:w-auto">
+                        <Archive className="h-4 w-4 mr-1 sm:mr-2" />
+                        <span className="hidden sm:inline">Archive ({selectedMessages.length})</span>
+                        <span className="sm:hidden">Archive</span>
                       </Button>
-                      <Button variant="outline" size="sm">
-                        <Trash2 className="h-4 w-4 mr-2" />
-                        Delete ({selectedMessages.length})
+                      <Button variant="outline" size="sm" className="text-xs w-full sm:w-auto">
+                        <Trash2 className="h-4 w-4 mr-1 sm:mr-2" />
+                        <span className="hidden sm:inline">Delete ({selectedMessages.length})</span>
+                        <span className="sm:hidden">Delete</span>
                       </Button>
                     </div>
                   )}
