@@ -253,17 +253,23 @@ function AppContent() {
   };
 
   return (
-    <>
-      {!isLandingPage && (
-        <TopDivisionNav
-          conversationalMode={conversationalMode}
-          onConversationalModeChange={handleConversationalModeChange}
-        />
-      )}
-      {!isLandingPage && (
-        <ChatbotContainer conversationalMode={conversationalMode} />
-      )}
-      <Routes>
+    <ConversationalModeContext.Provider
+      value={{
+        conversationalMode,
+        onConversationalModeChange: handleConversationalModeChange,
+      }}
+    >
+      <>
+        {!isLandingPage && (
+          <TopDivisionNav
+            conversationalMode={conversationalMode}
+            onConversationalModeChange={handleConversationalModeChange}
+          />
+        )}
+        {!isLandingPage && (
+          <ChatbotContainer conversationalMode={conversationalMode} />
+        )}
+        <Routes>
         <Route path="/" element={<PrimaryLanding />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/onboarding" element={<Onboarding />} />
@@ -312,7 +318,10 @@ function AppContent() {
         <Route path="/sales-intelligence" element={<SalesIntelligence />} />
 
         {/* Additional Feature Routes */}
-        <Route path="/ai-insights" element={<AiInsights />} />
+        <Route
+          path="/ai-insights"
+          element={<AiInsights />}
+        />
         <Route path="/document-manager" element={<DocumentManager />} />
         <Route path="/growth-planning" element={<GrowthPlanning />} />
         <Route path="/all-reports" element={<AllReports />} />
@@ -378,7 +387,8 @@ function AppContent() {
         {/* Catch-all route - MUST be last */}
         <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+      </>
+    </ConversationalModeContext.Provider>
   );
 }
 
