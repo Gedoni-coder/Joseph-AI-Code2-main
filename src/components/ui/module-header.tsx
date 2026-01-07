@@ -50,28 +50,36 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
   error,
   connectionLabel = "Live",
   showConnectionStatus = true,
-  onConversationalModeChange,
+  onConversationalModeChange: externalOnChange,
   conversationalMode: externalConversationalMode,
 }) => {
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [ideasOpen, setIdeasOpen] = useState(false);
-  const [conversationalMode, setConversationalMode] = useState(() => {
-    if (externalConversationalMode !== undefined) {
-      return externalConversationalMode;
-    }
-    const saved = localStorage.getItem("conversationalMode");
-    return saved !== null ? saved === "true" : true;
-  });
 
-  React.useEffect(() => {
-    if (externalConversationalMode !== undefined) {
-      setConversationalMode(externalConversationalMode);
-    }
-  }, [externalConversationalMode]);
+  // Use context hook if props not provided
+  let contextMode = undefined;
+  let contextOnChange = undefined;
+  try {
+    const context = useConversationalMode();
+    contextMode = context.conversationalMode;
+    contextOnChange = context.onConversationalModeChange;
+  } catch {
+    // Context not available, will use props or local state
+  }
+
+  const conversationalMode =
+    externalConversationalMode !== undefined
+      ? externalConversationalMode
+      : contextMode ?? (localStorage.getItem("conversationalMode") === "true");
 
   const handleConversationalModeChange = (enabled: boolean) => {
-    setConversationalMode(enabled);
-    onConversationalModeChange?.(enabled);
+    if (externalOnChange) {
+      externalOnChange(enabled);
+    } else if (contextOnChange) {
+      contextOnChange(enabled);
+    } else {
+      localStorage.setItem("conversationalMode", String(enabled));
+    }
   };
 
   return (
