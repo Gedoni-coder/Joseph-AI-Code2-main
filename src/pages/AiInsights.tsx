@@ -17,6 +17,7 @@ import {
   ChevronRight,
   Search,
   X,
+  Menu,
 } from "lucide-react";
 
 interface AdviceMessage {
@@ -56,6 +57,7 @@ const AdviceHub = () => {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const messagesEndRef = useRef(null);
 
   const modulesList = [
@@ -217,6 +219,7 @@ const AdviceHub = () => {
 
   const handleMessageClick = (messageId: string) => {
     setSelectedMessageId(messageId);
+    setIsSidebarOpen(false); // Close sidebar on mobile after selecting message
     const message = adviceMessages.find((m) => m.id === messageId);
     if (message) {
       setAdviceMessages((prev) =>
@@ -317,18 +320,22 @@ const AdviceHub = () => {
         />
 
         {/* Chat Header */}
-        <div className="bg-white border-b border-gray-200 p-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="bg-white border-b border-gray-200 p-3 sm:p-4 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
             <button
               onClick={() => setSelectedMessageId(null)}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
             >
-              <ArrowLeft className="h-5 w-5 text-gray-600" />
+              <ArrowLeft className="h-4 sm:h-5 w-4 sm:w-5 text-gray-600" />
             </button>
-            <div>
-              <h2 className="font-semibold text-gray-900 flex items-center gap-2">
-                <span className="text-xl">{selectedMessage.moduleIcon}</span>
-                <span className="text-sm">{selectedMessage.title}</span>
+            <div className="min-w-0">
+              <h2 className="font-semibold text-gray-900 flex items-center gap-2 line-clamp-1">
+                <span className="text-lg sm:text-xl flex-shrink-0">
+                  {selectedMessage.moduleIcon}
+                </span>
+                <span className="text-xs sm:text-sm truncate">
+                  {selectedMessage.title}
+                </span>
               </h2>
               <p className="text-xs text-gray-500">
                 [{selectedMessage.moduleName}] •{" "}
@@ -336,21 +343,24 @@ const AdviceHub = () => {
               </p>
             </div>
           </div>
-          <Badge variant="default" className="bg-green-100 text-green-800">
-            🟢 Joseph Live
+          <Badge
+            variant="default"
+            className="bg-green-100 text-green-800 text-xs sm:text-sm flex-shrink-0"
+          >
+            🟢 Live
           </Badge>
         </div>
 
         {/* Chat Area */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          <div className="max-w-2xl mx-auto w-full space-y-6">
+        <div className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-3 sm:space-y-6">
+          <div className="max-w-2xl mx-auto w-full space-y-3 sm:space-y-6">
             {chatMessages.map((message) => (
               <div
                 key={message.id}
-                className={`flex gap-4 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                className={`flex gap-2 sm:gap-4 ${message.role === "user" ? "justify-end" : "justify-start"}`}
               >
                 {message.role === "joseph" && (
-                  <div className="flex-shrink-0">
+                  <div className="flex-shrink-0 hidden sm:block">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center">
                       <Sparkles className="h-4 w-4 text-white" />
                     </div>
@@ -358,18 +368,18 @@ const AdviceHub = () => {
                 )}
 
                 <div
-                  className={`max-w-xl ${message.role === "user" ? "order-first" : ""}`}
+                  className={`max-w-xs sm:max-w-xl ${message.role === "user" ? "order-first" : ""}`}
                 >
                   <div
-                    className={`rounded-2xl px-4 py-3 ${
+                    className={`rounded-2xl px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base ${
                       message.role === "user"
                         ? "bg-blue-600 text-white"
                         : "bg-white border border-gray-200 shadow-sm"
                     }`}
                   >
-                    <p className="text-sm leading-relaxed">{message.content}</p>
+                    <p className="leading-relaxed">{message.content}</p>
                   </div>
-                  <div className="flex items-center gap-2 mt-2">
+                  <div className="flex items-center gap-2 mt-1 sm:mt-2">
                     <span className="text-xs text-gray-500">
                       {message.timestamp.toLocaleTimeString([], {
                         hour: "2-digit",
@@ -377,11 +387,11 @@ const AdviceHub = () => {
                       })}
                     </span>
                     {message.role === "joseph" && (
-                      <div className="flex items-center gap-1 ml-2">
-                        <button className="p-1 hover:bg-gray-100 rounded transition-colors">
+                      <div className="flex items-center gap-1 ml-1 sm:ml-2">
+                        <button className="p-1 hover:bg-gray-100 rounded transition-colors hidden sm:block">
                           <Copy className="h-3 w-3 text-gray-400" />
                         </button>
-                        <button className="p-1 hover:bg-gray-100 rounded transition-colors">
+                        <button className="p-1 hover:bg-gray-100 rounded transition-colors hidden sm:block">
                           <Share2 className="h-3 w-3 text-gray-400" />
                         </button>
                       </div>
@@ -390,7 +400,7 @@ const AdviceHub = () => {
                 </div>
 
                 {message.role === "user" && (
-                  <div className="flex-shrink-0">
+                  <div className="flex-shrink-0 hidden sm:block">
                     <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center text-white text-xs font-medium">
                       U
                     </div>
@@ -400,13 +410,13 @@ const AdviceHub = () => {
             ))}
 
             {isTyping && (
-              <div className="flex gap-4">
-                <div className="flex-shrink-0">
+              <div className="flex gap-2 sm:gap-4">
+                <div className="flex-shrink-0 hidden sm:block">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center">
                     <Sparkles className="h-4 w-4 text-white" />
                   </div>
                 </div>
-                <div className="bg-white border border-gray-200 shadow-sm rounded-2xl px-4 py-3">
+                <div className="bg-white border border-gray-200 shadow-sm rounded-2xl px-3 sm:px-4 py-2 sm:py-3">
                   <div className="flex space-x-1">
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
                     <div
@@ -427,9 +437,9 @@ const AdviceHub = () => {
         </div>
 
         {/* Chat Input */}
-        <div className="border-t bg-white p-6 flex-shrink-0">
+        <div className="border-t bg-white p-3 sm:p-6 flex-shrink-0">
           <div className="max-w-2xl mx-auto">
-            <div className="flex gap-3 items-end">
+            <div className="flex gap-2 sm:gap-3 items-end">
               <div className="flex-1">
                 <div className="relative border border-gray-200 rounded-2xl bg-white shadow-sm">
                   <textarea
@@ -441,21 +451,29 @@ const AdviceHub = () => {
                         handleSendMessage();
                       }
                     }}
-                    placeholder="Ask Joseph for more details or follow-up advice..."
-                    className="w-full p-4 pr-20 resize-none border-0 focus:ring-0 focus:outline-none rounded-2xl"
+                    placeholder="Ask Joseph..."
+                    className="w-full p-3 sm:p-4 pr-16 sm:pr-20 resize-none border-0 focus:ring-0 focus:outline-none rounded-2xl text-sm sm:text-base"
                     rows={1}
                     style={{
-                      minHeight: "52px",
+                      minHeight: "44px",
                       maxHeight: "200px",
                       height: "auto",
                     }}
                   />
 
                   <div className="absolute bottom-2 right-2 flex items-center gap-1">
-                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-7 sm:h-8 w-7 sm:w-8 p-0 hidden sm:flex"
+                    >
                       <Paperclip className="h-4 w-4" />
                     </Button>
-                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-7 sm:h-8 w-7 sm:w-8 p-0 hidden sm:flex"
+                    >
                       <Mic className="h-4 w-4" />
                     </Button>
                   </div>
@@ -465,7 +483,7 @@ const AdviceHub = () => {
               <Button
                 onClick={handleSendMessage}
                 disabled={!inputMessage.trim() || isTyping}
-                className="h-12 w-12 rounded-xl"
+                className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl flex-shrink-0 p-0"
               >
                 <Send className="h-4 w-4" />
               </Button>
@@ -489,28 +507,26 @@ const AdviceHub = () => {
       />
 
       {/* Module Circles Section */}
-      <div className="bg-white border-b border-gray-200 px-6 py-6">
+      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-3 sm:py-4">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between gap-3 mb-3">
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">
+              <h2 className="text-sm sm:text-base font-semibold text-gray-900">
                 Module Updates
               </h2>
-              <p className="text-sm text-gray-600">
-                {unreadCount === 0
-                  ? "All advice read"
-                  : `${unreadCount} new advice`}
+              <p className="text-xs text-gray-600">
+                {unreadCount === 0 ? "All advice read" : `${unreadCount} new`}
               </p>
             </div>
             {unreadCount > 0 && (
-              <Badge variant="destructive" className="animate-pulse">
-                {unreadCount} unread
+              <Badge variant="destructive" className="animate-pulse text-xs">
+                {unreadCount}
               </Badge>
             )}
           </div>
 
           {/* Module Status Circles */}
-          <div className="flex gap-6 overflow-x-auto pb-2">
+          <div className="flex gap-3 sm:gap-4 overflow-x-auto pb-1">
             {modulesList.map((module) => {
               const moduleMessages = adviceMessages.filter(
                 (m) => m.moduleId === module.id,
@@ -540,24 +556,24 @@ const AdviceHub = () => {
                   className="flex-shrink-0 focus:outline-none group transition-all"
                 >
                   <div
-                    className={`relative w-20 h-20 rounded-full flex items-center justify-center cursor-pointer transition-all bg-gradient-to-br ${
+                    className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center cursor-pointer transition-all bg-gradient-to-br ${
                       colorMap[module.id] || "from-gray-400 to-gray-600"
                     } ${
                       hasUnread
-                        ? "ring-4 ring-offset-2 ring-offset-white ring-yellow-400"
+                        ? "ring-3 ring-offset-1 ring-offset-white ring-yellow-400"
                         : ""
                     }`}
                   >
-                    <span className="text-3xl">{module.icon}</span>
+                    <span className="text-xl sm:text-2xl">{module.icon}</span>
 
                     {hasUnread && (
-                      <div className="absolute top-0 right-0 w-5 h-5 bg-yellow-400 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-gray-900 animate-pulse">
+                      <div className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-yellow-400 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-gray-900 animate-pulse">
                         {unreadInModule.length}
                       </div>
                     )}
                   </div>
 
-                  <p className="text-center text-xs font-medium text-gray-700 mt-2 truncate w-20 group-hover:text-gray-900 transition-colors">
+                  <p className="text-center text-xs font-medium text-gray-700 mt-1 truncate w-14 sm:w-16 group-hover:text-gray-900 transition-colors">
                     {module.name.split(" ")[0]}
                   </p>
                 </button>
@@ -568,9 +584,46 @@ const AdviceHub = () => {
       </div>
 
       {/* Main Content - Sidebar + Messages */}
-      <div className="flex-1 overflow-hidden flex">
+      <div className="flex-1 overflow-hidden flex relative">
+        {/* Mobile Hamburger Menu Button */}
+        <div className="absolute top-4 left-4 z-40 md:hidden">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+            className="p-2 h-10 w-10"
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
+        </div>
+
+        {/* Overlay on mobile when sidebar is open */}
+        {isSidebarOpen && (
+          <div
+            className="absolute inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        )}
+
         {/* Left Sidebar - Module Filters */}
-        <div className="w-72 border-r border-gray-200 bg-white flex flex-col overflow-hidden">
+        <div
+          className={`fixed md:relative z-40 md:z-auto top-0 left-0 h-full w-64 border-r border-gray-200 bg-white flex flex-col overflow-hidden transition-transform duration-300 ease-in-out ${
+            isSidebarOpen
+              ? "translate-x-0"
+              : "-translate-x-full md:translate-x-0"
+          }`}
+        >
+          {/* Sidebar Header with Close Button */}
+          <div className="p-4 border-b border-gray-200 flex items-center justify-between md:hidden">
+            <h3 className="text-sm font-semibold text-gray-900">Filter</h3>
+            <button
+              onClick={() => setIsSidebarOpen(false)}
+              className="p-1 hover:bg-gray-100 rounded transition-colors"
+            >
+              <X className="h-5 w-5 text-gray-600" />
+            </button>
+          </div>
+
           {/* Search Bar */}
           <div className="p-4 border-b border-gray-200">
             <div className="relative">
@@ -666,7 +719,7 @@ const AdviceHub = () => {
         {/* Right Side - Messages List */}
         <div className="flex-1 overflow-y-auto bg-white flex flex-col">
           {/* Messages Header */}
-          <div className="px-6 py-4 border-b border-gray-200 bg-white flex items-center gap-2 flex-shrink-0">
+          <div className="px-4 sm:px-6 py-4 border-b border-gray-200 bg-white flex items-center gap-2 flex-shrink-0 mt-14 md:mt-0">
             <span className="text-xl">💡</span>
             <h3 className="font-semibold text-gray-900">Latest Advice</h3>
           </div>
@@ -691,53 +744,50 @@ const AdviceHub = () => {
                     <button
                       key={message.id}
                       onClick={() => handleMessageClick(message.id)}
-                      className={`w-full text-left px-6 py-4 hover:bg-gray-50 transition-colors group flex items-center justify-between ${
+                      className={`w-full text-left px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50 transition-colors group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 ${
                         !message.isRead ? "bg-blue-50" : ""
                       }`}
                     >
                       {/* Left Content */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-3 mb-2">
-                          <span className="text-2xl flex-shrink-0">
-                            {message.moduleIcon}
-                          </span>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2">
-                              <h3
-                                className={`text-sm ${
-                                  !message.isRead
-                                    ? "font-bold text-gray-900"
-                                    : "font-medium text-gray-900"
-                                } truncate`}
-                              >
-                                {message.title}
-                              </h3>
-                              {!message.isRead && (
-                                <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></div>
-                              )}
-                            </div>
-                            <p className="text-xs text-gray-500 mt-0.5">
-                              <Badge
-                                variant="outline"
-                                className="text-xs font-normal"
-                              >
-                                [{message.moduleName}]
-                              </Badge>
-                            </p>
+                      <div className="flex-1 min-w-0 flex items-start gap-2 sm:gap-3">
+                        <span className="text-lg sm:text-2xl flex-shrink-0 mt-0.5">
+                          {message.moduleIcon}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <h3
+                              className={`text-sm ${
+                                !message.isRead
+                                  ? "font-bold text-gray-900"
+                                  : "font-medium text-gray-900"
+                              } truncate`}
+                            >
+                              {message.title}
+                            </h3>
+                            {!message.isRead && (
+                              <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></div>
+                            )}
                           </div>
+                          <p className="text-xs text-gray-500 mb-1">
+                            <Badge
+                              variant="outline"
+                              className="text-xs font-normal"
+                            >
+                              [{message.moduleName}]
+                            </Badge>
+                          </p>
+                          <p className="text-xs sm:text-sm text-gray-600 line-clamp-2">
+                            {message.content}
+                          </p>
                         </div>
-
-                        <p className="text-sm text-gray-600 line-clamp-2 ml-11">
-                          {message.content}
-                        </p>
                       </div>
 
                       {/* Right Side - Timestamp & Chevron */}
-                      <div className="flex items-center gap-3 ml-4 flex-shrink-0">
+                      <div className="flex items-center gap-2 ml-auto sm:ml-4 flex-shrink-0">
                         <span className="text-xs text-gray-500 whitespace-nowrap">
                           {formatTime(message.timestamp)}
                         </span>
-                        <ChevronRight className="h-5 w-5 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <ChevronRight className="h-4 sm:h-5 w-4 sm:w-5 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
                       </div>
                     </button>
                   ))}

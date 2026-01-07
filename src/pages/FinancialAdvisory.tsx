@@ -121,18 +121,18 @@ export default function FinancialAdvisory() {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         {/* Header */}
         <header className="bg-white/60 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
-            <div className="flex flex-col gap-4">
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4">
+            <div className="flex flex-col gap-2 sm:gap-3 md:gap-4">
               <div>
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center w-10 h-10 bg-blue-600 rounded-xl text-white">
-                    <Calculator className="w-5 h-5" />
+                <div className="flex items-start gap-2 sm:gap-3">
+                  <div className="flex items-center justify-center w-8 sm:w-10 h-8 sm:h-10 bg-blue-600 rounded-xl text-white flex-shrink-0">
+                    <Calculator className="w-4 sm:w-5 h-4 sm:h-5" />
                   </div>
-                  <div>
-                    <h1 className="text-lg sm:text-2xl font-bold text-gray-900 tracking-tight">
+                  <div className="min-w-0">
+                    <h1 className="text-base sm:text-xl md:text-2xl font-bold text-gray-900 tracking-tight">
                       Financial Advisory & Planning
                     </h1>
-                    <p className="text-xs sm:text-sm text-gray-600">
+                    <p className="text-xs sm:text-sm text-gray-600 line-clamp-2">
                       {companyName} strategic budgeting, cash flow management,
                       and financial advisory insights for marketplace operations
                     </p>
@@ -140,9 +140,11 @@ export default function FinancialAdvisory() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                 <ModuleNavigation />
-                <ConnectionStatus lastUpdated={lastUpdated} />
+                <div className="hidden sm:block">
+                  <ConnectionStatus lastUpdated={lastUpdated} />
+                </div>
 
                 {/* Notifications Tab */}
                 <Popover
@@ -155,9 +157,9 @@ export default function FinancialAdvisory() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="flex items-center gap-2 relative"
+                          className="flex items-center gap-1 sm:gap-2 relative text-xs sm:text-sm p-1.5 sm:p-2"
                         >
-                          <Bell className="h-4 w-4" />
+                          <Bell className="h-3.5 sm:h-4 w-3.5 sm:w-4 flex-shrink-0" />
                           <span className="hidden sm:inline">
                             Notifications
                           </span>
@@ -174,19 +176,22 @@ export default function FinancialAdvisory() {
                       <p>View notifications and alerts</p>
                     </TooltipContent>
                   </Tooltip>
-                  <PopoverContent className="w-80" align="end">
-                    <div className="space-y-4">
+                  <PopoverContent className="w-64 sm:w-80" align="end">
+                    <div className="space-y-3 sm:space-y-4">
                       <div className="flex items-center justify-between">
-                        <h4 className="font-semibold">Notifications</h4>
+                        <h4 className="font-semibold text-sm sm:text-base">
+                          Notifications
+                        </h4>
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => setNotificationsOpen(false)}
+                          className="p-1 h-8 w-8"
                         >
                           <X className="h-4 w-4" />
                         </Button>
                       </div>
-                      <div className="space-y-3">
+                      <div className="space-y-2 sm:space-y-3 max-h-96 overflow-y-auto">
                         {DEFAULT_NOTIFICATIONS.map((notification) => {
                           const iconMap = {
                             calculator: Calculator,
@@ -204,17 +209,17 @@ export default function FinancialAdvisory() {
                           return (
                             <div
                               key={notification.id}
-                              className="p-3 rounded-lg border bg-card"
+                              className="p-2 sm:p-3 rounded-lg border bg-card"
                             >
-                              <div className="flex items-start gap-3">
+                              <div className="flex items-start gap-2 sm:gap-3">
                                 <Icon
                                   className={`h-4 w-4 ${colorMap[notification.type]} mt-0.5 flex-shrink-0`}
                                 />
                                 <div className="flex-1 min-w-0">
-                                  <p className="text-sm font-medium">
+                                  <p className="text-xs sm:text-sm font-medium line-clamp-2">
                                     {notification.title}
                                   </p>
-                                  <p className="text-xs text-muted-foreground">
+                                  <p className="text-xs text-muted-foreground line-clamp-2">
                                     {notification.message}
                                   </p>
                                   <p className="text-xs text-muted-foreground mt-1">
@@ -243,9 +248,9 @@ export default function FinancialAdvisory() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="flex items-center gap-2"
+                          className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm p-1.5 sm:p-2"
                         >
-                          <HelpCircle className="h-4 w-4" />
+                          <HelpCircle className="h-3.5 sm:h-4 w-3.5 sm:w-4 flex-shrink-0" />
                           <span className="hidden sm:inline">Advice</span>
                         </Button>
                       </PopoverTrigger>
@@ -254,19 +259,22 @@ export default function FinancialAdvisory() {
                       <p>Get expert advice and recommendations</p>
                     </TooltipContent>
                   </Tooltip>
-                  <PopoverContent className="w-80" align="end">
-                    <div className="space-y-4">
+                  <PopoverContent className="w-64 sm:w-80" align="end">
+                    <div className="space-y-3 sm:space-y-4">
                       <div className="flex items-center justify-between">
-                        <h4 className="font-semibold">Advice</h4>
+                        <h4 className="font-semibold text-sm sm:text-base">
+                          Advice
+                        </h4>
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => setIdeasOpen(false)}
+                          className="p-1 h-8 w-8"
                         >
                           <X className="h-4 w-4" />
                         </Button>
                       </div>
-                      <div className="space-y-3">
+                      <div className="space-y-2 sm:space-y-3 max-h-96 overflow-y-auto">
                         {DEFAULT_ADVICE.map((advice) => {
                           const iconMap = {
                             "help-circle": HelpCircle,
@@ -285,17 +293,17 @@ export default function FinancialAdvisory() {
                           return (
                             <div
                               key={advice.id}
-                              className="p-3 rounded-lg border bg-card"
+                              className="p-2 sm:p-3 rounded-lg border bg-card"
                             >
-                              <div className="flex items-start gap-3">
+                              <div className="flex items-start gap-2 sm:gap-3">
                                 <Icon
                                   className={`h-4 w-4 ${colorMap[advice.type]} mt-0.5 flex-shrink-0`}
                                 />
                                 <div className="flex-1 min-w-0">
-                                  <p className="text-sm font-medium">
+                                  <p className="text-xs sm:text-sm font-medium line-clamp-2">
                                     {advice.title}
                                   </p>
-                                  <p className="text-xs text-muted-foreground">
+                                  <p className="text-xs text-muted-foreground line-clamp-2">
                                     {advice.message}
                                   </p>
                                 </div>
@@ -318,19 +326,19 @@ export default function FinancialAdvisory() {
         </header>
 
         {/* Main Content */}
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
           <Tabs
             value={activeTab}
             onValueChange={setActiveTab}
-            className="space-y-6"
+            className="space-y-4 sm:space-y-6"
           >
-            <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
-              <TabsList className="contents">
+            <div className="overflow-x-auto -mx-3 sm:mx-0 px-3 sm:px-0 rounded-md bg-muted text-muted-foreground">
+              <TabsList className="inline-flex sm:grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-0.5 sm:gap-2 p-1 w-full">
                 <TabsTrigger
                   value="strategic-budgeting"
-                  className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
+                  className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 py-1.5 sm:py-2 min-w-max sm:min-w-0 text-xs sm:text-sm whitespace-nowrap sm:whitespace-normal"
                 >
-                  <TrendingUp className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
+                  <TrendingUp className="w-3.5 sm:w-4 h-3.5 sm:h-4 flex-shrink-0" />
                   <span className="hidden lg:inline line-clamp-1">
                     Strategic Budgeting
                   </span>
@@ -342,9 +350,9 @@ export default function FinancialAdvisory() {
 
                 <TabsTrigger
                   value="summary-recommendation"
-                  className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
+                  className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 py-1.5 sm:py-2 min-w-max sm:min-w-0 text-xs sm:text-sm whitespace-nowrap sm:whitespace-normal"
                 >
-                  <BarChart3 className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
+                  <BarChart3 className="w-3.5 sm:w-4 h-3.5 sm:h-4 flex-shrink-0" />
                   <span className="hidden lg:inline line-clamp-1">
                     Summary & Rec
                   </span>
@@ -353,9 +361,9 @@ export default function FinancialAdvisory() {
 
                 <TabsTrigger
                   value="cash-flow"
-                  className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
+                  className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 py-1.5 sm:py-2 min-w-max sm:min-w-0 text-xs sm:text-sm whitespace-nowrap sm:whitespace-normal"
                 >
-                  <Target className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
+                  <Target className="w-3.5 sm:w-4 h-3.5 sm:h-4 flex-shrink-0" />
                   <span className="hidden lg:inline line-clamp-1">
                     Cash Flow
                   </span>
@@ -364,9 +372,9 @@ export default function FinancialAdvisory() {
 
                 <TabsTrigger
                   value="budget-validation"
-                  className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
+                  className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 py-1.5 sm:py-2 min-w-max sm:min-w-0 text-xs sm:text-sm whitespace-nowrap sm:whitespace-normal"
                 >
-                  <BarChart3 className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
+                  <BarChart3 className="w-3.5 sm:w-4 h-3.5 sm:h-4 flex-shrink-0" />
                   <span className="hidden lg:inline line-clamp-1">
                     Validation
                   </span>
@@ -375,9 +383,9 @@ export default function FinancialAdvisory() {
 
                 <TabsTrigger
                   value="scenario-testing"
-                  className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
+                  className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 py-1.5 sm:py-2 min-w-max sm:min-w-0 text-xs sm:text-sm whitespace-nowrap sm:whitespace-normal"
                 >
-                  <Calculator className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
+                  <Calculator className="w-3.5 sm:w-4 h-3.5 sm:h-4 flex-shrink-0" />
                   <span className="hidden lg:inline line-clamp-1">
                     Scenarios
                   </span>
@@ -386,9 +394,9 @@ export default function FinancialAdvisory() {
 
                 <TabsTrigger
                   value="risk-assessment"
-                  className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
+                  className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 py-1.5 sm:py-2 min-w-max sm:min-w-0 text-xs sm:text-sm whitespace-nowrap sm:whitespace-normal"
                 >
-                  <Shield className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
+                  <Shield className="w-3.5 sm:w-4 h-3.5 sm:h-4 flex-shrink-0" />
                   <span className="hidden lg:inline line-clamp-1">
                     Risk Assessment
                   </span>
@@ -397,9 +405,9 @@ export default function FinancialAdvisory() {
 
                 <TabsTrigger
                   value="performance-drivers"
-                  className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
+                  className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 py-1.5 sm:py-2 min-w-max sm:min-w-0 text-xs sm:text-sm whitespace-nowrap sm:whitespace-normal"
                 >
-                  <Target className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
+                  <Target className="w-3.5 sm:w-4 h-3.5 sm:h-4 flex-shrink-0" />
                   <span className="hidden lg:inline line-clamp-1">
                     Performance KPIs
                   </span>
@@ -408,9 +416,9 @@ export default function FinancialAdvisory() {
 
                 <TabsTrigger
                   value="advisory-insights"
-                  className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-1 sm:px-2 min-w-0"
+                  className="flex items-center gap-1 sm:gap-2 data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 px-2 sm:px-3 py-1.5 sm:py-2 min-w-max sm:min-w-0 text-xs sm:text-sm whitespace-nowrap sm:whitespace-normal"
                 >
-                  <Lightbulb className="w-3 sm:w-4 h-3 sm:h-4 flex-shrink-0" />
+                  <Lightbulb className="w-3.5 sm:w-4 h-3.5 sm:h-4 flex-shrink-0" />
                   <span className="hidden lg:inline line-clamp-1">
                     Advisory Insights
                   </span>
@@ -421,7 +429,7 @@ export default function FinancialAdvisory() {
 
             <TabsContent
               value="strategic-budgeting"
-              className="space-y-4 sm:space-y-6"
+              className="space-y-3 sm:space-y-4 md:space-y-6"
             >
               <StrategicBudgeting
                 budgetForecasts={budgetForecasts}
@@ -431,7 +439,10 @@ export default function FinancialAdvisory() {
               />
             </TabsContent>
 
-            <TabsContent value="summary-recommendation" className="space-y-8">
+            <TabsContent
+              value="summary-recommendation"
+              className="space-y-4 sm:space-y-6 md:space-y-8"
+            >
               <SummaryRecommendationSection
                 summaryTitle="Financial Advisory Summary"
                 summaryDescription={SUMMARY_DESCRIPTION}
@@ -454,7 +465,10 @@ export default function FinancialAdvisory() {
               />
             </TabsContent>
 
-            <TabsContent value="cash-flow" className="space-y-6">
+            <TabsContent
+              value="cash-flow"
+              className="space-y-3 sm:space-y-4 md:space-y-6"
+            >
               <CashFlowPlanning
                 currentCashFlows={currentCashFlows}
                 cashFlowProjections={cashFlowProjections}
@@ -463,18 +477,27 @@ export default function FinancialAdvisory() {
               />
             </TabsContent>
 
-            <TabsContent value="budget-validation" className="space-y-6">
+            <TabsContent
+              value="budget-validation"
+              className="space-y-3 sm:space-y-4 md:space-y-6"
+            >
               <BudgetValidation budgetForecasts={budgetForecasts} />
             </TabsContent>
 
-            <TabsContent value="scenario-testing" className="space-y-6">
+            <TabsContent
+              value="scenario-testing"
+              className="space-y-3 sm:space-y-4 md:space-y-6"
+            >
               <ScenarioTesting
                 scenarioTests={scenarioTests}
                 onRunScenario={runScenarioTest}
               />
             </TabsContent>
 
-            <TabsContent value="risk-assessment" className="space-y-6">
+            <TabsContent
+              value="risk-assessment"
+              className="space-y-3 sm:space-y-4 md:space-y-6"
+            >
               <RiskAssessmentComponent
                 riskAssessments={riskAssessments}
                 onUpdateRiskStatus={updateRiskStatus}
@@ -482,7 +505,10 @@ export default function FinancialAdvisory() {
               />
             </TabsContent>
 
-            <TabsContent value="performance-drivers" className="space-y-6">
+            <TabsContent
+              value="performance-drivers"
+              className="space-y-3 sm:space-y-4 md:space-y-6"
+            >
               <PerformanceDrivers
                 performanceDrivers={performanceDrivers}
                 onAddDriver={addPerformanceDriver}
@@ -492,7 +518,10 @@ export default function FinancialAdvisory() {
               />
             </TabsContent>
 
-            <TabsContent value="advisory-insights" className="space-y-6">
+            <TabsContent
+              value="advisory-insights"
+              className="space-y-3 sm:space-y-4 md:space-y-6"
+            >
               <AdvisoryInsights
                 advisoryInsights={advisoryInsights}
                 onUpdateInsightStatus={updateInsightStatus}
