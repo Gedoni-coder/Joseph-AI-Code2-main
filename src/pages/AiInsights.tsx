@@ -402,13 +402,13 @@ const AdviceHub = () => {
             ))}
 
             {isTyping && (
-              <div className="flex gap-4">
-                <div className="flex-shrink-0">
+              <div className="flex gap-2 sm:gap-4">
+                <div className="flex-shrink-0 hidden sm:block">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center">
                     <Sparkles className="h-4 w-4 text-white" />
                   </div>
                 </div>
-                <div className="bg-white border border-gray-200 shadow-sm rounded-2xl px-4 py-3">
+                <div className="bg-white border border-gray-200 shadow-sm rounded-2xl px-3 sm:px-4 py-2 sm:py-3">
                   <div className="flex space-x-1">
                     <div className="w-2 h-2 bg-gray-400 rounded-full animate-pulse"></div>
                     <div
