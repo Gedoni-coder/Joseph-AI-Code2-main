@@ -17,6 +17,7 @@ import {
   ChevronRight,
   Search,
   X,
+  Menu,
 } from "lucide-react";
 
 interface AdviceMessage {
