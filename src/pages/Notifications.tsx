@@ -203,16 +203,17 @@ const Notifications = () => {
         connectionLabel="Live"
       />
 
-      <div className="container mx-auto px-4 py-6">
-        <div className="flex gap-6">
-          {/* Sidebar */}
-          <div className="w-64 space-y-2">
-            <div className="bg-white rounded-lg border p-4">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-6">
+        <div className="flex flex-col md:flex-row gap-4 sm:gap-6">
+          {/* Sidebar - Hidden on mobile, visible on md+ */}
+          <div className="hidden md:block md:w-56 lg:w-64 space-y-2">
+            <div className="bg-white rounded-lg border p-3 sm:p-4 sticky top-20">
               <Button className="w-full mb-4">
                 <Bell className="h-4 w-4 mr-2" />
-                New Notification
+                <span className="hidden sm:inline">New Notification</span>
+                <span className="sm:hidden">New</span>
               </Button>
-              
+
               <nav className="space-y-1">
                 {categories.map((category) => (
                   <button
@@ -236,6 +237,34 @@ const Notifications = () => {
                   </button>
                 ))}
               </nav>
+            </div>
+          </div>
+
+          {/* Mobile category selector */}
+          <div className="md:hidden">
+            <div className="flex gap-2 overflow-x-auto pb-2">
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id)}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm whitespace-nowrap transition-colors flex-shrink-0 ${
+                    selectedCategory === category.id
+                      ? "bg-blue-600 text-white"
+                      : "bg-white border"
+                  }`}
+                >
+                  {category.icon}
+                  <span className="text-xs sm:text-sm">{category.label}</span>
+                  {category.count > 0 && (
+                    <Badge
+                      variant={selectedCategory === category.id ? "default" : "secondary"}
+                      className="text-xs min-w-5 h-5 flex items-center justify-center rounded-full p-0"
+                    >
+                      {category.count}
+                    </Badge>
+                  )}
+                </button>
+              ))}
             </div>
           </div>
 
