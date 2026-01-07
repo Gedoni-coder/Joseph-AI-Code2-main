@@ -67,10 +67,22 @@ export function ChatbotContainer({
   );
   const [rightPanelCollapsed, setRightPanelCollapsed] = useState(false);
   const [sizeMode, setSizeMode] = useState<ChatbotSize>("half");
+
+  // Get conversational mode from context if prop not provided
+  let contextMode = undefined;
+  try {
+    const context = useConversationalMode();
+    contextMode = context.conversationalMode;
+  } catch {
+    // Context not available, will use prop or fallback
+  }
+
   const conversationalMode =
     externalConversationalMode !== undefined
       ? externalConversationalMode
-      : true;
+      : contextMode !== undefined
+        ? contextMode
+        : true;
 
   // Initialize global explain function
   useEffect(() => {
