@@ -135,7 +135,7 @@ export function ChatbotContainer({
 
     document.addEventListener("click", handlePageClick);
     return () => document.removeEventListener("click", handlePageClick);
-  }, [conversationalMode, isOpen, setIsOpen]);
+  }, [conversationalMode, isOpen]);
 
   // Keyboard shortcuts
   useEffect(() => {
