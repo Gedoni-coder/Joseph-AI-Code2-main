@@ -425,7 +425,7 @@ export default function FinancialAdvisory() {
 
             <TabsContent
               value="strategic-budgeting"
-              className="space-y-4 sm:space-y-6"
+              className="space-y-3 sm:space-y-4 md:space-y-6"
             >
               <StrategicBudgeting
                 budgetForecasts={budgetForecasts}
