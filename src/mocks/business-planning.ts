@@ -15,7 +15,8 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
   {
     id: "template-startup",
     name: "Startup Business Plan",
-    description: "Comprehensive plan for new business ventures with growth focus",
+    description:
+      "Comprehensive plan for new business ventures with growth focus",
     sections: 8,
     estimatedTime: "4-6 weeks",
   },
@@ -36,7 +37,8 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
   {
     id: "template-ecommerce",
     name: "E-Commerce Business Plan",
-    description: "Specialized plan for online marketplace and retail businesses",
+    description:
+      "Specialized plan for online marketplace and retail businesses",
     sections: 9,
     estimatedTime: "5-7 weeks",
     industry: "E-commerce",
@@ -63,21 +65,36 @@ export const PLAN_SECTIONS: PlanSection[] = [
     id: "section-executive",
     title: "Executive Summary",
     description: "High-level overview of your business",
-    keyElements: ["Business vision", "Target market", "Key competitive advantages", "Financial highlights"],
+    keyElements: [
+      "Business vision",
+      "Target market",
+      "Key competitive advantages",
+      "Financial highlights",
+    ],
     tips: "Write this last. Keep it concise but compelling - this is often the most-read section.",
   },
   {
     id: "section-company",
     title: "Company Description",
     description: "Details about your company and operations",
-    keyElements: ["Company mission", "Legal structure", "Location and facilities", "Organization structure"],
+    keyElements: [
+      "Company mission",
+      "Legal structure",
+      "Location and facilities",
+      "Organization structure",
+    ],
     tips: "Be specific about what makes your company unique and sustainable.",
   },
   {
     id: "section-market",
     title: "Market Analysis",
     description: "Research on your industry and target market",
-    keyElements: ["Industry overview", "Target market size", "Customer profiles", "Market trends"],
+    keyElements: [
+      "Industry overview",
+      "Target market size",
+      "Customer profiles",
+      "Market trends",
+    ],
     tips: "Use data and research. Investors want to see you understand your market.",
   },
   {
@@ -111,9 +128,11 @@ export const PLAN_GUIDANCE = {
   businessNameExtractionWords: 3,
   formLabel: "Make a Plan",
   formPlaceholder: "Describe your business idea...",
-  formTip: "Tip: include rough timelines, target markets, and unique value propositions to get better analysis",
+  formTip:
+    "Tip: include rough timelines, target markets, and unique value propositions to get better analysis",
   emptyStateTitle: "Past Business Plans",
-  emptyStateMessage: "No business plans created yet. Start by creating your first plan!",
+  emptyStateMessage:
+    "No business plans created yet. Start by creating your first plan!",
 };
 
 export const BUSINESS_PLANNING_STORAGE_KEY = "joseph_business_plans_v1";
@@ -138,7 +157,11 @@ export interface PlanStep {
 
 // ============ BUSINESS PLANNING TYPES ============
 
-export type StepStatus = "pending" | "in_progress" | "completed" | "needs_update";
+export type StepStatus =
+  | "pending"
+  | "in_progress"
+  | "completed"
+  | "needs_update";
 
 export interface StepContent {
   title: string;
@@ -186,7 +209,8 @@ export const BUSINESS_PLAN_STEPS: BusinessPlanStep[] = [
     id: 1,
     key: "business-plan-generator",
     name: "Business Plan Generator",
-    description: "Create a complete, investor-ready business plan tailored to your business",
+    description:
+      "Create a complete, investor-ready business plan tailored to your business",
     status: "pending",
     content: null,
   },
@@ -270,7 +294,10 @@ export const BUSINESS_PLAN_STEPS: BusinessPlanStep[] = [
  * @param idea - Business idea description
  * @returns New empty business plan
  */
-export function createEmptyBusinessPlan(feasibilityId: string, idea: string): BusinessPlanFull {
+export function createEmptyBusinessPlan(
+  feasibilityId: string,
+  idea: string,
+): BusinessPlanFull {
   return {
     id: `plan_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
     feasibilityId,

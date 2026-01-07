@@ -10,15 +10,30 @@ export interface InventoryStatus {
 }
 
 export const INVENTORY_STATUSES: Record<string, InventoryStatus> = {
-  "in-stock": { key: "in-stock", label: "In Stock", color: "green", severity: "success" },
-  "low-stock": { key: "low-stock", label: "Low Stock", color: "yellow", severity: "warning" },
+  "in-stock": {
+    key: "in-stock",
+    label: "In Stock",
+    color: "green",
+    severity: "success",
+  },
+  "low-stock": {
+    key: "low-stock",
+    label: "Low Stock",
+    color: "yellow",
+    severity: "warning",
+  },
   "out-of-stock": {
     key: "out-of-stock",
     label: "Out of Stock",
     color: "red",
     severity: "critical",
   },
-  overstock: { key: "overstock", label: "Overstock", color: "blue", severity: "info" },
+  overstock: {
+    key: "overstock",
+    label: "Overstock",
+    color: "blue",
+    severity: "info",
+  },
 };
 
 export interface InventoryItem {
@@ -170,7 +185,8 @@ export const RISK_ALERTS: RiskAlert[] = [
     description:
       "Global Parts Ltd experiencing production delays due to equipment failure. 2-3 week impact expected.",
     affectedItems: ["Electronics Processor", "Raw Steel Sheets"],
-    recommendedAction: "Activate backup supplier (Emergency Components Inc) immediately",
+    recommendedAction:
+      "Activate backup supplier (Emergency Components Inc) immediately",
     daysUntilImpact: 5,
   },
   {
@@ -178,9 +194,11 @@ export const RISK_ALERTS: RiskAlert[] = [
     severity: "high",
     category: "logistics",
     title: "Port Strike - West Africa Region",
-    description: "Potential port workers strike could affect shipments through Lagos and other West African ports.",
+    description:
+      "Potential port workers strike could affect shipments through Lagos and other West African ports.",
     affectedItems: ["All imported items"],
-    recommendedAction: "Consider air freight for critical items; pre-position safety stock",
+    recommendedAction:
+      "Consider air freight for critical items; pre-position safety stock",
     daysUntilImpact: 10,
   },
 ];
@@ -232,7 +250,7 @@ export function getSummaryContent(
   suppliersCount: number,
   disruptionRisks: number,
   productionPlans: number,
-  pendingOrders: number
+  pendingOrders: number,
 ): string {
   return `1. INVENTORY VALUE
 Total on-hand inventory value stands at ${formattedInventoryValue} across ${locationsCount} locations.
@@ -257,7 +275,7 @@ export function getSummaryMetrics(
   formattedInventoryValue: string,
   lowStockItems: number,
   supplierPerformance: number,
-  disruptionRisks: number
+  disruptionRisks: number,
 ) {
   return [
     {
@@ -300,7 +318,7 @@ export const RECOMMENDATION_DESCRIPTION =
 export function getRecommendationContent(
   lowStockItems: number,
   disruptionRisks: number,
-  productionPlans: number
+  productionPlans: number,
 ): string {
   return `1. REPLENISHMENT & FORECASTING
 Tighten reorder points using recent demand forecasts and lead-time variability. Prioritize ${lowStockItems} low/out-of-stock items.

@@ -11,21 +11,86 @@ export interface InputField {
 }
 
 export const POLICY_IMPACT_FIELDS: InputField[] = [
-  { id: "policyName", label: "Policy Name", placeholder: "e.g., Carbon Tax", type: "text" },
-  { id: "taxRate", label: "Tax Rate (%)", placeholder: "Enter tax rate", unit: "%", type: "number" },
-  { id: "targetSector", label: "Target Sector", placeholder: "e.g., Manufacturing", type: "text" },
-  { id: "affectedPopulation", label: "Affected Population", placeholder: "Number or percentage", type: "number" },
-  { id: "implementationDate", label: "Implementation Date", placeholder: "YYYY-MM-DD", type: "text" },
-  { id: "expectedImpact", label: "Expected Impact", placeholder: "Describe expected outcomes", type: "text" },
+  {
+    id: "policyName",
+    label: "Policy Name",
+    placeholder: "e.g., Carbon Tax",
+    type: "text",
+  },
+  {
+    id: "taxRate",
+    label: "Tax Rate (%)",
+    placeholder: "Enter tax rate",
+    unit: "%",
+    type: "number",
+  },
+  {
+    id: "targetSector",
+    label: "Target Sector",
+    placeholder: "e.g., Manufacturing",
+    type: "text",
+  },
+  {
+    id: "affectedPopulation",
+    label: "Affected Population",
+    placeholder: "Number or percentage",
+    type: "number",
+  },
+  {
+    id: "implementationDate",
+    label: "Implementation Date",
+    placeholder: "YYYY-MM-DD",
+    type: "text",
+  },
+  {
+    id: "expectedImpact",
+    label: "Expected Impact",
+    placeholder: "Describe expected outcomes",
+    type: "text",
+  },
 ];
 
 export const ECONOMIC_IMPACT_FIELDS: InputField[] = [
-  { id: "scenario", label: "Economic Scenario", placeholder: "e.g., Recession", type: "text" },
-  { id: "gdpChange", label: "GDP Change (%)", placeholder: "Enter GDP percentage change", unit: "%", type: "number" },
-  { id: "inflationRate", label: "Inflation Rate (%)", placeholder: "Enter inflation rate", unit: "%", type: "number" },
-  { id: "unemploymentChange", label: "Unemployment Change (%)", placeholder: "Enter change", unit: "%", type: "number" },
-  { id: "interestRate", label: "Interest Rate (%)", placeholder: "Enter interest rate", unit: "%", type: "number" },
-  { id: "marketReaction", label: "Market Reaction", placeholder: "Expected market changes", type: "text" },
+  {
+    id: "scenario",
+    label: "Economic Scenario",
+    placeholder: "e.g., Recession",
+    type: "text",
+  },
+  {
+    id: "gdpChange",
+    label: "GDP Change (%)",
+    placeholder: "Enter GDP percentage change",
+    unit: "%",
+    type: "number",
+  },
+  {
+    id: "inflationRate",
+    label: "Inflation Rate (%)",
+    placeholder: "Enter inflation rate",
+    unit: "%",
+    type: "number",
+  },
+  {
+    id: "unemploymentChange",
+    label: "Unemployment Change (%)",
+    placeholder: "Enter change",
+    unit: "%",
+    type: "number",
+  },
+  {
+    id: "interestRate",
+    label: "Interest Rate (%)",
+    placeholder: "Enter interest rate",
+    unit: "%",
+    type: "number",
+  },
+  {
+    id: "marketReaction",
+    label: "Market Reaction",
+    placeholder: "Expected market changes",
+    type: "text",
+  },
 ];
 
 export interface ScenarioTemplate {

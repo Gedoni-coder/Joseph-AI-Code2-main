@@ -195,9 +195,7 @@ export default function FinancialAdvisory() {
                             lightbulb: Lightbulb,
                           };
                           const Icon =
-                            iconMap[
-                              notification.icon as keyof typeof iconMap
-                            ];
+                            iconMap[notification.icon as keyof typeof iconMap];
                           const colorMap = {
                             alert: "text-blue-500",
                             update: "text-green-500",
@@ -276,7 +274,8 @@ export default function FinancialAdvisory() {
                             shield: Shield,
                             "trending-up": TrendingUp,
                           };
-                          const Icon = iconMap[advice.icon as keyof typeof iconMap];
+                          const Icon =
+                            iconMap[advice.icon as keyof typeof iconMap];
                           const colorMap = {
                             optimization: "text-blue-500",
                             performance: "text-green-500",
@@ -439,13 +438,13 @@ export default function FinancialAdvisory() {
                 summaryText={getSummaryContent(
                   budgetForecasts.length,
                   liquidityMetrics.length,
-                  riskAssessments.length
+                  riskAssessments.length,
                 )}
                 summaryMetrics={getSummaryMetrics(
                   budgetForecasts.length,
                   cashFlowProjections.length,
                   scenarioTests.length,
-                  riskAssessments.length
+                  riskAssessments.length,
                 )}
                 recommendationTitle="Financial Advisory Recommendations"
                 recommendationDescription={RECOMMENDATION_DESCRIPTION}

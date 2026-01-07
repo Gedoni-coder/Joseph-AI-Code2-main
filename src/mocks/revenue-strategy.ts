@@ -5,7 +5,12 @@
 export interface RevenueStream {
   id: string;
   name: string;
-  type: "marketplace-commission" | "advertising" | "subscriptions" | "services" | "partnerships";
+  type:
+    | "marketplace-commission"
+    | "advertising"
+    | "subscriptions"
+    | "services"
+    | "partnerships";
   currentRevenue: number;
   percentageOfTotal: number;
   growthRate: number; // percentage

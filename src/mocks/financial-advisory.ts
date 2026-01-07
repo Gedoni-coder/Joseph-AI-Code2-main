@@ -73,7 +73,7 @@ export const SUMMARY_DESCRIPTION =
 export function getSummaryContent(
   budgetForecastsLength: number,
   liquidityMetricsLength: number,
-  riskAssessmentsLength: number
+  riskAssessmentsLength: number,
 ): string {
   return `1. FINANCIAL POSITION OVERVIEW
 The organization maintains a strong financial position with healthy liquidity and profitability metrics. Cash flow projections show positive trends with adequate reserves to support operational needs and strategic investments.
@@ -200,7 +200,7 @@ export function getSummaryMetrics(
   budgetForecastsLength: number,
   cashFlowProjectionsLength: number,
   scenarioTestsLength: number,
-  riskAssessmentsLength: number
+  riskAssessmentsLength: number,
 ) {
   return [
     {

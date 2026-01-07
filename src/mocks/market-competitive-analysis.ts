@@ -15,7 +15,7 @@ export function getSummaryContent(
   totalTam: number,
   avgGrowthRate: number,
   competitorCount: number,
-  customerSegmentCount: number
+  customerSegmentCount: number,
 ): string {
   return `1. MARKET OVERVIEW
 Total addressable market (TAM) stands at approximately $${totalTam.toFixed(0)}B with an average growth rate of ${avgGrowthRate.toFixed(1)}% across segments. The market is fragmented with ${competitorCount} active competitors.
@@ -40,7 +40,7 @@ export function getSummaryMetrics(
   totalTam: number,
   avgGrowthRate: number,
   customerSegmentCount: number,
-  competitorCount: number
+  competitorCount: number,
 ) {
   return [
     {

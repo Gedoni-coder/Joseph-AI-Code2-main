@@ -133,49 +133,49 @@ export default function MarketCompetitiveAnalysis() {
         >
           <div className="grid grid-cols-2 sm:grid-cols-8 gap-2 w-full rounded-md bg-muted p-1 text-muted-foreground">
             <TabsList className="contents">
-            <TabsTrigger
-              value="overview"
-              className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-            >
-              Overview
-            </TabsTrigger>
-            <TabsTrigger
-              value="summary-recommendation"
-              className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-            >
-              Summary & Rec
-            </TabsTrigger>
-            <TabsTrigger
-              value="market"
-              className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-            >
-              Market Analysis
-            </TabsTrigger>
-            <TabsTrigger
-              value="competitive"
-              className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-            >
-              Competitive Analysis
-            </TabsTrigger>
-            <TabsTrigger
-              value="strategy"
-              className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-            >
-              Strategy & Advantages
-            </TabsTrigger>
-            <TabsTrigger
-              value="reports"
-              className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-            >
-              Report Notes
-            </TabsTrigger>
-            <TabsTrigger
-              value="conversation"
-              className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
-            >
-              JOSEPH
-            </TabsTrigger>
-          </TabsList>
+              <TabsTrigger
+                value="overview"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Overview
+              </TabsTrigger>
+              <TabsTrigger
+                value="summary-recommendation"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Summary & Rec
+              </TabsTrigger>
+              <TabsTrigger
+                value="market"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Market Analysis
+              </TabsTrigger>
+              <TabsTrigger
+                value="competitive"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Competitive Analysis
+              </TabsTrigger>
+              <TabsTrigger
+                value="strategy"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Strategy & Advantages
+              </TabsTrigger>
+              <TabsTrigger
+                value="reports"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Report Notes
+              </TabsTrigger>
+              <TabsTrigger
+                value="conversation"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                JOSEPH
+              </TabsTrigger>
+            </TabsList>
           </div>
 
           <TabsContent value="overview" className="space-y-6">
@@ -340,14 +340,14 @@ export default function MarketCompetitiveAnalysis() {
                 marketSizes.reduce((acc, m) => acc + m.growthRate, 0) /
                   marketSizes.length,
                 competitors.length,
-                customerSegments.length
+                customerSegments.length,
               )}
               summaryMetrics={getSummaryMetrics(
                 marketSizes.reduce((acc, m) => acc + m.tam, 0) / 1000000000,
                 marketSizes.reduce((acc, m) => acc + m.growthRate, 0) /
                   marketSizes.length,
                 customerSegments.length,
-                competitors.length
+                competitors.length,
               )}
               recommendationTitle="Market & Competitive Recommendations"
               recommendationDescription={RECOMMENDATION_DESCRIPTION}

@@ -16,7 +16,8 @@ export const PRICING_STRATEGIES: PricingStrategy[] = [
     id: "dynamic-pricing",
     name: "Dynamic Pricing",
     type: "dynamic",
-    description: "Adjust prices based on demand, seasonality, and competitor actions",
+    description:
+      "Adjust prices based on demand, seasonality, and competitor actions",
     expectedImpact: "high",
     complexity: "high",
   },
@@ -24,7 +25,8 @@ export const PRICING_STRATEGIES: PricingStrategy[] = [
     id: "value-based",
     name: "Value-Based Pricing",
     type: "value-based",
-    description: "Price based on customer perceived value and willingness to pay",
+    description:
+      "Price based on customer perceived value and willingness to pay",
     expectedImpact: "high",
     complexity: "medium",
   },
