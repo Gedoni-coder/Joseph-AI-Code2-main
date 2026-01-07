@@ -84,6 +84,21 @@ import { useCompanyInfo } from "./lib/company-context";
 
 const queryClient = new QueryClient();
 
+interface ConversationalModeContextType {
+  conversationalMode: boolean;
+  onConversationalModeChange: (enabled: boolean) => void;
+}
+
+const ConversationalModeContext = createContext<ConversationalModeContextType | undefined>(undefined);
+
+export const useConversationalMode = () => {
+  const context = useContext(ConversationalModeContext);
+  if (!context) {
+    throw new Error("useConversationalMode must be used within ConversationalModeProvider");
+  }
+  return context;
+};
+
 const infraModules = [
   { slug: "networks", name: "Networks" },
   { slug: "jobs", name: "Jobs" },
