@@ -319,18 +319,18 @@ const AdviceHub = () => {
         />
 
         {/* Chat Header */}
-        <div className="bg-white border-b border-gray-200 p-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="bg-white border-b border-gray-200 p-3 sm:p-4 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
             <button
               onClick={() => setSelectedMessageId(null)}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0"
             >
-              <ArrowLeft className="h-5 w-5 text-gray-600" />
+              <ArrowLeft className="h-4 sm:h-5 w-4 sm:w-5 text-gray-600" />
             </button>
-            <div>
-              <h2 className="font-semibold text-gray-900 flex items-center gap-2">
-                <span className="text-xl">{selectedMessage.moduleIcon}</span>
-                <span className="text-sm">{selectedMessage.title}</span>
+            <div className="min-w-0">
+              <h2 className="font-semibold text-gray-900 flex items-center gap-2 line-clamp-1">
+                <span className="text-lg sm:text-xl flex-shrink-0">{selectedMessage.moduleIcon}</span>
+                <span className="text-xs sm:text-sm truncate">{selectedMessage.title}</span>
               </h2>
               <p className="text-xs text-gray-500">
                 [{selectedMessage.moduleName}] •{" "}
@@ -338,8 +338,8 @@ const AdviceHub = () => {
               </p>
             </div>
           </div>
-          <Badge variant="default" className="bg-green-100 text-green-800">
-            🟢 Joseph Live
+          <Badge variant="default" className="bg-green-100 text-green-800 text-xs sm:text-sm flex-shrink-0">
+            🟢 Live
           </Badge>
         </div>
 
