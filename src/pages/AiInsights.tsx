@@ -585,8 +585,8 @@ const AdviceHub = () => {
 
       {/* Main Content - Sidebar + Messages */}
       <div className="flex-1 overflow-hidden flex relative">
-        {/* Mobile Hamburger Menu Button */}
-        <div className="absolute top-4 left-4 z-40 md:hidden">
+        {/* Hamburger Menu Button (Desktop & Mobile) */}
+        <div className="absolute top-4 left-4 z-40">
           <Button
             variant="outline"
             size="sm"
@@ -597,20 +597,20 @@ const AdviceHub = () => {
           </Button>
         </div>
 
-        {/* Overlay on mobile when sidebar is open */}
+        {/* Overlay when sidebar is open */}
         {isSidebarOpen && (
           <div
-            className="absolute inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+            className="absolute inset-0 bg-black bg-opacity-50 z-30"
             onClick={() => setIsSidebarOpen(false)}
           />
         )}
 
         {/* Left Sidebar - Module Filters */}
         <div
-          className={`fixed md:relative z-40 md:z-auto top-0 left-0 h-full w-64 border-r border-gray-200 bg-white flex flex-col overflow-hidden transition-transform duration-300 ease-in-out ${
+          className={`fixed z-40 top-0 left-0 h-full w-64 border-r border-gray-200 bg-white flex flex-col overflow-hidden transition-transform duration-300 ease-in-out ${
             isSidebarOpen
               ? "translate-x-0"
-              : "-translate-x-full md:translate-x-0"
+              : "-translate-x-full"
           }`}
         >
           {/* Sidebar Header with Close Button */}
