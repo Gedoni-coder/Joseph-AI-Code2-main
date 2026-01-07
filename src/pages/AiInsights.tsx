@@ -429,9 +429,9 @@ const AdviceHub = () => {
         </div>
 
         {/* Chat Input */}
-        <div className="border-t bg-white p-6 flex-shrink-0">
+        <div className="border-t bg-white p-3 sm:p-6 flex-shrink-0">
           <div className="max-w-2xl mx-auto">
-            <div className="flex gap-3 items-end">
+            <div className="flex gap-2 sm:gap-3 items-end">
               <div className="flex-1">
                 <div className="relative border border-gray-200 rounded-2xl bg-white shadow-sm">
                   <textarea
@@ -443,21 +443,21 @@ const AdviceHub = () => {
                         handleSendMessage();
                       }
                     }}
-                    placeholder="Ask Joseph for more details or follow-up advice..."
-                    className="w-full p-4 pr-20 resize-none border-0 focus:ring-0 focus:outline-none rounded-2xl"
+                    placeholder="Ask Joseph..."
+                    className="w-full p-3 sm:p-4 pr-16 sm:pr-20 resize-none border-0 focus:ring-0 focus:outline-none rounded-2xl text-sm sm:text-base"
                     rows={1}
                     style={{
-                      minHeight: "52px",
+                      minHeight: "44px",
                       maxHeight: "200px",
                       height: "auto",
                     }}
                   />
 
                   <div className="absolute bottom-2 right-2 flex items-center gap-1">
-                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                    <Button variant="ghost" size="sm" className="h-7 sm:h-8 w-7 sm:w-8 p-0 hidden sm:flex">
                       <Paperclip className="h-4 w-4" />
                     </Button>
-                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                    <Button variant="ghost" size="sm" className="h-7 sm:h-8 w-7 sm:w-8 p-0 hidden sm:flex">
                       <Mic className="h-4 w-4" />
                     </Button>
                   </div>
@@ -467,7 +467,7 @@ const AdviceHub = () => {
               <Button
                 onClick={handleSendMessage}
                 disabled={!inputMessage.trim() || isTyping}
-                className="h-12 w-12 rounded-xl"
+                className="h-10 w-10 sm:h-12 sm:w-12 rounded-xl flex-shrink-0 p-0"
               >
                 <Send className="h-4 w-4" />
               </Button>
