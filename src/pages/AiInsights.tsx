@@ -597,6 +597,17 @@ const AdviceHub = () => {
             isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
           }`}
         >
+          {/* Sidebar Header with Close Button */}
+          <div className="p-4 border-b border-gray-200 flex items-center justify-between md:hidden">
+            <h3 className="text-sm font-semibold text-gray-900">Filter</h3>
+            <button
+              onClick={() => setIsSidebarOpen(false)}
+              className="p-1 hover:bg-gray-100 rounded transition-colors"
+            >
+              <X className="h-5 w-5 text-gray-600" />
+            </button>
+          </div>
+
           {/* Search Bar */}
           <div className="p-4 border-b border-gray-200">
             <div className="relative">
