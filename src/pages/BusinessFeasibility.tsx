@@ -30,7 +30,7 @@ import {
   getModeThresholds,
   getModePrompt,
   useLargeTimeFactor,
-} from "@/lib/feasibility-config";
+} from "@/mocks/business-feasibility";
 
 // Modes
 type Mode = "Conservative" | "Safe" | "Wild";
@@ -129,11 +129,7 @@ function extractKeywords(text: string): string[] {
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, " ")
     .split(/\s+/)
-    .filter(
-      (w) =>
-        w.length > 3 &&
-        !FEASIBILITY_STOP_WORDS.includes(w),
-    );
+    .filter((w) => w.length > 3 && !FEASIBILITY_STOP_WORDS.includes(w));
   const counts: Record<string, number> = {};
   for (const w of words) counts[w] = (counts[w] || 0) + 1;
   return Object.entries(counts)
@@ -152,10 +148,19 @@ function deriveInputsFromIdea(text: string): Inputs {
   // Use mock data defaults from configuration
   const defaults = FEASIBILITY_INPUT_DEFAULTS;
 
-  let interestRate = rateMatch ? clamp(parseFloat(rateMatch[1]), 0, 100) : defaults.interestRate;
+  let interestRate = rateMatch
+    ? clamp(parseFloat(rateMatch[1]), 0, 100)
+    : defaults.interestRate;
   let timeValue =
-    interestRate > 0 ? Math.max(defaults.timeValueMin, Math.min(interestRate, defaults.timeValueMax)) : 5;
-  let roiTime = monthsMatch ? clamp(parseInt(monthsMatch[1], 10), 0, 600) : defaults.roiTime;
+    interestRate > 0
+      ? Math.max(
+          defaults.timeValueMin,
+          Math.min(interestRate, defaults.timeValueMax),
+        )
+      : 5;
+  let roiTime = monthsMatch
+    ? clamp(parseInt(monthsMatch[1], 10), 0, 600)
+    : defaults.roiTime;
 
   let risk = defaults.defaultRisk;
   if (/(high\s*risk|uncertain|unproven|new\s*market)/.test(lower)) risk = 60;
@@ -335,7 +340,9 @@ export default function BusinessFeasibility() {
                     onChange={(e) => setIdeaInput(e.target.value)}
                     placeholder={FEASIBILITY_UI_LABELS.formPlaceholder}
                   />
-                  <Button type="submit">{FEASIBILITY_UI_LABELS.formButtonText}</Button>
+                  <Button type="submit">
+                    {FEASIBILITY_UI_LABELS.formButtonText}
+                  </Button>
                 </form>
                 <div className="text-xs text-muted-foreground mt-2">
                   Tip: include rough timelines (e.g., “18 months”) or rates
@@ -346,7 +353,9 @@ export default function BusinessFeasibility() {
 
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-semibold">{FEASIBILITY_UI_LABELS.pastIdeasHeading}</h3>
+                <h3 className="text-sm font-semibold">
+                  {FEASIBILITY_UI_LABELS.pastIdeasHeading}
+                </h3>
                 <Badge variant="secondary">{reports.length}</Badge>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">

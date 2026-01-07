@@ -15,7 +15,8 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
   {
     id: "template-startup",
     name: "Startup Business Plan",
-    description: "Comprehensive plan for new business ventures with growth focus",
+    description:
+      "Comprehensive plan for new business ventures with growth focus",
     sections: 8,
     estimatedTime: "4-6 weeks",
   },
@@ -36,7 +37,8 @@ export const PLAN_TEMPLATES: PlanTemplate[] = [
   {
     id: "template-ecommerce",
     name: "E-Commerce Business Plan",
-    description: "Specialized plan for online marketplace and retail businesses",
+    description:
+      "Specialized plan for online marketplace and retail businesses",
     sections: 9,
     estimatedTime: "5-7 weeks",
     industry: "E-commerce",
@@ -63,21 +65,36 @@ export const PLAN_SECTIONS: PlanSection[] = [
     id: "section-executive",
     title: "Executive Summary",
     description: "High-level overview of your business",
-    keyElements: ["Business vision", "Target market", "Key competitive advantages", "Financial highlights"],
+    keyElements: [
+      "Business vision",
+      "Target market",
+      "Key competitive advantages",
+      "Financial highlights",
+    ],
     tips: "Write this last. Keep it concise but compelling - this is often the most-read section.",
   },
   {
     id: "section-company",
     title: "Company Description",
     description: "Details about your company and operations",
-    keyElements: ["Company mission", "Legal structure", "Location and facilities", "Organization structure"],
+    keyElements: [
+      "Company mission",
+      "Legal structure",
+      "Location and facilities",
+      "Organization structure",
+    ],
     tips: "Be specific about what makes your company unique and sustainable.",
   },
   {
     id: "section-market",
     title: "Market Analysis",
     description: "Research on your industry and target market",
-    keyElements: ["Industry overview", "Target market size", "Customer profiles", "Market trends"],
+    keyElements: [
+      "Industry overview",
+      "Target market size",
+      "Customer profiles",
+      "Market trends",
+    ],
     tips: "Use data and research. Investors want to see you understand your market.",
   },
   {
@@ -111,9 +128,11 @@ export const PLAN_GUIDANCE = {
   businessNameExtractionWords: 3,
   formLabel: "Make a Plan",
   formPlaceholder: "Describe your business idea...",
-  formTip: "Tip: include rough timelines, target markets, and unique value propositions to get better analysis",
+  formTip:
+    "Tip: include rough timelines, target markets, and unique value propositions to get better analysis",
   emptyStateTitle: "Past Business Plans",
-  emptyStateMessage: "No business plans created yet. Start by creating your first plan!",
+  emptyStateMessage:
+    "No business plans created yet. Start by creating your first plan!",
 };
 
 export const BUSINESS_PLANNING_STORAGE_KEY = "joseph_business_plans_v1";
@@ -134,4 +153,173 @@ export interface PlanStep {
   title: string;
   content: string;
   status: "not-started" | "in-progress" | "completed";
+}
+
+// ============ BUSINESS PLANNING TYPES ============
+
+export type StepStatus =
+  | "pending"
+  | "in_progress"
+  | "completed"
+  | "needs_update";
+
+export interface StepContent {
+  title: string;
+  content: string;
+  generatedAt: string;
+  status: StepStatus;
+}
+
+export interface BusinessPlanStep {
+  id: number;
+  key: string;
+  name: string;
+  description: string;
+  status: StepStatus;
+  content: StepContent | null;
+}
+
+export interface BusinessPlanFull {
+  id: string;
+  feasibilityId: string;
+  idea: string;
+  businessName: string;
+  createdAt: string;
+  updatedAt: string;
+  currentStep: number;
+  steps: BusinessPlanStep[];
+  fullDocument: {
+    executiveSummary: string;
+    companyOverview: string;
+    problemStatement: string;
+    valueProposition: string;
+    productServiceDescription: string;
+    businessModel: string;
+    marketAnalysis: string;
+    competitiveAnalysis: string;
+    operationsPlan: string;
+    financialProjections: string;
+    fundingRequirements: string;
+    goToMarketStrategy: string;
+  };
+}
+
+export const BUSINESS_PLAN_STEPS: BusinessPlanStep[] = [
+  {
+    id: 1,
+    key: "business-plan-generator",
+    name: "Business Plan Generator",
+    description:
+      "Create a complete, investor-ready business plan tailored to your business",
+    status: "pending",
+    content: null,
+  },
+  {
+    id: 2,
+    key: "market-validation",
+    name: "Industry & Market Validation",
+    description: "Validate your business idea against real market data",
+    status: "pending",
+    content: null,
+  },
+  {
+    id: 3,
+    key: "business-model-canvas",
+    name: "Business Model Canvas Builder",
+    description: "Structure your business using proven frameworks",
+    status: "pending",
+    content: null,
+  },
+  {
+    id: 4,
+    key: "operational-planning",
+    name: "Operational Planning Assistant",
+    description: "Plan day-to-day and structural operations",
+    status: "pending",
+    content: null,
+  },
+  {
+    id: 5,
+    key: "financial-planning",
+    name: "Financial Planning for Business Plans",
+    description: "Build the financial engine for your business",
+    status: "pending",
+    content: null,
+  },
+  {
+    id: 6,
+    key: "gtm-strategy",
+    name: "Go-To-Market Strategy Builder",
+    description: "Design effective market entry strategies",
+    status: "pending",
+    content: null,
+  },
+  {
+    id: 7,
+    key: "compliance-guidance",
+    name: "Compliance & Registration Guidance",
+    description: "Guide through legal registrations and compliance",
+    status: "pending",
+    content: null,
+  },
+  {
+    id: 8,
+    key: "health-checker",
+    name: "Business Planning Health Checker",
+    description: "Evaluate your plan and identify weaknesses",
+    status: "pending",
+    content: null,
+  },
+  {
+    id: 9,
+    key: "investor-pitch",
+    name: "Investor Pitch Preparation",
+    description: "Prepare for fundraising with investor materials",
+    status: "pending",
+    content: null,
+  },
+  {
+    id: 10,
+    key: "continuous-updating",
+    name: "Continuous Plan Updating",
+    description: "Keep your plan current as your business evolves",
+    status: "pending",
+    content: null,
+  },
+];
+
+/**
+ * Create an empty business plan
+ * @param feasibilityId - Related feasibility analysis ID
+ * @param idea - Business idea description
+ * @returns New empty business plan
+ */
+export function createEmptyBusinessPlan(
+  feasibilityId: string,
+  idea: string,
+): BusinessPlanFull {
+  return {
+    id: `plan_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+    feasibilityId,
+    idea,
+    businessName: "",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    currentStep: 1,
+    steps: BUSINESS_PLAN_STEPS.map((step) => ({ ...step })),
+    fullDocument: {
+      executiveSummary: "",
+      companyOverview: "",
+      problemStatement: "",
+      valueProposition: "",
+      productServiceDescription: "",
+      businessModel: "",
+      marketAnalysis: "",
+      competitiveAnalysis: "",
+      operationsPlan: "",
+      financialProjections: "",
+      fundingRequirements: "",
+      goToMarketStrategy: "",
+    },
+  };
 }

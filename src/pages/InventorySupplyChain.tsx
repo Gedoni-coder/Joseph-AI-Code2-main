@@ -33,8 +33,8 @@ import {
   getRecommendationContent,
   DEFAULT_ACTION_ITEMS,
   DEFAULT_NEXT_STEPS,
-} from "@/lib/inventory-content";
-import { INVENTORY_CONFIG } from "@/mocks/inventory-supply-chain";
+  INVENTORY_CONFIG,
+} from "@/mocks/inventory-supply-chain";
 import {
   Package,
   TrendingUp,
@@ -128,7 +128,8 @@ export default function InventorySupplyChain() {
   }
 
   const formatCurrency = (amount: number) => {
-    const { millions, millions_suffix, thousands, thousands_suffix } = INVENTORY_CONFIG.currencyFormat;
+    const { millions, millions_suffix, thousands, thousands_suffix } =
+      INVENTORY_CONFIG.currencyFormat;
     if (amount >= millions) {
       return `$${(amount / millions).toFixed(1)}${millions_suffix}`;
     }
@@ -512,20 +513,20 @@ export default function InventorySupplyChain() {
                 suppliers.length,
                 highRiskDisruptions,
                 productionPlans.length,
-                procurementOrders.filter((o) => o.status === "pending").length
+                procurementOrders.filter((o) => o.status === "pending").length,
               )}
               summaryMetrics={getSummaryMetrics(
                 formatCurrency(totalInventoryValue),
                 lowStockItems,
                 avgSupplierPerformance,
-                highRiskDisruptions
+                highRiskDisruptions,
               )}
               recommendationTitle="Inventory & Supply Chain Recommendations"
               recommendationDescription={RECOMMENDATION_DESCRIPTION}
               recommendationText={getRecommendationContent(
                 lowStockItems,
                 highRiskDisruptions,
-                productionPlans.length
+                productionPlans.length,
               )}
               actionItems={DEFAULT_ACTION_ITEMS}
               nextSteps={DEFAULT_NEXT_STEPS}

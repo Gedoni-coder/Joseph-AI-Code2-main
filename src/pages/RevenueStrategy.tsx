@@ -29,7 +29,7 @@ import {
   DEFAULT_REVENUE_ACTION_ITEMS,
   DEFAULT_REVENUE_NEXT_STEPS,
   getSummaryMetrics,
-} from "@/lib/revenue-content";
+} from "@/mocks/revenue-strategy";
 import {
   DollarSign,
   TrendingUp,

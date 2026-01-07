@@ -29,7 +29,7 @@ import {
   DEFAULT_PRICING_ACTION_ITEMS,
   DEFAULT_PRICING_NEXT_STEPS,
   getSummaryMetrics,
-} from "@/lib/pricing-content";
+} from "@/mocks/pricing-strategy";
 import {
   DollarSign,
   Target,
