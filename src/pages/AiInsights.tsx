@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import ModuleHeader from "@/components/ui/module-header";
+import { useConversationalMode } from "@/App";
 import {
   Brain,
   Send,
@@ -47,6 +48,8 @@ interface ChatMessage {
 }
 
 const AdviceHub = () => {
+  const { conversationalMode, onConversationalModeChange } =
+    useConversationalMode();
   const [selectedMessageId, setSelectedMessageId] = useState<string | null>(
     null,
   );
@@ -317,6 +320,8 @@ const AdviceHub = () => {
           isConnected={true}
           lastUpdated={new Date()}
           connectionLabel="Live"
+          conversationalMode={conversationalMode}
+          onConversationalModeChange={onConversationalModeChange}
         />
 
         {/* Chat Header */}
@@ -504,18 +509,20 @@ const AdviceHub = () => {
         isConnected={true}
         lastUpdated={new Date()}
         connectionLabel="Live"
+        conversationalMode={conversationalMode}
+        onConversationalModeChange={onConversationalModeChange}
       />
 
       {/* Module Circles Section */}
-      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-3 sm:py-4">
+      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-2 sm:py-2.5">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between gap-3 mb-3">
+          <div className="flex items-center justify-between gap-2 mb-2">
             <div>
-              <h2 className="text-sm sm:text-base font-semibold text-gray-900">
-                Module Updates
+              <h2 className="text-xs sm:text-sm font-semibold text-gray-900">
+                Updates
               </h2>
-              <p className="text-xs text-gray-600">
-                {unreadCount === 0 ? "All advice read" : `${unreadCount} new`}
+              <p className="text-xs text-gray-600 leading-tight">
+                {unreadCount === 0 ? "All read" : `${unreadCount} new`}
               </p>
             </div>
             {unreadCount > 0 && (
@@ -526,7 +533,7 @@ const AdviceHub = () => {
           </div>
 
           {/* Module Status Circles */}
-          <div className="flex gap-3 sm:gap-4 overflow-x-auto pb-1">
+          <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-1">
             {modulesList.map((module) => {
               const moduleMessages = adviceMessages.filter(
                 (m) => m.moduleId === module.id,
@@ -556,24 +563,24 @@ const AdviceHub = () => {
                   className="flex-shrink-0 focus:outline-none group transition-all"
                 >
                   <div
-                    className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center cursor-pointer transition-all bg-gradient-to-br ${
+                    className={`relative w-12 h-12 sm:w-13 sm:h-13 rounded-full flex items-center justify-center cursor-pointer transition-all bg-gradient-to-br ${
                       colorMap[module.id] || "from-gray-400 to-gray-600"
                     } ${
                       hasUnread
-                        ? "ring-3 ring-offset-1 ring-offset-white ring-yellow-400"
+                        ? "ring-2 ring-offset-1 ring-offset-white ring-yellow-400"
                         : ""
                     }`}
                   >
-                    <span className="text-xl sm:text-2xl">{module.icon}</span>
+                    <span className="text-lg sm:text-xl">{module.icon}</span>
 
                     {hasUnread && (
-                      <div className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-yellow-400 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-gray-900 animate-pulse">
+                      <div className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-yellow-400 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-gray-900 animate-pulse">
                         {unreadInModule.length}
                       </div>
                     )}
                   </div>
 
-                  <p className="text-center text-xs font-medium text-gray-700 mt-1 truncate w-14 sm:w-16 group-hover:text-gray-900 transition-colors">
+                  <p className="text-center text-xs font-medium text-gray-700 mt-0.5 truncate w-12 sm:w-13 group-hover:text-gray-900 transition-colors line-clamp-1">
                     {module.name.split(" ")[0]}
                   </p>
                 </button>
@@ -585,8 +592,8 @@ const AdviceHub = () => {
 
       {/* Main Content - Sidebar + Messages */}
       <div className="flex-1 overflow-hidden flex relative">
-        {/* Mobile Hamburger Menu Button */}
-        <div className="absolute top-4 left-4 z-40 md:hidden">
+        {/* Hamburger Menu Button (Desktop & Mobile) */}
+        <div className="absolute top-4 left-4 z-40">
           <Button
             variant="outline"
             size="sm"
@@ -597,20 +604,18 @@ const AdviceHub = () => {
           </Button>
         </div>
 
-        {/* Overlay on mobile when sidebar is open */}
+        {/* Overlay when sidebar is open */}
         {isSidebarOpen && (
           <div
-            className="absolute inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+            className="absolute inset-0 bg-black bg-opacity-50 z-30"
             onClick={() => setIsSidebarOpen(false)}
           />
         )}
 
         {/* Left Sidebar - Module Filters */}
         <div
-          className={`fixed md:relative z-40 md:z-auto top-0 left-0 h-full w-64 border-r border-gray-200 bg-white flex flex-col overflow-hidden transition-transform duration-300 ease-in-out ${
-            isSidebarOpen
-              ? "translate-x-0"
-              : "-translate-x-full md:translate-x-0"
+          className={`fixed z-40 top-0 left-0 h-full w-64 border-r border-gray-200 bg-white flex flex-col overflow-hidden transition-transform duration-300 ease-in-out ${
+            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
           {/* Sidebar Header with Close Button */}
@@ -719,7 +724,7 @@ const AdviceHub = () => {
         {/* Right Side - Messages List */}
         <div className="flex-1 overflow-y-auto bg-white flex flex-col">
           {/* Messages Header */}
-          <div className="px-4 sm:px-6 py-4 border-b border-gray-200 bg-white flex items-center gap-2 flex-shrink-0 mt-14 md:mt-0">
+          <div className="px-4 sm:px-6 py-4 border-b border-gray-200 bg-white flex items-center gap-2 flex-shrink-0 mt-14">
             <span className="text-xl">💡</span>
             <h3 className="font-semibold text-gray-900">Latest Advice</h3>
           </div>
