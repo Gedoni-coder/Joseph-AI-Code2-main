@@ -29,7 +29,7 @@ import {
   getRecommendationContent,
   DEFAULT_ACTION_ITEMS,
   DEFAULT_NEXT_STEPS,
-} from "@/lib/market-content";
+} from "@/mocks/market-competitive-analysis";
 import {
   BarChart3,
   TrendingUp,
