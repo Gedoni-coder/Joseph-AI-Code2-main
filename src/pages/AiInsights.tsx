@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import ModuleHeader from "@/components/ui/module-header";
+import { useConversationalMode } from "@/App";
 import {
   Brain,
   Send,
