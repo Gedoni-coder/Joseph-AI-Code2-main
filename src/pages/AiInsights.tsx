@@ -542,24 +542,24 @@ const AdviceHub = () => {
                   className="flex-shrink-0 focus:outline-none group transition-all"
                 >
                   <div
-                    className={`relative w-20 h-20 rounded-full flex items-center justify-center cursor-pointer transition-all bg-gradient-to-br ${
+                    className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center cursor-pointer transition-all bg-gradient-to-br ${
                       colorMap[module.id] || "from-gray-400 to-gray-600"
                     } ${
                       hasUnread
-                        ? "ring-4 ring-offset-2 ring-offset-white ring-yellow-400"
+                        ? "ring-3 ring-offset-1 ring-offset-white ring-yellow-400"
                         : ""
                     }`}
                   >
-                    <span className="text-3xl">{module.icon}</span>
+                    <span className="text-xl sm:text-2xl">{module.icon}</span>
 
                     {hasUnread && (
-                      <div className="absolute top-0 right-0 w-5 h-5 bg-yellow-400 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-gray-900 animate-pulse">
+                      <div className="absolute -top-1 -right-1 w-4 h-4 sm:w-5 sm:h-5 bg-yellow-400 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-gray-900 animate-pulse">
                         {unreadInModule.length}
                       </div>
                     )}
                   </div>
 
-                  <p className="text-center text-xs font-medium text-gray-700 mt-2 truncate w-20 group-hover:text-gray-900 transition-colors">
+                  <p className="text-center text-xs font-medium text-gray-700 mt-1 truncate w-14 sm:w-16 group-hover:text-gray-900 transition-colors">
                     {module.name.split(" ")[0]}
                   </p>
                 </button>
