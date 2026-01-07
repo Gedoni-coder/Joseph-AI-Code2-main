@@ -34,7 +34,7 @@ import {
   DEFAULT_ACTION_ITEMS,
   DEFAULT_NEXT_STEPS,
   getSummaryMetrics,
-} from "../lib/financial-advisory-content";
+} from "../mocks/financial-advisory";
 import { StrategicBudgeting } from "../components/financial/strategic-budgeting";
 import { CashFlowPlanning } from "../components/financial/cash-flow-planning";
 import { BudgetValidation } from "../components/financial/budget-validation";
