@@ -307,48 +307,54 @@ const Notifications = () => {
                   {filteredNotifications.map((notification) => (
                     <div
                       key={notification.id}
-                      className={`flex items-center gap-4 p-4 hover:bg-gray-50 cursor-pointer transition-colors ${
+                      className={`flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-3 sm:p-4 hover:bg-gray-50 cursor-pointer transition-colors ${
                         !notification.read ? "bg-blue-50 border-l-4 border-l-blue-500" : ""
                       }`}
                       onClick={() => setSelectedNotification(notification.id)}
                     >
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleMessageSelection(notification.id);
-                        }}
-                        className="p-1 hover:bg-gray-200 rounded"
-                      >
-                        {selectedMessages.includes(notification.id) ? (
-                          <CheckSquare className="h-4 w-4" />
-                        ) : (
-                          <Square className="h-4 w-4" />
-                        )}
-                      </button>
-                      
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          // Toggle starred
-                        }}
-                        className="p-1 hover:bg-gray-200 rounded"
-                      >
-                        <Star className={`h-4 w-4 ${notification.starred ? "fill-yellow-400 text-yellow-400" : ""}`} />
-                      </button>
-                      
-                      <div className="flex-shrink-0">
-                        {getTypeIcon(notification.type)}
+                      {/* Checkbox row */}
+                      <div className="flex items-center gap-2 sm:gap-4">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleMessageSelection(notification.id);
+                          }}
+                          className="p-1 hover:bg-gray-200 rounded flex-shrink-0"
+                        >
+                          {selectedMessages.includes(notification.id) ? (
+                            <CheckSquare className="h-4 w-4" />
+                          ) : (
+                            <Square className="h-4 w-4" />
+                          )}
+                        </button>
+
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            // Toggle starred
+                          }}
+                          className="p-1 hover:bg-gray-200 rounded flex-shrink-0 hidden sm:block"
+                        >
+                          <Star className={`h-4 w-4 ${notification.starred ? "fill-yellow-400 text-yellow-400" : ""}`} />
+                        </button>
+
+                        <div className="flex-shrink-0 hidden sm:block">
+                          {getTypeIcon(notification.type)}
+                        </div>
                       </div>
-                      
+
+                      {/* Content */}
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-1">
                           <span className={`text-sm ${!notification.read ? "font-semibold" : "font-medium"}`}>
                             {notification.sender}
                           </span>
-                          {getPriorityBadge(notification.priority)}
-                          <Badge variant="outline" className="text-xs">
-                            {notification.category}
-                          </Badge>
+                          <div className="flex items-center gap-1 flex-wrap">
+                            {getPriorityBadge(notification.priority)}
+                            <Badge variant="outline" className="text-xs">
+                              {notification.category}
+                            </Badge>
+                          </div>
                         </div>
                         <div className={`text-sm ${!notification.read ? "font-medium" : ""} truncate`}>
                           {notification.subject}
@@ -357,13 +363,14 @@ const Notifications = () => {
                           {notification.preview}
                         </div>
                       </div>
-                      
-                      <div className="flex-shrink-0 text-right">
-                        <div className="text-xs text-muted-foreground">
+
+                      {/* Timestamp and menu */}
+                      <div className="flex-shrink-0 flex items-center justify-between sm:flex-col sm:text-right gap-2">
+                        <div className="text-xs text-muted-foreground sm:mb-1">
                           {notification.timestamp}
                         </div>
-                        <Button variant="ghost" size="sm" className="mt-1">
-                          <MoreVertical className="h-3 w-3" />
+                        <Button variant="ghost" size="sm" className="p-1 h-8 w-8">
+                          <MoreVertical className="h-4 w-4" />
                         </Button>
                       </div>
                     </div>
