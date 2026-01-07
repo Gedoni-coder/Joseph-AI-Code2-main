@@ -46,7 +46,12 @@ interface ChatMessage {
   timestamp: Date;
 }
 
-const AdviceHub = () => {
+interface AdviceHubProps {
+  conversationalMode?: boolean;
+  onConversationalModeChange?: (enabled: boolean) => void;
+}
+
+const AdviceHub = ({ conversationalMode, onConversationalModeChange }: AdviceHubProps) => {
   const [selectedMessageId, setSelectedMessageId] = useState<string | null>(
     null,
   );
