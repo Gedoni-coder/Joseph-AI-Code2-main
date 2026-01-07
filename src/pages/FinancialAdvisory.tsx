@@ -177,18 +177,19 @@ export default function FinancialAdvisory() {
                     </TooltipContent>
                   </Tooltip>
                   <PopoverContent className="w-64 sm:w-80" align="end">
-                    <div className="space-y-4">
+                    <div className="space-y-3 sm:space-y-4">
                       <div className="flex items-center justify-between">
-                        <h4 className="font-semibold">Notifications</h4>
+                        <h4 className="font-semibold text-sm sm:text-base">Notifications</h4>
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => setNotificationsOpen(false)}
+                          className="p-1 h-8 w-8"
                         >
                           <X className="h-4 w-4" />
                         </Button>
                       </div>
-                      <div className="space-y-3">
+                      <div className="space-y-2 sm:space-y-3 max-h-96 overflow-y-auto">
                         {DEFAULT_NOTIFICATIONS.map((notification) => {
                           const iconMap = {
                             calculator: Calculator,
@@ -206,17 +207,17 @@ export default function FinancialAdvisory() {
                           return (
                             <div
                               key={notification.id}
-                              className="p-3 rounded-lg border bg-card"
+                              className="p-2 sm:p-3 rounded-lg border bg-card"
                             >
-                              <div className="flex items-start gap-3">
+                              <div className="flex items-start gap-2 sm:gap-3">
                                 <Icon
                                   className={`h-4 w-4 ${colorMap[notification.type]} mt-0.5 flex-shrink-0`}
                                 />
                                 <div className="flex-1 min-w-0">
-                                  <p className="text-sm font-medium">
+                                  <p className="text-xs sm:text-sm font-medium line-clamp-2">
                                     {notification.title}
                                   </p>
-                                  <p className="text-xs text-muted-foreground">
+                                  <p className="text-xs text-muted-foreground line-clamp-2">
                                     {notification.message}
                                   </p>
                                   <p className="text-xs text-muted-foreground mt-1">
