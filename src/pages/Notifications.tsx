@@ -105,32 +105,34 @@ const Notifications = () => {
 
   if (selectedNotification) {
     const notification = notifications.find(n => n.id === selectedNotification);
-    
+
     return (
       <div className="min-h-screen bg-gray-50">
         {/* Header */}
         <header className="border-b bg-white sticky top-0 z-50">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center gap-4">
-              <Button 
-                variant="ghost" 
+          <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+              <Button
+                variant="ghost"
                 size="sm"
                 onClick={() => setSelectedNotification(null)}
+                className="justify-start w-fit"
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Inbox
+                <span className="hidden sm:inline">Back to Inbox</span>
+                <span className="sm:hidden">Back</span>
               </Button>
-              <div className="flex-1">
-                <h1 className="text-xl font-semibold">{notification?.subject}</h1>
+              <div className="flex-1 min-w-0">
+                <h1 className="text-base sm:text-xl font-semibold truncate">{notification?.subject}</h1>
               </div>
-              <div className="flex items-center gap-2">
-                <Button variant="ghost" size="sm">
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <Button variant="ghost" size="sm" className="p-1 h-8 w-8">
                   <Star className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" className="p-1 h-8 w-8 hidden sm:inline-flex">
                   <Archive className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" className="p-1 h-8 w-8 hidden sm:inline-flex">
                   <Trash2 className="h-4 w-4" />
                 </Button>
               </div>
@@ -139,50 +141,53 @@ const Notifications = () => {
         </header>
 
         {/* Message Content */}
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
           <Card className="max-w-4xl mx-auto">
             <CardHeader>
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
                     <User className="h-5 w-5 text-blue-600" />
                   </div>
-                  <div>
-                    <div className="flex items-center gap-2">
+                  <div className="min-w-0">
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
                       <h3 className="font-semibold">{notification?.sender}</h3>
                       {getPriorityBadge(notification?.priority)}
                     </div>
-                    <div className="text-sm text-muted-foreground flex items-center gap-2">
+                    <div className="text-xs sm:text-sm text-muted-foreground flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
                       <span>to me</span>
-                      <span>•</span>
-                      <Calendar className="h-3 w-3" />
-                      <span>{notification?.timestamp}</span>
+                      <span className="hidden sm:inline">•</span>
+                      <div className="flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        <span>{notification?.timestamp}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-shrink-0">
                   {getTypeIcon(notification?.type)}
-                  <Badge variant="outline">{notification?.category}</Badge>
+                  <Badge variant="outline" className="text-xs">{notification?.category}</Badge>
                 </div>
               </div>
             </CardHeader>
             <CardContent>
               <div className="prose max-w-none">
-                <pre className="whitespace-pre-wrap text-sm leading-relaxed font-sans">
+                <pre className="whitespace-pre-wrap text-xs sm:text-sm leading-relaxed font-sans">
                   {notification?.body}
                 </pre>
               </div>
-              
+
               {/* Action Buttons */}
-              <div className="flex gap-2 mt-6 pt-6 border-t">
-                <Button size="sm">
+              <div className="flex flex-col sm:flex-row gap-2 mt-6 pt-6 border-t">
+                <Button size="sm" className="w-full sm:w-auto">
                   Reply
                 </Button>
-                <Button size="sm" variant="outline">
+                <Button size="sm" variant="outline" className="w-full sm:w-auto">
                   Forward
                 </Button>
-                <Button size="sm" variant="outline">
-                  Mark as Important
+                <Button size="sm" variant="outline" className="w-full sm:w-auto">
+                  <span className="hidden sm:inline">Mark as Important</span>
+                  <span className="sm:hidden">Important</span>
                 </Button>
               </div>
             </CardContent>
