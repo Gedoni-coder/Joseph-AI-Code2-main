@@ -121,18 +121,18 @@ export default function FinancialAdvisory() {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         {/* Header */}
         <header className="bg-white/60 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-3 sm:py-4">
-            <div className="flex flex-col gap-4">
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4">
+            <div className="flex flex-col gap-2 sm:gap-3 md:gap-4">
               <div>
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center w-10 h-10 bg-blue-600 rounded-xl text-white">
-                    <Calculator className="w-5 h-5" />
+                <div className="flex items-start gap-2 sm:gap-3">
+                  <div className="flex items-center justify-center w-8 sm:w-10 h-8 sm:h-10 bg-blue-600 rounded-xl text-white flex-shrink-0">
+                    <Calculator className="w-4 sm:w-5 h-4 sm:h-5" />
                   </div>
-                  <div>
-                    <h1 className="text-lg sm:text-2xl font-bold text-gray-900 tracking-tight">
+                  <div className="min-w-0">
+                    <h1 className="text-base sm:text-xl md:text-2xl font-bold text-gray-900 tracking-tight">
                       Financial Advisory & Planning
                     </h1>
-                    <p className="text-xs sm:text-sm text-gray-600">
+                    <p className="text-xs sm:text-sm text-gray-600 line-clamp-2">
                       {companyName} strategic budgeting, cash flow management,
                       and financial advisory insights for marketplace operations
                     </p>
@@ -140,9 +140,11 @@ export default function FinancialAdvisory() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                 <ModuleNavigation />
-                <ConnectionStatus lastUpdated={lastUpdated} />
+                <div className="hidden sm:block">
+                  <ConnectionStatus lastUpdated={lastUpdated} />
+                </div>
 
                 {/* Notifications Tab */}
                 <Popover
@@ -155,9 +157,9 @@ export default function FinancialAdvisory() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="flex items-center gap-2 relative"
+                          className="flex items-center gap-1 sm:gap-2 relative text-xs sm:text-sm p-1.5 sm:p-2"
                         >
-                          <Bell className="h-4 w-4" />
+                          <Bell className="h-3.5 sm:h-4 w-3.5 sm:w-4 flex-shrink-0" />
                           <span className="hidden sm:inline">
                             Notifications
                           </span>
@@ -174,7 +176,7 @@ export default function FinancialAdvisory() {
                       <p>View notifications and alerts</p>
                     </TooltipContent>
                   </Tooltip>
-                  <PopoverContent className="w-80" align="end">
+                  <PopoverContent className="w-64 sm:w-80" align="end">
                     <div className="space-y-4">
                       <div className="flex items-center justify-between">
                         <h4 className="font-semibold">Notifications</h4>
