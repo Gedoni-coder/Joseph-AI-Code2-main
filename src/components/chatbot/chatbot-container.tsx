@@ -89,6 +89,13 @@ export function ChatbotContainer({
     setJosephExplainFunction(explainElement);
   }, [explainElement]);
 
+  // Close chatbot when conversational mode is disabled
+  useEffect(() => {
+    if (!conversationalMode && isOpen) {
+      setIsOpen(false);
+    }
+  }, [conversationalMode, isOpen, setIsOpen]);
+
   // Log when floating button is clicked
   const handleOpenClick = () => {
     console.log("Floating chatbot button clicked");
