@@ -219,6 +219,7 @@ const AdviceHub = () => {
 
   const handleMessageClick = (messageId: string) => {
     setSelectedMessageId(messageId);
+    setIsSidebarOpen(false); // Close sidebar on mobile after selecting message
     const message = adviceMessages.find((m) => m.id === messageId);
     if (message) {
       setAdviceMessages((prev) =>
