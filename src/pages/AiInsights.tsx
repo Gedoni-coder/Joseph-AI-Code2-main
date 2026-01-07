@@ -344,8 +344,8 @@ const AdviceHub = () => {
         </div>
 
         {/* Chat Area */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-6">
-          <div className="max-w-2xl mx-auto w-full space-y-6">
+        <div className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-3 sm:space-y-6">
+          <div className="max-w-2xl mx-auto w-full space-y-3 sm:space-y-6">
             {chatMessages.map((message) => (
               <div
                 key={message.id}
