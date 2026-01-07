@@ -70,7 +70,7 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
   const conversationalMode =
     externalConversationalMode !== undefined
       ? externalConversationalMode
-      : contextMode ?? (localStorage.getItem("conversationalMode") === "true");
+      : (contextMode ?? localStorage.getItem("conversationalMode") === "true");
 
   const handleConversationalModeChange = (enabled: boolean) => {
     if (externalOnChange) {

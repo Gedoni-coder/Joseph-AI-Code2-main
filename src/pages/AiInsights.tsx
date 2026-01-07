@@ -48,7 +48,8 @@ interface ChatMessage {
 }
 
 const AdviceHub = () => {
-  const { conversationalMode, onConversationalModeChange } = useConversationalMode();
+  const { conversationalMode, onConversationalModeChange } =
+    useConversationalMode();
   const [selectedMessageId, setSelectedMessageId] = useState<string | null>(
     null,
   );
@@ -614,9 +615,7 @@ const AdviceHub = () => {
         {/* Left Sidebar - Module Filters */}
         <div
           className={`fixed z-40 top-0 left-0 h-full w-64 border-r border-gray-200 bg-white flex flex-col overflow-hidden transition-transform duration-300 ease-in-out ${
-            isSidebarOpen
-              ? "translate-x-0"
-              : "-translate-x-full"
+            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
           {/* Sidebar Header with Close Button */}
