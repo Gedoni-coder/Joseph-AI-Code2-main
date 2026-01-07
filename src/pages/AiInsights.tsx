@@ -349,10 +349,10 @@ const AdviceHub = () => {
             {chatMessages.map((message) => (
               <div
                 key={message.id}
-                className={`flex gap-4 ${message.role === "user" ? "justify-end" : "justify-start"}`}
+                className={`flex gap-2 sm:gap-4 ${message.role === "user" ? "justify-end" : "justify-start"}`}
               >
                 {message.role === "joseph" && (
-                  <div className="flex-shrink-0">
+                  <div className="flex-shrink-0 hidden sm:block">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center">
                       <Sparkles className="h-4 w-4 text-white" />
                     </div>
@@ -360,18 +360,18 @@ const AdviceHub = () => {
                 )}
 
                 <div
-                  className={`max-w-xl ${message.role === "user" ? "order-first" : ""}`}
+                  className={`max-w-xs sm:max-w-xl ${message.role === "user" ? "order-first" : ""}`}
                 >
                   <div
-                    className={`rounded-2xl px-4 py-3 ${
+                    className={`rounded-2xl px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base ${
                       message.role === "user"
                         ? "bg-blue-600 text-white"
                         : "bg-white border border-gray-200 shadow-sm"
                     }`}
                   >
-                    <p className="text-sm leading-relaxed">{message.content}</p>
+                    <p className="leading-relaxed">{message.content}</p>
                   </div>
-                  <div className="flex items-center gap-2 mt-2">
+                  <div className="flex items-center gap-2 mt-1 sm:mt-2">
                     <span className="text-xs text-gray-500">
                       {message.timestamp.toLocaleTimeString([], {
                         hour: "2-digit",
@@ -379,11 +379,11 @@ const AdviceHub = () => {
                       })}
                     </span>
                     {message.role === "joseph" && (
-                      <div className="flex items-center gap-1 ml-2">
-                        <button className="p-1 hover:bg-gray-100 rounded transition-colors">
+                      <div className="flex items-center gap-1 ml-1 sm:ml-2">
+                        <button className="p-1 hover:bg-gray-100 rounded transition-colors hidden sm:block">
                           <Copy className="h-3 w-3 text-gray-400" />
                         </button>
-                        <button className="p-1 hover:bg-gray-100 rounded transition-colors">
+                        <button className="p-1 hover:bg-gray-100 rounded transition-colors hidden sm:block">
                           <Share2 className="h-3 w-3 text-gray-400" />
                         </button>
                       </div>
@@ -392,7 +392,7 @@ const AdviceHub = () => {
                 </div>
 
                 {message.role === "user" && (
-                  <div className="flex-shrink-0">
+                  <div className="flex-shrink-0 hidden sm:block">
                     <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center text-white text-xs font-medium">
                       U
                     </div>
