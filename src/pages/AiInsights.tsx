@@ -728,53 +728,50 @@ const AdviceHub = () => {
                     <button
                       key={message.id}
                       onClick={() => handleMessageClick(message.id)}
-                      className={`w-full text-left px-6 py-4 hover:bg-gray-50 transition-colors group flex items-center justify-between ${
+                      className={`w-full text-left px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50 transition-colors group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 ${
                         !message.isRead ? "bg-blue-50" : ""
                       }`}
                     >
                       {/* Left Content */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-3 mb-2">
-                          <span className="text-2xl flex-shrink-0">
-                            {message.moduleIcon}
-                          </span>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2">
-                              <h3
-                                className={`text-sm ${
-                                  !message.isRead
-                                    ? "font-bold text-gray-900"
-                                    : "font-medium text-gray-900"
-                                } truncate`}
-                              >
-                                {message.title}
-                              </h3>
-                              {!message.isRead && (
-                                <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></div>
-                              )}
-                            </div>
-                            <p className="text-xs text-gray-500 mt-0.5">
-                              <Badge
-                                variant="outline"
-                                className="text-xs font-normal"
-                              >
-                                [{message.moduleName}]
-                              </Badge>
-                            </p>
+                      <div className="flex-1 min-w-0 flex items-start gap-2 sm:gap-3">
+                        <span className="text-lg sm:text-2xl flex-shrink-0 mt-0.5">
+                          {message.moduleIcon}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <h3
+                              className={`text-sm ${
+                                !message.isRead
+                                  ? "font-bold text-gray-900"
+                                  : "font-medium text-gray-900"
+                              } truncate`}
+                            >
+                              {message.title}
+                            </h3>
+                            {!message.isRead && (
+                              <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></div>
+                            )}
                           </div>
+                          <p className="text-xs text-gray-500 mb-1">
+                            <Badge
+                              variant="outline"
+                              className="text-xs font-normal"
+                            >
+                              [{message.moduleName}]
+                            </Badge>
+                          </p>
+                          <p className="text-xs sm:text-sm text-gray-600 line-clamp-2">
+                            {message.content}
+                          </p>
                         </div>
-
-                        <p className="text-sm text-gray-600 line-clamp-2 ml-11">
-                          {message.content}
-                        </p>
                       </div>
 
                       {/* Right Side - Timestamp & Chevron */}
-                      <div className="flex items-center gap-3 ml-4 flex-shrink-0">
+                      <div className="flex items-center gap-2 ml-auto sm:ml-4 flex-shrink-0">
                         <span className="text-xs text-gray-500 whitespace-nowrap">
                           {formatTime(message.timestamp)}
                         </span>
-                        <ChevronRight className="h-5 w-5 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <ChevronRight className="h-4 sm:h-5 w-4 sm:w-5 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
                       </div>
                     </button>
                   ))}
