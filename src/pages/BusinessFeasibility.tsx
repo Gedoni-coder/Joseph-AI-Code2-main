@@ -30,7 +30,7 @@ import {
   getModeThresholds,
   getModePrompt,
   useLargeTimeFactor,
-} from "@/lib/feasibility-config";
+} from "@/mocks/business-feasibility";
 
 // Modes
 type Mode = "Conservative" | "Safe" | "Wild";
