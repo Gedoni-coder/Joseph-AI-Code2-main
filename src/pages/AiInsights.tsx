@@ -507,15 +507,15 @@ const AdviceHub = () => {
       />
 
       {/* Module Circles Section */}
-      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-3 sm:py-4">
+      <div className="bg-white border-b border-gray-200 px-4 sm:px-6 py-2 sm:py-2.5">
         <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between gap-3 mb-3">
+          <div className="flex items-center justify-between gap-2 mb-2">
             <div>
-              <h2 className="text-sm sm:text-base font-semibold text-gray-900">
-                Module Updates
+              <h2 className="text-xs sm:text-sm font-semibold text-gray-900">
+                Updates
               </h2>
-              <p className="text-xs text-gray-600">
-                {unreadCount === 0 ? "All advice read" : `${unreadCount} new`}
+              <p className="text-xs text-gray-600 leading-tight">
+                {unreadCount === 0 ? "All read" : `${unreadCount} new`}
               </p>
             </div>
             {unreadCount > 0 && (
@@ -526,7 +526,7 @@ const AdviceHub = () => {
           </div>
 
           {/* Module Status Circles */}
-          <div className="flex gap-3 sm:gap-4 overflow-x-auto pb-1">
+          <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-1">
             {modulesList.map((module) => {
               const moduleMessages = adviceMessages.filter(
                 (m) => m.moduleId === module.id,
