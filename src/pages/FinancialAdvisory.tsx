@@ -179,7 +179,9 @@ export default function FinancialAdvisory() {
                   <PopoverContent className="w-64 sm:w-80" align="end">
                     <div className="space-y-3 sm:space-y-4">
                       <div className="flex items-center justify-between">
-                        <h4 className="font-semibold text-sm sm:text-base">Notifications</h4>
+                        <h4 className="font-semibold text-sm sm:text-base">
+                          Notifications
+                        </h4>
                         <Button
                           variant="ghost"
                           size="sm"
@@ -260,7 +262,9 @@ export default function FinancialAdvisory() {
                   <PopoverContent className="w-64 sm:w-80" align="end">
                     <div className="space-y-3 sm:space-y-4">
                       <div className="flex items-center justify-between">
-                        <h4 className="font-semibold text-sm sm:text-base">Advice</h4>
+                        <h4 className="font-semibold text-sm sm:text-base">
+                          Advice
+                        </h4>
                         <Button
                           variant="ghost"
                           size="sm"
@@ -435,7 +439,10 @@ export default function FinancialAdvisory() {
               />
             </TabsContent>
 
-            <TabsContent value="summary-recommendation" className="space-y-4 sm:space-y-6 md:space-y-8">
+            <TabsContent
+              value="summary-recommendation"
+              className="space-y-4 sm:space-y-6 md:space-y-8"
+            >
               <SummaryRecommendationSection
                 summaryTitle="Financial Advisory Summary"
                 summaryDescription={SUMMARY_DESCRIPTION}
@@ -458,7 +465,10 @@ export default function FinancialAdvisory() {
               />
             </TabsContent>
 
-            <TabsContent value="cash-flow" className="space-y-3 sm:space-y-4 md:space-y-6">
+            <TabsContent
+              value="cash-flow"
+              className="space-y-3 sm:space-y-4 md:space-y-6"
+            >
               <CashFlowPlanning
                 currentCashFlows={currentCashFlows}
                 cashFlowProjections={cashFlowProjections}
@@ -467,18 +477,27 @@ export default function FinancialAdvisory() {
               />
             </TabsContent>
 
-            <TabsContent value="budget-validation" className="space-y-3 sm:space-y-4 md:space-y-6">
+            <TabsContent
+              value="budget-validation"
+              className="space-y-3 sm:space-y-4 md:space-y-6"
+            >
               <BudgetValidation budgetForecasts={budgetForecasts} />
             </TabsContent>
 
-            <TabsContent value="scenario-testing" className="space-y-3 sm:space-y-4 md:space-y-6">
+            <TabsContent
+              value="scenario-testing"
+              className="space-y-3 sm:space-y-4 md:space-y-6"
+            >
               <ScenarioTesting
                 scenarioTests={scenarioTests}
                 onRunScenario={runScenarioTest}
               />
             </TabsContent>
 
-            <TabsContent value="risk-assessment" className="space-y-3 sm:space-y-4 md:space-y-6">
+            <TabsContent
+              value="risk-assessment"
+              className="space-y-3 sm:space-y-4 md:space-y-6"
+            >
               <RiskAssessmentComponent
                 riskAssessments={riskAssessments}
                 onUpdateRiskStatus={updateRiskStatus}
@@ -486,7 +505,10 @@ export default function FinancialAdvisory() {
               />
             </TabsContent>
 
-            <TabsContent value="performance-drivers" className="space-y-3 sm:space-y-4 md:space-y-6">
+            <TabsContent
+              value="performance-drivers"
+              className="space-y-3 sm:space-y-4 md:space-y-6"
+            >
               <PerformanceDrivers
                 performanceDrivers={performanceDrivers}
                 onAddDriver={addPerformanceDriver}
@@ -496,7 +518,10 @@ export default function FinancialAdvisory() {
               />
             </TabsContent>
 
-            <TabsContent value="advisory-insights" className="space-y-3 sm:space-y-4 md:space-y-6">
+            <TabsContent
+              value="advisory-insights"
+              className="space-y-3 sm:space-y-4 md:space-y-6"
+            >
               <AdvisoryInsights
                 advisoryInsights={advisoryInsights}
                 onUpdateInsightStatus={updateInsightStatus}

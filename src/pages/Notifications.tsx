@@ -36,10 +36,30 @@ const Notifications = () => {
   const notifications = MOCK_NOTIFICATIONS;
 
   const categories = [
-    { id: "inbox", label: "Inbox", icon: <Inbox className="h-4 w-4" />, count: notifications.filter(n => !n.archived).length },
-    { id: "starred", label: "Starred", icon: <Star className="h-4 w-4" />, count: notifications.filter(n => n.starred).length },
-    { id: "archived", label: "Archived", icon: <Archive className="h-4 w-4" />, count: notifications.filter(n => n.archived).length },
-    { id: "alerts", label: "Alerts", icon: <AlertTriangle className="h-4 w-4" />, count: notifications.filter(n => n.type === "alert").length },
+    {
+      id: "inbox",
+      label: "Inbox",
+      icon: <Inbox className="h-4 w-4" />,
+      count: notifications.filter((n) => !n.archived).length,
+    },
+    {
+      id: "starred",
+      label: "Starred",
+      icon: <Star className="h-4 w-4" />,
+      count: notifications.filter((n) => n.starred).length,
+    },
+    {
+      id: "archived",
+      label: "Archived",
+      icon: <Archive className="h-4 w-4" />,
+      count: notifications.filter((n) => n.archived).length,
+    },
+    {
+      id: "alerts",
+      label: "Alerts",
+      icon: <AlertTriangle className="h-4 w-4" />,
+      count: notifications.filter((n) => n.type === "alert").length,
+    },
   ];
 
   const getTypeIcon = (type: string) => {
@@ -74,7 +94,7 @@ const Notifications = () => {
     }
   };
 
-  const filteredNotifications = notifications.filter(notification => {
+  const filteredNotifications = notifications.filter((notification) => {
     switch (selectedCategory) {
       case "starred":
         return notification.starred;
@@ -88,10 +108,10 @@ const Notifications = () => {
   });
 
   const toggleMessageSelection = (messageId: number) => {
-    setSelectedMessages(prev => 
-      prev.includes(messageId) 
-        ? prev.filter(id => id !== messageId)
-        : [...prev, messageId]
+    setSelectedMessages((prev) =>
+      prev.includes(messageId)
+        ? prev.filter((id) => id !== messageId)
+        : [...prev, messageId],
     );
   };
 
@@ -99,12 +119,14 @@ const Notifications = () => {
     if (selectedMessages.length === filteredNotifications.length) {
       setSelectedMessages([]);
     } else {
-      setSelectedMessages(filteredNotifications.map(n => n.id));
+      setSelectedMessages(filteredNotifications.map((n) => n.id));
     }
   };
 
   if (selectedNotification) {
-    const notification = notifications.find(n => n.id === selectedNotification);
+    const notification = notifications.find(
+      (n) => n.id === selectedNotification,
+    );
 
     return (
       <div className="min-h-screen bg-gray-50">
@@ -123,16 +145,26 @@ const Notifications = () => {
                 <span className="sm:hidden">Back</span>
               </Button>
               <div className="flex-1 min-w-0">
-                <h1 className="text-base sm:text-xl font-semibold truncate">{notification?.subject}</h1>
+                <h1 className="text-base sm:text-xl font-semibold truncate">
+                  {notification?.subject}
+                </h1>
               </div>
               <div className="flex items-center gap-2 flex-shrink-0">
                 <Button variant="ghost" size="sm" className="p-1 h-8 w-8">
                   <Star className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="sm" className="p-1 h-8 w-8 hidden sm:inline-flex">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="p-1 h-8 w-8 hidden sm:inline-flex"
+                >
                   <Archive className="h-4 w-4" />
                 </Button>
-                <Button variant="ghost" size="sm" className="p-1 h-8 w-8 hidden sm:inline-flex">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="p-1 h-8 w-8 hidden sm:inline-flex"
+                >
                   <Trash2 className="h-4 w-4" />
                 </Button>
               </div>
@@ -166,7 +198,9 @@ const Notifications = () => {
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
                   {getTypeIcon(notification?.type)}
-                  <Badge variant="outline" className="text-xs">{notification?.category}</Badge>
+                  <Badge variant="outline" className="text-xs">
+                    {notification?.category}
+                  </Badge>
                 </div>
               </div>
             </CardHeader>
@@ -182,10 +216,18 @@ const Notifications = () => {
                 <Button size="sm" className="w-full sm:w-auto">
                   Reply
                 </Button>
-                <Button size="sm" variant="outline" className="w-full sm:w-auto">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="w-full sm:w-auto"
+                >
                   Forward
                 </Button>
-                <Button size="sm" variant="outline" className="w-full sm:w-auto">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="w-full sm:w-auto"
+                >
                   <span className="hidden sm:inline">Mark as Important</span>
                   <span className="sm:hidden">Important</span>
                 </Button>
@@ -262,7 +304,11 @@ const Notifications = () => {
                   <span className="text-xs sm:text-sm">{category.label}</span>
                   {category.count > 0 && (
                     <Badge
-                      variant={selectedCategory === category.id ? "default" : "secondary"}
+                      variant={
+                        selectedCategory === category.id
+                          ? "default"
+                          : "secondary"
+                      }
                       className="text-xs min-w-5 h-5 flex items-center justify-center rounded-full p-0"
                     >
                       {category.count}
@@ -283,39 +329,57 @@ const Notifications = () => {
                       onClick={selectAllMessages}
                       className="p-1 hover:bg-gray-100 rounded flex-shrink-0"
                     >
-                      {selectedMessages.length === filteredNotifications.length && filteredNotifications.length > 0 ? (
+                      {selectedMessages.length ===
+                        filteredNotifications.length &&
+                      filteredNotifications.length > 0 ? (
                         <CheckSquare className="h-4 w-4" />
                       ) : (
                         <Square className="h-4 w-4" />
                       )}
                     </button>
-                    <CardTitle className="capitalize text-base sm:text-lg">{selectedCategory}</CardTitle>
+                    <CardTitle className="capitalize text-base sm:text-lg">
+                      {selectedCategory}
+                    </CardTitle>
                   </div>
 
                   {selectedMessages.length > 0 && (
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
-                      <Button variant="outline" size="sm" className="text-xs w-full sm:w-auto">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-xs w-full sm:w-auto"
+                      >
                         <Archive className="h-4 w-4 mr-1 sm:mr-2" />
-                        <span className="hidden sm:inline">Archive ({selectedMessages.length})</span>
+                        <span className="hidden sm:inline">
+                          Archive ({selectedMessages.length})
+                        </span>
                         <span className="sm:hidden">Archive</span>
                       </Button>
-                      <Button variant="outline" size="sm" className="text-xs w-full sm:w-auto">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="text-xs w-full sm:w-auto"
+                      >
                         <Trash2 className="h-4 w-4 mr-1 sm:mr-2" />
-                        <span className="hidden sm:inline">Delete ({selectedMessages.length})</span>
+                        <span className="hidden sm:inline">
+                          Delete ({selectedMessages.length})
+                        </span>
                         <span className="sm:hidden">Delete</span>
                       </Button>
                     </div>
                   )}
                 </div>
               </CardHeader>
-              
+
               <CardContent className="p-0">
                 <div className="divide-y">
                   {filteredNotifications.map((notification) => (
                     <div
                       key={notification.id}
                       className={`flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 p-3 sm:p-4 hover:bg-gray-50 cursor-pointer transition-colors ${
-                        !notification.read ? "bg-blue-50 border-l-4 border-l-blue-500" : ""
+                        !notification.read
+                          ? "bg-blue-50 border-l-4 border-l-blue-500"
+                          : ""
                       }`}
                       onClick={() => setSelectedNotification(notification.id)}
                     >
@@ -342,7 +406,9 @@ const Notifications = () => {
                           }}
                           className="p-1 hover:bg-gray-200 rounded flex-shrink-0 hidden sm:block"
                         >
-                          <Star className={`h-4 w-4 ${notification.starred ? "fill-yellow-400 text-yellow-400" : ""}`} />
+                          <Star
+                            className={`h-4 w-4 ${notification.starred ? "fill-yellow-400 text-yellow-400" : ""}`}
+                          />
                         </button>
 
                         <div className="flex-shrink-0 hidden sm:block">
@@ -353,7 +419,9 @@ const Notifications = () => {
                       {/* Content */}
                       <div className="flex-1 min-w-0">
                         <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-1">
-                          <span className={`text-sm ${!notification.read ? "font-semibold" : "font-medium"}`}>
+                          <span
+                            className={`text-sm ${!notification.read ? "font-semibold" : "font-medium"}`}
+                          >
                             {notification.sender}
                           </span>
                           <div className="flex items-center gap-1 flex-wrap">
@@ -363,7 +431,9 @@ const Notifications = () => {
                             </Badge>
                           </div>
                         </div>
-                        <div className={`text-sm ${!notification.read ? "font-medium" : ""} truncate`}>
+                        <div
+                          className={`text-sm ${!notification.read ? "font-medium" : ""} truncate`}
+                        >
                           {notification.subject}
                         </div>
                         <div className="text-xs text-muted-foreground truncate">
@@ -376,20 +446,27 @@ const Notifications = () => {
                         <div className="text-xs text-muted-foreground sm:mb-1">
                           {notification.timestamp}
                         </div>
-                        <Button variant="ghost" size="sm" className="p-1 h-8 w-8">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="p-1 h-8 w-8"
+                        >
                           <MoreVertical className="h-4 w-4" />
                         </Button>
                       </div>
                     </div>
                   ))}
                 </div>
-                
+
                 {filteredNotifications.length === 0 && (
                   <div className="text-center py-12">
                     <Inbox className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">No notifications</h3>
+                    <h3 className="text-lg font-semibold mb-2">
+                      No notifications
+                    </h3>
                     <p className="text-muted-foreground">
-                      Your {selectedCategory} is empty. New notifications will appear here.
+                      Your {selectedCategory} is empty. New notifications will
+                      appear here.
                     </p>
                   </div>
                 )}

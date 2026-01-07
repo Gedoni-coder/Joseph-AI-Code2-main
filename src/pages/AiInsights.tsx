@@ -330,8 +330,12 @@ const AdviceHub = () => {
             </button>
             <div className="min-w-0">
               <h2 className="font-semibold text-gray-900 flex items-center gap-2 line-clamp-1">
-                <span className="text-lg sm:text-xl flex-shrink-0">{selectedMessage.moduleIcon}</span>
-                <span className="text-xs sm:text-sm truncate">{selectedMessage.title}</span>
+                <span className="text-lg sm:text-xl flex-shrink-0">
+                  {selectedMessage.moduleIcon}
+                </span>
+                <span className="text-xs sm:text-sm truncate">
+                  {selectedMessage.title}
+                </span>
               </h2>
               <p className="text-xs text-gray-500">
                 [{selectedMessage.moduleName}] •{" "}
@@ -339,7 +343,10 @@ const AdviceHub = () => {
               </p>
             </div>
           </div>
-          <Badge variant="default" className="bg-green-100 text-green-800 text-xs sm:text-sm flex-shrink-0">
+          <Badge
+            variant="default"
+            className="bg-green-100 text-green-800 text-xs sm:text-sm flex-shrink-0"
+          >
             🟢 Live
           </Badge>
         </div>
@@ -455,10 +462,18 @@ const AdviceHub = () => {
                   />
 
                   <div className="absolute bottom-2 right-2 flex items-center gap-1">
-                    <Button variant="ghost" size="sm" className="h-7 sm:h-8 w-7 sm:w-8 p-0 hidden sm:flex">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-7 sm:h-8 w-7 sm:w-8 p-0 hidden sm:flex"
+                    >
                       <Paperclip className="h-4 w-4" />
                     </Button>
-                    <Button variant="ghost" size="sm" className="h-7 sm:h-8 w-7 sm:w-8 p-0 hidden sm:flex">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-7 sm:h-8 w-7 sm:w-8 p-0 hidden sm:flex"
+                    >
                       <Mic className="h-4 w-4" />
                     </Button>
                   </div>
@@ -500,9 +515,7 @@ const AdviceHub = () => {
                 Module Updates
               </h2>
               <p className="text-xs text-gray-600">
-                {unreadCount === 0
-                  ? "All advice read"
-                  : `${unreadCount} new`}
+                {unreadCount === 0 ? "All advice read" : `${unreadCount} new`}
               </p>
             </div>
             {unreadCount > 0 && (
@@ -595,7 +608,9 @@ const AdviceHub = () => {
         {/* Left Sidebar - Module Filters */}
         <div
           className={`fixed md:relative z-40 md:z-auto top-0 left-0 h-full w-64 border-r border-gray-200 bg-white flex flex-col overflow-hidden transition-transform duration-300 ease-in-out ${
-            isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+            isSidebarOpen
+              ? "translate-x-0"
+              : "-translate-x-full md:translate-x-0"
           }`}
         >
           {/* Sidebar Header with Close Button */}
