@@ -325,9 +325,9 @@ export default function BusinessPlanningFlow() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-4 gap-6">
           {/* Steps Sidebar - Left */}
-          <div className="lg:col-span-2">
+          <div className="col-span-1">
             <Card className="sticky top-4 h-fit">
               <CardHeader>
                 <CardTitle className="text-lg">Steps</CardTitle>
