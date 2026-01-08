@@ -325,20 +325,20 @@ export default function BusinessPlanningFlow() {
           </div>
         </div>
 
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-6">
           {/* Steps Sidebar - Left */}
           <div className="col-span-1">
             <Card className="sticky top-4 h-fit">
-              <CardHeader>
-                <CardTitle className="text-lg">Steps</CardTitle>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-base md:text-lg">Steps</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-2 max-h-[calc(100vh-200px)] overflow-y-auto">
+              <CardContent className="space-y-1 md:space-y-2 max-h-[calc(100vh-200px)] overflow-y-auto">
                 {businessPlan.steps.map((step) => (
                   <button
                     key={step.id}
                     onClick={() => goToStep(step.id)}
                     className={cn(
-                      "w-full text-left p-3 rounded-lg border-2 transition-all text-sm",
+                      "w-full text-left p-2 md:p-3 rounded-lg border-2 transition-all text-xs md:text-sm",
                       businessPlan.currentStep === step.id
                         ? "border-primary bg-primary/10"
                         : "border-border hover:border-primary/50",
@@ -346,19 +346,19 @@ export default function BusinessPlanningFlow() {
                         "bg-green-50 dark:bg-green-950",
                     )}
                   >
-                    <div className="flex items-start gap-2">
+                    <div className="flex items-start gap-1.5 md:gap-2">
                       {step.status === "completed" ? (
-                        <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-3.5 w-3.5 md:h-4 md:w-4 text-green-600 mt-0.5 flex-shrink-0" />
                       ) : step.status === "needs_update" ? (
-                        <AlertCircle className="h-4 w-4 text-yellow-600 mt-0.5 flex-shrink-0" />
+                        <AlertCircle className="h-3.5 w-3.5 md:h-4 md:w-4 text-yellow-600 mt-0.5 flex-shrink-0" />
                       ) : (
-                        <div className="h-4 w-4 border-2 border-muted-foreground rounded-full mt-0.5 flex-shrink-0" />
+                        <div className="h-3.5 w-3.5 md:h-4 md:w-4 border-2 border-muted-foreground rounded-full mt-0.5 flex-shrink-0" />
                       )}
-                      <div className="flex-1">
-                        <div className="font-medium">
+                      <div className="flex-1 min-w-0">
+                        <div className="font-medium text-xs md:text-sm leading-tight">
                           {step.id}. {step.name}
                         </div>
-                        <div className="text-xs text-muted-foreground mt-1">
+                        <div className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
                           {step.description}
                         </div>
                       </div>
@@ -370,7 +370,7 @@ export default function BusinessPlanningFlow() {
           </div>
 
           {/* Business Plan Generator - Right */}
-          <div className="col-span-3">
+          <div className="col-span-1 lg:col-span-3">
             <Card>
               <CardHeader>
                 <CardTitle>{currentStep.name}</CardTitle>
