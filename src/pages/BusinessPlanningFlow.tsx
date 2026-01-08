@@ -337,102 +337,36 @@ export default function BusinessPlanningFlow() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-2 md:gap-6 min-h-screen">
-          {/* Steps Sidebar - Left */}
-          <div
-            className={cn(
-              "lg:col-span-1 transition-all duration-300",
-              stepsExpanded ? "col-span-1" : "col-span-auto",
-            )}
-          >
+        <div className="grid grid-cols-4 gap-2 md:gap-4 lg:gap-6 min-h-screen">
+          {/* Steps Sidebar - Left (1/4 width) */}
+          <div className="col-span-1">
             {/* Mobile Compact View - Shows only step numbers */}
             <div className="lg:hidden">
-              {!stepsExpanded ? (
-                <div className="sticky top-4 h-fit">
-                  <div className="flex flex-col gap-1">
-                    {businessPlan.steps.map((step) => (
-                      <button
-                        key={step.id}
-                        onClick={() => {
-                          goToStep(step.id);
-                          setStepsExpanded(false);
-                        }}
-                        className={cn(
-                          "flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-lg border-2 transition-all text-xs font-medium flex-shrink-0",
-                          businessPlan.currentStep === step.id
-                            ? "border-primary bg-primary text-primary-foreground"
-                            : "border-border hover:border-primary/50",
-                          step.status === "completed" &&
-                            "bg-green-500 border-green-600 text-white",
-                        )}
-                        title={step.name}
-                      >
-                        {step.status === "completed" ? (
-                          <CheckCircle className="h-4 w-4" />
-                        ) : (
-                          step.id
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="mt-2 w-full text-xs"
-                    onClick={() => setStepsExpanded(true)}
-                  >
-                    Expand Steps
-                  </Button>
-                </div>
-              ) : (
-                <Card className="sticky top-4 h-fit">
-                  <CardHeader className="pb-3 flex flex-row items-center justify-between">
-                    <CardTitle className="text-base">Steps</CardTitle>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-6 w-6 p-0"
-                      onClick={() => setStepsExpanded(false)}
+              <div className="sticky top-4 h-fit">
+                <div className="flex flex-col gap-1">
+                  {businessPlan.steps.map((step) => (
+                    <button
+                      key={step.id}
+                      onClick={() => goToStep(step.id)}
+                      className={cn(
+                        "flex items-center justify-center w-6 h-6 md:w-8 md:h-8 rounded-lg border-2 transition-all text-xs font-medium flex-shrink-0",
+                        businessPlan.currentStep === step.id
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-border hover:border-primary/50",
+                        step.status === "completed" &&
+                          "bg-green-500 border-green-600 text-white",
+                      )}
+                      title={step.name}
                     >
-                      <ChevronLeft className="h-4 w-4" />
-                    </Button>
-                  </CardHeader>
-                  <CardContent className="space-y-1 max-h-[calc(100vh-200px)] overflow-y-auto">
-                    {businessPlan.steps.map((step) => (
-                      <button
-                        key={step.id}
-                        onClick={() => goToStep(step.id)}
-                        className={cn(
-                          "w-full text-left p-2 rounded-lg border-2 transition-all text-xs",
-                          businessPlan.currentStep === step.id
-                            ? "border-primary bg-primary/10"
-                            : "border-border hover:border-primary/50",
-                          step.status === "completed" &&
-                            "bg-green-50 dark:bg-green-950",
-                        )}
-                      >
-                        <div className="flex items-start gap-1.5">
-                          {step.status === "completed" ? (
-                            <CheckCircle className="h-3.5 w-3.5 text-green-600 mt-0.5 flex-shrink-0" />
-                          ) : step.status === "needs_update" ? (
-                            <AlertCircle className="h-3.5 w-3.5 text-yellow-600 mt-0.5 flex-shrink-0" />
-                          ) : (
-                            <div className="h-3.5 w-3.5 border-2 border-muted-foreground rounded-full mt-0.5 flex-shrink-0" />
-                          )}
-                          <div className="flex-1 min-w-0">
-                            <div className="font-medium text-xs leading-tight">
-                              {step.id}. {step.name}
-                            </div>
-                            <div className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
-                              {step.description}
-                            </div>
-                          </div>
-                        </div>
-                      </button>
-                    ))}
-                  </CardContent>
-                </Card>
-              )}
+                      {step.status === "completed" ? (
+                        <CheckCircle className="h-3 w-3 md:h-4 md:w-4" />
+                      ) : (
+                        step.id
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Desktop Full View - Always visible */}
@@ -479,13 +413,8 @@ export default function BusinessPlanningFlow() {
             </div>
           </div>
 
-          {/* Business Plan Generator - Right - Full width on mobile when steps not expanded */}
-          <div
-            className={cn(
-              "transition-all duration-300",
-              stepsExpanded ? "lg:col-span-3" : "col-span-1 lg:col-span-3",
-            )}
-          >
+          {/* Business Plan Generator - Right (3/4 width) */}
+          <div className="col-span-3">
             <Card>
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg md:text-xl">
