@@ -9,6 +9,7 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
     middlewareMode: false,
+    historyApiFallback: true,
   },
   plugins: [react(), aiProxy()],
   resolve: {
