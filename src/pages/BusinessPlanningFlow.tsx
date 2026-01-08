@@ -294,7 +294,9 @@ export default function BusinessPlanningFlow() {
               <Badge variant="outline" className="text-xs md:text-sm">
                 Step {businessPlan.currentStep} of {businessPlan.steps.length}
               </Badge>
-              <Badge variant="secondary" className="text-xs md:text-sm">{stepProgress}% Complete</Badge>
+              <Badge variant="secondary" className="text-xs md:text-sm">
+                {stepProgress}% Complete
+              </Badge>
             </div>
             <div className="flex gap-2 flex-wrap">
               <Button
@@ -305,7 +307,9 @@ export default function BusinessPlanningFlow() {
                 className="text-xs md:text-sm h-8 md:h-9"
               >
                 <Download className="h-3 w-3 md:h-4 md:w-4 md:mr-2" />
-                <span className="hidden md:inline">{exporting ? "Exporting..." : "Export DOCX"}</span>
+                <span className="hidden md:inline">
+                  {exporting ? "Exporting..." : "Export DOCX"}
+                </span>
                 <span className="md:hidden">DOCX</span>
               </Button>
               <Button
@@ -316,7 +320,9 @@ export default function BusinessPlanningFlow() {
                 className="text-xs md:text-sm h-8 md:h-9"
               >
                 <Download className="h-3 w-3 md:h-4 md:w-4 md:mr-2" />
-                <span className="hidden md:inline">{exporting ? "Exporting..." : "Export PDF"}</span>
+                <span className="hidden md:inline">
+                  {exporting ? "Exporting..." : "Export PDF"}
+                </span>
                 <span className="md:hidden">PDF</span>
               </Button>
             </div>
@@ -333,10 +339,12 @@ export default function BusinessPlanningFlow() {
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-2 md:gap-6 min-h-screen">
           {/* Steps Sidebar - Left */}
-          <div className={cn(
-            "lg:col-span-1 transition-all duration-300",
-            stepsExpanded ? "col-span-1" : "col-span-auto"
-          )}>
+          <div
+            className={cn(
+              "lg:col-span-1 transition-all duration-300",
+              stepsExpanded ? "col-span-1" : "col-span-auto",
+            )}
+          >
             {/* Mobile Compact View - Shows only step numbers */}
             <div className="lg:hidden">
               {!stepsExpanded ? (
@@ -472,14 +480,20 @@ export default function BusinessPlanningFlow() {
           </div>
 
           {/* Business Plan Generator - Right - Full width on mobile when steps not expanded */}
-          <div className={cn(
-            "transition-all duration-300",
-            stepsExpanded ? "lg:col-span-3" : "col-span-1 lg:col-span-3"
-          )}>
+          <div
+            className={cn(
+              "transition-all duration-300",
+              stepsExpanded ? "lg:col-span-3" : "col-span-1 lg:col-span-3",
+            )}
+          >
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-lg md:text-xl">{currentStep.name}</CardTitle>
-                <CardDescription className="text-xs md:text-sm">{currentStep.description}</CardDescription>
+                <CardTitle className="text-lg md:text-xl">
+                  {currentStep.name}
+                </CardTitle>
+                <CardDescription className="text-xs md:text-sm">
+                  {currentStep.description}
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3 md:space-y-6">
                 {currentStep.status === "needs_update" && (
