@@ -372,11 +372,11 @@ export default function BusinessPlanningFlow() {
           {/* Business Plan Generator - Right */}
           <div className="col-span-1 lg:col-span-3">
             <Card>
-              <CardHeader>
-                <CardTitle>{currentStep.name}</CardTitle>
-                <CardDescription>{currentStep.description}</CardDescription>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg md:text-xl">{currentStep.name}</CardTitle>
+                <CardDescription className="text-xs md:text-sm">{currentStep.description}</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
+              <CardContent className="space-y-3 md:space-y-6">
                 {currentStep.status === "needs_update" && (
                   <Alert className="border-yellow-200 bg-yellow-50 dark:bg-yellow-950">
                     <AlertCircle className="h-4 w-4 text-yellow-600" />
@@ -388,41 +388,44 @@ export default function BusinessPlanningFlow() {
                 )}
 
                 {editingStepId === currentStep.id ? (
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     <textarea
                       value={editContent}
                       onChange={(e) => setEditContent(e.target.value)}
-                      className="w-full h-96 p-4 border rounded-lg font-mono text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full h-48 md:h-96 p-2 md:p-4 border rounded-lg font-mono text-xs md:text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary"
                       placeholder="Edit step content..."
                     />
-                    <div className="flex gap-2">
+                    <div className="flex flex-col md:flex-row gap-2">
                       <Button
                         onClick={() =>
                           updateStepContent(currentStep.id, editContent)
                         }
-                        className="gap-2"
+                        className="gap-2 md:w-auto w-full"
+                        size="sm"
                       >
-                        <Check className="h-4 w-4" />
+                        <Check className="h-3.5 w-3.5 md:h-4 md:w-4" />
                         Save Changes
                       </Button>
                       <Button
                         variant="outline"
                         onClick={() => setEditingStepId(null)}
+                        size="sm"
+                        className="md:w-auto w-full"
                       >
                         Cancel
                       </Button>
                     </div>
                   </div>
                 ) : (
-                  <div className="space-y-4">
+                  <div className="space-y-3 md:space-y-4">
                     {currentStep.content ? (
                       <div>
                         <div className="prose dark:prose-invert max-w-none">
-                          <div className="whitespace-pre-wrap text-sm leading-relaxed p-4 bg-muted/30 rounded-lg border">
+                          <div className="whitespace-pre-wrap text-xs md:text-sm leading-relaxed p-2 md:p-4 bg-muted/30 rounded-lg border">
                             {currentStep.content.content}
                           </div>
                         </div>
-                        <div className="mt-4 flex gap-2">
+                        <div className="mt-3 md:mt-4 flex flex-col md:flex-row gap-2">
                           <Button
                             variant="outline"
                             onClick={() => {
@@ -431,15 +434,18 @@ export default function BusinessPlanningFlow() {
                                 currentStep.content?.content || "",
                               );
                             }}
-                            className="gap-2"
+                            className="gap-2 md:w-auto w-full"
+                            size="sm"
                           >
-                            <Edit2 className="h-4 w-4" />
+                            <Edit2 className="h-3.5 w-3.5 md:h-4 md:w-4" />
                             Edit Content
                           </Button>
                           <Button
                             variant="outline"
                             onClick={() => generateStepContent(currentStep.id)}
                             disabled={loading}
+                            size="sm"
+                            className="md:w-auto w-full"
                           >
                             {loading ? (
                               <>
@@ -453,19 +459,19 @@ export default function BusinessPlanningFlow() {
                         </div>
                       </div>
                     ) : (
-                      <div className="text-center py-8">
-                        <p className="text-muted-foreground mb-4">
+                      <div className="text-center py-4 md:py-8">
+                        <p className="text-xs md:text-sm text-muted-foreground mb-3 md:mb-4">
                           No content generated yet
                         </p>
                         <Button
                           onClick={() => generateStepContent(currentStep.id)}
                           disabled={loading}
-                          size="lg"
-                          className="gap-2"
+                          size="md"
+                          className="gap-2 w-full md:w-auto"
                         >
                           {loading ? (
                             <>
-                              <Loader2 className="h-4 w-4 animate-spin" />
+                              <Loader2 className="h-3.5 w-3.5 md:h-4 md:w-4 animate-spin" />
                               Generating...
                             </>
                           ) : (
