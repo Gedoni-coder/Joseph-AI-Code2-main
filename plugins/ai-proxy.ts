@@ -99,12 +99,17 @@ export default function aiProxy(): Plugin {
       });
 
       // SPA fallback: serve index.html for all non-file requests
-      server.middlewares.use((req, res, next) => {
-        if (!req.url?.includes('.') && !req.url?.startsWith('/api')) {
+      return () => {
+        server.middlewares.use((req, res, next) => {
+          // Skip API routes and files with extensions
+          if (req.url?.startsWith('/api') || req.url?.includes('.')) {
+            return next();
+          }
+          // For all other routes, serve index.html
           req.url = '/index.html';
-        }
-        next();
-      });
+          next();
+        });
+      };
     },
   };
 }
