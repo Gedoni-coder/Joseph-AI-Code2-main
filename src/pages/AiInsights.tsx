@@ -773,14 +773,14 @@ const AdviceHub = () => {
                               <div className="w-2 h-2 bg-blue-600 rounded-full flex-shrink-0"></div>
                             )}
                           </div>
-                          <p className="text-xs text-gray-500 mb-1">
+                          <div className="text-xs text-gray-500 mb-1">
                             <Badge
                               variant="outline"
                               className="text-xs font-normal"
                             >
                               [{message.moduleName}]
                             </Badge>
-                          </p>
+                          </div>
                           <p className="text-xs sm:text-sm text-gray-600 line-clamp-2">
                             {message.content}
                           </p>
