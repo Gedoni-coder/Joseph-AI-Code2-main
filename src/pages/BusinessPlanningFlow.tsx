@@ -435,44 +435,44 @@ export default function BusinessPlanningFlow() {
                 )}
 
                 {editingStepId === currentStep.id ? (
-                  <div className="space-y-3">
+                  <div className="space-y-2">
                     <textarea
                       value={editContent}
                       onChange={(e) => setEditContent(e.target.value)}
-                      className="w-full h-48 md:h-96 p-2 md:p-4 border rounded-lg font-mono text-xs md:text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full h-32 md:h-96 p-2 md:p-4 border rounded-lg font-mono text-xs md:text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary"
                       placeholder="Edit step content..."
                     />
-                    <div className="flex flex-col md:flex-row gap-2">
+                    <div className="flex flex-col md:flex-row gap-1.5 md:gap-2">
                       <Button
                         onClick={() =>
                           updateStepContent(currentStep.id, editContent)
                         }
-                        className="gap-2 md:w-auto w-full"
+                        className="gap-1 md:gap-2 w-full md:w-auto text-xs md:text-sm h-7 md:h-9"
                         size="sm"
                       >
-                        <Check className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                        Save Changes
+                        <Check className="h-3 w-3 md:h-4 md:w-4" />
+                        <span>Save</span>
                       </Button>
                       <Button
                         variant="outline"
                         onClick={() => setEditingStepId(null)}
                         size="sm"
-                        className="md:w-auto w-full"
+                        className="w-full md:w-auto text-xs md:text-sm h-7 md:h-9"
                       >
                         Cancel
                       </Button>
                     </div>
                   </div>
                 ) : (
-                  <div className="space-y-3 md:space-y-4">
+                  <div className="space-y-2 md:space-y-3">
                     {currentStep.content ? (
                       <div>
                         <div className="prose dark:prose-invert max-w-none">
-                          <div className="whitespace-pre-wrap text-xs md:text-sm leading-relaxed p-2 md:p-4 bg-muted/30 rounded-lg border">
+                          <div className="whitespace-pre-wrap text-xs md:text-sm leading-relaxed p-2 md:p-4 bg-muted/30 rounded-lg border max-h-40 md:max-h-80 overflow-y-auto">
                             {currentStep.content.content}
                           </div>
                         </div>
-                        <div className="mt-3 md:mt-4 flex flex-col md:flex-row gap-2">
+                        <div className="mt-2 md:mt-3 flex flex-col md:flex-row gap-1.5 md:gap-2">
                           <Button
                             variant="outline"
                             onClick={() => {
@@ -481,23 +481,24 @@ export default function BusinessPlanningFlow() {
                                 currentStep.content?.content || "",
                               );
                             }}
-                            className="gap-2 md:w-auto w-full"
+                            className="gap-1 md:gap-2 w-full md:w-auto text-xs md:text-sm h-7 md:h-9"
                             size="sm"
                           >
-                            <Edit2 className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                            Edit Content
+                            <Edit2 className="h-3 w-3 md:h-4 md:w-4" />
+                            <span>Edit</span>
                           </Button>
                           <Button
                             variant="outline"
                             onClick={() => generateStepContent(currentStep.id)}
                             disabled={loading}
                             size="sm"
-                            className="md:w-auto w-full"
+                            className="w-full md:w-auto text-xs md:text-sm h-7 md:h-9"
                           >
                             {loading ? (
                               <>
-                                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                                Regenerating...
+                                <Loader2 className="h-3 w-3 animate-spin" />
+                                <span className="hidden md:inline">Regenerating...</span>
+                                <span className="md:hidden">Regen...</span>
                               </>
                             ) : (
                               "Regenerate"
@@ -506,20 +507,20 @@ export default function BusinessPlanningFlow() {
                         </div>
                       </div>
                     ) : (
-                      <div className="text-center py-4 md:py-8">
-                        <p className="text-xs md:text-sm text-muted-foreground mb-3 md:mb-4">
+                      <div className="text-center py-3 md:py-6">
+                        <p className="text-xs md:text-sm text-muted-foreground mb-2 md:mb-3">
                           No content generated yet
                         </p>
                         <Button
                           onClick={() => generateStepContent(currentStep.id)}
                           disabled={loading}
-                          size="md"
-                          className="gap-2 w-full md:w-auto"
+                          size="sm"
+                          className="gap-1 md:gap-2 w-full md:w-auto text-xs md:text-sm h-7 md:h-9"
                         >
                           {loading ? (
                             <>
-                              <Loader2 className="h-3.5 w-3.5 md:h-4 md:w-4 animate-spin" />
-                              Generating...
+                              <Loader2 className="h-3 w-3 animate-spin" />
+                              <span>Generating...</span>
                             </>
                           ) : (
                             "Generate Content"
