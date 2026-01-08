@@ -5,6 +5,7 @@ import aiProxy from "./plugins/ai-proxy";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  appType: "spa",
   server: {
     host: "::",
     port: 8080,
