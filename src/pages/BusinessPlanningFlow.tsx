@@ -265,7 +265,7 @@ export default function BusinessPlanningFlow() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      <div className="container mx-auto px-3 md:px-4 py-6 md:py-8">
+      <div className="w-full px-2 sm:px-3 md:px-4 py-4 md:py-8">
         {/* Header */}
         <div className="mb-6 md:mb-8">
           <div className="flex items-center gap-2 mb-3 md:mb-4">
