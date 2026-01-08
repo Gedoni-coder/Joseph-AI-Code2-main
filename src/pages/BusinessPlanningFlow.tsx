@@ -267,46 +267,46 @@ export default function BusinessPlanningFlow() {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <div className="w-full px-2 sm:px-3 md:px-4 py-4 md:py-8">
         {/* Header */}
-        <div className="mb-6 md:mb-8">
-          <div className="flex items-center gap-2 mb-3 md:mb-4">
+        <div className="mb-4 md:mb-8">
+          <div className="flex items-center gap-1 md:gap-2 mb-2 md:mb-3">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => navigate("/business-planning")}
-              className="gap-2 h-8 px-2"
+              className="gap-1 md:gap-2 h-7 md:h-8 px-1.5 md:px-2"
             >
               <ArrowLeft className="h-3 w-3 md:h-4 md:w-4" />
-              <span className="hidden md:inline">Back to plans</span>
-              <span className="md:hidden">Back</span>
+              <span className="hidden md:inline text-xs md:text-sm">Back to plans</span>
+              <span className="md:hidden text-xs">Back</span>
             </Button>
           </div>
 
-          <h1 className="text-xl md:text-3xl font-bold mb-1 md:mb-2 line-clamp-2">
+          <h1 className="text-base md:text-3xl font-bold mb-1 md:mb-2 line-clamp-2">
             {businessPlan.businessName}
           </h1>
-          <p className="text-xs md:text-sm text-muted-foreground mb-3 md:mb-4">
+          <p className="text-xs md:text-sm text-muted-foreground mb-2 md:mb-3">
             Business Planning Workflow
           </p>
 
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4 mb-3 md:mb-4">
-            <div className="flex items-center gap-2 flex-wrap">
-              <Badge variant="outline" className="text-xs md:text-sm">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-4 mb-2 md:mb-3">
+            <div className="flex items-center gap-1.5 md:gap-2 flex-wrap">
+              <Badge variant="outline" className="text-xs">
                 Step {businessPlan.currentStep} of {businessPlan.steps.length}
               </Badge>
-              <Badge variant="secondary" className="text-xs md:text-sm">
+              <Badge variant="secondary" className="text-xs">
                 {stepProgress}% Complete
               </Badge>
             </div>
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex gap-1.5 md:gap-2 flex-wrap">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => handleExport("docx")}
                 disabled={exporting}
-                className="text-xs md:text-sm h-8 md:h-9"
+                className="text-xs h-7 md:h-9 px-2 md:px-3"
               >
-                <Download className="h-3 w-3 md:h-4 md:w-4 md:mr-2" />
-                <span className="hidden md:inline">
+                <Download className="h-3 w-3 md:h-4 md:w-4" />
+                <span className="hidden md:inline ml-1">
                   {exporting ? "Exporting..." : "Export DOCX"}
                 </span>
                 <span className="md:hidden">DOCX</span>
@@ -316,10 +316,10 @@ export default function BusinessPlanningFlow() {
                 size="sm"
                 onClick={() => handleExport("pdf")}
                 disabled={exporting}
-                className="text-xs md:text-sm h-8 md:h-9"
+                className="text-xs h-7 md:h-9 px-2 md:px-3"
               >
-                <Download className="h-3 w-3 md:h-4 md:w-4 md:mr-2" />
-                <span className="hidden md:inline">
+                <Download className="h-3 w-3 md:h-4 md:w-4" />
+                <span className="hidden md:inline ml-1">
                   {exporting ? "Exporting..." : "Export PDF"}
                 </span>
                 <span className="md:hidden">PDF</span>
@@ -328,9 +328,9 @@ export default function BusinessPlanningFlow() {
           </div>
 
           {/* Progress Bar */}
-          <div className="w-full bg-secondary rounded-full h-2">
+          <div className="w-full bg-secondary rounded-full h-1.5 md:h-2">
             <div
-              className="bg-primary h-2 rounded-full transition-all duration-300"
+              className="bg-primary h-1.5 md:h-2 rounded-full transition-all duration-300"
               style={{ width: `${stepProgress}%` }}
             />
           </div>
