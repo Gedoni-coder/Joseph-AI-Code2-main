@@ -517,10 +517,12 @@ export default function BusinessPlanningFlow() {
               }
             }}
             disabled={businessPlan.currentStep === businessPlan.steps.length}
-            className="gap-2"
+            className="gap-1 md:gap-2 text-xs md:text-sm h-8 md:h-9"
+            size="sm"
           >
-            Next
-            <ChevronRight className="h-4 w-4" />
+            <span className="hidden md:inline">Next</span>
+            <span className="md:hidden">Next</span>
+            <ChevronRight className="h-3 w-3 md:h-4 md:w-4" />
           </Button>
         </div>
       </div>
