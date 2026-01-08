@@ -265,53 +265,58 @@ export default function BusinessPlanningFlow() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-3 md:px-4 py-6 md:py-8">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-4 mb-4">
+        <div className="mb-6 md:mb-8">
+          <div className="flex items-center gap-2 mb-3 md:mb-4">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => navigate("/business-planning")}
-              className="gap-2"
+              className="gap-2 h-8 px-2"
             >
-              <ArrowLeft className="h-4 w-4" />
-              Back to plans
+              <ArrowLeft className="h-3 w-3 md:h-4 md:w-4" />
+              <span className="hidden md:inline">Back to plans</span>
+              <span className="md:hidden">Back</span>
             </Button>
           </div>
 
-          <h1 className="text-3xl font-bold mb-2">
+          <h1 className="text-xl md:text-3xl font-bold mb-1 md:mb-2 line-clamp-2">
             {businessPlan.businessName}
           </h1>
-          <p className="text-muted-foreground mb-4">
+          <p className="text-xs md:text-sm text-muted-foreground mb-3 md:mb-4">
             Business Planning Workflow
           </p>
 
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-4">
-              <Badge variant="outline">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4 mb-3 md:mb-4">
+            <div className="flex items-center gap-2 flex-wrap">
+              <Badge variant="outline" className="text-xs md:text-sm">
                 Step {businessPlan.currentStep} of {businessPlan.steps.length}
               </Badge>
-              <Badge variant="secondary">{stepProgress}% Complete</Badge>
+              <Badge variant="secondary" className="text-xs md:text-sm">{stepProgress}% Complete</Badge>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => handleExport("docx")}
                 disabled={exporting}
+                className="text-xs md:text-sm h-8 md:h-9"
               >
-                <Download className="h-4 w-4 mr-2" />
-                {exporting ? "Exporting..." : "Export DOCX"}
+                <Download className="h-3 w-3 md:h-4 md:w-4 md:mr-2" />
+                <span className="hidden md:inline">{exporting ? "Exporting..." : "Export DOCX"}</span>
+                <span className="md:hidden">DOCX</span>
               </Button>
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => handleExport("pdf")}
                 disabled={exporting}
+                className="text-xs md:text-sm h-8 md:h-9"
               >
-                <Download className="h-4 w-4 mr-2" />
-                {exporting ? "Exporting..." : "Export PDF"}
+                <Download className="h-3 w-3 md:h-4 md:w-4 md:mr-2" />
+                <span className="hidden md:inline">{exporting ? "Exporting..." : "Export PDF"}</span>
+                <span className="md:hidden">PDF</span>
               </Button>
             </div>
           </div>
@@ -488,18 +493,20 @@ export default function BusinessPlanningFlow() {
         </div>
 
         {/* Navigation - Below Both Panes */}
-        <div className="flex justify-between items-center pt-6 mt-6 border-t">
+        <div className="flex justify-between items-center pt-4 md:pt-6 mt-4 md:mt-6 border-t gap-2">
           <Button
             variant="outline"
             onClick={() => goToStep(Math.max(1, businessPlan.currentStep - 1))}
             disabled={businessPlan.currentStep === 1}
-            className="gap-2"
+            className="gap-1 md:gap-2 text-xs md:text-sm h-8 md:h-9"
+            size="sm"
           >
-            <ChevronLeft className="h-4 w-4" />
-            Previous
+            <ChevronLeft className="h-3 w-3 md:h-4 md:w-4" />
+            <span className="hidden md:inline">Previous</span>
+            <span className="md:hidden">Prev</span>
           </Button>
 
-          <div className="text-sm text-muted-foreground">
+          <div className="text-xs md:text-sm text-muted-foreground">
             Step {businessPlan.currentStep} of {businessPlan.steps.length}
           </div>
 
