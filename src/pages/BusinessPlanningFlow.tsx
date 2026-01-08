@@ -535,12 +535,12 @@ export default function BusinessPlanningFlow() {
         </div>
 
         {/* Navigation - Below Both Panes */}
-        <div className="flex justify-between items-center pt-4 md:pt-6 mt-4 md:mt-6 border-t gap-2">
+        <div className="flex justify-between items-center pt-3 md:pt-4 mt-3 md:mt-4 border-t gap-1.5 md:gap-2">
           <Button
             variant="outline"
             onClick={() => goToStep(Math.max(1, businessPlan.currentStep - 1))}
             disabled={businessPlan.currentStep === 1}
-            className="gap-1 md:gap-2 text-xs md:text-sm h-8 md:h-9"
+            className="gap-0.5 md:gap-1 text-xs h-7 md:h-9 px-2 md:px-3"
             size="sm"
           >
             <ChevronLeft className="h-3 w-3 md:h-4 md:w-4" />
@@ -548,7 +548,7 @@ export default function BusinessPlanningFlow() {
             <span className="md:hidden">Prev</span>
           </Button>
 
-          <div className="text-xs md:text-sm text-muted-foreground">
+          <div className="text-xs text-muted-foreground">
             Step {businessPlan.currentStep} of {businessPlan.steps.length}
           </div>
 
@@ -559,7 +559,7 @@ export default function BusinessPlanningFlow() {
               }
             }}
             disabled={businessPlan.currentStep === businessPlan.steps.length}
-            className="gap-1 md:gap-2 text-xs md:text-sm h-8 md:h-9"
+            className="gap-0.5 md:gap-1 text-xs h-7 md:h-9 px-2 md:px-3"
             size="sm"
           >
             <span className="hidden md:inline">Next</span>
