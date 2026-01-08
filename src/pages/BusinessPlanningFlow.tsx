@@ -57,7 +57,6 @@ export default function BusinessPlanningFlow() {
   const [editingStepId, setEditingStepId] = useState<number | null>(null);
   const [editContent, setEditContent] = useState("");
   const [exporting, setExporting] = useState(false);
-  const [stepsExpanded, setStepsExpanded] = useState(false);
 
   // Load existing business plan or create new one
   useEffect(() => {
