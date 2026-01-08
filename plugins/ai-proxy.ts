@@ -97,6 +97,14 @@ export default function aiProxy(): Plugin {
           res.end(JSON.stringify({ error: 'Upstream error' }));
         }
       });
+
+      // SPA fallback: serve index.html for all non-file requests
+      server.middlewares.use((req, res, next) => {
+        if (!req.url?.includes('.') && !req.url?.startsWith('/api')) {
+          req.url = '/index.html';
+        }
+        next();
+      });
     },
   };
 }
