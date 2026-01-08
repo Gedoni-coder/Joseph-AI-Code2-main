@@ -3,8 +3,6 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import aiProxy from "./plugins/ai-proxy";
 
-import { connect } from "http";
-
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   appType: "spa",
