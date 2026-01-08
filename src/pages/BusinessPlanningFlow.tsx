@@ -415,15 +415,15 @@ export default function BusinessPlanningFlow() {
           {/* Business Plan Generator - Right (3/4 width) */}
           <div className="col-span-3">
             <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg md:text-xl">
+              <CardHeader className="pb-2 md:pb-3">
+                <CardTitle className="text-sm md:text-xl line-clamp-2">
                   {currentStep.name}
                 </CardTitle>
-                <CardDescription className="text-xs md:text-sm">
+                <CardDescription className="text-xs line-clamp-2">
                   {currentStep.description}
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-3 md:space-y-6">
+              <CardContent className="space-y-2 md:space-y-4">
                 {currentStep.status === "needs_update" && (
                   <Alert className="border-yellow-200 bg-yellow-50 dark:bg-yellow-950">
                     <AlertCircle className="h-4 w-4 text-yellow-600" />
