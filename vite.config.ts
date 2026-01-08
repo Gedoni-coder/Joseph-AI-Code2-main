@@ -5,11 +5,10 @@ import aiProxy from "./plugins/ai-proxy";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  appType: 'spa',
   server: {
     host: "::",
     port: 8080,
-    middlewareMode: false,
-    historyApiFallback: true,
   },
   plugins: [react(), aiProxy()],
   resolve: {
