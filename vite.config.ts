@@ -5,32 +5,30 @@ import aiProxy from "./plugins/ai-proxy";
 
 // Custom SPA fallback middleware plugin
 function spaFallback() {
-  let config: any;
   return {
     name: 'spa-fallback',
-    configResolved(resolvedConfig: any) {
-      config = resolvedConfig;
-    },
     configureServer(server: any) {
       return () => {
         // Middleware that runs after internal middlewares
         server.middlewares.use((req: any, res: any, next: any) => {
-          // Skip if it's a file with extension, API route, or vite internal
-          if (
-            req.url.includes('.') ||
-            req.url.startsWith('/api') ||
-            req.url.startsWith('/@') ||
-            req.url === '/favicon.ico'
-          ) {
+          const url = req.url.split('?')[0]; // Remove query string
+
+          // Skip if it's:
+          // - An API request
+          // - A vite internal request
+          // - A file with a known extension (js, css, json, html, svg, png, jpg, etc)
+          const isAsset = /\.(js|mjs|json|css|html|svg|png|jpg|jpeg|gif|webp|woff|woff2|eot|ttf|otf|ico|map)(\?.*)?$/.test(url);
+          const isApi = url.startsWith('/api');
+          const isViteInternal = url.startsWith('/@');
+
+          if (isAsset || isApi || isViteInternal) {
             next();
             return;
           }
 
-          // For SPA routes without file extensions, rewrite to index.html
-          // so react-router can handle client-side routing
-          if (!req.url.includes('.')) {
-            req.url = '/index.html';
-          }
+          // For all other requests (SPA routes), serve index.html
+          // and let React Router handle the routing
+          req.url = '/index.html';
           next();
         });
       };
