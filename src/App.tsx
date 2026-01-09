@@ -14,8 +14,9 @@ import {
   useLocation,
   Navigate,
 } from "react-router-dom";
-import { Radio } from "lucide-react";
+import { Radio, Moon, Sun } from "lucide-react";
 import { Switch } from "./components/ui/switch";
+import { ThemeProvider, useTheme } from "./lib/theme-context";
 import Landing from "./pages/Landing";
 import PrimaryLanding from "./pages/PrimaryLanding";
 import Index from "./pages/Index";
