@@ -66,7 +66,9 @@ export default function Onboarding() {
     companyInfo?.companySize || ""
   );
   const [address, setAddress] = useState(companyInfo?.address || "");
-  const [websiteUrl, setWebsiteUrl] = useState(companyInfo?.websiteUrl || "");
+  const [websiteUrl, setWebsiteUrl] = useState(
+    companyInfo?.websiteUrl || "https://"
+  );
 
   // Optional fields
   const [showOptional, setShowOptional] = useState(false);
@@ -377,23 +379,29 @@ export default function Onboarding() {
                     <Label htmlFor="websiteUrl" className="text-sm font-medium">
                       Website URL
                     </Label>
-                    <Input
-                      id="websiteUrl"
-                      type="url"
-                      value={websiteUrl}
-                      onChange={(e) => {
-                        setWebsiteUrl(e.target.value);
-                        setErrors((prev) => {
-                          const newErrors = { ...prev };
-                          delete newErrors.websiteUrl;
-                          return newErrors;
-                        });
-                      }}
-                      placeholder="https://example.com"
-                      className={`mt-1 ${
-                        errors.websiteUrl ? "border-red-500" : ""
-                      }`}
-                    />
+                    <div className={`mt-1 flex items-center rounded-md border border-input bg-background overflow-hidden ${
+                      errors.websiteUrl ? "border-red-500" : ""
+                    }`}>
+                      <span className="px-3 py-2 text-sm font-medium text-muted-foreground bg-muted/30 border-r border-input whitespace-nowrap">
+                        https://
+                      </span>
+                      <input
+                        id="websiteUrl"
+                        type="text"
+                        value={websiteUrl.replace(/^https:\/\//, "")}
+                        onChange={(e) => {
+                          const domainValue = e.target.value.replace(/^https:\/\//, "");
+                          setWebsiteUrl(`https://${domainValue}`);
+                          setErrors((prev) => {
+                            const newErrors = { ...prev };
+                            delete newErrors.websiteUrl;
+                            return newErrors;
+                          });
+                        }}
+                        placeholder="example.com"
+                        className="flex-1 px-3 py-2 text-sm bg-transparent outline-none"
+                      />
+                    </div>
                     {errors.websiteUrl && (
                       <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
                         <AlertCircle className="h-4 w-4" />

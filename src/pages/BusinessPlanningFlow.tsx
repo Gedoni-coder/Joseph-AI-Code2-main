@@ -57,7 +57,6 @@ export default function BusinessPlanningFlow() {
   const [editingStepId, setEditingStepId] = useState<number | null>(null);
   const [editContent, setEditContent] = useState("");
   const [exporting, setExporting] = useState(false);
-  const [stepsExpanded, setStepsExpanded] = useState(false);
 
   // Load existing business plan or create new one
   useEffect(() => {
@@ -266,48 +265,48 @@ export default function BusinessPlanningFlow() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      <div className="container mx-auto px-3 md:px-4 py-6 md:py-8">
+      <div className="w-full px-2 sm:px-3 md:px-4 py-4 md:py-8">
         {/* Header */}
-        <div className="mb-6 md:mb-8">
-          <div className="flex items-center gap-2 mb-3 md:mb-4">
+        <div className="mb-4 md:mb-8">
+          <div className="flex items-center gap-1 md:gap-2 mb-2 md:mb-3">
             <Button
               variant="ghost"
               size="sm"
               onClick={() => navigate("/business-planning")}
-              className="gap-2 h-8 px-2"
+              className="gap-1 md:gap-2 h-7 md:h-8 px-1.5 md:px-2"
             >
               <ArrowLeft className="h-3 w-3 md:h-4 md:w-4" />
-              <span className="hidden md:inline">Back to plans</span>
-              <span className="md:hidden">Back</span>
+              <span className="hidden md:inline text-xs md:text-sm">Back to plans</span>
+              <span className="md:hidden text-xs">Back</span>
             </Button>
           </div>
 
-          <h1 className="text-xl md:text-3xl font-bold mb-1 md:mb-2 line-clamp-2">
+          <h1 className="text-base md:text-3xl font-bold mb-1 md:mb-2 line-clamp-2">
             {businessPlan.businessName}
           </h1>
-          <p className="text-xs md:text-sm text-muted-foreground mb-3 md:mb-4">
+          <p className="text-xs md:text-sm text-muted-foreground mb-2 md:mb-3">
             Business Planning Workflow
           </p>
 
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-4 mb-3 md:mb-4">
-            <div className="flex items-center gap-2 flex-wrap">
-              <Badge variant="outline" className="text-xs md:text-sm">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-4 mb-2 md:mb-3">
+            <div className="flex items-center gap-1.5 md:gap-2 flex-wrap">
+              <Badge variant="outline" className="text-xs">
                 Step {businessPlan.currentStep} of {businessPlan.steps.length}
               </Badge>
-              <Badge variant="secondary" className="text-xs md:text-sm">
+              <Badge variant="secondary" className="text-xs">
                 {stepProgress}% Complete
               </Badge>
             </div>
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex gap-1.5 md:gap-2 flex-wrap">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => handleExport("docx")}
                 disabled={exporting}
-                className="text-xs md:text-sm h-8 md:h-9"
+                className="text-xs h-7 md:h-9 px-2 md:px-3"
               >
-                <Download className="h-3 w-3 md:h-4 md:w-4 md:mr-2" />
-                <span className="hidden md:inline">
+                <Download className="h-3 w-3 md:h-4 md:w-4" />
+                <span className="hidden md:inline ml-1">
                   {exporting ? "Exporting..." : "Export DOCX"}
                 </span>
                 <span className="md:hidden">DOCX</span>
@@ -317,10 +316,10 @@ export default function BusinessPlanningFlow() {
                 size="sm"
                 onClick={() => handleExport("pdf")}
                 disabled={exporting}
-                className="text-xs md:text-sm h-8 md:h-9"
+                className="text-xs h-7 md:h-9 px-2 md:px-3"
               >
-                <Download className="h-3 w-3 md:h-4 md:w-4 md:mr-2" />
-                <span className="hidden md:inline">
+                <Download className="h-3 w-3 md:h-4 md:w-4" />
+                <span className="hidden md:inline ml-1">
                   {exporting ? "Exporting..." : "Export PDF"}
                 </span>
                 <span className="md:hidden">PDF</span>
@@ -329,110 +328,44 @@ export default function BusinessPlanningFlow() {
           </div>
 
           {/* Progress Bar */}
-          <div className="w-full bg-secondary rounded-full h-2">
+          <div className="w-full bg-secondary rounded-full h-1.5 md:h-2">
             <div
-              className="bg-primary h-2 rounded-full transition-all duration-300"
+              className="bg-primary h-1.5 md:h-2 rounded-full transition-all duration-300"
               style={{ width: `${stepProgress}%` }}
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-2 md:gap-6 min-h-screen">
-          {/* Steps Sidebar - Left */}
-          <div
-            className={cn(
-              "lg:col-span-1 transition-all duration-300",
-              stepsExpanded ? "col-span-1" : "col-span-auto",
-            )}
-          >
+        <div className="grid grid-cols-4 gap-2 md:gap-4 lg:gap-6 min-h-screen">
+          {/* Steps Sidebar - Left (1/4 width) */}
+          <div className="col-span-1">
             {/* Mobile Compact View - Shows only step numbers */}
             <div className="lg:hidden">
-              {!stepsExpanded ? (
-                <div className="sticky top-4 h-fit">
-                  <div className="flex flex-col gap-1">
-                    {businessPlan.steps.map((step) => (
-                      <button
-                        key={step.id}
-                        onClick={() => {
-                          goToStep(step.id);
-                          setStepsExpanded(false);
-                        }}
-                        className={cn(
-                          "flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-lg border-2 transition-all text-xs font-medium flex-shrink-0",
-                          businessPlan.currentStep === step.id
-                            ? "border-primary bg-primary text-primary-foreground"
-                            : "border-border hover:border-primary/50",
-                          step.status === "completed" &&
-                            "bg-green-500 border-green-600 text-white",
-                        )}
-                        title={step.name}
-                      >
-                        {step.status === "completed" ? (
-                          <CheckCircle className="h-4 w-4" />
-                        ) : (
-                          step.id
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="mt-2 w-full text-xs"
-                    onClick={() => setStepsExpanded(true)}
-                  >
-                    Expand Steps
-                  </Button>
-                </div>
-              ) : (
-                <Card className="sticky top-4 h-fit">
-                  <CardHeader className="pb-3 flex flex-row items-center justify-between">
-                    <CardTitle className="text-base">Steps</CardTitle>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-6 w-6 p-0"
-                      onClick={() => setStepsExpanded(false)}
+              <div className="sticky top-4 h-fit">
+                <div className="flex flex-col gap-1">
+                  {businessPlan.steps.map((step) => (
+                    <button
+                      key={step.id}
+                      onClick={() => goToStep(step.id)}
+                      className={cn(
+                        "flex items-center justify-center w-6 h-6 md:w-8 md:h-8 rounded-lg border-2 transition-all text-xs font-medium flex-shrink-0",
+                        businessPlan.currentStep === step.id
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-border hover:border-primary/50",
+                        step.status === "completed" &&
+                          "bg-green-500 border-green-600 text-white",
+                      )}
+                      title={step.name}
                     >
-                      <ChevronLeft className="h-4 w-4" />
-                    </Button>
-                  </CardHeader>
-                  <CardContent className="space-y-1 max-h-[calc(100vh-200px)] overflow-y-auto">
-                    {businessPlan.steps.map((step) => (
-                      <button
-                        key={step.id}
-                        onClick={() => goToStep(step.id)}
-                        className={cn(
-                          "w-full text-left p-2 rounded-lg border-2 transition-all text-xs",
-                          businessPlan.currentStep === step.id
-                            ? "border-primary bg-primary/10"
-                            : "border-border hover:border-primary/50",
-                          step.status === "completed" &&
-                            "bg-green-50 dark:bg-green-950",
-                        )}
-                      >
-                        <div className="flex items-start gap-1.5">
-                          {step.status === "completed" ? (
-                            <CheckCircle className="h-3.5 w-3.5 text-green-600 mt-0.5 flex-shrink-0" />
-                          ) : step.status === "needs_update" ? (
-                            <AlertCircle className="h-3.5 w-3.5 text-yellow-600 mt-0.5 flex-shrink-0" />
-                          ) : (
-                            <div className="h-3.5 w-3.5 border-2 border-muted-foreground rounded-full mt-0.5 flex-shrink-0" />
-                          )}
-                          <div className="flex-1 min-w-0">
-                            <div className="font-medium text-xs leading-tight">
-                              {step.id}. {step.name}
-                            </div>
-                            <div className="text-xs text-muted-foreground mt-0.5 line-clamp-2">
-                              {step.description}
-                            </div>
-                          </div>
-                        </div>
-                      </button>
-                    ))}
-                  </CardContent>
-                </Card>
-              )}
+                      {step.status === "completed" ? (
+                        <CheckCircle className="h-3 w-3 md:h-4 md:w-4" />
+                      ) : (
+                        step.id
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Desktop Full View - Always visible */}
@@ -479,23 +412,18 @@ export default function BusinessPlanningFlow() {
             </div>
           </div>
 
-          {/* Business Plan Generator - Right - Full width on mobile when steps not expanded */}
-          <div
-            className={cn(
-              "transition-all duration-300",
-              stepsExpanded ? "lg:col-span-3" : "col-span-1 lg:col-span-3",
-            )}
-          >
+          {/* Business Plan Generator - Right (3/4 width) */}
+          <div className="col-span-3">
             <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg md:text-xl">
+              <CardHeader className="pb-2 md:pb-3">
+                <CardTitle className="text-sm md:text-xl line-clamp-2">
                   {currentStep.name}
                 </CardTitle>
-                <CardDescription className="text-xs md:text-sm">
+                <CardDescription className="text-xs line-clamp-2">
                   {currentStep.description}
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-3 md:space-y-6">
+              <CardContent className="space-y-2 md:space-y-4">
                 {currentStep.status === "needs_update" && (
                   <Alert className="border-yellow-200 bg-yellow-50 dark:bg-yellow-950">
                     <AlertCircle className="h-4 w-4 text-yellow-600" />
@@ -507,44 +435,44 @@ export default function BusinessPlanningFlow() {
                 )}
 
                 {editingStepId === currentStep.id ? (
-                  <div className="space-y-3">
+                  <div className="space-y-2">
                     <textarea
                       value={editContent}
                       onChange={(e) => setEditContent(e.target.value)}
-                      className="w-full h-48 md:h-96 p-2 md:p-4 border rounded-lg font-mono text-xs md:text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary"
+                      className="w-full h-32 md:h-96 p-2 md:p-4 border rounded-lg font-mono text-xs md:text-sm resize-none focus:outline-none focus:ring-2 focus:ring-primary"
                       placeholder="Edit step content..."
                     />
-                    <div className="flex flex-col md:flex-row gap-2">
+                    <div className="flex flex-col md:flex-row gap-1.5 md:gap-2">
                       <Button
                         onClick={() =>
                           updateStepContent(currentStep.id, editContent)
                         }
-                        className="gap-2 md:w-auto w-full"
+                        className="gap-1 md:gap-2 w-full md:w-auto text-xs md:text-sm h-7 md:h-9"
                         size="sm"
                       >
-                        <Check className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                        Save Changes
+                        <Check className="h-3 w-3 md:h-4 md:w-4" />
+                        <span>Save</span>
                       </Button>
                       <Button
                         variant="outline"
                         onClick={() => setEditingStepId(null)}
                         size="sm"
-                        className="md:w-auto w-full"
+                        className="w-full md:w-auto text-xs md:text-sm h-7 md:h-9"
                       >
                         Cancel
                       </Button>
                     </div>
                   </div>
                 ) : (
-                  <div className="space-y-3 md:space-y-4">
+                  <div className="space-y-2 md:space-y-3">
                     {currentStep.content ? (
                       <div>
                         <div className="prose dark:prose-invert max-w-none">
-                          <div className="whitespace-pre-wrap text-xs md:text-sm leading-relaxed p-2 md:p-4 bg-muted/30 rounded-lg border">
+                          <div className="whitespace-pre-wrap text-xs md:text-sm leading-relaxed p-2 md:p-4 bg-muted/30 rounded-lg border max-h-40 md:max-h-80 overflow-y-auto">
                             {currentStep.content.content}
                           </div>
                         </div>
-                        <div className="mt-3 md:mt-4 flex flex-col md:flex-row gap-2">
+                        <div className="mt-2 md:mt-3 flex flex-col md:flex-row gap-1.5 md:gap-2">
                           <Button
                             variant="outline"
                             onClick={() => {
@@ -553,23 +481,24 @@ export default function BusinessPlanningFlow() {
                                 currentStep.content?.content || "",
                               );
                             }}
-                            className="gap-2 md:w-auto w-full"
+                            className="gap-1 md:gap-2 w-full md:w-auto text-xs md:text-sm h-7 md:h-9"
                             size="sm"
                           >
-                            <Edit2 className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                            Edit Content
+                            <Edit2 className="h-3 w-3 md:h-4 md:w-4" />
+                            <span>Edit</span>
                           </Button>
                           <Button
                             variant="outline"
                             onClick={() => generateStepContent(currentStep.id)}
                             disabled={loading}
                             size="sm"
-                            className="md:w-auto w-full"
+                            className="w-full md:w-auto text-xs md:text-sm h-7 md:h-9"
                           >
                             {loading ? (
                               <>
-                                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                                Regenerating...
+                                <Loader2 className="h-3 w-3 animate-spin" />
+                                <span className="hidden md:inline">Regenerating...</span>
+                                <span className="md:hidden">Regen...</span>
                               </>
                             ) : (
                               "Regenerate"
@@ -578,20 +507,20 @@ export default function BusinessPlanningFlow() {
                         </div>
                       </div>
                     ) : (
-                      <div className="text-center py-4 md:py-8">
-                        <p className="text-xs md:text-sm text-muted-foreground mb-3 md:mb-4">
+                      <div className="text-center py-3 md:py-6">
+                        <p className="text-xs md:text-sm text-muted-foreground mb-2 md:mb-3">
                           No content generated yet
                         </p>
                         <Button
                           onClick={() => generateStepContent(currentStep.id)}
                           disabled={loading}
-                          size="md"
-                          className="gap-2 w-full md:w-auto"
+                          size="sm"
+                          className="gap-1 md:gap-2 w-full md:w-auto text-xs md:text-sm h-7 md:h-9"
                         >
                           {loading ? (
                             <>
-                              <Loader2 className="h-3.5 w-3.5 md:h-4 md:w-4 animate-spin" />
-                              Generating...
+                              <Loader2 className="h-3 w-3 animate-spin" />
+                              <span>Generating...</span>
                             </>
                           ) : (
                             "Generate Content"
@@ -607,12 +536,12 @@ export default function BusinessPlanningFlow() {
         </div>
 
         {/* Navigation - Below Both Panes */}
-        <div className="flex justify-between items-center pt-4 md:pt-6 mt-4 md:mt-6 border-t gap-2">
+        <div className="flex justify-between items-center pt-3 md:pt-4 mt-3 md:mt-4 border-t gap-1.5 md:gap-2">
           <Button
             variant="outline"
             onClick={() => goToStep(Math.max(1, businessPlan.currentStep - 1))}
             disabled={businessPlan.currentStep === 1}
-            className="gap-1 md:gap-2 text-xs md:text-sm h-8 md:h-9"
+            className="gap-0.5 md:gap-1 text-xs h-7 md:h-9 px-2 md:px-3"
             size="sm"
           >
             <ChevronLeft className="h-3 w-3 md:h-4 md:w-4" />
@@ -620,7 +549,7 @@ export default function BusinessPlanningFlow() {
             <span className="md:hidden">Prev</span>
           </Button>
 
-          <div className="text-xs md:text-sm text-muted-foreground">
+          <div className="text-xs text-muted-foreground">
             Step {businessPlan.currentStep} of {businessPlan.steps.length}
           </div>
 
@@ -631,7 +560,7 @@ export default function BusinessPlanningFlow() {
               }
             }}
             disabled={businessPlan.currentStep === businessPlan.steps.length}
-            className="gap-1 md:gap-2 text-xs md:text-sm h-8 md:h-9"
+            className="gap-0.5 md:gap-1 text-xs h-7 md:h-9 px-2 md:px-3"
             size="sm"
           >
             <span className="hidden md:inline">Next</span>

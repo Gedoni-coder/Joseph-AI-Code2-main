@@ -14,8 +14,9 @@ import {
   useLocation,
   Navigate,
 } from "react-router-dom";
-import { Radio } from "lucide-react";
+import { Radio, Moon, Sun } from "lucide-react";
 import { Switch } from "./components/ui/switch";
+import { ThemeProvider, useTheme } from "./lib/theme-context";
 import Landing from "./pages/Landing";
 import PrimaryLanding from "./pages/PrimaryLanding";
 import Index from "./pages/Index";
@@ -173,8 +174,10 @@ function TopDivisionNav({
   conversationalMode,
   onConversationalModeChange,
 }: TopDivisionNavProps) {
+  const { theme, toggleTheme } = useTheme();
+
   return (
-    <nav className="hidden md:flex w-full bg-white border-b shadow-sm px-4 py-3 sticky top-0 z-40 gap-2 items-center">
+    <nav className="hidden md:flex w-full bg-card border-b shadow-sm px-4 py-3 sticky top-0 z-40 gap-2 items-center">
       <Link
         to="/home"
         className="font-bold tracking-tight text-lg px-3 py-1 rounded hover:bg-muted/30 transition-colors"
@@ -200,6 +203,24 @@ function TopDivisionNav({
             Divisions
           </span>
         </div>
+
+        <div className="h-6 w-px bg-border"></div>
+
+        <button
+          onClick={toggleTheme}
+          className="flex items-center gap-2 px-2 py-1 hover:bg-primary/10 rounded transition-all cursor-pointer"
+          title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          aria-label="Toggle dark mode"
+        >
+          {theme === "dark" ? (
+            <Sun className="h-4 w-4 text-primary" />
+          ) : (
+            <Moon className="h-4 w-4 text-primary" />
+          )}
+          <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">
+            {theme === "dark" ? "Light" : "Dark"}
+          </span>
+        </button>
 
         <div className="h-6 w-px bg-border"></div>
 
@@ -405,15 +426,17 @@ function AppContent() {
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <CompanyInfoProvider>
-            <AppContent />
-          </CompanyInfoProvider>
-        </BrowserRouter>
-      </TooltipProvider>
+      <ThemeProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <CompanyInfoProvider>
+              <AppContent />
+            </CompanyInfoProvider>
+          </BrowserRouter>
+        </TooltipProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };
