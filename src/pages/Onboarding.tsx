@@ -66,7 +66,9 @@ export default function Onboarding() {
     companyInfo?.companySize || ""
   );
   const [address, setAddress] = useState(companyInfo?.address || "");
-  const [websiteUrl, setWebsiteUrl] = useState(companyInfo?.websiteUrl || "");
+  const [websiteUrl, setWebsiteUrl] = useState(
+    companyInfo?.websiteUrl || "https://"
+  );
 
   // Optional fields
   const [showOptional, setShowOptional] = useState(false);
