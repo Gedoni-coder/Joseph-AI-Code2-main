@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import { STORAGE_KEY, FeasibilityReport } from "@/lib/feasibility";
+import { STORAGE_KEY as FEASIBILITY_STORAGE_KEY, FeasibilityReport } from "@/lib/feasibility";
 import { createEmptyBusinessPlan } from "@/lib/business-planning-types";
-import { STORAGE_KEYS } from "@/lib/app-config";
+import type { BusinessPlan } from "@/lib/business-planning-types";
+
+const BUSINESS_PLANS_STORAGE_KEY = "joseph_business_plans_v1";
 
 export default function BusinessPlanningFromFeasibility() {
   const { id } = useParams<{ id: string }>();
