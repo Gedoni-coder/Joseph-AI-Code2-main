@@ -448,11 +448,10 @@ export default function Onboarding() {
 
                   <div>
                     <Label htmlFor="websiteUrl" className="text-sm font-medium">
-                      Website URL
+                      Website URL{" "}
+                      <span className="text-gray-500 text-xs">(Optional)</span>
                     </Label>
-                    <div className={`mt-1 flex items-center rounded-md border border-input bg-background overflow-hidden ${
-                      errors.websiteUrl ? "border-red-500" : ""
-                    }`}>
+                    <div className={`mt-1 flex items-center rounded-md border border-input bg-background overflow-hidden`}>
                       <span className="px-3 py-2 text-sm font-medium text-muted-foreground bg-muted/30 border-r border-input whitespace-nowrap">
                         https://
                       </span>
@@ -462,23 +461,17 @@ export default function Onboarding() {
                         value={websiteUrl.replace(/^https:\/\//, "")}
                         onChange={(e) => {
                           const domainValue = e.target.value.replace(/^https:\/\//, "");
-                          setWebsiteUrl(`https://${domainValue}`);
+                          setWebsiteUrl(domainValue ? `https://${domainValue}` : "");
                           setErrors((prev) => {
                             const newErrors = { ...prev };
                             delete newErrors.websiteUrl;
                             return newErrors;
                           });
                         }}
-                        placeholder="example.com"
+                        placeholder="example.com (you can skip this)"
                         className="flex-1 px-3 py-2 text-sm bg-transparent outline-none"
                       />
                     </div>
-                    {errors.websiteUrl && (
-                      <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
-                        <AlertCircle className="h-4 w-4" />
-                        {errors.websiteUrl}
-                      </p>
-                    )}
                   </div>
                 </div>
               </div>
