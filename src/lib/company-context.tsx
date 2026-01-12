@@ -89,8 +89,9 @@ export function CompanyInfoProvider({
     companyInfo?.numberOfWorkers &&
     companyInfo?.sector &&
     companyInfo?.companySize &&
-    companyInfo?.address &&
-    companyInfo?.websiteUrl
+    companyInfo?.country &&
+    companyInfo?.state &&
+    companyInfo?.city
   );
 
   return (
