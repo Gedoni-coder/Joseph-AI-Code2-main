@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { STORAGE_KEY, FeasibilityReport } from "@/lib/feasibility";
-import { createEmptyBusinessPlan } from "@/mocks/business-planning";
+import { createEmptyBusinessPlan } from "@/lib/business-planning-types";
 import { STORAGE_KEYS } from "@/lib/app-config";
 
 export default function BusinessPlanningFromFeasibility() {
