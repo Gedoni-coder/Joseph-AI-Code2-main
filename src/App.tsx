@@ -36,6 +36,7 @@ import BusinessFeasibility from "./pages/BusinessFeasibility";
 import BusinessFeasibilityIdea from "./pages/BusinessFeasibilityIdea";
 import BusinessPlanning from "./pages/BusinessPlanning";
 import BusinessPlanningFlow from "./pages/BusinessPlanningFlow";
+import BusinessPlanningFromFeasibility from "./pages/BusinessPlanningFromFeasibility";
 import BusinessPlansList from "./pages/BusinessPlansList";
 import ImpactCalculator from "./pages/ImpactCalculator";
 import AiInsights from "./pages/AiInsights";
