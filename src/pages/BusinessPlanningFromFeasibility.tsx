@@ -20,7 +20,7 @@ export default function BusinessPlanningFromFeasibility() {
 
     try {
       // Load feasibility reports from localStorage
-      const feasibilityData = localStorage.getItem(STORAGE_KEY);
+      const feasibilityData = localStorage.getItem(FEASIBILITY_STORAGE_KEY);
       const reports: FeasibilityReport[] = feasibilityData
         ? JSON.parse(feasibilityData)
         : [];
@@ -44,11 +44,10 @@ export default function BusinessPlanningFromFeasibility() {
       plan.businessName = report.idea;
 
       // Save the new plan to localStorage
-      const businessPlansKey = STORAGE_KEYS.BUSINESS_PLANS;
-      const existingPlans = localStorage.getItem(businessPlansKey);
-      const plans = existingPlans ? JSON.parse(existingPlans) : [];
+      const existingPlans = localStorage.getItem(BUSINESS_PLANS_STORAGE_KEY);
+      const plans: BusinessPlan[] = existingPlans ? JSON.parse(existingPlans) : [];
       plans.unshift(plan);
-      localStorage.setItem(businessPlansKey, JSON.stringify(plans));
+      localStorage.setItem(BUSINESS_PLANS_STORAGE_KEY, JSON.stringify(plans));
 
       // Navigate to the planning flow
       navigate(`/business-planning-flow/${plan.id}`, { replace: true });
