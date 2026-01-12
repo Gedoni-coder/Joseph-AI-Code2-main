@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
-import { STORAGE_KEY as FEASIBILITY_STORAGE_KEY, FeasibilityReport } from "@/lib/feasibility";
+import {
+  STORAGE_KEY as FEASIBILITY_STORAGE_KEY,
+  FeasibilityReport,
+} from "@/lib/feasibility";
 import { createEmptyBusinessPlan } from "@/lib/business-planning-types";
 import type { BusinessPlan } from "@/lib/business-planning-types";
 
@@ -45,7 +48,9 @@ export default function BusinessPlanningFromFeasibility() {
 
       // Save the new plan to localStorage
       const existingPlans = localStorage.getItem(BUSINESS_PLANS_STORAGE_KEY);
-      const plans: BusinessPlan[] = existingPlans ? JSON.parse(existingPlans) : [];
+      const plans: BusinessPlan[] = existingPlans
+        ? JSON.parse(existingPlans)
+        : [];
       plans.unshift(plan);
       localStorage.setItem(BUSINESS_PLANS_STORAGE_KEY, JSON.stringify(plans));
 
