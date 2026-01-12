@@ -55,36 +55,36 @@ export default function Onboarding() {
 
   // Required fields
   const [companyName, setCompanyName] = useState(
-    companyInfo?.companyName || ""
+    companyInfo?.companyName || "",
   );
-  const [description, setDescription] = useState(companyInfo?.description || "");
+  const [description, setDescription] = useState(
+    companyInfo?.description || "",
+  );
   const [numberOfWorkers, setNumberOfWorkers] = useState(
-    companyInfo?.numberOfWorkers || ""
+    companyInfo?.numberOfWorkers || "",
   );
   const [sector, setSector] = useState(companyInfo?.sector || "");
   const [companySize, setCompanySize] = useState(
-    companyInfo?.companySize || ""
+    companyInfo?.companySize || "",
   );
   const [country, setCountry] = useState(companyInfo?.country || "");
   const [state, setState] = useState(companyInfo?.state || "");
   const [city, setCity] = useState(companyInfo?.city || "");
-  const [websiteUrl, setWebsiteUrl] = useState(
-    companyInfo?.websiteUrl || ""
-  );
+  const [websiteUrl, setWebsiteUrl] = useState(companyInfo?.websiteUrl || "");
 
   // Optional fields
   const [showOptional, setShowOptional] = useState(false);
   const [email, setEmail] = useState(companyInfo?.email || "");
   const [phone, setPhone] = useState(companyInfo?.phone || "");
   const [fiscalYearEndDate, setFiscalYearEndDate] = useState(
-    companyInfo?.fiscalYearEndDate || ""
+    companyInfo?.fiscalYearEndDate || "",
   );
   const [currencyPreference, setCurrencyPreference] = useState(
-    companyInfo?.currencyPreference || "USD"
+    companyInfo?.currencyPreference || "USD",
   );
   const [language, setLanguage] = useState(companyInfo?.language || "English");
   const [numberOfEntities, setNumberOfEntities] = useState(
-    companyInfo?.numberOfEntities || ""
+    companyInfo?.numberOfEntities || "",
   );
   const [logoFile, setLogoFile] = useState<File | null>(null);
 
@@ -94,8 +94,7 @@ export default function Onboarding() {
   const validateRequired = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!companyName.trim())
-      newErrors.companyName = "Company name is required";
+    if (!companyName.trim()) newErrors.companyName = "Company name is required";
     if (!description.trim()) newErrors.description = "Description is required";
     if (!numberOfWorkers)
       newErrors.numberOfWorkers = "Number of workers is required";
@@ -187,7 +186,10 @@ export default function Onboarding() {
                 </h3>
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="companyName" className="text-sm font-medium">
+                    <Label
+                      htmlFor="companyName"
+                      className="text-sm font-medium"
+                    >
                       Company Name
                     </Label>
                     <Input
@@ -215,7 +217,10 @@ export default function Onboarding() {
                   </div>
 
                   <div>
-                    <Label htmlFor="description" className="text-sm font-medium">
+                    <Label
+                      htmlFor="description"
+                      className="text-sm font-medium"
+                    >
                       Company Description
                     </Label>
                     <textarea
@@ -359,7 +364,10 @@ export default function Onboarding() {
                     </h4>
                     <div className="space-y-3">
                       <div>
-                        <Label htmlFor="country" className="text-sm font-medium">
+                        <Label
+                          htmlFor="country"
+                          className="text-sm font-medium"
+                        >
                           Country
                         </Label>
                         <Input
@@ -388,7 +396,10 @@ export default function Onboarding() {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <Label htmlFor="state" className="text-sm font-medium">
+                          <Label
+                            htmlFor="state"
+                            className="text-sm font-medium"
+                          >
                             State / Province
                           </Label>
                           <Input
@@ -451,7 +462,9 @@ export default function Onboarding() {
                       Website URL{" "}
                       <span className="text-gray-500 text-xs">(Optional)</span>
                     </Label>
-                    <div className={`mt-1 flex items-center rounded-md border border-input bg-background overflow-hidden`}>
+                    <div
+                      className={`mt-1 flex items-center rounded-md border border-input bg-background overflow-hidden`}
+                    >
                       <span className="px-3 py-2 text-sm font-medium text-muted-foreground bg-muted/30 border-r border-input whitespace-nowrap">
                         https://
                       </span>
@@ -460,8 +473,13 @@ export default function Onboarding() {
                         type="text"
                         value={websiteUrl.replace(/^https:\/\//, "")}
                         onChange={(e) => {
-                          const domainValue = e.target.value.replace(/^https:\/\//, "");
-                          setWebsiteUrl(domainValue ? `https://${domainValue}` : "");
+                          const domainValue = e.target.value.replace(
+                            /^https:\/\//,
+                            "",
+                          );
+                          setWebsiteUrl(
+                            domainValue ? `https://${domainValue}` : "",
+                          );
                           setErrors((prev) => {
                             const newErrors = { ...prev };
                             delete newErrors.websiteUrl;
@@ -620,9 +638,7 @@ export default function Onboarding() {
                         >
                           <Upload className="h-4 w-4" />
                           <span className="text-sm">
-                            {logoFile
-                              ? logoFile.name
-                              : "Choose logo (max 5MB)"}
+                            {logoFile ? logoFile.name : "Choose logo (max 5MB)"}
                           </span>
                         </label>
                       </div>

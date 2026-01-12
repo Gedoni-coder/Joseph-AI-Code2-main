@@ -29,7 +29,8 @@ export default function BusinessPlanningFromFeasibility() {
       if (!report) {
         toast({
           title: "Feasibility Report Not Found",
-          description: "The feasibility report you're trying to use no longer exists.",
+          description:
+            "The feasibility report you're trying to use no longer exists.",
           variant: "destructive",
         });
         navigate("/business-planning", { replace: true });

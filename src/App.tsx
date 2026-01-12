@@ -210,7 +210,9 @@ function TopDivisionNav({
         <button
           onClick={toggleTheme}
           className="flex items-center gap-2 px-2 py-1 hover:bg-primary/10 rounded transition-all cursor-pointer"
-          title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          title={
+            theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+          }
           aria-label="Toggle dark mode"
         >
           {theme === "dark" ? (
