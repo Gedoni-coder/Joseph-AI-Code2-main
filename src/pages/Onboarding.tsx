@@ -101,9 +101,9 @@ export default function Onboarding() {
       newErrors.numberOfWorkers = "Number of workers is required";
     if (!sector) newErrors.sector = "Sector is required";
     if (!companySize) newErrors.companySize = "Company size is required";
-    if (!address.trim()) newErrors.address = "Address is required";
-    if (!websiteUrl.trim())
-      newErrors.websiteUrl = "Website URL is required";
+    if (!country.trim()) newErrors.country = "Country is required";
+    if (!state.trim()) newErrors.state = "State/Province is required";
+    if (!city.trim()) newErrors.city = "City is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
