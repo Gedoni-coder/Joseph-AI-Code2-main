@@ -354,29 +354,96 @@ export default function Onboarding() {
                   </div>
 
                   <div>
-                    <Label htmlFor="address" className="text-sm font-medium">
-                      Address / Location
-                    </Label>
-                    <Input
-                      id="address"
-                      value={address}
-                      onChange={(e) => {
-                        setAddress(e.target.value);
-                        setErrors((prev) => {
-                          const newErrors = { ...prev };
-                          delete newErrors.address;
-                          return newErrors;
-                        });
-                      }}
-                      placeholder="Enter your company address"
-                      className={`mt-1 ${errors.address ? "border-red-500" : ""}`}
-                    />
-                    {errors.address && (
-                      <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
-                        <AlertCircle className="h-4 w-4" />
-                        {errors.address}
-                      </p>
-                    )}
+                    <h4 className="text-sm font-medium text-gray-700 mb-3">
+                      Location
+                    </h4>
+                    <div className="space-y-3">
+                      <div>
+                        <Label htmlFor="country" className="text-sm font-medium">
+                          Country
+                        </Label>
+                        <Input
+                          id="country"
+                          value={country}
+                          onChange={(e) => {
+                            setCountry(e.target.value);
+                            setErrors((prev) => {
+                              const newErrors = { ...prev };
+                              delete newErrors.country;
+                              return newErrors;
+                            });
+                          }}
+                          placeholder="e.g., United States"
+                          className={`mt-1 ${
+                            errors.country ? "border-red-500" : ""
+                          }`}
+                        />
+                        {errors.country && (
+                          <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
+                            <AlertCircle className="h-4 w-4" />
+                            {errors.country}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="state" className="text-sm font-medium">
+                            State / Province
+                          </Label>
+                          <Input
+                            id="state"
+                            value={state}
+                            onChange={(e) => {
+                              setState(e.target.value);
+                              setErrors((prev) => {
+                                const newErrors = { ...prev };
+                                delete newErrors.state;
+                                return newErrors;
+                              });
+                            }}
+                            placeholder="e.g., California"
+                            className={`mt-1 ${
+                              errors.state ? "border-red-500" : ""
+                            }`}
+                          />
+                          {errors.state && (
+                            <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
+                              <AlertCircle className="h-4 w-4" />
+                              {errors.state}
+                            </p>
+                          )}
+                        </div>
+
+                        <div>
+                          <Label htmlFor="city" className="text-sm font-medium">
+                            City
+                          </Label>
+                          <Input
+                            id="city"
+                            value={city}
+                            onChange={(e) => {
+                              setCity(e.target.value);
+                              setErrors((prev) => {
+                                const newErrors = { ...prev };
+                                delete newErrors.city;
+                                return newErrors;
+                              });
+                            }}
+                            placeholder="e.g., San Francisco"
+                            className={`mt-1 ${
+                              errors.city ? "border-red-500" : ""
+                            }`}
+                          />
+                          {errors.city && (
+                            <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
+                              <AlertCircle className="h-4 w-4" />
+                              {errors.city}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   <div>
