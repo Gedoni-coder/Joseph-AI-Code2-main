@@ -37,8 +37,8 @@ export default function BusinessPlanningFromFeasibility() {
       }
 
       // Create a new business plan from the feasibility report
-      const plan = createEmptyBusinessPlan(id, report.title);
-      plan.businessName = report.title;
+      const plan = createEmptyBusinessPlan(id, report.idea);
+      plan.businessName = report.idea;
 
       // Save the new plan to localStorage
       const businessPlansKey = STORAGE_KEYS.BUSINESS_PLANS;
