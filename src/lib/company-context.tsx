@@ -7,8 +7,10 @@ export interface CompanyInfo {
   numberOfWorkers: number;
   sector: string;
   companySize: "small" | "medium" | "enterprise";
-  address: string;
-  websiteUrl: string;
+  country: string;
+  state: string;
+  city: string;
+  websiteUrl?: string;
 
   // Optional fields
   email?: string;
