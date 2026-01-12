@@ -36,6 +36,7 @@ import BusinessFeasibility from "./pages/BusinessFeasibility";
 import BusinessFeasibilityIdea from "./pages/BusinessFeasibilityIdea";
 import BusinessPlanning from "./pages/BusinessPlanning";
 import BusinessPlanningFlow from "./pages/BusinessPlanningFlow";
+import BusinessPlanningFromFeasibility from "./pages/BusinessPlanningFromFeasibility";
 import BusinessPlansList from "./pages/BusinessPlansList";
 import ImpactCalculator from "./pages/ImpactCalculator";
 import AiInsights from "./pages/AiInsights";
@@ -209,7 +210,9 @@ function TopDivisionNav({
         <button
           onClick={toggleTheme}
           className="flex items-center gap-2 px-2 py-1 hover:bg-primary/10 rounded transition-all cursor-pointer"
-          title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          title={
+            theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+          }
           aria-label="Toggle dark mode"
         >
           {theme === "dark" ? (
@@ -341,6 +344,10 @@ function AppContent() {
             element={<BusinessFeasibilityIdea />}
           />
           <Route path="/business-planning" element={<BusinessPlanning />} />
+          <Route
+            path="/business-planning/:id"
+            element={<BusinessPlanningFromFeasibility />}
+          />
           <Route
             path="/business-planning-flow/:planId"
             element={<BusinessPlanningFlow />}
