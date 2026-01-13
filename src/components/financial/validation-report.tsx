@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { format } from "date-fns";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { cn } from "@/lib/utils";
 import {
   Dialog,
   DialogContent,
