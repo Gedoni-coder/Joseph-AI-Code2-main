@@ -17,7 +17,7 @@ function spaFallback() {
           // - An API request
           // - A vite internal request
           // - A file with a known extension (js, css, json, html, svg, png, jpg, etc)
-          const isAsset = /\.(js|mjs|json|css|html|svg|png|jpg|jpeg|gif|webp|woff|woff2|eot|ttf|otf|ico|map)(\?.*)?$/.test(url);
+          const isAsset = /\.(js|mjs|ts|tsx|mts|mtsx|json|css|html|svg|png|jpg|jpeg|gif|webp|woff|woff2|eot|ttf|otf|ico|map)(\?.*)?$/.test(url);
           const isApi = url.startsWith('/api');
           const isViteInternal = url.startsWith('/@');
 
