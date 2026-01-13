@@ -565,9 +565,7 @@ export function ValidationReport({
                       <h4 className="text-lg font-semibold text-gray-900">
                         {row.period}
                       </h4>
-                      <Badge
-                        className={cn(getStatusColor(row.status), "mt-2")}
-                      >
+                      <Badge className={cn(getStatusColor(row.status), "mt-2")}>
                         {row.status.toUpperCase()}
                       </Badge>
                     </div>
