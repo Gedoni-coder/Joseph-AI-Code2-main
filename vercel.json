@@ -1,7 +1,16 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "^/(?!assets/).*\\.(js|css|woff|woff2|eot|ttf|otf|svg|ico|png|jpg|jpeg|gif|webp|map)$",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "^/(?!assets/)[^.]*$",
       "dest": "/index.html"
     }
   ]
