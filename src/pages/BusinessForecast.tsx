@@ -74,7 +74,7 @@ const BusinessForecast = () => {
     updateKPI,
     updateScenario,
     reconnect,
-  } = useBusinessData();
+  } = useBusinessForecastingData();
 
   const handleRefresh = async () => {
     await refreshData();
