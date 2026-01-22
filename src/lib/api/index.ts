@@ -21,3 +21,5 @@ export * from "./business-feasibility-service";
 export * from "./inventory-supply-chain-service";
 export * from "./loan-funding-service";
 export * from "./financial-advisory-service";
+export * from "./economic-indicators-service";
+export * from "./policy-compliance-service";
