@@ -14,13 +14,10 @@ export * from "./pricing-strategy-service";
 export * from "./revenue-strategy-service";
 export * from "./auth-service";
 
-// Additional services to be created:
-// export * from "./market-analysis-service";
-// export * from "./financial-advisory-service";
-// export * from "./business-feasibility-service";
-// export * from "./inventory-supply-chain-service";
-// export * from "./funding-loan-hub-service";
-// export * from "./growth-planning-dashboard-service";
-// export * from "./policy-economic-impact-service";
-// export * from "./market-analysis-service";
-// export * from "./risk-management-service";
+// Additional services
+export * from "./market-analysis-service";
+export * from "./risk-management-service";
+export * from "./business-feasibility-service";
+export * from "./inventory-supply-chain-service";
+export * from "./loan-funding-service";
+export * from "./financial-advisory-service";
