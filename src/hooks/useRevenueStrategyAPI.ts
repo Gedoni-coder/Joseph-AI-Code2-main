@@ -5,12 +5,13 @@ import {
 } from "@/lib/api/revenue-strategy-service";
 
 interface TransformedRevenueData {
-  totalRevenueTarget: number;
-  revenueGrowthRate: number;
+  monthlyRecurringRevenue: number;
+  annualContractValue: number;
   customerLifetimeValue: number;
-  churnRate: number;
+  revenuePerCustomer: number;
+  netRevenueRetention: number;
   streams: string[];
-  scenarios: string[];
+  churnAnalysis: string[];
   upsellOpportunities: string[];
   recommendations: string[];
   isLoading: boolean;
@@ -27,12 +28,13 @@ function transformRevenueStrategyData(
 ): TransformedRevenueData {
   if (!data || data.length === 0) {
     return {
-      totalRevenueTarget: 0,
-      revenueGrowthRate: 0,
+      monthlyRecurringRevenue: 0,
+      annualContractValue: 0,
       customerLifetimeValue: 0,
-      churnRate: 0,
+      revenuePerCustomer: 0,
+      netRevenueRetention: 0,
       streams: [],
-      scenarios: [],
+      churnAnalysis: [],
       upsellOpportunities: [],
       recommendations: [],
       isLoading: false,
@@ -45,14 +47,15 @@ function transformRevenueStrategyData(
   const record = data[0];
 
   return {
-    totalRevenueTarget: record.total_revenue_target,
-    revenueGrowthRate: record.revenue_growth_rate,
+    monthlyRecurringRevenue: record.monthly_recurring_revenue,
+    annualContractValue: record.annual_contract_value,
     customerLifetimeValue: record.customer_lifetime_value,
-    churnRate: record.churn_rate,
-    streams: record.revenue_streams || [],
-    scenarios: record.scenario_planning || [],
-    upsellOpportunities: record.upsell_opportunities || [],
-    recommendations: record.revenue_recommendations || [],
+    revenuePerCustomer: record.revenue_per_customer,
+    netRevenueRetention: record.net_revenue_retention,
+    streams: record.top_revenue_streams || [],
+    churnAnalysis: record.churn_analysis || [],
+    upsellOpportunities: record.top_upsell_opportunities || [],
+    recommendations: record.revenue_strategy_recommendations || [],
     isLoading: false,
     error: null,
     isConnected: true,
