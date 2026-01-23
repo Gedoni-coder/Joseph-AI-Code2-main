@@ -60,7 +60,7 @@ export default function LoanFunding() {
     refreshData,
     updateEligibility,
     updateDocumentStatus,
-  } = useLoanData();
+  } = useLoanFundingAPI();
 
   const [activeTab, setActiveTab] = useState("overview");
   const [selectedFundingOption, setSelectedFundingOption] =
