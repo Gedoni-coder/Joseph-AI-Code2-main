@@ -32,13 +32,19 @@ import {
 
 const SalesIntelligence = () => {
   const [activeTab, setActiveTab] = useState("overview");
-  const [isLoading, setIsLoading] = useState(false);
   const [selectedChannel, setSelectedChannel] = useState("whatsapp");
   const [selectedSalesRep, setSelectedSalesRep] = useState("sarah");
-  const isConnected = true;
-  const lastUpdated = new Date();
 
-  const subModules = [
+  const {
+    subModules,
+    metrics,
+    isLoading,
+    isConnected,
+    lastUpdated,
+    refreshData,
+  } = useSalesIntelligenceAPI();
+
+  const staticSubModules = [
     {
       id: "lead-pipeline",
       name: "Lead Intelligence & Pipeline",
