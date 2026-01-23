@@ -197,8 +197,9 @@ const GrowthPlanning = () => {
         icon={<Target className="h-6 w-6" />}
         title="Growth Planning Dashboard"
         description="Strategic growth planning with AI-powered insights and scenario modeling"
-        isConnected={true}
-        lastUpdated={new Date()}
+        isConnected={isConnected}
+        lastUpdated={lastUpdated}
+        onReconnect={refreshData}
         connectionLabel="Live"
       />
 
