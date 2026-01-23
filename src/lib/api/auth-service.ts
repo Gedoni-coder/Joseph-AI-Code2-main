@@ -59,12 +59,13 @@ export async function login(credentials: LoginRequest): Promise<AuthResponse> {
     body: JSON.stringify(credentials),
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Login failed");
+    throw new Error(data.message || "Login failed");
   }
 
-  const { authToken, user_id } = await response.json();
+  const { authToken } = data;
 
   // Fetch full user details using the token
   const userDetails = await getMe(authToken);
@@ -88,12 +89,13 @@ export async function signup(data: SignupRequest): Promise<AuthResponse> {
     body: JSON.stringify(data),
   });
 
+  const responseData = await response.json();
+
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Signup failed");
+    throw new Error(responseData.message || "Signup failed");
   }
 
-  const { authToken, user_id } = await response.json();
+  const { authToken } = responseData;
 
   // Fetch full user details using the token
   const userDetails = await getMe(authToken);
@@ -191,12 +193,13 @@ export async function loginWithMagicToken(
     }),
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Magic link login failed");
+    throw new Error(data.message || "Magic link login failed");
   }
 
-  const { authToken, user_id } = await response.json();
+  const { authToken } = data;
 
   // Fetch full user details using the token
   const userDetails = await getMe(authToken);
