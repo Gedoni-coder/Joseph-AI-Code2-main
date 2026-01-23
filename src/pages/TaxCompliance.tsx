@@ -54,7 +54,7 @@ const TaxCompliance = () => {
     implementRecommendation,
     updateComplianceStatus,
     reconnect,
-  } = useTaxData();
+  } = useTaxDataAPI();
 
   const handleRefresh = async () => {
     await refreshData();
