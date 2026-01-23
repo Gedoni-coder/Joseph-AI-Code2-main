@@ -80,23 +80,55 @@ export function useFinancialAdvisoryAPI(): UseFinancialAdvisoryReturn {
             variance: 5,
           },
         ]
-      : mockBudgets;
+      : mockBudgetForecasts;
 
-  const cashFlowProjections: CashFlowProjection[] = mockCashFlow;
-  const scenarioTests: ScenarioTest[] = mockScenarios;
-  const riskAssessments: RiskAssessment[] = mockRisks;
-  const performanceDrivers: PerformanceDriver[] = mockDrivers;
+  const cashFlowProjections: CashFlowProjection[] = mockCashFlowProjections;
+  const currentCashFlows: CashFlowProjection[] = mockCurrentCashFlows;
+  const scenarioTests: ScenarioTest[] = mockScenarioTests;
+  const riskAssessments: RiskAssessment[] = mockRiskAssessments;
+  const performanceDrivers: PerformanceDriver[] = mockPerformanceDrivers;
+  const advisoryInsights: AdvisoryInsight[] = mockAdvisoryInsights;
+  const budgetAssumptions: BudgetAssumption[] = mockBudgetAssumptions;
+  const liquidityMetrics: LiquidityMetric[] = mockLiquidityMetrics;
 
   return {
     budgetForecasts,
     cashFlowProjections,
+    currentCashFlows,
     scenarioTests,
     riskAssessments,
     performanceDrivers,
+    advisoryInsights,
+    budgetAssumptions,
+    liquidityMetrics,
     isLoading,
     isConnected: !error,
     lastUpdated: new Date(),
     error: error ? (error as Error).message : null,
     refreshData: () => refetch(),
+    createBudgetForecast: (forecast: BudgetForecast) => {
+      console.log("Create budget forecast:", forecast);
+    },
+    updateBudgetAssumption: (id: string, data: Partial<BudgetAssumption>) => {
+      console.log("Update budget assumption:", id, data);
+    },
+    runScenarioTest: (test: ScenarioTest) => {
+      console.log("Run scenario test:", test);
+    },
+    updateRiskStatus: (id: string, status: string) => {
+      console.log("Update risk status:", id, status);
+    },
+    updateInsightStatus: (id: string, status: string) => {
+      console.log("Update insight status:", id, status);
+    },
+    addCashFlowProjection: (projection: CashFlowProjection) => {
+      console.log("Add cash flow projection:", projection);
+    },
+    addRisk: (risk: RiskAssessment) => {
+      console.log("Add risk:", risk);
+    },
+    addPerformanceDriver: (driver: PerformanceDriver) => {
+      console.log("Add performance driver:", driver);
+    },
   };
 }
