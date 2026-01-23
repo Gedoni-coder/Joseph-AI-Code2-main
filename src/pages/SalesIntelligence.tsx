@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import ModuleHeader from "@/components/ui/module-header";
+import { useSalesIntelligenceAPI } from "@/hooks/useSalesIntelligenceAPI";
 import {
   TrendingUp,
   Users,
