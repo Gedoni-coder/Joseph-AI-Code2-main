@@ -1,16 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
 import { getFinancialAdvisory, FinancialAdvisoryData } from "@/lib/api/financial-advisory-service";
 import {
-  budgetForecasts as mockBudgets,
-  cashFlowProjections as mockCashFlow,
-  scenarioTests as mockScenarios,
-  riskAssessments as mockRisks,
-  performanceDrivers as mockDrivers,
+  mockBudgetForecasts,
+  mockCashFlowProjections,
+  mockScenarioTests,
+  mockRiskAssessments,
+  mockPerformanceDrivers,
+  mockAdvisoryInsights,
+  mockBudgetAssumptions,
+  mockLiquidityMetrics,
+  mockCurrentCashFlows,
   type BudgetForecast,
   type CashFlowProjection,
   type ScenarioTest,
   type RiskAssessment,
   type PerformanceDriver,
+  type AdvisoryInsight,
+  type BudgetAssumption,
+  type LiquidityMetric,
 } from "@/lib/financial-advisory-data";
 
 export interface UseFinancialAdvisoryReturn {
