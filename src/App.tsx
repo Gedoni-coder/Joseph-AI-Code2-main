@@ -70,6 +70,7 @@ import BusinessIntelligenceLayer from "./pages/infrastructure/BusinessIntelligen
 import SupportSystems from "./pages/infrastructure/SupportSystems";
 import OpportunitiesMarketplace from "./pages/infrastructure/OpportunitiesMarketplace";
 import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
 import Onboarding from "./pages/Onboarding";
 import CompanySettings from "./pages/CompanySettings";
 import Learn from "./pages/learn/Learn";
@@ -300,6 +301,7 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<PrimaryLanding />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/company-settings" element={<CompanySettings />} />
           <Route path="/chatbot-test" element={<ChatbotTest />} />
