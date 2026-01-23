@@ -143,8 +143,12 @@ export async function requestResetLink(email: string): Promise<void> {
   );
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Failed to request reset link");
+    try {
+      const error = await response.json();
+      throw new Error(error.message || "Failed to request reset link");
+    } catch (e) {
+      throw new Error("Failed to request reset link");
+    }
   }
 }
 
@@ -170,8 +174,12 @@ export async function updatePassword(
   });
 
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Failed to update password");
+    try {
+      const error = await response.json();
+      throw new Error(error.message || "Failed to update password");
+    } catch (e) {
+      throw new Error("Failed to update password");
+    }
   }
 }
 
