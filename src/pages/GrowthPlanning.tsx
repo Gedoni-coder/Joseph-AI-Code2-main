@@ -38,17 +38,26 @@ const GrowthPlanning = () => {
   const [marketingSpend, setMarketingSpend] = useState(50000);
   const [pricingStrategy, setPricingStrategy] = useState(99);
 
+  const {
+    metrics,
+    levers,
+    isLoading,
+    isConnected,
+    lastUpdated,
+    refreshData,
+  } = useGrowthPlanningAPI();
+
   // Overview Data
   const overviewMetrics = {
-    currentGrowth: 15.2,
-    targetGrowth: 25.0,
-    revenueTarget: 13.7,
+    currentGrowth: metrics.find(m => m.id === "1")?.value || 15.2,
+    targetGrowth: metrics.find(m => m.id === "2")?.value || 25.0,
+    revenueTarget: metrics.find(m => m.id === "3")?.value || 13.7,
     timeHorizon: "12 months",
-    lastUpdated: "2 hours ago"
+    lastUpdated: lastUpdated.toLocaleString()
   };
 
-  // Growth Levers Data
-  const growthLevers = [
+  // Growth Levers Data - use from API hook
+  const growthLevers = levers || [
     {
       name: "Sales Efficiency",
       current: 78,
