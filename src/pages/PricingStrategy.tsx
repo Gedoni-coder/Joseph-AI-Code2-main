@@ -57,7 +57,7 @@ export default function PricingStrategy() {
     lastUpdated,
     error,
     refreshData,
-  } = usePricingData();
+  } = usePricingDataAPI();
   const [activeTab, setActiveTab] = useState("overview");
 
   if (error) {
