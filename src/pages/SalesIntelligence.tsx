@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import ModuleHeader from "@/components/ui/module-header";
+import { useSalesIntelligenceAPI } from "@/hooks/useSalesIntelligenceAPI";
 import {
   TrendingUp,
   Users,
@@ -31,13 +32,19 @@ import {
 
 const SalesIntelligence = () => {
   const [activeTab, setActiveTab] = useState("overview");
-  const [isLoading, setIsLoading] = useState(false);
   const [selectedChannel, setSelectedChannel] = useState("whatsapp");
   const [selectedSalesRep, setSelectedSalesRep] = useState("sarah");
-  const isConnected = true;
-  const lastUpdated = new Date();
 
-  const subModules = [
+  const {
+    subModules,
+    metrics,
+    isLoading,
+    isConnected,
+    lastUpdated,
+    refreshData,
+  } = useSalesIntelligenceAPI();
+
+  const staticSubModules = [
     {
       id: "lead-pipeline",
       name: "Lead Intelligence & Pipeline",
@@ -135,6 +142,7 @@ const SalesIntelligence = () => {
         description="Universal sales intelligence module helping businesses improve lead handling, sales performance, revenue conversion, and pipeline forecasting"
         isConnected={isConnected}
         lastUpdated={lastUpdated}
+        onReconnect={refreshData}
         connectionLabel="Live"
       />
 

@@ -9,7 +9,7 @@ import ModuleHeader from "@/components/ui/module-header";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useCompanyInfo } from "@/lib/company-context";
 import { getCompanyName } from "@/lib/get-company-name";
-import { useBusinessData } from "@/hooks/useBusinessData";
+import { useBusinessForecastingData } from "@/hooks/useBusinessForecastingData";
 import { CustomerProfileComponent } from "@/components/business/customer-profile";
 import { RevenueProjections } from "@/components/business/revenue-projections";
 import { KPIDashboard } from "@/components/business/kpi-dashboard";
@@ -74,7 +74,7 @@ const BusinessForecast = () => {
     updateKPI,
     updateScenario,
     reconnect,
-  } = useBusinessData();
+  } = useBusinessForecastingData();
 
   const handleRefresh = async () => {
     await refreshData();

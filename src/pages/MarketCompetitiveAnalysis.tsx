@@ -13,8 +13,8 @@ import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import ModuleHeader from "@/components/ui/module-header";
 import { useCompanyInfo } from "@/lib/company-context";
 import { getCompanyName } from "@/lib/get-company-name";
-import { useMarketData } from "@/hooks/useMarketData";
-import { useCompetitiveData } from "@/hooks/useCompetitiveData";
+import { useMarketDataAPI } from "@/hooks/useMarketDataAPI";
+import { useCompetitiveDataAPI } from "@/hooks/useCompetitiveDataAPI";
 import { MarketAnalysis } from "@/components/market/market-analysis";
 import { ReportNotes } from "@/components/market/report-notes";
 import { CompetitiveAnalysis } from "@/components/competitive/competitive-analysis";
@@ -60,7 +60,7 @@ export default function MarketCompetitiveAnalysis() {
     lastUpdated: marketLastUpdated,
     error: marketError,
     refreshData: refreshMarketData,
-  } = useMarketData();
+  } = useMarketDataAPI();
 
   const {
     competitors,
@@ -74,7 +74,7 @@ export default function MarketCompetitiveAnalysis() {
     lastUpdated: competitiveLastUpdated,
     error: competitiveError,
     refreshData: refreshCompetitiveData,
-  } = useCompetitiveData();
+  } = useCompetitiveDataAPI();
 
   const [activeTab, setActiveTab] = useState("overview");
 
