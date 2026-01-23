@@ -1,5 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { getFinancialAdvisory, FinancialAdvisoryData } from "@/lib/api/financial-advisory-service";
+import {
+  getFinancialAdvisory,
+  FinancialAdvisoryData,
+} from "@/lib/api/financial-advisory-service";
 import {
   mockBudgetForecasts,
   mockCashFlowProjections,
@@ -58,29 +61,28 @@ export function useFinancialAdvisoryAPI(): UseFinancialAdvisoryReturn {
   });
 
   // Use API data if available, fall back to mock
-  const budgetForecasts: BudgetForecast[] =
-    data
-      ? [
-          {
-            id: "1",
-            period: "Q1 2025",
-            type: "quarterly" as const,
-            revenue: data.total_financial_health_score
-              ? data.total_financial_health_score * 100000
-              : 500000,
-            expenses: data.total_financial_health_score
-              ? (data.total_financial_health_score * 100000 * 0.6)
-              : 300000,
-            netIncome: data.total_financial_health_score
-              ? (data.total_financial_health_score * 100000 * 0.4)
-              : 200000,
-            confidence: 85,
-            assumptions: ["Conservative growth", "Current market conditions"],
-            lastUpdated: new Date().toISOString(),
-            variance: 5,
-          },
-        ]
-      : mockBudgetForecasts;
+  const budgetForecasts: BudgetForecast[] = data
+    ? [
+        {
+          id: "1",
+          period: "Q1 2025",
+          type: "quarterly" as const,
+          revenue: data.total_financial_health_score
+            ? data.total_financial_health_score * 100000
+            : 500000,
+          expenses: data.total_financial_health_score
+            ? data.total_financial_health_score * 100000 * 0.6
+            : 300000,
+          netIncome: data.total_financial_health_score
+            ? data.total_financial_health_score * 100000 * 0.4
+            : 200000,
+          confidence: 85,
+          assumptions: ["Conservative growth", "Current market conditions"],
+          lastUpdated: new Date().toISOString(),
+          variance: 5,
+        },
+      ]
+    : mockBudgetForecasts;
 
   const cashFlowProjections: CashFlowProjection[] = mockCashFlowProjections;
   const currentCashFlows: CashFlowProjection[] = mockCurrentCashFlows;

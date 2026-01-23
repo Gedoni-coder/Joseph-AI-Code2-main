@@ -17,7 +17,11 @@ import { SmartTaxCalculator } from "@/components/tax/smart-tax-calculator";
 import { TaxRecommendations } from "@/components/tax/tax-recommendations";
 import { ComplianceUpdates } from "@/components/tax/compliance-updates";
 import { ComplianceCalendar } from "@/components/tax/compliance-calendar";
-import { CURRENCY_CONFIG, FOOTER_COMPLIANCE_TEXT, FOOTER_DATA_SECURITY } from "@/mocks/tax-compliance";
+import {
+  CURRENCY_CONFIG,
+  FOOTER_COMPLIANCE_TEXT,
+  FOOTER_DATA_SECURITY,
+} from "@/mocks/tax-compliance";
 import {
   Calculator,
   RefreshCw,
@@ -594,7 +598,9 @@ const TaxCompliance = () => {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div className="flex items-center gap-4 text-sm text-blue-700">
-              <span>© {new Date().getFullYear()} Tax & Compliance Platform</span>
+              <span>
+                © {new Date().getFullYear()} Tax & Compliance Platform
+              </span>
               <span>•</span>
               <span>{FOOTER_DATA_SECURITY}</span>
             </div>

@@ -84,7 +84,8 @@ export function useSalesIntelligenceAPI(): UseSalesIntelligenceReturn {
       id: "sales-coaching",
       name: "Sales Coaching Engine",
       icon: "Brain",
-      description: "Real-time coaching, call analysis, performance optimization",
+      description:
+        "Real-time coaching, call analysis, performance optimization",
       metrics: {
         "Coaching Moments": "245",
         "Rep Improvement": "+12%",
@@ -96,7 +97,8 @@ export function useSalesIntelligenceAPI(): UseSalesIntelligenceReturn {
       id: "engagement-optimizer",
       name: "Engagement Optimizer",
       icon: "MessageCircle",
-      description: "Multi-channel engagement, timing optimization, content recommendation",
+      description:
+        "Multi-channel engagement, timing optimization, content recommendation",
       metrics: {
         "Engagement Rate": "52%",
         "Optimal Timing": "8AM-10AM",

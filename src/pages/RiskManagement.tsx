@@ -33,80 +33,87 @@ const RiskManagement = () => {
     refreshData,
   } = useRiskManagementDataAPI();
 
-  const risks = apiRisks && apiRisks.length > 0 ? apiRisks : [
-    {
-      id: 1,
-      title: "Supply Chain Disruption",
-      category: "Operational",
-      severity: "High",
-      probability: "Medium",
-      impact: "$2.5M",
-      status: "Active",
-      owner: "Operations Team",
-      lastUpdated: "2 days ago",
-      description: "Potential disruption in key supplier relationships affecting production capacity",
-      mitigation: [
-        "Diversify supplier base across 3 regions",
-        "Maintain 90-day inventory buffer",
-        "Establish backup supplier contracts",
-      ],
-      timeline: "Q1 2024",
-    },
-    {
-      id: 2,
-      title: "Market Competition",
-      category: "Strategic",
-      severity: "High",
-      probability: "High",
-      impact: "$5.2M",
-      status: "Monitoring",
-      owner: "Strategy Team",
-      lastUpdated: "1 week ago",
-      description: "Increased competition from new market entrants with lower pricing",
-      mitigation: [
-        "Enhance product differentiation",
-        "Improve customer retention programs",
-        "Optimize pricing strategy",
-      ],
-      timeline: "Q2 2024",
-    },
-    {
-      id: 3,
-      title: "Regulatory Changes",
-      category: "Compliance",
-      severity: "Medium",
-      probability: "Medium",
-      impact: "$1.8M",
-      status: "Planning",
-      owner: "Legal Team",
-      lastUpdated: "3 days ago",
-      description: "Upcoming regulatory changes requiring system modifications and compliance updates",
-      mitigation: [
-        "Monitor regulatory developments",
-        "Engage compliance consultants",
-        "Update internal processes",
-      ],
-      timeline: "Q3 2024",
-    },
-    {
-      id: 4,
-      title: "Cybersecurity Threats",
-      category: "Technology",
-      severity: "High",
-      probability: "Low",
-      impact: "$3.1M",
-      status: "Mitigated",
-      owner: "IT Security",
-      lastUpdated: "1 day ago",
-      description: "Potential cybersecurity breaches affecting customer data and operations",
-      mitigation: [
-        "Implement advanced threat detection",
-        "Regular security audits",
-        "Employee training programs",
-      ],
-      timeline: "Ongoing",
-    },
-  ];
+  const risks =
+    apiRisks && apiRisks.length > 0
+      ? apiRisks
+      : [
+          {
+            id: 1,
+            title: "Supply Chain Disruption",
+            category: "Operational",
+            severity: "High",
+            probability: "Medium",
+            impact: "$2.5M",
+            status: "Active",
+            owner: "Operations Team",
+            lastUpdated: "2 days ago",
+            description:
+              "Potential disruption in key supplier relationships affecting production capacity",
+            mitigation: [
+              "Diversify supplier base across 3 regions",
+              "Maintain 90-day inventory buffer",
+              "Establish backup supplier contracts",
+            ],
+            timeline: "Q1 2024",
+          },
+          {
+            id: 2,
+            title: "Market Competition",
+            category: "Strategic",
+            severity: "High",
+            probability: "High",
+            impact: "$5.2M",
+            status: "Monitoring",
+            owner: "Strategy Team",
+            lastUpdated: "1 week ago",
+            description:
+              "Increased competition from new market entrants with lower pricing",
+            mitigation: [
+              "Enhance product differentiation",
+              "Improve customer retention programs",
+              "Optimize pricing strategy",
+            ],
+            timeline: "Q2 2024",
+          },
+          {
+            id: 3,
+            title: "Regulatory Changes",
+            category: "Compliance",
+            severity: "Medium",
+            probability: "Medium",
+            impact: "$1.8M",
+            status: "Planning",
+            owner: "Legal Team",
+            lastUpdated: "3 days ago",
+            description:
+              "Upcoming regulatory changes requiring system modifications and compliance updates",
+            mitigation: [
+              "Monitor regulatory developments",
+              "Engage compliance consultants",
+              "Update internal processes",
+            ],
+            timeline: "Q3 2024",
+          },
+          {
+            id: 4,
+            title: "Cybersecurity Threats",
+            category: "Technology",
+            severity: "High",
+            probability: "Low",
+            impact: "$3.1M",
+            status: "Mitigated",
+            owner: "IT Security",
+            lastUpdated: "1 day ago",
+            description:
+              "Potential cybersecurity breaches affecting customer data and operations",
+            mitigation: [
+              "Implement advanced threat detection",
+              "Regular security audits",
+              "Employee training programs",
+            ],
+            timeline: "Ongoing",
+          },
+        ];
 
   const riskMetrics = [
     {
@@ -118,21 +125,23 @@ const RiskManagement = () => {
     },
     {
       label: "High Severity",
-      value: risks.filter(r => r.severity === "High").length,
+      value: risks.filter((r) => r.severity === "High").length,
       icon: <TrendingDown className="h-5 w-5" />,
       color: "text-red-600",
       bgColor: "bg-red-100",
     },
     {
       label: "Active Monitoring",
-      value: risks.filter(r => r.status === "Active" || r.status === "Monitoring").length,
+      value: risks.filter(
+        (r) => r.status === "Active" || r.status === "Monitoring",
+      ).length,
       icon: <Activity className="h-5 w-5" />,
       color: "text-blue-600",
       bgColor: "bg-blue-100",
     },
     {
       label: "Mitigated",
-      value: risks.filter(r => r.status === "Mitigated").length,
+      value: risks.filter((r) => r.status === "Mitigated").length,
       icon: <CheckCircle className="h-5 w-5" />,
       color: "text-green-600",
       bgColor: "bg-green-100",
@@ -176,9 +185,13 @@ const RiskManagement = () => {
     }
   };
 
-  const filteredRisks = selectedCategory === "all" 
-    ? risks 
-    : risks.filter(risk => risk.category.toLowerCase() === selectedCategory.toLowerCase());
+  const filteredRisks =
+    selectedCategory === "all"
+      ? risks
+      : risks.filter(
+          (risk) =>
+            risk.category.toLowerCase() === selectedCategory.toLowerCase(),
+        );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
@@ -203,7 +216,9 @@ const RiskManagement = () => {
                     <div className={metric.color}>{metric.icon}</div>
                   </div>
                   <div>
-                    <div className="text-sm text-muted-foreground">{metric.label}</div>
+                    <div className="text-sm text-muted-foreground">
+                      {metric.label}
+                    </div>
                     <div className="text-lg font-bold">{metric.value}</div>
                   </div>
                 </div>
@@ -223,7 +238,7 @@ const RiskManagement = () => {
             </TabsList>
 
             <div className="flex items-center gap-2">
-              <select 
+              <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
                 className="px-3 py-1 border rounded-md text-sm"
@@ -245,7 +260,9 @@ const RiskManagement = () => {
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
-                          <CardTitle className="text-lg">{risk.title}</CardTitle>
+                          <CardTitle className="text-lg">
+                            {risk.title}
+                          </CardTitle>
                           <Badge variant="outline" className="text-xs">
                             {risk.category}
                           </Badge>
@@ -262,44 +279,65 @@ const RiskManagement = () => {
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
                       <div className="space-y-1">
-                        <span className="text-sm text-muted-foreground">Severity</span>
+                        <span className="text-sm text-muted-foreground">
+                          Severity
+                        </span>
                         <Badge className={getSeverityColor(risk.severity)}>
                           {risk.severity}
                         </Badge>
                       </div>
                       <div className="space-y-1">
-                        <span className="text-sm text-muted-foreground">Probability</span>
-                        <Badge className={getProbabilityColor(risk.probability)}>
+                        <span className="text-sm text-muted-foreground">
+                          Probability
+                        </span>
+                        <Badge
+                          className={getProbabilityColor(risk.probability)}
+                        >
                           {risk.probability}
                         </Badge>
                       </div>
                       <div className="space-y-1">
-                        <span className="text-sm text-muted-foreground">Impact</span>
-                        <div className="text-sm font-medium text-red-600">{risk.impact}</div>
+                        <span className="text-sm text-muted-foreground">
+                          Impact
+                        </span>
+                        <div className="text-sm font-medium text-red-600">
+                          {risk.impact}
+                        </div>
                       </div>
                       <div className="space-y-1">
-                        <span className="text-sm text-muted-foreground">Owner</span>
+                        <span className="text-sm text-muted-foreground">
+                          Owner
+                        </span>
                         <div className="text-sm font-medium">{risk.owner}</div>
                       </div>
                       <div className="space-y-1">
-                        <span className="text-sm text-muted-foreground">Updated</span>
-                        <div className="text-sm text-muted-foreground">{risk.lastUpdated}</div>
+                        <span className="text-sm text-muted-foreground">
+                          Updated
+                        </span>
+                        <div className="text-sm text-muted-foreground">
+                          {risk.lastUpdated}
+                        </div>
                       </div>
                     </div>
-                    
+
                     <div className="space-y-3">
                       <div>
-                        <h4 className="font-semibold text-sm mb-2">Mitigation Actions:</h4>
+                        <h4 className="font-semibold text-sm mb-2">
+                          Mitigation Actions:
+                        </h4>
                         <ul className="space-y-1">
                           {risk.mitigation.map((action, index) => (
-                            <li key={index} className="text-sm text-muted-foreground flex items-start gap-2">
+                            <li
+                              key={index}
+                              className="text-sm text-muted-foreground flex items-start gap-2"
+                            >
                               <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
                               {action}
                             </li>
                           ))}
                         </ul>
                       </div>
-                      
+
                       <div className="flex gap-2">
                         <Button size="sm" variant="outline">
                           <Target className="h-4 w-4 mr-2" />
@@ -332,13 +370,18 @@ const RiskManagement = () => {
               <CardContent>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <div className="space-y-4">
-                    <h4 className="font-semibold">Risk Distribution by Category</h4>
+                    <h4 className="font-semibold">
+                      Risk Distribution by Category
+                    </h4>
                     <div className="space-y-3">
                       <div className="flex items-center justify-between p-3 border rounded">
                         <span className="text-sm">Operational</span>
                         <div className="flex items-center gap-2">
                           <div className="w-20 bg-gray-200 rounded-full h-2">
-                            <div className="bg-orange-500 h-2 rounded-full" style={{ width: "25%" }}></div>
+                            <div
+                              className="bg-orange-500 h-2 rounded-full"
+                              style={{ width: "25%" }}
+                            ></div>
                           </div>
                           <span className="text-sm font-medium">1</span>
                         </div>
@@ -347,7 +390,10 @@ const RiskManagement = () => {
                         <span className="text-sm">Strategic</span>
                         <div className="flex items-center gap-2">
                           <div className="w-20 bg-gray-200 rounded-full h-2">
-                            <div className="bg-red-500 h-2 rounded-full" style={{ width: "25%" }}></div>
+                            <div
+                              className="bg-red-500 h-2 rounded-full"
+                              style={{ width: "25%" }}
+                            ></div>
                           </div>
                           <span className="text-sm font-medium">1</span>
                         </div>
@@ -356,7 +402,10 @@ const RiskManagement = () => {
                         <span className="text-sm">Compliance</span>
                         <div className="flex items-center gap-2">
                           <div className="w-20 bg-gray-200 rounded-full h-2">
-                            <div className="bg-blue-500 h-2 rounded-full" style={{ width: "25%" }}></div>
+                            <div
+                              className="bg-blue-500 h-2 rounded-full"
+                              style={{ width: "25%" }}
+                            ></div>
                           </div>
                           <span className="text-sm font-medium">1</span>
                         </div>
@@ -365,14 +414,17 @@ const RiskManagement = () => {
                         <span className="text-sm">Technology</span>
                         <div className="flex items-center gap-2">
                           <div className="w-20 bg-gray-200 rounded-full h-2">
-                            <div className="bg-green-500 h-2 rounded-full" style={{ width: "25%" }}></div>
+                            <div
+                              className="bg-green-500 h-2 rounded-full"
+                              style={{ width: "25%" }}
+                            ></div>
                           </div>
                           <span className="text-sm font-medium">1</span>
                         </div>
                       </div>
                     </div>
                   </div>
-                  
+
                   <div className="space-y-4">
                     <h4 className="font-semibold">Risk Priority Matrix</h4>
                     <div className="space-y-2">
@@ -383,22 +435,46 @@ const RiskManagement = () => {
                         <div className="font-medium">High</div>
                       </div>
                       <div className="grid grid-cols-4 gap-1">
-                        <div className="text-xs font-medium flex items-center">High</div>
-                        <div className="h-8 bg-orange-200 flex items-center justify-center text-xs">0</div>
-                        <div className="h-8 bg-red-300 flex items-center justify-center text-xs">1</div>
-                        <div className="h-8 bg-red-500 flex items-center justify-center text-xs text-white">2</div>
+                        <div className="text-xs font-medium flex items-center">
+                          High
+                        </div>
+                        <div className="h-8 bg-orange-200 flex items-center justify-center text-xs">
+                          0
+                        </div>
+                        <div className="h-8 bg-red-300 flex items-center justify-center text-xs">
+                          1
+                        </div>
+                        <div className="h-8 bg-red-500 flex items-center justify-center text-xs text-white">
+                          2
+                        </div>
                       </div>
                       <div className="grid grid-cols-4 gap-1">
-                        <div className="text-xs font-medium flex items-center">Medium</div>
-                        <div className="h-8 bg-green-200 flex items-center justify-center text-xs">0</div>
-                        <div className="h-8 bg-orange-200 flex items-center justify-center text-xs">1</div>
-                        <div className="h-8 bg-red-300 flex items-center justify-center text-xs">0</div>
+                        <div className="text-xs font-medium flex items-center">
+                          Medium
+                        </div>
+                        <div className="h-8 bg-green-200 flex items-center justify-center text-xs">
+                          0
+                        </div>
+                        <div className="h-8 bg-orange-200 flex items-center justify-center text-xs">
+                          1
+                        </div>
+                        <div className="h-8 bg-red-300 flex items-center justify-center text-xs">
+                          0
+                        </div>
                       </div>
                       <div className="grid grid-cols-4 gap-1">
-                        <div className="text-xs font-medium flex items-center">Low</div>
-                        <div className="h-8 bg-green-100 flex items-center justify-center text-xs">0</div>
-                        <div className="h-8 bg-green-200 flex items-center justify-center text-xs">0</div>
-                        <div className="h-8 bg-orange-200 flex items-center justify-center text-xs">0</div>
+                        <div className="text-xs font-medium flex items-center">
+                          Low
+                        </div>
+                        <div className="h-8 bg-green-100 flex items-center justify-center text-xs">
+                          0
+                        </div>
+                        <div className="h-8 bg-green-200 flex items-center justify-center text-xs">
+                          0
+                        </div>
+                        <div className="h-8 bg-orange-200 flex items-center justify-center text-xs">
+                          0
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -421,26 +497,37 @@ const RiskManagement = () => {
                     <div className="space-y-4">
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
-                          <span className="text-sm text-muted-foreground">Timeline</span>
+                          <span className="text-sm text-muted-foreground">
+                            Timeline
+                          </span>
                           <div className="font-medium">{risk.timeline}</div>
                         </div>
                         <div>
-                          <span className="text-sm text-muted-foreground">Owner</span>
+                          <span className="text-sm text-muted-foreground">
+                            Owner
+                          </span>
                           <div className="font-medium">{risk.owner}</div>
                         </div>
                         <div>
-                          <span className="text-sm text-muted-foreground">Status</span>
+                          <span className="text-sm text-muted-foreground">
+                            Status
+                          </span>
                           <Badge className={getStatusColor(risk.status)}>
                             {risk.status}
                           </Badge>
                         </div>
                       </div>
-                      
+
                       <div>
-                        <h4 className="font-semibold text-sm mb-2">Action Items:</h4>
+                        <h4 className="font-semibold text-sm mb-2">
+                          Action Items:
+                        </h4>
                         <div className="space-y-2">
                           {risk.mitigation.map((action, index) => (
-                            <div key={index} className="flex items-center gap-3 p-2 border rounded">
+                            <div
+                              key={index}
+                              className="flex items-center gap-3 p-2 border rounded"
+                            >
                               <CheckCircle className="h-4 w-4 text-green-500" />
                               <span className="text-sm flex-1">{action}</span>
                               <Badge variant="outline" className="text-xs">
@@ -471,22 +558,32 @@ const RiskManagement = () => {
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <Clock className="h-4 w-4 text-blue-500" />
-                        <span className="text-sm font-medium">Active Monitoring</span>
+                        <span className="text-sm font-medium">
+                          Active Monitoring
+                        </span>
                       </div>
                       <div className="text-2xl font-bold">
-                        {risks.filter(r => r.status === "Active" || r.status === "Monitoring").length}
+                        {
+                          risks.filter(
+                            (r) =>
+                              r.status === "Active" ||
+                              r.status === "Monitoring",
+                          ).length
+                        }
                       </div>
                       <div className="text-sm text-muted-foreground">
                         risks under active monitoring
                       </div>
                     </div>
                   </Card>
-                  
+
                   <Card className="p-4">
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
                         <DollarSign className="h-4 w-4 text-red-500" />
-                        <span className="text-sm font-medium">Total Exposure</span>
+                        <span className="text-sm font-medium">
+                          Total Exposure
+                        </span>
                       </div>
                       <div className="text-2xl font-bold">$12.6M</div>
                       <div className="text-sm text-muted-foreground">
@@ -494,7 +591,7 @@ const RiskManagement = () => {
                       </div>
                     </div>
                   </Card>
-                  
+
                   <Card className="p-4">
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
@@ -508,7 +605,7 @@ const RiskManagement = () => {
                     </div>
                   </Card>
                 </div>
-                
+
                 <div className="mt-6 text-center">
                   <Link to="/audit-reports">
                     <Button>

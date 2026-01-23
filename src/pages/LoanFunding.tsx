@@ -88,7 +88,8 @@ export default function LoanFunding() {
   }
 
   const formatCurrency = (amount: number) => {
-    const { millions, millions_suffix, thousands, thousands_suffix } = CURRENCY_FORMATTING;
+    const { millions, millions_suffix, thousands, thousands_suffix } =
+      CURRENCY_FORMATTING;
     if (amount >= millions) {
       return `$${(amount / millions).toFixed(1)}${millions_suffix}`;
     }

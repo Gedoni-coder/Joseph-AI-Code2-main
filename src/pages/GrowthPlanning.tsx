@@ -38,22 +38,16 @@ const GrowthPlanning = () => {
   const [marketingSpend, setMarketingSpend] = useState(50000);
   const [pricingStrategy, setPricingStrategy] = useState(99);
 
-  const {
-    metrics,
-    levers,
-    isLoading,
-    isConnected,
-    lastUpdated,
-    refreshData,
-  } = useGrowthPlanningAPI();
+  const { metrics, levers, isLoading, isConnected, lastUpdated, refreshData } =
+    useGrowthPlanningAPI();
 
   // Overview Data
   const overviewMetrics = {
-    currentGrowth: metrics.find(m => m.id === "1")?.value || 15.2,
-    targetGrowth: metrics.find(m => m.id === "2")?.value || 25.0,
-    revenueTarget: metrics.find(m => m.id === "3")?.value || 13.7,
+    currentGrowth: metrics.find((m) => m.id === "1")?.value || 15.2,
+    targetGrowth: metrics.find((m) => m.id === "2")?.value || 25.0,
+    revenueTarget: metrics.find((m) => m.id === "3")?.value || 13.7,
     timeHorizon: "12 months",
-    lastUpdated: lastUpdated.toLocaleString()
+    lastUpdated: lastUpdated.toLocaleString(),
   };
 
   // Growth Levers Data - use from API hook
@@ -102,7 +96,7 @@ const GrowthPlanning = () => {
       trend: "up",
       color: "text-green-600",
       bgColor: "bg-green-100",
-      unit: "%"
+      unit: "%",
     },
     {
       name: "Operational Efficiency",
@@ -119,7 +113,7 @@ const GrowthPlanning = () => {
   const scenarios = {
     conservative: { growth: 18, revenue: 11.8, probability: 85 },
     base: { growth: 25, revenue: 13.7, probability: 70 },
-    aggressive: { growth: 35, revenue: 16.2, probability: 45 }
+    aggressive: { growth: 35, revenue: 16.2, probability: 45 },
   };
 
   // Strategy Roadmap
@@ -183,12 +177,28 @@ const GrowthPlanning = () => {
   const calculateImpact = () => {
     const baseRevenue = 10000000;
     const impactMultiplier = {
-      conservative: 1 + (acquisitionCost * 0.001) + (marketingSpend * 0.000001) + (pricingStrategy * 0.01),
-      base: 1 + (acquisitionCost * 0.002) + (marketingSpend * 0.000002) + (pricingStrategy * 0.015),
-      aggressive: 1 + (acquisitionCost * 0.003) + (marketingSpend * 0.000003) + (pricingStrategy * 0.02)
+      conservative:
+        1 +
+        acquisitionCost * 0.001 +
+        marketingSpend * 0.000001 +
+        pricingStrategy * 0.01,
+      base:
+        1 +
+        acquisitionCost * 0.002 +
+        marketingSpend * 0.000002 +
+        pricingStrategy * 0.015,
+      aggressive:
+        1 +
+        acquisitionCost * 0.003 +
+        marketingSpend * 0.000003 +
+        pricingStrategy * 0.02,
     };
-    
-    return Math.round(baseRevenue * impactMultiplier[selectedScenario] / 1000000 * 100) / 100;
+
+    return (
+      Math.round(
+        ((baseRevenue * impactMultiplier[selectedScenario]) / 1000000) * 100,
+      ) / 100
+    );
   };
 
   return (
@@ -210,8 +220,12 @@ const GrowthPlanning = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Current Growth</p>
-                  <p className="text-3xl font-bold text-green-600">{overviewMetrics.currentGrowth}%</p>
+                  <p className="text-sm text-muted-foreground">
+                    Current Growth
+                  </p>
+                  <p className="text-3xl font-bold text-green-600">
+                    {overviewMetrics.currentGrowth}%
+                  </p>
                 </div>
                 <TrendingUp className="h-8 w-8 text-green-600" />
               </div>
@@ -223,7 +237,9 @@ const GrowthPlanning = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground">Target Goal</p>
-                  <p className="text-3xl font-bold text-blue-600">{overviewMetrics.targetGrowth}%</p>
+                  <p className="text-3xl font-bold text-blue-600">
+                    {overviewMetrics.targetGrowth}%
+                  </p>
                 </div>
                 <Target className="h-8 w-8 text-blue-600" />
               </div>
@@ -234,8 +250,12 @@ const GrowthPlanning = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Revenue Target</p>
-                  <p className="text-3xl font-bold text-purple-600">${overviewMetrics.revenueTarget}M</p>
+                  <p className="text-sm text-muted-foreground">
+                    Revenue Target
+                  </p>
+                  <p className="text-3xl font-bold text-purple-600">
+                    ${overviewMetrics.revenueTarget}M
+                  </p>
                 </div>
                 <DollarSign className="h-8 w-8 text-purple-600" />
               </div>
@@ -247,7 +267,9 @@ const GrowthPlanning = () => {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-muted-foreground">Time Horizon</p>
-                  <p className="text-3xl font-bold text-orange-600">{overviewMetrics.timeHorizon}</p>
+                  <p className="text-3xl font-bold text-orange-600">
+                    {overviewMetrics.timeHorizon}
+                  </p>
                 </div>
                 <Calendar className="h-8 w-8 text-orange-600" />
               </div>
@@ -271,28 +293,41 @@ const GrowthPlanning = () => {
                     <Card key={index} className="p-4">
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                          <h4 className="font-semibold text-sm">{lever.name}</h4>
+                          <h4 className="font-semibold text-sm">
+                            {lever.name}
+                          </h4>
                           <div className="flex items-center gap-1">
                             {getTrendIcon(lever.trend)}
-                            <Badge className={lever.bgColor + " " + lever.color}>
+                            <Badge
+                              className={lever.bgColor + " " + lever.color}
+                            >
                               {lever.impact}
                             </Badge>
                           </div>
                         </div>
-                        
+
                         <div className="space-y-2">
                           <div className="flex justify-between text-sm">
-                            <span>Current: {lever.current}{lever.unit || "%"}</span>
-                            <span>Target: {lever.target}{lever.unit || "%"}</span>
+                            <span>
+                              Current: {lever.current}
+                              {lever.unit || "%"}
+                            </span>
+                            <span>
+                              Target: {lever.target}
+                              {lever.unit || "%"}
+                            </span>
                           </div>
                           <div className="w-full bg-gray-200 rounded-full h-2">
-                            <div 
+                            <div
                               className="bg-gradient-to-r from-blue-500 to-green-500 h-2 rounded-full transition-all"
-                              style={{ width: `${(lever.current / lever.target) * 100}%` }}
+                              style={{
+                                width: `${(lever.current / lever.target) * 100}%`,
+                              }}
                             ></div>
                           </div>
                           <div className="text-xs text-muted-foreground">
-                            Progress: {Math.round((lever.current / lever.target) * 100)}%
+                            Progress:{" "}
+                            {Math.round((lever.current / lever.target) * 100)}%
                           </div>
                         </div>
                       </div>
@@ -335,19 +370,25 @@ const GrowthPlanning = () => {
                       <div className="text-2xl font-bold text-green-600">
                         {scenarios[selectedScenario].growth}%
                       </div>
-                      <div className="text-sm text-muted-foreground">Growth Rate</div>
+                      <div className="text-sm text-muted-foreground">
+                        Growth Rate
+                      </div>
                     </div>
                     <div className="text-center p-4 border rounded-lg">
                       <div className="text-2xl font-bold text-blue-600">
                         ${scenarios[selectedScenario].revenue}M
                       </div>
-                      <div className="text-sm text-muted-foreground">Revenue</div>
+                      <div className="text-sm text-muted-foreground">
+                        Revenue
+                      </div>
                     </div>
                     <div className="text-center p-4 border rounded-lg">
                       <div className="text-2xl font-bold text-purple-600">
                         {scenarios[selectedScenario].probability}%
                       </div>
-                      <div className="text-sm text-muted-foreground">Probability</div>
+                      <div className="text-sm text-muted-foreground">
+                        Probability
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -365,11 +406,16 @@ const GrowthPlanning = () => {
               <CardContent>
                 <div className="space-y-4">
                   {roadmapItems.map((item, index) => (
-                    <div key={index} className="flex items-center gap-4 p-4 border rounded-lg">
+                    <div
+                      key={index}
+                      className="flex items-center gap-4 p-4 border rounded-lg"
+                    >
                       <div className="flex-shrink-0 text-center">
-                        <div className="text-sm font-medium">{item.quarter}</div>
+                        <div className="text-sm font-medium">
+                          {item.quarter}
+                        </div>
                       </div>
-                      
+
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between mb-2">
                           <h4 className="font-semibold">{item.milestone}</h4>
@@ -377,21 +423,25 @@ const GrowthPlanning = () => {
                             {item.status}
                           </Badge>
                         </div>
-                        
+
                         <div className="space-y-2">
                           <div className="flex justify-between text-sm">
                             <span>Progress</span>
                             <span>{item.progress}%</span>
                           </div>
                           <div className="w-full bg-gray-200 rounded-full h-2">
-                            <div 
+                            <div
                               className="bg-blue-500 h-2 rounded-full"
                               style={{ width: `${item.progress}%` }}
                             ></div>
                           </div>
                           <div className="flex gap-1 mt-2">
                             {item.kpis.map((kpi, kpiIndex) => (
-                              <Badge key={kpiIndex} variant="outline" className="text-xs">
+                              <Badge
+                                key={kpiIndex}
+                                variant="outline"
+                                className="text-xs"
+                              >
                                 {kpi}
                               </Badge>
                             ))}
@@ -426,10 +476,14 @@ const GrowthPlanning = () => {
                       min="50"
                       max="300"
                       value={acquisitionCost}
-                      onChange={(e) => setAcquisitionCost(parseInt(e.target.value))}
+                      onChange={(e) =>
+                        setAcquisitionCost(parseInt(e.target.value))
+                      }
                       className="flex-1"
                     />
-                    <span className="text-sm font-medium w-12">${acquisitionCost}</span>
+                    <span className="text-sm font-medium w-12">
+                      ${acquisitionCost}
+                    </span>
                   </div>
                 </div>
 
@@ -444,10 +498,14 @@ const GrowthPlanning = () => {
                       max="100000"
                       step="5000"
                       value={marketingSpend}
-                      onChange={(e) => setMarketingSpend(parseInt(e.target.value))}
+                      onChange={(e) =>
+                        setMarketingSpend(parseInt(e.target.value))
+                      }
                       className="flex-1"
                     />
-                    <span className="text-sm font-medium w-16">${marketingSpend / 1000}K</span>
+                    <span className="text-sm font-medium w-16">
+                      ${marketingSpend / 1000}K
+                    </span>
                   </div>
                 </div>
 
@@ -461,16 +519,22 @@ const GrowthPlanning = () => {
                       min="49"
                       max="199"
                       value={pricingStrategy}
-                      onChange={(e) => setPricingStrategy(parseInt(e.target.value))}
+                      onChange={(e) =>
+                        setPricingStrategy(parseInt(e.target.value))
+                      }
                       className="flex-1"
                     />
-                    <span className="text-sm font-medium w-12">${pricingStrategy}</span>
+                    <span className="text-sm font-medium w-12">
+                      ${pricingStrategy}
+                    </span>
                   </div>
                 </div>
 
                 <div className="pt-4 border-t">
                   <div className="text-center">
-                    <div className="text-sm text-muted-foreground">Projected Revenue</div>
+                    <div className="text-sm text-muted-foreground">
+                      Projected Revenue
+                    </div>
                     <div className="text-2xl font-bold text-green-600">
                       ${calculateImpact()}M
                     </div>
@@ -494,7 +558,8 @@ const GrowthPlanning = () => {
                     <div className="text-sm">
                       <p className="font-medium mb-1">Growth Opportunity</p>
                       <p className="text-muted-foreground">
-                        Your customer retention rate shows potential for 12% improvement. Focus on loyalty programs.
+                        Your customer retention rate shows potential for 12%
+                        improvement. Focus on loyalty programs.
                       </p>
                     </div>
                   </div>
@@ -506,7 +571,8 @@ const GrowthPlanning = () => {
                     <div className="text-sm">
                       <p className="font-medium mb-1">Risk Alert</p>
                       <p className="text-muted-foreground">
-                        Aggressive scenario has 45% probability. Consider risk mitigation strategies.
+                        Aggressive scenario has 45% probability. Consider risk
+                        mitigation strategies.
                       </p>
                     </div>
                   </div>
@@ -518,7 +584,8 @@ const GrowthPlanning = () => {
                     <div className="text-sm">
                       <p className="font-medium mb-1">Strategy Tip</p>
                       <p className="text-muted-foreground">
-                        Market expansion timing is optimal. Economic indicators support Q3 launch.
+                        Market expansion timing is optimal. Economic indicators
+                        support Q3 launch.
                       </p>
                     </div>
                   </div>
