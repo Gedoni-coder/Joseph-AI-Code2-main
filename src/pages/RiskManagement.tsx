@@ -186,8 +186,9 @@ const RiskManagement = () => {
         icon={<Shield className="h-6 w-6" />}
         title="Risk Management Center"
         description="Identify, assess, and mitigate business risks across all operations"
-        isConnected={true}
-        lastUpdated={new Date()}
+        isConnected={isConnected}
+        lastUpdated={lastUpdated}
+        onReconnect={refreshData}
         connectionLabel="Live"
       />
 
