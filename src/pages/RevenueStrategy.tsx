@@ -14,7 +14,7 @@ import { ConnectionStatus } from "@/components/ui/connection-status";
 import ModuleHeader from "@/components/ui/module-header";
 import { useCompanyInfo } from "@/lib/company-context";
 import { getCompanyName } from "@/lib/get-company-name";
-import { useRevenueData } from "@/hooks/useRevenueData";
+import { useRevenueDataAPI } from "@/hooks/useRevenueDataAPI";
 import { RevenueStreams } from "@/components/revenue/revenue-streams";
 import { RevenueForecasting } from "@/components/revenue/revenue-forecasting";
 import { ChurnAnalysisComponent } from "@/components/revenue/churn-analysis";
