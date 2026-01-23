@@ -142,6 +142,7 @@ const SalesIntelligence = () => {
         description="Universal sales intelligence module helping businesses improve lead handling, sales performance, revenue conversion, and pipeline forecasting"
         isConnected={isConnected}
         lastUpdated={lastUpdated}
+        onReconnect={refreshData}
         connectionLabel="Live"
       />
 
