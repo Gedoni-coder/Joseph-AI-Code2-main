@@ -9,9 +9,12 @@ import * as authService from "./api/auth-service";
 import * as accountsService from "./api/accounts-service";
 
 export interface AuthUser {
-  id: string;
-  email: string;
+  id: number;
+  created_at: string;
   name: string;
+  email: string;
+  account_id: number;
+  role: string;
 }
 
 export interface AuthContextType {
@@ -66,11 +69,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           // Token is still valid, try to get user info
           try {
             const userRecord = await authService.getMe(storedToken);
-            setUser({
-              id: userRecord.id,
-              email: userRecord.email,
-              name: userRecord.name,
-            });
+            setUser(userRecord);
             setError(null);
           } catch (err) {
             // Token might be invalid, clear it
@@ -125,11 +124,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       localStorage.setItem(TOKEN_STORAGE_KEY, response.authToken);
       localStorage.setItem(TOKEN_EXPIRY_KEY, tokenExpiry.toString());
 
-      setUser({
-        id: response.user.id,
-        email: response.user.email,
-        name: response.user.name,
-      });
+      setUser(response.user);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Login failed";
       setError(errorMessage);
@@ -151,11 +146,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem(TOKEN_STORAGE_KEY, response.authToken);
         localStorage.setItem(TOKEN_EXPIRY_KEY, tokenExpiry.toString());
 
-        setUser({
-          id: response.user.id,
-          email: response.user.email,
-          name: response.user.name,
-        });
+        setUser(response.user);
       } catch (err) {
         const errorMessage =
           err instanceof Error ? err.message : "Signup failed";
@@ -189,11 +180,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     try {
       const userRecord = await authService.getMe(storedToken);
-      setUser({
-        id: userRecord.id,
-        email: userRecord.email,
-        name: userRecord.name,
-      });
+      setUser(userRecord);
       setError(null);
     } catch (err) {
       localStorage.removeItem(TOKEN_STORAGE_KEY);
