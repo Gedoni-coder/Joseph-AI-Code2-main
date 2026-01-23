@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useFinancialAdvisoryData } from "../hooks/useFinancialAdvisoryData";
+import { useFinancialAdvisoryAPI } from "../hooks/useFinancialAdvisoryAPI";
 import { useCompanyInfo } from "../lib/company-context";
 import { getCompanyName } from "../lib/get-company-name";
 import ModuleNavigation from "../components/ui/module-navigation";
