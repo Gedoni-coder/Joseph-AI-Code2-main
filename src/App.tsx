@@ -70,6 +70,7 @@ import BusinessIntelligenceLayer from "./pages/infrastructure/BusinessIntelligen
 import SupportSystems from "./pages/infrastructure/SupportSystems";
 import OpportunitiesMarketplace from "./pages/infrastructure/OpportunitiesMarketplace";
 import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
 import Onboarding from "./pages/Onboarding";
 import CompanySettings from "./pages/CompanySettings";
 import Learn from "./pages/learn/Learn";
@@ -83,6 +84,7 @@ import LearnRecords from "./pages/learn/LearnRecords";
 import SalesIntelligence from "./pages/SalesIntelligence";
 import ChatbotTest from "./pages/ChatbotTest";
 import { useCompanyInfo } from "./lib/company-context";
+import { AuthProvider } from "./lib/auth-context";
 
 const queryClient = new QueryClient();
 
@@ -266,6 +268,7 @@ function AppContent() {
   const isLandingPage =
     location.pathname === "/" ||
     location.pathname === "/signup" ||
+    location.pathname === "/login" ||
     location.pathname === "/onboarding";
 
   React.useEffect(() => {
@@ -300,6 +303,7 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<PrimaryLanding />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/company-settings" element={<CompanySettings />} />
           <Route path="/chatbot-test" element={<ChatbotTest />} />
@@ -438,9 +442,11 @@ const App = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <CompanyInfoProvider>
-              <AppContent />
-            </CompanyInfoProvider>
+            <AuthProvider>
+              <CompanyInfoProvider>
+                <AppContent />
+              </CompanyInfoProvider>
+            </AuthProvider>
           </BrowserRouter>
         </TooltipProvider>
       </ThemeProvider>
