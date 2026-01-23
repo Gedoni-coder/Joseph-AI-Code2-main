@@ -83,7 +83,7 @@ export default function FinancialAdvisory() {
     addCashFlowProjection,
     addRisk,
     addPerformanceDriver,
-  } = useFinancialAdvisoryData();
+  } = useFinancialAdvisoryAPI();
 
   const [activeTab, setActiveTab] = useState("strategic-budgeting");
   const [notificationsOpen, setNotificationsOpen] = useState(false);
