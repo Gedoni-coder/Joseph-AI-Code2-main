@@ -119,12 +119,13 @@ export async function getMe(token: string): Promise<UserRecord> {
     credentials: "include",
   });
 
+  const data = await response.json();
+
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || "Failed to get user");
+    throw new Error(data.message || "Failed to get user");
   }
 
-  return response.json();
+  return data;
 }
 
 /**
