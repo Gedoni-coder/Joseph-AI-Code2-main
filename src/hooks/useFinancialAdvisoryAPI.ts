@@ -23,14 +23,26 @@ import {
 export interface UseFinancialAdvisoryReturn {
   budgetForecasts: BudgetForecast[];
   cashFlowProjections: CashFlowProjection[];
+  currentCashFlows: CashFlowProjection[];
   scenarioTests: ScenarioTest[];
   riskAssessments: RiskAssessment[];
   performanceDrivers: PerformanceDriver[];
+  advisoryInsights: AdvisoryInsight[];
+  budgetAssumptions: BudgetAssumption[];
+  liquidityMetrics: LiquidityMetric[];
   isLoading: boolean;
   isConnected: boolean;
   lastUpdated: Date;
   error: string | null;
   refreshData: () => void;
+  createBudgetForecast: (forecast: BudgetForecast) => void;
+  updateBudgetAssumption: (id: string, data: Partial<BudgetAssumption>) => void;
+  runScenarioTest: (test: ScenarioTest) => void;
+  updateRiskStatus: (id: string, status: string) => void;
+  updateInsightStatus: (id: string, status: string) => void;
+  addCashFlowProjection: (projection: CashFlowProjection) => void;
+  addRisk: (risk: RiskAssessment) => void;
+  addPerformanceDriver: (driver: PerformanceDriver) => void;
 }
 
 /**
