@@ -267,6 +267,7 @@ function AppContent() {
   const isLandingPage =
     location.pathname === "/" ||
     location.pathname === "/signup" ||
+    location.pathname === "/login" ||
     location.pathname === "/onboarding";
 
   React.useEffect(() => {
