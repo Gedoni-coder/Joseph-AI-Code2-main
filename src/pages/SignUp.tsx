@@ -31,7 +31,7 @@ export default function SignUp() {
     }
   }, [isAuthenticated, navigate]);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLocalError("");
     clearError();
@@ -42,7 +42,7 @@ export default function SignUp() {
     }
 
     try {
-      signup(email, password, fullName);
+      await signup(email, password, fullName);
       // Auth context will handle the navigation via isAuthenticated redirect
     } catch (err) {
       setLocalError(error || "Signup failed. Please try again.");
