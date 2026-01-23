@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -40,6 +40,50 @@ export default function Login() {
     }
   }, [isAuthenticated, navigate]);
 
+  const handleGoogleSignIn = useCallback(
+    async (response: any) => {
+      setGoogleLoading(true);
+      setLocalError("");
+      clearError();
+
+      try {
+        // The response.credential is a JWT token from Google
+        // Send this to your backend/Xano to authenticate the user
+        // For now, store it and show implementation guidance
+        const credential = response?.credential;
+
+        if (!credential) {
+          setLocalError("Failed to get Google credentials");
+          return;
+        }
+
+        // TODO: Implement backend endpoint to exchange Google JWT for auth token
+        // This should:
+        // 1. Verify the Google JWT signature
+        // 2. Find or create a user in your database with the Google account info
+        // 3. Return an authToken to store in localStorage
+        // 4. Call the useAuth().login or directly set user state
+
+        console.log("Google Sign-In credential received, integrate with backend:");
+        console.log("1. Send credential JWT to /auth/google-login endpoint");
+        console.log("2. Backend should verify JWT and create/authenticate user in Xano");
+        console.log("3. Return authToken to complete sign-in");
+
+        // For now, show a helpful message
+        setLocalError(
+          "Google Sign-In integration required: Please configure Xano backend endpoint for /auth/google-login",
+        );
+      } catch (err) {
+        setLocalError(
+          "Google Sign-In failed. Please try username/password login.",
+        );
+      } finally {
+        setGoogleLoading(false);
+      }
+    },
+    [clearError],
+  );
+
   // Load Google Identity Services script
   useEffect(() => {
     if (!googleClientId) return;
@@ -69,7 +113,7 @@ export default function Login() {
         // Script already removed
       }
     };
-  }, [googleClientId]);
+  }, [googleClientId, handleGoogleSignIn]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -86,47 +130,6 @@ export default function Login() {
       // Auth context will handle redirect via isAuthenticated effect
     } catch (err) {
       setLocalError(error || "Login failed. Please try again.");
-    }
-  };
-
-  const handleGoogleSignIn = async (response: any) => {
-    setGoogleLoading(true);
-    setLocalError("");
-    clearError();
-
-    try {
-      // The response.credential is a JWT token from Google
-      // Send this to your backend/Xano to authenticate the user
-      // For now, store it and show implementation guidance
-      const credential = response?.credential;
-
-      if (!credential) {
-        setLocalError("Failed to get Google credentials");
-        return;
-      }
-
-      // TODO: Implement backend endpoint to exchange Google JWT for auth token
-      // This should:
-      // 1. Verify the Google JWT signature
-      // 2. Find or create a user in your database with the Google account info
-      // 3. Return an authToken to store in localStorage
-      // 4. Call the useAuth().login or directly set user state
-
-      console.log("Google Sign-In credential received, integrate with backend:");
-      console.log("1. Send credential JWT to /auth/google-login endpoint");
-      console.log("2. Backend should verify JWT and create/authenticate user in Xano");
-      console.log("3. Return authToken to complete sign-in");
-
-      // For now, show a helpful message
-      setLocalError(
-        "Google Sign-In integration required: Please configure Xano backend endpoint for /auth/google-login",
-      );
-    } catch (err) {
-      setLocalError(
-        "Google Sign-In failed. Please try username/password login.",
-      );
-    } finally {
-      setGoogleLoading(false);
     }
   };
 
