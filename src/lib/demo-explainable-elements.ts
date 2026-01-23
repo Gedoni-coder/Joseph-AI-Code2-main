@@ -112,5 +112,9 @@ export function initializeDemoExplainableElements() {
 
 // Auto-initialize when script loads
 if (typeof window !== 'undefined') {
-  initializeDemoExplainableElements();
+  try {
+    initializeDemoExplainableElements();
+  } catch (error) {
+    console.error('Failed to initialize demo explainable elements:', error);
+  }
 }
