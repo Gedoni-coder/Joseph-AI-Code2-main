@@ -60,7 +60,7 @@ export default function MarketCompetitiveAnalysis() {
     lastUpdated: marketLastUpdated,
     error: marketError,
     refreshData: refreshMarketData,
-  } = useMarketData();
+  } = useMarketDataAPI();
 
   const {
     competitors,
@@ -74,7 +74,7 @@ export default function MarketCompetitiveAnalysis() {
     lastUpdated: competitiveLastUpdated,
     error: competitiveError,
     refreshData: refreshCompetitiveData,
-  } = useCompetitiveData();
+  } = useCompetitiveDataAPI();
 
   const [activeTab, setActiveTab] = useState("overview");
 
