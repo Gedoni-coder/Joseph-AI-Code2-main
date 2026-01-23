@@ -25,7 +25,15 @@ import {
 const RiskManagement = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
 
-  const risks = [
+  const {
+    risks: apiRisks,
+    isLoading,
+    isConnected,
+    lastUpdated,
+    refreshData,
+  } = useRiskManagementDataAPI();
+
+  const risks = apiRisks && apiRisks.length > 0 ? apiRisks : [
     {
       id: 1,
       title: "Supply Chain Disruption",
