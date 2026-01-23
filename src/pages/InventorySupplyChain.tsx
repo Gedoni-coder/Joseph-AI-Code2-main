@@ -60,50 +60,33 @@ export default function InventorySupplyChain() {
     demandForecasts,
     inventoryValuation,
     deadStock,
-    locations,
-    inventoryAudits,
-    turnoverMetrics,
-    isLoading: inventoryLoading,
-    isConnected: inventoryConnected,
-    lastUpdated: inventoryLastUpdated,
-    error: inventoryError,
-    refreshData: refreshInventoryData,
-    updateStockLevel,
-    addStockMovement,
-  } = useInventoryData();
-
-  const {
-    suppliers,
-    procurementOrders,
-    productionPlans,
-    warehouseOperations,
-    logisticsMetrics,
-    marketVolatility,
-    regulatoryCompliance,
-    disruptionRisks,
-    sustainabilityMetrics,
-    isLoading: supplyChainLoading,
-    isConnected: supplyChainConnected,
-    lastUpdated: supplyChainLastUpdated,
-    error: supplyChainError,
-    refreshData: refreshSupplyChainData,
-    updateSupplierPerformance,
-    updateOrderStatus,
-  } = useSupplyChainData();
+    isLoading,
+    isConnected,
+    lastUpdated,
+    error,
+    refreshData,
+  } = useInventorySupplyChainAPI();
 
   const [activeTab, setActiveTab] = useState("overview");
 
-  const isLoading = inventoryLoading || supplyChainLoading;
-  const isConnected = inventoryConnected && supplyChainConnected;
-  const lastUpdated = new Date(
-    Math.max(inventoryLastUpdated.getTime(), supplyChainLastUpdated.getTime()),
-  );
-  const error = inventoryError || supplyChainError;
+  // Placeholder data for supply chain (future API integration)
+  const locations = [];
+  const inventoryAudits = [];
+  const turnoverMetrics = [];
+  const suppliers = [];
+  const procurementOrders = [];
+  const productionPlans = [];
+  const warehouseOperations = [];
+  const logisticsMetrics = [];
+  const marketVolatility = [];
+  const regulatoryCompliance = [];
+  const disruptionRisks = [];
+  const sustainabilityMetrics = [];
 
-  const refreshData = () => {
-    refreshInventoryData();
-    refreshSupplyChainData();
-  };
+  const updateStockLevel = () => {};
+  const addStockMovement = () => {};
+  const updateSupplierPerformance = () => {};
+  const updateOrderStatus = () => {};
 
   if (error) {
     return (
