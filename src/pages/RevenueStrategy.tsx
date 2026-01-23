@@ -60,7 +60,7 @@ export default function RevenueStrategy() {
     lastUpdated,
     error,
     refreshData,
-  } = useRevenueData();
+  } = useRevenueDataAPI();
   const [activeTab, setActiveTab] = useState("overview");
   const [streams, setStreams] = useState(initialStreams);
 
