@@ -52,18 +52,7 @@ const CURRENCIES = [
 
 export default function Onboarding() {
   const navigate = useNavigate();
-  const { updateCompanyInfo, companyInfo, isSetup } = useCompanyInfo();
-  const { isAuthenticated, isLoading } = useAuth();
-
-  // Redirect unauthenticated users to login
-  if (!isLoading && !isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
-  // Redirect already setup users to home
-  if (isSetup) {
-    return <Navigate to="/home" replace />;
-  }
+  const { updateCompanyInfo, companyInfo } = useCompanyInfo();
 
   // Required fields
   const [companyName, setCompanyName] = useState(
