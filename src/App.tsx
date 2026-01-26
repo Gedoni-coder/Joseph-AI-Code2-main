@@ -84,7 +84,7 @@ import LearnRecords from "./pages/learn/LearnRecords";
 import SalesIntelligence from "./pages/SalesIntelligence";
 import ChatbotTest from "./pages/ChatbotTest";
 import { useCompanyInfo } from "./lib/company-context";
-import { AuthProvider, useAuth } from "./lib/auth-context";
+import { AuthProvider } from "./lib/auth-context";
 
 const queryClient = new QueryClient();
 
