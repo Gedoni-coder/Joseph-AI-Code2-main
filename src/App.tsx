@@ -254,19 +254,7 @@ function TopDivisionNav({
 
 function ProtectedHomeRoute() {
   const { isSetup } = useCompanyInfo();
-  const { isAuthenticated, isLoading } = useAuth();
 
-  // Wait for auth to load before deciding
-  if (isLoading) {
-    return <div className="min-h-screen" />; // Loading state
-  }
-
-  // Redirect unauthenticated users to login
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
-  // If authenticated but not set up, go to onboarding
   if (!isSetup) {
     return <Navigate to="/onboarding" replace />;
   }
