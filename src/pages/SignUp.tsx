@@ -9,7 +9,6 @@ import { AlertCircle, Loader2 } from "lucide-react";
 export default function SignUp() {
   const navigate = useNavigate();
   const { signup, error, isLoading, clearError, isAuthenticated } = useAuth();
-  const redirectedRef = React.useRef(false);
 
   const [fullName, setFullName] = React.useState("");
   const [email, setEmail] = React.useState(() => {
@@ -24,14 +23,6 @@ export default function SignUp() {
   const googleClientId = import.meta.env?.VITE_GOOGLE_CLIENT_ID as
     | string
     | undefined;
-
-  // Only redirect if already authenticated (use ref to prevent multiple navigations)
-  React.useEffect(() => {
-    if (isAuthenticated && !isLoading && !redirectedRef.current) {
-      redirectedRef.current = true;
-      navigate("/onboarding", { replace: true });
-    }
-  }, [isAuthenticated, isLoading, navigate]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
