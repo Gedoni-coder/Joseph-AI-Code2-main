@@ -127,7 +127,8 @@ export default function Login() {
 
     try {
       await login(email, password);
-      // Auth context will handle redirect via isAuthenticated effect
+      // Navigate to home after successful login
+      navigate("/home", { replace: true });
     } catch (err) {
       setLocalError(error || "Login failed. Please try again.");
     }
