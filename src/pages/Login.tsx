@@ -22,7 +22,7 @@ declare global {
 
 export default function Login() {
   const navigate = useNavigate();
-  const { login, error, isLoading, clearError } = useAuth();
+  const { login, error, isLoading, clearError, isAuthenticated } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,6 +32,13 @@ export default function Login() {
   const googleClientId = import.meta.env?.VITE_GOOGLE_CLIENT_ID as
     | string
     | undefined;
+
+  // Only redirect if already authenticated (prevents re-renders from triggering navigation)
+  useEffect(() => {
+    if (isAuthenticated && !isLoading) {
+      navigate("/home", { replace: true });
+    }
+  }, []);
 
   const handleGoogleSignIn = useCallback(
     async (response: any) => {
