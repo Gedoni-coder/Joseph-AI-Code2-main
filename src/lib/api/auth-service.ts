@@ -1,4 +1,5 @@
-const AUTH_API_BASE = import.meta.env.VITE_AUTH_API_BASE || "";
+// Use local proxy to avoid CORS issues
+const AUTH_API_BASE = "/api/auth";
 
 export interface LoginRequest {
   email: string;

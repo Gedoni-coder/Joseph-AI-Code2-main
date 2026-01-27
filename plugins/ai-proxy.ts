@@ -135,6 +135,39 @@ export default function aiProxy(): Plugin {
           res.end(JSON.stringify({ error: "Upstream error" }));
         }
       });
+
+      // Auth API proxy to bypass CORS issues
+      server.middlewares.use("/api/auth", async (req, res) => {
+        const authApiBase =
+          process.env.VITE_AUTH_API_BASE ||
+          "https://x8ki-letl-twmt.n7.xano.io/api:FWLNXgW6";
+        const pathname = req.url.split("?")[0]; // Remove query string
+        const upstreamUrl = `${authApiBase}${pathname}`;
+
+        try {
+          const body =
+            req.method !== "GET" ? await parseBody(req) : undefined;
+          const r = await fetch(upstreamUrl, {
+            method: req.method,
+            headers: {
+              "Content-Type": "application/json",
+              ...(req.headers.authorization && {
+                Authorization: req.headers.authorization,
+              }),
+            },
+            ...(body && { body: JSON.stringify(body) }),
+          });
+
+          const text = await r.text();
+          res.statusCode = r.status;
+          res.setHeader("Content-Type", "application/json");
+          res.end(text);
+        } catch (e) {
+          console.error("Auth proxy error:", e);
+          res.statusCode = 502;
+          res.end(JSON.stringify({ error: "Upstream error" }));
+        }
+      });
     },
   };
 }
