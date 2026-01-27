@@ -33,12 +33,12 @@ export default function Login() {
     | string
     | undefined;
 
-  // Redirect if already authenticated
+  // Redirect if already authenticated on mount
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/home");
+      navigate("/home", { replace: true });
     }
-  }, [isAuthenticated, navigate]);
+  }, []);
 
   const handleGoogleSignIn = useCallback(
     async (response: any) => {
