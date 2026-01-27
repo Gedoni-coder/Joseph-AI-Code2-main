@@ -23,6 +23,7 @@ declare global {
 export default function Login() {
   const navigate = useNavigate();
   const { login, error, isLoading, clearError, isAuthenticated } = useAuth();
+  const redirectedRef = React.useRef(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,9 +34,10 @@ export default function Login() {
     | string
     | undefined;
 
-  // Only redirect if already authenticated (prevents re-renders from triggering navigation)
+  // Only redirect if already authenticated (use ref to prevent multiple navigations)
   useEffect(() => {
-    if (isAuthenticated && !isLoading) {
+    if (isAuthenticated && !isLoading && !redirectedRef.current) {
+      redirectedRef.current = true;
       navigate("/home", { replace: true });
     }
   }, [isAuthenticated, isLoading, navigate]);
