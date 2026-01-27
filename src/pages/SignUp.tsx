@@ -24,11 +24,9 @@ export default function SignUp() {
     | string
     | undefined;
 
-  // Redirect if already authenticated (only once on component mount, not on every isAuthenticated change)
-  const hasRedirected = React.useRef(false);
+  // Redirect if already authenticated on mount
   useEffect(() => {
-    if (isAuthenticated && !hasRedirected.current && !isLoading) {
-      hasRedirected.current = true;
+    if (isAuthenticated) {
       navigate("/home", { replace: true });
     }
   }, []);
