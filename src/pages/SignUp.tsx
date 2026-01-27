@@ -29,7 +29,7 @@ export default function SignUp() {
     if (isAuthenticated && !isLoading) {
       navigate("/onboarding", { replace: true });
     }
-  }, []);
+  }, [isAuthenticated, isLoading, navigate]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
