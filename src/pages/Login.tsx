@@ -23,6 +23,7 @@ declare global {
 export default function Login() {
   const navigate = useNavigate();
   const { login, error, isLoading, clearError, isAuthenticated } = useAuth();
+  const hasRedirectedRef = React.useRef(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,12 +34,13 @@ export default function Login() {
     | string
     | undefined;
 
-  // Redirect if already authenticated on mount
+  // Redirect if already authenticated, but only once
   useEffect(() => {
-    if (isAuthenticated) {
+    if (isAuthenticated && !hasRedirectedRef.current) {
+      hasRedirectedRef.current = true;
       navigate("/home", { replace: true });
     }
-  }, []);
+  }, [isAuthenticated, navigate]);
 
   const handleGoogleSignIn = useCallback(
     async (response: any) => {
