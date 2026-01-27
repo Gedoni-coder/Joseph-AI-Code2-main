@@ -59,7 +59,9 @@ export default function SignUp() {
           callback: (response: any) => {
             // Google credential handling - integrate with your backend/Xano
             // The credential (JWT) should be sent to your backend to create/authenticate user
-            console.log("Google sign-up - integrate with backend to exchange JWT for auth token");
+            console.log(
+              "Google sign-up - integrate with backend to exchange JWT for auth token",
+            );
             try {
               localStorage.setItem(
                 "joseph:googleCredential",
