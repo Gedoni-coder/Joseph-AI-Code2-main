@@ -9,6 +9,7 @@ import { AlertCircle, Loader2 } from "lucide-react";
 export default function SignUp() {
   const navigate = useNavigate();
   const { signup, error, isLoading, clearError, isAuthenticated } = useAuth();
+  const redirectedRef = React.useRef(false);
 
   const [fullName, setFullName] = React.useState("");
   const [email, setEmail] = React.useState(() => {
@@ -24,9 +25,10 @@ export default function SignUp() {
     | string
     | undefined;
 
-  // Only redirect if already authenticated (prevents re-renders from triggering navigation)
+  // Only redirect if already authenticated (use ref to prevent multiple navigations)
   React.useEffect(() => {
-    if (isAuthenticated && !isLoading) {
+    if (isAuthenticated && !isLoading && !redirectedRef.current) {
+      redirectedRef.current = true;
       navigate("/onboarding", { replace: true });
     }
   }, [isAuthenticated, isLoading, navigate]);
