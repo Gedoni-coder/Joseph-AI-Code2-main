@@ -43,7 +43,8 @@ export default function SignUp() {
 
     try {
       await signup(email, password, fullName);
-      // Auth context will handle the navigation via isAuthenticated redirect
+      // Navigate to onboarding after successful signup
+      navigate("/onboarding", { replace: true });
     } catch (err) {
       setLocalError(error || "Signup failed. Please try again.");
     }
