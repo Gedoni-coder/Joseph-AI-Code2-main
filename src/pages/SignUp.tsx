@@ -8,7 +8,7 @@ import { AlertCircle, Loader2 } from "lucide-react";
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const { signup, error, isLoading, clearError, isAuthenticated } = useAuth();
+  const { signup, error, isLoading, clearError, isAuthenticated, user } = useAuth();
 
   const [fullName, setFullName] = React.useState("");
   const [email, setEmail] = React.useState(() => {
