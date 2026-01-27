@@ -24,12 +24,14 @@ export default function SignUp() {
     | string
     | undefined;
 
-  // Redirect if already authenticated
+  // Redirect if already authenticated (only once on component mount, not on every isAuthenticated change)
+  const hasRedirected = React.useRef(false);
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/home");
+    if (isAuthenticated && !hasRedirected.current && !isLoading) {
+      hasRedirected.current = true;
+      navigate("/home", { replace: true });
     }
-  }, [isAuthenticated, navigate]);
+  }, []);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
