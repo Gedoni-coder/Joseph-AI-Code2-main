@@ -8,7 +8,8 @@ import { AlertCircle, Loader2 } from "lucide-react";
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const { signup, error, isLoading, clearError, isAuthenticated, user } = useAuth();
+  const { signup, error, isLoading, clearError, isAuthenticated } = useAuth();
+  const hasRedirectedRef = React.useRef(false);
 
   const [fullName, setFullName] = React.useState("");
   const [email, setEmail] = React.useState(() => {
@@ -24,12 +25,13 @@ export default function SignUp() {
     | string
     | undefined;
 
-  // Redirect if already authenticated on mount
-  useEffect(() => {
-    if (isAuthenticated) {
+  // Redirect if already authenticated, but only once
+  React.useEffect(() => {
+    if (isAuthenticated && !hasRedirectedRef.current) {
+      hasRedirectedRef.current = true;
       navigate("/home", { replace: true });
     }
-  }, []);
+  }, [isAuthenticated, navigate]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
