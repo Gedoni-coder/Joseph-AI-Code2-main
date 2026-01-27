@@ -38,7 +38,7 @@ export default function Login() {
     if (isAuthenticated && !isLoading) {
       navigate("/home", { replace: true });
     }
-  }, []);
+  }, [isAuthenticated, isLoading, navigate]);
 
   const handleGoogleSignIn = useCallback(
     async (response: any) => {
