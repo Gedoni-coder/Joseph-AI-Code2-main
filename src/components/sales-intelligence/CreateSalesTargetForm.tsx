@@ -9,11 +9,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import CreateSalesRepDialog from "./CreateSalesRepDialog";
+import { Plus } from "lucide-react";
 
 interface CreateSalesTargetFormProps {
   salesReps: Array<{ id: string; name: string }>;
   onSubmit: (data: CreateSalesTargetFormData) => void;
   onCancel: () => void;
+  onSalesRepCreated?: (rep: { id: string; name: string }) => void;
 }
 
 export interface CreateSalesTargetFormData {
