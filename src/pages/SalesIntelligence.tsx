@@ -984,6 +984,19 @@ const SalesIntelligence = () => {
 
           {/* Targets Tab */}
           <TabsContent value="targets" className="space-y-6">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold">
+                Sales Target Management
+              </h3>
+              <Button
+                onClick={() => setCreateTargetOpen(true)}
+                size="lg"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Create new Sales Target
+              </Button>
+            </div>
+
             {/* Sales Rep Selection */}
             <div>
               <h3 className="text-lg font-semibold mb-4">
