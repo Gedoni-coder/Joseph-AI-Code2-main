@@ -1530,6 +1530,12 @@ const SalesIntelligence = () => {
           </CardContent>
         </Card>
       </div>
+
+      <CreateLeadDialog
+        open={createLeadOpen}
+        onOpenChange={setCreateLeadOpen}
+        onLeadCreated={handleLeadCreated}
+      />
     </div>
   );
 };
