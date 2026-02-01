@@ -1564,6 +1564,13 @@ const SalesIntelligence = () => {
         onOpenChange={setCreateLeadOpen}
         onLeadCreated={handleLeadCreated}
       />
+
+      <CreateSalesTargetDialog
+        open={createTargetOpen}
+        onOpenChange={setCreateTargetOpen}
+        salesReps={salesRepsList}
+        onTargetCreated={handleTargetCreated}
+      />
     </div>
   );
 };
