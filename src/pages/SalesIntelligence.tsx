@@ -36,6 +36,7 @@ const SalesIntelligence = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [selectedChannel, setSelectedChannel] = useState("whatsapp");
   const [selectedSalesRep, setSelectedSalesRep] = useState("sarah");
+  const [createLeadOpen, setCreateLeadOpen] = useState(false);
 
   const {
     subModules,
@@ -45,6 +46,12 @@ const SalesIntelligence = () => {
     lastUpdated,
     refreshData,
   } = useSalesIntelligenceAPI();
+
+  const handleLeadCreated = (leadData: any) => {
+    console.log("New lead created:", leadData);
+    // TODO: Integrate with backend API to save the lead
+    // For now, we'll just log it and close the dialog
+  };
 
   const staticSubModules = [
     {
