@@ -67,6 +67,13 @@ const SalesIntelligence = () => {
     // For now, we'll just log it and close the dialog
   };
 
+  const handleSalesRepCreated = (newRep: { id: string; name: string }) => {
+    console.log("New sales representative created:", newRep);
+    // Add the new rep to the list
+    setSalesRepsList([...salesRepsList, newRep]);
+    // TODO: Integrate with backend API to save the rep
+  };
+
   const staticSubModules = [
     {
       id: "lead-pipeline",
