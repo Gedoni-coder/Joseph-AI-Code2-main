@@ -1013,44 +1013,44 @@ const SalesIntelligence = () => {
 
             {/* Sales Rep Selection */}
             <div>
-              <h3 className="text-lg font-semibold mb-4">
-                Select Sales Representative
-              </h3>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold">
+                  Select Sales Representative ({salesRepsList.length})
+                </h3>
+              </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                  { id: "sarah", name: "Sarah Johnson", achievement: 125 },
-                  { id: "mike", name: "Mike Chen", achievement: 118 },
-                  { id: "lisa", name: "Lisa Rodriguez", achievement: 95 },
-                  { id: "john", name: "John Davis", achievement: 108 },
-                ].map((rep) => (
-                  <button
-                    key={rep.id}
-                    onClick={() => setSelectedSalesRep(rep.id)}
-                    className={`p-4 rounded-lg border-2 transition-all ${
-                      selectedSalesRep === rep.id
-                        ? "border-blue-500 bg-blue-50 shadow-lg scale-105"
-                        : "border-gray-200 bg-white hover:border-gray-300"
-                    }`}
-                  >
-                    <div className="flex flex-col items-center gap-2">
-                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
-                        {rep.name.charAt(0)}
+                {salesRepsList.map((rep) => {
+                  const achievement = repAchievements[rep.id] || 0;
+                  return (
+                    <button
+                      key={rep.id}
+                      onClick={() => setSelectedSalesRep(rep.id)}
+                      className={`p-4 rounded-lg border-2 transition-all ${
+                        selectedSalesRep === rep.id
+                          ? "border-blue-500 bg-blue-50 shadow-lg scale-105"
+                          : "border-gray-200 bg-white hover:border-gray-300"
+                      }`}
+                    >
+                      <div className="flex flex-col items-center gap-2">
+                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                          {rep.name.charAt(0)}
+                        </div>
+                        <div>
+                          <p className="font-semibold text-sm">{rep.name}</p>
+                          <p
+                            className={`text-xs font-bold ${
+                              achievement >= 100
+                                ? "text-green-600"
+                                : "text-orange-600"
+                            }`}
+                          >
+                            {achievement || "N/A"}%
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-semibold text-sm">{rep.name}</p>
-                        <p
-                          className={`text-xs font-bold ${
-                            rep.achievement >= 100
-                              ? "text-green-600"
-                              : "text-orange-600"
-                          }`}
-                        >
-                          {rep.achievement}%
-                        </p>
-                      </div>
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
