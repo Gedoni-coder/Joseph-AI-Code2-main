@@ -270,19 +270,29 @@ const SalesIntelligence = () => {
 
           {/* Lead Intelligence Tab */}
           <TabsContent value="lead-pipeline" className="space-y-6">
-            <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-              <div className="flex gap-3">
-                <AlertCircle className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="font-semibold text-blue-900 mb-1">
-                    Pipeline Health Alert
-                  </h4>
-                  <p className="text-sm text-blue-800">
-                    3 deals at risk detected. AI suggests intervention
-                    strategies for rescue.
-                  </p>
+            <div className="flex items-center justify-between">
+              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200 flex-1">
+                <div className="flex gap-3">
+                  <AlertCircle className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-semibold text-blue-900 mb-1">
+                      Pipeline Health Alert
+                    </h4>
+                    <p className="text-sm text-blue-800">
+                      3 deals at risk detected. AI suggests intervention
+                      strategies for rescue.
+                    </p>
+                  </div>
                 </div>
               </div>
+              <Button
+                onClick={() => setCreateLeadOpen(true)}
+                className="ml-4 whitespace-nowrap"
+                size="lg"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Create Lead
+              </Button>
             </div>
 
             {/* Hot Leads Table */}
