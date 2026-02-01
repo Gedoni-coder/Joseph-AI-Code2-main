@@ -288,6 +288,12 @@ export default function CreateSalesTargetForm({
           Create Target
         </Button>
       </div>
+
+      <CreateSalesRepDialog
+        open={createRepOpen}
+        onOpenChange={setCreateRepOpen}
+        onRepCreated={handleSalesRepCreated}
+      />
     </form>
   );
 }
