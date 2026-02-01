@@ -38,6 +38,7 @@ const SalesIntelligence = () => {
   const [selectedChannel, setSelectedChannel] = useState("whatsapp");
   const [selectedSalesRep, setSelectedSalesRep] = useState("sarah");
   const [createLeadOpen, setCreateLeadOpen] = useState(false);
+  const [createTargetOpen, setCreateTargetOpen] = useState(false);
 
   const {
     subModules,
@@ -48,9 +49,22 @@ const SalesIntelligence = () => {
     refreshData,
   } = useSalesIntelligenceAPI();
 
+  const salesRepsList = [
+    { id: "sarah", name: "Sarah Johnson" },
+    { id: "mike", name: "Mike Chen" },
+    { id: "lisa", name: "Lisa Rodriguez" },
+    { id: "john", name: "John Davis" },
+  ];
+
   const handleLeadCreated = (leadData: any) => {
     console.log("New lead created:", leadData);
     // TODO: Integrate with backend API to save the lead
+    // For now, we'll just log it and close the dialog
+  };
+
+  const handleTargetCreated = (targetData: any) => {
+    console.log("New sales target created:", targetData);
+    // TODO: Integrate with backend API to save the target
     // For now, we'll just log it and close the dialog
   };
 
