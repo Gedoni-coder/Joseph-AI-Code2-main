@@ -39,6 +39,12 @@ const SalesIntelligence = () => {
   const [selectedSalesRep, setSelectedSalesRep] = useState("sarah");
   const [createLeadOpen, setCreateLeadOpen] = useState(false);
   const [createTargetOpen, setCreateTargetOpen] = useState(false);
+  const [salesRepsList, setSalesRepsList] = useState([
+    { id: "sarah", name: "Sarah Johnson" },
+    { id: "mike", name: "Mike Chen" },
+    { id: "lisa", name: "Lisa Rodriguez" },
+    { id: "john", name: "John Davis" },
+  ]);
 
   const {
     subModules,
@@ -48,13 +54,6 @@ const SalesIntelligence = () => {
     lastUpdated,
     refreshData,
   } = useSalesIntelligenceAPI();
-
-  const salesRepsList = [
-    { id: "sarah", name: "Sarah Johnson" },
-    { id: "mike", name: "Mike Chen" },
-    { id: "lisa", name: "Lisa Rodriguez" },
-    { id: "john", name: "John Davis" },
-  ];
 
   const handleLeadCreated = (leadData: any) => {
     console.log("New lead created:", leadData);
