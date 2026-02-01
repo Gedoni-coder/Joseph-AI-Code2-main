@@ -34,6 +34,7 @@ export default function CreateSalesTargetForm({
   salesReps,
   onSubmit,
   onCancel,
+  onSalesRepCreated,
 }: CreateSalesTargetFormProps) {
   const [formData, setFormData] = useState<CreateSalesTargetFormData>({
     salesRepId: "",
@@ -47,6 +48,8 @@ export default function CreateSalesTargetForm({
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [createRepOpen, setCreateRepOpen] = useState(false);
+  const [currentSalesReps, setCurrentSalesReps] = useState(salesReps);
 
   const achievementPercentage = useMemo(() => {
     if (formData.targetAmount === 0) return 0;
