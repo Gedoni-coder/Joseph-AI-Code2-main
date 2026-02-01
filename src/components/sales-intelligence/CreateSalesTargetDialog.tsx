@@ -24,6 +24,7 @@ export default function CreateSalesTargetDialog({
   onOpenChange,
   salesReps,
   onTargetCreated,
+  onSalesRepCreated,
 }: CreateSalesTargetDialogProps) {
   const [step, setStep] = useState<"choice" | "form" | "upload">("choice");
 
