@@ -74,6 +74,14 @@ const SalesIntelligence = () => {
     // TODO: Integrate with backend API to save the rep
   };
 
+  // Map sales rep achievements
+  const repAchievements: Record<string, number> = {
+    sarah: 125,
+    mike: 118,
+    lisa: 95,
+    john: 108,
+  };
+
   const staticSubModules = [
     {
       id: "lead-pipeline",
