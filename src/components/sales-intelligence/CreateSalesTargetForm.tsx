@@ -83,12 +83,27 @@ export default function CreateSalesTargetForm({
   };
 
   const handleSalesRepChange = (repId: string) => {
-    const selectedRep = salesReps.find((rep) => rep.id === repId);
+    const selectedRep = currentSalesReps.find((rep) => rep.id === repId);
     setFormData({
       ...formData,
       salesRepId: repId,
       salesRepName: selectedRep?.name || "",
     });
+  };
+
+  const handleSalesRepCreated = (newRep: { id: string; name: string }) => {
+    // Add the new rep to the list
+    setCurrentSalesReps([...currentSalesReps, newRep]);
+
+    // Auto-select the newly created rep
+    setFormData({
+      ...formData,
+      salesRepId: newRep.id,
+      salesRepName: newRep.name,
+    });
+
+    // Notify parent component
+    onSalesRepCreated?.(newRep);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
