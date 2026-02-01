@@ -16,6 +16,7 @@ interface CreateSalesTargetDialogProps {
   onOpenChange: (open: boolean) => void;
   salesReps: Array<{ id: string; name: string }>;
   onTargetCreated?: (target: any) => void;
+  onSalesRepCreated?: (rep: { id: string; name: string }) => void;
 }
 
 export default function CreateSalesTargetDialog({
