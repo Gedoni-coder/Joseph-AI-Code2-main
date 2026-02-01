@@ -12,6 +12,7 @@ import { Badge } from "@/components/ui/badge";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import ModuleHeader from "@/components/ui/module-header";
 import { useSalesIntelligenceAPI } from "@/hooks/useSalesIntelligenceAPI";
+import CreateLeadDialog from "@/components/sales-intelligence/CreateLeadDialog";
 import {
   TrendingUp,
   Users,
@@ -28,6 +29,7 @@ import {
   Linkedin,
   CheckCircle2,
   Lightbulb,
+  Plus,
 } from "lucide-react";
 
 const SalesIntelligence = () => {
