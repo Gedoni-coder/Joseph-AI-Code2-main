@@ -1576,6 +1576,7 @@ const SalesIntelligence = () => {
         onOpenChange={setCreateTargetOpen}
         salesReps={salesRepsList}
         onTargetCreated={handleTargetCreated}
+        onSalesRepCreated={handleSalesRepCreated}
       />
     </div>
   );
