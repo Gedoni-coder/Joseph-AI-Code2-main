@@ -64,7 +64,7 @@ export default function CreateLeadDialog({
                 <div className="flex items-start justify-between">
                   <div className="flex items-start gap-3">
                     <div className="p-2 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors">
-                      <Form className="h-5 w-5 text-blue-600" />
+                      <FileText className="h-5 w-5 text-blue-600" />
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900">
