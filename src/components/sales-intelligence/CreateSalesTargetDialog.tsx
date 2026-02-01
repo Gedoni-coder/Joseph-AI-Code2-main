@@ -120,6 +120,7 @@ export default function CreateSalesTargetDialog({
               salesReps={salesReps}
               onSubmit={handleFormSubmit}
               onCancel={handleBack}
+              onSalesRepCreated={onSalesRepCreated}
             />
           </>
         )}
