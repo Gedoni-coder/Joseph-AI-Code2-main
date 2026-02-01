@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Upload, Form, ArrowRight } from "lucide-react";
+import { Upload, FileText, ArrowRight } from "lucide-react";
 import CreateLeadForm from "./CreateLeadForm";
 import DocumentUpload from "./DocumentUpload";
 
