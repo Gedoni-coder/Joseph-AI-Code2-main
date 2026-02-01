@@ -119,7 +119,19 @@ export default function CreateSalesTargetForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
       <div className="space-y-2">
-        <Label htmlFor="salesRepId">Sales Representative</Label>
+        <div className="flex items-center justify-between">
+          <Label htmlFor="salesRepId">Sales Representative</Label>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={() => setCreateRepOpen(true)}
+            className="text-xs h-auto py-0.5 px-2"
+          >
+            <Plus className="h-3 w-3 mr-1" />
+            Create New
+          </Button>
+        </div>
         <Select value={formData.salesRepId} onValueChange={handleSalesRepChange}>
           <SelectTrigger
             id="salesRepId"
@@ -128,7 +140,7 @@ export default function CreateSalesTargetForm({
             <SelectValue placeholder="Select a sales representative" />
           </SelectTrigger>
           <SelectContent>
-            {salesReps.map((rep) => (
+            {currentSalesReps.map((rep) => (
               <SelectItem key={rep.id} value={rep.id}>
                 {rep.name}
               </SelectItem>
