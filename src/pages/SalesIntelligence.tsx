@@ -280,30 +280,55 @@ const SalesIntelligence = () => {
   // Formula #2
   const qualifiedLeads = hotLeads.length + warmLeads.length;
 
-  // Map sales rep achievements
-  const repAchievements: Record<string, number> = {
-    sarah: 125,
-    mike: 118,
-    lisa: 95,
-    john: 108,
+  // Calculate rep achievements dynamically from sales targets
+  const calculateRepAchievements = (): Record<string, { target: number; achieved: number; percentage: number }> => {
+    const achievements: Record<string, { target: number; achieved: number; percentage: number }> = {};
+
+    salesTargets.forEach((target) => {
+      if (!achievements[target.salesRepId]) {
+        achievements[target.salesRepId] = {
+          target: 0,
+          achieved: 0,
+          percentage: 0,
+        };
+      }
+      achievements[target.salesRepId].target += target.targetAmount;
+      achievements[target.salesRepId].achieved += target.achievedAmount;
+    });
+
+    // Calculate percentage for each rep
+    Object.keys(achievements).forEach((repId) => {
+      const data = achievements[repId];
+      if (data.target > 0) {
+        data.percentage = (data.achieved / data.target) * 100;
+      }
+    });
+
+    return achievements;
   };
 
-  // 13. GET TOP PERFORMER = Rep with highest achievement
-  const getTopPerformer = () => {
-    let topRep = "Sarah";
-    let maxAchievement = 0;
+  const repAchievements = calculateRepAchievements();
 
-    Object.entries(repAchievements).forEach(([key, value]) => {
-      if (value > maxAchievement) {
-        maxAchievement = value;
-        const rep = salesRepsList.find(r => r.id === key);
+  // 13. GET TOP PERFORMER = Rep with highest achievement percentage
+  const getTopPerformer = () => {
+    if (Object.keys(repAchievements).length === 0) {
+      return { name: "N/A", achievement: 0 };
+    }
+
+    let topRep = "N/A";
+    let maxPercentage = 0;
+
+    Object.entries(repAchievements).forEach(([repId, data]) => {
+      if (data.percentage > maxPercentage) {
+        maxPercentage = data.percentage;
+        const rep = salesRepsList.find(r => r.id === repId);
         if (rep) {
           topRep = rep.name;
         }
       }
     });
 
-    return { name: topRep, achievement: maxAchievement };
+    return { name: topRep, achievement: Math.round(maxPercentage) };
   };
 
   // Sub-modules with CALCULATED metrics (TAGS hardcoded, VALUES calculated)
