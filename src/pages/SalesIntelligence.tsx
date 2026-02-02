@@ -1198,185 +1198,97 @@ const SalesIntelligence = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b bg-gray-50">
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Name
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Company
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Deal Description
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Avg Response Rate
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Avg Response Time
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Engagement Score
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Follow-up Rate
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {(selectedChannel === "whatsapp"
-                        ? [
-                            {
-                              name: "Ahmed Hassan",
-                              company: "ZenithTech Ltd",
-                              dealDescription: "50 Laptops Supply Contract",
-                              avgResponseRate: "95%",
-                              avgResponseTime: "8 min",
-                              engagementScore: 9.2,
-                              followUpRate: "100%",
-                            },
-                            {
-                              name: "Fatima Ali",
-                              company: "PrimeFoods PLC",
-                              dealDescription: "Packaging Automation Upgrade",
-                              avgResponseRate: "88%",
-                              avgResponseTime: "15 min",
-                              engagementScore: 8.7,
-                              followUpRate: "94%",
-                            },
-                            {
-                              name: "John Smith",
-                              company: "Star Transport Co.",
-                              dealDescription: "Fleet Tracking Subscription",
-                              avgResponseRate: "72%",
-                              avgResponseTime: "2.5 hours",
-                              engagementScore: 7.1,
-                              followUpRate: "78%",
-                            },
-                          ]
-                        : selectedChannel === "email"
-                          ? [
-                              {
-                                name: "Sarah Johnson",
-                                company: "GreenMart Stores",
-                                dealDescription: "POS + Inventory SaaS",
-                                avgResponseRate: "68%",
-                                avgResponseTime: "4 hours",
-                                engagementScore: 7.4,
-                                followUpRate: "82%",
-                              },
-                              {
-                                name: "Michael Brown",
-                                company: "CraftBuild Ltd",
-                                dealDescription: "Supplier Workflow System",
-                                avgResponseRate: "52%",
-                                avgResponseTime: "6 hours",
-                                engagementScore: 6.2,
-                                followUpRate: "65%",
-                              },
-                              {
-                                name: "Lisa Chen",
-                                company: "NextGen Autos",
-                                dealDescription: "CRM Deployment",
-                                avgResponseRate: "61%",
-                                avgResponseTime: "5.2 hours",
-                                engagementScore: 6.9,
-                                followUpRate: "71%",
-                              },
-                            ]
-                          : selectedChannel === "sms"
-                            ? [
-                                {
-                                  name: "David Wilson",
-                                  company: "AlphaPrint",
-                                  dealDescription: "Printer Leasing Proposal",
-                                  avgResponseRate: "75%",
-                                  avgResponseTime: "12 min",
-                                  engagementScore: 7.8,
-                                  followUpRate: "88%",
-                                },
-                                {
-                                  name: "Emma Davis",
-                                  company: "Urban Boutique",
-                                  dealDescription: "Website Revamp",
-                                  avgResponseRate: "58%",
-                                  avgResponseTime: "35 min",
-                                  engagementScore: 6.3,
-                                  followUpRate: "69%",
-                                },
-                                {
-                                  name: "Robert Garcia",
-                                  company: "RapidFoods",
-                                  dealDescription: "Delivery App Integration",
-                                  avgResponseRate: "81%",
-                                  avgResponseTime: "20 min",
-                                  engagementScore: 8.4,
-                                  followUpRate: "91%",
-                                },
-                              ]
-                            : [
-                                {
-                                  name: "James Anderson",
-                                  company: "TechVision Inc",
-                                  dealDescription: "Enterprise Software Suite",
-                                  avgResponseRate: "45%",
-                                  avgResponseTime: "8 hours",
-                                  engagementScore: 5.8,
-                                  followUpRate: "52%",
-                                },
-                                {
-                                  name: "Rachel Moore",
-                                  company: "Digital Solutions LLC",
-                                  dealDescription: "Cloud Migration Services",
-                                  avgResponseRate: "62%",
-                                  avgResponseTime: "6 hours",
-                                  engagementScore: 7.2,
-                                  followUpRate: "74%",
-                                },
-                                {
-                                  name: "Christopher Lee",
-                                  company: "Innovation Labs",
-                                  dealDescription: "AI Implementation Project",
-                                  avgResponseRate: "71%",
-                                  avgResponseTime: "4 hours",
-                                  engagementScore: 8.1,
-                                  followUpRate: "85%",
-                                },
-                              ]
-                      ).map((contact, idx) => (
-                        <tr key={idx} className="border-b hover:bg-gray-50">
-                          <td className="py-3 px-4 font-medium">
-                            {contact.name}
-                          </td>
-                          <td className="py-3 px-4">{contact.company}</td>
-                          <td className="py-3 px-4">
-                            {contact.dealDescription}
-                          </td>
-                          <td className="py-3 px-4 text-center">
-                            <Badge className="bg-green-100 text-green-800">
-                              {contact.avgResponseRate}
-                            </Badge>
-                          </td>
-                          <td className="py-3 px-4 text-center text-sm">
-                            {contact.avgResponseTime}
-                          </td>
-                          <td className="py-3 px-4 text-center">
-                            <Badge className="bg-blue-100 text-blue-800">
-                              {contact.engagementScore}/10
-                            </Badge>
-                          </td>
-                          <td className="py-3 px-4 text-center">
-                            <Badge className="bg-purple-100 text-purple-800">
-                              {contact.followUpRate}
-                            </Badge>
-                          </td>
+                {engagements.filter((e) => e.channel === selectedChannel)
+                  .length === 0 ? (
+                  <div className="py-12 text-center">
+                    <p className="text-gray-500 mb-2">
+                      No engagements for this channel yet
+                    </p>
+                    <p className="text-sm text-gray-400">
+                      Create an engagement to see it appear in this table
+                    </p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b bg-gray-50">
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Name
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Company
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Deal Description
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            Avg Response Rate
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            Avg Response Time
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            Engagement Score
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            Follow-up Rate
+                          </th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody>
+                        {engagements
+                          .filter((e) => e.channel === selectedChannel)
+                          .map((engagement) => {
+                            const mins = engagement.avgResponseTimeMinutes;
+                            const hours = Math.floor(mins / 60);
+                            const remainingMins = mins % 60;
+                            let responseTimeStr = "";
+                            if (hours > 0) {
+                              responseTimeStr = `${hours}h ${remainingMins}m`;
+                            } else {
+                              responseTimeStr = `${mins}m`;
+                            }
+
+                            return (
+                              <tr
+                                key={engagement.id}
+                                className="border-b hover:bg-gray-50"
+                              >
+                                <td className="py-3 px-4 font-medium">
+                                  {engagement.personName}
+                                </td>
+                                <td className="py-3 px-4">
+                                  {engagement.companyName}
+                                </td>
+                                <td className="py-3 px-4">
+                                  {engagement.dealDescription}
+                                </td>
+                                <td className="py-3 px-4 text-center">
+                                  <Badge className="bg-green-100 text-green-800">
+                                    {engagement.avgResponseRate.toFixed(1)}%
+                                  </Badge>
+                                </td>
+                                <td className="py-3 px-4 text-center text-sm">
+                                  {responseTimeStr}
+                                </td>
+                                <td className="py-3 px-4 text-center">
+                                  <Badge className="bg-blue-100 text-blue-800">
+                                    {engagement.engagementScore.toFixed(1)}/10
+                                  </Badge>
+                                </td>
+                                <td className="py-3 px-4 text-center">
+                                  <Badge className="bg-purple-100 text-purple-800">
+                                    {engagement.followUpRate.toFixed(1)}%
+                                  </Badge>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
