@@ -45,6 +45,18 @@ interface Lead {
   playbook: string;
 }
 
+interface SalesTarget {
+  id: string;
+  salesRepId: string;
+  salesRepName: string;
+  targetPeriod: string;
+  targetAmount: number;
+  achievedAmount: number;
+  status: string;
+  dealsClosed: number;
+  avgDealSize: number;
+}
+
 const SalesIntelligence = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [selectedChannel, setSelectedChannel] = useState("whatsapp");
