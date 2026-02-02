@@ -547,42 +547,7 @@ const SalesIntelligence = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {[
-                        {
-                          company: "ZenithTech Ltd",
-                          description: "50 Laptops Supply Contract",
-                          opening: "2025-01-11",
-                          expectedClose: "2025-02-05",
-                          stage: "Proposal Sent",
-                          leadScore: 92,
-                          probability: 88,
-                          stall: "No",
-                          playbook: "Not Required",
-                        },
-                        {
-                          company: "PrimeFoods PLC",
-                          description: "Packaging Automation Upgrade",
-                          opening: "2025-01-03",
-                          expectedClose: "2025-01-28",
-                          stage: "Negotiation",
-                          leadScore: 95,
-                          probability: 93,
-                          stall: "No",
-                          playbook: "Not Required",
-                        },
-                        {
-                          company: "Star Transport Co.",
-                          description: "Fleet Tracking Subscription",
-                          opening: "2025-01-15",
-                          expectedClose: "2025-02-10",
-                          stage: "Decision Pending",
-                          leadScore: 89,
-                          probability: 80,
-                          stall: "Yes",
-                          playbook:
-                            "Send 'Decision Reminder + Value ROI Summary'",
-                        },
-                      ].map((deal, idx) => (
+                      {hotLeads.map((deal, idx) => (
                         <tr key={idx} className="border-b hover:bg-gray-50">
                           <td className="py-3 px-4">{deal.company}</td>
                           <td className="py-3 px-4">{deal.description}</td>
