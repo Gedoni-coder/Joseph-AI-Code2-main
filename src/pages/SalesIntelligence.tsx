@@ -221,6 +221,17 @@ const SalesIntelligence = () => {
     }
   };
 
+  // Sales target management functions
+  const handleDeleteTarget = (targetId: string) => {
+    setSalesTargets(salesTargets.filter(t => t.id !== targetId));
+  };
+
+  const handleChangeTargetStatus = (targetId: string, newStatus: string) => {
+    setSalesTargets(salesTargets.map(t =>
+      t.id === targetId ? { ...t, status: newStatus } : t
+    ));
+  };
+
   // ============================================================
   // KPI CALCULATION FUNCTIONS (FORMULAS)
   // ============================================================
