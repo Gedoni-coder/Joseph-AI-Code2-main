@@ -33,6 +33,18 @@ import {
   Plus,
 } from "lucide-react";
 
+interface Lead {
+  company: string;
+  description: string;
+  opening: string;
+  expectedClose: string;
+  stage: string;
+  leadScore: number;
+  probability: number;
+  stall: string;
+  playbook: string;
+}
+
 const SalesIntelligence = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [selectedChannel, setSelectedChannel] = useState("whatsapp");
@@ -44,6 +56,115 @@ const SalesIntelligence = () => {
     { id: "mike", name: "Mike Chen" },
     { id: "lisa", name: "Lisa Rodriguez" },
     { id: "john", name: "John Davis" },
+  ]);
+
+  // Lead data state
+  const [hotLeads, setHotLeads] = useState<Lead[]>([
+    {
+      company: "ZenithTech Ltd",
+      description: "50 Laptops Supply Contract",
+      opening: "2025-01-11",
+      expectedClose: "2025-02-05",
+      stage: "Proposal Sent",
+      leadScore: 92,
+      probability: 88,
+      stall: "No",
+      playbook: "Not Required",
+    },
+    {
+      company: "PrimeFoods PLC",
+      description: "Packaging Automation Upgrade",
+      opening: "2025-01-03",
+      expectedClose: "2025-01-28",
+      stage: "Negotiation",
+      leadScore: 95,
+      probability: 93,
+      stall: "No",
+      playbook: "Not Required",
+    },
+    {
+      company: "Star Transport Co.",
+      description: "Fleet Tracking Subscription",
+      opening: "2025-01-15",
+      expectedClose: "2025-02-10",
+      stage: "Decision Pending",
+      leadScore: 89,
+      probability: 80,
+      stall: "Yes",
+      playbook: "Send 'Decision Reminder + Value ROI Summary'",
+    },
+  ]);
+
+  const [warmLeads, setWarmLeads] = useState<Lead[]>([
+    {
+      company: "GreenMart Stores",
+      description: "POS + Inventory SaaS",
+      opening: "2025-01-08",
+      expectedClose: "2025-03-01",
+      stage: "Product Demo Booked",
+      leadScore: 72,
+      probability: 54,
+      stall: "No",
+      playbook: "Not Required",
+    },
+    {
+      company: "CraftBuild Ltd",
+      description: "Supplier Workflow System",
+      opening: "2025-01-04",
+      expectedClose: "2025-03-20",
+      stage: "Lead Contacted",
+      leadScore: 68,
+      probability: 48,
+      stall: "Yes",
+      playbook: "'Re-engage With Case Study'",
+    },
+    {
+      company: "NextGen Autos",
+      description: "CRM Deployment",
+      opening: "2025-01-18",
+      expectedClose: "2025-03-10",
+      stage: "Initial Qualification",
+      leadScore: 61,
+      probability: 40,
+      stall: "No",
+      playbook: "'Send Competitive Comparison Brief'",
+    },
+  ]);
+
+  const [coldLeads, setColdLeads] = useState<Lead[]>([
+    {
+      company: "AlphaPrint",
+      description: "Printer Leasing Proposal",
+      opening: "2024-12-22",
+      expectedClose: "2025-04-15",
+      stage: "Outreach Attempted",
+      leadScore: 25,
+      probability: 9,
+      stall: "Yes",
+      playbook: "'Dormant Lead Recovery Script'",
+    },
+    {
+      company: "Urban Boutique",
+      description: "Website Revamp",
+      opening: "2025-01-02",
+      expectedClose: "2025-04-01",
+      stage: "Unresponsive",
+      leadScore: 31,
+      probability: 12,
+      stall: "Yes",
+      playbook: "'Soft Re-open Offer + Discount'",
+    },
+    {
+      company: "RapidFoods",
+      description: "Delivery App Integration",
+      opening: "2025-01-14",
+      expectedClose: "2025-05-20",
+      stage: "No Response Yet",
+      leadScore: 28,
+      probability: 7,
+      stall: "No",
+      playbook: "'Reminder + Value Proposition Summary'",
+    },
   ]);
 
   const {
