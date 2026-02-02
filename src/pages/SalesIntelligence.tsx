@@ -55,6 +55,7 @@ interface Lead {
   probability: number;
   stall: string;
   playbook: string;
+  leadSource: string;
 }
 
 interface SalesTarget {
