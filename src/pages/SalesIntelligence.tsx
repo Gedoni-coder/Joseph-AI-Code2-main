@@ -72,7 +72,9 @@ const SalesIntelligence = () => {
   const [selectedSalesRep, setSelectedSalesRep] = useState<string>("");
   const [createLeadOpen, setCreateLeadOpen] = useState(false);
   const [createTargetOpen, setCreateTargetOpen] = useState(false);
-  const [salesRepsList, setSalesRepsList] = useState<Array<{ id: string; name: string }>>([]);
+  const [salesRepsList, setSalesRepsList] = useState<
+    Array<{ id: string; name: string }>
+  >([]);
   const [salesTargets, setSalesTargets] = useState<SalesTarget[]>([]);
 
   // Lead data state - starts empty
@@ -91,25 +93,27 @@ const SalesIntelligence = () => {
 
   // Function to calculate AI lead score and probability based on stage
   const calculateLeadMetrics = (stage: string) => {
-    const stageMetrics: Record<string, { score: number; probability: number }> = {
-      "Outreach Attempted": { score: 25, probability: 9 },
-      "Unresponsive": { score: 31, probability: 12 },
-      "No Response Yet": { score: 28, probability: 7 },
-      "Lead Contacted": { score: 68, probability: 48 },
-      "Initial Qualification": { score: 61, probability: 40 },
-      "Product Demo Booked": { score: 72, probability: 54 },
-      "Proposal Sent": { score: 92, probability: 88 },
-      "Negotiation": { score: 95, probability: 93 },
-      "Decision Pending": { score: 89, probability: 80 },
-    };
+    const stageMetrics: Record<string, { score: number; probability: number }> =
+      {
+        "Outreach Attempted": { score: 25, probability: 9 },
+        Unresponsive: { score: 31, probability: 12 },
+        "No Response Yet": { score: 28, probability: 7 },
+        "Lead Contacted": { score: 68, probability: 48 },
+        "Initial Qualification": { score: 61, probability: 40 },
+        "Product Demo Booked": { score: 72, probability: 54 },
+        "Proposal Sent": { score: 92, probability: 88 },
+        Negotiation: { score: 95, probability: 93 },
+        "Decision Pending": { score: 89, probability: 80 },
+      };
 
-    return (
-      stageMetrics[stage] || { score: 50, probability: 35 }
-    );
+    return stageMetrics[stage] || { score: 50, probability: 35 };
   };
 
   // Function to categorize lead as Hot, Warm, or Cold based on score
-  const categorizeLead = (score: number, stage: string): "hot" | "warm" | "cold" => {
+  const categorizeLead = (
+    score: number,
+    stage: string,
+  ): "hot" | "warm" | "cold" => {
     if (score >= 80) return "hot";
     if (score >= 60) return "warm";
     return "cold";
@@ -188,7 +192,10 @@ const SalesIntelligence = () => {
   };
 
   // Lead management functions
-  const handleDeleteLead = (leadIndex: number, category: "hot" | "warm" | "cold") => {
+  const handleDeleteLead = (
+    leadIndex: number,
+    category: "hot" | "warm" | "cold",
+  ) => {
     if (category === "hot") {
       setHotLeads(hotLeads.filter((_, idx) => idx !== leadIndex));
     } else if (category === "warm") {
@@ -198,7 +205,11 @@ const SalesIntelligence = () => {
     }
   };
 
-  const handleChangePipelineStage = (lead: Lead, newStage: string, currentCategory: "hot" | "warm" | "cold") => {
+  const handleChangePipelineStage = (
+    lead: Lead,
+    newStage: string,
+    currentCategory: "hot" | "warm" | "cold",
+  ) => {
     // Calculate new metrics based on new stage
     const newMetrics = calculateLeadMetrics(newStage);
     const newCategory = categorizeLead(newMetrics.score, newStage);
@@ -213,32 +224,43 @@ const SalesIntelligence = () => {
 
     // Remove from current category
     if (currentCategory === "hot") {
-      setHotLeads(hotLeads.filter(l => l.company !== lead.company));
+      setHotLeads(hotLeads.filter((l) => l.company !== lead.company));
     } else if (currentCategory === "warm") {
-      setWarmLeads(warmLeads.filter(l => l.company !== lead.company));
+      setWarmLeads(warmLeads.filter((l) => l.company !== lead.company));
     } else {
-      setColdLeads(coldLeads.filter(l => l.company !== lead.company));
+      setColdLeads(coldLeads.filter((l) => l.company !== lead.company));
     }
 
     // Add to new category
     if (newCategory === "hot") {
-      setHotLeads([...hotLeads.filter(l => l.company !== lead.company), updatedLead]);
+      setHotLeads([
+        ...hotLeads.filter((l) => l.company !== lead.company),
+        updatedLead,
+      ]);
     } else if (newCategory === "warm") {
-      setWarmLeads([...warmLeads.filter(l => l.company !== lead.company), updatedLead]);
+      setWarmLeads([
+        ...warmLeads.filter((l) => l.company !== lead.company),
+        updatedLead,
+      ]);
     } else {
-      setColdLeads([...coldLeads.filter(l => l.company !== lead.company), updatedLead]);
+      setColdLeads([
+        ...coldLeads.filter((l) => l.company !== lead.company),
+        updatedLead,
+      ]);
     }
   };
 
   // Sales target management functions
   const handleDeleteTarget = (targetId: string) => {
-    setSalesTargets(salesTargets.filter(t => t.id !== targetId));
+    setSalesTargets(salesTargets.filter((t) => t.id !== targetId));
   };
 
   const handleChangeTargetStatus = (targetId: string, newStatus: string) => {
-    setSalesTargets(salesTargets.map(t =>
-      t.id === targetId ? { ...t, status: newStatus } : t
-    ));
+    setSalesTargets(
+      salesTargets.map((t) =>
+        t.id === targetId ? { ...t, status: newStatus } : t,
+      ),
+    );
   };
 
   // ============================================================
@@ -284,7 +306,9 @@ const SalesIntelligence = () => {
     const totalDays = allLeads.reduce((sum, lead) => {
       const opening = new Date(lead.opening);
       const close = new Date(lead.expectedClose);
-      const days = Math.ceil((close.getTime() - opening.getTime()) / (1000 * 60 * 60 * 24));
+      const days = Math.ceil(
+        (close.getTime() - opening.getTime()) / (1000 * 60 * 60 * 24),
+      );
       return sum + days;
     }, 0);
     return Math.round(totalDays / allLeads.length);
@@ -309,8 +333,11 @@ const SalesIntelligence = () => {
   // 7. AVERAGE DEAL PROBABILITY = ∑Probabilities / Total Leads
   const calculateAvgProbability = () => {
     if (allLeads.length === 0) return 0;
-    const totalProbability = allLeads.reduce((sum, lead) => sum + lead.probability, 0);
-    return ((totalProbability / allLeads.length) / 100).toFixed(1);
+    const totalProbability = allLeads.reduce(
+      (sum, lead) => sum + lead.probability,
+      0,
+    );
+    return (totalProbability / allLeads.length / 100).toFixed(1);
   };
 
   // 8. TOTAL TEAM TARGET = ∑All Target Amounts
@@ -344,8 +371,14 @@ const SalesIntelligence = () => {
   const qualifiedLeads = hotLeads.length + warmLeads.length;
 
   // Calculate rep achievements dynamically from sales targets
-  const calculateRepAchievements = (): Record<string, { target: number; achieved: number; percentage: number }> => {
-    const achievements: Record<string, { target: number; achieved: number; percentage: number }> = {};
+  const calculateRepAchievements = (): Record<
+    string,
+    { target: number; achieved: number; percentage: number }
+  > => {
+    const achievements: Record<
+      string,
+      { target: number; achieved: number; percentage: number }
+    > = {};
 
     salesTargets.forEach((target) => {
       if (!achievements[target.salesRepId]) {
@@ -384,7 +417,7 @@ const SalesIntelligence = () => {
     Object.entries(repAchievements).forEach(([repId, data]) => {
       if (data.percentage > maxPercentage) {
         maxPercentage = data.percentage;
-        const rep = salesRepsList.find(r => r.id === repId);
+        const rep = salesRepsList.find((r) => r.id === repId);
         if (rep) {
           topRep = rep.name;
         }
@@ -450,7 +483,7 @@ const SalesIntelligence = () => {
       description: "AI coaching, performance insights, skill recommendations",
       metrics: {
         "Coaching Score": `${calculateAvgLeadScore()}/10`, // TAG: Hardcoded, VALUE: Calculated
-        "Top Performers": `${salesRepsList.filter(rep => repAchievements[rep.id]?.percentage >= 100).length} identified`, // TAG: Hardcoded, VALUE: Calculated
+        "Top Performers": `${salesRepsList.filter((rep) => repAchievements[rep.id]?.percentage >= 100).length} identified`, // TAG: Hardcoded, VALUE: Calculated
         "Improvement Rate": `${((qualifiedLeads / allLeads.length) * 100).toFixed(0)}%`, // TAG: Hardcoded, VALUE: Calculated
       },
     },
@@ -656,7 +689,8 @@ const SalesIntelligence = () => {
                   <div className="py-12 text-center">
                     <p className="text-gray-500 mb-2">No hot leads yet</p>
                     <p className="text-sm text-gray-400">
-                      Leads with proposal sent, negotiation in progress, or decision pending will appear here
+                      Leads with proposal sent, negotiation in progress, or
+                      decision pending will appear here
                     </p>
                   </div>
                 ) : (
@@ -704,18 +738,41 @@ const SalesIntelligence = () => {
                             <td className="py-3 px-4">{deal.opening}</td>
                             <td className="py-3 px-4">{deal.expectedClose}</td>
                             <td className="py-3 px-4">
-                              <Select value={deal.stage} onValueChange={(newStage) => handleChangePipelineStage(deal, newStage, "hot")}>
+                              <Select
+                                value={deal.stage}
+                                onValueChange={(newStage) =>
+                                  handleChangePipelineStage(
+                                    deal,
+                                    newStage,
+                                    "hot",
+                                  )
+                                }
+                              >
                                 <SelectTrigger className="w-40 h-8 text-xs">
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
-                                  <SelectItem value="Outreach Attempted">Outreach Attempted</SelectItem>
-                                  <SelectItem value="Lead Contacted">Lead Contacted</SelectItem>
-                                  <SelectItem value="Initial Qualification">Initial Qualification</SelectItem>
-                                  <SelectItem value="Product Demo Booked">Product Demo Booked</SelectItem>
-                                  <SelectItem value="Proposal Sent">Proposal Sent</SelectItem>
-                                  <SelectItem value="Negotiation">Negotiation</SelectItem>
-                                  <SelectItem value="Decision Pending">Decision Pending</SelectItem>
+                                  <SelectItem value="Outreach Attempted">
+                                    Outreach Attempted
+                                  </SelectItem>
+                                  <SelectItem value="Lead Contacted">
+                                    Lead Contacted
+                                  </SelectItem>
+                                  <SelectItem value="Initial Qualification">
+                                    Initial Qualification
+                                  </SelectItem>
+                                  <SelectItem value="Product Demo Booked">
+                                    Product Demo Booked
+                                  </SelectItem>
+                                  <SelectItem value="Proposal Sent">
+                                    Proposal Sent
+                                  </SelectItem>
+                                  <SelectItem value="Negotiation">
+                                    Negotiation
+                                  </SelectItem>
+                                  <SelectItem value="Decision Pending">
+                                    Decision Pending
+                                  </SelectItem>
                                   <SelectItem value="Won">Won</SelectItem>
                                 </SelectContent>
                               </Select>
@@ -737,7 +794,9 @@ const SalesIntelligence = () => {
                                 {deal.stall}
                               </span>
                             </td>
-                            <td className="py-3 px-4 text-xs">{deal.playbook}</td>
+                            <td className="py-3 px-4 text-xs">
+                              {deal.playbook}
+                            </td>
                             <td className="py-3 px-4 text-center">
                               <button
                                 onClick={() => handleDeleteLead(idx, "hot")}
@@ -774,7 +833,8 @@ const SalesIntelligence = () => {
                   <div className="py-12 text-center">
                     <p className="text-gray-500 mb-2">No warm leads yet</p>
                     <p className="text-sm text-gray-400">
-                      Leads with product demo booked, lead contacted, or initial qualification will appear here
+                      Leads with product demo booked, lead contacted, or initial
+                      qualification will appear here
                     </p>
                   </div>
                 ) : (
@@ -822,18 +882,41 @@ const SalesIntelligence = () => {
                             <td className="py-3 px-4">{deal.opening}</td>
                             <td className="py-3 px-4">{deal.expectedClose}</td>
                             <td className="py-3 px-4">
-                              <Select value={deal.stage} onValueChange={(newStage) => handleChangePipelineStage(deal, newStage, "warm")}>
+                              <Select
+                                value={deal.stage}
+                                onValueChange={(newStage) =>
+                                  handleChangePipelineStage(
+                                    deal,
+                                    newStage,
+                                    "warm",
+                                  )
+                                }
+                              >
                                 <SelectTrigger className="w-40 h-8 text-xs">
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
-                                  <SelectItem value="Outreach Attempted">Outreach Attempted</SelectItem>
-                                  <SelectItem value="Lead Contacted">Lead Contacted</SelectItem>
-                                  <SelectItem value="Initial Qualification">Initial Qualification</SelectItem>
-                                  <SelectItem value="Product Demo Booked">Product Demo Booked</SelectItem>
-                                  <SelectItem value="Proposal Sent">Proposal Sent</SelectItem>
-                                  <SelectItem value="Negotiation">Negotiation</SelectItem>
-                                  <SelectItem value="Decision Pending">Decision Pending</SelectItem>
+                                  <SelectItem value="Outreach Attempted">
+                                    Outreach Attempted
+                                  </SelectItem>
+                                  <SelectItem value="Lead Contacted">
+                                    Lead Contacted
+                                  </SelectItem>
+                                  <SelectItem value="Initial Qualification">
+                                    Initial Qualification
+                                  </SelectItem>
+                                  <SelectItem value="Product Demo Booked">
+                                    Product Demo Booked
+                                  </SelectItem>
+                                  <SelectItem value="Proposal Sent">
+                                    Proposal Sent
+                                  </SelectItem>
+                                  <SelectItem value="Negotiation">
+                                    Negotiation
+                                  </SelectItem>
+                                  <SelectItem value="Decision Pending">
+                                    Decision Pending
+                                  </SelectItem>
                                   <SelectItem value="Won">Won</SelectItem>
                                 </SelectContent>
                               </Select>
@@ -855,7 +938,9 @@ const SalesIntelligence = () => {
                                 {deal.stall}
                               </span>
                             </td>
-                            <td className="py-3 px-4 text-xs">{deal.playbook}</td>
+                            <td className="py-3 px-4 text-xs">
+                              {deal.playbook}
+                            </td>
                             <td className="py-3 px-4 text-center">
                               <button
                                 onClick={() => handleDeleteLead(idx, "warm")}
@@ -892,7 +977,8 @@ const SalesIntelligence = () => {
                   <div className="py-12 text-center">
                     <p className="text-gray-500 mb-2">No cold leads yet</p>
                     <p className="text-sm text-gray-400">
-                      Leads with outreach attempted, unresponsive, or no response yet will appear here
+                      Leads with outreach attempted, unresponsive, or no
+                      response yet will appear here
                     </p>
                   </div>
                 ) : (
@@ -940,18 +1026,41 @@ const SalesIntelligence = () => {
                             <td className="py-3 px-4">{deal.opening}</td>
                             <td className="py-3 px-4">{deal.expectedClose}</td>
                             <td className="py-3 px-4">
-                              <Select value={deal.stage} onValueChange={(newStage) => handleChangePipelineStage(deal, newStage, "cold")}>
+                              <Select
+                                value={deal.stage}
+                                onValueChange={(newStage) =>
+                                  handleChangePipelineStage(
+                                    deal,
+                                    newStage,
+                                    "cold",
+                                  )
+                                }
+                              >
                                 <SelectTrigger className="w-40 h-8 text-xs">
                                   <SelectValue />
                                 </SelectTrigger>
                                 <SelectContent>
-                                  <SelectItem value="Outreach Attempted">Outreach Attempted</SelectItem>
-                                  <SelectItem value="Lead Contacted">Lead Contacted</SelectItem>
-                                  <SelectItem value="Initial Qualification">Initial Qualification</SelectItem>
-                                  <SelectItem value="Product Demo Booked">Product Demo Booked</SelectItem>
-                                  <SelectItem value="Proposal Sent">Proposal Sent</SelectItem>
-                                  <SelectItem value="Negotiation">Negotiation</SelectItem>
-                                  <SelectItem value="Decision Pending">Decision Pending</SelectItem>
+                                  <SelectItem value="Outreach Attempted">
+                                    Outreach Attempted
+                                  </SelectItem>
+                                  <SelectItem value="Lead Contacted">
+                                    Lead Contacted
+                                  </SelectItem>
+                                  <SelectItem value="Initial Qualification">
+                                    Initial Qualification
+                                  </SelectItem>
+                                  <SelectItem value="Product Demo Booked">
+                                    Product Demo Booked
+                                  </SelectItem>
+                                  <SelectItem value="Proposal Sent">
+                                    Proposal Sent
+                                  </SelectItem>
+                                  <SelectItem value="Negotiation">
+                                    Negotiation
+                                  </SelectItem>
+                                  <SelectItem value="Decision Pending">
+                                    Decision Pending
+                                  </SelectItem>
                                   <SelectItem value="Won">Won</SelectItem>
                                 </SelectContent>
                               </Select>
@@ -973,7 +1082,9 @@ const SalesIntelligence = () => {
                                 {deal.stall}
                               </span>
                             </td>
-                            <td className="py-3 px-4 text-xs">{deal.playbook}</td>
+                            <td className="py-3 px-4 text-xs">
+                              {deal.playbook}
+                            </td>
                             <td className="py-3 px-4 text-center">
                               <button
                                 onClick={() => handleDeleteLead(idx, "cold")}
@@ -1321,13 +1432,8 @@ const SalesIntelligence = () => {
           {/* Targets Tab */}
           <TabsContent value="targets" className="space-y-6">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold">
-                Sales Target Management
-              </h3>
-              <Button
-                onClick={() => setCreateTargetOpen(true)}
-                size="lg"
-              >
+              <h3 className="text-lg font-semibold">Sales Target Management</h3>
+              <Button onClick={() => setCreateTargetOpen(true)} size="lg">
                 <Plus className="h-4 w-4 mr-2" />
                 Create new Sales Target
               </Button>
@@ -1342,9 +1448,12 @@ const SalesIntelligence = () => {
               </div>
               {salesRepsList.length === 0 ? (
                 <div className="py-12 text-center border-2 border-dashed border-gray-300 rounded-lg">
-                  <p className="text-gray-500 mb-2">No sales representatives yet</p>
+                  <p className="text-gray-500 mb-2">
+                    No sales representatives yet
+                  </p>
                   <p className="text-sm text-gray-400">
-                    Create a new sales target to add your first sales representative
+                    Create a new sales target to add your first sales
+                    representative
                   </p>
                 </div>
               ) : (
@@ -1391,18 +1500,23 @@ const SalesIntelligence = () => {
               <Card>
                 <CardHeader>
                   <CardTitle>
-                    {salesRepsList.find(r => r.id === selectedSalesRep)?.name} - Target Tracking
+                    {salesRepsList.find((r) => r.id === selectedSalesRep)?.name}{" "}
+                    - Target Tracking
                   </CardTitle>
                   <CardDescription>
                     Comprehensive target achievement and performance metrics
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {salesTargets.filter(t => t.salesRepId === selectedSalesRep).length === 0 ? (
+                  {salesTargets.filter((t) => t.salesRepId === selectedSalesRep)
+                    .length === 0 ? (
                     <div className="py-12 text-center">
-                      <p className="text-gray-500 mb-2">No targets created yet</p>
+                      <p className="text-gray-500 mb-2">
+                        No targets created yet
+                      </p>
                       <p className="text-sm text-gray-400">
-                        Create a sales target for this representative to view their performance
+                        Create a sales target for this representative to view
+                        their performance
                       </p>
                     </div>
                   ) : (
@@ -1440,79 +1554,105 @@ const SalesIntelligence = () => {
                           </tr>
                         </thead>
                         <tbody>
-                          {salesTargets.filter(t => t.salesRepId === selectedSalesRep).map((target) => {
-                            const achievement = (target.achievedAmount / target.targetAmount) * 100;
-                            const isAchieved = achievement >= 100;
-                            return (
-                              <tr key={target.id} className="border-b hover:bg-gray-50">
-                                <td className="py-3 px-4 font-medium">
-                                  {target.targetPeriod}
-                                </td>
-                                <td className="py-3 px-4 text-center">
-                                  ${(target.targetAmount / 1000).toFixed(0)}K
-                                </td>
-                                <td className="py-3 px-4 text-center font-semibold">
-                                  ${(target.achievedAmount / 1000).toFixed(0)}K
-                                </td>
-                                <td className="py-3 px-4 text-center">
-                                  <div className="flex items-center justify-center gap-2">
-                                    <Badge
-                                      className={
-                                        isAchieved
-                                          ? "bg-green-100 text-green-800"
-                                          : "bg-yellow-100 text-yellow-800"
+                          {salesTargets
+                            .filter((t) => t.salesRepId === selectedSalesRep)
+                            .map((target) => {
+                              const achievement =
+                                (target.achievedAmount / target.targetAmount) *
+                                100;
+                              const isAchieved = achievement >= 100;
+                              return (
+                                <tr
+                                  key={target.id}
+                                  className="border-b hover:bg-gray-50"
+                                >
+                                  <td className="py-3 px-4 font-medium">
+                                    {target.targetPeriod}
+                                  </td>
+                                  <td className="py-3 px-4 text-center">
+                                    ${(target.targetAmount / 1000).toFixed(0)}K
+                                  </td>
+                                  <td className="py-3 px-4 text-center font-semibold">
+                                    ${(target.achievedAmount / 1000).toFixed(0)}
+                                    K
+                                  </td>
+                                  <td className="py-3 px-4 text-center">
+                                    <div className="flex items-center justify-center gap-2">
+                                      <Badge
+                                        className={
+                                          isAchieved
+                                            ? "bg-green-100 text-green-800"
+                                            : "bg-yellow-100 text-yellow-800"
+                                        }
+                                      >
+                                        {achievement.toFixed(0)}%
+                                      </Badge>
+                                      {isAchieved && (
+                                        <CheckCircle2 className="h-4 w-4 text-green-600" />
+                                      )}
+                                    </div>
+                                  </td>
+                                  <td className="py-3 px-4 text-center">
+                                    <Select
+                                      value={target.status}
+                                      onValueChange={(newStatus) =>
+                                        handleChangeTargetStatus(
+                                          target.id,
+                                          newStatus,
+                                        )
                                       }
                                     >
-                                      {achievement.toFixed(0)}%
-                                    </Badge>
-                                    {isAchieved && (
-                                      <CheckCircle2 className="h-4 w-4 text-green-600" />
-                                    )}
-                                  </div>
-                                </td>
-                                <td className="py-3 px-4 text-center">
-                                  <Select value={target.status} onValueChange={(newStatus) => handleChangeTargetStatus(target.id, newStatus)}>
-                                    <SelectTrigger className="w-32 h-8 text-xs">
-                                      <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                      <SelectItem value="In Progress">In Progress</SelectItem>
-                                      <SelectItem value="✓ Achieved">✓ Achieved</SelectItem>
-                                      <SelectItem value="At Risk">At Risk</SelectItem>
-                                      <SelectItem value="Completed">Completed</SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </td>
-                                <td className="py-3 px-4 text-center font-semibold">
-                                  {target.dealsClosed}
-                                </td>
-                                <td className="py-3 px-4 text-center text-sm">
-                                  ${(target.avgDealSize / 1000).toFixed(1)}K
-                                </td>
-                                <td className="py-3 px-4 text-xs">
-                                  <div className="flex items-start gap-1">
-                                    <Lightbulb className="h-4 w-4 text-amber-600 flex-shrink-0 mt-0.5" />
-                                    <span>
-                                      {achievement >= 100
-                                        ? "Excellent performance - target achieved!"
-                                        : achievement >= 75
-                                          ? "On track - continue momentum"
-                                          : "Below target - increase effort"}
-                                    </span>
-                                  </div>
-                                </td>
-                                <td className="py-3 px-4 text-center">
-                                  <button
-                                    onClick={() => handleDeleteTarget(target.id)}
-                                    className="p-1 text-red-600 hover:bg-red-50 rounded transition-colors"
-                                    title="Delete target"
-                                  >
-                                    <Trash2 className="h-4 w-4" />
-                                  </button>
-                                </td>
-                              </tr>
-                            );
-                          })}
+                                      <SelectTrigger className="w-32 h-8 text-xs">
+                                        <SelectValue />
+                                      </SelectTrigger>
+                                      <SelectContent>
+                                        <SelectItem value="In Progress">
+                                          In Progress
+                                        </SelectItem>
+                                        <SelectItem value="✓ Achieved">
+                                          ✓ Achieved
+                                        </SelectItem>
+                                        <SelectItem value="At Risk">
+                                          At Risk
+                                        </SelectItem>
+                                        <SelectItem value="Completed">
+                                          Completed
+                                        </SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  </td>
+                                  <td className="py-3 px-4 text-center font-semibold">
+                                    {target.dealsClosed}
+                                  </td>
+                                  <td className="py-3 px-4 text-center text-sm">
+                                    ${(target.avgDealSize / 1000).toFixed(1)}K
+                                  </td>
+                                  <td className="py-3 px-4 text-xs">
+                                    <div className="flex items-start gap-1">
+                                      <Lightbulb className="h-4 w-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                                      <span>
+                                        {achievement >= 100
+                                          ? "Excellent performance - target achieved!"
+                                          : achievement >= 75
+                                            ? "On track - continue momentum"
+                                            : "Below target - increase effort"}
+                                      </span>
+                                    </div>
+                                  </td>
+                                  <td className="py-3 px-4 text-center">
+                                    <button
+                                      onClick={() =>
+                                        handleDeleteTarget(target.id)
+                                      }
+                                      className="p-1 text-red-600 hover:bg-red-50 rounded transition-colors"
+                                      title="Delete target"
+                                    >
+                                      <Trash2 className="h-4 w-4" />
+                                    </button>
+                                  </td>
+                                </tr>
+                              );
+                            })}
                         </tbody>
                       </table>
                     </div>
@@ -1529,9 +1669,12 @@ const SalesIntelligence = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="py-12 text-center">
-                    <p className="text-gray-500 mb-2">No sales representative selected</p>
+                    <p className="text-gray-500 mb-2">
+                      No sales representative selected
+                    </p>
                     <p className="text-sm text-gray-400">
-                      Select a representative from the list above or create a new target
+                      Select a representative from the list above or create a
+                      new target
                     </p>
                   </div>
                 </CardContent>
@@ -1552,30 +1695,49 @@ const SalesIntelligence = () => {
                     <p className="text-sm text-gray-600 mb-1">
                       Total Team Target {/* TAG: Hardcoded */}
                     </p>
-                    <p className="text-2xl font-bold text-gray-900">${(calculateTotalTeamTarget() / 1000).toFixed(0)}K</p> {/* VALUE: Calculated */}
+                    <p className="text-2xl font-bold text-gray-900">
+                      ${(calculateTotalTeamTarget() / 1000).toFixed(0)}K
+                    </p>{" "}
+                    {/* VALUE: Calculated */}
                     <p className="text-xs text-gray-500 mt-2">Q1 Total</p>
                   </div>
                   <div className="p-4 border rounded-lg bg-green-50">
-                    <p className="text-sm text-gray-600 mb-1">Total Achieved</p> {/* TAG: Hardcoded */}
-                    <p className="text-2xl font-bold text-green-700">${(calculateTotalAchieved() / 1000).toFixed(1)}K</p> {/* VALUE: Calculated */}
+                    <p className="text-sm text-gray-600 mb-1">Total Achieved</p>{" "}
+                    {/* TAG: Hardcoded */}
+                    <p className="text-2xl font-bold text-green-700">
+                      ${(calculateTotalAchieved() / 1000).toFixed(1)}K
+                    </p>{" "}
+                    {/* VALUE: Calculated */}
                     <p className="text-xs text-green-600 mt-2">
-                      {calculateAvgTeamAchievement()}% Completion {/* VALUE: Calculated */}
+                      {calculateAvgTeamAchievement()}% Completion{" "}
+                      {/* VALUE: Calculated */}
                     </p>
                   </div>
                   <div className="p-4 border rounded-lg">
-                    <p className="text-sm text-gray-600 mb-1">Top Performer</p> {/* TAG: Hardcoded */}
-                    <p className="text-2xl font-bold text-blue-700">{getTopPerformer().name}</p> {/* VALUE: Calculated */}
+                    <p className="text-sm text-gray-600 mb-1">Top Performer</p>{" "}
+                    {/* TAG: Hardcoded */}
+                    <p className="text-2xl font-bold text-blue-700">
+                      {getTopPerformer().name}
+                    </p>{" "}
+                    {/* VALUE: Calculated */}
                     <p className="text-xs text-blue-600 mt-2">
-                      {getTopPerformer().achievement}% Achievement {/* VALUE: Calculated */}
+                      {getTopPerformer().achievement}% Achievement{" "}
+                      {/* VALUE: Calculated */}
                     </p>
                   </div>
                   <div className="p-4 border rounded-lg">
                     <p className="text-sm text-gray-600 mb-1">
                       Avg Team Achievement {/* TAG: Hardcoded */}
                     </p>
-                    <p className="text-2xl font-bold text-purple-700">{calculateAvgTeamAchievement()}%</p> {/* VALUE: Calculated */}
+                    <p className="text-2xl font-bold text-purple-700">
+                      {calculateAvgTeamAchievement()}%
+                    </p>{" "}
+                    {/* VALUE: Calculated */}
                     <p className="text-xs text-purple-600 mt-2">
-                      {parseInt(calculateAvgTeamAchievement()) >= 100 ? "Above Target" : "In Progress"} {/* VALUE: Calculated */}
+                      {parseInt(calculateAvgTeamAchievement()) >= 100
+                        ? "Above Target"
+                        : "In Progress"}{" "}
+                      {/* VALUE: Calculated */}
                     </p>
                   </div>
                 </div>
