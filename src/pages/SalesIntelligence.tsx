@@ -622,70 +622,79 @@ const SalesIntelligence = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b bg-gray-50">
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Company Name
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Deal Description
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Opening Date
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Expected Close
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Pipeline Stage
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          AI Lead Score
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Deal Probability
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Stall?
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          AI Rescue Playbook
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {warmLeads.map((deal, idx) => (
-                        <tr key={idx} className="border-b hover:bg-gray-50">
-                          <td className="py-3 px-4">{deal.company}</td>
-                          <td className="py-3 px-4">{deal.description}</td>
-                          <td className="py-3 px-4">{deal.opening}</td>
-                          <td className="py-3 px-4">{deal.expectedClose}</td>
-                          <td className="py-3 px-4">{deal.stage}</td>
-                          <td className="py-3 px-4 text-center">
-                            <Badge className="bg-yellow-100 text-yellow-800">
-                              {deal.leadScore}
-                            </Badge>
-                          </td>
-                          <td className="py-3 px-4 text-center">
-                            <Badge className="bg-yellow-100 text-yellow-800">
-                              {deal.probability}%
-                            </Badge>
-                          </td>
-                          <td className="py-3 px-4 text-center">
-                            <span
-                              className={`font-semibold ${deal.stall === "Yes" ? "text-orange-600" : "text-green-600"}`}
-                            >
-                              {deal.stall}
-                            </span>
-                          </td>
-                          <td className="py-3 px-4 text-xs">{deal.playbook}</td>
+                {warmLeads.length === 0 ? (
+                  <div className="py-12 text-center">
+                    <p className="text-gray-500 mb-2">No warm leads yet</p>
+                    <p className="text-sm text-gray-400">
+                      Leads with product demo booked, lead contacted, or initial qualification will appear here
+                    </p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b bg-gray-50">
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Company Name
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Deal Description
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Opening Date
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Expected Close
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Pipeline Stage
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            AI Lead Score
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            Deal Probability
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            Stall?
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            AI Rescue Playbook
+                          </th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody>
+                        {warmLeads.map((deal, idx) => (
+                          <tr key={idx} className="border-b hover:bg-gray-50">
+                            <td className="py-3 px-4">{deal.company}</td>
+                            <td className="py-3 px-4">{deal.description}</td>
+                            <td className="py-3 px-4">{deal.opening}</td>
+                            <td className="py-3 px-4">{deal.expectedClose}</td>
+                            <td className="py-3 px-4">{deal.stage}</td>
+                            <td className="py-3 px-4 text-center">
+                              <Badge className="bg-yellow-100 text-yellow-800">
+                                {deal.leadScore}
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <Badge className="bg-yellow-100 text-yellow-800">
+                                {deal.probability}%
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <span
+                                className={`font-semibold ${deal.stall === "Yes" ? "text-orange-600" : "text-green-600"}`}
+                              >
+                                {deal.stall}
+                              </span>
+                            </td>
+                            <td className="py-3 px-4 text-xs">{deal.playbook}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
