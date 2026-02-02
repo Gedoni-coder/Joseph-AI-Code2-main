@@ -12,6 +12,8 @@ import { Badge } from "@/components/ui/badge";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import ModuleHeader from "@/components/ui/module-header";
 import { useSalesIntelligenceAPI } from "@/hooks/useSalesIntelligenceAPI";
+import CreateLeadDialog from "@/components/sales-intelligence/CreateLeadDialog";
+import CreateSalesTargetDialog from "@/components/sales-intelligence/CreateSalesTargetDialog";
 import {
   TrendingUp,
   Users,
@@ -28,12 +30,142 @@ import {
   Linkedin,
   CheckCircle2,
   Lightbulb,
+  Plus,
 } from "lucide-react";
+
+interface Lead {
+  company: string;
+  description: string;
+  opening: string;
+  expectedClose: string;
+  stage: string;
+  leadScore: number;
+  probability: number;
+  stall: string;
+  playbook: string;
+}
 
 const SalesIntelligence = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [selectedChannel, setSelectedChannel] = useState("whatsapp");
   const [selectedSalesRep, setSelectedSalesRep] = useState("sarah");
+  const [createLeadOpen, setCreateLeadOpen] = useState(false);
+  const [createTargetOpen, setCreateTargetOpen] = useState(false);
+  const [salesRepsList, setSalesRepsList] = useState([
+    { id: "sarah", name: "Sarah Johnson" },
+    { id: "mike", name: "Mike Chen" },
+    { id: "lisa", name: "Lisa Rodriguez" },
+    { id: "john", name: "John Davis" },
+  ]);
+
+  // Lead data state
+  const [hotLeads, setHotLeads] = useState<Lead[]>([
+    {
+      company: "ZenithTech Ltd",
+      description: "50 Laptops Supply Contract",
+      opening: "2025-01-11",
+      expectedClose: "2025-02-05",
+      stage: "Proposal Sent",
+      leadScore: 92,
+      probability: 88,
+      stall: "No",
+      playbook: "Not Required",
+    },
+    {
+      company: "PrimeFoods PLC",
+      description: "Packaging Automation Upgrade",
+      opening: "2025-01-03",
+      expectedClose: "2025-01-28",
+      stage: "Negotiation",
+      leadScore: 95,
+      probability: 93,
+      stall: "No",
+      playbook: "Not Required",
+    },
+    {
+      company: "Star Transport Co.",
+      description: "Fleet Tracking Subscription",
+      opening: "2025-01-15",
+      expectedClose: "2025-02-10",
+      stage: "Decision Pending",
+      leadScore: 89,
+      probability: 80,
+      stall: "Yes",
+      playbook: "Send 'Decision Reminder + Value ROI Summary'",
+    },
+  ]);
+
+  const [warmLeads, setWarmLeads] = useState<Lead[]>([
+    {
+      company: "GreenMart Stores",
+      description: "POS + Inventory SaaS",
+      opening: "2025-01-08",
+      expectedClose: "2025-03-01",
+      stage: "Product Demo Booked",
+      leadScore: 72,
+      probability: 54,
+      stall: "No",
+      playbook: "Not Required",
+    },
+    {
+      company: "CraftBuild Ltd",
+      description: "Supplier Workflow System",
+      opening: "2025-01-04",
+      expectedClose: "2025-03-20",
+      stage: "Lead Contacted",
+      leadScore: 68,
+      probability: 48,
+      stall: "Yes",
+      playbook: "'Re-engage With Case Study'",
+    },
+    {
+      company: "NextGen Autos",
+      description: "CRM Deployment",
+      opening: "2025-01-18",
+      expectedClose: "2025-03-10",
+      stage: "Initial Qualification",
+      leadScore: 61,
+      probability: 40,
+      stall: "No",
+      playbook: "'Send Competitive Comparison Brief'",
+    },
+  ]);
+
+  const [coldLeads, setColdLeads] = useState<Lead[]>([
+    {
+      company: "AlphaPrint",
+      description: "Printer Leasing Proposal",
+      opening: "2024-12-22",
+      expectedClose: "2025-04-15",
+      stage: "Outreach Attempted",
+      leadScore: 25,
+      probability: 9,
+      stall: "Yes",
+      playbook: "'Dormant Lead Recovery Script'",
+    },
+    {
+      company: "Urban Boutique",
+      description: "Website Revamp",
+      opening: "2025-01-02",
+      expectedClose: "2025-04-01",
+      stage: "Unresponsive",
+      leadScore: 31,
+      probability: 12,
+      stall: "Yes",
+      playbook: "'Soft Re-open Offer + Discount'",
+    },
+    {
+      company: "RapidFoods",
+      description: "Delivery App Integration",
+      opening: "2025-01-14",
+      expectedClose: "2025-05-20",
+      stage: "No Response Yet",
+      leadScore: 28,
+      probability: 7,
+      stall: "No",
+      playbook: "'Reminder + Value Proposition Summary'",
+    },
+  ]);
 
   const {
     subModules,
@@ -44,6 +176,209 @@ const SalesIntelligence = () => {
     refreshData,
   } = useSalesIntelligenceAPI();
 
+  // Function to calculate AI lead score and probability based on stage
+  const calculateLeadMetrics = (stage: string) => {
+    const stageMetrics: Record<string, { score: number; probability: number }> = {
+      "Outreach Attempted": { score: 25, probability: 9 },
+      "Unresponsive": { score: 31, probability: 12 },
+      "No Response Yet": { score: 28, probability: 7 },
+      "Lead Contacted": { score: 68, probability: 48 },
+      "Initial Qualification": { score: 61, probability: 40 },
+      "Product Demo Booked": { score: 72, probability: 54 },
+      "Proposal Sent": { score: 92, probability: 88 },
+      "Negotiation": { score: 95, probability: 93 },
+      "Decision Pending": { score: 89, probability: 80 },
+    };
+
+    return (
+      stageMetrics[stage] || { score: 50, probability: 35 }
+    );
+  };
+
+  // Function to categorize lead as Hot, Warm, or Cold based on score
+  const categorizeLead = (score: number, stage: string): "hot" | "warm" | "cold" => {
+    if (score >= 80) return "hot";
+    if (score >= 60) return "warm";
+    return "cold";
+  };
+
+  const handleLeadCreated = (leadData: any) => {
+    console.log("New lead created:", leadData);
+
+    if (leadData.type === "document") {
+      // TODO: Handle document parsing and bulk lead creation
+      return;
+    }
+
+    // Create new lead from form data
+    const metrics = calculateLeadMetrics(leadData.pipelineStage);
+    const newLead: Lead = {
+      company: leadData.companyName,
+      description: leadData.dealDescription,
+      opening: leadData.openingDate,
+      expectedClose: leadData.expectedClose,
+      stage: leadData.pipelineStage,
+      leadScore: metrics.score,
+      probability: metrics.probability,
+      stall: "No",
+      playbook: "Monitor",
+    };
+
+    const category = categorizeLead(metrics.score, leadData.pipelineStage);
+
+    // Add lead to appropriate category
+    if (category === "hot") {
+      setHotLeads([...hotLeads, newLead]);
+    } else if (category === "warm") {
+      setWarmLeads([...warmLeads, newLead]);
+    } else {
+      setColdLeads([...coldLeads, newLead]);
+    }
+  };
+
+  const handleTargetCreated = (targetData: any) => {
+    console.log("New sales target created:", targetData);
+    // TODO: Integrate with backend API to save the target
+    // For now, we'll just log it and close the dialog
+  };
+
+  const handleSalesRepCreated = (newRep: { id: string; name: string }) => {
+    console.log("New sales representative created:", newRep);
+    // Add the new rep to the list
+    setSalesRepsList([...salesRepsList, newRep]);
+    // TODO: Integrate with backend API to save the rep
+  };
+
+  // ============================================================
+  // KPI CALCULATION FUNCTIONS (FORMULAS)
+  // ============================================================
+
+  // Get all leads combined
+  const allLeads = [...hotLeads, ...warmLeads, ...coldLeads];
+
+  // 1. TOTAL PIPELINE VALUE = ∑(Deal Value × Win Probability)
+  // Weighted pipeline formula #26
+  const calculatePipelineValue = () => {
+    if (allLeads.length === 0) return 0;
+    return allLeads.reduce((sum, lead) => {
+      // Assume a base deal value based on stage and probability
+      // Using probability as a proxy for deal value (0-100 scale)
+      const baseDealValue = 50000; // $50K base
+      const dealValue = (lead.probability / 100) * baseDealValue;
+      return sum + dealValue;
+    }, 0);
+  };
+
+  // 2. WIN RATE = (Deals Won / Total Opportunities) × 100
+  // In our context: Hot leads that are likely to win / Total leads
+  // Formula #9
+  const calculateWinRate = () => {
+    if (allLeads.length === 0) return 0;
+    const hotLeadsCount = hotLeads.length;
+    return (hotLeadsCount / allLeads.length) * 100;
+  };
+
+  // 3. AVERAGE DEAL SIZE = Total Pipeline Value / Total Leads
+  // Formula #20
+  const calculateAvgDealSize = () => {
+    if (allLeads.length === 0) return 0;
+    return calculatePipelineValue() / allLeads.length;
+  };
+
+  // 4. SALES CYCLE LENGTH = ∑Days to Close / Deals
+  // Formula #11
+  const calculateSalesCycle = () => {
+    if (allLeads.length === 0) return 0;
+    const totalDays = allLeads.reduce((sum, lead) => {
+      const opening = new Date(lead.opening);
+      const close = new Date(lead.expectedClose);
+      const days = Math.ceil((close.getTime() - opening.getTime()) / (1000 * 60 * 60 * 24));
+      return sum + days;
+    }, 0);
+    return Math.round(totalDays / allLeads.length);
+  };
+
+  // 5. AVERAGE LEAD SCORE = ∑Lead Scores / Total Leads
+  // Formula #3
+  const calculateAvgLeadScore = () => {
+    if (allLeads.length === 0) return 0;
+    const totalScore = allLeads.reduce((sum, lead) => sum + lead.leadScore, 0);
+    return (totalScore / allLeads.length).toFixed(1);
+  };
+
+  // 6. PIPELINE HEALTH = (Hot + Warm Leads / Total Leads) × 100
+  // Percentage of leads in active/healthy stages
+  const calculatePipelineHealth = () => {
+    if (allLeads.length === 0) return 0;
+    const healthyLeads = hotLeads.length + warmLeads.length;
+    return ((healthyLeads / allLeads.length) * 100).toFixed(0);
+  };
+
+  // 7. AVERAGE DEAL PROBABILITY = ∑Probabilities / Total Leads
+  const calculateAvgProbability = () => {
+    if (allLeads.length === 0) return 0;
+    const totalProbability = allLeads.reduce((sum, lead) => sum + lead.probability, 0);
+    return ((totalProbability / allLeads.length) / 100).toFixed(1);
+  };
+
+  // 8. TOTAL TEAM TARGET = ∑All Target Amounts
+  // Formula based on targets created
+  const calculateTotalTeamTarget = () => {
+    // This would sum from actual targets - for now using hardcoded data
+    // When targets are created via form, this will calculate dynamically
+    return 600000; // Will be replaced with actual sum of target amounts
+  };
+
+  // 9. TOTAL ACHIEVED = ∑All Achieved Amounts
+  const calculateTotalAchieved = () => {
+    // This would sum from actual targets
+    return 425500; // Will be replaced with actual sum of achieved amounts
+  };
+
+  // 10. AVERAGE TEAM ACHIEVEMENT = (Total Achieved / Total Team Target) × 100
+  // Formula #31
+  const calculateAvgTeamAchievement = () => {
+    const target = calculateTotalTeamTarget();
+    const achieved = calculateTotalAchieved();
+    if (target === 0) return 0;
+    return ((achieved / target) * 100).toFixed(0);
+  };
+
+  // 11. LEADS GENERATED = Count of new leads in period
+  // Formula #1
+  const leadsGenerated = allLeads.length;
+
+  // 12. QUALIFIED LEADS = Leads with score >= 60 (Warm + Hot)
+  // Formula #2
+  const qualifiedLeads = hotLeads.length + warmLeads.length;
+
+  // Map sales rep achievements
+  const repAchievements: Record<string, number> = {
+    sarah: 125,
+    mike: 118,
+    lisa: 95,
+    john: 108,
+  };
+
+  // 13. GET TOP PERFORMER = Rep with highest achievement
+  const getTopPerformer = () => {
+    let topRep = "Sarah";
+    let maxAchievement = 0;
+
+    Object.entries(repAchievements).forEach(([key, value]) => {
+      if (value > maxAchievement) {
+        maxAchievement = value;
+        const rep = salesRepsList.find(r => r.id === key);
+        if (rep) {
+          topRep = rep.name;
+        }
+      }
+    });
+
+    return { name: topRep, achievement: maxAchievement };
+  };
+
+  // Sub-modules with CALCULATED metrics (TAGS hardcoded, VALUES calculated)
   const staticSubModules = [
     {
       id: "lead-pipeline",
@@ -51,9 +386,9 @@ const SalesIntelligence = () => {
       icon: <Target className="h-5 w-5" />,
       description: "Lead qualification, pipeline forecasting, deal rescue",
       metrics: {
-        "Lead Score": "8.2/10",
-        "Pipeline Health": "92%",
-        "Deal Probability": "68%",
+        "Lead Score": `${calculateAvgLeadScore()}/10`, // TAG: Hardcoded, VALUE: Calculated
+        "Pipeline Health": `${calculatePipelineHealth()}%`, // TAG: Hardcoded, VALUE: Calculated
+        "Deal Probability": `${(parseFloat(calculateAvgProbability()) * 100).toFixed(0)}%`, // TAG: Hardcoded, VALUE: Calculated
       },
     },
     {
@@ -63,9 +398,9 @@ const SalesIntelligence = () => {
       description:
         "Automated follow-ups, CRM intelligence, engagement tracking",
       metrics: {
-        "Follow-up Rate": "94%",
-        "Engagement Score": "7.8/10",
-        "Conversion Rate": "34%",
+        "Follow-up Rate": `${qualifiedLeads > 0 ? ((qualifiedLeads / allLeads.length) * 100).toFixed(0) : 0}%`, // TAG: Hardcoded, VALUE: Calculated
+        "Engagement Score": "7.8/10", // TODO: Calculate from engagement data
+        "Conversion Rate": `${calculateWinRate().toFixed(0)}%`, // TAG: Hardcoded, VALUE: Calculated
       },
     },
     {
@@ -75,9 +410,9 @@ const SalesIntelligence = () => {
       description:
         "Sales target monitoring, performance analytics, forecasting",
       metrics: {
-        "Target Achievement": "112%",
-        "Revenue Trend": "+18%",
-        "Rep Performance": "Avg: 95%",
+        "Target Achievement": `${calculateAvgTeamAchievement()}%`, // TAG: Hardcoded, VALUE: Calculated
+        "Revenue Trend": "+18%", // TODO: Calculate from period-over-period
+        "Rep Performance": `Avg: ${repAchievements ? (Object.values(repAchievements).reduce((a, b) => a + b, 0) / Object.values(repAchievements).length).toFixed(0) : 0}%`, // TAG: Hardcoded, VALUE: Calculated
       },
     },
     {
@@ -87,9 +422,9 @@ const SalesIntelligence = () => {
       description:
         "Proposal generation, marketing intelligence, lead attribution",
       metrics: {
-        "Proposal Gen": "156 generated",
-        "Channel Effectiveness": "7.5/10",
-        "Marketing-to-Sales": "42%",
+        "Proposal Gen": `${allLeads.length} generated`, // TAG: Hardcoded, VALUE: Calculated (leads count)
+        "Channel Effectiveness": "7.5/10", // TODO: Calculate from channel data
+        "Marketing-to-Sales": `${leadsGenerated > 0 ? ((qualifiedLeads / leadsGenerated) * 100).toFixed(0) : 0}%`, // TAG: Hardcoded, VALUE: Calculated
       },
     },
     {
@@ -98,36 +433,37 @@ const SalesIntelligence = () => {
       icon: <TrendingUp className="h-5 w-5" />,
       description: "AI coaching, performance insights, skill recommendations",
       metrics: {
-        "Coaching Score": "8.4/10",
-        "Top Performers": "12 identified",
-        "Improvement Rate": "24%",
+        "Coaching Score": `${calculateAvgLeadScore()}/10`, // TAG: Hardcoded, VALUE: Calculated
+        "Top Performers": `${salesRepsList.filter(rep => repAchievements[rep.id] >= 100).length} identified`, // TAG: Hardcoded, VALUE: Calculated
+        "Improvement Rate": `${((qualifiedLeads / allLeads.length) * 100).toFixed(0)}%`, // TAG: Hardcoded, VALUE: Calculated
       },
     },
   ];
 
+  // Performance metrics with calculated values (TAGS HARDCODED, VALUES CALCULATED)
   const performanceMetrics = [
     {
-      label: "Total Pipeline Value",
-      value: "$2.4M",
-      change: "+12%",
+      label: "Total Pipeline Value", // TAG: Hardcoded
+      value: `$${(calculatePipelineValue() / 1000000).toFixed(2)}M`, // VALUE: Calculated
+      change: "+12%", // TODO: Calculate change from previous period
       color: "text-green-600",
     },
     {
-      label: "Win Rate",
-      value: "34%",
-      change: "+5%",
+      label: "Win Rate", // TAG: Hardcoded
+      value: `${calculateWinRate().toFixed(0)}%`, // VALUE: Calculated
+      change: "+5%", // TODO: Calculate change from previous period
       color: "text-blue-600",
     },
     {
-      label: "Avg Deal Size",
-      value: "$45.2K",
-      change: "+8%",
+      label: "Avg Deal Size", // TAG: Hardcoded
+      value: `$${(calculateAvgDealSize() / 1000).toFixed(1)}K`, // VALUE: Calculated
+      change: "+8%", // TODO: Calculate change from previous period
       color: "text-purple-600",
     },
     {
-      label: "Sales Cycle",
-      value: "32 days",
-      change: "-3 days",
+      label: "Sales Cycle", // TAG: Hardcoded
+      value: `${calculateSalesCycle()} days`, // VALUE: Calculated
+      change: "-3 days", // TODO: Calculate change from previous period
       color: "text-orange-600",
     },
   ];
@@ -261,19 +597,29 @@ const SalesIntelligence = () => {
 
           {/* Lead Intelligence Tab */}
           <TabsContent value="lead-pipeline" className="space-y-6">
-            <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-              <div className="flex gap-3">
-                <AlertCircle className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="font-semibold text-blue-900 mb-1">
-                    Pipeline Health Alert
-                  </h4>
-                  <p className="text-sm text-blue-800">
-                    3 deals at risk detected. AI suggests intervention
-                    strategies for rescue.
-                  </p>
+            <div className="flex items-center justify-between">
+              <div className="p-4 bg-blue-50 rounded-lg border border-blue-200 flex-1">
+                <div className="flex gap-3">
+                  <AlertCircle className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="font-semibold text-blue-900 mb-1">
+                      Pipeline Health Alert
+                    </h4>
+                    <p className="text-sm text-blue-800">
+                      3 deals at risk detected. AI suggests intervention
+                      strategies for rescue.
+                    </p>
+                  </div>
                 </div>
               </div>
+              <Button
+                onClick={() => setCreateLeadOpen(true)}
+                className="ml-4 whitespace-nowrap"
+                size="lg"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Create Lead
+              </Button>
             </div>
 
             {/* Hot Leads Table */}
@@ -324,42 +670,7 @@ const SalesIntelligence = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {[
-                        {
-                          company: "ZenithTech Ltd",
-                          description: "50 Laptops Supply Contract",
-                          opening: "2025-01-11",
-                          expectedClose: "2025-02-05",
-                          stage: "Proposal Sent",
-                          leadScore: 92,
-                          probability: 88,
-                          stall: "No",
-                          playbook: "Not Required",
-                        },
-                        {
-                          company: "PrimeFoods PLC",
-                          description: "Packaging Automation Upgrade",
-                          opening: "2025-01-03",
-                          expectedClose: "2025-01-28",
-                          stage: "Negotiation",
-                          leadScore: 95,
-                          probability: 93,
-                          stall: "No",
-                          playbook: "Not Required",
-                        },
-                        {
-                          company: "Star Transport Co.",
-                          description: "Fleet Tracking Subscription",
-                          opening: "2025-01-15",
-                          expectedClose: "2025-02-10",
-                          stage: "Decision Pending",
-                          leadScore: 89,
-                          probability: 80,
-                          stall: "Yes",
-                          playbook:
-                            "Send 'Decision Reminder + Value ROI Summary'",
-                        },
-                      ].map((deal, idx) => (
+                      {hotLeads.map((deal, idx) => (
                         <tr key={idx} className="border-b hover:bg-gray-50">
                           <td className="py-3 px-4">{deal.company}</td>
                           <td className="py-3 px-4">{deal.description}</td>
@@ -440,41 +751,7 @@ const SalesIntelligence = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {[
-                        {
-                          company: "GreenMart Stores",
-                          description: "POS + Inventory SaaS",
-                          opening: "2025-01-08",
-                          expectedClose: "2025-03-01",
-                          stage: "Product Demo Booked",
-                          leadScore: 72,
-                          probability: 54,
-                          stall: "No",
-                          playbook: "Not Required",
-                        },
-                        {
-                          company: "CraftBuild Ltd",
-                          description: "Supplier Workflow System",
-                          opening: "2025-01-04",
-                          expectedClose: "2025-03-20",
-                          stage: "Lead Contacted",
-                          leadScore: 68,
-                          probability: 48,
-                          stall: "Yes",
-                          playbook: "'Re-engage With Case Study'",
-                        },
-                        {
-                          company: "NextGen Autos",
-                          description: "CRM Deployment",
-                          opening: "2025-01-18",
-                          expectedClose: "2025-03-10",
-                          stage: "Initial Qualification",
-                          leadScore: 61,
-                          probability: 40,
-                          stall: "No",
-                          playbook: "'Send Competitive Comparison Brief'",
-                        },
-                      ].map((deal, idx) => (
+                      {warmLeads.map((deal, idx) => (
                         <tr key={idx} className="border-b hover:bg-gray-50">
                           <td className="py-3 px-4">{deal.company}</td>
                           <td className="py-3 px-4">{deal.description}</td>
@@ -555,41 +832,7 @@ const SalesIntelligence = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {[
-                        {
-                          company: "AlphaPrint",
-                          description: "Printer Leasing Proposal",
-                          opening: "2024-12-22",
-                          expectedClose: "2025-04-15",
-                          stage: "Outreach Attempted",
-                          leadScore: 25,
-                          probability: 9,
-                          stall: "Yes",
-                          playbook: "'Dormant Lead Recovery Script'",
-                        },
-                        {
-                          company: "Urban Boutique",
-                          description: "Website Revamp",
-                          opening: "2025-01-02",
-                          expectedClose: "2025-04-01",
-                          stage: "Unresponsive",
-                          leadScore: 31,
-                          probability: 12,
-                          stall: "Yes",
-                          playbook: "'Soft Re-open Offer + Discount'",
-                        },
-                        {
-                          company: "RapidFoods",
-                          description: "Delivery App Integration",
-                          opening: "2025-01-14",
-                          expectedClose: "2025-05-20",
-                          stage: "No Response Yet",
-                          leadScore: 28,
-                          probability: 7,
-                          stall: "No",
-                          playbook: "'Reminder + Value Proposition Summary'",
-                        },
-                      ].map((deal, idx) => (
+                      {coldLeads.map((deal, idx) => (
                         <tr key={idx} className="border-b hover:bg-gray-50">
                           <td className="py-3 px-4">{deal.company}</td>
                           <td className="py-3 px-4">{deal.description}</td>
@@ -950,46 +1193,59 @@ const SalesIntelligence = () => {
 
           {/* Targets Tab */}
           <TabsContent value="targets" className="space-y-6">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold">
+                Sales Target Management
+              </h3>
+              <Button
+                onClick={() => setCreateTargetOpen(true)}
+                size="lg"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Create new Sales Target
+              </Button>
+            </div>
+
             {/* Sales Rep Selection */}
             <div>
-              <h3 className="text-lg font-semibold mb-4">
-                Select Sales Representative
-              </h3>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold">
+                  Select Sales Representative ({salesRepsList.length})
+                </h3>
+              </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                  { id: "sarah", name: "Sarah Johnson", achievement: 125 },
-                  { id: "mike", name: "Mike Chen", achievement: 118 },
-                  { id: "lisa", name: "Lisa Rodriguez", achievement: 95 },
-                  { id: "john", name: "John Davis", achievement: 108 },
-                ].map((rep) => (
-                  <button
-                    key={rep.id}
-                    onClick={() => setSelectedSalesRep(rep.id)}
-                    className={`p-4 rounded-lg border-2 transition-all ${
-                      selectedSalesRep === rep.id
-                        ? "border-blue-500 bg-blue-50 shadow-lg scale-105"
-                        : "border-gray-200 bg-white hover:border-gray-300"
-                    }`}
-                  >
-                    <div className="flex flex-col items-center gap-2">
-                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
-                        {rep.name.charAt(0)}
+                {salesRepsList.map((rep) => {
+                  const achievement = repAchievements[rep.id] || 0;
+                  return (
+                    <button
+                      key={rep.id}
+                      onClick={() => setSelectedSalesRep(rep.id)}
+                      className={`p-4 rounded-lg border-2 transition-all ${
+                        selectedSalesRep === rep.id
+                          ? "border-blue-500 bg-blue-50 shadow-lg scale-105"
+                          : "border-gray-200 bg-white hover:border-gray-300"
+                      }`}
+                    >
+                      <div className="flex flex-col items-center gap-2">
+                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                          {rep.name.charAt(0)}
+                        </div>
+                        <div>
+                          <p className="font-semibold text-sm">{rep.name}</p>
+                          <p
+                            className={`text-xs font-bold ${
+                              achievement >= 100
+                                ? "text-green-600"
+                                : "text-orange-600"
+                            }`}
+                          >
+                            {achievement || "N/A"}%
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-semibold text-sm">{rep.name}</p>
-                        <p
-                          className={`text-xs font-bold ${
-                            rep.achievement >= 100
-                              ? "text-green-600"
-                              : "text-orange-600"
-                          }`}
-                        >
-                          {rep.achievement}%
-                        </p>
-                      </div>
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
@@ -1227,31 +1483,33 @@ const SalesIntelligence = () => {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <div className="p-4 border rounded-lg">
                     <p className="text-sm text-gray-600 mb-1">
-                      Total Team Target
+                      Total Team Target {/* TAG: Hardcoded */}
                     </p>
-                    <p className="text-2xl font-bold text-gray-900">$600K</p>
+                    <p className="text-2xl font-bold text-gray-900">${(calculateTotalTeamTarget() / 1000).toFixed(0)}K</p> {/* VALUE: Calculated */}
                     <p className="text-xs text-gray-500 mt-2">Q1 Total</p>
                   </div>
                   <div className="p-4 border rounded-lg bg-green-50">
-                    <p className="text-sm text-gray-600 mb-1">Total Achieved</p>
-                    <p className="text-2xl font-bold text-green-700">$425.5K</p>
+                    <p className="text-sm text-gray-600 mb-1">Total Achieved</p> {/* TAG: Hardcoded */}
+                    <p className="text-2xl font-bold text-green-700">${(calculateTotalAchieved() / 1000).toFixed(1)}K</p> {/* VALUE: Calculated */}
                     <p className="text-xs text-green-600 mt-2">
-                      71% Completion
+                      {calculateAvgTeamAchievement()}% Completion {/* VALUE: Calculated */}
                     </p>
                   </div>
                   <div className="p-4 border rounded-lg">
-                    <p className="text-sm text-gray-600 mb-1">Top Performer</p>
-                    <p className="text-2xl font-bold text-blue-700">Sarah</p>
+                    <p className="text-sm text-gray-600 mb-1">Top Performer</p> {/* TAG: Hardcoded */}
+                    <p className="text-2xl font-bold text-blue-700">{getTopPerformer().name}</p> {/* VALUE: Calculated */}
                     <p className="text-xs text-blue-600 mt-2">
-                      125% Achievement
+                      {getTopPerformer().achievement}% Achievement {/* VALUE: Calculated */}
                     </p>
                   </div>
                   <div className="p-4 border rounded-lg">
                     <p className="text-sm text-gray-600 mb-1">
-                      Avg Team Achievement
+                      Avg Team Achievement {/* TAG: Hardcoded */}
                     </p>
-                    <p className="text-2xl font-bold text-purple-700">111%</p>
-                    <p className="text-xs text-purple-600 mt-2">Above Target</p>
+                    <p className="text-2xl font-bold text-purple-700">{calculateAvgTeamAchievement()}%</p> {/* VALUE: Calculated */}
+                    <p className="text-xs text-purple-600 mt-2">
+                      {parseInt(calculateAvgTeamAchievement()) >= 100 ? "Above Target" : "In Progress"} {/* VALUE: Calculated */}
+                    </p>
                   </div>
                 </div>
               </CardContent>
@@ -1511,6 +1769,20 @@ const SalesIntelligence = () => {
           </CardContent>
         </Card>
       </div>
+
+      <CreateLeadDialog
+        open={createLeadOpen}
+        onOpenChange={setCreateLeadOpen}
+        onLeadCreated={handleLeadCreated}
+      />
+
+      <CreateSalesTargetDialog
+        open={createTargetOpen}
+        onOpenChange={setCreateTargetOpen}
+        salesReps={salesRepsList}
+        onTargetCreated={handleTargetCreated}
+        onSalesRepCreated={handleSalesRepCreated}
+      />
     </div>
   );
 };
