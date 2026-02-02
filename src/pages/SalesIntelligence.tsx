@@ -1119,6 +1119,17 @@ const SalesIntelligence = () => {
 
           {/* Engagement Tab */}
           <TabsContent value="engagement" className="space-y-6">
+            {/* Create Engagement Button */}
+            <div className="flex items-center justify-end mb-4">
+              <Button
+                onClick={() => setCreateEngagementOpen(true)}
+                size="lg"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Create Engagement
+              </Button>
+            </div>
+
             {/* Channel Selection */}
             <div>
               <h3 className="text-lg font-semibold mb-4">
