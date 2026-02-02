@@ -421,29 +421,30 @@ const SalesIntelligence = () => {
     },
   ];
 
+  // Performance metrics with calculated values (TAGS HARDCODED, VALUES CALCULATED)
   const performanceMetrics = [
     {
-      label: "Total Pipeline Value",
-      value: "$2.4M",
-      change: "+12%",
+      label: "Total Pipeline Value", // TAG: Hardcoded
+      value: `$${(calculatePipelineValue() / 1000000).toFixed(2)}M`, // VALUE: Calculated
+      change: "+12%", // TODO: Calculate change from previous period
       color: "text-green-600",
     },
     {
-      label: "Win Rate",
-      value: "34%",
-      change: "+5%",
+      label: "Win Rate", // TAG: Hardcoded
+      value: `${calculateWinRate().toFixed(0)}%`, // VALUE: Calculated
+      change: "+5%", // TODO: Calculate change from previous period
       color: "text-blue-600",
     },
     {
-      label: "Avg Deal Size",
-      value: "$45.2K",
-      change: "+8%",
+      label: "Avg Deal Size", // TAG: Hardcoded
+      value: `$${(calculateAvgDealSize() / 1000).toFixed(1)}K`, // VALUE: Calculated
+      change: "+8%", // TODO: Calculate change from previous period
       color: "text-purple-600",
     },
     {
-      label: "Sales Cycle",
-      value: "32 days",
-      change: "-3 days",
+      label: "Sales Cycle", // TAG: Hardcoded
+      value: `${calculateSalesCycle()} days`, // VALUE: Calculated
+      change: "-3 days", // TODO: Calculate change from previous period
       color: "text-orange-600",
     },
   ];
