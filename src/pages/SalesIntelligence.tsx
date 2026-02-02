@@ -206,6 +206,144 @@ const SalesIntelligence = () => {
     setEngagements([...engagements, engagementData]);
   };
 
+  // ============================================================
+  // ASSET CALCULATION FUNCTIONS
+  // ============================================================
+
+  // Calculate Proposals
+  // Proposals = Leads at "Proposal Sent" stage or higher + Engagements with score > 7.0
+  const calculateProposals = () => {
+    const allLeads = [...hotLeads, ...warmLeads, ...coldLeads];
+
+    // Count leads at proposal stage or beyond
+    const proposalStages = [
+      "Proposal Sent",
+      "Negotiation",
+      "Decision Pending",
+      "Won",
+    ];
+    const proposalLeads = allLeads.filter((lead) =>
+      proposalStages.includes(lead.stage),
+    ).length;
+
+    // Count high-quality engagements (score > 7.0)
+    const highEngagements = engagements.filter(
+      (e) => e.engagementScore > 7.0,
+    ).length;
+
+    return proposalLeads + highEngagements;
+  };
+
+  // Calculate Quotations with score-based conversion tiers
+  // Conversion tiers: Score > 8.0 = 80%, 7.0-8.0 = 60%, 6.0-7.0 = 40%, < 6.0 = 20%
+  const calculateQuotations = () => {
+    const proposals = calculateProposals();
+
+    // Calculate conversion rate based on engagement scores
+    if (engagements.length === 0) return 0;
+
+    let totalConversions = 0;
+    engagements.forEach((eng) => {
+      if (eng.engagementScore > 8.0) {
+        totalConversions += 0.8; // 80% conversion
+      } else if (eng.engagementScore >= 7.0) {
+        totalConversions += 0.6; // 60% conversion
+      } else if (eng.engagementScore >= 6.0) {
+        totalConversions += 0.4; // 40% conversion
+      } else {
+        totalConversions += 0.2; // 20% conversion
+      }
+    });
+
+    const avgConversion = totalConversions / engagements.length;
+    return Math.round(proposals * avgConversion);
+  };
+
+  // Calculate Pitch Decks (mixed criteria)
+  // Union of: High engagement (>7.0) + Demo booked stage + High probability deals + Warm leads
+  const calculatePitchDecks = () => {
+    const allLeads = [...hotLeads, ...warmLeads, ...coldLeads];
+    const pitchDeckIds = new Set<string>();
+
+    // A) Engagements with score > 7.0
+    engagements.forEach((eng) => {
+      if (eng.engagementScore > 7.0) {
+        pitchDeckIds.add(`engagement-${eng.id}`);
+      }
+    });
+
+    // B) Leads at "Product Demo Booked" stage or beyond
+    const demoStages = [
+      "Product Demo Booked",
+      "Proposal Sent",
+      "Negotiation",
+      "Decision Pending",
+      "Won",
+    ];
+    allLeads.forEach((lead) => {
+      if (demoStages.includes(lead.stage)) {
+        pitchDeckIds.add(`lead-${lead.company}`);
+      }
+    });
+
+    // C) Leads with high probability (> 70%) - approximate with hot leads that have high probability
+    hotLeads.forEach((lead) => {
+      if (lead.probability > 70) {
+        pitchDeckIds.add(`lead-high-prob-${lead.company}`);
+      }
+    });
+
+    // D) All warm leads
+    warmLeads.forEach((lead) => {
+      pitchDeckIds.add(`lead-warm-${lead.company}`);
+    });
+
+    return pitchDeckIds.size;
+  };
+
+  // Calculate Lead Sources percentages
+  const calculateLeadSources = () => {
+    const allLeads = [...hotLeads, ...warmLeads, ...coldLeads];
+    const total = allLeads.length;
+
+    if (total === 0) {
+      return {
+        Website: 0,
+        "Social Media": 0,
+        "Email Campaign": 0,
+        Referrals: 0,
+      };
+    }
+
+    const sources = {
+      Website: 0,
+      "Social Media": 0,
+      "Email Campaign": 0,
+      Referrals: 0,
+    };
+
+    allLeads.forEach((lead) => {
+      if (
+        lead.leadSource === "Website" ||
+        lead.leadSource === "Social Media" ||
+        lead.leadSource === "Email Campaign" ||
+        lead.leadSource === "Referrals"
+      ) {
+        sources[lead.leadSource as keyof typeof sources]++;
+      }
+    });
+
+    // Convert to percentages
+    const percentages = {
+      Website: Math.round((sources.Website / total) * 100),
+      "Social Media": Math.round((sources["Social Media"] / total) * 100),
+      "Email Campaign": Math.round((sources["Email Campaign"] / total) * 100),
+      Referrals: Math.round((sources.Referrals / total) * 100),
+    };
+
+    return percentages;
+  };
+
   // Lead management functions
   const handleDeleteLead = (
     leadIndex: number,
