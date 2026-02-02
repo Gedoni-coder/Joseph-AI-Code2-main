@@ -1434,6 +1434,9 @@ const SalesIntelligence = () => {
                             <th className="text-left py-3 px-4 font-semibold">
                               AI Recommendation
                             </th>
+                            <th className="text-center py-3 px-4 font-semibold">
+                              Actions
+                            </th>
                           </tr>
                         </thead>
                         <tbody>
@@ -1468,11 +1471,17 @@ const SalesIntelligence = () => {
                                   </div>
                                 </td>
                                 <td className="py-3 px-4 text-center">
-                                  <Badge
-                                    variant={isAchieved ? "default" : "secondary"}
-                                  >
-                                    {target.status}
-                                  </Badge>
+                                  <Select value={target.status} onValueChange={(newStatus) => handleChangeTargetStatus(target.id, newStatus)}>
+                                    <SelectTrigger className="w-32 h-8 text-xs">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="In Progress">In Progress</SelectItem>
+                                      <SelectItem value="✓ Achieved">✓ Achieved</SelectItem>
+                                      <SelectItem value="At Risk">At Risk</SelectItem>
+                                      <SelectItem value="Completed">Completed</SelectItem>
+                                    </SelectContent>
+                                  </Select>
                                 </td>
                                 <td className="py-3 px-4 text-center font-semibold">
                                   {target.dealsClosed}
@@ -1491,6 +1500,15 @@ const SalesIntelligence = () => {
                                           : "Below target - increase effort"}
                                     </span>
                                   </div>
+                                </td>
+                                <td className="py-3 px-4 text-center">
+                                  <button
+                                    onClick={() => handleDeleteTarget(target.id)}
+                                    className="p-1 text-red-600 hover:bg-red-50 rounded transition-colors"
+                                    title="Delete target"
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </button>
                                 </td>
                               </tr>
                             );
