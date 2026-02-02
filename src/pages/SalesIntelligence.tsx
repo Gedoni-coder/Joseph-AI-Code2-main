@@ -2347,7 +2347,7 @@ const SalesIntelligence = () => {
                       Top Performers
                     </h4>
                     <div className="space-y-2">
-                      {["Sarah Johnson", "Mike Chen", "Lisa Rodriguez"].map(
+                      {getTopPerformers().map(
                         (name) => (
                           <div
                             key={name}
@@ -2366,18 +2366,12 @@ const SalesIntelligence = () => {
                       Areas to Improve
                     </h4>
                     <ul className="space-y-2 text-sm">
-                      <li className="flex items-center gap-2">
-                        <span className="text-orange-600">•</span>
-                        Follow-up consistency
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-orange-600">•</span>
-                        Deal closure rate
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-orange-600">•</span>
-                        Customer retention
-                      </li>
+                      {getAreasToImprove().map((area) => (
+                        <li key={area} className="flex items-center gap-2">
+                          <span className="text-orange-600">•</span>
+                          {area}
+                        </li>
+                      ))}
                     </ul>
                   </div>
                   <div className="p-4 border rounded-lg">
@@ -2386,18 +2380,12 @@ const SalesIntelligence = () => {
                       AI Coaching Tips
                     </h4>
                     <ul className="space-y-2 text-sm">
-                      <li className="flex items-center gap-2">
-                        <span className="text-blue-600">→</span>
-                        Use power words in emails
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-blue-600">→</span>
-                        Schedule calls earlier
-                      </li>
-                      <li className="flex items-center gap-2">
-                        <span className="text-blue-600">→</span>
-                        Personalize 1st contact
-                      </li>
+                      {getAiCoachingTips().map((tip) => (
+                        <li key={tip} className="flex items-center gap-2">
+                          <span className="text-blue-600">→</span>
+                          {tip}
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 </div>
@@ -2413,18 +2401,22 @@ const SalesIntelligence = () => {
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
                         <span>
-                          Team improved follow-up response rate by 12%
+                          Team improved follow-up response rate by{" "}
+                          {calculateFollowUpRateImprovement()}%
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <AlertCircle className="h-4 w-4 text-orange-600 mt-0.5 flex-shrink-0" />
                         <span>
-                          Deal cycle time is 3 days longer than last month
+                          Deal cycle time is {calculateDealCycleDays()} days
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <TrendingUp className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
-                        <span>Conversion rate trending upward (+8%)</span>
+                        <span>
+                          Conversion rate trending upward (
+                          +{calculateConversionRateTrend()}%)
+                        </span>
                       </li>
                     </ul>
                   </CardContent>
