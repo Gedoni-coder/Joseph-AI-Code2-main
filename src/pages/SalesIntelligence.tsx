@@ -147,6 +147,7 @@ const SalesIntelligence = () => {
       probability: metrics.probability,
       stall: "No",
       playbook: "Monitor",
+      leadSource: leadData.leadSource,
     };
 
     const category = categorizeLead(metrics.score, leadData.pipelineStage);
