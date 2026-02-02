@@ -927,6 +927,9 @@ const SalesIntelligence = () => {
                           <th className="text-left py-3 px-4 font-semibold">
                             AI Rescue Playbook
                           </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            Actions
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -936,7 +939,23 @@ const SalesIntelligence = () => {
                             <td className="py-3 px-4">{deal.description}</td>
                             <td className="py-3 px-4">{deal.opening}</td>
                             <td className="py-3 px-4">{deal.expectedClose}</td>
-                            <td className="py-3 px-4">{deal.stage}</td>
+                            <td className="py-3 px-4">
+                              <Select value={deal.stage} onValueChange={(newStage) => handleChangePipelineStage(deal, newStage, "cold")}>
+                                <SelectTrigger className="w-40 h-8 text-xs">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="Outreach Attempted">Outreach Attempted</SelectItem>
+                                  <SelectItem value="Lead Contacted">Lead Contacted</SelectItem>
+                                  <SelectItem value="Initial Qualification">Initial Qualification</SelectItem>
+                                  <SelectItem value="Product Demo Booked">Product Demo Booked</SelectItem>
+                                  <SelectItem value="Proposal Sent">Proposal Sent</SelectItem>
+                                  <SelectItem value="Negotiation">Negotiation</SelectItem>
+                                  <SelectItem value="Decision Pending">Decision Pending</SelectItem>
+                                  <SelectItem value="Won">Won</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </td>
                             <td className="py-3 px-4 text-center">
                               <Badge className="bg-blue-100 text-blue-800">
                                 {deal.leadScore}
@@ -955,6 +974,15 @@ const SalesIntelligence = () => {
                               </span>
                             </td>
                             <td className="py-3 px-4 text-xs">{deal.playbook}</td>
+                            <td className="py-3 px-4 text-center">
+                              <button
+                                onClick={() => handleDeleteLead(idx, "cold")}
+                                className="p-1 text-red-600 hover:bg-red-50 rounded transition-colors"
+                                title="Delete lead"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </button>
+                            </td>
                           </tr>
                         ))}
                       </tbody>
