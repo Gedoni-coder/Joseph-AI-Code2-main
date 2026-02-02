@@ -1193,40 +1193,50 @@ const SalesIntelligence = () => {
                   Select Sales Representative ({salesRepsList.length})
                 </h3>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {salesRepsList.map((rep) => {
-                  const achievement = repAchievements[rep.id] || 0;
-                  return (
-                    <button
-                      key={rep.id}
-                      onClick={() => setSelectedSalesRep(rep.id)}
-                      className={`p-4 rounded-lg border-2 transition-all ${
-                        selectedSalesRep === rep.id
-                          ? "border-blue-500 bg-blue-50 shadow-lg scale-105"
-                          : "border-gray-200 bg-white hover:border-gray-300"
-                      }`}
-                    >
-                      <div className="flex flex-col items-center gap-2">
-                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
-                          {rep.name.charAt(0)}
+              {salesRepsList.length === 0 ? (
+                <div className="py-12 text-center border-2 border-dashed border-gray-300 rounded-lg">
+                  <p className="text-gray-500 mb-2">No sales representatives yet</p>
+                  <p className="text-sm text-gray-400">
+                    Create a new sales target to add your first sales representative
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {salesRepsList.map((rep) => {
+                    const repData = repAchievements[rep.id];
+                    const achievement = repData?.percentage || 0;
+                    return (
+                      <button
+                        key={rep.id}
+                        onClick={() => setSelectedSalesRep(rep.id)}
+                        className={`p-4 rounded-lg border-2 transition-all ${
+                          selectedSalesRep === rep.id
+                            ? "border-blue-500 bg-blue-50 shadow-lg scale-105"
+                            : "border-gray-200 bg-white hover:border-gray-300"
+                        }`}
+                      >
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                            {rep.name.charAt(0)}
+                          </div>
+                          <div>
+                            <p className="font-semibold text-sm">{rep.name}</p>
+                            <p
+                              className={`text-xs font-bold ${
+                                achievement >= 100
+                                  ? "text-green-600"
+                                  : "text-orange-600"
+                              }`}
+                            >
+                              {achievement.toFixed(0) || "N/A"}%
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="font-semibold text-sm">{rep.name}</p>
-                          <p
-                            className={`text-xs font-bold ${
-                              achievement >= 100
-                                ? "text-green-600"
-                                : "text-orange-600"
-                            }`}
-                          >
-                            {achievement || "N/A"}%
-                          </p>
-                        </div>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
             {/* Sales Rep Target Details Table */}
