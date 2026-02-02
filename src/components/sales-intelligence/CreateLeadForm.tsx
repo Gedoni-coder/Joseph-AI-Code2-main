@@ -36,6 +36,8 @@ const PIPELINE_STAGES = [
   "Won",
 ];
 
+const LEAD_SOURCES = ["Website", "Social Media", "Email Campaign", "Referrals"];
+
 export default function CreateLeadForm({
   onSubmit,
   onCancel,
