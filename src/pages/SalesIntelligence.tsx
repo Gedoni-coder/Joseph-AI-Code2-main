@@ -387,7 +387,7 @@ const SalesIntelligence = () => {
       description: "AI coaching, performance insights, skill recommendations",
       metrics: {
         "Coaching Score": `${calculateAvgLeadScore()}/10`, // TAG: Hardcoded, VALUE: Calculated
-        "Top Performers": `${salesRepsList.filter(rep => repAchievements[rep.id] >= 100).length} identified`, // TAG: Hardcoded, VALUE: Calculated
+        "Top Performers": `${salesRepsList.filter(rep => repAchievements[rep.id]?.percentage >= 100).length} identified`, // TAG: Hardcoded, VALUE: Calculated
         "Improvement Rate": `${((qualifiedLeads / allLeads.length) * 100).toFixed(0)}%`, // TAG: Hardcoded, VALUE: Calculated
       },
     },
