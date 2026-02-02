@@ -1948,69 +1948,94 @@ const SalesIntelligence = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="p-4 border rounded-lg">
-                    <h4 className="font-semibold mb-4">Generated Assets</h4>
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center">
-                        <div>
-                          <p className="font-semibold">Proposals</p>
-                          <p className="text-sm text-gray-600">
-                            Auto-generated
-                          </p>
+                {(() => {
+                  const proposals = calculateProposals();
+                  const quotations = calculateQuotations();
+                  const pitchDecks = calculatePitchDecks();
+                  const leadSources = calculateLeadSources();
+
+                  return (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="p-4 border rounded-lg">
+                        <h4 className="font-semibold mb-4">Generated Assets</h4>
+                        <div className="space-y-3">
+                          <div className="flex justify-between items-center">
+                            <div>
+                              <p className="font-semibold">Proposals</p>
+                              <p className="text-sm text-gray-600">
+                                Auto-generated
+                              </p>
+                            </div>
+                            <p className="text-2xl font-bold text-blue-600">
+                              {proposals}
+                            </p>
+                          </div>
+                          <hr />
+                          <div className="flex justify-between items-center">
+                            <div>
+                              <p className="font-semibold">Quotations</p>
+                              <p className="text-sm text-gray-600">
+                                Customized pricing
+                              </p>
+                            </div>
+                            <p className="text-2xl font-bold text-green-600">
+                              {quotations}
+                            </p>
+                          </div>
+                          <hr />
+                          <div className="flex justify-between items-center">
+                            <div>
+                              <p className="font-semibold">Pitch Decks</p>
+                              <p className="text-sm text-gray-600">
+                                Interactive
+                              </p>
+                            </div>
+                            <p className="text-2xl font-bold text-purple-600">
+                              {pitchDecks}
+                            </p>
+                          </div>
                         </div>
-                        <p className="text-2xl font-bold text-blue-600">156</p>
                       </div>
-                      <hr />
-                      <div className="flex justify-between items-center">
-                        <div>
-                          <p className="font-semibold">Quotations</p>
-                          <p className="text-sm text-gray-600">
-                            Customized pricing
-                          </p>
+                      <div className="p-4 border rounded-lg">
+                        <h4 className="font-semibold mb-4">Lead Sources</h4>
+                        <div className="space-y-3">
+                          <div>
+                            <div className="flex justify-between text-sm mb-1">
+                              <span>Website</span>
+                              <span className="font-semibold">
+                                {leadSources.Website}%
+                              </span>
+                            </div>
+                          </div>
+                          <div>
+                            <div className="flex justify-between text-sm mb-1">
+                              <span>Social Media</span>
+                              <span className="font-semibold">
+                                {leadSources["Social Media"]}%
+                              </span>
+                            </div>
+                          </div>
+                          <div>
+                            <div className="flex justify-between text-sm mb-1">
+                              <span>Email Campaign</span>
+                              <span className="font-semibold">
+                                {leadSources["Email Campaign"]}%
+                              </span>
+                            </div>
+                          </div>
+                          <div>
+                            <div className="flex justify-between text-sm mb-1">
+                              <span>Referrals</span>
+                              <span className="font-semibold">
+                                {leadSources.Referrals}%
+                              </span>
+                            </div>
+                          </div>
                         </div>
-                        <p className="text-2xl font-bold text-green-600">89</p>
-                      </div>
-                      <hr />
-                      <div className="flex justify-between items-center">
-                        <div>
-                          <p className="font-semibold">Pitch Decks</p>
-                          <p className="text-sm text-gray-600">Interactive</p>
-                        </div>
-                        <p className="text-2xl font-bold text-purple-600">43</p>
                       </div>
                     </div>
-                  </div>
-                  <div className="p-4 border rounded-lg">
-                    <h4 className="font-semibold mb-4">Lead Sources</h4>
-                    <div className="space-y-3">
-                      <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>Website</span>
-                          <span className="font-semibold">42%</span>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>Social Media</span>
-                          <span className="font-semibold">28%</span>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>Email Campaign</span>
-                          <span className="font-semibold">18%</span>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>Referrals</span>
-                          <span className="font-semibold">12%</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  );
+                })()}
               </CardContent>
             </Card>
           </TabsContent>
