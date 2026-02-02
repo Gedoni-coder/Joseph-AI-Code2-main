@@ -71,6 +71,9 @@ export default function CreateLeadForm({
     if (!formData.pipelineStage) {
       newErrors.pipelineStage = "Pipeline stage is required";
     }
+    if (!formData.leadSource) {
+      newErrors.leadSource = "Lead source is required";
+    }
 
     // Validate that expected close is after opening date
     if (formData.openingDate && formData.expectedClose) {
