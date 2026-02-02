@@ -866,56 +866,67 @@ const SalesIntelligence = () => {
       icon: <Target className="h-5 w-5" />,
       description: "Lead qualification, pipeline forecasting, deal rescue",
       metrics: {
-        "Lead Score": `${calculateAvgLeadScore()}/10`, // TAG: Hardcoded, VALUE: Calculated
-        "Pipeline Health": `${calculatePipelineHealth()}%`, // TAG: Hardcoded, VALUE: Calculated
-        "Deal Probability": `${(parseFloat(calculateAvgProbability()) * 100).toFixed(0)}%`, // TAG: Hardcoded, VALUE: Calculated
+        "Lead Score": `${calculateAvgLeadScore()}/10`,
+        "Pipeline Health": `${calculatePipelineHealth()}%`,
+        "Deal Probability": `${(parseFloat(calculateAvgProbability()) * 100).toFixed(0)}%`,
       },
     },
     {
-      id: "engagement-crm",
-      name: "Automated Engagement & CRM",
-      icon: <MessageSquare className="h-5 w-5" />,
+      id: "sales-coaching",
+      name: "Sales Coaching Engine",
+      icon: <Lightbulb className="h-5 w-5" />,
       description:
-        "Automated follow-ups, CRM intelligence, engagement tracking",
+        "Real-time coaching, call analysis, performance optimization",
       metrics: {
-        "Follow-up Rate": `${qualifiedLeads > 0 ? ((qualifiedLeads / allLeads.length) * 100).toFixed(0) : 0}%`, // TAG: Hardcoded, VALUE: Calculated
-        "Engagement Score": "7.8/10", // TODO: Calculate from engagement data
-        "Conversion Rate": `${calculateWinRate().toFixed(0)}%`, // TAG: Hardcoded, VALUE: Calculated
+        "Coaching Moments": `${calculateCoachingMoments()}`,
+        "Rep Improvement": `${calculateRepImprovement() >= 0 ? "+" : ""}${calculateRepImprovement()}%`,
+        "Call Success Rate": `${calculateCallSuccessRate()}%`,
       },
     },
     {
-      id: "sales-targets",
-      name: "Target Tracking & Revenue",
+      id: "engagement-optimizer",
+      name: "Engagement Optimizer",
+      icon: <MessageCircle className="h-5 w-5" />,
+      description:
+        "Multi-channel engagement, timing optimization, content recommendation",
+      metrics: {
+        "Engagement Rate": `${calculateEngagementRate()}%`,
+        "Optimal Timing": getOptimalTiming(),
+        "Top Channel": getTopChannel(),
+      },
+    },
+    {
+      id: "competitive-intelligence",
+      name: "Competitive Intelligence",
       icon: <BarChart3 className="h-5 w-5" />,
-      description:
-        "Sales target monitoring, performance analytics, forecasting",
+      description: "Win/loss analysis, competitive positioning, battle cards",
       metrics: {
-        "Target Achievement": `${calculateAvgTeamAchievement()}%`, // TAG: Hardcoded, VALUE: Calculated
-        "Revenue Trend": "+18%", // TODO: Calculate from period-over-period
-        "Rep Performance": `Avg: ${Object.keys(repAchievements).length > 0 ? (Object.values(repAchievements).reduce((sum, rep) => sum + rep.percentage, 0) / Object.keys(repAchievements).length).toFixed(0) : 0}%`, // TAG: Hardcoded, VALUE: Calculated
+        "Win Rate vs Competitor": `${calculateWinRateVsCompetitor()}%`,
+        "Market Share": `${calculateMarketShare()}%`,
+        "Pricing Benchmark": `${calculatePricingBenchmark() > 0 ? "+" : ""}${calculatePricingBenchmark()}%`,
       },
     },
     {
-      id: "sales-assets",
-      name: "Sales Assets & Marketing",
-      icon: <Zap className="h-5 w-5" />,
-      description:
-        "Proposal generation, marketing intelligence, lead attribution",
-      metrics: {
-        "Proposal Gen": `${allLeads.length} generated`, // TAG: Hardcoded, VALUE: Calculated (leads count)
-        "Channel Effectiveness": "7.5/10", // TODO: Calculate from channel data
-        "Marketing-to-Sales": `${leadsGenerated > 0 ? ((qualifiedLeads / leadsGenerated) * 100).toFixed(0) : 0}%`, // TAG: Hardcoded, VALUE: Calculated
-      },
-    },
-    {
-      id: "insights-coaching",
-      name: "Insights Engine & AI Coaching",
+      id: "sales-forecasting",
+      name: "Sales Forecasting",
       icon: <TrendingUp className="h-5 w-5" />,
-      description: "AI coaching, performance insights, skill recommendations",
+      description: "AI-powered forecasting, scenario modeling, risk assessment",
       metrics: {
-        "Coaching Score": `${calculateAvgLeadScore()}/10`, // TAG: Hardcoded, VALUE: Calculated
-        "Top Performers": `${salesRepsList.filter((rep) => repAchievements[rep.id]?.percentage >= 100).length} identified`, // TAG: Hardcoded, VALUE: Calculated
-        "Improvement Rate": `${((qualifiedLeads / allLeads.length) * 100).toFixed(0)}%`, // TAG: Hardcoded, VALUE: Calculated
+        "Forecast Accuracy": `${calculateForecastAccuracy()}%`,
+        "Next Quarter": `$${(calculateNextQuarterForecast() / 1000000).toFixed(1)}M`,
+        "Best Case": `$${(calculateBestCaseForecast() / 1000000).toFixed(1)}M`,
+      },
+    },
+    {
+      id: "rep-productivity",
+      name: "Rep Productivity Dashboard",
+      icon: <Users className="h-5 w-5" />,
+      description:
+        "Activity tracking, quota progress, performance leaderboard",
+      metrics: {
+        "Avg Calls/Day": `${calculateAvgCallsPerDay()}`,
+        "Quota Achievement": `${calculateQuotaAchievementAvg()}%`,
+        "Activity Rate": `${calculateActivityRate()}%`,
       },
     },
   ];
