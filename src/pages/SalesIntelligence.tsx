@@ -2064,6 +2064,12 @@ const SalesIntelligence = () => {
         onTargetCreated={handleTargetCreated}
         onSalesRepCreated={handleSalesRepCreated}
       />
+
+      <CreateEngagementDialog
+        open={createEngagementOpen}
+        onOpenChange={setCreateEngagementOpen}
+        onEngagementCreated={handleEngagementCreated}
+      />
     </div>
   );
 };
