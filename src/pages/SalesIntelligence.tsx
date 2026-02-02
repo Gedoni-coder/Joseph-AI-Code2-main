@@ -31,7 +31,16 @@ import {
   CheckCircle2,
   Lightbulb,
   Plus,
+  Trash2,
+  ChevronDown,
 } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Lead {
   company: string;
@@ -45,127 +54,33 @@ interface Lead {
   playbook: string;
 }
 
+interface SalesTarget {
+  id: string;
+  salesRepId: string;
+  salesRepName: string;
+  targetPeriod: string;
+  targetAmount: number;
+  achievedAmount: number;
+  status: string;
+  dealsClosed: number;
+  avgDealSize: number;
+}
+
 const SalesIntelligence = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [selectedChannel, setSelectedChannel] = useState("whatsapp");
-  const [selectedSalesRep, setSelectedSalesRep] = useState("sarah");
+  const [selectedSalesRep, setSelectedSalesRep] = useState<string>("");
   const [createLeadOpen, setCreateLeadOpen] = useState(false);
   const [createTargetOpen, setCreateTargetOpen] = useState(false);
-  const [salesRepsList, setSalesRepsList] = useState([
-    { id: "sarah", name: "Sarah Johnson" },
-    { id: "mike", name: "Mike Chen" },
-    { id: "lisa", name: "Lisa Rodriguez" },
-    { id: "john", name: "John Davis" },
-  ]);
+  const [salesRepsList, setSalesRepsList] = useState<
+    Array<{ id: string; name: string }>
+  >([]);
+  const [salesTargets, setSalesTargets] = useState<SalesTarget[]>([]);
 
-  // Lead data state
-  const [hotLeads, setHotLeads] = useState<Lead[]>([
-    {
-      company: "ZenithTech Ltd",
-      description: "50 Laptops Supply Contract",
-      opening: "2025-01-11",
-      expectedClose: "2025-02-05",
-      stage: "Proposal Sent",
-      leadScore: 92,
-      probability: 88,
-      stall: "No",
-      playbook: "Not Required",
-    },
-    {
-      company: "PrimeFoods PLC",
-      description: "Packaging Automation Upgrade",
-      opening: "2025-01-03",
-      expectedClose: "2025-01-28",
-      stage: "Negotiation",
-      leadScore: 95,
-      probability: 93,
-      stall: "No",
-      playbook: "Not Required",
-    },
-    {
-      company: "Star Transport Co.",
-      description: "Fleet Tracking Subscription",
-      opening: "2025-01-15",
-      expectedClose: "2025-02-10",
-      stage: "Decision Pending",
-      leadScore: 89,
-      probability: 80,
-      stall: "Yes",
-      playbook: "Send 'Decision Reminder + Value ROI Summary'",
-    },
-  ]);
-
-  const [warmLeads, setWarmLeads] = useState<Lead[]>([
-    {
-      company: "GreenMart Stores",
-      description: "POS + Inventory SaaS",
-      opening: "2025-01-08",
-      expectedClose: "2025-03-01",
-      stage: "Product Demo Booked",
-      leadScore: 72,
-      probability: 54,
-      stall: "No",
-      playbook: "Not Required",
-    },
-    {
-      company: "CraftBuild Ltd",
-      description: "Supplier Workflow System",
-      opening: "2025-01-04",
-      expectedClose: "2025-03-20",
-      stage: "Lead Contacted",
-      leadScore: 68,
-      probability: 48,
-      stall: "Yes",
-      playbook: "'Re-engage With Case Study'",
-    },
-    {
-      company: "NextGen Autos",
-      description: "CRM Deployment",
-      opening: "2025-01-18",
-      expectedClose: "2025-03-10",
-      stage: "Initial Qualification",
-      leadScore: 61,
-      probability: 40,
-      stall: "No",
-      playbook: "'Send Competitive Comparison Brief'",
-    },
-  ]);
-
-  const [coldLeads, setColdLeads] = useState<Lead[]>([
-    {
-      company: "AlphaPrint",
-      description: "Printer Leasing Proposal",
-      opening: "2024-12-22",
-      expectedClose: "2025-04-15",
-      stage: "Outreach Attempted",
-      leadScore: 25,
-      probability: 9,
-      stall: "Yes",
-      playbook: "'Dormant Lead Recovery Script'",
-    },
-    {
-      company: "Urban Boutique",
-      description: "Website Revamp",
-      opening: "2025-01-02",
-      expectedClose: "2025-04-01",
-      stage: "Unresponsive",
-      leadScore: 31,
-      probability: 12,
-      stall: "Yes",
-      playbook: "'Soft Re-open Offer + Discount'",
-    },
-    {
-      company: "RapidFoods",
-      description: "Delivery App Integration",
-      opening: "2025-01-14",
-      expectedClose: "2025-05-20",
-      stage: "No Response Yet",
-      leadScore: 28,
-      probability: 7,
-      stall: "No",
-      playbook: "'Reminder + Value Proposition Summary'",
-    },
-  ]);
+  // Lead data state - starts empty
+  const [hotLeads, setHotLeads] = useState<Lead[]>([]);
+  const [warmLeads, setWarmLeads] = useState<Lead[]>([]);
+  const [coldLeads, setColdLeads] = useState<Lead[]>([]);
 
   const {
     subModules,
@@ -178,25 +93,27 @@ const SalesIntelligence = () => {
 
   // Function to calculate AI lead score and probability based on stage
   const calculateLeadMetrics = (stage: string) => {
-    const stageMetrics: Record<string, { score: number; probability: number }> = {
-      "Outreach Attempted": { score: 25, probability: 9 },
-      "Unresponsive": { score: 31, probability: 12 },
-      "No Response Yet": { score: 28, probability: 7 },
-      "Lead Contacted": { score: 68, probability: 48 },
-      "Initial Qualification": { score: 61, probability: 40 },
-      "Product Demo Booked": { score: 72, probability: 54 },
-      "Proposal Sent": { score: 92, probability: 88 },
-      "Negotiation": { score: 95, probability: 93 },
-      "Decision Pending": { score: 89, probability: 80 },
-    };
+    const stageMetrics: Record<string, { score: number; probability: number }> =
+      {
+        "Outreach Attempted": { score: 25, probability: 9 },
+        Unresponsive: { score: 31, probability: 12 },
+        "No Response Yet": { score: 28, probability: 7 },
+        "Lead Contacted": { score: 68, probability: 48 },
+        "Initial Qualification": { score: 61, probability: 40 },
+        "Product Demo Booked": { score: 72, probability: 54 },
+        "Proposal Sent": { score: 92, probability: 88 },
+        Negotiation: { score: 95, probability: 93 },
+        "Decision Pending": { score: 89, probability: 80 },
+      };
 
-    return (
-      stageMetrics[stage] || { score: 50, probability: 35 }
-    );
+    return stageMetrics[stage] || { score: 50, probability: 35 };
   };
 
   // Function to categorize lead as Hot, Warm, or Cold based on score
-  const categorizeLead = (score: number, stage: string): "hot" | "warm" | "cold" => {
+  const categorizeLead = (
+    score: number,
+    stage: string,
+  ): "hot" | "warm" | "cold" => {
     if (score >= 80) return "hot";
     if (score >= 60) return "warm";
     return "cold";
@@ -238,15 +155,112 @@ const SalesIntelligence = () => {
 
   const handleTargetCreated = (targetData: any) => {
     console.log("New sales target created:", targetData);
-    // TODO: Integrate with backend API to save the target
-    // For now, we'll just log it and close the dialog
+
+    if (targetData.type === "document") {
+      // TODO: Handle document parsing and bulk target creation
+      return;
+    }
+
+    // Create new target with unique ID
+    const newTarget: SalesTarget = {
+      id: `target-${Date.now()}`,
+      salesRepId: targetData.salesRepId,
+      salesRepName: targetData.salesRepName,
+      targetPeriod: targetData.targetPeriod,
+      targetAmount: targetData.targetAmount,
+      achievedAmount: targetData.achievedAmount,
+      status: targetData.status,
+      dealsClosed: targetData.dealsClosed,
+      avgDealSize: targetData.avgDealSize,
+    };
+
+    // Add target to list
+    setSalesTargets([...salesTargets, newTarget]);
+
+    // Auto-select the rep if targets list was empty
+    if (!selectedSalesRep) {
+      setSelectedSalesRep(targetData.salesRepId);
+    }
   };
 
   const handleSalesRepCreated = (newRep: { id: string; name: string }) => {
     console.log("New sales representative created:", newRep);
     // Add the new rep to the list
     setSalesRepsList([...salesRepsList, newRep]);
-    // TODO: Integrate with backend API to save the rep
+    // Auto-select the newly created rep
+    setSelectedSalesRep(newRep.id);
+  };
+
+  // Lead management functions
+  const handleDeleteLead = (
+    leadIndex: number,
+    category: "hot" | "warm" | "cold",
+  ) => {
+    if (category === "hot") {
+      setHotLeads(hotLeads.filter((_, idx) => idx !== leadIndex));
+    } else if (category === "warm") {
+      setWarmLeads(warmLeads.filter((_, idx) => idx !== leadIndex));
+    } else {
+      setColdLeads(coldLeads.filter((_, idx) => idx !== leadIndex));
+    }
+  };
+
+  const handleChangePipelineStage = (
+    lead: Lead,
+    newStage: string,
+    currentCategory: "hot" | "warm" | "cold",
+  ) => {
+    // Calculate new metrics based on new stage
+    const newMetrics = calculateLeadMetrics(newStage);
+    const newCategory = categorizeLead(newMetrics.score, newStage);
+
+    // Create updated lead
+    const updatedLead: Lead = {
+      ...lead,
+      stage: newStage,
+      leadScore: newMetrics.score,
+      probability: newMetrics.probability,
+    };
+
+    // Remove from current category
+    if (currentCategory === "hot") {
+      setHotLeads(hotLeads.filter((l) => l.company !== lead.company));
+    } else if (currentCategory === "warm") {
+      setWarmLeads(warmLeads.filter((l) => l.company !== lead.company));
+    } else {
+      setColdLeads(coldLeads.filter((l) => l.company !== lead.company));
+    }
+
+    // Add to new category
+    if (newCategory === "hot") {
+      setHotLeads([
+        ...hotLeads.filter((l) => l.company !== lead.company),
+        updatedLead,
+      ]);
+    } else if (newCategory === "warm") {
+      setWarmLeads([
+        ...warmLeads.filter((l) => l.company !== lead.company),
+        updatedLead,
+      ]);
+    } else {
+      setColdLeads([
+        ...coldLeads.filter((l) => l.company !== lead.company),
+        updatedLead,
+      ]);
+    }
+  };
+
+  // Sales target management functions
+  const handleDeleteTarget = (targetId: string) => {
+    setSalesTargets(salesTargets.filter((t) => t.id !== targetId));
+  };
+
+  const handleChangeTargetStatus = (targetId: string, newStatus: string) => {
+    setSalesTargets(
+      salesTargets.map((t) =>
+        t.id === targetId ? { ...t, status: newStatus } : t,
+      ),
+    );
   };
 
   // ============================================================
@@ -292,7 +306,9 @@ const SalesIntelligence = () => {
     const totalDays = allLeads.reduce((sum, lead) => {
       const opening = new Date(lead.opening);
       const close = new Date(lead.expectedClose);
-      const days = Math.ceil((close.getTime() - opening.getTime()) / (1000 * 60 * 60 * 24));
+      const days = Math.ceil(
+        (close.getTime() - opening.getTime()) / (1000 * 60 * 60 * 24),
+      );
       return sum + days;
     }, 0);
     return Math.round(totalDays / allLeads.length);
@@ -317,22 +333,24 @@ const SalesIntelligence = () => {
   // 7. AVERAGE DEAL PROBABILITY = ∑Probabilities / Total Leads
   const calculateAvgProbability = () => {
     if (allLeads.length === 0) return 0;
-    const totalProbability = allLeads.reduce((sum, lead) => sum + lead.probability, 0);
-    return ((totalProbability / allLeads.length) / 100).toFixed(1);
+    const totalProbability = allLeads.reduce(
+      (sum, lead) => sum + lead.probability,
+      0,
+    );
+    return (totalProbability / allLeads.length / 100).toFixed(1);
   };
 
   // 8. TOTAL TEAM TARGET = ∑All Target Amounts
   // Formula based on targets created
   const calculateTotalTeamTarget = () => {
-    // This would sum from actual targets - for now using hardcoded data
-    // When targets are created via form, this will calculate dynamically
-    return 600000; // Will be replaced with actual sum of target amounts
+    if (salesTargets.length === 0) return 0;
+    return salesTargets.reduce((sum, target) => sum + target.targetAmount, 0);
   };
 
   // 9. TOTAL ACHIEVED = ∑All Achieved Amounts
   const calculateTotalAchieved = () => {
-    // This would sum from actual targets
-    return 425500; // Will be replaced with actual sum of achieved amounts
+    if (salesTargets.length === 0) return 0;
+    return salesTargets.reduce((sum, target) => sum + target.achievedAmount, 0);
   };
 
   // 10. AVERAGE TEAM ACHIEVEMENT = (Total Achieved / Total Team Target) × 100
@@ -352,30 +370,61 @@ const SalesIntelligence = () => {
   // Formula #2
   const qualifiedLeads = hotLeads.length + warmLeads.length;
 
-  // Map sales rep achievements
-  const repAchievements: Record<string, number> = {
-    sarah: 125,
-    mike: 118,
-    lisa: 95,
-    john: 108,
+  // Calculate rep achievements dynamically from sales targets
+  const calculateRepAchievements = (): Record<
+    string,
+    { target: number; achieved: number; percentage: number }
+  > => {
+    const achievements: Record<
+      string,
+      { target: number; achieved: number; percentage: number }
+    > = {};
+
+    salesTargets.forEach((target) => {
+      if (!achievements[target.salesRepId]) {
+        achievements[target.salesRepId] = {
+          target: 0,
+          achieved: 0,
+          percentage: 0,
+        };
+      }
+      achievements[target.salesRepId].target += target.targetAmount;
+      achievements[target.salesRepId].achieved += target.achievedAmount;
+    });
+
+    // Calculate percentage for each rep
+    Object.keys(achievements).forEach((repId) => {
+      const data = achievements[repId];
+      if (data.target > 0) {
+        data.percentage = (data.achieved / data.target) * 100;
+      }
+    });
+
+    return achievements;
   };
 
-  // 13. GET TOP PERFORMER = Rep with highest achievement
-  const getTopPerformer = () => {
-    let topRep = "Sarah";
-    let maxAchievement = 0;
+  const repAchievements = calculateRepAchievements();
 
-    Object.entries(repAchievements).forEach(([key, value]) => {
-      if (value > maxAchievement) {
-        maxAchievement = value;
-        const rep = salesRepsList.find(r => r.id === key);
+  // 13. GET TOP PERFORMER = Rep with highest achievement percentage
+  const getTopPerformer = () => {
+    if (Object.keys(repAchievements).length === 0) {
+      return { name: "N/A", achievement: 0 };
+    }
+
+    let topRep = "N/A";
+    let maxPercentage = 0;
+
+    Object.entries(repAchievements).forEach(([repId, data]) => {
+      if (data.percentage > maxPercentage) {
+        maxPercentage = data.percentage;
+        const rep = salesRepsList.find((r) => r.id === repId);
         if (rep) {
           topRep = rep.name;
         }
       }
     });
 
-    return { name: topRep, achievement: maxAchievement };
+    return { name: topRep, achievement: Math.round(maxPercentage) };
   };
 
   // Sub-modules with CALCULATED metrics (TAGS hardcoded, VALUES calculated)
@@ -412,7 +461,7 @@ const SalesIntelligence = () => {
       metrics: {
         "Target Achievement": `${calculateAvgTeamAchievement()}%`, // TAG: Hardcoded, VALUE: Calculated
         "Revenue Trend": "+18%", // TODO: Calculate from period-over-period
-        "Rep Performance": `Avg: ${repAchievements ? (Object.values(repAchievements).reduce((a, b) => a + b, 0) / Object.values(repAchievements).length).toFixed(0) : 0}%`, // TAG: Hardcoded, VALUE: Calculated
+        "Rep Performance": `Avg: ${Object.keys(repAchievements).length > 0 ? (Object.values(repAchievements).reduce((sum, rep) => sum + rep.percentage, 0) / Object.keys(repAchievements).length).toFixed(0) : 0}%`, // TAG: Hardcoded, VALUE: Calculated
       },
     },
     {
@@ -434,7 +483,7 @@ const SalesIntelligence = () => {
       description: "AI coaching, performance insights, skill recommendations",
       metrics: {
         "Coaching Score": `${calculateAvgLeadScore()}/10`, // TAG: Hardcoded, VALUE: Calculated
-        "Top Performers": `${salesRepsList.filter(rep => repAchievements[rep.id] >= 100).length} identified`, // TAG: Hardcoded, VALUE: Calculated
+        "Top Performers": `${salesRepsList.filter((rep) => repAchievements[rep.id]?.percentage >= 100).length} identified`, // TAG: Hardcoded, VALUE: Calculated
         "Improvement Rate": `${((qualifiedLeads / allLeads.length) * 100).toFixed(0)}%`, // TAG: Hardcoded, VALUE: Calculated
       },
     },
@@ -636,70 +685,133 @@ const SalesIntelligence = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b bg-gray-50">
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Company Name
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Deal Description
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Opening Date
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Expected Close
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Pipeline Stage
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          AI Lead Score
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Deal Probability
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Stall?
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          AI Rescue Playbook
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {hotLeads.map((deal, idx) => (
-                        <tr key={idx} className="border-b hover:bg-gray-50">
-                          <td className="py-3 px-4">{deal.company}</td>
-                          <td className="py-3 px-4">{deal.description}</td>
-                          <td className="py-3 px-4">{deal.opening}</td>
-                          <td className="py-3 px-4">{deal.expectedClose}</td>
-                          <td className="py-3 px-4">{deal.stage}</td>
-                          <td className="py-3 px-4 text-center">
-                            <Badge className="bg-green-100 text-green-800">
-                              {deal.leadScore}
-                            </Badge>
-                          </td>
-                          <td className="py-3 px-4 text-center">
-                            <Badge className="bg-green-100 text-green-800">
-                              {deal.probability}%
-                            </Badge>
-                          </td>
-                          <td className="py-3 px-4 text-center">
-                            <span
-                              className={`font-semibold ${deal.stall === "Yes" ? "text-red-600" : "text-green-600"}`}
-                            >
-                              {deal.stall}
-                            </span>
-                          </td>
-                          <td className="py-3 px-4 text-xs">{deal.playbook}</td>
+                {hotLeads.length === 0 ? (
+                  <div className="py-12 text-center">
+                    <p className="text-gray-500 mb-2">No hot leads yet</p>
+                    <p className="text-sm text-gray-400">
+                      Leads with proposal sent, negotiation in progress, or
+                      decision pending will appear here
+                    </p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b bg-gray-50">
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Company Name
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Deal Description
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Opening Date
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Expected Close
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Pipeline Stage
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            AI Lead Score
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            Deal Probability
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            Stall?
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            AI Rescue Playbook
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            Actions
+                          </th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody>
+                        {hotLeads.map((deal, idx) => (
+                          <tr key={idx} className="border-b hover:bg-gray-50">
+                            <td className="py-3 px-4">{deal.company}</td>
+                            <td className="py-3 px-4">{deal.description}</td>
+                            <td className="py-3 px-4">{deal.opening}</td>
+                            <td className="py-3 px-4">{deal.expectedClose}</td>
+                            <td className="py-3 px-4">
+                              <Select
+                                value={deal.stage}
+                                onValueChange={(newStage) =>
+                                  handleChangePipelineStage(
+                                    deal,
+                                    newStage,
+                                    "hot",
+                                  )
+                                }
+                              >
+                                <SelectTrigger className="w-40 h-8 text-xs">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="Outreach Attempted">
+                                    Outreach Attempted
+                                  </SelectItem>
+                                  <SelectItem value="Lead Contacted">
+                                    Lead Contacted
+                                  </SelectItem>
+                                  <SelectItem value="Initial Qualification">
+                                    Initial Qualification
+                                  </SelectItem>
+                                  <SelectItem value="Product Demo Booked">
+                                    Product Demo Booked
+                                  </SelectItem>
+                                  <SelectItem value="Proposal Sent">
+                                    Proposal Sent
+                                  </SelectItem>
+                                  <SelectItem value="Negotiation">
+                                    Negotiation
+                                  </SelectItem>
+                                  <SelectItem value="Decision Pending">
+                                    Decision Pending
+                                  </SelectItem>
+                                  <SelectItem value="Won">Won</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <Badge className="bg-green-100 text-green-800">
+                                {deal.leadScore}
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <Badge className="bg-green-100 text-green-800">
+                                {deal.probability}%
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <span
+                                className={`font-semibold ${deal.stall === "Yes" ? "text-red-600" : "text-green-600"}`}
+                              >
+                                {deal.stall}
+                              </span>
+                            </td>
+                            <td className="py-3 px-4 text-xs">
+                              {deal.playbook}
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <button
+                                onClick={() => handleDeleteLead(idx, "hot")}
+                                className="p-1 text-red-600 hover:bg-red-50 rounded transition-colors"
+                                title="Delete lead"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
@@ -717,70 +829,133 @@ const SalesIntelligence = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b bg-gray-50">
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Company Name
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Deal Description
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Opening Date
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Expected Close
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Pipeline Stage
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          AI Lead Score
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Deal Probability
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Stall?
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          AI Rescue Playbook
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {warmLeads.map((deal, idx) => (
-                        <tr key={idx} className="border-b hover:bg-gray-50">
-                          <td className="py-3 px-4">{deal.company}</td>
-                          <td className="py-3 px-4">{deal.description}</td>
-                          <td className="py-3 px-4">{deal.opening}</td>
-                          <td className="py-3 px-4">{deal.expectedClose}</td>
-                          <td className="py-3 px-4">{deal.stage}</td>
-                          <td className="py-3 px-4 text-center">
-                            <Badge className="bg-yellow-100 text-yellow-800">
-                              {deal.leadScore}
-                            </Badge>
-                          </td>
-                          <td className="py-3 px-4 text-center">
-                            <Badge className="bg-yellow-100 text-yellow-800">
-                              {deal.probability}%
-                            </Badge>
-                          </td>
-                          <td className="py-3 px-4 text-center">
-                            <span
-                              className={`font-semibold ${deal.stall === "Yes" ? "text-orange-600" : "text-green-600"}`}
-                            >
-                              {deal.stall}
-                            </span>
-                          </td>
-                          <td className="py-3 px-4 text-xs">{deal.playbook}</td>
+                {warmLeads.length === 0 ? (
+                  <div className="py-12 text-center">
+                    <p className="text-gray-500 mb-2">No warm leads yet</p>
+                    <p className="text-sm text-gray-400">
+                      Leads with product demo booked, lead contacted, or initial
+                      qualification will appear here
+                    </p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b bg-gray-50">
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Company Name
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Deal Description
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Opening Date
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Expected Close
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Pipeline Stage
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            AI Lead Score
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            Deal Probability
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            Stall?
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            AI Rescue Playbook
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            Actions
+                          </th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody>
+                        {warmLeads.map((deal, idx) => (
+                          <tr key={idx} className="border-b hover:bg-gray-50">
+                            <td className="py-3 px-4">{deal.company}</td>
+                            <td className="py-3 px-4">{deal.description}</td>
+                            <td className="py-3 px-4">{deal.opening}</td>
+                            <td className="py-3 px-4">{deal.expectedClose}</td>
+                            <td className="py-3 px-4">
+                              <Select
+                                value={deal.stage}
+                                onValueChange={(newStage) =>
+                                  handleChangePipelineStage(
+                                    deal,
+                                    newStage,
+                                    "warm",
+                                  )
+                                }
+                              >
+                                <SelectTrigger className="w-40 h-8 text-xs">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="Outreach Attempted">
+                                    Outreach Attempted
+                                  </SelectItem>
+                                  <SelectItem value="Lead Contacted">
+                                    Lead Contacted
+                                  </SelectItem>
+                                  <SelectItem value="Initial Qualification">
+                                    Initial Qualification
+                                  </SelectItem>
+                                  <SelectItem value="Product Demo Booked">
+                                    Product Demo Booked
+                                  </SelectItem>
+                                  <SelectItem value="Proposal Sent">
+                                    Proposal Sent
+                                  </SelectItem>
+                                  <SelectItem value="Negotiation">
+                                    Negotiation
+                                  </SelectItem>
+                                  <SelectItem value="Decision Pending">
+                                    Decision Pending
+                                  </SelectItem>
+                                  <SelectItem value="Won">Won</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <Badge className="bg-yellow-100 text-yellow-800">
+                                {deal.leadScore}
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <Badge className="bg-yellow-100 text-yellow-800">
+                                {deal.probability}%
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <span
+                                className={`font-semibold ${deal.stall === "Yes" ? "text-orange-600" : "text-green-600"}`}
+                              >
+                                {deal.stall}
+                              </span>
+                            </td>
+                            <td className="py-3 px-4 text-xs">
+                              {deal.playbook}
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <button
+                                onClick={() => handleDeleteLead(idx, "warm")}
+                                className="p-1 text-red-600 hover:bg-red-50 rounded transition-colors"
+                                title="Delete lead"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
@@ -798,70 +973,133 @@ const SalesIntelligence = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b bg-gray-50">
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Company Name
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Deal Description
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Opening Date
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Expected Close
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Pipeline Stage
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          AI Lead Score
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Deal Probability
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Stall?
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          AI Rescue Playbook
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {coldLeads.map((deal, idx) => (
-                        <tr key={idx} className="border-b hover:bg-gray-50">
-                          <td className="py-3 px-4">{deal.company}</td>
-                          <td className="py-3 px-4">{deal.description}</td>
-                          <td className="py-3 px-4">{deal.opening}</td>
-                          <td className="py-3 px-4">{deal.expectedClose}</td>
-                          <td className="py-3 px-4">{deal.stage}</td>
-                          <td className="py-3 px-4 text-center">
-                            <Badge className="bg-blue-100 text-blue-800">
-                              {deal.leadScore}
-                            </Badge>
-                          </td>
-                          <td className="py-3 px-4 text-center">
-                            <Badge className="bg-blue-100 text-blue-800">
-                              {deal.probability}%
-                            </Badge>
-                          </td>
-                          <td className="py-3 px-4 text-center">
-                            <span
-                              className={`font-semibold ${deal.stall === "Yes" ? "text-red-600" : "text-green-600"}`}
-                            >
-                              {deal.stall}
-                            </span>
-                          </td>
-                          <td className="py-3 px-4 text-xs">{deal.playbook}</td>
+                {coldLeads.length === 0 ? (
+                  <div className="py-12 text-center">
+                    <p className="text-gray-500 mb-2">No cold leads yet</p>
+                    <p className="text-sm text-gray-400">
+                      Leads with outreach attempted, unresponsive, or no
+                      response yet will appear here
+                    </p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b bg-gray-50">
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Company Name
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Deal Description
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Opening Date
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Expected Close
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            Pipeline Stage
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            AI Lead Score
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            Deal Probability
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            Stall?
+                          </th>
+                          <th className="text-left py-3 px-4 font-semibold">
+                            AI Rescue Playbook
+                          </th>
+                          <th className="text-center py-3 px-4 font-semibold">
+                            Actions
+                          </th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody>
+                        {coldLeads.map((deal, idx) => (
+                          <tr key={idx} className="border-b hover:bg-gray-50">
+                            <td className="py-3 px-4">{deal.company}</td>
+                            <td className="py-3 px-4">{deal.description}</td>
+                            <td className="py-3 px-4">{deal.opening}</td>
+                            <td className="py-3 px-4">{deal.expectedClose}</td>
+                            <td className="py-3 px-4">
+                              <Select
+                                value={deal.stage}
+                                onValueChange={(newStage) =>
+                                  handleChangePipelineStage(
+                                    deal,
+                                    newStage,
+                                    "cold",
+                                  )
+                                }
+                              >
+                                <SelectTrigger className="w-40 h-8 text-xs">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="Outreach Attempted">
+                                    Outreach Attempted
+                                  </SelectItem>
+                                  <SelectItem value="Lead Contacted">
+                                    Lead Contacted
+                                  </SelectItem>
+                                  <SelectItem value="Initial Qualification">
+                                    Initial Qualification
+                                  </SelectItem>
+                                  <SelectItem value="Product Demo Booked">
+                                    Product Demo Booked
+                                  </SelectItem>
+                                  <SelectItem value="Proposal Sent">
+                                    Proposal Sent
+                                  </SelectItem>
+                                  <SelectItem value="Negotiation">
+                                    Negotiation
+                                  </SelectItem>
+                                  <SelectItem value="Decision Pending">
+                                    Decision Pending
+                                  </SelectItem>
+                                  <SelectItem value="Won">Won</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <Badge className="bg-blue-100 text-blue-800">
+                                {deal.leadScore}
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <Badge className="bg-blue-100 text-blue-800">
+                                {deal.probability}%
+                              </Badge>
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <span
+                                className={`font-semibold ${deal.stall === "Yes" ? "text-red-600" : "text-green-600"}`}
+                              >
+                                {deal.stall}
+                              </span>
+                            </td>
+                            <td className="py-3 px-4 text-xs">
+                              {deal.playbook}
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              <button
+                                onClick={() => handleDeleteLead(idx, "cold")}
+                                className="p-1 text-red-600 hover:bg-red-50 rounded transition-colors"
+                                title="Delete lead"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
@@ -1194,13 +1432,8 @@ const SalesIntelligence = () => {
           {/* Targets Tab */}
           <TabsContent value="targets" className="space-y-6">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold">
-                Sales Target Management
-              </h3>
-              <Button
-                onClick={() => setCreateTargetOpen(true)}
-                size="lg"
-              >
+              <h3 className="text-lg font-semibold">Sales Target Management</h3>
+              <Button onClick={() => setCreateTargetOpen(true)} size="lg">
                 <Plus className="h-4 w-4 mr-2" />
                 Create new Sales Target
               </Button>
@@ -1213,263 +1446,240 @@ const SalesIntelligence = () => {
                   Select Sales Representative ({salesRepsList.length})
                 </h3>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {salesRepsList.map((rep) => {
-                  const achievement = repAchievements[rep.id] || 0;
-                  return (
-                    <button
-                      key={rep.id}
-                      onClick={() => setSelectedSalesRep(rep.id)}
-                      className={`p-4 rounded-lg border-2 transition-all ${
-                        selectedSalesRep === rep.id
-                          ? "border-blue-500 bg-blue-50 shadow-lg scale-105"
-                          : "border-gray-200 bg-white hover:border-gray-300"
-                      }`}
-                    >
-                      <div className="flex flex-col items-center gap-2">
-                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
-                          {rep.name.charAt(0)}
+              {salesRepsList.length === 0 ? (
+                <div className="py-12 text-center border-2 border-dashed border-gray-300 rounded-lg">
+                  <p className="text-gray-500 mb-2">
+                    No sales representatives yet
+                  </p>
+                  <p className="text-sm text-gray-400">
+                    Create a new sales target to add your first sales
+                    representative
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {salesRepsList.map((rep) => {
+                    const repData = repAchievements[rep.id];
+                    const achievement = repData?.percentage || 0;
+                    return (
+                      <button
+                        key={rep.id}
+                        onClick={() => setSelectedSalesRep(rep.id)}
+                        className={`p-4 rounded-lg border-2 transition-all ${
+                          selectedSalesRep === rep.id
+                            ? "border-blue-500 bg-blue-50 shadow-lg scale-105"
+                            : "border-gray-200 bg-white hover:border-gray-300"
+                        }`}
+                      >
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                            {rep.name.charAt(0)}
+                          </div>
+                          <div>
+                            <p className="font-semibold text-sm">{rep.name}</p>
+                            <p
+                              className={`text-xs font-bold ${
+                                achievement >= 100
+                                  ? "text-green-600"
+                                  : "text-orange-600"
+                              }`}
+                            >
+                              {achievement.toFixed(0) || "N/A"}%
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="font-semibold text-sm">{rep.name}</p>
-                          <p
-                            className={`text-xs font-bold ${
-                              achievement >= 100
-                                ? "text-green-600"
-                                : "text-orange-600"
-                            }`}
-                          >
-                            {achievement || "N/A"}%
-                          </p>
-                        </div>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
             {/* Sales Rep Target Details Table */}
-            <Card>
-              <CardHeader>
-                <CardTitle>
-                  {selectedSalesRep === "sarah" &&
-                    "Sarah Johnson - Target Tracking"}
-                  {selectedSalesRep === "mike" && "Mike Chen - Target Tracking"}
-                  {selectedSalesRep === "lisa" &&
-                    "Lisa Rodriguez - Target Tracking"}
-                  {selectedSalesRep === "john" &&
-                    "John Davis - Target Tracking"}
-                </CardTitle>
-                <CardDescription>
-                  Comprehensive target achievement and performance metrics
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b bg-gray-50">
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Target Period
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Target ($)
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Achieved ($)
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Achievement %
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Status
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Deals Closed
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Avg Deal Size
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          AI Recommendation
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {(selectedSalesRep === "sarah"
-                        ? [
-                            {
-                              period: "January",
-                              target: 50000,
-                              achieved: 62500,
-                              deals: 5,
-                              avgDealSize: 12500,
-                              recommendation:
-                                "Maintain momentum - top performer",
-                            },
-                            {
-                              period: "February",
-                              target: 50000,
-                              achieved: 50000,
-                              deals: 4,
-                              avgDealSize: 12500,
-                              recommendation: "On track - focus on pipeline",
-                            },
-                            {
-                              period: "March (YTD)",
-                              target: 150000,
-                              achieved: 112500,
-                              deals: 9,
-                              avgDealSize: 12500,
-                              recommendation:
-                                "75% completion - increase outreach",
-                            },
-                          ]
-                        : selectedSalesRep === "mike"
-                          ? [
-                              {
-                                period: "January",
-                                target: 50000,
-                                achieved: 59000,
-                                deals: 4,
-                                avgDealSize: 14750,
-                                recommendation: "Performing above average",
-                              },
-                              {
-                                period: "February",
-                                target: 50000,
-                                achieved: 55000,
-                                deals: 3,
-                                avgDealSize: 18333,
-                                recommendation:
-                                  "Lower volume but higher value deals",
-                              },
-                              {
-                                period: "March (YTD)",
-                                target: 150000,
-                                achieved: 114000,
-                                deals: 7,
-                                avgDealSize: 16286,
-                                recommendation:
-                                  "76% completion - focus on closing stalled deals",
-                              },
-                            ]
-                          : selectedSalesRep === "lisa"
-                            ? [
-                                {
-                                  period: "January",
-                                  target: 50000,
-                                  achieved: 45000,
-                                  deals: 3,
-                                  avgDealSize: 15000,
-                                  recommendation:
-                                    "Below target - needs support",
-                                },
-                                {
-                                  period: "February",
-                                  target: 50000,
-                                  achieved: 50000,
-                                  deals: 3,
-                                  avgDealSize: 16667,
-                                  recommendation: "Met minimum target",
-                                },
-                                {
-                                  period: "March (YTD)",
-                                  target: 150000,
-                                  achieved: 95000,
-                                  deals: 6,
-                                  avgDealSize: 15833,
-                                  recommendation:
-                                    "63% completion - coaching program recommended",
-                                },
-                              ]
-                            : [
-                                {
-                                  period: "January",
-                                  target: 50000,
-                                  achieved: 54000,
-                                  deals: 4,
-                                  avgDealSize: 13500,
-                                  recommendation:
-                                    "Solid performer - consistent results",
-                                },
-                                {
-                                  period: "February",
-                                  target: 50000,
-                                  achieved: 50000,
-                                  deals: 3,
-                                  avgDealSize: 16667,
-                                  recommendation: "At target with larger deals",
-                                },
-                                {
-                                  period: "March (YTD)",
-                                  target: 150000,
-                                  achieved: 104000,
-                                  deals: 7,
-                                  avgDealSize: 14857,
-                                  recommendation:
-                                    "69% completion - push for final stretch",
-                                },
-                              ]
-                      ).map((target, idx) => {
-                        const achievement =
-                          (target.achieved / target.target) * 100;
-                        const isAchieved = achievement >= 100;
-                        return (
-                          <tr key={idx} className="border-b hover:bg-gray-50">
-                            <td className="py-3 px-4 font-medium">
-                              {target.period}
-                            </td>
-                            <td className="py-3 px-4 text-center">
-                              ${(target.target / 1000).toFixed(0)}K
-                            </td>
-                            <td className="py-3 px-4 text-center font-semibold">
-                              ${(target.achieved / 1000).toFixed(0)}K
-                            </td>
-                            <td className="py-3 px-4 text-center">
-                              <div className="flex items-center justify-center gap-2">
-                                <Badge
-                                  className={
-                                    isAchieved
-                                      ? "bg-green-100 text-green-800"
-                                      : "bg-yellow-100 text-yellow-800"
-                                  }
-                                >
-                                  {achievement.toFixed(0)}%
-                                </Badge>
-                                {isAchieved && (
-                                  <CheckCircle2 className="h-4 w-4 text-green-600" />
-                                )}
-                              </div>
-                            </td>
-                            <td className="py-3 px-4 text-center">
-                              <Badge
-                                variant={isAchieved ? "default" : "secondary"}
-                              >
-                                {isAchieved ? "✓ Achieved" : "In Progress"}
-                              </Badge>
-                            </td>
-                            <td className="py-3 px-4 text-center font-semibold">
-                              {target.deals}
-                            </td>
-                            <td className="py-3 px-4 text-center text-sm">
-                              ${(target.avgDealSize / 1000).toFixed(1)}K
-                            </td>
-                            <td className="py-3 px-4 text-xs">
-                              <div className="flex items-start gap-1">
-                                <Lightbulb className="h-4 w-4 text-amber-600 flex-shrink-0 mt-0.5" />
-                                <span>{target.recommendation}</span>
-                              </div>
-                            </td>
+            {selectedSalesRep ? (
+              <Card>
+                <CardHeader>
+                  <CardTitle>
+                    {salesRepsList.find((r) => r.id === selectedSalesRep)?.name}{" "}
+                    - Target Tracking
+                  </CardTitle>
+                  <CardDescription>
+                    Comprehensive target achievement and performance metrics
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {salesTargets.filter((t) => t.salesRepId === selectedSalesRep)
+                    .length === 0 ? (
+                    <div className="py-12 text-center">
+                      <p className="text-gray-500 mb-2">
+                        No targets created yet
+                      </p>
+                      <p className="text-sm text-gray-400">
+                        Create a sales target for this representative to view
+                        their performance
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="border-b bg-gray-50">
+                            <th className="text-left py-3 px-4 font-semibold">
+                              Target Period
+                            </th>
+                            <th className="text-center py-3 px-4 font-semibold">
+                              Target ($)
+                            </th>
+                            <th className="text-center py-3 px-4 font-semibold">
+                              Achieved ($)
+                            </th>
+                            <th className="text-center py-3 px-4 font-semibold">
+                              Achievement %
+                            </th>
+                            <th className="text-center py-3 px-4 font-semibold">
+                              Status
+                            </th>
+                            <th className="text-center py-3 px-4 font-semibold">
+                              Deals Closed
+                            </th>
+                            <th className="text-center py-3 px-4 font-semibold">
+                              Avg Deal Size
+                            </th>
+                            <th className="text-left py-3 px-4 font-semibold">
+                              AI Recommendation
+                            </th>
+                            <th className="text-center py-3 px-4 font-semibold">
+                              Actions
+                            </th>
                           </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
+                        </thead>
+                        <tbody>
+                          {salesTargets
+                            .filter((t) => t.salesRepId === selectedSalesRep)
+                            .map((target) => {
+                              const achievement =
+                                (target.achievedAmount / target.targetAmount) *
+                                100;
+                              const isAchieved = achievement >= 100;
+                              return (
+                                <tr
+                                  key={target.id}
+                                  className="border-b hover:bg-gray-50"
+                                >
+                                  <td className="py-3 px-4 font-medium">
+                                    {target.targetPeriod}
+                                  </td>
+                                  <td className="py-3 px-4 text-center">
+                                    ${(target.targetAmount / 1000).toFixed(0)}K
+                                  </td>
+                                  <td className="py-3 px-4 text-center font-semibold">
+                                    ${(target.achievedAmount / 1000).toFixed(0)}
+                                    K
+                                  </td>
+                                  <td className="py-3 px-4 text-center">
+                                    <div className="flex items-center justify-center gap-2">
+                                      <Badge
+                                        className={
+                                          isAchieved
+                                            ? "bg-green-100 text-green-800"
+                                            : "bg-yellow-100 text-yellow-800"
+                                        }
+                                      >
+                                        {achievement.toFixed(0)}%
+                                      </Badge>
+                                      {isAchieved && (
+                                        <CheckCircle2 className="h-4 w-4 text-green-600" />
+                                      )}
+                                    </div>
+                                  </td>
+                                  <td className="py-3 px-4 text-center">
+                                    <Select
+                                      value={target.status}
+                                      onValueChange={(newStatus) =>
+                                        handleChangeTargetStatus(
+                                          target.id,
+                                          newStatus,
+                                        )
+                                      }
+                                    >
+                                      <SelectTrigger className="w-32 h-8 text-xs">
+                                        <SelectValue />
+                                      </SelectTrigger>
+                                      <SelectContent>
+                                        <SelectItem value="In Progress">
+                                          In Progress
+                                        </SelectItem>
+                                        <SelectItem value="✓ Achieved">
+                                          ✓ Achieved
+                                        </SelectItem>
+                                        <SelectItem value="At Risk">
+                                          At Risk
+                                        </SelectItem>
+                                        <SelectItem value="Completed">
+                                          Completed
+                                        </SelectItem>
+                                      </SelectContent>
+                                    </Select>
+                                  </td>
+                                  <td className="py-3 px-4 text-center font-semibold">
+                                    {target.dealsClosed}
+                                  </td>
+                                  <td className="py-3 px-4 text-center text-sm">
+                                    ${(target.avgDealSize / 1000).toFixed(1)}K
+                                  </td>
+                                  <td className="py-3 px-4 text-xs">
+                                    <div className="flex items-start gap-1">
+                                      <Lightbulb className="h-4 w-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                                      <span>
+                                        {achievement >= 100
+                                          ? "Excellent performance - target achieved!"
+                                          : achievement >= 75
+                                            ? "On track - continue momentum"
+                                            : "Below target - increase effort"}
+                                      </span>
+                                    </div>
+                                  </td>
+                                  <td className="py-3 px-4 text-center">
+                                    <button
+                                      onClick={() =>
+                                        handleDeleteTarget(target.id)
+                                      }
+                                      className="p-1 text-red-600 hover:bg-red-50 rounded transition-colors"
+                                      title="Delete target"
+                                    >
+                                      <Trash2 className="h-4 w-4" />
+                                    </button>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            ) : (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Sales Rep Target Tracking</CardTitle>
+                  <CardDescription>
+                    Select a sales representative to view their targets
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="py-12 text-center">
+                    <p className="text-gray-500 mb-2">
+                      No sales representative selected
+                    </p>
+                    <p className="text-sm text-gray-400">
+                      Select a representative from the list above or create a
+                      new target
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
             {/* Overall Team Performance Summary */}
             <Card>
@@ -1485,30 +1695,49 @@ const SalesIntelligence = () => {
                     <p className="text-sm text-gray-600 mb-1">
                       Total Team Target {/* TAG: Hardcoded */}
                     </p>
-                    <p className="text-2xl font-bold text-gray-900">${(calculateTotalTeamTarget() / 1000).toFixed(0)}K</p> {/* VALUE: Calculated */}
+                    <p className="text-2xl font-bold text-gray-900">
+                      ${(calculateTotalTeamTarget() / 1000).toFixed(0)}K
+                    </p>{" "}
+                    {/* VALUE: Calculated */}
                     <p className="text-xs text-gray-500 mt-2">Q1 Total</p>
                   </div>
                   <div className="p-4 border rounded-lg bg-green-50">
-                    <p className="text-sm text-gray-600 mb-1">Total Achieved</p> {/* TAG: Hardcoded */}
-                    <p className="text-2xl font-bold text-green-700">${(calculateTotalAchieved() / 1000).toFixed(1)}K</p> {/* VALUE: Calculated */}
+                    <p className="text-sm text-gray-600 mb-1">Total Achieved</p>{" "}
+                    {/* TAG: Hardcoded */}
+                    <p className="text-2xl font-bold text-green-700">
+                      ${(calculateTotalAchieved() / 1000).toFixed(1)}K
+                    </p>{" "}
+                    {/* VALUE: Calculated */}
                     <p className="text-xs text-green-600 mt-2">
-                      {calculateAvgTeamAchievement()}% Completion {/* VALUE: Calculated */}
+                      {calculateAvgTeamAchievement()}% Completion{" "}
+                      {/* VALUE: Calculated */}
                     </p>
                   </div>
                   <div className="p-4 border rounded-lg">
-                    <p className="text-sm text-gray-600 mb-1">Top Performer</p> {/* TAG: Hardcoded */}
-                    <p className="text-2xl font-bold text-blue-700">{getTopPerformer().name}</p> {/* VALUE: Calculated */}
+                    <p className="text-sm text-gray-600 mb-1">Top Performer</p>{" "}
+                    {/* TAG: Hardcoded */}
+                    <p className="text-2xl font-bold text-blue-700">
+                      {getTopPerformer().name}
+                    </p>{" "}
+                    {/* VALUE: Calculated */}
                     <p className="text-xs text-blue-600 mt-2">
-                      {getTopPerformer().achievement}% Achievement {/* VALUE: Calculated */}
+                      {getTopPerformer().achievement}% Achievement{" "}
+                      {/* VALUE: Calculated */}
                     </p>
                   </div>
                   <div className="p-4 border rounded-lg">
                     <p className="text-sm text-gray-600 mb-1">
                       Avg Team Achievement {/* TAG: Hardcoded */}
                     </p>
-                    <p className="text-2xl font-bold text-purple-700">{calculateAvgTeamAchievement()}%</p> {/* VALUE: Calculated */}
+                    <p className="text-2xl font-bold text-purple-700">
+                      {calculateAvgTeamAchievement()}%
+                    </p>{" "}
+                    {/* VALUE: Calculated */}
                     <p className="text-xs text-purple-600 mt-2">
-                      {parseInt(calculateAvgTeamAchievement()) >= 100 ? "Above Target" : "In Progress"} {/* VALUE: Calculated */}
+                      {parseInt(calculateAvgTeamAchievement()) >= 100
+                        ? "Above Target"
+                        : "In Progress"}{" "}
+                      {/* VALUE: Calculated */}
                     </p>
                   </div>
                 </div>
