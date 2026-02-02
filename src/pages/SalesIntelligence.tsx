@@ -75,6 +75,7 @@ const SalesIntelligence = () => {
   const [selectedSalesRep, setSelectedSalesRep] = useState<string>("");
   const [createLeadOpen, setCreateLeadOpen] = useState(false);
   const [createTargetOpen, setCreateTargetOpen] = useState(false);
+  const [createEngagementOpen, setCreateEngagementOpen] = useState(false);
   const [salesRepsList, setSalesRepsList] = useState<
     Array<{ id: string; name: string }>
   >([]);
@@ -84,6 +85,9 @@ const SalesIntelligence = () => {
   const [hotLeads, setHotLeads] = useState<Lead[]>([]);
   const [warmLeads, setWarmLeads] = useState<Lead[]>([]);
   const [coldLeads, setColdLeads] = useState<Lead[]>([]);
+
+  // Engagement data state - starts empty
+  const [engagements, setEngagements] = useState<EngagementData[]>([]);
 
   const {
     subModules,
