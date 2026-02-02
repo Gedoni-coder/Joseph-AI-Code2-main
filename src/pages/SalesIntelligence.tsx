@@ -709,41 +709,7 @@ const SalesIntelligence = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {[
-                        {
-                          company: "AlphaPrint",
-                          description: "Printer Leasing Proposal",
-                          opening: "2024-12-22",
-                          expectedClose: "2025-04-15",
-                          stage: "Outreach Attempted",
-                          leadScore: 25,
-                          probability: 9,
-                          stall: "Yes",
-                          playbook: "'Dormant Lead Recovery Script'",
-                        },
-                        {
-                          company: "Urban Boutique",
-                          description: "Website Revamp",
-                          opening: "2025-01-02",
-                          expectedClose: "2025-04-01",
-                          stage: "Unresponsive",
-                          leadScore: 31,
-                          probability: 12,
-                          stall: "Yes",
-                          playbook: "'Soft Re-open Offer + Discount'",
-                        },
-                        {
-                          company: "RapidFoods",
-                          description: "Delivery App Integration",
-                          opening: "2025-01-14",
-                          expectedClose: "2025-05-20",
-                          stage: "No Response Yet",
-                          leadScore: 28,
-                          probability: 7,
-                          stall: "No",
-                          playbook: "'Reminder + Value Proposition Summary'",
-                        },
-                      ].map((deal, idx) => (
+                      {coldLeads.map((deal, idx) => (
                         <tr key={idx} className="border-b hover:bg-gray-50">
                           <td className="py-3 px-4">{deal.company}</td>
                           <td className="py-3 px-4">{deal.description}</td>
