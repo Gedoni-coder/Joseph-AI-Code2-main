@@ -31,7 +31,16 @@ import {
   CheckCircle2,
   Lightbulb,
   Plus,
+  Trash2,
+  ChevronDown,
 } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Lead {
   company: string;
