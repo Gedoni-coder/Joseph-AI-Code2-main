@@ -628,41 +628,7 @@ const SalesIntelligence = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {[
-                        {
-                          company: "GreenMart Stores",
-                          description: "POS + Inventory SaaS",
-                          opening: "2025-01-08",
-                          expectedClose: "2025-03-01",
-                          stage: "Product Demo Booked",
-                          leadScore: 72,
-                          probability: 54,
-                          stall: "No",
-                          playbook: "Not Required",
-                        },
-                        {
-                          company: "CraftBuild Ltd",
-                          description: "Supplier Workflow System",
-                          opening: "2025-01-04",
-                          expectedClose: "2025-03-20",
-                          stage: "Lead Contacted",
-                          leadScore: 68,
-                          probability: 48,
-                          stall: "Yes",
-                          playbook: "'Re-engage With Case Study'",
-                        },
-                        {
-                          company: "NextGen Autos",
-                          description: "CRM Deployment",
-                          opening: "2025-01-18",
-                          expectedClose: "2025-03-10",
-                          stage: "Initial Qualification",
-                          leadScore: 61,
-                          probability: 40,
-                          stall: "No",
-                          playbook: "'Send Competitive Comparison Brief'",
-                        },
-                      ].map((deal, idx) => (
+                      {warmLeads.map((deal, idx) => (
                         <tr key={idx} className="border-b hover:bg-gray-50">
                           <td className="py-3 px-4">{deal.company}</td>
                           <td className="py-3 px-4">{deal.description}</td>
