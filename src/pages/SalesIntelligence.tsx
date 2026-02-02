@@ -253,15 +253,14 @@ const SalesIntelligence = () => {
   // 8. TOTAL TEAM TARGET = ∑All Target Amounts
   // Formula based on targets created
   const calculateTotalTeamTarget = () => {
-    // This would sum from actual targets - for now using hardcoded data
-    // When targets are created via form, this will calculate dynamically
-    return 600000; // Will be replaced with actual sum of target amounts
+    if (salesTargets.length === 0) return 0;
+    return salesTargets.reduce((sum, target) => sum + target.targetAmount, 0);
   };
 
   // 9. TOTAL ACHIEVED = ∑All Achieved Amounts
   const calculateTotalAchieved = () => {
-    // This would sum from actual targets
-    return 425500; // Will be replaced with actual sum of achieved amounts
+    if (salesTargets.length === 0) return 0;
+    return salesTargets.reduce((sum, target) => sum + target.achievedAmount, 0);
   };
 
   // 10. AVERAGE TEAM ACHIEVEMENT = (Total Achieved / Total Team Target) × 100
