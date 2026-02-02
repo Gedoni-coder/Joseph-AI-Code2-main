@@ -176,10 +176,64 @@ const SalesIntelligence = () => {
     refreshData,
   } = useSalesIntelligenceAPI();
 
+  // Function to calculate AI lead score and probability based on stage
+  const calculateLeadMetrics = (stage: string) => {
+    const stageMetrics: Record<string, { score: number; probability: number }> = {
+      "Outreach Attempted": { score: 25, probability: 9 },
+      "Unresponsive": { score: 31, probability: 12 },
+      "No Response Yet": { score: 28, probability: 7 },
+      "Lead Contacted": { score: 68, probability: 48 },
+      "Initial Qualification": { score: 61, probability: 40 },
+      "Product Demo Booked": { score: 72, probability: 54 },
+      "Proposal Sent": { score: 92, probability: 88 },
+      "Negotiation": { score: 95, probability: 93 },
+      "Decision Pending": { score: 89, probability: 80 },
+    };
+
+    return (
+      stageMetrics[stage] || { score: 50, probability: 35 }
+    );
+  };
+
+  // Function to categorize lead as Hot, Warm, or Cold based on score
+  const categorizeLead = (score: number, stage: string): "hot" | "warm" | "cold" => {
+    if (score >= 80) return "hot";
+    if (score >= 60) return "warm";
+    return "cold";
+  };
+
   const handleLeadCreated = (leadData: any) => {
     console.log("New lead created:", leadData);
-    // TODO: Integrate with backend API to save the lead
-    // For now, we'll just log it and close the dialog
+
+    if (leadData.type === "document") {
+      // TODO: Handle document parsing and bulk lead creation
+      return;
+    }
+
+    // Create new lead from form data
+    const metrics = calculateLeadMetrics(leadData.pipelineStage);
+    const newLead: Lead = {
+      company: leadData.companyName,
+      description: leadData.dealDescription,
+      opening: leadData.openingDate,
+      expectedClose: leadData.expectedClose,
+      stage: leadData.pipelineStage,
+      leadScore: metrics.score,
+      probability: metrics.probability,
+      stall: "No",
+      playbook: "Monitor",
+    };
+
+    const category = categorizeLead(metrics.score, leadData.pipelineStage);
+
+    // Add lead to appropriate category
+    if (category === "hot") {
+      setHotLeads([...hotLeads, newLead]);
+    } else if (category === "warm") {
+      setWarmLeads([...warmLeads, newLead]);
+    } else {
+      setColdLeads([...coldLeads, newLead]);
+    }
   };
 
   const handleTargetCreated = (targetData: any) => {
