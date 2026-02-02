@@ -1240,226 +1240,138 @@ const SalesIntelligence = () => {
             </div>
 
             {/* Sales Rep Target Details Table */}
-            <Card>
-              <CardHeader>
-                <CardTitle>
-                  {selectedSalesRep === "sarah" &&
-                    "Sarah Johnson - Target Tracking"}
-                  {selectedSalesRep === "mike" && "Mike Chen - Target Tracking"}
-                  {selectedSalesRep === "lisa" &&
-                    "Lisa Rodriguez - Target Tracking"}
-                  {selectedSalesRep === "john" &&
-                    "John Davis - Target Tracking"}
-                </CardTitle>
-                <CardDescription>
-                  Comprehensive target achievement and performance metrics
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b bg-gray-50">
-                        <th className="text-left py-3 px-4 font-semibold">
-                          Target Period
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Target ($)
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Achieved ($)
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Achievement %
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Status
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Deals Closed
-                        </th>
-                        <th className="text-center py-3 px-4 font-semibold">
-                          Avg Deal Size
-                        </th>
-                        <th className="text-left py-3 px-4 font-semibold">
-                          AI Recommendation
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {(selectedSalesRep === "sarah"
-                        ? [
-                            {
-                              period: "January",
-                              target: 50000,
-                              achieved: 62500,
-                              deals: 5,
-                              avgDealSize: 12500,
-                              recommendation:
-                                "Maintain momentum - top performer",
-                            },
-                            {
-                              period: "February",
-                              target: 50000,
-                              achieved: 50000,
-                              deals: 4,
-                              avgDealSize: 12500,
-                              recommendation: "On track - focus on pipeline",
-                            },
-                            {
-                              period: "March (YTD)",
-                              target: 150000,
-                              achieved: 112500,
-                              deals: 9,
-                              avgDealSize: 12500,
-                              recommendation:
-                                "75% completion - increase outreach",
-                            },
-                          ]
-                        : selectedSalesRep === "mike"
-                          ? [
-                              {
-                                period: "January",
-                                target: 50000,
-                                achieved: 59000,
-                                deals: 4,
-                                avgDealSize: 14750,
-                                recommendation: "Performing above average",
-                              },
-                              {
-                                period: "February",
-                                target: 50000,
-                                achieved: 55000,
-                                deals: 3,
-                                avgDealSize: 18333,
-                                recommendation:
-                                  "Lower volume but higher value deals",
-                              },
-                              {
-                                period: "March (YTD)",
-                                target: 150000,
-                                achieved: 114000,
-                                deals: 7,
-                                avgDealSize: 16286,
-                                recommendation:
-                                  "76% completion - focus on closing stalled deals",
-                              },
-                            ]
-                          : selectedSalesRep === "lisa"
-                            ? [
-                                {
-                                  period: "January",
-                                  target: 50000,
-                                  achieved: 45000,
-                                  deals: 3,
-                                  avgDealSize: 15000,
-                                  recommendation:
-                                    "Below target - needs support",
-                                },
-                                {
-                                  period: "February",
-                                  target: 50000,
-                                  achieved: 50000,
-                                  deals: 3,
-                                  avgDealSize: 16667,
-                                  recommendation: "Met minimum target",
-                                },
-                                {
-                                  period: "March (YTD)",
-                                  target: 150000,
-                                  achieved: 95000,
-                                  deals: 6,
-                                  avgDealSize: 15833,
-                                  recommendation:
-                                    "63% completion - coaching program recommended",
-                                },
-                              ]
-                            : [
-                                {
-                                  period: "January",
-                                  target: 50000,
-                                  achieved: 54000,
-                                  deals: 4,
-                                  avgDealSize: 13500,
-                                  recommendation:
-                                    "Solid performer - consistent results",
-                                },
-                                {
-                                  period: "February",
-                                  target: 50000,
-                                  achieved: 50000,
-                                  deals: 3,
-                                  avgDealSize: 16667,
-                                  recommendation: "At target with larger deals",
-                                },
-                                {
-                                  period: "March (YTD)",
-                                  target: 150000,
-                                  achieved: 104000,
-                                  deals: 7,
-                                  avgDealSize: 14857,
-                                  recommendation:
-                                    "69% completion - push for final stretch",
-                                },
-                              ]
-                      ).map((target, idx) => {
-                        const achievement =
-                          (target.achieved / target.target) * 100;
-                        const isAchieved = achievement >= 100;
-                        return (
-                          <tr key={idx} className="border-b hover:bg-gray-50">
-                            <td className="py-3 px-4 font-medium">
-                              {target.period}
-                            </td>
-                            <td className="py-3 px-4 text-center">
-                              ${(target.target / 1000).toFixed(0)}K
-                            </td>
-                            <td className="py-3 px-4 text-center font-semibold">
-                              ${(target.achieved / 1000).toFixed(0)}K
-                            </td>
-                            <td className="py-3 px-4 text-center">
-                              <div className="flex items-center justify-center gap-2">
-                                <Badge
-                                  className={
-                                    isAchieved
-                                      ? "bg-green-100 text-green-800"
-                                      : "bg-yellow-100 text-yellow-800"
-                                  }
-                                >
-                                  {achievement.toFixed(0)}%
-                                </Badge>
-                                {isAchieved && (
-                                  <CheckCircle2 className="h-4 w-4 text-green-600" />
-                                )}
-                              </div>
-                            </td>
-                            <td className="py-3 px-4 text-center">
-                              <Badge
-                                variant={isAchieved ? "default" : "secondary"}
-                              >
-                                {isAchieved ? "✓ Achieved" : "In Progress"}
-                              </Badge>
-                            </td>
-                            <td className="py-3 px-4 text-center font-semibold">
-                              {target.deals}
-                            </td>
-                            <td className="py-3 px-4 text-center text-sm">
-                              ${(target.avgDealSize / 1000).toFixed(1)}K
-                            </td>
-                            <td className="py-3 px-4 text-xs">
-                              <div className="flex items-start gap-1">
-                                <Lightbulb className="h-4 w-4 text-amber-600 flex-shrink-0 mt-0.5" />
-                                <span>{target.recommendation}</span>
-                              </div>
-                            </td>
+            {selectedSalesRep ? (
+              <Card>
+                <CardHeader>
+                  <CardTitle>
+                    {salesRepsList.find(r => r.id === selectedSalesRep)?.name} - Target Tracking
+                  </CardTitle>
+                  <CardDescription>
+                    Comprehensive target achievement and performance metrics
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {salesTargets.filter(t => t.salesRepId === selectedSalesRep).length === 0 ? (
+                    <div className="py-12 text-center">
+                      <p className="text-gray-500 mb-2">No targets created yet</p>
+                      <p className="text-sm text-gray-400">
+                        Create a sales target for this representative to view their performance
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="border-b bg-gray-50">
+                            <th className="text-left py-3 px-4 font-semibold">
+                              Target Period
+                            </th>
+                            <th className="text-center py-3 px-4 font-semibold">
+                              Target ($)
+                            </th>
+                            <th className="text-center py-3 px-4 font-semibold">
+                              Achieved ($)
+                            </th>
+                            <th className="text-center py-3 px-4 font-semibold">
+                              Achievement %
+                            </th>
+                            <th className="text-center py-3 px-4 font-semibold">
+                              Status
+                            </th>
+                            <th className="text-center py-3 px-4 font-semibold">
+                              Deals Closed
+                            </th>
+                            <th className="text-center py-3 px-4 font-semibold">
+                              Avg Deal Size
+                            </th>
+                            <th className="text-left py-3 px-4 font-semibold">
+                              AI Recommendation
+                            </th>
                           </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
+                        </thead>
+                        <tbody>
+                          {salesTargets.filter(t => t.salesRepId === selectedSalesRep).map((target) => {
+                            const achievement = (target.achievedAmount / target.targetAmount) * 100;
+                            const isAchieved = achievement >= 100;
+                            return (
+                              <tr key={target.id} className="border-b hover:bg-gray-50">
+                                <td className="py-3 px-4 font-medium">
+                                  {target.targetPeriod}
+                                </td>
+                                <td className="py-3 px-4 text-center">
+                                  ${(target.targetAmount / 1000).toFixed(0)}K
+                                </td>
+                                <td className="py-3 px-4 text-center font-semibold">
+                                  ${(target.achievedAmount / 1000).toFixed(0)}K
+                                </td>
+                                <td className="py-3 px-4 text-center">
+                                  <div className="flex items-center justify-center gap-2">
+                                    <Badge
+                                      className={
+                                        isAchieved
+                                          ? "bg-green-100 text-green-800"
+                                          : "bg-yellow-100 text-yellow-800"
+                                      }
+                                    >
+                                      {achievement.toFixed(0)}%
+                                    </Badge>
+                                    {isAchieved && (
+                                      <CheckCircle2 className="h-4 w-4 text-green-600" />
+                                    )}
+                                  </div>
+                                </td>
+                                <td className="py-3 px-4 text-center">
+                                  <Badge
+                                    variant={isAchieved ? "default" : "secondary"}
+                                  >
+                                    {target.status}
+                                  </Badge>
+                                </td>
+                                <td className="py-3 px-4 text-center font-semibold">
+                                  {target.dealsClosed}
+                                </td>
+                                <td className="py-3 px-4 text-center text-sm">
+                                  ${(target.avgDealSize / 1000).toFixed(1)}K
+                                </td>
+                                <td className="py-3 px-4 text-xs">
+                                  <div className="flex items-start gap-1">
+                                    <Lightbulb className="h-4 w-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                                    <span>
+                                      {achievement >= 100
+                                        ? "Excellent performance - target achieved!"
+                                        : achievement >= 75
+                                          ? "On track - continue momentum"
+                                          : "Below target - increase effort"}
+                                    </span>
+                                  </div>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            ) : (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Sales Rep Target Tracking</CardTitle>
+                  <CardDescription>
+                    Select a sales representative to view their targets
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="py-12 text-center">
+                    <p className="text-gray-500 mb-2">No sales representative selected</p>
+                    <p className="text-sm text-gray-400">
+                      Select a representative from the list above or create a new target
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
             {/* Overall Team Performance Summary */}
             <Card>
