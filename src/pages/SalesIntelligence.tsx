@@ -60,7 +60,7 @@ interface SalesTarget {
 const SalesIntelligence = () => {
   const [activeTab, setActiveTab] = useState("overview");
   const [selectedChannel, setSelectedChannel] = useState("whatsapp");
-  const [selectedSalesRep, setSelectedSalesRep] = useState("sarah");
+  const [selectedSalesRep, setSelectedSalesRep] = useState<string>("");
   const [createLeadOpen, setCreateLeadOpen] = useState(false);
   const [createTargetOpen, setCreateTargetOpen] = useState(false);
   const [salesRepsList, setSalesRepsList] = useState<Array<{ id: string; name: string }>>([]);
