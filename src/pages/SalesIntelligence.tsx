@@ -178,6 +178,49 @@ const SalesIntelligence = () => {
     setSelectedSalesRep(newRep.id);
   };
 
+  // Lead management functions
+  const handleDeleteLead = (leadIndex: number, category: "hot" | "warm" | "cold") => {
+    if (category === "hot") {
+      setHotLeads(hotLeads.filter((_, idx) => idx !== leadIndex));
+    } else if (category === "warm") {
+      setWarmLeads(warmLeads.filter((_, idx) => idx !== leadIndex));
+    } else {
+      setColdLeads(coldLeads.filter((_, idx) => idx !== leadIndex));
+    }
+  };
+
+  const handleChangePipelineStage = (lead: Lead, newStage: string, currentCategory: "hot" | "warm" | "cold") => {
+    // Calculate new metrics based on new stage
+    const newMetrics = calculateLeadMetrics(newStage);
+    const newCategory = categorizeLead(newMetrics.score, newStage);
+
+    // Create updated lead
+    const updatedLead: Lead = {
+      ...lead,
+      stage: newStage,
+      leadScore: newMetrics.score,
+      probability: newMetrics.probability,
+    };
+
+    // Remove from current category
+    if (currentCategory === "hot") {
+      setHotLeads(hotLeads.filter(l => l.company !== lead.company));
+    } else if (currentCategory === "warm") {
+      setWarmLeads(warmLeads.filter(l => l.company !== lead.company));
+    } else {
+      setColdLeads(coldLeads.filter(l => l.company !== lead.company));
+    }
+
+    // Add to new category
+    if (newCategory === "hot") {
+      setHotLeads([...hotLeads.filter(l => l.company !== lead.company), updatedLead]);
+    } else if (newCategory === "warm") {
+      setWarmLeads([...warmLeads.filter(l => l.company !== lead.company), updatedLead]);
+    } else {
+      setColdLeads([...coldLeads.filter(l => l.company !== lead.company), updatedLead]);
+    }
+  };
+
   // ============================================================
   // KPI CALCULATION FUNCTIONS (FORMULAS)
   // ============================================================
