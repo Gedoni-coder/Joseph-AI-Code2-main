@@ -192,6 +192,33 @@ export default function CreateLeadForm({
         )}
       </div>
 
+      <div className="space-y-2">
+        <Label htmlFor="leadSource">Lead Source</Label>
+        <Select
+          value={formData.leadSource}
+          onValueChange={(value) =>
+            setFormData({ ...formData, leadSource: value })
+          }
+        >
+          <SelectTrigger
+            id="leadSource"
+            className={errors.leadSource ? "border-red-500" : ""}
+          >
+            <SelectValue placeholder="Select a lead source" />
+          </SelectTrigger>
+          <SelectContent>
+            {LEAD_SOURCES.map((source) => (
+              <SelectItem key={source} value={source}>
+                {source}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        {errors.leadSource && (
+          <p className="text-xs text-red-500">{errors.leadSource}</p>
+        )}
+      </div>
+
       <div className="flex gap-2 pt-4">
         <Button
           type="button"
