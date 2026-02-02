@@ -360,6 +360,24 @@ const SalesIntelligence = () => {
     john: 108,
   };
 
+  // 13. GET TOP PERFORMER = Rep with highest achievement
+  const getTopPerformer = () => {
+    let topRep = "Sarah";
+    let maxAchievement = 0;
+
+    Object.entries(repAchievements).forEach(([key, value]) => {
+      if (value > maxAchievement) {
+        maxAchievement = value;
+        const rep = salesRepsList.find(r => r.id === key);
+        if (rep) {
+          topRep = rep.name;
+        }
+      }
+    });
+
+    return { name: topRep, achievement: maxAchievement };
+  };
+
   // Sub-modules with CALCULATED metrics (TAGS hardcoded, VALUES calculated)
   const staticSubModules = [
     {
