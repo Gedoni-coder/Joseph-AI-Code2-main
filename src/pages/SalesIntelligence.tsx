@@ -1301,66 +1301,182 @@ const SalesIntelligence = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="p-4 border rounded-lg">
-                    <h4 className="font-semibold mb-4">Channel Performance</h4>
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm">WhatsApp</span>
-                        <div className="w-32 bg-gray-200 rounded-full h-2">
-                          <div className="bg-green-600 h-2 rounded-full w-5/6"></div>
+                {(() => {
+                  // Calculate channel performance (average engagement score by channel)
+                  const channelPerformance = {
+                    whatsapp: {
+                      engagements: engagements.filter(
+                        (e) => e.channel === "whatsapp",
+                      ),
+                      color: "bg-green-600",
+                    },
+                    sms: {
+                      engagements: engagements.filter(
+                        (e) => e.channel === "sms",
+                      ),
+                      color: "bg-blue-600",
+                    },
+                    email: {
+                      engagements: engagements.filter(
+                        (e) => e.channel === "email",
+                      ),
+                      color: "bg-red-600",
+                    },
+                    linkedin: {
+                      engagements: engagements.filter(
+                        (e) => e.channel === "linkedin",
+                      ),
+                      color: "bg-blue-700",
+                    },
+                  };
+
+                  // Calculate overall stats
+                  const totalEngagements = engagements.length;
+                  const avgResponseRate =
+                    totalEngagements > 0
+                      ? (
+                          engagements.reduce(
+                            (sum, e) => sum + e.avgResponseRate,
+                            0,
+                          ) / totalEngagements
+                        ).toFixed(1)
+                      : 0;
+                  const avgResponseTime =
+                    totalEngagements > 0
+                      ? engagements.reduce(
+                          (sum, e) => sum + e.avgResponseTimeMinutes,
+                          0,
+                        ) / totalEngagements
+                      : 0;
+                  const avgFollowUpRate =
+                    totalEngagements > 0
+                      ? (
+                          engagements.reduce(
+                            (sum, e) => sum + e.followUpRate,
+                            0,
+                          ) / totalEngagements
+                        ).toFixed(1)
+                      : 0;
+
+                  // Format response time
+                  const formatTime = (minutes: number) => {
+                    if (minutes === 0) return "0 min";
+                    const hours = Math.floor(minutes / 60);
+                    const mins = Math.round(minutes % 60);
+                    if (hours > 0) return `${hours}h ${mins}m`;
+                    return `${Math.round(minutes)}m`;
+                  };
+
+                  // Get max engagement score for normalization (0-10 scale)
+                  const getChannelBarWidth = (
+                    engagementsList: EngagementData[],
+                  ) => {
+                    if (engagementsList.length === 0) return 0;
+                    const avgScore =
+                      engagementsList.reduce(
+                        (sum, e) => sum + e.engagementScore,
+                        0,
+                      ) / engagementsList.length;
+                    return (avgScore / 10) * 100; // Convert to percentage
+                  };
+
+                  return (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="p-4 border rounded-lg">
+                        <h4 className="font-semibold mb-4">
+                          Channel Performance
+                        </h4>
+                        <div className="space-y-3">
+                          {[
+                            { name: "WhatsApp", key: "whatsapp" },
+                            { name: "SMS", key: "sms" },
+                            { name: "Email", key: "email" },
+                            { name: "LinkedIn", key: "linkedin" },
+                          ].map((channel) => {
+                            const performance =
+                              channelPerformance[
+                                channel.key as keyof typeof channelPerformance
+                              ];
+                            const barWidth = getChannelBarWidth(
+                              performance.engagements,
+                            );
+                            const avgScore =
+                              performance.engagements.length > 0
+                                ? (
+                                    performance.engagements.reduce(
+                                      (sum, e) => sum + e.engagementScore,
+                                      0,
+                                    ) / performance.engagements.length
+                                  ).toFixed(1)
+                                : 0;
+
+                            return (
+                              <div key={channel.key}>
+                                <div className="flex justify-between items-center mb-1">
+                                  <span className="text-sm">
+                                    {channel.name}
+                                  </span>
+                                  <span className="text-xs text-gray-600">
+                                    {performance.engagements.length}{" "}
+                                    engagement
+                                    {performance.engagements.length !== 1
+                                      ? "s"
+                                      : ""}
+                                    {performance.engagements.length > 0 &&
+                                      ` - Score: ${avgScore}/10`}
+                                  </span>
+                                </div>
+                                <div className="w-full bg-gray-200 rounded-full h-2">
+                                  <div
+                                    className={`${performance.color} h-2 rounded-full transition-all`}
+                                    style={{ width: `${barWidth}%` }}
+                                  ></div>
+                                </div>
+                              </div>
+                            );
+                          })}
                         </div>
                       </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm">SMS</span>
-                        <div className="w-32 bg-gray-200 rounded-full h-2">
-                          <div className="bg-blue-600 h-2 rounded-full w-4/6"></div>
-                        </div>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm">Email</span>
-                        <div className="w-32 bg-gray-200 rounded-full h-2">
-                          <div className="bg-red-600 h-2 rounded-full w-3/5"></div>
-                        </div>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm">LinkedIn</span>
-                        <div className="w-32 bg-gray-200 rounded-full h-2">
-                          <div className="bg-blue-700 h-2 rounded-full w-2/5"></div>
+                      <div className="p-4 border rounded-lg">
+                        <h4 className="font-semibold mb-4">Follow-up Stats</h4>
+                        <div className="space-y-3">
+                          <div>
+                            <div className="flex justify-between text-sm mb-1">
+                              <span>Total Engagements</span>
+                              <span className="font-semibold">
+                                {totalEngagements}
+                              </span>
+                            </div>
+                          </div>
+                          <div>
+                            <div className="flex justify-between text-sm mb-1">
+                              <span>Overall Response Rate</span>
+                              <span className="font-semibold">
+                                {avgResponseRate}%
+                              </span>
+                            </div>
+                          </div>
+                          <div>
+                            <div className="flex justify-between text-sm mb-1">
+                              <span>Avg Response Time</span>
+                              <span className="font-semibold">
+                                {formatTime(avgResponseTime)}
+                              </span>
+                            </div>
+                          </div>
+                          <div>
+                            <div className="flex justify-between text-sm mb-1">
+                              <span>Avg Follow-up Rate</span>
+                              <span className="font-semibold">
+                                {avgFollowUpRate}%
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div className="p-4 border rounded-lg">
-                    <h4 className="font-semibold mb-4">Follow-up Stats</h4>
-                    <div className="space-y-3">
-                      <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>Automated Triggers</span>
-                          <span className="font-semibold">2,847</span>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>Overall Response Rate</span>
-                          <span className="font-semibold">72%</span>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>Avg Response Time</span>
-                          <span className="font-semibold">2.1 hours</span>
-                        </div>
-                      </div>
-                      <div>
-                        <div className="flex justify-between text-sm mb-1">
-                          <span>Conversion from Engagement</span>
-                          <span className="font-semibold">34%</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                  );
+                })()}
               </CardContent>
             </Card>
           </TabsContent>
