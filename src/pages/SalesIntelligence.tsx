@@ -198,6 +198,12 @@ const SalesIntelligence = () => {
     setSelectedSalesRep(newRep.id);
   };
 
+  const handleEngagementCreated = (engagementData: EngagementData) => {
+    console.log("New engagement created:", engagementData);
+    // Add engagement to list
+    setEngagements([...engagements, engagementData]);
+  };
+
   // Lead management functions
   const handleDeleteLead = (
     leadIndex: number,
