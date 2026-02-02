@@ -365,7 +365,7 @@ const SalesIntelligence = () => {
       metrics: {
         "Target Achievement": `${calculateAvgTeamAchievement()}%`, // TAG: Hardcoded, VALUE: Calculated
         "Revenue Trend": "+18%", // TODO: Calculate from period-over-period
-        "Rep Performance": `Avg: ${repAchievements ? (Object.values(repAchievements).reduce((a, b) => a + b, 0) / Object.values(repAchievements).length).toFixed(0) : 0}%`, // TAG: Hardcoded, VALUE: Calculated
+        "Rep Performance": `Avg: ${Object.keys(repAchievements).length > 0 ? (Object.values(repAchievements).reduce((sum, rep) => sum + rep.percentage, 0) / Object.keys(repAchievements).length).toFixed(0) : 0}%`, // TAG: Hardcoded, VALUE: Calculated
       },
     },
     {
