@@ -249,6 +249,109 @@ const SalesIntelligence = () => {
     // TODO: Integrate with backend API to save the rep
   };
 
+  // ============================================================
+  // KPI CALCULATION FUNCTIONS (FORMULAS)
+  // ============================================================
+
+  // Get all leads combined
+  const allLeads = [...hotLeads, ...warmLeads, ...coldLeads];
+
+  // 1. TOTAL PIPELINE VALUE = ∑(Deal Value × Win Probability)
+  // Weighted pipeline formula #26
+  const calculatePipelineValue = () => {
+    if (allLeads.length === 0) return 0;
+    return allLeads.reduce((sum, lead) => {
+      // Assume a base deal value based on stage and probability
+      // Using probability as a proxy for deal value (0-100 scale)
+      const baseDealValue = 50000; // $50K base
+      const dealValue = (lead.probability / 100) * baseDealValue;
+      return sum + dealValue;
+    }, 0);
+  };
+
+  // 2. WIN RATE = (Deals Won / Total Opportunities) × 100
+  // In our context: Hot leads that are likely to win / Total leads
+  // Formula #9
+  const calculateWinRate = () => {
+    if (allLeads.length === 0) return 0;
+    const hotLeadsCount = hotLeads.length;
+    return (hotLeadsCount / allLeads.length) * 100;
+  };
+
+  // 3. AVERAGE DEAL SIZE = Total Pipeline Value / Total Leads
+  // Formula #20
+  const calculateAvgDealSize = () => {
+    if (allLeads.length === 0) return 0;
+    return calculatePipelineValue() / allLeads.length;
+  };
+
+  // 4. SALES CYCLE LENGTH = ∑Days to Close / Deals
+  // Formula #11
+  const calculateSalesCycle = () => {
+    if (allLeads.length === 0) return 0;
+    const totalDays = allLeads.reduce((sum, lead) => {
+      const opening = new Date(lead.opening);
+      const close = new Date(lead.expectedClose);
+      const days = Math.ceil((close.getTime() - opening.getTime()) / (1000 * 60 * 60 * 24));
+      return sum + days;
+    }, 0);
+    return Math.round(totalDays / allLeads.length);
+  };
+
+  // 5. AVERAGE LEAD SCORE = ∑Lead Scores / Total Leads
+  // Formula #3
+  const calculateAvgLeadScore = () => {
+    if (allLeads.length === 0) return 0;
+    const totalScore = allLeads.reduce((sum, lead) => sum + lead.leadScore, 0);
+    return (totalScore / allLeads.length).toFixed(1);
+  };
+
+  // 6. PIPELINE HEALTH = (Hot + Warm Leads / Total Leads) × 100
+  // Percentage of leads in active/healthy stages
+  const calculatePipelineHealth = () => {
+    if (allLeads.length === 0) return 0;
+    const healthyLeads = hotLeads.length + warmLeads.length;
+    return ((healthyLeads / allLeads.length) * 100).toFixed(0);
+  };
+
+  // 7. AVERAGE DEAL PROBABILITY = ∑Probabilities / Total Leads
+  const calculateAvgProbability = () => {
+    if (allLeads.length === 0) return 0;
+    const totalProbability = allLeads.reduce((sum, lead) => sum + lead.probability, 0);
+    return ((totalProbability / allLeads.length) / 100).toFixed(1);
+  };
+
+  // 8. TOTAL TEAM TARGET = ∑All Target Amounts
+  // Formula based on targets created
+  const calculateTotalTeamTarget = () => {
+    // This would sum from actual targets - for now using hardcoded data
+    // When targets are created via form, this will calculate dynamically
+    return 600000; // Will be replaced with actual sum of target amounts
+  };
+
+  // 9. TOTAL ACHIEVED = ∑All Achieved Amounts
+  const calculateTotalAchieved = () => {
+    // This would sum from actual targets
+    return 425500; // Will be replaced with actual sum of achieved amounts
+  };
+
+  // 10. AVERAGE TEAM ACHIEVEMENT = (Total Achieved / Total Team Target) × 100
+  // Formula #31
+  const calculateAvgTeamAchievement = () => {
+    const target = calculateTotalTeamTarget();
+    const achieved = calculateTotalAchieved();
+    if (target === 0) return 0;
+    return ((achieved / target) * 100).toFixed(0);
+  };
+
+  // 11. LEADS GENERATED = Count of new leads in period
+  // Formula #1
+  const leadsGenerated = allLeads.length;
+
+  // 12. QUALIFIED LEADS = Leads with score >= 60 (Warm + Hot)
+  // Formula #2
+  const qualifiedLeads = hotLeads.length + warmLeads.length;
+
   // Map sales rep achievements
   const repAchievements: Record<string, number> = {
     sarah: 125,
