@@ -63,12 +63,8 @@ const SalesIntelligence = () => {
   const [selectedSalesRep, setSelectedSalesRep] = useState("sarah");
   const [createLeadOpen, setCreateLeadOpen] = useState(false);
   const [createTargetOpen, setCreateTargetOpen] = useState(false);
-  const [salesRepsList, setSalesRepsList] = useState([
-    { id: "sarah", name: "Sarah Johnson" },
-    { id: "mike", name: "Mike Chen" },
-    { id: "lisa", name: "Lisa Rodriguez" },
-    { id: "john", name: "John Davis" },
-  ]);
+  const [salesRepsList, setSalesRepsList] = useState<Array<{ id: string; name: string }>>([]);
+  const [salesTargets, setSalesTargets] = useState<SalesTarget[]>([]);
 
   // Lead data state - starts empty
   const [hotLeads, setHotLeads] = useState<Lead[]>([]);
