@@ -142,15 +142,40 @@ const SalesIntelligence = () => {
 
   const handleTargetCreated = (targetData: any) => {
     console.log("New sales target created:", targetData);
-    // TODO: Integrate with backend API to save the target
-    // For now, we'll just log it and close the dialog
+
+    if (targetData.type === "document") {
+      // TODO: Handle document parsing and bulk target creation
+      return;
+    }
+
+    // Create new target with unique ID
+    const newTarget: SalesTarget = {
+      id: `target-${Date.now()}`,
+      salesRepId: targetData.salesRepId,
+      salesRepName: targetData.salesRepName,
+      targetPeriod: targetData.targetPeriod,
+      targetAmount: targetData.targetAmount,
+      achievedAmount: targetData.achievedAmount,
+      status: targetData.status,
+      dealsClosed: targetData.dealsClosed,
+      avgDealSize: targetData.avgDealSize,
+    };
+
+    // Add target to list
+    setSalesTargets([...salesTargets, newTarget]);
+
+    // Auto-select the rep if targets list was empty
+    if (!selectedSalesRep) {
+      setSelectedSalesRep(targetData.salesRepId);
+    }
   };
 
   const handleSalesRepCreated = (newRep: { id: string; name: string }) => {
     console.log("New sales representative created:", newRep);
     // Add the new rep to the list
     setSalesRepsList([...salesRepsList, newRep]);
-    // TODO: Integrate with backend API to save the rep
+    // Auto-select the newly created rep
+    setSelectedSalesRep(newRep.id);
   };
 
   // ============================================================
