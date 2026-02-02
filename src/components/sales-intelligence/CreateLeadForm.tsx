@@ -48,6 +48,7 @@ export default function CreateLeadForm({
     openingDate: "",
     expectedClose: "",
     pipelineStage: "",
+    leadSource: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
