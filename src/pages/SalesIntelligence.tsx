@@ -1483,31 +1483,33 @@ const SalesIntelligence = () => {
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <div className="p-4 border rounded-lg">
                     <p className="text-sm text-gray-600 mb-1">
-                      Total Team Target
+                      Total Team Target {/* TAG: Hardcoded */}
                     </p>
-                    <p className="text-2xl font-bold text-gray-900">$600K</p>
+                    <p className="text-2xl font-bold text-gray-900">${(calculateTotalTeamTarget() / 1000).toFixed(0)}K</p> {/* VALUE: Calculated */}
                     <p className="text-xs text-gray-500 mt-2">Q1 Total</p>
                   </div>
                   <div className="p-4 border rounded-lg bg-green-50">
-                    <p className="text-sm text-gray-600 mb-1">Total Achieved</p>
-                    <p className="text-2xl font-bold text-green-700">$425.5K</p>
+                    <p className="text-sm text-gray-600 mb-1">Total Achieved</p> {/* TAG: Hardcoded */}
+                    <p className="text-2xl font-bold text-green-700">${(calculateTotalAchieved() / 1000).toFixed(1)}K</p> {/* VALUE: Calculated */}
                     <p className="text-xs text-green-600 mt-2">
-                      71% Completion
+                      {calculateAvgTeamAchievement()}% Completion {/* VALUE: Calculated */}
                     </p>
                   </div>
                   <div className="p-4 border rounded-lg">
-                    <p className="text-sm text-gray-600 mb-1">Top Performer</p>
-                    <p className="text-2xl font-bold text-blue-700">Sarah</p>
+                    <p className="text-sm text-gray-600 mb-1">Top Performer</p> {/* TAG: Hardcoded */}
+                    <p className="text-2xl font-bold text-blue-700">{getTopPerformer().name}</p> {/* VALUE: Calculated */}
                     <p className="text-xs text-blue-600 mt-2">
-                      125% Achievement
+                      {getTopPerformer().achievement}% Achievement {/* VALUE: Calculated */}
                     </p>
                   </div>
                   <div className="p-4 border rounded-lg">
                     <p className="text-sm text-gray-600 mb-1">
-                      Avg Team Achievement
+                      Avg Team Achievement {/* TAG: Hardcoded */}
                     </p>
-                    <p className="text-2xl font-bold text-purple-700">111%</p>
-                    <p className="text-xs text-purple-600 mt-2">Above Target</p>
+                    <p className="text-2xl font-bold text-purple-700">{calculateAvgTeamAchievement()}%</p> {/* VALUE: Calculated */}
+                    <p className="text-xs text-purple-600 mt-2">
+                      {parseInt(calculateAvgTeamAchievement()) >= 100 ? "Above Target" : "In Progress"} {/* VALUE: Calculated */}
+                    </p>
                   </div>
                 </div>
               </CardContent>
