@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, TrendingDown, Info } from "lucide-react";
+import { useCurrency } from "@/hooks/useCurrency";
 
 const KPICategory = ({ name, kpis }: { name: string; kpis: any[] }) => (
   <div className="space-y-4">
