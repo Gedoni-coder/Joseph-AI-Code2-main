@@ -39,6 +39,19 @@ const SalesIntelligence = () => {
 
   const subModules = [
     {
+      id: "kpi-dashboard",
+      name: "KPI Dashboard",
+      icon: <BarChart3 className="h-5 w-5" />,
+      description: "Comprehensive KPI tracking and analytics for sales performance monitoring",
+      metrics: {
+        "KPIs Tracked": "22",
+        "KPIs On Target": "18",
+        "Overall Health": "92%",
+      },
+      link: "/kpi-dashboard",
+      isNew: true,
+    },
+    {
       id: "lead-pipeline",
       name: "Lead Intelligence & Pipeline",
       icon: <Target className="h-5 w-5" />,
