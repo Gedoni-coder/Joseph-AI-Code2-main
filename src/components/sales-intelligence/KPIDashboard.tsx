@@ -26,7 +26,7 @@ interface KPIDashboardProps {
   salesCycle?: number;
 }
 
-export const KPIDashboard = ({
+const KPIDashboard = ({
   totalRevenue = 0,
   totalTarget = 0,
   leadsGenerated = 0,
