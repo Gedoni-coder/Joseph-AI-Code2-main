@@ -48,6 +48,7 @@ interface DealsAnalyticsProps {
   forecastData?: ForecastData[];
   totalRevenue?: number;
   repeatRevenueRate?: number;
+  repeatRevenueTrend?: number;
   pipelineRisk?: number;
   dealVelocityRisk?: number;
   repPerformanceRisk?: number;
