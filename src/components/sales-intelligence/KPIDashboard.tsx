@@ -40,6 +40,10 @@ interface KPIDashboardProps {
   winRateTrend?: number;
   dealSizeTrend?: number;
   salesCycleTrend?: number;
+  revenueTrendData?: Array<{ month: string; revenue: number }>;
+  leadsVsDealsData?: Array<{ stage: string; count: number }>;
+  salesCycleTrendData?: Array<{ month: string; days: number }>;
+  pipelineVsTargetData?: Array<{ name: string; value: number }>;
 }
 
 const KPIDashboard = ({
