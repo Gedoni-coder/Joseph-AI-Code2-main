@@ -282,9 +282,9 @@ export const KPICategoriesView = () => {
         {
           name: "Pipeline Value",
           description: "Total value of all open opportunities",
-          currentValue: "$450K",
-          lastMonthValue: "$420K",
-          trendValue: "+$30K",
+          currentValue: format(450000, 0),
+          lastMonthValue: format(420000, 0),
+          trendValue: `+${format(30000, 0)}`,
           trendDirection: "up",
           explanation:
             "Pipeline strengthening. Good inflow of new deals.",
@@ -332,9 +332,9 @@ export const KPICategoriesView = () => {
         {
           name: "Next Month Forecast",
           description: "Projected revenue for next month",
-          currentValue: "$238K",
-          lastMonthValue: "$245K",
-          trendValue: "-$7K",
+          currentValue: format(238000, 0),
+          lastMonthValue: format(245000, 0),
+          trendValue: `-${format(7000, 0)}`,
           trendDirection: "down",
           explanation:
             "Conservative forecast. Some deals slipping.",
