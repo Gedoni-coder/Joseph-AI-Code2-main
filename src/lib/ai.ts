@@ -94,9 +94,9 @@ export async function generateAIResponse(
   history: ChatMessage[],
   opts: AIOptions = {},
 ): Promise<string | null> {
-  // Default to including app context and performing web search
+  // Default to including app context but disable web search due to network reliability issues
   const includeAppContext = opts.includeAppContext !== false;
-  const performWebSearch = opts.performWebSearch !== false;
+  const performWebSearch = opts.performWebSearch === true;
 
   let enhancedSystem = opts.system || "";
   let enhancedWebContext = opts.webContext || "";
