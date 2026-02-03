@@ -25,6 +25,7 @@ import CustomKPIBuilder from "@/components/sales-intelligence/CustomKPIBuilder";
 import BenchmarkingSection from "@/components/sales-intelligence/BenchmarkingSection";
 import KPIAlerts from "@/components/sales-intelligence/KPIAlerts";
 import ExportReporting from "@/components/sales-intelligence/ExportReporting";
+import DealsAnalytics from "@/components/sales-intelligence/DealsAnalytics";
 import {
   TrendingUp,
   Users,
