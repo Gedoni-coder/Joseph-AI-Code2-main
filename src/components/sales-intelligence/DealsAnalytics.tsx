@@ -134,9 +134,18 @@ const DealsAnalytics = () => {
   const repeatRevenueRate = 68;
 
   // Calculate forecast metrics
-  const totalForecast = forecastData.reduce((sum, item) => sum + item.forecast, 0);
-  const totalBestCase = forecastData.reduce((sum, item) => sum + item.bestCase, 0);
-  const totalWorstCase = forecastData.reduce((sum, item) => sum + item.worstCase, 0);
+  const totalForecast = forecastData.reduce(
+    (sum, item) => sum + item.forecast,
+    0,
+  );
+  const totalBestCase = forecastData.reduce(
+    (sum, item) => sum + item.bestCase,
+    0,
+  );
+  const totalWorstCase = forecastData.reduce(
+    (sum, item) => sum + item.worstCase,
+    0,
+  );
   const annualTarget = 4800000;
   const forecastToTargetRatio = ((totalForecast * 2) / annualTarget) * 100;
 
@@ -155,7 +164,9 @@ const DealsAnalytics = () => {
                 <DollarSign className="h-5 w-5 text-blue-600" />
               </div>
             </div>
-            <p className="text-xs text-green-600 mt-2">↑ 12% vs last 6 months</p>
+            <p className="text-xs text-green-600 mt-2">
+              ↑ 12% vs last 6 months
+            </p>
           </CardContent>
         </Card>
 
@@ -173,7 +184,8 @@ const DealsAnalytics = () => {
               </div>
             </div>
             <p className="text-xs text-gray-600 mt-2">
-              ${(topProduct.revenue / 1000).toFixed(0)}K ({topProduct.percentage}%)
+              ${(topProduct.revenue / 1000).toFixed(0)}K (
+              {topProduct.percentage}%)
             </p>
           </CardContent>
         </Card>
@@ -182,7 +194,9 @@ const DealsAnalytics = () => {
           <CardContent className="p-6">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm text-gray-600 mb-2">Most Profitable Region</p>
+                <p className="text-sm text-gray-600 mb-2">
+                  Most Profitable Region
+                </p>
                 <p className="text-2xl font-bold text-gray-900">
                   {topRegion.category.split(" ")[0]}
                 </p>
@@ -192,7 +206,8 @@ const DealsAnalytics = () => {
               </div>
             </div>
             <p className="text-xs text-gray-600 mt-2">
-              ${(topRegion.revenue / 1000).toFixed(0)}K ({topRegion.percentage}%)
+              ${(topRegion.revenue / 1000).toFixed(0)}K ({topRegion.percentage}
+              %)
             </p>
           </CardContent>
         </Card>
@@ -210,7 +225,9 @@ const DealsAnalytics = () => {
                 <AlertCircle className="h-5 w-5 text-orange-600" />
               </div>
             </div>
-            <p className="text-xs text-green-600 mt-2">Healthy retention rate</p>
+            <p className="text-xs text-green-600 mt-2">
+              Healthy retention rate
+            </p>
           </CardContent>
         </Card>
       </div>
@@ -276,7 +293,9 @@ const DealsAnalytics = () => {
                         className="w-3 h-3 rounded-full"
                         style={{ backgroundColor: colors[idx] }}
                       ></div>
-                      <span className="font-medium text-sm">{item.category}</span>
+                      <span className="font-medium text-sm">
+                        {item.category}
+                      </span>
                     </div>
                     <div className="flex items-center gap-4">
                       <span className="text-sm text-gray-600">
@@ -332,7 +351,9 @@ const DealsAnalytics = () => {
                         className="w-3 h-3 rounded-full"
                         style={{ backgroundColor: colors[idx] }}
                       ></div>
-                      <span className="font-medium text-sm">{item.category}</span>
+                      <span className="font-medium text-sm">
+                        {item.category}
+                      </span>
                     </div>
                     <div className="flex items-center gap-4">
                       <span className="text-sm text-gray-600">
@@ -388,7 +409,9 @@ const DealsAnalytics = () => {
                         className="w-3 h-3 rounded-full"
                         style={{ backgroundColor: colors[idx] }}
                       ></div>
-                      <span className="font-medium text-sm">{item.category}</span>
+                      <span className="font-medium text-sm">
+                        {item.category}
+                      </span>
                     </div>
                     <div className="flex items-center gap-4">
                       <span className="text-sm text-gray-600">
@@ -444,7 +467,9 @@ const DealsAnalytics = () => {
                         className="w-3 h-3 rounded-full"
                         style={{ backgroundColor: colors[idx] }}
                       ></div>
-                      <span className="font-medium text-sm">{item.category}</span>
+                      <span className="font-medium text-sm">
+                        {item.category}
+                      </span>
                     </div>
                     <div className="flex items-center gap-4">
                       <span className="text-sm text-gray-600">
@@ -500,7 +525,9 @@ const DealsAnalytics = () => {
                         className="w-3 h-3 rounded-full"
                         style={{ backgroundColor: colors[idx] }}
                       ></div>
-                      <span className="font-medium text-sm">{item.category}</span>
+                      <span className="font-medium text-sm">
+                        {item.category}
+                      </span>
                     </div>
                     <div className="flex items-center gap-4">
                       <span className="text-sm text-gray-600">
@@ -583,7 +610,9 @@ const DealsAnalytics = () => {
                   <p className="text-2xl font-bold text-blue-600">
                     ${(totalForecast / 1000000).toFixed(2)}M
                   </p>
-                  <p className="text-xs text-gray-600 mt-2">Most likely scenario</p>
+                  <p className="text-xs text-gray-600 mt-2">
+                    Most likely scenario
+                  </p>
                 </CardContent>
               </Card>
 
@@ -603,21 +632,26 @@ const DealsAnalytics = () => {
             {/* Key Questions Answered */}
             <Card className="border-blue-200 bg-blue-50">
               <CardHeader>
-                <CardTitle className="text-base">Key Questions Answered</CardTitle>
+                <CardTitle className="text-base">
+                  Key Questions Answered
+                </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
                   <div className="flex items-start gap-3 p-3 bg-white rounded-lg">
                     <div className="flex-shrink-0 w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mt-0.5">
-                      <span className="text-xs font-bold text-green-600">✓</span>
+                      <span className="text-xs font-bold text-green-600">
+                        ✓
+                      </span>
                     </div>
                     <div>
                       <p className="font-semibold text-sm">
                         Will we hit our annual target?
                       </p>
                       <p className="text-xs text-gray-600 mt-1">
-                        At base case rate: {forecastToTargetRatio.toFixed(0)}% probability of
-                        hitting ${(annualTarget / 1000000).toFixed(1)}M target
+                        At base case rate: {forecastToTargetRatio.toFixed(0)}%
+                        probability of hitting $
+                        {(annualTarget / 1000000).toFixed(1)}M target
                       </p>
                     </div>
                   </div>
@@ -631,35 +665,42 @@ const DealsAnalytics = () => {
                         How many deals do we need per month?
                       </p>
                       <p className="text-xs text-gray-600 mt-1">
-                        ~3-4 enterprise deals or 8-10 mid-market deals to stay on track
+                        ~3-4 enterprise deals or 8-10 mid-market deals to stay
+                        on track
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3 p-3 bg-white rounded-lg">
                     <div className="flex-shrink-0 w-6 h-6 bg-orange-100 rounded-full flex items-center justify-center mt-0.5">
-                      <span className="text-xs font-bold text-orange-600">⚠</span>
+                      <span className="text-xs font-bold text-orange-600">
+                        ⚠
+                      </span>
                     </div>
                     <div>
                       <p className="font-semibold text-sm">
                         How much pipeline do we need to be safe?
                       </p>
                       <p className="text-xs text-gray-600 mt-1">
-                        Maintain $6.5M-$8M in active pipeline for 3x conversion buffer
+                        Maintain $6.5M-$8M in active pipeline for 3x conversion
+                        buffer
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-start gap-3 p-3 bg-white rounded-lg">
                     <div className="flex-shrink-0 w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center mt-0.5">
-                      <span className="text-xs font-bold text-purple-600">→</span>
+                      <span className="text-xs font-bold text-purple-600">
+                        →
+                      </span>
                     </div>
                     <div>
                       <p className="font-semibold text-sm">
                         What if we increase marketing by 20%?
                       </p>
                       <p className="text-xs text-gray-600 mt-1">
-                        Projected impact: +$180K additional revenue (6% increase in pipeline)
+                        Projected impact: +$180K additional revenue (6% increase
+                        in pipeline)
                       </p>
                     </div>
                   </div>

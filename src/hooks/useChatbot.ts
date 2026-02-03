@@ -466,7 +466,7 @@ export function useChatbot() {
         }
       } catch (error) {
         // Handle any errors silently
-        console.debug('Error explaining element:', error);
+        console.debug("Error explaining element:", error);
       } finally {
         setIsTyping(false);
       }
