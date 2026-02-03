@@ -140,9 +140,9 @@ const ExportReporting = () => {
               <label className="text-sm font-medium mb-2 block">
                 Report Format
               </label>
-              <Select value={selectedFormat} onValueChange={(value: any) => setSelectedFormat(value)}>
+              <Select value={selectedFormat} onValueChange={(value: "pdf" | "excel") => setSelectedFormat(value)}>
                 <SelectTrigger>
-                  <SelectValue />
+                  <SelectValue placeholder="Select format" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="pdf">PDF Document</SelectItem>
