@@ -80,7 +80,9 @@ interface SalesTarget {
 
 const SalesIntelligence = () => {
   const { format } = useCurrency();
-  const [activeTab, setActiveTab] = useState("overview");
+  const location = useLocation();
+  const isKPIDashboard = location.pathname === "/kpi-dashboard";
+  const [activeTab, setActiveTab] = useState(isKPIDashboard ? "kpi" : "overview");
   const [selectedChannel, setSelectedChannel] = useState("whatsapp");
   const [selectedSalesRep, setSelectedSalesRep] = useState<string>("");
   const [createLeadOpen, setCreateLeadOpen] = useState(false);
