@@ -167,7 +167,11 @@ class JosephGlobalExplainer {
 
             const description = explainableData?.description || `${tag} element`;
             const data = { ...(explainableData?.data || {}), ...enriched };
-            this.explainFunction(description, data);
+            try {
+              this.explainFunction(description, data);
+            } catch (error) {
+              // Handle any errors from explain function silently
+            }
           }
           return;
         }
