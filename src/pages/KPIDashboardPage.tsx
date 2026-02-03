@@ -23,7 +23,7 @@ const KPIDashboardPage = () => {
         title="KPI Dashboard"
         description="Comprehensive KPI tracking and analytics for sales performance monitoring. Track metrics, categories, custom KPIs, benchmarking, alerts, and generate reports."
         isConnected={true}
-        lastUpdated={new Date().toLocaleTimeString()}
+        lastUpdated={new Date()}
         onReconnect={() => {}}
         connectionLabel="Live"
       />
