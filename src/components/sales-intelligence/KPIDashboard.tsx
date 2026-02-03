@@ -199,14 +199,15 @@ const KPIDashboard = ({
               <CardDescription>Conversion funnel analysis</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
-                <div className="text-center">
-                  <p className="text-gray-500">Chart visualization area</p>
-                  <p className="text-xs text-gray-400 mt-2">
-                    📊 Conversion funnel data would be displayed here
-                  </p>
-                </div>
-              </div>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={leadsVsDealsData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="stage" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="count" fill="#10b981" name="Count" />
+                </BarChart>
+              </ResponsiveContainer>
             </CardContent>
           </Card>
 
