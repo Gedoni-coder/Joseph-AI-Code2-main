@@ -2,8 +2,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { useCurrency } from "@/hooks/useCurrency";
 
 export const KPIDashboardHome = () => {
+  const { format, formatShort } = useCurrency();
   // Top-line KPIs data
   const topLineKPIs = [
     {
