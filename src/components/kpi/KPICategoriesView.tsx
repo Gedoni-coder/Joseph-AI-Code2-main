@@ -71,6 +71,7 @@ const KPICategory = ({ name, kpis }: { name: string; kpis: any[] }) => (
 );
 
 export const KPICategoriesView = () => {
+  const { format } = useCurrency();
   const [activeCategory, setActiveCategory] = useState("lead");
 
   const categories = {
