@@ -192,7 +192,8 @@ const CreateEngagementDialog = ({
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {/* Personal Information Section */}
           <div className="space-y-4 border-b pb-4">
             <h3 className="text-sm font-semibold text-gray-700">
@@ -398,6 +399,7 @@ const CreateEngagementDialog = ({
             </Button>
           </div>
         </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
