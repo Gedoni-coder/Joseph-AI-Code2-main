@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TrendingUp, TrendingDown } from "lucide-react";
 
@@ -23,7 +29,8 @@ const kpiCategories: KPICategory[] = [
   {
     id: "lead-conversion",
     name: "Lead & Conversion KPIs",
-    description: "How well you generate and qualify opportunities (Top of Funnel)",
+    description:
+      "How well you generate and qualify opportunities (Top of Funnel)",
     kpis: [
       {
         name: "Leads Generated",
@@ -68,7 +75,8 @@ const kpiCategories: KPICategory[] = [
   {
     id: "deal-closing",
     name: "Deal & Closing KPIs",
-    description: "How good your sales team is at closing business (Middle/Bottom of Funnel)",
+    description:
+      "How good your sales team is at closing business (Middle/Bottom of Funnel)",
     kpis: [
       {
         name: "Opportunity Win Rate",
@@ -246,7 +254,8 @@ const kpiCategories: KPICategory[] = [
         current: "18.5%",
         previous: "15.2%",
         change: 21.7,
-        description: "Percentage of existing customers with upsells/cross-sells",
+        description:
+          "Percentage of existing customers with upsells/cross-sells",
       },
       {
         name: "Territory Coverage",
@@ -269,7 +278,9 @@ const kpiCategories: KPICategory[] = [
 const KPICategories = () => {
   const [activeCategory, setActiveCategory] = useState("lead-conversion");
 
-  const currentCategory = kpiCategories.find((cat) => cat.id === activeCategory);
+  const currentCategory = kpiCategories.find(
+    (cat) => cat.id === activeCategory,
+  );
 
   return (
     <div className="space-y-6">
@@ -287,10 +298,16 @@ const KPICategories = () => {
         </TabsList>
 
         {kpiCategories.map((category) => (
-          <TabsContent key={category.id} value={category.id} className="space-y-4">
+          <TabsContent
+            key={category.id}
+            value={category.id}
+            className="space-y-4"
+          >
             <div>
               <h3 className="text-lg font-semibold">{category.name}</h3>
-              <p className="text-sm text-gray-600 mt-1">{category.description}</p>
+              <p className="text-sm text-gray-600 mt-1">
+                {category.description}
+              </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -314,7 +331,9 @@ const KPICategories = () => {
                           {kpi.current}
                         </p>
                         {kpi.unit && (
-                          <p className="text-xs text-gray-500 mt-1">{kpi.unit}</p>
+                          <p className="text-xs text-gray-500 mt-1">
+                            {kpi.unit}
+                          </p>
                         )}
                       </div>
 

@@ -1,4 +1,10 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { useCurrency } from "@/hooks/useCurrency";
@@ -82,9 +88,7 @@ export const KPIDashboard = () => {
                       )}
                       <span
                         className={`text-sm font-medium ${
-                          metric.isPositive
-                            ? "text-green-600"
-                            : "text-red-600"
+                          metric.isPositive ? "text-green-600" : "text-red-600"
                         }`}
                       >
                         {metric.isPositive ? "+" : ""}
@@ -106,7 +110,9 @@ export const KPIDashboard = () => {
           {/* Revenue Trend Chart */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">Revenue Trend (Last 6 Months)</CardTitle>
+              <CardTitle className="text-base">
+                Revenue Trend (Last 6 Months)
+              </CardTitle>
               <CardDescription>Monthly revenue performance</CardDescription>
             </CardHeader>
             <CardContent>
@@ -124,7 +130,9 @@ export const KPIDashboard = () => {
           {/* Leads vs Deals Conversion Funnel */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">Leads vs Deals Conversion</CardTitle>
+              <CardTitle className="text-base">
+                Leads vs Deals Conversion
+              </CardTitle>
               <CardDescription>Conversion funnel analysis</CardDescription>
             </CardHeader>
             <CardContent>
@@ -161,7 +169,9 @@ export const KPIDashboard = () => {
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Pipeline vs Target</CardTitle>
-              <CardDescription>Current pipeline vs sales targets</CardDescription>
+              <CardDescription>
+                Current pipeline vs sales targets
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">

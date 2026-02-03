@@ -1,4 +1,10 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -103,7 +109,7 @@ const ExportReporting = () => {
       name: `${selectedPeriod === "current" ? "Current Month" : selectedPeriod} KPI Report`,
       description: `KPI report for ${selectedPeriod}`,
       sections: selectedSections.map(
-        (id) => reportSections.find((s) => s.id === id)?.name || ""
+        (id) => reportSections.find((s) => s.id === id)?.name || "",
       ),
       createdDate: new Date().toISOString().split("T")[0],
       format: selectedFormat,
@@ -140,7 +146,12 @@ const ExportReporting = () => {
               <label className="text-sm font-medium mb-2 block">
                 Report Format
               </label>
-              <Select value={selectedFormat} onValueChange={(value: "pdf" | "excel") => setSelectedFormat(value)}>
+              <Select
+                value={selectedFormat}
+                onValueChange={(value: "pdf" | "excel") =>
+                  setSelectedFormat(value)
+                }
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Select format" />
                 </SelectTrigger>
@@ -184,7 +195,7 @@ const ExportReporting = () => {
                     setSelectedSections(
                       selectedSections.includes(section.id)
                         ? selectedSections.filter((id) => id !== section.id)
-                        : [...selectedSections, section.id]
+                        : [...selectedSections, section.id],
                     )
                   }
                 >
@@ -232,7 +243,10 @@ const ExportReporting = () => {
             </Card>
           ) : (
             generatedReports.map((report) => (
-              <Card key={report.id} className="hover:shadow-md transition-shadow">
+              <Card
+                key={report.id}
+                className="hover:shadow-md transition-shadow"
+              >
                 <CardContent className="p-6">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1">

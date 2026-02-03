@@ -1,4 +1,10 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   AlertCircle,
@@ -60,7 +66,8 @@ const KPIAlerts = () => {
       id: "alert-4",
       type: "warning",
       title: "Win Rate Declining",
-      description: "Your win rate is trending downward for the second consecutive month.",
+      description:
+        "Your win rate is trending downward for the second consecutive month.",
       metric: "Win Rate",
       value: "18% (-5% vs last month)",
       action: "Review competitive positioning and pricing strategy",
@@ -171,7 +178,9 @@ const KPIAlerts = () => {
     }
   };
 
-  const visibleAlerts = alerts.filter((alert) => !dismissedAlerts.includes(alert.id));
+  const visibleAlerts = alerts.filter(
+    (alert) => !dismissedAlerts.includes(alert.id),
+  );
 
   return (
     <div className="space-y-6">
@@ -182,11 +191,10 @@ const KPIAlerts = () => {
           <Card className="border-green-200 bg-green-50">
             <CardContent className="p-6 text-center">
               <CheckCircle className="h-12 w-12 text-green-600 mx-auto mb-3" />
-              <p className="text-lg font-semibold text-green-900">
-                All Clear!
-              </p>
+              <p className="text-lg font-semibold text-green-900">All Clear!</p>
               <p className="text-sm text-green-800 mt-1">
-                No active alerts. Your KPIs are performing within expected ranges.
+                No active alerts. Your KPIs are performing within expected
+                ranges.
               </p>
             </CardContent>
           </Card>
@@ -248,7 +256,9 @@ const KPIAlerts = () => {
                   <div className="flex-1">
                     <div className="flex items-start justify-between mb-2">
                       <h4 className="font-semibold text-sm">{insight.title}</h4>
-                      <Badge className={`text-xs ${getImpactColor(insight.impact)}`}>
+                      <Badge
+                        className={`text-xs ${getImpactColor(insight.impact)}`}
+                      >
                         {insight.impact === "high"
                           ? "High Impact"
                           : insight.impact === "medium"

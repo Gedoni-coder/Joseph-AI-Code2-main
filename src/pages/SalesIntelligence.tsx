@@ -605,10 +605,9 @@ const SalesIntelligence = () => {
   const getOptimalTiming = () => {
     if (engagements.length === 0) return "N/A";
     // Calculate average response time and map to time range
-    const avgTime = engagements.reduce(
-      (sum, e) => sum + e.avgResponseTimeMinutes,
-      0,
-    ) / engagements.length;
+    const avgTime =
+      engagements.reduce((sum, e) => sum + e.avgResponseTimeMinutes, 0) /
+      engagements.length;
 
     // Convert minutes to hour and return range
     const hour = Math.floor(avgTime / 60);
@@ -667,7 +666,8 @@ const SalesIntelligence = () => {
   const calculatePricingBenchmark = () => {
     // Based on deal probability trend - if avg probability is declining, pricing may be high
     if (allLeads.length === 0) return 0;
-    const avgProb = allLeads.reduce((sum, l) => sum + l.probability, 0) / allLeads.length;
+    const avgProb =
+      allLeads.reduce((sum, l) => sum + l.probability, 0) / allLeads.length;
     // If probability below 50%, pricing might be too high (-8%)
     return avgProb >= 70 ? 8 : avgProb >= 50 ? 0 : -8;
   };
@@ -676,7 +676,9 @@ const SalesIntelligence = () => {
   const calculateForecastAccuracy = () => {
     // Based on how many targets are achieved vs expected
     if (salesTargets.length === 0) return 0;
-    const achieved = salesTargets.filter((t) => (t.achievedAmount / t.targetAmount) * 100 >= 100).length;
+    const achieved = salesTargets.filter(
+      (t) => (t.achievedAmount / t.targetAmount) * 100 >= 100,
+    ).length;
     return Math.round((achieved / salesTargets.length) * 100);
   };
 
@@ -705,7 +707,10 @@ const SalesIntelligence = () => {
   const calculateAvgCallsPerDay = () => {
     if (engagements.length === 0 || salesRepsList.length === 0) return 0;
     // Calls = total times contacted across all engagements
-    const totalCalls = engagements.reduce((sum, e) => sum + e.timesContacted, 0);
+    const totalCalls = engagements.reduce(
+      (sum, e) => sum + e.timesContacted,
+      0,
+    );
     return Math.round(totalCalls / Math.max(1, salesRepsList.length));
   };
 
@@ -746,11 +751,20 @@ const SalesIntelligence = () => {
     // Calculate improvement in average engagement scores over time
     // Simplified: improvement based on engagement quality trend
     if (engagements.length < 2) return 0;
-    const recentEngagements = engagements.slice(-Math.ceil(engagements.length / 2));
-    const olderEngagements = engagements.slice(0, Math.floor(engagements.length / 2));
+    const recentEngagements = engagements.slice(
+      -Math.ceil(engagements.length / 2),
+    );
+    const olderEngagements = engagements.slice(
+      0,
+      Math.floor(engagements.length / 2),
+    );
 
-    const recentAvg = recentEngagements.reduce((sum, e) => sum + e.engagementScore, 0) / recentEngagements.length;
-    const olderAvg = olderEngagements.reduce((sum, e) => sum + e.engagementScore, 0) / olderEngagements.length;
+    const recentAvg =
+      recentEngagements.reduce((sum, e) => sum + e.engagementScore, 0) /
+      recentEngagements.length;
+    const olderAvg =
+      olderEngagements.reduce((sum, e) => sum + e.engagementScore, 0) /
+      olderEngagements.length;
 
     const improvement = ((recentAvg - olderAvg) / olderAvg) * 100;
     return Math.round(improvement);
@@ -759,10 +773,9 @@ const SalesIntelligence = () => {
   const calculateCallSuccessRate = () => {
     // Based on average response rate of engagements
     if (engagements.length === 0) return 0;
-    const avgResponseRate = engagements.reduce(
-      (sum, e) => sum + e.avgResponseRate,
-      0,
-    ) / engagements.length;
+    const avgResponseRate =
+      engagements.reduce((sum, e) => sum + e.avgResponseRate, 0) /
+      engagements.length;
     return Math.round(avgResponseRate);
   };
 
@@ -776,18 +789,18 @@ const SalesIntelligence = () => {
         return rep?.name || "Unknown";
       });
 
-    return topReps.length > 0
-      ? topReps
-      : ["No sales reps yet"];
+    return topReps.length > 0 ? topReps : ["No sales reps yet"];
   };
 
   const getAreasToImprove = () => {
     const issues = [];
 
     // Check follow-up rate
-    const avgFollowUpRate = engagements.length > 0
-      ? engagements.reduce((sum, e) => sum + e.followUpRate, 0) / engagements.length
-      : 0;
+    const avgFollowUpRate =
+      engagements.length > 0
+        ? engagements.reduce((sum, e) => sum + e.followUpRate, 0) /
+          engagements.length
+        : 0;
     if (avgFollowUpRate < 70) {
       issues.push("Follow-up consistency");
     }
@@ -798,16 +811,22 @@ const SalesIntelligence = () => {
     }
 
     // Check engagement quality
-    const avgEngagementScore = engagements.length > 0
-      ? engagements.reduce((sum, e) => sum + e.engagementScore, 0) / engagements.length
-      : 0;
+    const avgEngagementScore =
+      engagements.length > 0
+        ? engagements.reduce((sum, e) => sum + e.engagementScore, 0) /
+          engagements.length
+        : 0;
     if (avgEngagementScore < 6) {
       issues.push("Customer retention");
     }
 
     // Default if no issues
     if (issues.length === 0) {
-      return ["Follow-up consistency", "Deal closure rate", "Customer retention"];
+      return [
+        "Follow-up consistency",
+        "Deal closure rate",
+        "Customer retention",
+      ];
     }
 
     return issues.slice(0, 3);
@@ -817,10 +836,11 @@ const SalesIntelligence = () => {
     const tips = [];
 
     // Tip 1: Response time
-    const avgResponseTime = engagements.length > 0
-      ? engagements.reduce((sum, e) => sum + e.avgResponseTimeMinutes, 0) /
-        engagements.length
-      : 0;
+    const avgResponseTime =
+      engagements.length > 0
+        ? engagements.reduce((sum, e) => sum + e.avgResponseTimeMinutes, 0) /
+          engagements.length
+        : 0;
     if (avgResponseTime > 60) {
       tips.push("Use power words in emails");
     } else {
@@ -943,8 +963,7 @@ const SalesIntelligence = () => {
       id: "rep-productivity",
       name: "Rep Productivity Dashboard",
       icon: <Users className="h-5 w-5" />,
-      description:
-        "Activity tracking, quota progress, performance leaderboard",
+      description: "Activity tracking, quota progress, performance leaderboard",
       metrics: {
         "Avg Calls/Day": `${calculateAvgCallsPerDay()}`,
         "Quota Achievement": `${calculateQuotaAchievementAvg()}%`,
@@ -1643,10 +1662,7 @@ const SalesIntelligence = () => {
           <TabsContent value="engagement" className="space-y-6">
             {/* Create Engagement Button */}
             <div className="flex items-center justify-end mb-4">
-              <Button
-                onClick={() => setCreateEngagementOpen(true)}
-                size="lg"
-              >
+              <Button onClick={() => setCreateEngagementOpen(true)} size="lg">
                 <Plus className="h-4 w-4 mr-2" />
                 Create Engagement
               </Button>
@@ -1939,8 +1955,7 @@ const SalesIntelligence = () => {
                                     {channel.name}
                                   </span>
                                   <span className="text-xs text-gray-600">
-                                    {performance.engagements.length}{" "}
-                                    engagement
+                                    {performance.engagements.length} engagement
                                     {performance.engagements.length !== 1
                                       ? "s"
                                       : ""}
@@ -2440,17 +2455,15 @@ const SalesIntelligence = () => {
                       Top Performers
                     </h4>
                     <div className="space-y-2">
-                      {getTopPerformers().map(
-                        (name) => (
-                          <div
-                            key={name}
-                            className="text-sm flex items-center gap-2"
-                          >
-                            <div className="w-2 h-2 bg-green-600 rounded-full"></div>
-                            {name}
-                          </div>
-                        ),
-                      )}
+                      {getTopPerformers().map((name) => (
+                        <div
+                          key={name}
+                          className="text-sm flex items-center gap-2"
+                        >
+                          <div className="w-2 h-2 bg-green-600 rounded-full"></div>
+                          {name}
+                        </div>
+                      ))}
                     </div>
                   </div>
                   <div className="p-4 border rounded-lg">
@@ -2507,8 +2520,8 @@ const SalesIntelligence = () => {
                       <li className="flex items-start gap-2">
                         <TrendingUp className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
                         <span>
-                          Conversion rate trending upward (
-                          +{calculateConversionRateTrend()}%)
+                          Conversion rate trending upward ( +
+                          {calculateConversionRateTrend()}%)
                         </span>
                       </li>
                     </ul>

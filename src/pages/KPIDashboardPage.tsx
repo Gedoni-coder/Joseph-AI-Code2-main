@@ -17,12 +17,17 @@ const KPIDashboardPage = () => {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">KPI Dashboard</h1>
           <p className="text-gray-600 mt-2">
-            Comprehensive KPI tracking and analytics for sales performance monitoring
+            Comprehensive KPI tracking and analytics for sales performance
+            monitoring
           </p>
         </div>
 
         {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full space-y-6">
+        <Tabs
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="w-full space-y-6"
+        >
           <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
             <TabsTrigger value="categories">Categories</TabsTrigger>

@@ -1,6 +1,17 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, TrendingDown, AlertCircle, CheckCircle } from "lucide-react";
+import {
+  TrendingUp,
+  TrendingDown,
+  AlertCircle,
+  CheckCircle,
+} from "lucide-react";
 
 interface Benchmark {
   metric: string;
@@ -19,7 +30,8 @@ const BenchmarkingSection = () => {
       industryAverage: "18%",
       difference: 22.2,
       isPositive: true,
-      insight: "Your win rate is 22% higher than industry average. Excellent performance!",
+      insight:
+        "Your win rate is 22% higher than industry average. Excellent performance!",
     },
     {
       metric: "Sales Cycle Length",
@@ -202,9 +214,7 @@ const BenchmarkingSection = () => {
           {performanceComparisons.map((comparison, idx) => (
             <Card key={idx}>
               <CardHeader>
-                <CardTitle className="text-base">
-                  {comparison.title}
-                </CardTitle>
+                <CardTitle className="text-base">{comparison.title}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
