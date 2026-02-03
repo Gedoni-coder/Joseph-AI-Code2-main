@@ -48,6 +48,9 @@ interface DealsAnalyticsProps {
   forecastData?: ForecastData[];
   totalRevenue?: number;
   repeatRevenueRate?: number;
+  pipelineRisk?: number;
+  dealVelocityRisk?: number;
+  repPerformanceRisk?: number;
 }
 
 // Default empty data for when no data is available
