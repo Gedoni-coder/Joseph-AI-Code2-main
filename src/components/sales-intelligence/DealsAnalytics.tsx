@@ -680,11 +680,11 @@ const DealsAnalytics = ({
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
                         className="bg-green-500 h-2 rounded-full"
-                        style={{ width: "72%" }}
+                        style={{ width: `${pipelineRisk}%` }}
                       ></div>
                     </div>
                     <p className="text-xs text-gray-600 mt-2">
-                      72% healthy (72% above minimum threshold)
+                      {pipelineRisk}% healthy ({pipelineRisk}% above minimum threshold)
                     </p>
                   </div>
 
@@ -695,11 +695,11 @@ const DealsAnalytics = ({
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
                         className="bg-yellow-500 h-2 rounded-full"
-                        style={{ width: "55%" }}
+                        style={{ width: `${dealVelocityRisk}%` }}
                       ></div>
                     </div>
                     <p className="text-xs text-gray-600 mt-2">
-                      55% on track (deals closing on schedule)
+                      {dealVelocityRisk}% on track (deals closing on schedule)
                     </p>
                   </div>
 
@@ -710,11 +710,11 @@ const DealsAnalytics = ({
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
                         className="bg-blue-500 h-2 rounded-full"
-                        style={{ width: "85%" }}
+                        style={{ width: `${repPerformanceRisk}%` }}
                       ></div>
                     </div>
                     <p className="text-xs text-gray-600 mt-2">
-                      85% on track (quota achievement)
+                      {repPerformanceRisk}% on track (quota achievement)
                     </p>
                   </div>
                 </div>
