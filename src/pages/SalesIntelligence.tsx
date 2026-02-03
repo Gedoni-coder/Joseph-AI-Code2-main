@@ -1631,6 +1631,10 @@ const SalesIntelligence = () => {
                   winRateTrend={calculateWinRateTrend()}
                   dealSizeTrend={calculateDealSizeTrend()}
                   salesCycleTrend={calculateSalesCycleTrend()}
+                  revenueTrendData={calculateRevenueTrendData()}
+                  leadsVsDealsData={calculateLeadsVsDealsData()}
+                  salesCycleTrendData={calculateSalesCycleTrendData()}
+                  pipelineVsTargetData={calculatePipelineVsTargetData()}
                 />
               </TabsContent>
 
