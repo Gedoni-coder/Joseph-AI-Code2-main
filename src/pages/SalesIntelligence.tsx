@@ -18,6 +18,12 @@ import CreateSalesTargetDialog from "@/components/sales-intelligence/CreateSales
 import CreateEngagementDialog, {
   EngagementData,
 } from "@/components/sales-intelligence/CreateEngagementDialog";
+import KPIDashboard from "@/components/sales-intelligence/KPIDashboard";
+import KPICategories from "@/components/sales-intelligence/KPICategories";
+import CustomKPIBuilder from "@/components/sales-intelligence/CustomKPIBuilder";
+import BenchmarkingSection from "@/components/sales-intelligence/BenchmarkingSection";
+import KPIAlerts from "@/components/sales-intelligence/KPIAlerts";
+import ExportReporting from "@/components/sales-intelligence/ExportReporting";
 import {
   TrendingUp,
   Users,
