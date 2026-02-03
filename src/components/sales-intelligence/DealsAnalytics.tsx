@@ -186,7 +186,7 @@ const DealsAnalytics = ({
               </div>
             </div>
             <p className="text-xs text-green-600 mt-2">
-              Healthy retention rate
+              {repeatRevenueTrend >= 0 ? "↑" : "↓"} {Math.abs(repeatRevenueTrend)}% Healthy retention rate
             </p>
           </CardContent>
         </Card>
