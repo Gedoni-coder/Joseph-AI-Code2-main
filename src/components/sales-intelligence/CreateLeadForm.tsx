@@ -23,6 +23,11 @@ export interface CreateLeadFormData {
   expectedClose: string;
   pipelineStage: string;
   leadSource: string;
+  product?: string;
+  region?: string;
+  industry?: string;
+  segment?: string;
+  dealSize?: number;
 }
 
 const PIPELINE_STAGES = [
