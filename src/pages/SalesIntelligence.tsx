@@ -2447,6 +2447,11 @@ const SalesIntelligence = () => {
             </Card>
           </TabsContent>
 
+          {/* Deals Tab */}
+          <TabsContent value="deals" className="space-y-6">
+            <DealsAnalytics />
+          </TabsContent>
+
           {/* Insights Tab */}
           <TabsContent value="insights" className="space-y-6">
             <Card>
