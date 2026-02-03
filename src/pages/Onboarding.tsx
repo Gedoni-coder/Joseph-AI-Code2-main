@@ -644,13 +644,61 @@ export default function Onboarding() {
                       />
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-4">
+                      <div>
+                        <Label
+                          htmlFor="currencyFormat"
+                          className="text-sm font-medium"
+                        >
+                          Currency Format (Optional)
+                        </Label>
+                        <p className="text-xs text-gray-500 mt-1 mb-3">
+                          Choose how you want to select your currency
+                        </p>
+                        <div className="grid grid-cols-2 gap-3">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setCurrencyFormat("international");
+                              setCurrencyPreference("USD");
+                            }}
+                            className={`p-3 rounded-lg border-2 transition-all text-sm font-medium ${
+                              currencyFormat === "international"
+                                ? "border-blue-500 bg-blue-50 text-blue-900"
+                                : "border-gray-200 bg-white hover:border-gray-300 text-gray-700"
+                            }`}
+                          >
+                            🌍 International
+                            <p className="text-xs font-normal text-gray-600 mt-1">
+                              Dollars & Euros
+                            </p>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setCurrencyFormat("national");
+                              setCurrencyPreference("USD");
+                            }}
+                            className={`p-3 rounded-lg border-2 transition-all text-sm font-medium ${
+                              currencyFormat === "national"
+                                ? "border-blue-500 bg-blue-50 text-blue-900"
+                                : "border-gray-200 bg-white hover:border-gray-300 text-gray-700"
+                            }`}
+                          >
+                            🗺️ National
+                            <p className="text-xs font-normal text-gray-600 mt-1">
+                              All currencies
+                            </p>
+                          </button>
+                        </div>
+                      </div>
+
                       <div>
                         <Label
                           htmlFor="currencyPreference"
                           className="text-sm font-medium"
                         >
-                          Currency Preference (Optional)
+                          Select Currency (Optional)
                         </Label>
                         <select
                           id="currencyPreference"
@@ -660,34 +708,45 @@ export default function Onboarding() {
                           }
                           className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                         >
-                          {CURRENCIES.map((curr) => (
-                            <option key={curr.code} value={curr.code}>
-                              {curr.code} - {curr.label}
-                            </option>
-                          ))}
+                          {currencyFormat === "international"
+                            ? INTERNATIONAL_CURRENCIES.map((curr) => (
+                                <option key={curr.code} value={curr.code}>
+                                  {curr.code} - {curr.label}
+                                </option>
+                              ))
+                            : NATIONAL_CURRENCIES.map((curr) => (
+                                <option key={curr.code} value={curr.code}>
+                                  {curr.code} - {curr.label}
+                                </option>
+                              ))}
                         </select>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {currencyFormat === "international"
+                            ? "Choose between USD or EUR"
+                            : `${NATIONAL_CURRENCIES.length} currencies available`}
+                        </p>
                       </div>
+                    </div>
 
-                      <div>
-                        <Label
-                          htmlFor="language"
-                          className="text-sm font-medium"
-                        >
-                          Preferred Language (Optional)
-                        </Label>
-                        <select
-                          id="language"
-                          value={language}
-                          onChange={(e) => setLanguage(e.target.value)}
-                          className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                        >
-                          {LANGUAGES.map((lang) => (
-                            <option key={lang} value={lang}>
-                              {lang}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                    <div>
+                      <Label
+                        htmlFor="language"
+                        className="text-sm font-medium"
+                      >
+                        Preferred Language (Optional)
+                      </Label>
+                      <select
+                        id="language"
+                        value={language}
+                        onChange={(e) => setLanguage(e.target.value)}
+                        className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                      >
+                        {LANGUAGES.map((lang) => (
+                          <option key={lang} value={lang}>
+                            {lang}
+                          </option>
+                        ))}
+                      </select>
                     </div>
 
                     <div>
