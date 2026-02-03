@@ -37,6 +37,10 @@ const KPIDashboard = ({
   winRate = 0,
   avgDealSize = 0,
   salesCycle = 0,
+  revenueTrend = 0,
+  winRateTrend = 0,
+  dealSizeTrend = 0,
+  salesCycleTrend = 0,
 }: KPIDashboardProps) => {
   const { format } = useCurrency();
 
@@ -50,8 +54,8 @@ const KPIDashboard = ({
     {
       label: "Total Revenue",
       value: totalRevenue > 0 ? format(totalRevenue) : format(0),
-      change: 12.5,
-      isPositive: true,
+      change: revenueTrend,
+      isPositive: revenueTrend >= 0,
       color: "text-green-600",
     },
     {
@@ -64,29 +68,29 @@ const KPIDashboard = ({
     {
       label: "Revenue Gap",
       value: revenueGap > 0 ? format(revenueGap) : format(revenueGap),
-      change: totalTarget > 0 ? ((revenueGap / totalTarget) * 100).toFixed(1) as any : 0,
+      change: totalTarget > 0 ? parseFloat(((revenueGap / totalTarget) * 100).toFixed(1)) : 0,
       isPositive: revenueGap >= 0,
       color: revenueGap >= 0 ? "text-green-600" : "text-orange-600",
     },
     {
       label: "Deals Closed",
       value: dealsClosed,
-      change: 25,
-      isPositive: true,
+      change: dealSizeTrend,
+      isPositive: dealSizeTrend >= 0,
       color: "text-purple-600",
     },
     {
       label: "Leads Generated",
       value: leadsGenerated,
-      change: 8.5,
-      isPositive: true,
+      change: winRateTrend,
+      isPositive: winRateTrend >= 0,
       color: "text-indigo-600",
     },
     {
       label: "Win Rate",
       value: `${Math.round(winRate)}%`,
-      change: 5,
-      isPositive: true,
+      change: winRateTrend,
+      isPositive: winRateTrend >= 0,
       color: "text-pink-600",
     },
   ];
