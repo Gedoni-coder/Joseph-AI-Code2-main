@@ -348,9 +348,9 @@ export const KPICategoriesView = () => {
         {
           name: "Cost per Sale",
           description: "Total sales cost divided by number of deals closed",
-          currentValue: "$2,850",
-          lastMonthValue: "$3,100",
-          trendValue: "-$250",
+          currentValue: format(2850),
+          lastMonthValue: format(3100),
+          trendValue: `-${format(250)}`,
           trendDirection: "up",
           explanation:
             "Improving efficiency. Better cost control.",
@@ -388,8 +388,8 @@ export const KPICategoriesView = () => {
         {
           name: "Sales Team Cost",
           description: "Total monthly salary and commission costs",
-          currentValue: "$68K",
-          lastMonthValue: "$68K",
+          currentValue: format(68000, 0),
+          lastMonthValue: format(68000, 0),
           trendValue: "No change",
           trendDirection: "up",
           explanation:
