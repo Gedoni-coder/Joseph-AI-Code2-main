@@ -83,13 +83,21 @@ const DealsAnalytics = ({
   dealVelocityRisk = 0,
   repPerformanceRisk = 0,
 }: DealsAnalyticsProps) => {
-
   const colors = ["#3b82f6", "#ef4444", "#10b981", "#f59e0b", "#8b5cf6"];
 
   // Calculate key insights
-  const topProduct = revenueByProduct && revenueByProduct.length > 0 ? revenueByProduct[0] : DEFAULT_REVENUE_DATA[0];
-  const topRegion = revenueByRegion && revenueByRegion.length > 0 ? revenueByRegion[0] : DEFAULT_REVENUE_DATA[0];
-  const topSalesRep = revenueBySalesRep && revenueBySalesRep.length > 0 ? revenueBySalesRep[0] : DEFAULT_REVENUE_DATA[0];
+  const topProduct =
+    revenueByProduct && revenueByProduct.length > 0
+      ? revenueByProduct[0]
+      : DEFAULT_REVENUE_DATA[0];
+  const topRegion =
+    revenueByRegion && revenueByRegion.length > 0
+      ? revenueByRegion[0]
+      : DEFAULT_REVENUE_DATA[0];
+  const topSalesRep =
+    revenueBySalesRep && revenueBySalesRep.length > 0
+      ? revenueBySalesRep[0]
+      : DEFAULT_REVENUE_DATA[0];
 
   // Calculate forecast metrics
   const totalForecast = forecastData.reduce(
@@ -186,7 +194,8 @@ const DealsAnalytics = ({
               </div>
             </div>
             <p className="text-xs text-green-600 mt-2">
-              {repeatRevenueTrend >= 0 ? "↑" : "↓"} {Math.abs(repeatRevenueTrend)}% Healthy retention rate
+              {repeatRevenueTrend >= 0 ? "↑" : "↓"}{" "}
+              {Math.abs(repeatRevenueTrend)}% Healthy retention rate
             </p>
           </CardContent>
         </Card>
@@ -686,7 +695,8 @@ const DealsAnalytics = ({
                       ></div>
                     </div>
                     <p className="text-xs text-gray-600 mt-2">
-                      {pipelineRisk}% healthy ({pipelineRisk}% above minimum threshold)
+                      {pipelineRisk}% healthy ({pipelineRisk}% above minimum
+                      threshold)
                     </p>
                   </div>
 

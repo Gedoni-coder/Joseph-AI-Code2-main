@@ -48,7 +48,8 @@ const KPIDashboard = ({
   const revenueGap = totalRevenue - totalTarget;
 
   // Calculate deal closed (estimate based on revenue and average deal size)
-  const dealsClosed = avgDealSize > 0 ? Math.round(totalRevenue / avgDealSize) : 0;
+  const dealsClosed =
+    avgDealSize > 0 ? Math.round(totalRevenue / avgDealSize) : 0;
 
   const topLineKPIs: KPIMetric[] = [
     {
@@ -68,7 +69,10 @@ const KPIDashboard = ({
     {
       label: "Revenue Gap",
       value: revenueGap > 0 ? format(revenueGap) : format(revenueGap),
-      change: totalTarget > 0 ? parseFloat(((revenueGap / totalTarget) * 100).toFixed(1)) : 0,
+      change:
+        totalTarget > 0
+          ? parseFloat(((revenueGap / totalTarget) * 100).toFixed(1))
+          : 0,
       isPositive: revenueGap >= 0,
       color: revenueGap >= 0 ? "text-green-600" : "text-orange-600",
     },

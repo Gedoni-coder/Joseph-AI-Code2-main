@@ -912,7 +912,8 @@ const SalesIntelligence = () => {
     if (lead.product) return lead.product;
     // Assign product based on company name patterns or default
     const products = ["Product A", "Product B", "Product C", "Product D"];
-    const productIndex = (lead.company.charCodeAt(0) + lead.company.length) % products.length;
+    const productIndex =
+      (lead.company.charCodeAt(0) + lead.company.length) % products.length;
     return products[productIndex];
   };
 
@@ -921,7 +922,8 @@ const SalesIntelligence = () => {
     if (lead.region) return lead.region;
     // Assign region based on company name patterns or default
     const regions = ["North America", "Europe", "Asia Pacific", "LATAM"];
-    const regionIndex = (lead.company.charCodeAt(0) + lead.company.length) % regions.length;
+    const regionIndex =
+      (lead.company.charCodeAt(0) + lead.company.length) % regions.length;
     return regions[regionIndex];
   };
 
@@ -929,8 +931,14 @@ const SalesIntelligence = () => {
   const getLeadIndustry = (lead: Lead): string => {
     if (lead.industry) return lead.industry;
     // Assign industry based on company name patterns or default
-    const industries = ["Technology", "Financial Services", "Healthcare", "Retail"];
-    const industryIndex = (lead.company.charCodeAt(0) + lead.company.length) % industries.length;
+    const industries = [
+      "Technology",
+      "Financial Services",
+      "Healthcare",
+      "Retail",
+    ];
+    const industryIndex =
+      (lead.company.charCodeAt(0) + lead.company.length) % industries.length;
     return industries[industryIndex];
   };
 
@@ -970,12 +978,16 @@ const SalesIntelligence = () => {
         acc[product].count++;
         return acc;
       },
-      {} as Record<string, { revenue: number; count: number; percentage: number }>
+      {} as Record<
+        string,
+        { revenue: number; count: number; percentage: number }
+      >,
     );
 
     const total = calculateTotalRevenue();
     Object.keys(products).forEach((product) => {
-      products[product].percentage = total > 0 ? Math.round((products[product].revenue / total) * 100) : 0;
+      products[product].percentage =
+        total > 0 ? Math.round((products[product].revenue / total) * 100) : 0;
     });
 
     return Object.entries(products)
@@ -999,12 +1011,16 @@ const SalesIntelligence = () => {
         acc[region].count++;
         return acc;
       },
-      {} as Record<string, { revenue: number; count: number; percentage: number }>
+      {} as Record<
+        string,
+        { revenue: number; count: number; percentage: number }
+      >,
     );
 
     const total = calculateTotalRevenue();
     Object.keys(regions).forEach((region) => {
-      regions[region].percentage = total > 0 ? Math.round((regions[region].revenue / total) * 100) : 0;
+      regions[region].percentage =
+        total > 0 ? Math.round((regions[region].revenue / total) * 100) : 0;
     });
 
     return Object.entries(regions)
@@ -1028,12 +1044,16 @@ const SalesIntelligence = () => {
         acc[rep].count++;
         return acc;
       },
-      {} as Record<string, { revenue: number; count: number; percentage: number }>
+      {} as Record<
+        string,
+        { revenue: number; count: number; percentage: number }
+      >,
     );
 
     const total = calculateTotalRevenue();
     Object.keys(reps).forEach((rep) => {
-      reps[rep].percentage = total > 0 ? Math.round((reps[rep].revenue / total) * 100) : 0;
+      reps[rep].percentage =
+        total > 0 ? Math.round((reps[rep].revenue / total) * 100) : 0;
     });
 
     return Object.entries(reps)
@@ -1057,12 +1077,18 @@ const SalesIntelligence = () => {
         acc[industry].count++;
         return acc;
       },
-      {} as Record<string, { revenue: number; count: number; percentage: number }>
+      {} as Record<
+        string,
+        { revenue: number; count: number; percentage: number }
+      >,
     );
 
     const total = calculateTotalRevenue();
     Object.keys(industries).forEach((industry) => {
-      industries[industry].percentage = total > 0 ? Math.round((industries[industry].revenue / total) * 100) : 0;
+      industries[industry].percentage =
+        total > 0
+          ? Math.round((industries[industry].revenue / total) * 100)
+          : 0;
     });
 
     return Object.entries(industries)
@@ -1086,12 +1112,16 @@ const SalesIntelligence = () => {
         acc[segment].count++;
         return acc;
       },
-      {} as Record<string, { revenue: number; count: number; percentage: number }>
+      {} as Record<
+        string,
+        { revenue: number; count: number; percentage: number }
+      >,
     );
 
     const total = calculateTotalRevenue();
     Object.keys(segments).forEach((segment) => {
-      segments[segment].percentage = total > 0 ? Math.round((segments[segment].revenue / total) * 100) : 0;
+      segments[segment].percentage =
+        total > 0 ? Math.round((segments[segment].revenue / total) * 100) : 0;
     });
 
     return Object.entries(segments)
@@ -1142,7 +1172,7 @@ const SalesIntelligence = () => {
     const dealsOnTrack = allLeads.filter((lead) => {
       const expectedClose = new Date(lead.expectedClose);
       const daysUntilClose = Math.ceil(
-        (expectedClose.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+        (expectedClose.getTime() - today.getTime()) / (1000 * 60 * 60 * 24),
       );
       // On track if expected close is still in future
       return daysUntilClose > 0;
@@ -1156,7 +1186,7 @@ const SalesIntelligence = () => {
     if (Object.keys(repAchievements).length === 0) return 0;
     const total = Object.values(repAchievements).reduce(
       (sum, rep) => sum + rep.percentage,
-      0
+      0,
     );
     return Math.round(total / Object.keys(repAchievements).length);
   };
@@ -1165,7 +1195,9 @@ const SalesIntelligence = () => {
   const calculateRepeatRevenueRate = () => {
     if (allLeads.length === 0) return 0;
     // Estimate based on lead probability - higher probability = likely repeat customer
-    const repeatLeads = allLeads.filter((lead) => lead.probability >= 70).length;
+    const repeatLeads = allLeads.filter(
+      (lead) => lead.probability >= 70,
+    ).length;
     return Math.round((repeatLeads / allLeads.length) * 100);
   };
 
@@ -1176,7 +1208,7 @@ const SalesIntelligence = () => {
     // Estimate: assume each new hot lead adds value, calculate growth
     const hotLeadRevenue = hotLeads.reduce(
       (sum, lead) => sum + getLeadDealSize(lead),
-      0
+      0,
     );
     const totalRevenue = calculateTotalRevenue();
     if (totalRevenue === 0) return 0;

@@ -234,7 +234,9 @@ export default function CreateLeadForm({
       </div>
 
       <div className="space-y-2 pt-2">
-        <p className="text-xs text-gray-500 font-semibold">Additional Details (Optional)</p>
+        <p className="text-xs text-gray-500 font-semibold">
+          Additional Details (Optional)
+        </p>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
