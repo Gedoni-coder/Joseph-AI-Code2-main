@@ -16,6 +16,7 @@ export interface CompanyInfo {
   email?: string;
   phone?: string;
   fiscalYearEndDate?: string;
+  currencyFormat?: string;
   currencyPreference?: string;
   logo?: string;
   language?: string;

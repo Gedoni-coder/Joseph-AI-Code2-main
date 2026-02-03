@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useCurrency } from "@/hooks/useCurrency";
 import {
   Card,
   CardContent,
@@ -71,6 +72,7 @@ interface SalesTarget {
 }
 
 const SalesIntelligence = () => {
+  const { format } = useCurrency();
   const [activeTab, setActiveTab] = useState("overview");
   const [selectedChannel, setSelectedChannel] = useState("whatsapp");
   const [selectedSalesRep, setSelectedSalesRep] = useState<string>("");
@@ -861,6 +863,20 @@ const SalesIntelligence = () => {
   // Sub-modules with CALCULATED metrics (TAGS hardcoded, VALUES calculated)
   const staticSubModules = [
     {
+      id: "kpi-dashboard",
+      name: "KPI Dashboard",
+      icon: <BarChart3 className="h-5 w-5" />,
+      description:
+        "Comprehensive KPI tracking and analytics for sales performance monitoring",
+      metrics: {
+        "KPIs Tracked": "22",
+        "KPIs On Target": "18",
+        "Overall Health": "92%",
+      },
+      link: "/kpi-dashboard",
+      isNew: true,
+    },
+    {
       id: "lead-pipeline",
       name: "Lead Intelligence & Pipeline",
       icon: <Target className="h-5 w-5" />,
@@ -934,6 +950,9 @@ const SalesIntelligence = () => {
   // Performance metrics with calculated values (TAGS HARDCODED, VALUES CALCULATED)
   const performanceMetrics = [
     {
+      label: "Total Pipeline Value",
+      value: format(2400000),
+      change: "+12%",
       label: "Total Pipeline Value", // TAG: Hardcoded
       value: `$${(calculatePipelineValue() / 1000000).toFixed(2)}M`, // VALUE: Calculated
       change: "+12%", // TODO: Calculate change from previous period
@@ -946,6 +965,9 @@ const SalesIntelligence = () => {
       color: "text-blue-600",
     },
     {
+      label: "Avg Deal Size",
+      value: format(45200),
+      change: "+8%",
       label: "Avg Deal Size", // TAG: Hardcoded
       value: `$${(calculateAvgDealSize() / 1000).toFixed(1)}K`, // VALUE: Calculated
       change: "+8%", // TODO: Calculate change from previous period
@@ -1046,7 +1068,14 @@ const SalesIntelligence = () => {
               {staticSubModules.map((module) => (
                 <Card
                   key={module.id}
-                  className="hover:shadow-lg transition-shadow"
+                  className={`hover:shadow-lg transition-shadow cursor-pointer ${
+                    (module as any).link ? "hover:border-blue-300" : ""
+                  }`}
+                  onClick={() => {
+                    if ((module as any).link) {
+                      window.location.href = (module as any).link;
+                    }
+                  }}
                 >
                   <CardHeader>
                     <div className="flex items-start justify-between">
@@ -1063,7 +1092,14 @@ const SalesIntelligence = () => {
                           </CardDescription>
                         </div>
                       </div>
-                      <Badge variant="outline">Active</Badge>
+                      <div className="flex gap-2">
+                        {(module as any).isNew && (
+                          <Badge variant="default" className="bg-green-600">
+                            NEW
+                          </Badge>
+                        )}
+                        <Badge variant="outline">Active</Badge>
+                      </div>
                     </div>
                   </CardHeader>
                   <CardContent>
@@ -1080,6 +1116,13 @@ const SalesIntelligence = () => {
                         </div>
                       ))}
                     </div>
+                    {(module as any).link && (
+                      <div className="mt-3 pt-3 border-t">
+                        <p className="text-xs text-blue-600 font-semibold flex items-center gap-1">
+                          Click to open <ArrowRight className="h-3 w-3" />
+                        </p>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               ))}
