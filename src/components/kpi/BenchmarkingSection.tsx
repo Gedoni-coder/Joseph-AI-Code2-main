@@ -34,10 +34,10 @@ export const BenchmarkingSection = () => {
     },
     {
       kpi: "Average Deal Size",
-      yourValue: "$45.2K",
-      industryAvg: "$38K",
-      topPerformer: "$62K",
-      lastQuarter: "$42.1K",
+      yourValue: format(45200),
+      industryAvg: format(38000),
+      topPerformer: format(62000),
+      lastQuarter: format(42100),
       status: "above",
       insight:
         "Deal sizes are growing. Your premium positioning is working effectively.",
