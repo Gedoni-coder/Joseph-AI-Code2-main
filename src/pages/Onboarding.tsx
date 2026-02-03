@@ -250,6 +250,9 @@ export default function Onboarding() {
   const [fiscalYearEndDate, setFiscalYearEndDate] = useState(
     companyInfo?.fiscalYearEndDate || ""
   );
+  const [currencyFormat, setCurrencyFormat] = useState(
+    companyInfo?.currencyFormat || "international"
+  );
   const [currencyPreference, setCurrencyPreference] = useState(
     companyInfo?.currencyPreference || "USD"
   );
