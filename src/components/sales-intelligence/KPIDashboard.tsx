@@ -17,48 +17,70 @@ interface KPIMetric {
   color: string;
 }
 
-export const KPIDashboard = () => {
+interface KPIDashboardProps {
+  totalRevenue?: number;
+  totalTarget?: number;
+  leadsGenerated?: number;
+  winRate?: number;
+  avgDealSize?: number;
+  salesCycle?: number;
+}
+
+export const KPIDashboard = ({
+  totalRevenue = 0,
+  totalTarget = 0,
+  leadsGenerated = 0,
+  winRate = 0,
+  avgDealSize = 0,
+  salesCycle = 0,
+}: KPIDashboardProps) => {
   const { format } = useCurrency();
+
+  // Calculate revenue gap
+  const revenueGap = totalRevenue - totalTarget;
+
+  // Calculate deal closed (estimate based on revenue and average deal size)
+  const dealsClosed = avgDealSize > 0 ? Math.round(totalRevenue / avgDealSize) : 0;
 
   const topLineKPIs: KPIMetric[] = [
     {
-      label: "Monthly Revenue",
-      value: format(250000),
+      label: "Total Revenue",
+      value: totalRevenue > 0 ? format(totalRevenue) : format(0),
       change: 12.5,
       isPositive: true,
       color: "text-green-600",
     },
     {
       label: "Sales Target",
-      value: format(280000),
+      value: totalTarget > 0 ? format(totalTarget) : format(0),
       change: 0,
       isPositive: true,
       color: "text-blue-600",
     },
     {
       label: "Revenue Gap",
-      value: format(-30000),
-      change: -10.7,
-      isPositive: false,
-      color: "text-orange-600",
+      value: revenueGap > 0 ? format(revenueGap) : format(revenueGap),
+      change: totalTarget > 0 ? ((revenueGap / totalTarget) * 100).toFixed(1) as any : 0,
+      isPositive: revenueGap >= 0,
+      color: revenueGap >= 0 ? "text-green-600" : "text-orange-600",
     },
     {
       label: "Deals Closed",
-      value: 18,
+      value: dealsClosed,
       change: 25,
       isPositive: true,
       color: "text-purple-600",
     },
     {
       label: "Leads Generated",
-      value: 145,
+      value: leadsGenerated,
       change: 8.5,
       isPositive: true,
       color: "text-indigo-600",
     },
     {
       label: "Win Rate",
-      value: "22%",
+      value: `${Math.round(winRate)}%`,
       change: 5,
       isPositive: true,
       color: "text-pink-600",
