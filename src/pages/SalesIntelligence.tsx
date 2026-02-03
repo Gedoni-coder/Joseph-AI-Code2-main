@@ -2836,7 +2836,11 @@ const SalesIntelligence = () => {
               revenueBySegment={calculateRevenueBySegment()}
               forecastData={calculateForecastDataPoints()}
               totalRevenue={calculateTotalRevenue()}
-              repeatRevenueRate={68}
+              repeatRevenueRate={calculateRepeatRevenueRate()}
+              repeatRevenueTrend={calculateRepeatRevenueTrend()}
+              pipelineRisk={calculatePipelineRisk()}
+              dealVelocityRisk={calculateDealVelocityRisk()}
+              repPerformanceRisk={calculateRepPerformanceRisk()}
             />
           </TabsContent>
 
