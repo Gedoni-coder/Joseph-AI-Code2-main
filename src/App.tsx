@@ -79,6 +79,7 @@ import LearnCourseView from "./pages/learn/LearnCourseView";
 import LearnQuizzes from "./pages/learn/LearnQuizzes";
 import LearnRecords from "./pages/learn/LearnRecords";
 import SalesIntelligence from "./pages/SalesIntelligence";
+import KPIDashboard from "./pages/kpi/KPIDashboard";
 import ChatbotTest from "./pages/ChatbotTest";
 import { useCompanyInfo } from "./lib/company-context";
 
