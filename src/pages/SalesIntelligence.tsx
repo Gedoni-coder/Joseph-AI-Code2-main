@@ -1043,7 +1043,7 @@ const SalesIntelligence = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {subModules.map((module) => (
+              {staticSubModules.map((module) => (
                 <Card
                   key={module.id}
                   className="hover:shadow-lg transition-shadow"
