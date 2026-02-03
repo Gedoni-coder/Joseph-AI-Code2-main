@@ -324,6 +324,7 @@ export default function Onboarding() {
         ...(email && { email }),
         ...(phone && { phone }),
         ...(fiscalYearEndDate && { fiscalYearEndDate }),
+        ...(currencyFormat && { currencyFormat }),
         ...(currencyPreference && { currencyPreference }),
         ...(language && { language }),
         ...(numberOfEntities && { numberOfEntities: Number(numberOfEntities) }),
