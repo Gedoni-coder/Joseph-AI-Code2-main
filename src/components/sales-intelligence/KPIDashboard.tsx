@@ -247,14 +247,15 @@ const KPIDashboard = ({
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
-                <div className="text-center">
-                  <p className="text-gray-500">Chart visualization area</p>
-                  <p className="text-xs text-gray-400 mt-2">
-                    📊 Pipeline vs target comparison would be displayed here
-                  </p>
-                </div>
-              </div>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={pipelineVsTargetData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip formatter={(value) => `$${(value / 1000000).toFixed(2)}M`} />
+                  <Bar dataKey="value" fill="#8b5cf6" name="Amount" />
+                </BarChart>
+              </ResponsiveContainer>
             </CardContent>
           </Card>
         </div>
