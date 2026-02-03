@@ -233,6 +233,114 @@ export default function CreateLeadForm({
         )}
       </div>
 
+      <div className="space-y-2 pt-2">
+        <p className="text-xs text-gray-500 font-semibold">Additional Details (Optional)</p>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="product">Product</Label>
+          <Select
+            value={formData.product || ""}
+            onValueChange={(value) =>
+              setFormData({ ...formData, product: value })
+            }
+          >
+            <SelectTrigger id="product">
+              <SelectValue placeholder="Select product" />
+            </SelectTrigger>
+            <SelectContent>
+              {PRODUCTS.map((product) => (
+                <SelectItem key={product} value={product}>
+                  {product}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="region">Region</Label>
+          <Select
+            value={formData.region || ""}
+            onValueChange={(value) =>
+              setFormData({ ...formData, region: value })
+            }
+          >
+            <SelectTrigger id="region">
+              <SelectValue placeholder="Select region" />
+            </SelectTrigger>
+            <SelectContent>
+              {REGIONS.map((region) => (
+                <SelectItem key={region} value={region}>
+                  {region}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="industry">Industry</Label>
+          <Select
+            value={formData.industry || ""}
+            onValueChange={(value) =>
+              setFormData({ ...formData, industry: value })
+            }
+          >
+            <SelectTrigger id="industry">
+              <SelectValue placeholder="Select industry" />
+            </SelectTrigger>
+            <SelectContent>
+              {INDUSTRIES.map((industry) => (
+                <SelectItem key={industry} value={industry}>
+                  {industry}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="segment">Customer Segment</Label>
+          <Select
+            value={formData.segment || ""}
+            onValueChange={(value) =>
+              setFormData({ ...formData, segment: value })
+            }
+          >
+            <SelectTrigger id="segment">
+              <SelectValue placeholder="Select segment" />
+            </SelectTrigger>
+            <SelectContent>
+              {SEGMENTS.map((segment) => (
+                <SelectItem key={segment} value={segment}>
+                  {segment}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="dealSize">Estimated Deal Size ($)</Label>
+        <Input
+          id="dealSize"
+          type="number"
+          placeholder="Enter estimated deal value"
+          value={formData.dealSize || ""}
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              dealSize: e.target.value ? parseInt(e.target.value) : undefined,
+            })
+          }
+        />
+      </div>
+
       <div className="flex gap-2 pt-4">
         <Button
           type="button"
