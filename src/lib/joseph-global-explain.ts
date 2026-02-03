@@ -168,9 +168,15 @@ class JosephGlobalExplainer {
             const description = explainableData?.description || `${tag} element`;
             const data = { ...(explainableData?.data || {}), ...enriched };
             try {
-              this.explainFunction(description, data);
+              const result = this.explainFunction(description, data);
+              // Handle promise rejection if function is async
+              if (result && typeof result.catch === 'function') {
+                result.catch(() => {
+                  // Silently handle errors from async explain function
+                });
+              }
             } catch (error) {
-              // Handle any errors from explain function silently
+              // Handle any synchronous errors from explain function
             }
           }
           return;
