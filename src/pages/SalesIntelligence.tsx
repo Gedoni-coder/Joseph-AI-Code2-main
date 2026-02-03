@@ -1141,6 +1141,44 @@ const SalesIntelligence = () => {
             </div>
           </TabsContent>
 
+          {/* KPI Tab */}
+          <TabsContent value="kpi" className="space-y-6">
+            <Tabs defaultValue="dashboard" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6">
+                <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+                <TabsTrigger value="categories">Categories</TabsTrigger>
+                <TabsTrigger value="custom">Custom Builder</TabsTrigger>
+                <TabsTrigger value="benchmarking">Benchmarking</TabsTrigger>
+                <TabsTrigger value="alerts">Alerts</TabsTrigger>
+                <TabsTrigger value="reports">Reports</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="dashboard">
+                <KPIDashboard />
+              </TabsContent>
+
+              <TabsContent value="categories">
+                <KPICategories />
+              </TabsContent>
+
+              <TabsContent value="custom">
+                <CustomKPIBuilder />
+              </TabsContent>
+
+              <TabsContent value="benchmarking">
+                <BenchmarkingSection />
+              </TabsContent>
+
+              <TabsContent value="alerts">
+                <KPIAlerts />
+              </TabsContent>
+
+              <TabsContent value="reports">
+                <ExportReporting />
+              </TabsContent>
+            </Tabs>
+          </TabsContent>
+
           {/* Lead Intelligence Tab */}
           <TabsContent value="lead-pipeline" className="space-y-6">
             <div className="flex items-center justify-between">
