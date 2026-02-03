@@ -42,6 +42,10 @@ const PIPELINE_STAGES = [
 ];
 
 const LEAD_SOURCES = ["Website", "Social Media", "Email Campaign", "Referrals"];
+const PRODUCTS = ["Product A", "Product B", "Product C", "Product D"];
+const REGIONS = ["North America", "Europe", "Asia Pacific", "LATAM"];
+const INDUSTRIES = ["Technology", "Financial Services", "Healthcare", "Retail"];
+const SEGMENTS = ["Enterprise", "Mid-Market", "SMB"];
 
 export default function CreateLeadForm({
   onSubmit,
@@ -54,6 +58,11 @@ export default function CreateLeadForm({
     expectedClose: "",
     pipelineStage: "",
     leadSource: "",
+    product: "",
+    region: "",
+    industry: "",
+    segment: "",
+    dealSize: undefined,
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
