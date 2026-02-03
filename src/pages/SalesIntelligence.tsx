@@ -116,7 +116,7 @@ const SalesIntelligence = () => {
   const performanceMetrics = [
     {
       label: "Total Pipeline Value",
-      value: "$2.4M",
+      value: format(2400000),
       change: "+12%",
       color: "text-green-600",
     },
@@ -128,7 +128,7 @@ const SalesIntelligence = () => {
     },
     {
       label: "Avg Deal Size",
-      value: "$45.2K",
+      value: format(45200),
       change: "+8%",
       color: "text-purple-600",
     },
