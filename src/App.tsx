@@ -296,6 +296,7 @@ function AppContent() {
         />
         <Route path="/business-plans" element={<BusinessPlansList />} />
         <Route path="/sales-intelligence" element={<SalesIntelligence />} />
+        <Route path="/kpi-dashboard" element={<KPIDashboard />} />
 
         {/* Additional Feature Routes */}
         <Route path="/ai-insights" element={<AiInsights />} />
