@@ -78,6 +78,7 @@ const DealsAnalytics = ({
   forecastData = DEFAULT_FORECAST_DATA,
   totalRevenue = 0,
   repeatRevenueRate = 0,
+  repeatRevenueTrend = 0,
   pipelineRisk = 0,
   dealVelocityRisk = 0,
   repPerformanceRisk = 0,
