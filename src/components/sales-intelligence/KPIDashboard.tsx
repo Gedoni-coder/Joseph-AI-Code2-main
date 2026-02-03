@@ -17,50 +17,84 @@ interface KPIMetric {
   color: string;
 }
 
-export const KPIDashboard = () => {
+interface KPIDashboardProps {
+  totalRevenue?: number;
+  totalTarget?: number;
+  leadsGenerated?: number;
+  winRate?: number;
+  avgDealSize?: number;
+  salesCycle?: number;
+  revenueTrend?: number;
+  winRateTrend?: number;
+  dealSizeTrend?: number;
+  salesCycleTrend?: number;
+}
+
+const KPIDashboard = ({
+  totalRevenue = 0,
+  totalTarget = 0,
+  leadsGenerated = 0,
+  winRate = 0,
+  avgDealSize = 0,
+  salesCycle = 0,
+  revenueTrend = 0,
+  winRateTrend = 0,
+  dealSizeTrend = 0,
+  salesCycleTrend = 0,
+}: KPIDashboardProps) => {
   const { format } = useCurrency();
+
+  // Calculate revenue gap
+  const revenueGap = totalRevenue - totalTarget;
+
+  // Calculate deal closed (estimate based on revenue and average deal size)
+  const dealsClosed =
+    avgDealSize > 0 ? Math.round(totalRevenue / avgDealSize) : 0;
 
   const topLineKPIs: KPIMetric[] = [
     {
-      label: "Monthly Revenue",
-      value: format(250000),
-      change: 12.5,
-      isPositive: true,
+      label: "Total Revenue",
+      value: totalRevenue > 0 ? format(totalRevenue) : format(0),
+      change: revenueTrend,
+      isPositive: revenueTrend >= 0,
       color: "text-green-600",
     },
     {
       label: "Sales Target",
-      value: format(280000),
+      value: totalTarget > 0 ? format(totalTarget) : format(0),
       change: 0,
       isPositive: true,
       color: "text-blue-600",
     },
     {
       label: "Revenue Gap",
-      value: format(-30000),
-      change: -10.7,
-      isPositive: false,
-      color: "text-orange-600",
+      value: revenueGap > 0 ? format(revenueGap) : format(revenueGap),
+      change:
+        totalTarget > 0
+          ? parseFloat(((revenueGap / totalTarget) * 100).toFixed(1))
+          : 0,
+      isPositive: revenueGap >= 0,
+      color: revenueGap >= 0 ? "text-green-600" : "text-orange-600",
     },
     {
       label: "Deals Closed",
-      value: 18,
-      change: 25,
-      isPositive: true,
+      value: dealsClosed,
+      change: dealSizeTrend,
+      isPositive: dealSizeTrend >= 0,
       color: "text-purple-600",
     },
     {
       label: "Leads Generated",
-      value: 145,
-      change: 8.5,
-      isPositive: true,
+      value: leadsGenerated,
+      change: winRateTrend,
+      isPositive: winRateTrend >= 0,
       color: "text-indigo-600",
     },
     {
       label: "Win Rate",
-      value: "22%",
-      change: 5,
-      isPositive: true,
+      value: `${Math.round(winRate)}%`,
+      change: winRateTrend,
+      isPositive: winRateTrend >= 0,
       color: "text-pink-600",
     },
   ];

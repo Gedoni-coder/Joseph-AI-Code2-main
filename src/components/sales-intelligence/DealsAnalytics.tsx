@@ -39,99 +39,65 @@ interface ForecastData {
   worstCase: number;
 }
 
-const DealsAnalytics = () => {
-  // Sample revenue data by product
-  const revenueByProduct: RevenueData[] = [
-    { category: "Product A", revenue: 450000, percentage: 35 },
-    { category: "Product B", revenue: 380000, percentage: 30 },
-    { category: "Product C", revenue: 290000, percentage: 22 },
-    { category: "Product D", revenue: 180000, percentage: 13 },
-  ];
+interface DealsAnalyticsProps {
+  revenueByProduct?: RevenueData[];
+  revenueByRegion?: RevenueData[];
+  revenueBySalesRep?: RevenueData[];
+  revenueByIndustry?: RevenueData[];
+  revenueBySegment?: RevenueData[];
+  forecastData?: ForecastData[];
+  totalRevenue?: number;
+  repeatRevenueRate?: number;
+  repeatRevenueTrend?: number;
+  pipelineRisk?: number;
+  dealVelocityRisk?: number;
+  repPerformanceRisk?: number;
+}
 
-  // Sample revenue data by region
-  const revenueByRegion: RevenueData[] = [
-    { category: "North America", revenue: 680000, percentage: 52 },
-    { category: "Europe", revenue: 390000, percentage: 30 },
-    { category: "Asia Pacific", revenue: 180000, percentage: 14 },
-    { category: "LATAM", revenue: 50000, percentage: 4 },
-  ];
+// Default empty data for when no data is available
+const DEFAULT_REVENUE_DATA: RevenueData[] = [
+  { category: "No Data", revenue: 0, percentage: 0 },
+];
 
-  // Sample revenue data by sales rep
-  const revenueBySalesRep: RevenueData[] = [
-    { category: "Sarah Johnson", revenue: 425000, percentage: 33 },
-    { category: "Mike Chen", revenue: 380000, percentage: 29 },
-    { category: "Emily Rodriguez", revenue: 320000, percentage: 25 },
-    { category: "James Wilson", revenue: 175000, percentage: 13 },
-  ];
+const DEFAULT_FORECAST_DATA: ForecastData[] = [
+  {
+    month: "Jan",
+    forecast: 0,
+    bestCase: 0,
+    baseCase: 0,
+    worstCase: 0,
+  },
+];
 
-  // Sample revenue data by industry
-  const revenueByIndustry: RevenueData[] = [
-    { category: "Technology", revenue: 520000, percentage: 40 },
-    { category: "Financial Services", revenue: 390000, percentage: 30 },
-    { category: "Healthcare", revenue: 260000, percentage: 20 },
-    { category: "Retail", revenue: 130000, percentage: 10 },
-  ];
-
-  // Sample revenue data by customer segment
-  const revenueBySegment: RevenueData[] = [
-    { category: "Enterprise", revenue: 780000, percentage: 60 },
-    { category: "Mid-Market", revenue: 390000, percentage: 30 },
-    { category: "SMB", revenue: 130000, percentage: 10 },
-  ];
-
-  // Forecast data for next 12 months
-  const forecastData: ForecastData[] = [
-    {
-      month: "Jan",
-      forecast: 320000,
-      bestCase: 380000,
-      baseCase: 320000,
-      worstCase: 260000,
-    },
-    {
-      month: "Feb",
-      forecast: 340000,
-      bestCase: 410000,
-      baseCase: 340000,
-      worstCase: 270000,
-    },
-    {
-      month: "Mar",
-      forecast: 360000,
-      bestCase: 440000,
-      baseCase: 360000,
-      worstCase: 280000,
-    },
-    {
-      month: "Apr",
-      forecast: 380000,
-      bestCase: 470000,
-      baseCase: 380000,
-      worstCase: 290000,
-    },
-    {
-      month: "May",
-      forecast: 400000,
-      bestCase: 500000,
-      baseCase: 400000,
-      worstCase: 300000,
-    },
-    {
-      month: "Jun",
-      forecast: 420000,
-      bestCase: 530000,
-      baseCase: 420000,
-      worstCase: 310000,
-    },
-  ];
-
+const DealsAnalytics = ({
+  revenueByProduct = DEFAULT_REVENUE_DATA,
+  revenueByRegion = DEFAULT_REVENUE_DATA,
+  revenueBySalesRep = DEFAULT_REVENUE_DATA,
+  revenueByIndustry = DEFAULT_REVENUE_DATA,
+  revenueBySegment = DEFAULT_REVENUE_DATA,
+  forecastData = DEFAULT_FORECAST_DATA,
+  totalRevenue = 0,
+  repeatRevenueRate = 0,
+  repeatRevenueTrend = 0,
+  pipelineRisk = 0,
+  dealVelocityRisk = 0,
+  repPerformanceRisk = 0,
+}: DealsAnalyticsProps) => {
   const colors = ["#3b82f6", "#ef4444", "#10b981", "#f59e0b", "#8b5cf6"];
 
   // Calculate key insights
-  const topProduct = revenueByProduct[0];
-  const topRegion = revenueByRegion[0];
-  const topSalesRep = revenueBySalesRep[0];
-  const repeatRevenueRate = 68;
+  const topProduct =
+    revenueByProduct && revenueByProduct.length > 0
+      ? revenueByProduct[0]
+      : DEFAULT_REVENUE_DATA[0];
+  const topRegion =
+    revenueByRegion && revenueByRegion.length > 0
+      ? revenueByRegion[0]
+      : DEFAULT_REVENUE_DATA[0];
+  const topSalesRep =
+    revenueBySalesRep && revenueBySalesRep.length > 0
+      ? revenueBySalesRep[0]
+      : DEFAULT_REVENUE_DATA[0];
 
   // Calculate forecast metrics
   const totalForecast = forecastData.reduce(
@@ -157,8 +123,10 @@ const DealsAnalytics = () => {
           <CardContent className="p-6">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm text-gray-600 mb-2">Total Revenue (6m)</p>
-                <p className="text-2xl font-bold text-gray-900">$2.30M</p>
+                <p className="text-sm text-gray-600 mb-2">Total Revenue</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  ${(totalRevenue / 1000000).toFixed(2)}M
+                </p>
               </div>
               <div className="p-2 bg-blue-100 rounded-lg">
                 <DollarSign className="h-5 w-5 text-blue-600" />
@@ -226,7 +194,8 @@ const DealsAnalytics = () => {
               </div>
             </div>
             <p className="text-xs text-green-600 mt-2">
-              Healthy retention rate
+              {repeatRevenueTrend >= 0 ? "↑" : "↓"}{" "}
+              {Math.abs(repeatRevenueTrend)}% Healthy retention rate
             </p>
           </CardContent>
         </Card>
@@ -722,11 +691,12 @@ const DealsAnalytics = () => {
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
                         className="bg-green-500 h-2 rounded-full"
-                        style={{ width: "72%" }}
+                        style={{ width: `${pipelineRisk}%` }}
                       ></div>
                     </div>
                     <p className="text-xs text-gray-600 mt-2">
-                      72% healthy (72% above minimum threshold)
+                      {pipelineRisk}% healthy ({pipelineRisk}% above minimum
+                      threshold)
                     </p>
                   </div>
 
@@ -737,11 +707,11 @@ const DealsAnalytics = () => {
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
                         className="bg-yellow-500 h-2 rounded-full"
-                        style={{ width: "55%" }}
+                        style={{ width: `${dealVelocityRisk}%` }}
                       ></div>
                     </div>
                     <p className="text-xs text-gray-600 mt-2">
-                      55% on track (deals closing on schedule)
+                      {dealVelocityRisk}% on track (deals closing on schedule)
                     </p>
                   </div>
 
@@ -752,11 +722,11 @@ const DealsAnalytics = () => {
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <div
                         className="bg-blue-500 h-2 rounded-full"
-                        style={{ width: "85%" }}
+                        style={{ width: `${repPerformanceRisk}%` }}
                       ></div>
                     </div>
                     <p className="text-xs text-gray-600 mt-2">
-                      85% on track (quota achievement)
+                      {repPerformanceRisk}% on track (quota achievement)
                     </p>
                   </div>
                 </div>
