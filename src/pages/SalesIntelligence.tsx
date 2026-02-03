@@ -77,13 +77,9 @@ interface SalesTarget {
   avgDealSize: number;
 }
 
-interface SalesIntelligenceProps {
-  initialTab?: string;
-}
-
-const SalesIntelligence = ({ initialTab = "overview" }: SalesIntelligenceProps) => {
+const SalesIntelligence = () => {
   const { format } = useCurrency();
-  const [activeTab, setActiveTab] = useState(initialTab);
+  const [activeTab, setActiveTab] = useState("overview");
   const [selectedChannel, setSelectedChannel] = useState("whatsapp");
   const [selectedSalesRep, setSelectedSalesRep] = useState<string>("");
   const [createLeadOpen, setCreateLeadOpen] = useState(false);
