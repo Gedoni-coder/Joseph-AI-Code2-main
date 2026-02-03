@@ -107,8 +107,10 @@ const DealsAnalytics = ({
           <CardContent className="p-6">
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-sm text-gray-600 mb-2">Total Revenue (6m)</p>
-                <p className="text-2xl font-bold text-gray-900">$2.30M</p>
+                <p className="text-sm text-gray-600 mb-2">Total Revenue</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  ${(totalRevenue / 1000000).toFixed(2)}M
+                </p>
               </div>
               <div className="p-2 bg-blue-100 rounded-lg">
                 <DollarSign className="h-5 w-5 text-blue-600" />
