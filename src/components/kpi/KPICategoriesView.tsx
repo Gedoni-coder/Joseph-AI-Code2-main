@@ -133,9 +133,9 @@ export const KPICategoriesView = () => {
         {
           name: "Cost per Lead",
           description: "Total lead generation cost divided by leads generated",
-          currentValue: "$125",
-          lastMonthValue: "$132",
-          trendValue: "-$7",
+          currentValue: format(125),
+          lastMonthValue: format(132),
+          trendValue: `-${format(7)}`,
           trendDirection: "up",
           explanation:
             "Lead acquisition cost is decreasing. Channel optimization working.",
