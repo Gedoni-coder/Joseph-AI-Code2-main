@@ -11,11 +11,13 @@ The Joseph AI platform now includes a comprehensive dynamic currency system that
 During the onboarding process, users choose from two currency format options:
 
 #### Option A: International
+
 - Limited to 2 currencies: **US Dollar (USD)** and **Euro (EUR)**
 - Perfect for organizations operating primarily in these major global currencies
 - Quick and simple selection
 
 #### Option B: National
+
 - Access to all **182 world currencies**
 - Includes major and minor currencies from every nation
 - Examples: INR, JPY, GBP, CAD, AUD, BRL, ZAR, CNY, MXN, CHF, SEK, NOK, DKK, and many more
@@ -24,6 +26,7 @@ During the onboarding process, users choose from two currency format options:
 ### 2. **Currency Preference Storage**
 
 Selected currency preference is stored in:
+
 - **Browser LocalStorage** (via CompanyInfo context)
 - **Application State** (CompanyInfo context)
 - Persists across sessions
@@ -33,11 +36,13 @@ Selected currency preference is stored in:
 The selected currency is automatically applied to all monetary values in:
 
 #### Sales Intelligence Module
+
 - Pipeline Value
 - Average Deal Size
 - Revenue metrics
 
 #### KPI Dashboard
+
 - Monthly Revenue
 - Sales Target
 - Revenue Gap
@@ -46,6 +51,7 @@ The selected currency is automatically applied to all monetary values in:
 - Cost metrics
 
 #### Benchmarking Section
+
 - Deal size comparisons
 - Performance metrics
 - Industry average comparisons
@@ -84,7 +90,7 @@ import { useCurrency } from "@/hooks/useCurrency";
 
 function MyComponent() {
   const { format, formatShort, symbol, info, code } = useCurrency();
-  
+
   return (
     <div>
       <p>Revenue: {format(245000)}</p>           // "$245,000.00"
@@ -99,6 +105,7 @@ function MyComponent() {
 ### Company Context (`src/lib/company-context.tsx`)
 
 Extended to include:
+
 - `currencyFormat`: "international" | "national"
 - `currencyPreference`: Currency code (e.g., "USD", "EUR", "INR")
 
@@ -107,12 +114,14 @@ Extended to include:
 Different currencies have different symbol positions:
 
 **Before Amount:**
+
 - USD: $245,000
 - EUR: €245,000
 - INR: ₹245,000
 - GBP: £245,000
 
 **After Amount:**
+
 - EUR (in some locales): 245,000 €
 - JPY: 245,000 ¥
 - CHF: 245,000 CHF
@@ -122,6 +131,7 @@ The system automatically handles positioning based on currency standards.
 ## Supported Currencies (182 Total)
 
 ### Major Currencies
+
 - USD - US Dollar
 - EUR - Euro
 - GBP - British Pound
@@ -148,7 +158,7 @@ import { useCurrency } from "@/hooks/useCurrency";
 
 export function RevenueCard() {
   const { format } = useCurrency();
-  
+
   return (
     <Card>
       <CardTitle>Monthly Revenue</CardTitle>
@@ -169,7 +179,7 @@ import { useCurrency } from "@/hooks/useCurrency";
 
 export function SalesMetrics() {
   const { format, formatShort } = useCurrency();
-  
+
   return (
     <div className="space-y-4">
       <div>
@@ -202,6 +212,7 @@ export function SalesMetrics() {
 ### Settings Update
 
 Users can update their currency preference anytime in:
+
 - Company Settings (future implementation)
 - User Profile (future implementation)
 
@@ -219,26 +230,31 @@ Changes are reflected immediately throughout the app.
 ## Troubleshooting
 
 ### Currency Not Updating Across App
+
 - Ensure `useCurrency()` hook is used in the component
 - Check browser DevTools → Application → LocalStorage for stored currency
 - Verify CompanyInfo context is wrapping the component
 
 ### Currency Symbol Not Displaying
+
 - Check if currency code is valid (see CURRENCY_SYMBOLS in currency-utils.ts)
 - Ensure font supports the currency symbol (most do)
 - Try a different currency to test
 
 ### Incorrect Currency Position
+
 - Position is determined by CURRENCY_SYMBOLS configuration
 - For custom positioning, update the position field in currency-utils.ts
 
 ## Files Modified/Created
 
 ### New Files Created:
+
 - `src/lib/currency-utils.ts` - Core currency formatting utilities
 - `src/hooks/useCurrency.ts` - Custom hook for easy usage
 
 ### Files Modified:
+
 - `src/pages/Onboarding.tsx` - Added currency selection
 - `src/lib/company-context.tsx` - Added currencyFormat and currencyPreference
 - `src/pages/SalesIntelligence.tsx` - Updated to use dynamic currency
@@ -263,11 +279,11 @@ import { useCurrency } from "@/hooks/useCurrency";
 
 export function NewFinancialCard() {
   const { format, symbol } = useCurrency();
-  
+
   const revenue = 125000;
   const expenses = 45000;
   const profit = revenue - expenses;
-  
+
   return (
     <Card>
       <CardTitle>Financial Summary</CardTitle>

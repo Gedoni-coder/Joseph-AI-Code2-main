@@ -182,7 +182,9 @@ export const BenchmarkingSection = () => {
 
                 {/* Insight Box */}
                 <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
-                  <p className="text-sm text-blue-800">💡 {benchmark.insight}</p>
+                  <p className="text-sm text-blue-800">
+                    💡 {benchmark.insight}
+                  </p>
                 </div>
 
                 {/* Progress Bar showing comparison */}
@@ -254,7 +256,8 @@ export const BenchmarkingSection = () => {
                     teamAvg: "31%",
                     topRep: "45%",
                     gap: "+45%",
-                    insight: "Her superior positioning skills show in closing rates",
+                    insight:
+                      "Her superior positioning skills show in closing rates",
                   },
                   {
                     kpi: "Avg Deal Size",
@@ -303,14 +306,15 @@ export const BenchmarkingSection = () => {
             </h4>
             <ul className="space-y-1 text-sm text-green-800">
               <li>
-                • Schedule daily coaching call with Sarah to learn her prospecting
-                approach
+                • Schedule daily coaching call with Sarah to learn her
+                prospecting approach
               </li>
               <li>
                 • Implement her lead qualification framework across the team
               </li>
               <li>
-                • Set up mentoring sessions to improve deal sizing and positioning
+                • Set up mentoring sessions to improve deal sizing and
+                positioning
               </li>
             </ul>
           </div>

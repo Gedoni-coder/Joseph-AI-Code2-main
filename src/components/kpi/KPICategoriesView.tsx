@@ -107,8 +107,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "15",
           trendValue: "+3",
           trendDirection: "up",
-          explanation:
-            "Meeting cadence improving. Sales team is more engaged.",
+          explanation: "Meeting cadence improving. Sales team is more engaged.",
         },
         {
           name: "Meetings Held",
@@ -117,8 +116,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "14",
           trendValue: "+2",
           trendDirection: "up",
-          explanation:
-            "Good meeting attendance rate at 89%.",
+          explanation: "Good meeting attendance rate at 89%.",
         },
         {
           name: "Demo-to-Close Rate",
@@ -144,8 +142,7 @@ export const KPICategoriesView = () => {
     },
     deal: {
       name: "Deal & Closing KPIs",
-      description:
-        "Track sales effectiveness from opportunity to closed deal",
+      description: "Track sales effectiveness from opportunity to closed deal",
       kpis: [
         {
           name: "Opportunity Win Rate",
@@ -164,8 +161,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "45%",
           trendValue: "+3%",
           trendDirection: "up",
-          explanation:
-            "Better proposal quality and follow-up strategy.",
+          explanation: "Better proposal quality and follow-up strategy.",
         },
         {
           name: "Quote-to-Close Ratio",
@@ -174,8 +170,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "2.5",
           trendValue: "-0.4",
           trendDirection: "up",
-          explanation:
-            "Fewer quotes needed. More targeted proposals.",
+          explanation: "Fewer quotes needed. More targeted proposals.",
         },
         {
           name: "Sales Cycle Length",
@@ -184,8 +179,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "28 days",
           trendValue: "-3 days",
           trendDirection: "up",
-          explanation:
-            "Sales cycles shortening. Process improvements working.",
+          explanation: "Sales cycles shortening. Process improvements working.",
         },
         {
           name: "Win/Loss Ratio",
@@ -194,8 +188,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "1.6:1",
           trendValue: "+0.3:1",
           trendDirection: "up",
-          explanation:
-            "Better competitive positioning. Team execution strong.",
+          explanation: "Better competitive positioning. Team execution strong.",
         },
         {
           name: "Average Deal Size",
@@ -204,8 +197,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: format(42100),
           trendValue: `+${format(3100)}`,
           trendDirection: "up",
-          explanation:
-            "Deal sizes increasing. Upselling is effective.",
+          explanation: "Deal sizes increasing. Upselling is effective.",
         },
       ],
     },
@@ -220,8 +212,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: format(235000, 0),
           trendValue: `+${format(10000, 0)}`,
           trendDirection: "up",
-          explanation:
-            "Revenue on track. Strong deal closures this period.",
+          explanation: "Revenue on track. Strong deal closures this period.",
         },
         {
           name: "Revenue Growth Rate",
@@ -230,8 +221,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "2.8%",
           trendValue: "+1.4%",
           trendDirection: "up",
-          explanation:
-            "Growth acceleration. Momentum building.",
+          explanation: "Growth acceleration. Momentum building.",
         },
         {
           name: "Average Deal Size",
@@ -240,18 +230,17 @@ export const KPICategoriesView = () => {
           lastMonthValue: format(42100),
           trendValue: `+${format(3100)}`,
           trendDirection: "up",
-          explanation:
-            "Higher value deals. Premium positioning working.",
+          explanation: "Higher value deals. Premium positioning working.",
         },
         {
           name: "New vs Existing Mix",
-          description: "Percentage of new revenue vs. existing customer revenue",
+          description:
+            "Percentage of new revenue vs. existing customer revenue",
           currentValue: "62% / 38%",
           lastMonthValue: "58% / 42%",
           trendValue: "+4%",
           trendDirection: "up",
-          explanation:
-            "New business outpacing retention. Diversified revenue.",
+          explanation: "New business outpacing retention. Diversified revenue.",
         },
         {
           name: "Monthly Recurring Revenue",
@@ -260,8 +249,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: format(178000, 0),
           trendValue: `+${format(7000, 0)}`,
           trendDirection: "up",
-          explanation:
-            "MRR growing steadily. Subscription base expanding.",
+          explanation: "MRR growing steadily. Subscription base expanding.",
         },
         {
           name: "Revenue Target Achievement",
@@ -270,8 +258,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "95%",
           trendValue: "+3%",
           trendDirection: "up",
-          explanation:
-            "Nearly at target. On track for quarter.",
+          explanation: "Nearly at target. On track for quarter.",
         },
       ],
     },
@@ -286,8 +273,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: format(420000, 0),
           trendValue: `+${format(30000, 0)}`,
           trendDirection: "up",
-          explanation:
-            "Pipeline strengthening. Good inflow of new deals.",
+          explanation: "Pipeline strengthening. Good inflow of new deals.",
         },
         {
           name: "Pipeline Coverage Ratio",
@@ -296,8 +282,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "1.7x",
           trendDirection: "up",
           trendValue: "+0.1x",
-          explanation:
-            "Healthy pipeline coverage. Future revenue secure.",
+          explanation: "Healthy pipeline coverage. Future revenue secure.",
         },
         {
           name: "Forecast Accuracy",
@@ -306,8 +291,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "82%",
           trendValue: "+5%",
           trendDirection: "up",
-          explanation:
-            "Forecasting improving. Better pipeline visibility.",
+          explanation: "Forecasting improving. Better pipeline visibility.",
         },
         {
           name: "Pipeline by Stage",
@@ -316,8 +300,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "Top-Heavy",
           trendValue: "Improved",
           trendDirection: "up",
-          explanation:
-            "Better distribution. Early stage deals moving through.",
+          explanation: "Better distribution. Early stage deals moving through.",
         },
         {
           name: "Deals at Risk",
@@ -326,8 +309,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "5",
           trendValue: "-2",
           trendDirection: "up",
-          explanation:
-            "Risk mitigation working. Fewer stalled deals.",
+          explanation: "Risk mitigation working. Fewer stalled deals.",
         },
         {
           name: "Next Month Forecast",
@@ -336,8 +318,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: format(245000, 0),
           trendValue: `-${format(7000, 0)}`,
           trendDirection: "down",
-          explanation:
-            "Conservative forecast. Some deals slipping.",
+          explanation: "Conservative forecast. Some deals slipping.",
         },
       ],
     },
@@ -352,8 +333,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: format(3100),
           trendValue: `-${format(250)}`,
           trendDirection: "up",
-          explanation:
-            "Improving efficiency. Better cost control.",
+          explanation: "Improving efficiency. Better cost control.",
         },
         {
           name: "Sales Cost Ratio",
@@ -362,8 +342,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "16%",
           trendValue: "-2%",
           trendDirection: "up",
-          explanation:
-            "Ratio improving. Revenue growth outpacing costs.",
+          explanation: "Ratio improving. Revenue growth outpacing costs.",
         },
         {
           name: "Margin per Deal",
@@ -372,8 +351,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "65%",
           trendValue: "+3%",
           trendDirection: "up",
-          explanation:
-            "Better margins. Premium positioning effective.",
+          explanation: "Better margins. Premium positioning effective.",
         },
         {
           name: "Discount Rate",
@@ -382,8 +360,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "12%",
           trendValue: "-4%",
           trendDirection: "up",
-          explanation:
-            "Less discounting. Pricing power improving.",
+          explanation: "Less discounting. Pricing power improving.",
         },
         {
           name: "Sales Team Cost",
@@ -392,8 +369,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: format(68000, 0),
           trendValue: "No change",
           trendDirection: "up",
-          explanation:
-            "Costs stable while revenue grows.",
+          explanation: "Costs stable while revenue grows.",
         },
         {
           name: "ROI on Sales Investment",
@@ -402,8 +378,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "6.3x",
           trendValue: "+0.8x",
           trendDirection: "up",
-          explanation:
-            "Better ROI. Sales investment paying off.",
+          explanation: "Better ROI. Sales investment paying off.",
         },
       ],
     },
@@ -418,8 +393,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "16",
           trendValue: "+2",
           trendDirection: "up",
-          explanation:
-            "Activity increasing. Better engagement levels.",
+          explanation: "Activity increasing. Better engagement levels.",
         },
         {
           name: "Emails per Rep",
@@ -428,8 +402,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "28",
           trendValue: "+4",
           trendDirection: "up",
-          explanation:
-            "More outreach. Digital engagement up.",
+          explanation: "More outreach. Digital engagement up.",
         },
         {
           name: "Meetings per Rep",
@@ -438,8 +411,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "11",
           trendValue: "+1",
           trendDirection: "up",
-          explanation:
-            "Better meeting cadence. More conversations.",
+          explanation: "Better meeting cadence. More conversations.",
         },
         {
           name: "Activity-to-Opportunity Ratio",
@@ -448,8 +420,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "48",
           trendValue: "-6",
           trendDirection: "up",
-          explanation:
-            "More efficient prospecting. Better targeting.",
+          explanation: "More efficient prospecting. Better targeting.",
         },
         {
           name: "Deals per Rep per Month",
@@ -458,8 +429,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "2.8",
           trendValue: "+0.2",
           trendDirection: "up",
-          explanation:
-            "Productivity improving. Better conversion.",
+          explanation: "Productivity improving. Better conversion.",
         },
         {
           name: "Activity Consistency",
@@ -468,8 +438,7 @@ export const KPICategoriesView = () => {
           lastMonthValue: "88%",
           trendValue: "+4%",
           trendDirection: "up",
-          explanation:
-            "Team alignment improving. More consistency.",
+          explanation: "Team alignment improving. More consistency.",
         },
       ],
     },
@@ -496,7 +465,9 @@ export const KPICategoriesView = () => {
               <TabsTrigger value="revenue">Revenue</TabsTrigger>
               <TabsTrigger value="pipeline">Pipeline & Forecast</TabsTrigger>
               <TabsTrigger value="cost">Cost & Profitability</TabsTrigger>
-              <TabsTrigger value="activity">Activity & Productivity</TabsTrigger>
+              <TabsTrigger value="activity">
+                Activity & Productivity
+              </TabsTrigger>
             </TabsList>
 
             {Object.entries(categories).map(([key, category]) => (

@@ -44,7 +44,8 @@ const SalesIntelligence = () => {
       id: "kpi-dashboard",
       name: "KPI Dashboard",
       icon: <BarChart3 className="h-5 w-5" />,
-      description: "Comprehensive KPI tracking and analytics for sales performance monitoring",
+      description:
+        "Comprehensive KPI tracking and analytics for sales performance monitoring",
       metrics: {
         "KPIs Tracked": "22",
         "KPIs On Target": "18",

@@ -1,7 +1,27 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, TrendingDown } from "lucide-react";
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  PieChart,
+  Pie,
+  Cell,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import { useCurrency } from "@/hooks/useCurrency";
 
 export const KPIDashboardHome = () => {
@@ -135,7 +155,9 @@ export const KPIDashboardHome = () => {
         <Card>
           <CardHeader>
             <CardTitle>📈 Revenue Trend (Last 6 Months)</CardTitle>
-            <CardDescription>Monthly revenue vs target comparison</CardDescription>
+            <CardDescription>
+              Monthly revenue vs target comparison
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -143,7 +165,7 @@ export const KPIDashboardHome = () => {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
                 <YAxis />
-                <Tooltip 
+                <Tooltip
                   formatter={(value) => `$${(value / 1000).toFixed(0)}K`}
                 />
                 <Legend />
@@ -174,7 +196,9 @@ export const KPIDashboardHome = () => {
           <Card>
             <CardHeader>
               <CardTitle>📊 Leads vs Deals Conversion Funnel</CardTitle>
-              <CardDescription>Sales funnel performance overview</CardDescription>
+              <CardDescription>
+                Sales funnel performance overview
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -210,7 +234,9 @@ export const KPIDashboardHome = () => {
           <Card>
             <CardHeader>
               <CardTitle>📉 Sales Cycle Trend</CardTitle>
-              <CardDescription>Average days to close (decreasing is good)</CardDescription>
+              <CardDescription>
+                Average days to close (decreasing is good)
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={250}>
@@ -230,7 +256,9 @@ export const KPIDashboardHome = () => {
         <Card>
           <CardHeader>
             <CardTitle>📊 Pipeline vs Target Chart</CardTitle>
-            <CardDescription>Current pipeline health and target alignment</CardDescription>
+            <CardDescription>
+              Current pipeline health and target alignment
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>
@@ -238,7 +266,9 @@ export const KPIDashboardHome = () => {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="category" />
                 <YAxis />
-                <Tooltip formatter={(value) => `$${(value / 1000).toFixed(0)}K`} />
+                <Tooltip
+                  formatter={(value) => `$${(value / 1000).toFixed(0)}K`}
+                />
                 <Legend />
                 <Bar dataKey="current" fill="#10b981" name="Current" />
                 <Bar dataKey="target" fill="#3b82f6" name="Target" />
