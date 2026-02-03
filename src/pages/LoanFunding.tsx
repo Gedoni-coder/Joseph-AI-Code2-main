@@ -12,7 +12,8 @@ import { Badge } from "@/components/ui/badge";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ConnectionStatus } from "@/components/ui/connection-status";
 import ModuleHeader from "@/components/ui/module-header";
-import { useLoanData } from "@/hooks/useLoanData";
+import { useLoanFundingAPI } from "@/hooks/useLoanFundingAPI";
+import { CURRENCY_FORMATTING } from "@/mocks/loan-funding";
 import { LoanEligibilityAssessment } from "@/components/loan/loan-eligibility";
 import { FundingOptionsExplorer } from "@/components/loan/funding-options";
 import { SmartLoanComparison } from "@/components/loan/loan-comparison";
@@ -21,6 +22,8 @@ import { FundingStrategyAnalysis } from "@/components/loan/funding-strategy";
 import { InvestorMatchingEngine } from "@/components/loan/investor-matching";
 import { LoanResearchUpdates } from "@/components/loan/loan-research";
 import { type FundingOption } from "@/lib/loan-data";
+import { useCompanyInfo } from "@/lib/company-context";
+import { getCompanyName } from "@/lib/get-company-name";
 import {
   DollarSign,
   TrendingUp,
@@ -38,6 +41,9 @@ import {
 import { Link } from "react-router-dom";
 
 export default function LoanFunding() {
+  const { companyInfo } = useCompanyInfo();
+  const companyName = getCompanyName(companyInfo?.companyName);
+
   const {
     eligibility,
     fundingOptions,
@@ -54,7 +60,7 @@ export default function LoanFunding() {
     refreshData,
     updateEligibility,
     updateDocumentStatus,
-  } = useLoanData();
+  } = useLoanFundingAPI();
 
   const [activeTab, setActiveTab] = useState("overview");
   const [selectedFundingOption, setSelectedFundingOption] =
@@ -82,11 +88,13 @@ export default function LoanFunding() {
   }
 
   const formatCurrency = (amount: number) => {
-    if (amount >= 1000000) {
-      return `$${(amount / 1000000).toFixed(1)}M`;
+    const { millions, millions_suffix, thousands, thousands_suffix } =
+      CURRENCY_FORMATTING;
+    if (amount >= millions) {
+      return `$${(amount / millions).toFixed(1)}${millions_suffix}`;
     }
-    if (amount >= 1000) {
-      return `$${(amount / 1000).toFixed(0)}K`;
+    if (amount >= thousands) {
+      return `$${(amount / thousands).toFixed(0)}${thousands_suffix}`;
     }
     return `$${amount.toLocaleString()}`;
   };
@@ -98,7 +106,7 @@ export default function LoanFunding() {
       <ModuleHeader
         icon={<DollarSign className="h-6 w-6" />}
         title="Funding and Loan Hub"
-        description="Complete financing solutions and funding opportunities for E-buy expansion, operations, and strategic growth"
+        description={`Complete financing solutions and funding opportunities for ${companyName} expansion, operations, and strategic growth`}
         isConnected={isConnected}
         lastUpdated={lastUpdated}
         onReconnect={refreshData}

@@ -7,8 +7,10 @@ export interface CompanyInfo {
   numberOfWorkers: number;
   sector: string;
   companySize: "small" | "medium" | "enterprise";
-  address: string;
-  websiteUrl: string;
+  country: string;
+  state: string;
+  city: string;
+  websiteUrl?: string;
 
   // Optional fields
   email?: string;
@@ -35,9 +37,7 @@ const STORAGE_KEY = "joseph:companyInfo";
 export function useCompanyInfo() {
   const context = useContext(CompanyContext);
   if (!context) {
-    throw new Error(
-      "useCompanyInfo must be used within CompanyInfoProvider"
-    );
+    throw new Error("useCompanyInfo must be used within CompanyInfoProvider");
   }
   return context;
 }
@@ -88,8 +88,9 @@ export function CompanyInfoProvider({
     companyInfo?.numberOfWorkers &&
     companyInfo?.sector &&
     companyInfo?.companySize &&
-    companyInfo?.address &&
-    companyInfo?.websiteUrl
+    companyInfo?.country &&
+    companyInfo?.state &&
+    companyInfo?.city
   );
 
   return (

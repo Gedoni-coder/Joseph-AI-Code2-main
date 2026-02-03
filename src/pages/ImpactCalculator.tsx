@@ -38,7 +38,7 @@ import {
   REPUTATIONAL_IMPACT_OPTIONS,
   PolicyInputs,
   EconomicInputs,
-} from "@/lib/impact-scenarios";
+} from "@/mocks/impact-calculator";
 
 const ImpactCalculator = () => {
   const [calculationType, setCalculationType] = useState("policy");

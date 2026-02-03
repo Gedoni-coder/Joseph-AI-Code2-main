@@ -13,7 +13,7 @@ import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import ModuleHeader from "@/components/ui/module-header";
 import { useCompanyInfo } from "@/lib/company-context";
 import { getCompanyName } from "@/lib/get-company-name";
-import { usePricingData } from "@/hooks/usePricingData";
+import { usePricingDataAPI } from "@/hooks/usePricingDataAPI";
 import { PricingStrategies } from "@/components/pricing/pricing-strategies";
 import { CompetitiveAnalysis } from "@/components/pricing/competitive-analysis";
 import { PriceTesting } from "@/components/pricing/price-testing";
@@ -29,7 +29,7 @@ import {
   DEFAULT_PRICING_ACTION_ITEMS,
   DEFAULT_PRICING_NEXT_STEPS,
   getSummaryMetrics,
-} from "@/lib/pricing-content";
+} from "@/mocks/pricing-strategy";
 import {
   DollarSign,
   Target,
@@ -57,7 +57,7 @@ export default function PricingStrategy() {
     lastUpdated,
     error,
     refreshData,
-  } = usePricingData();
+  } = usePricingDataAPI();
   const [activeTab, setActiveTab] = useState("overview");
 
   if (error) {

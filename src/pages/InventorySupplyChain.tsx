@@ -11,8 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ConnectionStatus } from "@/components/ui/connection-status";
-import { useInventoryData } from "@/hooks/useInventoryData";
-import { useSupplyChainData } from "@/hooks/useSupplyChainData";
+import { useInventorySupplyChainAPI } from "@/hooks/useInventorySupplyChainAPI";
 import { StockMonitoring } from "@/components/inventory/stock-monitoring";
 import { DemandForecasting } from "@/components/inventory/demand-forecasting";
 import { ValuationTracking } from "@/components/inventory/valuation-tracking";
@@ -33,7 +32,8 @@ import {
   getRecommendationContent,
   DEFAULT_ACTION_ITEMS,
   DEFAULT_NEXT_STEPS,
-} from "@/lib/inventory-content";
+  INVENTORY_CONFIG,
+} from "@/mocks/inventory-supply-chain";
 import {
   Package,
   TrendingUp,
@@ -60,50 +60,33 @@ export default function InventorySupplyChain() {
     demandForecasts,
     inventoryValuation,
     deadStock,
-    locations,
-    inventoryAudits,
-    turnoverMetrics,
-    isLoading: inventoryLoading,
-    isConnected: inventoryConnected,
-    lastUpdated: inventoryLastUpdated,
-    error: inventoryError,
-    refreshData: refreshInventoryData,
-    updateStockLevel,
-    addStockMovement,
-  } = useInventoryData();
-
-  const {
-    suppliers,
-    procurementOrders,
-    productionPlans,
-    warehouseOperations,
-    logisticsMetrics,
-    marketVolatility,
-    regulatoryCompliance,
-    disruptionRisks,
-    sustainabilityMetrics,
-    isLoading: supplyChainLoading,
-    isConnected: supplyChainConnected,
-    lastUpdated: supplyChainLastUpdated,
-    error: supplyChainError,
-    refreshData: refreshSupplyChainData,
-    updateSupplierPerformance,
-    updateOrderStatus,
-  } = useSupplyChainData();
+    isLoading,
+    isConnected,
+    lastUpdated,
+    error,
+    refreshData,
+  } = useInventorySupplyChainAPI();
 
   const [activeTab, setActiveTab] = useState("overview");
 
-  const isLoading = inventoryLoading || supplyChainLoading;
-  const isConnected = inventoryConnected && supplyChainConnected;
-  const lastUpdated = new Date(
-    Math.max(inventoryLastUpdated.getTime(), supplyChainLastUpdated.getTime()),
-  );
-  const error = inventoryError || supplyChainError;
+  // Placeholder data for supply chain (future API integration)
+  const locations = [];
+  const inventoryAudits = [];
+  const turnoverMetrics = [];
+  const suppliers = [];
+  const procurementOrders = [];
+  const productionPlans = [];
+  const warehouseOperations = [];
+  const logisticsMetrics = [];
+  const marketVolatility = [];
+  const regulatoryCompliance = [];
+  const disruptionRisks = [];
+  const sustainabilityMetrics = [];
 
-  const refreshData = () => {
-    refreshInventoryData();
-    refreshSupplyChainData();
-  };
+  const updateStockLevel = () => {};
+  const addStockMovement = () => {};
+  const updateSupplierPerformance = () => {};
+  const updateOrderStatus = () => {};
 
   if (error) {
     return (
@@ -127,11 +110,13 @@ export default function InventorySupplyChain() {
   }
 
   const formatCurrency = (amount: number) => {
-    if (amount >= 1000000) {
-      return `$${(amount / 1000000).toFixed(1)}M`;
+    const { millions, millions_suffix, thousands, thousands_suffix } =
+      INVENTORY_CONFIG.currencyFormat;
+    if (amount >= millions) {
+      return `$${(amount / millions).toFixed(1)}${millions_suffix}`;
     }
-    if (amount >= 1000) {
-      return `$${(amount / 1000).toFixed(0)}K`;
+    if (amount >= thousands) {
+      return `$${(amount / thousands).toFixed(0)}${thousands_suffix}`;
     }
     return `$${amount.toLocaleString()}`;
   };
@@ -145,7 +130,7 @@ export default function InventorySupplyChain() {
     suppliers.reduce((acc, s) => acc + s.performanceMetrics.overallScore, 0) /
     suppliers.length;
   const highRiskDisruptions = disruptionRisks.filter(
-    (risk) => risk.riskScore > 20,
+    (risk) => risk.riskScore > INVENTORY_CONFIG.riskThreshold,
   ).length;
 
   return (
@@ -510,20 +495,20 @@ export default function InventorySupplyChain() {
                 suppliers.length,
                 highRiskDisruptions,
                 productionPlans.length,
-                procurementOrders.filter((o) => o.status === "pending").length
+                procurementOrders.filter((o) => o.status === "pending").length,
               )}
               summaryMetrics={getSummaryMetrics(
                 formatCurrency(totalInventoryValue),
                 lowStockItems,
                 avgSupplierPerformance,
-                highRiskDisruptions
+                highRiskDisruptions,
               )}
               recommendationTitle="Inventory & Supply Chain Recommendations"
               recommendationDescription={RECOMMENDATION_DESCRIPTION}
               recommendationText={getRecommendationContent(
                 lowStockItems,
                 highRiskDisruptions,
-                productionPlans.length
+                productionPlans.length,
               )}
               actionItems={DEFAULT_ACTION_ITEMS}
               nextSteps={DEFAULT_NEXT_STEPS}

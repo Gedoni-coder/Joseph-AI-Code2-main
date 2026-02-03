@@ -14,7 +14,7 @@ import { ConnectionStatus } from "@/components/ui/connection-status";
 import ModuleHeader from "@/components/ui/module-header";
 import { useCompanyInfo } from "@/lib/company-context";
 import { getCompanyName } from "@/lib/get-company-name";
-import { useRevenueData } from "@/hooks/useRevenueData";
+import { useRevenueDataAPI } from "@/hooks/useRevenueDataAPI";
 import { RevenueStreams } from "@/components/revenue/revenue-streams";
 import { RevenueForecasting } from "@/components/revenue/revenue-forecasting";
 import { ChurnAnalysisComponent } from "@/components/revenue/churn-analysis";
@@ -29,7 +29,7 @@ import {
   DEFAULT_REVENUE_ACTION_ITEMS,
   DEFAULT_REVENUE_NEXT_STEPS,
   getSummaryMetrics,
-} from "@/lib/revenue-content";
+} from "@/mocks/revenue-strategy";
 import {
   DollarSign,
   TrendingUp,
@@ -60,7 +60,7 @@ export default function RevenueStrategy() {
     lastUpdated,
     error,
     refreshData,
-  } = useRevenueData();
+  } = useRevenueDataAPI();
   const [activeTab, setActiveTab] = useState("overview");
   const [streams, setStreams] = useState(initialStreams);
 

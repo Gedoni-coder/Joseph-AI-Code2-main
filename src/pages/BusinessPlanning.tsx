@@ -7,10 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CheckCircle, FileText, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { BusinessPlan } from "@/lib/business-planning-types";
-import { createEmptyBusinessPlan } from "@/lib/business-planning-types";
+import type { BusinessPlanFull as BusinessPlan } from "@/mocks/business-planning";
+import { createEmptyBusinessPlan } from "@/mocks/business-planning";
+import { STORAGE_KEYS } from "@/lib/app-config";
 
-const STORAGE_KEY = "joseph_business_plans_v1";
+// Use mock data configuration for storage key
+const STORAGE_KEY = STORAGE_KEYS.BUSINESS_PLANS;
 
 function extractBusinessName(idea: string): string {
   const words = idea.split(" ");

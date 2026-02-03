@@ -3,6 +3,7 @@ import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import { Card } from "../ui/card";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { useConversationalMode } from "../../App";
 import {
   Bot,
   Minimize2,
@@ -66,15 +67,34 @@ export function ChatbotContainer({
   );
   const [rightPanelCollapsed, setRightPanelCollapsed] = useState(false);
   const [sizeMode, setSizeMode] = useState<ChatbotSize>("half");
+
+  // Get conversational mode from context if prop not provided
+  let contextMode = undefined;
+  try {
+    const context = useConversationalMode();
+    contextMode = context.conversationalMode;
+  } catch {
+    // Context not available, will use prop or fallback
+  }
+
   const conversationalMode =
     externalConversationalMode !== undefined
       ? externalConversationalMode
-      : true;
+      : contextMode !== undefined
+        ? contextMode
+        : true;
 
   // Initialize global explain function
   useEffect(() => {
     setJosephExplainFunction(explainElement);
   }, [explainElement]);
+
+  // Close chatbot when conversational mode is disabled
+  useEffect(() => {
+    if (!conversationalMode && isOpen) {
+      setIsOpen(false);
+    }
+  }, [conversationalMode, isOpen, setIsOpen]);
 
   // Log when floating button is clicked
   const handleOpenClick = () => {
@@ -115,7 +135,7 @@ export function ChatbotContainer({
 
     document.addEventListener("click", handlePageClick);
     return () => document.removeEventListener("click", handlePageClick);
-  }, [conversationalMode, isOpen, setIsOpen]);
+  }, [conversationalMode, isOpen]);
 
   // Keyboard shortcuts
   useEffect(() => {

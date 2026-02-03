@@ -230,17 +230,21 @@ export default function Onboarding() {
 
   // Required fields
   const [companyName, setCompanyName] = useState(
-    companyInfo?.companyName || ""
+    companyInfo?.companyName || "",
   );
-  const [description, setDescription] = useState(companyInfo?.description || "");
+  const [description, setDescription] = useState(
+    companyInfo?.description || "",
+  );
   const [numberOfWorkers, setNumberOfWorkers] = useState(
-    companyInfo?.numberOfWorkers || ""
+    companyInfo?.numberOfWorkers || "",
   );
   const [sector, setSector] = useState(companyInfo?.sector || "");
   const [companySize, setCompanySize] = useState(
-    companyInfo?.companySize || ""
+    companyInfo?.companySize || "",
   );
-  const [address, setAddress] = useState(companyInfo?.address || "");
+  const [country, setCountry] = useState(companyInfo?.country || "");
+  const [state, setState] = useState(companyInfo?.state || "");
+  const [city, setCity] = useState(companyInfo?.city || "");
   const [websiteUrl, setWebsiteUrl] = useState(companyInfo?.websiteUrl || "");
 
   // Optional fields
@@ -248,17 +252,17 @@ export default function Onboarding() {
   const [email, setEmail] = useState(companyInfo?.email || "");
   const [phone, setPhone] = useState(companyInfo?.phone || "");
   const [fiscalYearEndDate, setFiscalYearEndDate] = useState(
-    companyInfo?.fiscalYearEndDate || ""
+    companyInfo?.fiscalYearEndDate || "",
   );
   const [currencyFormat, setCurrencyFormat] = useState(
     companyInfo?.currencyFormat || "international"
   );
   const [currencyPreference, setCurrencyPreference] = useState(
-    companyInfo?.currencyPreference || "USD"
+    companyInfo?.currencyPreference || "USD",
   );
   const [language, setLanguage] = useState(companyInfo?.language || "English");
   const [numberOfEntities, setNumberOfEntities] = useState(
-    companyInfo?.numberOfEntities || ""
+    companyInfo?.numberOfEntities || "",
   );
   const [logoFile, setLogoFile] = useState<File | null>(null);
 
@@ -268,16 +272,15 @@ export default function Onboarding() {
   const validateRequired = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!companyName.trim())
-      newErrors.companyName = "Company name is required";
+    if (!companyName.trim()) newErrors.companyName = "Company name is required";
     if (!description.trim()) newErrors.description = "Description is required";
     if (!numberOfWorkers)
       newErrors.numberOfWorkers = "Number of workers is required";
     if (!sector) newErrors.sector = "Sector is required";
     if (!companySize) newErrors.companySize = "Company size is required";
-    if (!address.trim()) newErrors.address = "Address is required";
-    if (!websiteUrl.trim())
-      newErrors.websiteUrl = "Website URL is required";
+    if (!country.trim()) newErrors.country = "Country is required";
+    if (!state.trim()) newErrors.state = "State/Province is required";
+    if (!city.trim()) newErrors.city = "City is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -319,8 +322,10 @@ export default function Onboarding() {
         numberOfWorkers: Number(numberOfWorkers),
         sector,
         companySize: companySize as "small" | "medium" | "enterprise",
-        address,
-        websiteUrl,
+        country,
+        state,
+        city,
+        ...(websiteUrl && websiteUrl !== "" && { websiteUrl }),
         ...(email && { email }),
         ...(phone && { phone }),
         ...(fiscalYearEndDate && { fiscalYearEndDate }),
@@ -360,7 +365,10 @@ export default function Onboarding() {
                 </h3>
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="companyName" className="text-sm font-medium">
+                    <Label
+                      htmlFor="companyName"
+                      className="text-sm font-medium"
+                    >
                       Company Name
                     </Label>
                     <Input
@@ -388,7 +396,10 @@ export default function Onboarding() {
                   </div>
 
                   <div>
-                    <Label htmlFor="description" className="text-sm font-medium">
+                    <Label
+                      htmlFor="description"
+                      className="text-sm font-medium"
+                    >
                       Company Description
                     </Label>
                     <textarea
@@ -527,58 +538,137 @@ export default function Onboarding() {
                   </div>
 
                   <div>
-                    <Label htmlFor="address" className="text-sm font-medium">
-                      Address / Location
-                    </Label>
-                    <Input
-                      id="address"
-                      value={address}
-                      onChange={(e) => {
-                        setAddress(e.target.value);
-                        setErrors((prev) => {
-                          const newErrors = { ...prev };
-                          delete newErrors.address;
-                          return newErrors;
-                        });
-                      }}
-                      placeholder="Enter your company address"
-                      className={`mt-1 ${errors.address ? "border-red-500" : ""}`}
-                    />
-                    {errors.address && (
-                      <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
-                        <AlertCircle className="h-4 w-4" />
-                        {errors.address}
-                      </p>
-                    )}
+                    <h4 className="text-sm font-medium text-gray-700 mb-3">
+                      Location
+                    </h4>
+                    <div className="space-y-3">
+                      <div>
+                        <Label
+                          htmlFor="country"
+                          className="text-sm font-medium"
+                        >
+                          Country
+                        </Label>
+                        <Input
+                          id="country"
+                          value={country}
+                          onChange={(e) => {
+                            setCountry(e.target.value);
+                            setErrors((prev) => {
+                              const newErrors = { ...prev };
+                              delete newErrors.country;
+                              return newErrors;
+                            });
+                          }}
+                          placeholder="e.g., United States"
+                          className={`mt-1 ${
+                            errors.country ? "border-red-500" : ""
+                          }`}
+                        />
+                        {errors.country && (
+                          <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
+                            <AlertCircle className="h-4 w-4" />
+                            {errors.country}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <Label
+                            htmlFor="state"
+                            className="text-sm font-medium"
+                          >
+                            State / Province
+                          </Label>
+                          <Input
+                            id="state"
+                            value={state}
+                            onChange={(e) => {
+                              setState(e.target.value);
+                              setErrors((prev) => {
+                                const newErrors = { ...prev };
+                                delete newErrors.state;
+                                return newErrors;
+                              });
+                            }}
+                            placeholder="e.g., California"
+                            className={`mt-1 ${
+                              errors.state ? "border-red-500" : ""
+                            }`}
+                          />
+                          {errors.state && (
+                            <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
+                              <AlertCircle className="h-4 w-4" />
+                              {errors.state}
+                            </p>
+                          )}
+                        </div>
+
+                        <div>
+                          <Label htmlFor="city" className="text-sm font-medium">
+                            City
+                          </Label>
+                          <Input
+                            id="city"
+                            value={city}
+                            onChange={(e) => {
+                              setCity(e.target.value);
+                              setErrors((prev) => {
+                                const newErrors = { ...prev };
+                                delete newErrors.city;
+                                return newErrors;
+                              });
+                            }}
+                            placeholder="e.g., San Francisco"
+                            className={`mt-1 ${
+                              errors.city ? "border-red-500" : ""
+                            }`}
+                          />
+                          {errors.city && (
+                            <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
+                              <AlertCircle className="h-4 w-4" />
+                              {errors.city}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   <div>
                     <Label htmlFor="websiteUrl" className="text-sm font-medium">
-                      Website URL
+                      Website URL{" "}
+                      <span className="text-gray-500 text-xs">(Optional)</span>
                     </Label>
-                    <Input
-                      id="websiteUrl"
-                      type="url"
-                      value={websiteUrl}
-                      onChange={(e) => {
-                        setWebsiteUrl(e.target.value);
-                        setErrors((prev) => {
-                          const newErrors = { ...prev };
-                          delete newErrors.websiteUrl;
-                          return newErrors;
-                        });
-                      }}
-                      placeholder="https://example.com"
-                      className={`mt-1 ${
-                        errors.websiteUrl ? "border-red-500" : ""
-                      }`}
-                    />
-                    {errors.websiteUrl && (
-                      <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
-                        <AlertCircle className="h-4 w-4" />
-                        {errors.websiteUrl}
-                      </p>
-                    )}
+                    <div
+                      className={`mt-1 flex items-center rounded-md border border-input bg-background overflow-hidden`}
+                    >
+                      <span className="px-3 py-2 text-sm font-medium text-muted-foreground bg-muted/30 border-r border-input whitespace-nowrap">
+                        https://
+                      </span>
+                      <input
+                        id="websiteUrl"
+                        type="text"
+                        value={websiteUrl.replace(/^https:\/\//, "")}
+                        onChange={(e) => {
+                          const domainValue = e.target.value.replace(
+                            /^https:\/\//,
+                            "",
+                          );
+                          setWebsiteUrl(
+                            domainValue ? `https://${domainValue}` : "",
+                          );
+                          setErrors((prev) => {
+                            const newErrors = { ...prev };
+                            delete newErrors.websiteUrl;
+                            return newErrors;
+                          });
+                        }}
+                        placeholder="example.com (you can skip this)"
+                        className="flex-1 px-3 py-2 text-sm bg-transparent outline-none"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -786,9 +876,7 @@ export default function Onboarding() {
                         >
                           <Upload className="h-4 w-4" />
                           <span className="text-sm">
-                            {logoFile
-                              ? logoFile.name
-                              : "Choose logo (max 5MB)"}
+                            {logoFile ? logoFile.name : "Choose logo (max 5MB)"}
                           </span>
                         </label>
                       </div>

@@ -9,7 +9,7 @@ import ModuleHeader from "@/components/ui/module-header";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useCompanyInfo } from "@/lib/company-context";
 import { getCompanyName } from "@/lib/get-company-name";
-import { useBusinessData } from "@/hooks/useBusinessData";
+import { useBusinessForecastingData } from "@/hooks/useBusinessForecastingData";
 import { CustomerProfileComponent } from "@/components/business/customer-profile";
 import { RevenueProjections } from "@/components/business/revenue-projections";
 import { KPIDashboard } from "@/components/business/kpi-dashboard";
@@ -33,6 +33,11 @@ import {
   GROWTH_TRAJECTORY,
   getSummaryMetrics,
 } from "@/lib/business-forecast-content";
+import {
+  KEY_ASSUMPTIONS,
+  KEY_RISKS,
+  COMPETITIVE_METRICS,
+} from "@/mocks/business-forecast";
 import {
   Building2,
   RefreshCw,
@@ -69,7 +74,7 @@ const BusinessForecast = () => {
     updateKPI,
     updateScenario,
     reconnect,
-  } = useBusinessData();
+  } = useBusinessForecastingData();
 
   const handleRefresh = async () => {
     await refreshData();
@@ -548,10 +553,9 @@ const BusinessForecast = () => {
                           Key Assumptions
                         </h4>
                         <div className="space-y-2 text-sm text-muted-foreground">
-                          <p>• Market growth rate: 15% annually</p>
-                          <p>• Customer retention: 85% average</p>
-                          <p>• Cost inflation: 3-5% per year</p>
-                          <p>• Technology adoption: 25% improvement</p>
+                          {KEY_ASSUMPTIONS.map((assumption, idx) => (
+                            <p key={idx}>• {assumption.label}: {assumption.value}</p>
+                          ))}
                           <div className="mt-3">
                             <Link to="/risk-management">
                               <Button
@@ -590,39 +594,23 @@ const BusinessForecast = () => {
                   <CardContent>
                     <div className="space-y-4">
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <Card className="p-4">
-                          <div className="space-y-2">
-                            <h4 className="font-medium text-sm">
-                              Market Share
-                            </h4>
-                            <div className="text-2xl font-bold">12.5%</div>
-                            <div className="text-xs text-muted-foreground">
-                              Target: 15%
+                        {COMPETITIVE_METRICS.map((metric, idx) => (
+                          <Card key={idx} className="p-4">
+                            <div className="space-y-2">
+                              <h4 className="font-medium text-sm">
+                                {metric.label}
+                              </h4>
+                              <div className="text-2xl font-bold">
+                                {metric.currentValue}{metric.unit}
+                              </div>
+                              {metric.targetValue && (
+                                <div className="text-xs text-muted-foreground">
+                                  Target: {metric.targetValue}{metric.unit}
+                                </div>
+                              )}
                             </div>
-                          </div>
-                        </Card>
-                        <Card className="p-4">
-                          <div className="space-y-2">
-                            <h4 className="font-medium text-sm">
-                              Competitive Position
-                            </h4>
-                            <div className="text-2xl font-bold">#3</div>
-                            <div className="text-xs text-muted-foreground">
-                              In target market
-                            </div>
-                          </div>
-                        </Card>
-                        <Card className="p-4">
-                          <div className="space-y-2">
-                            <h4 className="font-medium text-sm">
-                              Price Premium
-                            </h4>
-                            <div className="text-2xl font-bold">+8%</div>
-                            <div className="text-xs text-muted-foreground">
-                              vs. market average
-                            </div>
-                          </div>
-                        </Card>
+                          </Card>
+                        ))}
                       </div>
                       <div className="mt-6 text-center">
                         <Link to="/market-competitive-analysis">

@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { format } from "date-fns";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { cn } from "@/lib/utils";
 import {
   Dialog,
   DialogContent,
@@ -564,10 +565,7 @@ export function ValidationReport({
                       <h4 className="text-lg font-semibold text-gray-900">
                         {row.period}
                       </h4>
-                      <Badge
-                        className={getStatusColor(row.status)}
-                        className="mt-2"
-                      >
+                      <Badge className={cn(getStatusColor(row.status), "mt-2")}>
                         {row.status.toUpperCase()}
                       </Badge>
                     </div>

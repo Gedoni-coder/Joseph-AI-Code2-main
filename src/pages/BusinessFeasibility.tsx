@@ -20,6 +20,17 @@ import { cn } from "@/lib/utils";
 import { generateAIResponse } from "@/lib/ai";
 import type { ChatMessage } from "@/lib/chatbot-data";
 import { BusinessPlanningContent } from "./BusinessPlanning";
+import { STORAGE_KEYS } from "@/lib/app-config";
+import {
+  FEASIBILITY_MODE_THRESHOLDS,
+  FEASIBILITY_INPUT_DEFAULTS,
+  FEASIBILITY_STOP_WORDS,
+  FEASIBILITY_UI_LABELS,
+  FEASIBILITY_AI_PROMPTS,
+  getModeThresholds,
+  getModePrompt,
+  useLargeTimeFactor,
+} from "@/mocks/business-feasibility";
 
 // Modes
 type Mode = "Conservative" | "Safe" | "Wild";
@@ -59,7 +70,8 @@ interface FeasibilityReport {
   resultsByMode: Record<Mode, ModeResult>;
 }
 
-const STORAGE_KEY = "joseph_feasibility_ideas_v1";
+// Use mock data configuration for storage key
+const STORAGE_KEY = STORAGE_KEYS.FEASIBILITY_IDEAS;
 
 function clamp(n: number, min = 0, max = 100) {
   return Math.max(min, Math.min(max, n));
@@ -71,19 +83,8 @@ function computeFeasibility(mode: Mode, inputs: Inputs): ModeResult {
   const years = Math.max(roiTime, 0) / 12;
   const pvFactor = 1 / Math.pow(1 + combinedRate, years || 0);
 
-  const thresholds = (
-    {
-      Conservative: {
-        risk: 1.0,
-        time: 0.8,
-        rate: 0.8,
-        feasible: 60,
-        borderline: 45,
-      },
-      Safe: { risk: 0.7, time: 0.5, rate: 0.6, feasible: 50, borderline: 40 },
-      Wild: { risk: 0.4, time: 0.3, rate: 0.4, feasible: 40, borderline: 30 },
-    } as const
-  )[mode];
+  // Get thresholds from mock data configuration
+  const thresholds = getModeThresholds(mode);
 
   const baseScore = 100 * pvFactor;
   const riskPenalty = risk * thresholds.risk;
@@ -123,33 +124,12 @@ function computeFeasibility(mode: Mode, inputs: Inputs): ModeResult {
 }
 
 function extractKeywords(text: string): string[] {
+  // Use stop words from mock data configuration
   const words = text
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, " ")
     .split(/\s+/)
-    .filter(
-      (w) =>
-        w.length > 3 &&
-        ![
-          "with",
-          "that",
-          "this",
-          "from",
-          "your",
-          "have",
-          "will",
-          "they",
-          "them",
-          "into",
-          "about",
-          "idea",
-          "market",
-          "users",
-          "their",
-          "more",
-          "less",
-        ].includes(w),
-    );
+    .filter((w) => w.length > 3 && !FEASIBILITY_STOP_WORDS.includes(w));
   const counts: Record<string, number> = {};
   for (const w of words) counts[w] = (counts[w] || 0) + 1;
   return Object.entries(counts)
@@ -165,21 +145,34 @@ function deriveInputsFromIdea(text: string): Inputs {
   const rateMatch = lower.match(pct);
   const monthsMatch = lower.match(months);
 
-  let interestRate = rateMatch ? clamp(parseFloat(rateMatch[1]), 0, 100) : 6.5;
-  let timeValue =
-    interestRate > 0 ? Math.max(3, Math.min(interestRate, 12)) : 5;
-  let roiTime = monthsMatch ? clamp(parseInt(monthsMatch[1], 10), 0, 600) : 18;
+  // Use mock data defaults from configuration
+  const defaults = FEASIBILITY_INPUT_DEFAULTS;
 
-  let risk = 35;
+  let interestRate = rateMatch
+    ? clamp(parseFloat(rateMatch[1]), 0, 100)
+    : defaults.interestRate;
+  let timeValue =
+    interestRate > 0
+      ? Math.max(
+          defaults.timeValueMin,
+          Math.min(interestRate, defaults.timeValueMax),
+        )
+      : 5;
+  let roiTime = monthsMatch
+    ? clamp(parseInt(monthsMatch[1], 10), 0, 600)
+    : defaults.roiTime;
+
+  let risk = defaults.defaultRisk;
   if (/(high\s*risk|uncertain|unproven|new\s*market)/.test(lower)) risk = 60;
   if (/(regulated|enterprise|long\s*cycle)/.test(lower))
     risk = Math.max(risk, 50);
   if (/(recurring|existing\s*customers|loyal)/.test(lower)) risk = 25;
 
-  let lengthTimeFactor = 12;
-  if (/(infrastructure|hardware|manufacturing)/.test(lower))
-    lengthTimeFactor = 24;
-  if (/(software|saas|app)/.test(lower)) lengthTimeFactor = 12;
+  // Check if text mentions large time factor categories using config helper
+  let lengthTimeFactor = defaults.lengthTimeFactor;
+  if (useLargeTimeFactor(text)) {
+    lengthTimeFactor = defaults.lengthTimeFactorLarge;
+  }
 
   return { risk, timeValue, roiTime, lengthTimeFactor, interestRate };
 }
@@ -198,8 +191,8 @@ async function buildNarrative(
       context: "business-feasibility",
     },
   ];
-  const system = `You are Joseph AI. Create a concise business feasibility narrative for the ${mode} mode.
-Include: Risk, Time Value (NPV intuition), ROI Time, Length Time Factor, Interest Rate, and an overall verdict (${res.verdict}) with score ${res.score}/100. Avoid fluff.`;
+  // Get AI prompt from mock data configuration
+  const system = getModePrompt(mode);
   try {
     const text = await generateAIResponse(history, { system });
     return text || undefined;
@@ -303,7 +296,7 @@ export default function BusinessFeasibility() {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
       <ModuleHeader
         icon={<CheckCircle className="h-6 w-6" />}
-        title="Business Plan and Feasibility Analysis"
+        title={FEASIBILITY_UI_LABELS.moduleTitle}
         description={`Evaluate and analyze business ideas for ${companyName} expansion, new categories, and strategic initiatives`}
         showConnectionStatus={false}
       />
@@ -345,9 +338,11 @@ export default function BusinessFeasibility() {
                   <Input
                     value={ideaInput}
                     onChange={(e) => setIdeaInput(e.target.value)}
-                    placeholder="Got an Idea?"
+                    placeholder={FEASIBILITY_UI_LABELS.formPlaceholder}
                   />
-                  <Button type="submit">Analyze</Button>
+                  <Button type="submit">
+                    {FEASIBILITY_UI_LABELS.formButtonText}
+                  </Button>
                 </form>
                 <div className="text-xs text-muted-foreground mt-2">
                   Tip: include rough timelines (e.g., “18 months”) or rates
@@ -358,7 +353,9 @@ export default function BusinessFeasibility() {
 
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-sm font-semibold">Past Ideas</h3>
+                <h3 className="text-sm font-semibold">
+                  {FEASIBILITY_UI_LABELS.pastIdeasHeading}
+                </h3>
                 <Badge variant="secondary">{reports.length}</Badge>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -427,7 +424,7 @@ export default function BusinessFeasibility() {
               </div>
               {reports.length === 0 && (
                 <div className="text-xs text-muted-foreground">
-                  No ideas analyzed yet. Enter an idea above to get started.
+                  {FEASIBILITY_UI_LABELS.emptyStateText}
                 </div>
               )}
             </div>
