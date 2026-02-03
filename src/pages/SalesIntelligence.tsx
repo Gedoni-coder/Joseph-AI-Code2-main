@@ -2685,7 +2685,16 @@ const SalesIntelligence = () => {
 
           {/* Deals Tab */}
           <TabsContent value="deals" className="space-y-6">
-            <DealsAnalytics />
+            <DealsAnalytics
+              revenueByProduct={calculateRevenueByProduct()}
+              revenueByRegion={calculateRevenueByRegion()}
+              revenueBySalesRep={calculateRevenueBySalesRep()}
+              revenueByIndustry={calculateRevenueByIndustry()}
+              revenueBySegment={calculateRevenueBySegment()}
+              forecastData={calculateForecastDataPoints()}
+              totalRevenue={calculateTotalRevenue()}
+              repeatRevenueRate={68}
+            />
           </TabsContent>
 
           {/* Insights Tab */}
