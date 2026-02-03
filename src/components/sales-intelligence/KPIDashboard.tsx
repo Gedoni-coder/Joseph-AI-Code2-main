@@ -24,6 +24,10 @@ interface KPIDashboardProps {
   winRate?: number;
   avgDealSize?: number;
   salesCycle?: number;
+  revenueTrend?: number;
+  winRateTrend?: number;
+  dealSizeTrend?: number;
+  salesCycleTrend?: number;
 }
 
 const KPIDashboard = ({
