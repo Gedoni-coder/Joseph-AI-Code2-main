@@ -57,6 +57,10 @@ const KPIDashboard = ({
   winRateTrend = 0,
   dealSizeTrend = 0,
   salesCycleTrend = 0,
+  revenueTrendData = [],
+  leadsVsDealsData = [],
+  salesCycleTrendData = [],
+  pipelineVsTargetData = [],
 }: KPIDashboardProps) => {
   const { format } = useCurrency();
 
