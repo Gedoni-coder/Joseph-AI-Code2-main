@@ -170,14 +170,23 @@ const KPIDashboard = ({
               <CardDescription>Monthly revenue performance</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
-                <div className="text-center">
-                  <p className="text-gray-500">Chart visualization area</p>
-                  <p className="text-xs text-gray-400 mt-2">
-                    📈 Revenue trending data would be displayed here
-                  </p>
-                </div>
-              </div>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={revenueTrendData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip formatter={(value) => `$${(value / 1000).toFixed(0)}K`} />
+                  <Legend />
+                  <Line
+                    type="monotone"
+                    dataKey="revenue"
+                    stroke="#3b82f6"
+                    name="Revenue"
+                    strokeWidth={2}
+                    dot={{ fill: "#3b82f6", r: 4 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
             </CardContent>
           </Card>
 
