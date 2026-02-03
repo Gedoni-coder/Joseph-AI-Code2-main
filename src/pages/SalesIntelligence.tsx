@@ -1412,7 +1412,14 @@ const SalesIntelligence = () => {
               </TabsList>
 
               <TabsContent value="dashboard">
-                <KPIDashboard />
+                <KPIDashboard
+                  totalRevenue={calculateTotalRevenue()}
+                  totalTarget={calculateTotalTeamTarget()}
+                  leadsGenerated={leadsGenerated}
+                  winRate={calculateWinRate()}
+                  avgDealSize={calculateAvgDealSize()}
+                  salesCycle={calculateSalesCycle()}
+                />
               </TabsContent>
 
               <TabsContent value="categories">
