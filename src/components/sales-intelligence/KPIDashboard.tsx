@@ -8,6 +8,18 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, TrendingDown } from "lucide-react";
 import { useCurrency } from "@/hooks/useCurrency";
+import {
+  LineChart,
+  Line,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 interface KPIMetric {
   label: string;
@@ -28,6 +40,10 @@ interface KPIDashboardProps {
   winRateTrend?: number;
   dealSizeTrend?: number;
   salesCycleTrend?: number;
+  revenueTrendData?: Array<{ month: string; revenue: number }>;
+  leadsVsDealsData?: Array<{ stage: string; count: number }>;
+  salesCycleTrendData?: Array<{ month: string; days: number }>;
+  pipelineVsTargetData?: Array<{ name: string; value: number }>;
 }
 
 const KPIDashboard = ({
@@ -41,6 +57,10 @@ const KPIDashboard = ({
   winRateTrend = 0,
   dealSizeTrend = 0,
   salesCycleTrend = 0,
+  revenueTrendData = [],
+  leadsVsDealsData = [],
+  salesCycleTrendData = [],
+  pipelineVsTargetData = [],
 }: KPIDashboardProps) => {
   const { format } = useCurrency();
 
@@ -150,14 +170,23 @@ const KPIDashboard = ({
               <CardDescription>Monthly revenue performance</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
-                <div className="text-center">
-                  <p className="text-gray-500">Chart visualization area</p>
-                  <p className="text-xs text-gray-400 mt-2">
-                    📈 Revenue trending data would be displayed here
-                  </p>
-                </div>
-              </div>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={revenueTrendData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip formatter={(value) => `$${(value / 1000).toFixed(0)}K`} />
+                  <Legend />
+                  <Line
+                    type="monotone"
+                    dataKey="revenue"
+                    stroke="#3b82f6"
+                    name="Revenue"
+                    strokeWidth={2}
+                    dot={{ fill: "#3b82f6", r: 4 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
             </CardContent>
           </Card>
 
@@ -170,14 +199,15 @@ const KPIDashboard = ({
               <CardDescription>Conversion funnel analysis</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
-                <div className="text-center">
-                  <p className="text-gray-500">Chart visualization area</p>
-                  <p className="text-xs text-gray-400 mt-2">
-                    📊 Conversion funnel data would be displayed here
-                  </p>
-                </div>
-              </div>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={leadsVsDealsData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="stage" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="count" fill="#10b981" name="Count" />
+                </BarChart>
+              </ResponsiveContainer>
             </CardContent>
           </Card>
 
@@ -188,14 +218,23 @@ const KPIDashboard = ({
               <CardDescription>Average days to close over time</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
-                <div className="text-center">
-                  <p className="text-gray-500">Chart visualization area</p>
-                  <p className="text-xs text-gray-400 mt-2">
-                    📉 Sales cycle trend data would be displayed here
-                  </p>
-                </div>
-              </div>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={salesCycleTrendData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip formatter={(value) => `${value} days`} />
+                  <Legend />
+                  <Line
+                    type="monotone"
+                    dataKey="days"
+                    stroke="#f59e0b"
+                    name="Days to Close"
+                    strokeWidth={2}
+                    dot={{ fill: "#f59e0b", r: 4 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
             </CardContent>
           </Card>
 
@@ -208,14 +247,15 @@ const KPIDashboard = ({
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
-                <div className="text-center">
-                  <p className="text-gray-500">Chart visualization area</p>
-                  <p className="text-xs text-gray-400 mt-2">
-                    📊 Pipeline vs target comparison would be displayed here
-                  </p>
-                </div>
-              </div>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={pipelineVsTargetData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip formatter={(value) => `$${(value / 1000000).toFixed(2)}M`} />
+                  <Bar dataKey="value" fill="#8b5cf6" name="Amount" />
+                </BarChart>
+              </ResponsiveContainer>
             </CardContent>
           </Card>
         </div>

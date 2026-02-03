@@ -1258,6 +1258,75 @@ const SalesIntelligence = () => {
     return 12; // Default positive trend of 12%
   };
 
+  // Chart data calculation functions for KPI Dashboard
+  const calculateRevenueTrendData = () => {
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+    const totalRevenue = calculateTotalRevenue();
+    const baselineMonthly = totalRevenue / 6;
+
+    return months.map((month, index) => {
+      // Simulate growth trend: 8% increase per month
+      const growthFactor = Math.pow(1.08, index);
+      const revenue = Math.round(baselineMonthly * growthFactor);
+
+      return {
+        month,
+        revenue,
+      };
+    });
+  };
+
+  const calculateLeadsVsDealsData = () => {
+    const totalLeads = allLeads.length;
+    const quotas = calculateQuotations();
+    const proposals = calculateProposals();
+    const deals = hotLeads.length; // Approximate deals as hot leads
+
+    return [
+      { stage: "Total Leads", count: totalLeads },
+      { stage: "Proposals", count: proposals },
+      { stage: "Quotations", count: quotas },
+      { stage: "Deals", count: deals },
+    ];
+  };
+
+  const calculateSalesCycleTrendData = () => {
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"];
+    const baseSalesCycle = calculateSalesCycle();
+
+    return months.map((month, index) => {
+      // Simulate improvement: 2 days reduction per month
+      const improvement = index * 2;
+      const cycle = Math.max(baseSalesCycle - improvement, 10);
+
+      return {
+        month,
+        days: Math.round(cycle),
+      };
+    });
+  };
+
+  const calculatePipelineVsTargetData = () => {
+    const target = calculateTotalTeamTarget();
+    const pipeline = calculatePipelineValue();
+    const achieved = calculateTotalAchieved();
+
+    return [
+      {
+        name: "Pipeline",
+        value: Math.round(pipeline),
+      },
+      {
+        name: "Achieved",
+        value: Math.round(achieved),
+      },
+      {
+        name: "Target",
+        value: Math.round(target),
+      },
+    ];
+  };
+
   // Sub-modules with CALCULATED metrics (TAGS hardcoded, VALUES calculated)
   const staticSubModules = [
     {
@@ -1562,6 +1631,10 @@ const SalesIntelligence = () => {
                   winRateTrend={calculateWinRateTrend()}
                   dealSizeTrend={calculateDealSizeTrend()}
                   salesCycleTrend={calculateSalesCycleTrend()}
+                  revenueTrendData={calculateRevenueTrendData()}
+                  leadsVsDealsData={calculateLeadsVsDealsData()}
+                  salesCycleTrendData={calculateSalesCycleTrendData()}
+                  pipelineVsTargetData={calculatePipelineVsTargetData()}
                 />
               </TabsContent>
 
@@ -2836,7 +2909,11 @@ const SalesIntelligence = () => {
               revenueBySegment={calculateRevenueBySegment()}
               forecastData={calculateForecastDataPoints()}
               totalRevenue={calculateTotalRevenue()}
-              repeatRevenueRate={68}
+              repeatRevenueRate={calculateRepeatRevenueRate()}
+              repeatRevenueTrend={calculateRepeatRevenueTrend()}
+              pipelineRisk={calculatePipelineRisk()}
+              dealVelocityRisk={calculateDealVelocityRisk()}
+              repPerformanceRisk={calculateRepPerformanceRisk()}
             />
           </TabsContent>
 
