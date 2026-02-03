@@ -31,6 +31,7 @@ import {
 } from "lucide-react";
 
 const SalesIntelligence = () => {
+  const { format } = useCurrency();
   const [activeTab, setActiveTab] = useState("overview");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedChannel, setSelectedChannel] = useState("whatsapp");
