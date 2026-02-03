@@ -216,9 +216,9 @@ export const KPICategoriesView = () => {
         {
           name: "Sales Revenue",
           description: "Total closed revenue for the period",
-          currentValue: "$245K",
-          lastMonthValue: "$235K",
-          trendValue: "+$10K",
+          currentValue: format(245000, 0),
+          lastMonthValue: format(235000, 0),
+          trendValue: `+${format(10000, 0)}`,
           trendDirection: "up",
           explanation:
             "Revenue on track. Strong deal closures this period.",
@@ -236,9 +236,9 @@ export const KPICategoriesView = () => {
         {
           name: "Average Deal Size",
           description: "Mean revenue per closed deal",
-          currentValue: "$45.2K",
-          lastMonthValue: "$42.1K",
-          trendValue: "+$3.1K",
+          currentValue: format(45200),
+          lastMonthValue: format(42100),
+          trendValue: `+${format(3100)}`,
           trendDirection: "up",
           explanation:
             "Higher value deals. Premium positioning working.",
@@ -256,9 +256,9 @@ export const KPICategoriesView = () => {
         {
           name: "Monthly Recurring Revenue",
           description: "Predictable monthly revenue from subscriptions",
-          currentValue: "$185K",
-          lastMonthValue: "$178K",
-          trendValue: "+$7K",
+          currentValue: format(185000, 0),
+          lastMonthValue: format(178000, 0),
+          trendValue: `+${format(7000, 0)}`,
           trendDirection: "up",
           explanation:
             "MRR growing steadily. Subscription base expanding.",
