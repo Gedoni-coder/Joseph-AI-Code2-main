@@ -1069,6 +1069,12 @@ const SalesIntelligence = () => {
                 Assets
               </TabsTrigger>
               <TabsTrigger
+                value="deals"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Deals
+              </TabsTrigger>
+              <TabsTrigger
                 value="insights"
                 className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
               >
