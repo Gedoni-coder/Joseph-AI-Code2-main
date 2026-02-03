@@ -168,6 +168,11 @@ const SalesIntelligence = () => {
       stall: "No",
       playbook: "Monitor",
       leadSource: leadData.leadSource,
+      product: leadData.product,
+      region: leadData.region,
+      industry: leadData.industry,
+      segment: leadData.segment,
+      dealSize: leadData.dealSize,
     };
 
     const category = categorizeLead(metrics.score, leadData.pipelineStage);
