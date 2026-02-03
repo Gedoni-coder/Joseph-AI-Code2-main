@@ -224,7 +224,14 @@ const SalesIntelligence = () => {
               {subModules.map((module) => (
                 <Card
                   key={module.id}
-                  className="hover:shadow-lg transition-shadow"
+                  className={`hover:shadow-lg transition-shadow cursor-pointer ${
+                    (module as any).link ? "hover:border-blue-300" : ""
+                  }`}
+                  onClick={() => {
+                    if ((module as any).link) {
+                      window.location.href = (module as any).link;
+                    }
+                  }}
                 >
                   <CardHeader>
                     <div className="flex items-start justify-between">
@@ -241,7 +248,14 @@ const SalesIntelligence = () => {
                           </CardDescription>
                         </div>
                       </div>
-                      <Badge variant="outline">Active</Badge>
+                      <div className="flex gap-2">
+                        {(module as any).isNew && (
+                          <Badge variant="default" className="bg-green-600">
+                            NEW
+                          </Badge>
+                        )}
+                        <Badge variant="outline">Active</Badge>
+                      </div>
                     </div>
                   </CardHeader>
                   <CardContent>
@@ -258,6 +272,13 @@ const SalesIntelligence = () => {
                         </div>
                       ))}
                     </div>
+                    {(module as any).link && (
+                      <div className="mt-3 pt-3 border-t">
+                        <p className="text-xs text-blue-600 font-semibold flex items-center gap-1">
+                          Click to open <ArrowRight className="h-3 w-3" />
+                        </p>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               ))}
