@@ -10,7 +10,7 @@ export const KPIDashboardHome = () => {
   const topLineKPIs = [
     {
       label: "Monthly Revenue",
-      value: "$245,000",
+      value: format(245000),
       trend: "+12%",
       color: "text-green-600",
       bgColor: "bg-green-50",
@@ -18,7 +18,7 @@ export const KPIDashboardHome = () => {
     },
     {
       label: "Sales Target",
-      value: "$250,000",
+      value: format(250000),
       trend: "-2%",
       color: "text-blue-600",
       bgColor: "bg-blue-50",
@@ -26,7 +26,7 @@ export const KPIDashboardHome = () => {
     },
     {
       label: "Revenue Gap",
-      value: "$5,000",
+      value: format(5000),
       trend: "-98%",
       color: "text-orange-600",
       bgColor: "bg-orange-50",
