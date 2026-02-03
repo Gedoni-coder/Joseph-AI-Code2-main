@@ -200,9 +200,9 @@ export const KPICategoriesView = () => {
         {
           name: "Average Deal Size",
           description: "Average revenue per closed deal",
-          currentValue: "$45.2K",
-          lastMonthValue: "$42.1K",
-          trendValue: "+$3.1K",
+          currentValue: format(45200),
+          lastMonthValue: format(42100),
+          trendValue: `+${format(3100)}`,
           trendDirection: "up",
           explanation:
             "Deal sizes increasing. Upselling is effective.",
