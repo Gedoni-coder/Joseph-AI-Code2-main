@@ -77,6 +77,9 @@ const DealsAnalytics = ({
   forecastData = DEFAULT_FORECAST_DATA,
   totalRevenue = 0,
   repeatRevenueRate = 0,
+  pipelineRisk = 0,
+  dealVelocityRisk = 0,
+  repPerformanceRisk = 0,
 }: DealsAnalyticsProps) => {
 
   const colors = ["#3b82f6", "#ef4444", "#10b981", "#f59e0b", "#8b5cf6"];
