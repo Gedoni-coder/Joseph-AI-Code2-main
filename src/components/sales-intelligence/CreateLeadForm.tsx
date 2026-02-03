@@ -22,6 +22,7 @@ export interface CreateLeadFormData {
   openingDate: string;
   expectedClose: string;
   pipelineStage: string;
+  leadSource: string;
 }
 
 const PIPELINE_STAGES = [
@@ -35,6 +36,8 @@ const PIPELINE_STAGES = [
   "Won",
 ];
 
+const LEAD_SOURCES = ["Website", "Social Media", "Email Campaign", "Referrals"];
+
 export default function CreateLeadForm({
   onSubmit,
   onCancel,
@@ -45,6 +48,7 @@ export default function CreateLeadForm({
     openingDate: "",
     expectedClose: "",
     pipelineStage: "",
+    leadSource: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -66,6 +70,9 @@ export default function CreateLeadForm({
     }
     if (!formData.pipelineStage) {
       newErrors.pipelineStage = "Pipeline stage is required";
+    }
+    if (!formData.leadSource) {
+      newErrors.leadSource = "Lead source is required";
     }
 
     // Validate that expected close is after opening date
@@ -182,6 +189,33 @@ export default function CreateLeadForm({
         </Select>
         {errors.pipelineStage && (
           <p className="text-xs text-red-500">{errors.pipelineStage}</p>
+        )}
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="leadSource">Lead Source</Label>
+        <Select
+          value={formData.leadSource}
+          onValueChange={(value) =>
+            setFormData({ ...formData, leadSource: value })
+          }
+        >
+          <SelectTrigger
+            id="leadSource"
+            className={errors.leadSource ? "border-red-500" : ""}
+          >
+            <SelectValue placeholder="Select a lead source" />
+          </SelectTrigger>
+          <SelectContent>
+            {LEAD_SOURCES.map((source) => (
+              <SelectItem key={source} value={source}>
+                {source}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        {errors.leadSource && (
+          <p className="text-xs text-red-500">{errors.leadSource}</p>
         )}
       </div>
 
