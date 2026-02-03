@@ -7,8 +7,10 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, TrendingDown, Target, Award } from "lucide-react";
+import { useCurrency } from "@/hooks/useCurrency";
 
 export const BenchmarkingSection = () => {
+  const { format } = useCurrency();
   const benchmarks = [
     {
       kpi: "Win Rate",
