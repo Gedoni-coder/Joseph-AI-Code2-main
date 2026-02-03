@@ -1016,6 +1016,12 @@ const SalesIntelligence = () => {
                 Overview
               </TabsTrigger>
               <TabsTrigger
+                value="kpi"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                KPI
+              </TabsTrigger>
+              <TabsTrigger
                 value="lead-pipeline"
                 className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
               >
