@@ -218,14 +218,23 @@ const KPIDashboard = ({
               <CardDescription>Average days to close over time</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
-                <div className="text-center">
-                  <p className="text-gray-500">Chart visualization area</p>
-                  <p className="text-xs text-gray-400 mt-2">
-                    📉 Sales cycle trend data would be displayed here
-                  </p>
-                </div>
-              </div>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={salesCycleTrendData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip formatter={(value) => `${value} days`} />
+                  <Legend />
+                  <Line
+                    type="monotone"
+                    dataKey="days"
+                    stroke="#f59e0b"
+                    name="Days to Close"
+                    strokeWidth={2}
+                    dot={{ fill: "#f59e0b", r: 4 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
             </CardContent>
           </Card>
 
