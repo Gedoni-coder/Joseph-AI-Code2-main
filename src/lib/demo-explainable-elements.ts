@@ -110,7 +110,8 @@ export function initializeDemoExplainableElements() {
   }, 3000);
 }
 
-// Auto-initialize when script loads
-if (typeof window !== 'undefined') {
+// Auto-initialize when script loads (with a check to avoid unnecessary DOM queries if not needed)
+if (typeof window !== 'undefined' && window.location.pathname !== '/') {
+  // Only initialize on non-landing pages
   initializeDemoExplainableElements();
 }
