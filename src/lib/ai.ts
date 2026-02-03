@@ -166,7 +166,9 @@ export async function generateAIResponse(
       const content: string | undefined = data?.choices?.[0]?.message?.content;
       if (content) return content;
     }
-  } catch {}
+  } catch (error) {
+    // Groq endpoint unavailable - continue to next provider
+  }
 
   // Then OpenAI
   if (OPENAI_API_KEY) {

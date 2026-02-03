@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useCurrency } from "@/hooks/useCurrency";
 import {
@@ -24,6 +25,7 @@ import CustomKPIBuilder from "@/components/sales-intelligence/CustomKPIBuilder";
 import BenchmarkingSection from "@/components/sales-intelligence/BenchmarkingSection";
 import KPIAlerts from "@/components/sales-intelligence/KPIAlerts";
 import ExportReporting from "@/components/sales-intelligence/ExportReporting";
+import DealsAnalytics from "@/components/sales-intelligence/DealsAnalytics";
 import {
   TrendingUp,
   Users,
@@ -79,7 +81,11 @@ interface SalesTarget {
 
 const SalesIntelligence = () => {
   const { format } = useCurrency();
-  const [activeTab, setActiveTab] = useState("overview");
+  const location = useLocation();
+  const isKPIDashboard = location.pathname === "/kpi-dashboard";
+  const [activeTab, setActiveTab] = useState(
+    isKPIDashboard ? "kpi" : "overview",
+  );
   const [selectedChannel, setSelectedChannel] = useState("whatsapp");
   const [selectedSalesRep, setSelectedSalesRep] = useState<string>("");
   const [createLeadOpen, setCreateLeadOpen] = useState(false);
@@ -1063,6 +1069,12 @@ const SalesIntelligence = () => {
                 className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
               >
                 Assets
+              </TabsTrigger>
+              <TabsTrigger
+                value="deals"
+                className="w-full justify-center data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+              >
+                Deals
               </TabsTrigger>
               <TabsTrigger
                 value="insights"
@@ -2435,6 +2447,11 @@ const SalesIntelligence = () => {
                 })()}
               </CardContent>
             </Card>
+          </TabsContent>
+
+          {/* Deals Tab */}
+          <TabsContent value="deals" className="space-y-6">
+            <DealsAnalytics />
           </TabsContent>
 
           {/* Insights Tab */}

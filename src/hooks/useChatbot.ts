@@ -424,46 +424,52 @@ export function useChatbot() {
 
   const explainElement = useCallback(
     async (elementDescription: string, data?: any) => {
-      setIsTyping(true);
-      const history: ChatMessage[] = [
-        ...(messagesByContext[currentContext.id] || []),
-        {
-          id: `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-          type: "user",
-          content: `Explain this UI element: ${elementDescription}. If helpful, relate it to ${currentContext.name}.`,
-          timestamp: new Date(),
+      try {
+        setIsTyping(true);
+        const history: ChatMessage[] = [
+          ...(messagesByContext[currentContext.id] || []),
+          {
+            id: `msg-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+            type: "user",
+            content: `Explain this UI element: ${elementDescription}. If helpful, relate it to ${currentContext.name}.`,
+            timestamp: new Date(),
+            context: currentContext.id,
+          },
+        ];
+
+        const system = `You are Joseph AI embedded in a web app. The user clicked an element described as: "${elementDescription}". Provide a concise explanation relevant to the current module (${currentContext.name}). If numbers or metrics are present in data, interpret them, cite the values you used. Avoid hallucinations.`;
+        const webContext = data
+          ? `Clicked element details (JSON):\n${JSON.stringify(data).slice(0, 6000)}`
+          : undefined;
+        const aiText = await generateAIResponse(history, {
+          system,
+          webContext: webContext || null,
+        });
+
+        const content =
+          aiText ??
+          `You clicked on "${elementDescription}". ${generateContextualResponse(
+            `Explain ${elementDescription}`,
+            currentContext.id,
+            data,
+          )}`;
+
+        addMessage({
+          type: "assistant",
+          content,
           context: currentContext.id,
-        },
-      ];
+        });
 
-      const system = `You are Joseph AI embedded in a web app. The user clicked an element described as: "${elementDescription}". Provide a concise explanation relevant to the current module (${currentContext.name}). If numbers or metrics are present in data, interpret them, cite the values you used. Avoid hallucinations.`;
-      const webContext = data
-        ? `Clicked element details (JSON):\n${JSON.stringify(data).slice(0, 6000)}`
-        : undefined;
-      const aiText = await generateAIResponse(history, {
-        system,
-        webContext: webContext || null,
-      });
-
-      const content =
-        aiText ??
-        `You clicked on "${elementDescription}". ${generateContextualResponse(
-          `Explain ${elementDescription}`,
-          currentContext.id,
-          data,
-        )}`;
-
-      addMessage({
-        type: "assistant",
-        content,
-        context: currentContext.id,
-      });
-
-      if (!isOpen) {
-        setIsOpen(true);
-        setIsMinimized(false);
+        if (!isOpen) {
+          setIsOpen(true);
+          setIsMinimized(false);
+        }
+      } catch (error) {
+        // Handle any errors silently
+        console.debug("Error explaining element:", error);
+      } finally {
+        setIsTyping(false);
       }
-      setIsTyping(false);
     },
     [
       currentContext.id,
