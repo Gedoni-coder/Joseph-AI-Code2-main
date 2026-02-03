@@ -65,6 +65,12 @@ interface Lead {
   stall: string;
   playbook: string;
   leadSource: string;
+  product?: string;
+  region?: string;
+  industry?: string;
+  segment?: string;
+  dealSize?: number;
+  salesRep?: string;
 }
 
 interface SalesTarget {
