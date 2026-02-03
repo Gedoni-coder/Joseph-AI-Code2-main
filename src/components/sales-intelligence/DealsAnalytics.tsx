@@ -40,10 +40,6 @@ interface ForecastData {
 }
 
 const DealsAnalytics = () => {
-  const [selectedView, setSelectedView] = useState<"revenue" | "forecast">(
-    "revenue"
-  );
-
   // Sample revenue data by product
   const revenueByProduct: RevenueData[] = [
     { category: "Product A", revenue: 450000, percentage: 35 },
@@ -135,14 +131,14 @@ const DealsAnalytics = () => {
   const topProduct = revenueByProduct[0];
   const topRegion = revenueByRegion[0];
   const topSalesRep = revenueBySalesRep[0];
-  const repeatRevenueRate = 68; // percentage
+  const repeatRevenueRate = 68;
 
   // Calculate forecast metrics
   const totalForecast = forecastData.reduce((sum, item) => sum + item.forecast, 0);
   const totalBestCase = forecastData.reduce((sum, item) => sum + item.bestCase, 0);
   const totalWorstCase = forecastData.reduce((sum, item) => sum + item.worstCase, 0);
   const annualTarget = 4800000;
-  const forecastToTargetRatio = ((totalForecast * 2) / annualTarget) * 100; // extrapolate to 12 months
+  const forecastToTargetRatio = ((totalForecast * 2) / annualTarget) * 100;
 
   return (
     <div className="space-y-6">
@@ -237,287 +233,285 @@ const DealsAnalytics = () => {
               <TabsTrigger value="segment">By Segment</TabsTrigger>
             </TabsList>
 
-            <div className="mt-6">
-              <TabsContent value="product" className="space-y-4">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={revenueByProduct}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="category" angle={-45} textAnchor="end" />
-                      <YAxis />
-                      <Tooltip formatter={(value) => `$${value / 1000}K`} />
-                      <Bar dataKey="revenue" fill="#3b82f6" />
-                    </BarChart>
-                  </ResponsiveContainer>
+            <TabsContent value="product" className="mt-6 space-y-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={revenueByProduct}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="category" angle={-45} textAnchor="end" />
+                    <YAxis />
+                    <Tooltip formatter={(value) => `$${value / 1000}K`} />
+                    <Bar dataKey="revenue" fill="#3b82f6" />
+                  </BarChart>
+                </ResponsiveContainer>
 
-                  <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                      <Pie
-                        data={revenueByProduct}
-                        dataKey="revenue"
-                        nameKey="category"
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={80}
-                        label
-                      >
-                        {revenueByProduct.map((_, index) => (
-                          <Cell key={`cell-${index}`} fill={colors[index]} />
-                        ))}
-                      </Pie>
-                      <Tooltip formatter={(value) => `$${value / 1000}K`} />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-
-                <div className="mt-6 space-y-2">
-                  {revenueByProduct.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                <ResponsiveContainer width="100%" height={300}>
+                  <PieChart>
+                    <Pie
+                      data={revenueByProduct}
+                      dataKey="revenue"
+                      nameKey="category"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={80}
+                      label
                     >
-                      <div className="flex items-center gap-2">
-                        <div
-                          className="w-3 h-3 rounded-full"
-                          style={{ backgroundColor: colors[idx] }}
-                        ></div>
-                        <span className="font-medium text-sm">{item.category}</span>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <span className="text-sm text-gray-600">
-                          ${(item.revenue / 1000).toFixed(0)}K
-                        </span>
-                        <Badge variant="secondary">{item.percentage}%</Badge>
-                      </div>
+                      {revenueByProduct.map((_, index) => (
+                        <Cell key={`cell-${index}`} fill={colors[index]} />
+                      ))}
+                    </Pie>
+                    <Tooltip formatter={(value) => `$${value / 1000}K`} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+
+              <div className="space-y-2">
+                {revenueByProduct.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: colors[idx] }}
+                      ></div>
+                      <span className="font-medium text-sm">{item.category}</span>
                     </div>
-                  ))}
-                </div>
-              </TabsContent>
+                    <div className="flex items-center gap-4">
+                      <span className="text-sm text-gray-600">
+                        ${(item.revenue / 1000).toFixed(0)}K
+                      </span>
+                      <Badge variant="secondary">{item.percentage}%</Badge>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
 
-              <TabsContent value="region" className="space-y-4">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={revenueByRegion}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="category" angle={-45} textAnchor="end" />
-                      <YAxis />
-                      <Tooltip formatter={(value) => `$${value / 1000}K`} />
-                      <Bar dataKey="revenue" fill="#10b981" />
-                    </BarChart>
-                  </ResponsiveContainer>
+            <TabsContent value="region" className="mt-6 space-y-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={revenueByRegion}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="category" angle={-45} textAnchor="end" />
+                    <YAxis />
+                    <Tooltip formatter={(value) => `$${value / 1000}K`} />
+                    <Bar dataKey="revenue" fill="#10b981" />
+                  </BarChart>
+                </ResponsiveContainer>
 
-                  <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                      <Pie
-                        data={revenueByRegion}
-                        dataKey="revenue"
-                        nameKey="category"
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={80}
-                        label
-                      >
-                        {revenueByRegion.map((_, index) => (
-                          <Cell key={`cell-${index}`} fill={colors[index]} />
-                        ))}
-                      </Pie>
-                      <Tooltip formatter={(value) => `$${value / 1000}K`} />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-
-                <div className="mt-6 space-y-2">
-                  {revenueByRegion.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                <ResponsiveContainer width="100%" height={300}>
+                  <PieChart>
+                    <Pie
+                      data={revenueByRegion}
+                      dataKey="revenue"
+                      nameKey="category"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={80}
+                      label
                     >
-                      <div className="flex items-center gap-2">
-                        <div
-                          className="w-3 h-3 rounded-full"
-                          style={{ backgroundColor: colors[idx] }}
-                        ></div>
-                        <span className="font-medium text-sm">{item.category}</span>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <span className="text-sm text-gray-600">
-                          ${(item.revenue / 1000).toFixed(0)}K
-                        </span>
-                        <Badge variant="secondary">{item.percentage}%</Badge>
-                      </div>
+                      {revenueByRegion.map((_, index) => (
+                        <Cell key={`cell-${index}`} fill={colors[index]} />
+                      ))}
+                    </Pie>
+                    <Tooltip formatter={(value) => `$${value / 1000}K`} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+
+              <div className="space-y-2">
+                {revenueByRegion.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: colors[idx] }}
+                      ></div>
+                      <span className="font-medium text-sm">{item.category}</span>
                     </div>
-                  ))}
-                </div>
-              </TabsContent>
+                    <div className="flex items-center gap-4">
+                      <span className="text-sm text-gray-600">
+                        ${(item.revenue / 1000).toFixed(0)}K
+                      </span>
+                      <Badge variant="secondary">{item.percentage}%</Badge>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
 
-              <TabsContent value="rep" className="space-y-4">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={revenueBySalesRep}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="category" angle={-45} textAnchor="end" />
-                      <YAxis />
-                      <Tooltip formatter={(value) => `$${value / 1000}K`} />
-                      <Bar dataKey="revenue" fill="#f59e0b" />
-                    </BarChart>
-                  </ResponsiveContainer>
+            <TabsContent value="rep" className="mt-6 space-y-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={revenueBySalesRep}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="category" angle={-45} textAnchor="end" />
+                    <YAxis />
+                    <Tooltip formatter={(value) => `$${value / 1000}K`} />
+                    <Bar dataKey="revenue" fill="#f59e0b" />
+                  </BarChart>
+                </ResponsiveContainer>
 
-                  <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                      <Pie
-                        data={revenueBySalesRep}
-                        dataKey="revenue"
-                        nameKey="category"
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={80}
-                        label
-                      >
-                        {revenueBySalesRep.map((_, index) => (
-                          <Cell key={`cell-${index}`} fill={colors[index]} />
-                        ))}
-                      </Pie>
-                      <Tooltip formatter={(value) => `$${value / 1000}K`} />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-
-                <div className="mt-6 space-y-2">
-                  {revenueBySalesRep.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                <ResponsiveContainer width="100%" height={300}>
+                  <PieChart>
+                    <Pie
+                      data={revenueBySalesRep}
+                      dataKey="revenue"
+                      nameKey="category"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={80}
+                      label
                     >
-                      <div className="flex items-center gap-2">
-                        <div
-                          className="w-3 h-3 rounded-full"
-                          style={{ backgroundColor: colors[idx] }}
-                        ></div>
-                        <span className="font-medium text-sm">{item.category}</span>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <span className="text-sm text-gray-600">
-                          ${(item.revenue / 1000).toFixed(0)}K
-                        </span>
-                        <Badge variant="secondary">{item.percentage}%</Badge>
-                      </div>
+                      {revenueBySalesRep.map((_, index) => (
+                        <Cell key={`cell-${index}`} fill={colors[index]} />
+                      ))}
+                    </Pie>
+                    <Tooltip formatter={(value) => `$${value / 1000}K`} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+
+              <div className="space-y-2">
+                {revenueBySalesRep.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: colors[idx] }}
+                      ></div>
+                      <span className="font-medium text-sm">{item.category}</span>
                     </div>
-                  ))}
-                </div>
-              </TabsContent>
+                    <div className="flex items-center gap-4">
+                      <span className="text-sm text-gray-600">
+                        ${(item.revenue / 1000).toFixed(0)}K
+                      </span>
+                      <Badge variant="secondary">{item.percentage}%</Badge>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
 
-              <TabsContent value="industry" className="space-y-4">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={revenueByIndustry}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="category" angle={-45} textAnchor="end" />
-                      <YAxis />
-                      <Tooltip formatter={(value) => `$${value / 1000}K`} />
-                      <Bar dataKey="revenue" fill="#ef4444" />
-                    </BarChart>
-                  </ResponsiveContainer>
+            <TabsContent value="industry" className="mt-6 space-y-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={revenueByIndustry}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="category" angle={-45} textAnchor="end" />
+                    <YAxis />
+                    <Tooltip formatter={(value) => `$${value / 1000}K`} />
+                    <Bar dataKey="revenue" fill="#ef4444" />
+                  </BarChart>
+                </ResponsiveContainer>
 
-                  <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                      <Pie
-                        data={revenueByIndustry}
-                        dataKey="revenue"
-                        nameKey="category"
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={80}
-                        label
-                      >
-                        {revenueByIndustry.map((_, index) => (
-                          <Cell key={`cell-${index}`} fill={colors[index]} />
-                        ))}
-                      </Pie>
-                      <Tooltip formatter={(value) => `$${value / 1000}K`} />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-
-                <div className="mt-6 space-y-2">
-                  {revenueByIndustry.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                <ResponsiveContainer width="100%" height={300}>
+                  <PieChart>
+                    <Pie
+                      data={revenueByIndustry}
+                      dataKey="revenue"
+                      nameKey="category"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={80}
+                      label
                     >
-                      <div className="flex items-center gap-2">
-                        <div
-                          className="w-3 h-3 rounded-full"
-                          style={{ backgroundColor: colors[idx] }}
-                        ></div>
-                        <span className="font-medium text-sm">{item.category}</span>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <span className="text-sm text-gray-600">
-                          ${(item.revenue / 1000).toFixed(0)}K
-                        </span>
-                        <Badge variant="secondary">{item.percentage}%</Badge>
-                      </div>
+                      {revenueByIndustry.map((_, index) => (
+                        <Cell key={`cell-${index}`} fill={colors[index]} />
+                      ))}
+                    </Pie>
+                    <Tooltip formatter={(value) => `$${value / 1000}K`} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+
+              <div className="space-y-2">
+                {revenueByIndustry.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: colors[idx] }}
+                      ></div>
+                      <span className="font-medium text-sm">{item.category}</span>
                     </div>
-                  ))}
-                </div>
-              </TabsContent>
+                    <div className="flex items-center gap-4">
+                      <span className="text-sm text-gray-600">
+                        ${(item.revenue / 1000).toFixed(0)}K
+                      </span>
+                      <Badge variant="secondary">{item.percentage}%</Badge>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
 
-              <TabsContent value="segment" className="space-y-4">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <ResponsiveContainer width="100%" height={300}>
-                    <BarChart data={revenueBySegment}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="category" angle={-45} textAnchor="end" />
-                      <YAxis />
-                      <Tooltip formatter={(value) => `$${value / 1000}K`} />
-                      <Bar dataKey="revenue" fill="#8b5cf6" />
-                    </BarChart>
-                  </ResponsiveContainer>
+            <TabsContent value="segment" className="mt-6 space-y-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart data={revenueBySegment}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="category" angle={-45} textAnchor="end" />
+                    <YAxis />
+                    <Tooltip formatter={(value) => `$${value / 1000}K`} />
+                    <Bar dataKey="revenue" fill="#8b5cf6" />
+                  </BarChart>
+                </ResponsiveContainer>
 
-                  <ResponsiveContainer width="100%" height={300}>
-                    <PieChart>
-                      <Pie
-                        data={revenueBySegment}
-                        dataKey="revenue"
-                        nameKey="category"
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={80}
-                        label
-                      >
-                        {revenueBySegment.map((_, index) => (
-                          <Cell key={`cell-${index}`} fill={colors[index]} />
-                        ))}
-                      </Pie>
-                      <Tooltip formatter={(value) => `$${value / 1000}K`} />
-                    </PieChart>
-                  </ResponsiveContainer>
-                </div>
-
-                <div className="mt-6 space-y-2">
-                  {revenueBySegment.map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                <ResponsiveContainer width="100%" height={300}>
+                  <PieChart>
+                    <Pie
+                      data={revenueBySegment}
+                      dataKey="revenue"
+                      nameKey="category"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={80}
+                      label
                     >
-                      <div className="flex items-center gap-2">
-                        <div
-                          className="w-3 h-3 rounded-full"
-                          style={{ backgroundColor: colors[idx] }}
-                        ></div>
-                        <span className="font-medium text-sm">{item.category}</span>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <span className="text-sm text-gray-600">
-                          ${(item.revenue / 1000).toFixed(0)}K
-                        </span>
-                        <Badge variant="secondary">{item.percentage}%</Badge>
-                      </div>
+                      {revenueBySegment.map((_, index) => (
+                        <Cell key={`cell-${index}`} fill={colors[index]} />
+                      ))}
+                    </Pie>
+                    <Tooltip formatter={(value) => `$${value / 1000}K`} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+
+              <div className="space-y-2">
+                {revenueBySegment.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                  >
+                    <div className="flex items-center gap-2">
+                      <div
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: colors[idx] }}
+                      ></div>
+                      <span className="font-medium text-sm">{item.category}</span>
                     </div>
-                  ))}
-                </div>
-              </TabsContent>
-            </Tabs>
+                    <div className="flex items-center gap-4">
+                      <span className="text-sm text-gray-600">
+                        ${(item.revenue / 1000).toFixed(0)}K
+                      </span>
+                      <Badge variant="secondary">{item.percentage}%</Badge>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
           </Tabs>
         </CardContent>
       </Card>
@@ -534,7 +528,9 @@ const DealsAnalytics = () => {
           <div className="space-y-6">
             {/* Forecast Chart */}
             <div>
-              <h4 className="text-sm font-semibold mb-4">Revenue Forecast (Next 6 Months)</h4>
+              <h4 className="text-sm font-semibold mb-4">
+                Revenue Forecast (Next 6 Months)
+              </h4>
               <ResponsiveContainer width="100%" height={350}>
                 <LineChart data={forecastData}>
                   <CartesianGrid strokeDasharray="3 3" />
@@ -616,9 +612,12 @@ const DealsAnalytics = () => {
                       <span className="text-xs font-bold text-green-600">✓</span>
                     </div>
                     <div>
-                      <p className="font-semibold text-sm">Will we hit our annual target?</p>
+                      <p className="font-semibold text-sm">
+                        Will we hit our annual target?
+                      </p>
                       <p className="text-xs text-gray-600 mt-1">
-                        At base case rate: {forecastToTargetRatio.toFixed(0)}% probability of hitting ${(annualTarget / 1000000).toFixed(1)}M target
+                        At base case rate: {forecastToTargetRatio.toFixed(0)}% probability of
+                        hitting ${(annualTarget / 1000000).toFixed(1)}M target
                       </p>
                     </div>
                   </div>
@@ -628,7 +627,9 @@ const DealsAnalytics = () => {
                       <span className="text-xs font-bold text-blue-600">→</span>
                     </div>
                     <div>
-                      <p className="font-semibold text-sm">How many deals do we need per month?</p>
+                      <p className="font-semibold text-sm">
+                        How many deals do we need per month?
+                      </p>
                       <p className="text-xs text-gray-600 mt-1">
                         ~3-4 enterprise deals or 8-10 mid-market deals to stay on track
                       </p>
@@ -640,7 +641,9 @@ const DealsAnalytics = () => {
                       <span className="text-xs font-bold text-orange-600">⚠</span>
                     </div>
                     <div>
-                      <p className="font-semibold text-sm">How much pipeline do we need to be safe?</p>
+                      <p className="font-semibold text-sm">
+                        How much pipeline do we need to be safe?
+                      </p>
                       <p className="text-xs text-gray-600 mt-1">
                         Maintain $6.5M-$8M in active pipeline for 3x conversion buffer
                       </p>
@@ -652,7 +655,9 @@ const DealsAnalytics = () => {
                       <span className="text-xs font-bold text-purple-600">→</span>
                     </div>
                     <div>
-                      <p className="font-semibold text-sm">What if we increase marketing by 20%?</p>
+                      <p className="font-semibold text-sm">
+                        What if we increase marketing by 20%?
+                      </p>
                       <p className="text-xs text-gray-600 mt-1">
                         Projected impact: +$180K additional revenue (6% increase in pipeline)
                       </p>
@@ -670,27 +675,48 @@ const DealsAnalytics = () => {
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="p-4 bg-white rounded-lg">
-                    <p className="text-sm font-semibold text-gray-900 mb-2">Pipeline Risk</p>
+                    <p className="text-sm font-semibold text-gray-900 mb-2">
+                      Pipeline Risk
+                    </p>
                     <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-green-500 h-2 rounded-full" style={{ width: "72%" }}></div>
+                      <div
+                        className="bg-green-500 h-2 rounded-full"
+                        style={{ width: "72%" }}
+                      ></div>
                     </div>
-                    <p className="text-xs text-gray-600 mt-2">72% healthy (72% above minimum threshold)</p>
+                    <p className="text-xs text-gray-600 mt-2">
+                      72% healthy (72% above minimum threshold)
+                    </p>
                   </div>
 
                   <div className="p-4 bg-white rounded-lg">
-                    <p className="text-sm font-semibold text-gray-900 mb-2">Deal Velocity Risk</p>
+                    <p className="text-sm font-semibold text-gray-900 mb-2">
+                      Deal Velocity Risk
+                    </p>
                     <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-yellow-500 h-2 rounded-full" style={{ width: "55%" }}></div>
+                      <div
+                        className="bg-yellow-500 h-2 rounded-full"
+                        style={{ width: "55%" }}
+                      ></div>
                     </div>
-                    <p className="text-xs text-gray-600 mt-2">55% on track (deals closing on schedule)</p>
+                    <p className="text-xs text-gray-600 mt-2">
+                      55% on track (deals closing on schedule)
+                    </p>
                   </div>
 
                   <div className="p-4 bg-white rounded-lg">
-                    <p className="text-sm font-semibold text-gray-900 mb-2">Rep Performance Risk</p>
+                    <p className="text-sm font-semibold text-gray-900 mb-2">
+                      Rep Performance Risk
+                    </p>
                     <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div className="bg-blue-500 h-2 rounded-full" style={{ width: "85%" }}></div>
+                      <div
+                        className="bg-blue-500 h-2 rounded-full"
+                        style={{ width: "85%" }}
+                      ></div>
                     </div>
-                    <p className="text-xs text-gray-600 mt-2">85% on track (quota achievement)</p>
+                    <p className="text-xs text-gray-600 mt-2">
+                      85% on track (quota achievement)
+                    </p>
                   </div>
                 </div>
               </CardContent>
