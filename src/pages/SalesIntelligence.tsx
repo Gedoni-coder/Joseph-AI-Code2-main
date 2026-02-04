@@ -1359,9 +1359,9 @@ const SalesIntelligence = () => {
       description:
         "Comprehensive KPI tracking and analytics for sales performance monitoring",
       metrics: {
-        "KPIs Tracked": "22",
-        "KPIs On Target": "18",
-        "Overall Health": "92%",
+        "KPIs Tracked": `${calculateKpisTracked()}`,
+        "KPIs On Target": `${calculateKpisOnTarget()}`,
+        "Overall Health": `${calculateOverallHealth()}%`,
       },
       link: "/kpi-dashboard",
       isNew: true,
