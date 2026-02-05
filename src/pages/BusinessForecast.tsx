@@ -222,17 +222,83 @@ const BusinessForecast = () => {
             </div>
 
             <TabsContent value="overview" className="space-y-8">
-              {/* Customer Profiles */}
+              {/* Revenue Forecast vs Target Summary */}
               <section>
-                <LoadingOverlay
-                  isLoading={isLoading}
-                  loadingText="Updating customer data..."
-                >
-                  <CustomerProfileComponent profiles={customerProfiles} />
-                </LoadingOverlay>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <DollarSign className="h-5 w-5" />
+                      Revenue Forecast vs Target
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <Card className="p-4">
+                        <div className="space-y-2">
+                          <h4 className="text-sm font-medium text-muted-foreground">
+                            Annual Target
+                          </h4>
+                          <div className="text-3xl font-bold text-economic-positive">
+                            {BUSINESS_FORECAST_DEFAULTS.ANNUAL_REVENUE_TARGET}
+                          </div>
+                          <p className="text-xs text-muted-foreground">
+                            Total yearly revenue goal
+                          </p>
+                        </div>
+                      </Card>
+                      <Card className="p-4">
+                        <div className="space-y-2">
+                          <h4 className="text-sm font-medium text-muted-foreground">
+                            Projected Revenue
+                          </h4>
+                          <div className="text-3xl font-bold">
+                            $
+                            {(
+                              revenueProjections.reduce(
+                                (sum, p) => sum + (p.value || 0),
+                                0
+                              ) / 1000000
+                            ).toFixed(1)}
+                            M
+                          </div>
+                          <p className="text-xs text-muted-foreground">
+                            Based on current forecasts
+                          </p>
+                        </div>
+                      </Card>
+                      <Card className="p-4">
+                        <div className="space-y-2">
+                          <h4 className="text-sm font-medium text-muted-foreground">
+                            Achievement %
+                          </h4>
+                          <div className="text-3xl font-bold">
+                            {(
+                              ((revenueProjections.reduce(
+                                (sum, p) => sum + (p.value || 0),
+                                0
+                              ) /
+                                parseFloat(
+                                  BUSINESS_FORECAST_DEFAULTS.ANNUAL_REVENUE_TARGET.replace(
+                                    /[^0-9.]/g,
+                                    ""
+                                  )
+                                )) *
+                                100 ||
+                              0)
+                            ).toFixed(0)}
+                            %
+                          </div>
+                          <p className="text-xs text-muted-foreground">
+                            On track to goal
+                          </p>
+                        </div>
+                      </Card>
+                    </div>
+                  </CardContent>
+                </Card>
               </section>
 
-              {/* Revenue Projections */}
+              {/* Monthly/Quarterly/Annual Revenue */}
               <section>
                 <LoadingOverlay
                   isLoading={isLoading}
@@ -240,6 +306,140 @@ const BusinessForecast = () => {
                 >
                   <RevenueProjections projections={revenueProjections} />
                 </LoadingOverlay>
+              </section>
+
+              {/* Cash Flow Forecast */}
+              <section>
+                <LoadingOverlay
+                  isLoading={isLoading}
+                  loadingText="Updating cash flow..."
+                >
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg flex items-center gap-2">
+                        <BarChart3 className="h-5 w-5" />
+                        Cash Flow Forecast
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-4">
+                        <div className="grid grid-cols-1 lg:grid-cols-6 gap-4">
+                          {mockCashFlow.slice(0, 6).map((flow) => (
+                            <Card key={flow.id} className="p-3">
+                              <div className="space-y-2">
+                                <h4 className="font-medium text-sm">
+                                  {flow.month}
+                                </h4>
+                                <div className="space-y-1">
+                                  <div className="flex justify-between text-xs">
+                                    <span className="text-muted-foreground">
+                                      Inflow
+                                    </span>
+                                    <span className="text-economic-positive">
+                                      ${(flow.cashInflow / 1000000).toFixed(1)}M
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between text-xs">
+                                    <span className="text-muted-foreground">
+                                      Outflow
+                                    </span>
+                                    <span className="text-economic-negative">
+                                      ${(flow.cashOutflow / 1000000).toFixed(1)}
+                                      M
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between text-sm border-t pt-1">
+                                    <span className="font-medium">Net</span>
+                                    <span
+                                      className={
+                                        flow.netCashFlow > 0
+                                          ? "text-economic-positive"
+                                          : "text-economic-negative"
+                                      }
+                                    >
+                                      ${(flow.netCashFlow / 1000000).toFixed(1)}
+                                      M
+                                    </span>
+                                  </div>
+                                </div>
+                              </div>
+                            </Card>
+                          ))}
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </LoadingOverlay>
+              </section>
+
+              {/* Profit/Loss Projection */}
+              <section>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <TrendingUp className="h-5 w-5" />
+                      Profit/Loss Projection
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <Card className="p-4">
+                        <div className="space-y-2">
+                          <h4 className="text-sm font-medium text-muted-foreground">
+                            Gross Profit Margin
+                          </h4>
+                          <div className="text-3xl font-bold text-economic-positive">
+                            {(
+                              revenueProjections.reduce(
+                                (sum, p) => sum + (p.value || 0),
+                                0
+                              ) * 0.62
+                            ).toFixed(0)}
+                          </div>
+                          <p className="text-xs text-muted-foreground">
+                            After COGS
+                          </p>
+                        </div>
+                      </Card>
+                      <Card className="p-4">
+                        <div className="space-y-2">
+                          <h4 className="text-sm font-medium text-muted-foreground">
+                            Operating Expense
+                          </h4>
+                          <div className="text-3xl font-bold text-economic-negative">
+                            ${(
+                              revenueProjections.reduce(
+                                (sum, p) => sum + (p.value || 0),
+                                0
+                              ) * 0.25
+                            ).toFixed(0)}
+                          </div>
+                          <p className="text-xs text-muted-foreground">
+                            Annual overhead
+                          </p>
+                        </div>
+                      </Card>
+                      <Card className="p-4">
+                        <div className="space-y-2">
+                          <h4 className="text-sm font-medium text-muted-foreground">
+                            Net Profit
+                          </h4>
+                          <div className="text-3xl font-bold text-economic-positive">
+                            ${(
+                              revenueProjections.reduce(
+                                (sum, p) => sum + (p.value || 0),
+                                0
+                              ) * 0.37
+                            ).toFixed(0)}
+                          </div>
+                          <p className="text-xs text-muted-foreground">
+                            Bottom line
+                          </p>
+                        </div>
+                      </Card>
+                    </div>
+                  </CardContent>
+                </Card>
               </section>
 
               {/* Key Performance Indicators */}
@@ -252,6 +452,70 @@ const BusinessForecast = () => {
                     kpis={kpis.slice(0, 6)}
                     title="Key Performance Indicators"
                   />
+                </LoadingOverlay>
+              </section>
+
+              {/* Alerts & Warnings */}
+              <section>
+                <Card className="border-orange-200 bg-orange-50">
+                  <CardHeader>
+                    <CardTitle className="text-lg flex items-center gap-2 text-orange-900">
+                      <AlertTriangle className="h-5 w-5 text-orange-600" />
+                      Alerts & Warnings
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="flex items-start gap-3 p-3 bg-white rounded border border-orange-200">
+                        <AlertTriangle className="h-5 w-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-semibold text-sm text-orange-900">
+                            Revenue Below Target
+                          </h4>
+                          <p className="text-xs text-orange-800 mt-1">
+                            Current projection is slightly below annual target.
+                            Review customer segment assumptions.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start gap-3 p-3 bg-white rounded border border-orange-200">
+                        <AlertTriangle className="h-5 w-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-semibold text-sm text-orange-900">
+                            Cash Flow Variability
+                          </h4>
+                          <p className="text-xs text-orange-800 mt-1">
+                            Q2 and Q3 show significant fluctuations. Consider
+                            adjusting payment terms.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-start gap-3 p-3 bg-white rounded border border-orange-200">
+                        <AlertTriangle className="h-5 w-5 text-orange-600 flex-shrink-0 mt-0.5" />
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-semibold text-sm text-orange-900">
+                            Cost Increase Trend
+                          </h4>
+                          <p className="text-xs text-orange-800 mt-1">
+                            Operating expenses trending upward. Monitor cost
+                            structure closely.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </section>
+
+              {/* Customer Profiles */}
+              <section>
+                <LoadingOverlay
+                  isLoading={isLoading}
+                  loadingText="Updating customer data..."
+                >
+                  <CustomerProfileComponent profiles={customerProfiles} />
                 </LoadingOverlay>
               </section>
             </TabsContent>
