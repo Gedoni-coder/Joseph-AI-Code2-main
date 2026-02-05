@@ -1018,71 +1018,397 @@ const BusinessForecast = () => {
             </TabsContent>
 
             <TabsContent value="costs" className="space-y-8">
-              {/* Cost Structure */}
+              {/* Cost & Expense Forecasting Header */}
               <section>
-                <LoadingOverlay
-                  isLoading={isLoading}
-                  loadingText="Analyzing cost structure..."
-                >
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg flex items-center gap-2">
-                        <PieChart className="h-5 w-5" />
-                        Cost of Goods Sold (COGS) & Operating Expenses
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {mockCosts.map((cost) => (
-                          <Card key={cost.id} className="p-4">
-                            <div className="space-y-3">
+                <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+                  <CardHeader>
+                    <CardTitle className="text-xl flex items-center gap-2">
+                      <DollarSign className="h-6 w-6 text-blue-600" />
+                      Cost & Expense Forecasting
+                    </CardTitle>
+                    <p className="text-sm text-muted-foreground mt-2">
+                      Predicts future spending to ensure profitability. Comprehensive view of fixed costs, variable costs, and forecasted expenses.
+                    </p>
+                  </CardHeader>
+                </Card>
+              </section>
+
+              {/* Fixed vs Variable Costs Overview */}
+              <section>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <BarChart3 className="h-5 w-5" />
+                      Fixed vs Variable Costs Overview
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <Card className="p-4 border-2 border-orange-200 bg-orange-50">
+                        <div className="space-y-3">
+                          <h4 className="font-semibold text-sm text-orange-900">Fixed Costs</h4>
+                          <p className="text-xs text-orange-800">Rent, salaries, subscriptions, insurance</p>
+                          <div className="space-y-2">
+                            <div className="flex justify-between">
+                              <span className="text-sm">Annual Total</span>
+                              <span className="font-bold text-lg">$3.2M</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-sm">Monthly Avg</span>
+                              <span className="font-bold">$267K</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-sm">% of Revenue</span>
+                              <span className="font-bold">23%</span>
+                            </div>
+                          </div>
+                          <div className="border-t pt-2 mt-2">
+                            <div className="flex items-center gap-2">
+                              <TrendingUp className="h-4 w-4 text-orange-600" />
+                              <span className="text-xs text-orange-800 font-semibold">Stable and predictable</span>
+                            </div>
+                          </div>
+                        </div>
+                      </Card>
+
+                      <Card className="p-4 border-2 border-purple-200 bg-purple-50">
+                        <div className="space-y-3">
+                          <h4 className="font-semibold text-sm text-purple-900">Variable Costs</h4>
+                          <p className="text-xs text-purple-800">Raw materials, commissions, production costs</p>
+                          <div className="space-y-2">
+                            <div className="flex justify-between">
+                              <span className="text-sm">Annual Total</span>
+                              <span className="font-bold text-lg">$5.1M</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-sm">Monthly Avg</span>
+                              <span className="font-bold">$425K</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-sm">% of Revenue</span>
+                              <span className="font-bold">37%</span>
+                            </div>
+                          </div>
+                          <div className="border-t pt-2 mt-2">
+                            <div className="flex items-center gap-2">
+                              <TrendingUp className="h-4 w-4 text-purple-600" />
+                              <span className="text-xs text-purple-800 font-semibold">Scales with revenue</span>
+                            </div>
+                          </div>
+                        </div>
+                      </Card>
+                    </div>
+                  </CardContent>
+                </Card>
+              </section>
+
+              {/* Detailed Cost Breakdown */}
+              <section>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <PieChart className="h-5 w-5" />
+                      Detailed Cost Breakdown by Category
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {mockCosts.map((cost) => (
+                        <Card key={cost.id} className="p-4">
+                          <div className="space-y-3">
+                            <div className="flex items-center justify-between">
+                              <h4 className="font-medium text-sm">
+                                {cost.category}
+                              </h4>
+                              <Badge
+                                variant={
+                                  cost.type === "COGS"
+                                    ? "default"
+                                    : "secondary"
+                                }
+                              >
+                                {cost.type}
+                              </Badge>
+                            </div>
+                            <div className="space-y-2">
                               <div className="flex items-center justify-between">
-                                <h4 className="font-medium text-sm">
-                                  {cost.category}
-                                </h4>
-                                <Badge
-                                  variant={
-                                    cost.type === "COGS"
-                                      ? "default"
-                                      : "secondary"
-                                  }
-                                >
-                                  {cost.type}
+                                <span className="text-sm text-muted-foreground">
+                                  Amount
+                                </span>
+                                <span className="font-semibold">
+                                  ${(cost.amount / 1000).toFixed(0)}K
+                                </span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-sm text-muted-foreground">
+                                  % of Total
+                                </span>
+                                <span className="font-medium">
+                                  {cost.percentage}%
+                                </span>
+                              </div>
+                              <div className="flex items-center justify-between">
+                                <span className="text-sm text-muted-foreground">
+                                  Type
+                                </span>
+                                <Badge variant="outline" className="text-xs">
+                                  {cost.variability}
                                 </Badge>
                               </div>
-                              <div className="space-y-2">
-                                <div className="flex items-center justify-between">
-                                  <span className="text-sm text-muted-foreground">
-                                    Amount
-                                  </span>
-                                  <span className="font-semibold">
-                                    ${(cost.amount / 1000).toFixed(0)}K
-                                  </span>
+                            </div>
+                          </div>
+                        </Card>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </section>
+
+              {/* Forecast vs Actual vs Budget Comparison */}
+              <section>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <Activity className="h-5 w-5" />
+                      Forecast vs Actual vs Budget Comparison
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-6">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <Card className="p-4 bg-blue-50">
+                          <div className="space-y-2">
+                            <h5 className="font-semibold text-sm text-blue-900">Budget 2025</h5>
+                            <div className="text-3xl font-bold text-blue-600">$8.8M</div>
+                            <p className="text-xs text-blue-800">Target spending</p>
+                          </div>
+                        </Card>
+
+                        <Card className="p-4 bg-purple-50">
+                          <div className="space-y-2">
+                            <h5 className="font-semibold text-sm text-purple-900">Forecast 2025</h5>
+                            <div className="text-3xl font-bold text-purple-600">$8.3M</div>
+                            <p className="text-xs text-purple-800">Projected spending</p>
+                          </div>
+                        </Card>
+
+                        <Card className="p-4 bg-green-50">
+                          <div className="space-y-2">
+                            <h5 className="font-semibold text-sm text-green-900">Variance</h5>
+                            <div className="text-3xl font-bold text-green-600">+$500K</div>
+                            <p className="text-xs text-green-800">Under budget (5.7%)</p>
+                          </div>
+                        </Card>
+                      </div>
+
+                      <div className="border rounded-lg p-4 space-y-4">
+                        <h4 className="font-semibold text-sm">Monthly Comparison</h4>
+                        <div className="space-y-3">
+                          {[
+                            { month: "January", budget: 750, forecast: 680, actual: 690 },
+                            { month: "February", budget: 750, forecast: 720, actual: 750 },
+                            { month: "March", budget: 750, forecast: 700, actual: 680 },
+                            { month: "April", budget: 750, forecast: 710, actual: null },
+                          ].map((row) => (
+                            <div key={row.month} className="space-y-2">
+                              <div className="flex items-center justify-between">
+                                <span className="font-medium text-sm">{row.month}</span>
+                              </div>
+                              <div className="flex gap-2">
+                                <div className="flex-1 flex items-center gap-2">
+                                  <Badge variant="outline" className="text-xs">Budget</Badge>
+                                  <div className="flex-1">
+                                    <div className="h-6 bg-blue-200 rounded flex items-center justify-center text-xs font-semibold">
+                                      ${row.budget}K
+                                    </div>
+                                  </div>
                                 </div>
-                                <div className="flex items-center justify-between">
-                                  <span className="text-sm text-muted-foreground">
-                                    % of Total
-                                  </span>
-                                  <span className="font-medium">
-                                    {cost.percentage}%
-                                  </span>
+                                <div className="flex-1 flex items-center gap-2">
+                                  <Badge variant="outline" className="text-xs">Forecast</Badge>
+                                  <div className="flex-1">
+                                    <div className="h-6 bg-purple-200 rounded flex items-center justify-center text-xs font-semibold">
+                                      ${row.forecast}K
+                                    </div>
+                                  </div>
                                 </div>
-                                <div className="flex items-center justify-between">
-                                  <span className="text-sm text-muted-foreground">
-                                    Type
-                                  </span>
-                                  <Badge variant="outline" className="text-xs">
-                                    {cost.variability}
-                                  </Badge>
-                                </div>
+                                {row.actual && (
+                                  <div className="flex-1 flex items-center gap-2">
+                                    <Badge variant="outline" className="text-xs">Actual</Badge>
+                                    <div className="flex-1">
+                                      <div className="h-6 bg-green-200 rounded flex items-center justify-center text-xs font-semibold">
+                                        ${row.actual}K
+                                      </div>
+                                    </div>
+                                  </div>
+                                )}
                               </div>
                             </div>
-                          </Card>
-                        ))}
+                          ))}
+                        </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                </LoadingOverlay>
+                    </div>
+                  </CardContent>
+                </Card>
+              </section>
+
+              {/* Operational Expense Categories */}
+              <section>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <Building2 className="h-5 w-5" />
+                      Operational Expense Categories
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <Card className="p-4 border-l-4 border-l-blue-500">
+                        <div className="space-y-3">
+                          <h5 className="font-semibold text-sm">Marketing & Sales</h5>
+                          <div className="space-y-2">
+                            <div className="flex justify-between">
+                              <span className="text-sm text-muted-foreground">Digital Marketing</span>
+                              <span className="font-bold">$480K</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-sm text-muted-foreground">Sales Team Salaries</span>
+                              <span className="font-bold">$620K</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-sm text-muted-foreground">Events & Conferences</span>
+                              <span className="font-bold">$150K</span>
+                            </div>
+                            <div className="border-t pt-2 flex justify-between font-bold">
+                              <span>Total</span>
+                              <span>$1.25M</span>
+                            </div>
+                          </div>
+                        </div>
+                      </Card>
+
+                      <Card className="p-4 border-l-4 border-l-purple-500">
+                        <div className="space-y-3">
+                          <h5 className="font-semibold text-sm">Research & Development</h5>
+                          <div className="space-y-2">
+                            <div className="flex justify-between">
+                              <span className="text-sm text-muted-foreground">R&D Team Salaries</span>
+                              <span className="font-bold">$850K</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-sm text-muted-foreground">Tools & Infrastructure</span>
+                              <span className="font-bold">$220K</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-sm text-muted-foreground">Licenses & Software</span>
+                              <span className="font-bold">$180K</span>
+                            </div>
+                            <div className="border-t pt-2 flex justify-between font-bold">
+                              <span>Total</span>
+                              <span>$1.25M</span>
+                            </div>
+                          </div>
+                        </div>
+                      </Card>
+
+                      <Card className="p-4 border-l-4 border-l-orange-500">
+                        <div className="space-y-3">
+                          <h5 className="font-semibold text-sm">General & Administrative</h5>
+                          <div className="space-y-2">
+                            <div className="flex justify-between">
+                              <span className="text-sm text-muted-foreground">Office Rent</span>
+                              <span className="font-bold">$360K</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-sm text-muted-foreground">Admin Staff Salaries</span>
+                              <span className="font-bold">$420K</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-sm text-muted-foreground">Utilities & Services</span>
+                              <span className="font-bold">$140K</span>
+                            </div>
+                            <div className="border-t pt-2 flex justify-between font-bold">
+                              <span>Total</span>
+                              <span>$0.92M</span>
+                            </div>
+                          </div>
+                        </div>
+                      </Card>
+
+                      <Card className="p-4 border-l-4 border-l-green-500">
+                        <div className="space-y-3">
+                          <h5 className="font-semibold text-sm">Forecasted COGS</h5>
+                          <div className="space-y-2">
+                            <div className="flex justify-between">
+                              <span className="text-sm text-muted-foreground">Raw Materials</span>
+                              <span className="font-bold">$2.1M</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-sm text-muted-foreground">Manufacturing</span>
+                              <span className="font-bold">$1.8M</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-sm text-muted-foreground">Shipping & Logistics</span>
+                              <span className="font-bold">$620K</span>
+                            </div>
+                            <div className="border-t pt-2 flex justify-between font-bold">
+                              <span>Total</span>
+                              <span>$4.52M</span>
+                            </div>
+                          </div>
+                        </div>
+                      </Card>
+                    </div>
+                  </CardContent>
+                </Card>
+              </section>
+
+              {/* Cost Trend Analysis */}
+              <section>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <TrendingUp className="h-5 w-5" />
+                      Cost Trend Analysis & Projections
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <Card className="p-4">
+                          <div className="space-y-3">
+                            <h5 className="font-semibold text-sm">Cost Growth Rate</h5>
+                            <div className="text-3xl font-bold text-orange-600">+4.2%</div>
+                            <p className="text-xs text-muted-foreground">YoY increase from 2024 to 2025</p>
+                            <div className="border-t pt-2 mt-2">
+                              <p className="text-xs text-muted-foreground">Primary drivers:</p>
+                              <ul className="text-xs space-y-1 mt-1">
+                                <li>• Salary increases (+2%)</li>
+                                <li>• Material cost inflation (+3%)</li>
+                                <li>• Headcount expansion (+1.2%)</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </Card>
+
+                        <Card className="p-4">
+                          <div className="space-y-3">
+                            <h5 className="font-semibold text-sm">COGS as % of Revenue</h5>
+                            <div className="text-3xl font-bold text-green-600">37%</div>
+                            <p className="text-xs text-muted-foreground">Below industry average of 42%</p>
+                            <div className="border-t pt-2 mt-2">
+                              <p className="text-xs text-muted-foreground">Cost efficiency opportunity:</p>
+                              <ul className="text-xs space-y-1 mt-1">
+                                <li>• Potential 1-2% improvement</li>
+                                <li>• Supplier optimization needed</li>
+                                <li>• Process automation benefits</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </Card>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </section>
 
               {/* Cash Flow Forecast */}
@@ -1095,7 +1421,7 @@ const BusinessForecast = () => {
                     <CardHeader>
                       <CardTitle className="text-lg flex items-center gap-2">
                         <BarChart3 className="h-5 w-5" />
-                        Cash Flow Forecast
+                        Monthly Cash Flow Forecast
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
