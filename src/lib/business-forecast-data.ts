@@ -97,7 +97,25 @@ export const revenueProjections: RevenueProjection[] = [
     projected: 3200000,
     conservative: 2880000,
     optimistic: 3680000,
+    actualToDate: 2720000,
     confidence: 78,
+  },
+  {
+    id: "3",
+    period: "Q3 2025",
+    projected: 3500000,
+    conservative: 3150000,
+    optimistic: 4025000,
+    actualToDate: 1850000,
+    confidence: 72,
+  },
+  {
+    id: "4",
+    period: "Q4 2025",
+    projected: 4200000,
+    conservative: 3780000,
+    optimistic: 4860000,
+    confidence: 68,
   },
 ];
 
