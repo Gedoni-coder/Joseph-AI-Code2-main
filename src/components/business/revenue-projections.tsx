@@ -133,8 +133,40 @@ export function RevenueProjections({
                           )}
                         </span>
                       </div>
-                      <div className="text-lg font-semibold">
+                      <div className="text-lg font-semibold mb-3">
                         {formatCurrency(projection.actualToDate)}
+                      </div>
+
+                      {/* Volume Level Progress Indicator */}
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between text-xs mb-2">
+                          <span className="text-muted-foreground">Progress</span>
+                          <span className="font-bold text-primary">
+                            {Math.round(
+                              (projection.actualToDate / projection.projected) * 100
+                            )}%
+                          </span>
+                        </div>
+                        <div className="flex gap-1 h-12 items-end">
+                          {[...Array(10)].map((_, i) => {
+                            const progressPercentage =
+                              (projection.actualToDate / projection.projected) * 100;
+                            const segmentThreshold = (i + 1) * 10;
+                            const isFilled = progressPercentage >= segmentThreshold;
+
+                            return (
+                              <div
+                                key={i}
+                                className={cn(
+                                  "flex-1 rounded-sm transition-all duration-300",
+                                  isFilled
+                                    ? "bg-gradient-to-t from-primary to-primary/80 h-full shadow-sm"
+                                    : "bg-muted h-1"
+                                )}
+                              />
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
                   )}
