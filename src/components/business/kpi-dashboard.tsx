@@ -25,7 +25,26 @@ export function KPIDashboard({
 }: KPIDashboardProps) {
   const [expandedCategories, setExpandedCategories] = useState<
     Record<string, boolean>
-  >({});
+  >(() => {
+    // Initialize all categories as expanded by default
+    const grouped = kpis.reduce(
+      (acc, kpi) => {
+        if (!acc[kpi.category]) {
+          acc[kpi.category] = true; // All expanded by default
+        }
+        return acc;
+      },
+      {} as Record<string, boolean>,
+    );
+    return grouped;
+  });
+
+  const toggleCategory = (category: string) => {
+    setExpandedCategories((prev) => ({
+      ...prev,
+      [category]: !prev[category],
+    }));
+  };
   const formatValue = (value: number, unit: string) => {
     if (unit === "USD") {
       return new Intl.NumberFormat("en-US", {
