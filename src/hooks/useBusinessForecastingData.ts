@@ -86,6 +86,7 @@ function transformBusinessForecastingData(
       projected: forecast.q2_2025_projected_revenue,
       conservative: forecast.q2_2025_scenario_range_min,
       optimistic: forecast.q2_2025_scenario_range_max,
+      actualToDate: forecast.q2_2025_actual_to_date,
       confidence:
         forecast.q2_2025_confidence === "High"
           ? 85
