@@ -158,12 +158,14 @@ function transformBusinessForecastingData(
   const revenueProjections = baseRevenueProjections;
 
   // Transform to KPIs - use comprehensive mock KPIs as base
-  const kpis: KPI[] = mockKpis.map(kpi => {
+  const kpis: KPI[] = mockKpis.map((kpi) => {
     // Allow API to override specific KPI values if available
     if (kpi.category === "Revenue" || kpi.category === "Financial") {
       return {
         ...kpi,
-        current: forecast.total_revenue_target ? forecast.total_revenue_target * 0.85 : kpi.current,
+        current: forecast.total_revenue_target
+          ? forecast.total_revenue_target * 0.85
+          : kpi.current,
       };
     }
     if (kpi.category === "Customer" && kpi.name.includes("Retention")) {

@@ -111,7 +111,8 @@ export function DocumentsSection() {
         );
         toast.success(`Text extracted from ${file.name}`);
       } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : String(error);
+        const errorMessage =
+          error instanceof Error ? error.message : String(error);
         setDocuments((prev) =>
           prev.map((doc) =>
             doc.id === mockDocument.id
@@ -279,7 +280,10 @@ export function DocumentsSection() {
                     : { displayText: "", isTruncated: false };
 
                   return (
-                    <div key={doc.id} className="border rounded-lg overflow-hidden">
+                    <div
+                      key={doc.id}
+                      className="border rounded-lg overflow-hidden"
+                    >
                       {/* Document Header */}
                       <div className="flex items-center justify-between p-4 hover:bg-muted/50 transition-colors">
                         <div className="flex items-center gap-4 flex-1 min-w-0">
@@ -298,7 +302,10 @@ export function DocumentsSection() {
                                 {formatDate(doc.uploaded_at)}
                               </span>
                               {doc.isExtracting && (
-                                <Badge variant="secondary" className="text-xs gap-1">
+                                <Badge
+                                  variant="secondary"
+                                  className="text-xs gap-1"
+                                >
                                   <Loader2 className="h-3 w-3 animate-spin" />
                                   Extracting...
                                 </Badge>
@@ -353,7 +360,9 @@ export function DocumentsSection() {
                               variant="ghost"
                               size="sm"
                               className="h-8 w-8 p-0"
-                              onClick={() => setExpandedDocId(isExpanded ? null : doc.id)}
+                              onClick={() =>
+                                setExpandedDocId(isExpanded ? null : doc.id)
+                              }
                               title={isExpanded ? "Collapse" : "Expand"}
                             >
                               {isExpanded ? (
@@ -371,7 +380,9 @@ export function DocumentsSection() {
                         <div className="border-t bg-muted/30 p-4 space-y-3">
                           <div className="flex items-center justify-between">
                             <div className="space-y-1">
-                              <h4 className="font-medium text-sm">Extracted Text</h4>
+                              <h4 className="font-medium text-sm">
+                                Extracted Text
+                              </h4>
                               <p className="text-xs text-muted-foreground">
                                 {doc.extractedText.length} characters •{" "}
                                 {doc.extractedText.split("\n").length} lines
@@ -411,8 +422,10 @@ export function DocumentsSection() {
                           {isTruncated && (
                             <div className="text-xs text-muted-foreground flex items-center gap-2">
                               <AlertCircle className="h-3 w-3" />
-                              Full text available ({doc.extractedText.length} chars).
-                              Download to see complete content.
+                              Full text available ({
+                                doc.extractedText.length
+                              }{" "}
+                              chars). Download to see complete content.
                             </div>
                           )}
                         </div>

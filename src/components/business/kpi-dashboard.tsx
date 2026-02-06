@@ -232,7 +232,9 @@ export function KPIDashboard({
 
                       <div className="space-y-2">
                         <div className="flex items-center justify-between text-sm">
-                          <span className="text-muted-foreground">Progress</span>
+                          <span className="text-muted-foreground">
+                            Progress
+                          </span>
                           <span
                             className={cn(
                               "font-medium",

@@ -20,7 +20,9 @@ export async function extractTextFromFile(file: File): Promise<string> {
       return await extractTextFromCSV(file);
     } else if (fileExtension === "txt") {
       return await file.text();
-    } else if (["jpg", "jpeg", "png", "gif", "bmp"].includes(fileExtension || "")) {
+    } else if (
+      ["jpg", "jpeg", "png", "gif", "bmp"].includes(fileExtension || "")
+    ) {
       return await extractTextFromImage(file);
     } else {
       return await extractAsPlainText(file);
@@ -37,7 +39,7 @@ export async function extractTextFromFile(file: File): Promise<string> {
 async function extractTextFromPDF(file: File): Promise<string> {
   try {
     const pdfjs = await import("pdfjs-dist");
-    
+
     // Set up the worker
     pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
@@ -48,9 +50,7 @@ async function extractTextFromPDF(file: File): Promise<string> {
     for (let i = 1; i <= pdf.numPages; i++) {
       const page = await pdf.getPage(i);
       const content = await page.getTextContent();
-      const pageText = content.items
-        .map((item: any) => item.str)
-        .join(" ");
+      const pageText = content.items.map((item: any) => item.str).join(" ");
       text += pageText + "\n";
     }
 
@@ -68,7 +68,7 @@ async function extractTextFromDOCX(file: File): Promise<string> {
   try {
     const mammoth = await import("mammoth");
     const arrayBuffer = await file.arrayBuffer();
-    
+
     const result = await mammoth.extractRawText({ arrayBuffer });
     return result.value.trim() || "No text content found in Word document";
   } catch (error) {
@@ -84,7 +84,7 @@ async function extractTextFromSpreadsheet(file: File): Promise<string> {
   try {
     const XLSX = await import("xlsx");
     const arrayBuffer = await file.arrayBuffer();
-    
+
     const workbook = XLSX.read(arrayBuffer, { type: "array" });
     let text = "";
 
@@ -164,7 +164,7 @@ async function extractAsPlainText(file: File): Promise<string> {
  */
 export function formatExtractedText(
   text: string,
-  maxChars: number = 50000
+  maxChars: number = 50000,
 ): {
   displayText: string;
   fullText: string;
