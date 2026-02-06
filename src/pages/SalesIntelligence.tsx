@@ -904,6 +904,29 @@ const SalesIntelligence = () => {
   };
 
   // ============================================================
+  // KPI DASHBOARD METRICS CALCULATION FUNCTIONS
+  // ============================================================
+
+  // Calculate total KPIs being tracked (based on sales targets)
+  const calculateKpisTracked = () => {
+    return salesTargets.length;
+  };
+
+  // Calculate KPIs that are on target (achieved >= target amount)
+  const calculateKpisOnTarget = () => {
+    return salesTargets.filter(
+      (target) => target.achievedAmount >= target.targetAmount,
+    ).length;
+  };
+
+  // Calculate overall health percentage
+  const calculateOverallHealth = () => {
+    if (salesTargets.length === 0) return 0;
+    const kpisOnTarget = calculateKpisOnTarget();
+    return Math.round((kpisOnTarget / salesTargets.length) * 100);
+  };
+
+  // ============================================================
   // DEAL & REVENUE METRICS CALCULATION FUNCTIONS
   // ============================================================
 
@@ -1336,9 +1359,9 @@ const SalesIntelligence = () => {
       description:
         "Comprehensive KPI tracking and analytics for sales performance monitoring",
       metrics: {
-        "KPIs Tracked": "22",
-        "KPIs On Target": "18",
-        "Overall Health": "92%",
+        "KPIs Tracked": `${calculateKpisTracked()}`,
+        "KPIs On Target": `${calculateKpisOnTarget()}`,
+        "Overall Health": `${calculateOverallHealth()}%`,
       },
       link: "/kpi-dashboard",
       isNew: true,
