@@ -8,6 +8,10 @@ import {
   RevenueProjection,
   KPI,
   ScenarioPlanning,
+  revenueProjections as mockRevenueProjections,
+  customerProfiles as mockCustomerProfiles,
+  kpis as mockKpis,
+  scenarioPlanning as mockScenarios,
 } from "@/lib/business-forecast-data";
 
 interface TransformedBusinessData {
