@@ -312,10 +312,7 @@ export function DocumentsSection() {
                                     ✓ Extracted
                                   </Badge>
                                   <span className="text-xs text-muted-foreground">
-                                    {(() => {
-                                      const stats = formatExtractedText(doc.extractedText);
-                                      return `${stats.charCount} chars, ${stats.lineCount} lines`;
-                                    })()}
+                                    {doc.extractedText.length} chars
                                   </span>
                                 </>
                               )}
