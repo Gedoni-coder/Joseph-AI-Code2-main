@@ -52,6 +52,81 @@ export function RevenueProjections({
     0,
   );
 
+  // Generate monthly data from quarterly projections
+  const generateMonthlyData = (): RevenueProjection[] => {
+    const monthlyData: RevenueProjection[] = [];
+    const months = [
+      "Jan 2025",
+      "Feb 2025",
+      "Mar 2025",
+      "Apr 2025",
+      "May 2025",
+      "Jun 2025",
+      "Jul 2025",
+      "Aug 2025",
+      "Sep 2025",
+      "Oct 2025",
+      "Nov 2025",
+      "Dec 2025",
+    ];
+
+    const quarterly = projections.slice(0, 4);
+
+    for (let i = 0; i < 12; i++) {
+      const quarterIndex = Math.floor(i / 3);
+      const q = quarterly[quarterIndex];
+
+      if (q) {
+        const monthlyProjected = q.projected / 3;
+        const monthlyConservative = q.conservative / 3;
+        const monthlyOptimistic = q.optimistic / 3;
+        const monthlyActual = q.actualToDate ? q.actualToDate / 3 : undefined;
+
+        monthlyData.push({
+          id: `month-${i + 1}`,
+          period: months[i],
+          projected: monthlyProjected,
+          conservative: monthlyConservative,
+          optimistic: monthlyOptimistic,
+          actualToDate: monthlyActual,
+          confidence: q.confidence,
+        });
+      }
+    }
+
+    return monthlyData;
+  };
+
+  // Generate yearly data
+  const generateYearlyData = (): RevenueProjection[] => {
+    return [
+      {
+        id: "yearly-2025",
+        period: "Full Year 2025",
+        projected: totalProjectedRevenue,
+        conservative: projections.reduce((sum, p) => sum + p.conservative, 0),
+        optimistic: projections.reduce((sum, p) => sum + p.optimistic, 0),
+        actualToDate: projections.reduce(
+          (sum, p) => sum + (p.actualToDate || 0),
+          0,
+        ),
+        confidence: Math.round(
+          projections.reduce((sum, p) => sum + p.confidence, 0) /
+            projections.length,
+        ),
+      },
+    ];
+  };
+
+  const getDisplayData = (): RevenueProjection[] => {
+    if (viewType === "monthly") return generateMonthlyData();
+    if (viewType === "yearly") return generateYearlyData();
+    return projections;
+  };
+
+  const displayData = getDisplayData();
+  const displayTotal = displayData.reduce((sum, p) => sum + p.projected, 0);
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -60,8 +135,34 @@ export function RevenueProjections({
           {title}
         </h3>
         <div className="flex items-center gap-2">
+          <div className="flex gap-2 border rounded-lg p-1">
+            <Button
+              size="sm"
+              variant={viewType === "monthly" ? "default" : "ghost"}
+              onClick={() => setViewType("monthly")}
+              className="text-xs"
+            >
+              Monthly
+            </Button>
+            <Button
+              size="sm"
+              variant={viewType === "quarterly" ? "default" : "ghost"}
+              onClick={() => setViewType("quarterly")}
+              className="text-xs"
+            >
+              Quarterly
+            </Button>
+            <Button
+              size="sm"
+              variant={viewType === "yearly" ? "default" : "ghost"}
+              onClick={() => setViewType("yearly")}
+              className="text-xs"
+            >
+              Yearly
+            </Button>
+          </div>
           <Badge variant="outline" className="text-xs">
-            Total: {formatCurrency(totalProjectedRevenue)}
+            Total: {formatCurrency(displayTotal)}
           </Badge>
         </div>
       </div>
