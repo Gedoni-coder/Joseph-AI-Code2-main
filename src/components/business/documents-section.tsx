@@ -370,7 +370,13 @@ export function DocumentsSection() {
                       {isExpanded && doc.extractedText && (
                         <div className="border-t bg-muted/30 p-4 space-y-3">
                           <div className="flex items-center justify-between">
-                            <h4 className="font-medium text-sm">Extracted Text</h4>
+                            <div className="space-y-1">
+                              <h4 className="font-medium text-sm">Extracted Text</h4>
+                              <p className="text-xs text-muted-foreground">
+                                {doc.extractedText.length} characters •{" "}
+                                {doc.extractedText.split("\n").length} lines
+                              </p>
+                            </div>
                             <Button
                               variant="ghost"
                               size="sm"
