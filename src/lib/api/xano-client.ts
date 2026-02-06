@@ -58,14 +58,26 @@ export async function xanoRequest<T>(
     throw new Error(error.message || `API request failed: ${response.status}`);
   }
 
-  // Check if response is JSON before parsing
-  const contentType = response.headers.get("content-type");
-  if (contentType && contentType.includes("application/json")) {
-    return response.json();
-  }
+  try {
+    // Check if response is JSON before parsing
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.includes("application/json")) {
+      return await response.json();
+    }
 
-  // Return empty object if not JSON
-  return {} as T;
+    // Try to parse as JSON anyway, it might just be missing the header
+    const text = await response.text();
+    if (text.trim().startsWith("{") || text.trim().startsWith("[")) {
+      return JSON.parse(text);
+    }
+
+    // Return empty array/object as fallback
+    return (Array.isArray([]) ? [] : {}) as T;
+  } catch (parseError) {
+    console.error("Failed to parse response:", parseError);
+    // Return empty array/object as fallback
+    return (Array.isArray([]) ? [] : {}) as T;
+  }
 }
 
 /**
