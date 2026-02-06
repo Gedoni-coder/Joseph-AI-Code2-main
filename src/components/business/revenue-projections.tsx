@@ -349,7 +349,7 @@ export function RevenueProjections({
                   Total Revenue Target
                 </div>
                 <div className="text-lg font-bold">
-                  {formatCurrency(totalProjectedRevenue)}
+                  {formatCurrency(displayTotal)}
                 </div>
               </div>
             </div>
@@ -368,8 +368,8 @@ export function RevenueProjections({
                 </div>
                 <div className="text-lg font-bold">
                   {(
-                    projections.reduce((sum, p) => sum + p.confidence, 0) /
-                    projections.length
+                    displayData.reduce((sum, p) => sum + p.confidence, 0) /
+                    displayData.length
                   ).toFixed(0)}
                   %
                 </div>
@@ -390,8 +390,8 @@ export function RevenueProjections({
                 </div>
                 <div className="text-lg font-bold">
                   {formatCurrency(
-                    projections.reduce((sum, p) => sum + p.optimistic, 0) -
-                      totalProjectedRevenue,
+                    displayData.reduce((sum, p) => sum + p.optimistic, 0) -
+                      displayTotal,
                   )}
                 </div>
               </div>
