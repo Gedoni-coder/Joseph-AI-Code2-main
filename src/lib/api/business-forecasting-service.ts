@@ -71,7 +71,13 @@ export type BusinessForecastingUpdateData =
 export async function getBusinessForecasts(): Promise<
   BusinessForecastingData[]
 > {
-  return xanoGet<BusinessForecastingData[]>("/business_forecasting");
+  try {
+    return await xanoGet<BusinessForecastingData[]>("/business_forecasting");
+  } catch (error) {
+    console.error("Error fetching business forecasts from API:", error);
+    // Return empty array on error - will trigger fallback to mock data
+    return [];
+  }
 }
 
 /**
