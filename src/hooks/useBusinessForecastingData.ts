@@ -242,9 +242,10 @@ export function useBusinessForecastingData() {
     queryFn: () => getBusinessForecasts(),
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
-    retry: 2,
+    retry: 1,
   });
 
+  // Use mock data as fallback when API fails or returns no data
   const transformed = transformBusinessForecastingData(data || []);
 
   return {
