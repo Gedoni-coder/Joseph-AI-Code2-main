@@ -167,8 +167,15 @@ export function RevenueProjections({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {projections.map((projection) => {
+      <div className={cn(
+        "grid gap-4",
+        viewType === "yearly"
+          ? "grid-cols-1"
+          : viewType === "monthly"
+            ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+            : "grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
+      )}>
+        {displayData.map((projection) => {
           const variance = getVariancePercentage(
             projection.actualToDate,
             projection.projected,
