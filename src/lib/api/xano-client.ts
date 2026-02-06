@@ -41,13 +41,31 @@ export async function xanoRequest<T>(
   });
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({
+    const contentType = response.headers.get("content-type");
+    let error = {
       message: response.statusText,
-    }));
+    };
+
+    // Only try to parse JSON if the response is actually JSON
+    if (contentType && contentType.includes("application/json")) {
+      try {
+        error = await response.json();
+      } catch {
+        // If JSON parsing fails, use the statusText
+      }
+    }
+
     throw new Error(error.message || `API request failed: ${response.status}`);
   }
 
-  return response.json();
+  // Check if response is JSON before parsing
+  const contentType = response.headers.get("content-type");
+  if (contentType && contentType.includes("application/json")) {
+    return response.json();
+  }
+
+  // Return empty object if not JSON
+  return {} as T;
 }
 
 /**
