@@ -256,7 +256,7 @@ const BusinessForecast = () => {
                             {(
                               revenueProjections.reduce(
                                 (sum, p) => sum + (p.value || 0),
-                                0
+                                0,
                               ) / 1000000
                             ).toFixed(1)}
                             M
@@ -273,18 +273,17 @@ const BusinessForecast = () => {
                           </h4>
                           <div className="text-3xl font-bold">
                             {(
-                              ((revenueProjections.reduce(
+                              (revenueProjections.reduce(
                                 (sum, p) => sum + (p.value || 0),
-                                0
+                                0,
                               ) /
                                 parseFloat(
                                   BUSINESS_FORECAST_DEFAULTS.ANNUAL_REVENUE_TARGET.replace(
                                     /[^0-9.]/g,
-                                    ""
-                                  )
+                                    "",
+                                  ),
                                 )) *
-                                100 ||
-                              0)
+                                100 || 0
                             ).toFixed(0)}
                             %
                           </div>
@@ -392,7 +391,7 @@ const BusinessForecast = () => {
                             {(
                               revenueProjections.reduce(
                                 (sum, p) => sum + (p.value || 0),
-                                0
+                                0,
                               ) * 0.62
                             ).toFixed(0)}
                           </div>
@@ -407,10 +406,11 @@ const BusinessForecast = () => {
                             Operating Expense
                           </h4>
                           <div className="text-3xl font-bold text-economic-negative">
-                            ${(
+                            $
+                            {(
                               revenueProjections.reduce(
                                 (sum, p) => sum + (p.value || 0),
-                                0
+                                0,
                               ) * 0.25
                             ).toFixed(0)}
                           </div>
@@ -425,10 +425,11 @@ const BusinessForecast = () => {
                             Net Profit
                           </h4>
                           <div className="text-3xl font-bold text-economic-positive">
-                            ${(
+                            $
+                            {(
                               revenueProjections.reduce(
                                 (sum, p) => sum + (p.value || 0),
-                                0
+                                0,
                               ) * 0.37
                             ).toFixed(0)}
                           </div>
@@ -573,18 +574,28 @@ const BusinessForecast = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <Card className="p-4">
                         <div className="space-y-3">
-                          <h4 className="font-semibold text-sm">Core Platform</h4>
+                          <h4 className="font-semibold text-sm">
+                            Core Platform
+                          </h4>
                           <div className="space-y-2">
                             <div className="flex justify-between text-sm">
-                              <span className="text-muted-foreground">2025 Projection</span>
+                              <span className="text-muted-foreground">
+                                2025 Projection
+                              </span>
                               <span className="font-bold">$5.2M</span>
                             </div>
                             <div className="flex justify-between text-sm">
-                              <span className="text-muted-foreground">Growth Rate</span>
-                              <span className="font-bold text-economic-positive">+18%</span>
+                              <span className="text-muted-foreground">
+                                Growth Rate
+                              </span>
+                              <span className="font-bold text-economic-positive">
+                                +18%
+                              </span>
                             </div>
                             <div className="flex justify-between text-sm">
-                              <span className="text-muted-foreground">Market Share</span>
+                              <span className="text-muted-foreground">
+                                Market Share
+                              </span>
                               <span className="font-bold">42%</span>
                             </div>
                           </div>
@@ -593,18 +604,28 @@ const BusinessForecast = () => {
 
                       <Card className="p-4">
                         <div className="space-y-3">
-                          <h4 className="font-semibold text-sm">Premium Tier</h4>
+                          <h4 className="font-semibold text-sm">
+                            Premium Tier
+                          </h4>
                           <div className="space-y-2">
                             <div className="flex justify-between text-sm">
-                              <span className="text-muted-foreground">2025 Projection</span>
+                              <span className="text-muted-foreground">
+                                2025 Projection
+                              </span>
                               <span className="font-bold">$3.1M</span>
                             </div>
                             <div className="flex justify-between text-sm">
-                              <span className="text-muted-foreground">Growth Rate</span>
-                              <span className="font-bold text-economic-positive">+28%</span>
+                              <span className="text-muted-foreground">
+                                Growth Rate
+                              </span>
+                              <span className="font-bold text-economic-positive">
+                                +28%
+                              </span>
                             </div>
                             <div className="flex justify-between text-sm">
-                              <span className="text-muted-foreground">Market Share</span>
+                              <span className="text-muted-foreground">
+                                Market Share
+                              </span>
                               <span className="font-bold">25%</span>
                             </div>
                           </div>
@@ -613,18 +634,28 @@ const BusinessForecast = () => {
 
                       <Card className="p-4">
                         <div className="space-y-3">
-                          <h4 className="font-semibold text-sm">Professional Services</h4>
+                          <h4 className="font-semibold text-sm">
+                            Professional Services
+                          </h4>
                           <div className="space-y-2">
                             <div className="flex justify-between text-sm">
-                              <span className="text-muted-foreground">2025 Projection</span>
+                              <span className="text-muted-foreground">
+                                2025 Projection
+                              </span>
                               <span className="font-bold">$2.8M</span>
                             </div>
                             <div className="flex justify-between text-sm">
-                              <span className="text-muted-foreground">Growth Rate</span>
-                              <span className="font-bold text-economic-positive">+22%</span>
+                              <span className="text-muted-foreground">
+                                Growth Rate
+                              </span>
+                              <span className="font-bold text-economic-positive">
+                                +22%
+                              </span>
                             </div>
                             <div className="flex justify-between text-sm">
-                              <span className="text-muted-foreground">Market Share</span>
+                              <span className="text-muted-foreground">
+                                Market Share
+                              </span>
                               <span className="font-bold">23%</span>
                             </div>
                           </div>
@@ -633,18 +664,28 @@ const BusinessForecast = () => {
 
                       <Card className="p-4">
                         <div className="space-y-3">
-                          <h4 className="font-semibold text-sm">Support & Maintenance</h4>
+                          <h4 className="font-semibold text-sm">
+                            Support & Maintenance
+                          </h4>
                           <div className="space-y-2">
                             <div className="flex justify-between text-sm">
-                              <span className="text-muted-foreground">2025 Projection</span>
+                              <span className="text-muted-foreground">
+                                2025 Projection
+                              </span>
                               <span className="font-bold">$2.6M</span>
                             </div>
                             <div className="flex justify-between text-sm">
-                              <span className="text-muted-foreground">Growth Rate</span>
-                              <span className="font-bold text-economic-positive">+15%</span>
+                              <span className="text-muted-foreground">
+                                Growth Rate
+                              </span>
+                              <span className="font-bold text-economic-positive">
+                                +15%
+                              </span>
                             </div>
                             <div className="flex justify-between text-sm">
-                              <span className="text-muted-foreground">Market Share</span>
+                              <span className="text-muted-foreground">
+                                Market Share
+                              </span>
                               <span className="font-bold">10%</span>
                             </div>
                           </div>
@@ -667,16 +708,24 @@ const BusinessForecast = () => {
                   <CardContent>
                     <div className="space-y-6">
                       <div>
-                        <h4 className="font-semibold text-sm mb-3">By Geographic Region</h4>
+                        <h4 className="font-semibold text-sm mb-3">
+                          By Geographic Region
+                        </h4>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                           <Card className="p-4">
                             <div className="space-y-2">
-                              <h5 className="font-medium text-sm">North America</h5>
+                              <h5 className="font-medium text-sm">
+                                North America
+                              </h5>
                               <div className="text-2xl font-bold">$6.5M</div>
-                              <p className="text-xs text-muted-foreground">52% of revenue</p>
+                              <p className="text-xs text-muted-foreground">
+                                52% of revenue
+                              </p>
                               <div className="flex justify-between text-xs mt-2">
                                 <span>Growth:</span>
-                                <span className="text-economic-positive font-bold">+14%</span>
+                                <span className="text-economic-positive font-bold">
+                                  +14%
+                                </span>
                               </div>
                             </div>
                           </Card>
@@ -684,21 +733,31 @@ const BusinessForecast = () => {
                             <div className="space-y-2">
                               <h5 className="font-medium text-sm">Europe</h5>
                               <div className="text-2xl font-bold">$3.8M</div>
-                              <p className="text-xs text-muted-foreground">30% of revenue</p>
+                              <p className="text-xs text-muted-foreground">
+                                30% of revenue
+                              </p>
                               <div className="flex justify-between text-xs mt-2">
                                 <span>Growth:</span>
-                                <span className="text-economic-positive font-bold">+22%</span>
+                                <span className="text-economic-positive font-bold">
+                                  +22%
+                                </span>
                               </div>
                             </div>
                           </Card>
                           <Card className="p-4">
                             <div className="space-y-2">
-                              <h5 className="font-medium text-sm">Asia-Pacific</h5>
+                              <h5 className="font-medium text-sm">
+                                Asia-Pacific
+                              </h5>
                               <div className="text-2xl font-bold">$2.4M</div>
-                              <p className="text-xs text-muted-foreground">18% of revenue</p>
+                              <p className="text-xs text-muted-foreground">
+                                18% of revenue
+                              </p>
                               <div className="flex justify-between text-xs mt-2">
                                 <span>Growth:</span>
-                                <span className="text-economic-positive font-bold">+38%</span>
+                                <span className="text-economic-positive font-bold">
+                                  +38%
+                                </span>
                               </div>
                             </div>
                           </Card>
@@ -706,7 +765,9 @@ const BusinessForecast = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-sm mb-3">By Customer Segment</h4>
+                        <h4 className="font-semibold text-sm mb-3">
+                          By Customer Segment
+                        </h4>
                         <div className="space-y-2">
                           {customerProfiles.map((profile) => (
                             <div
@@ -714,14 +775,17 @@ const BusinessForecast = () => {
                               className="flex items-center justify-between p-3 border rounded-lg"
                             >
                               <div className="flex-1">
-                                <p className="font-medium text-sm">{profile.segment}</p>
+                                <p className="font-medium text-sm">
+                                  {profile.segment}
+                                </p>
                                 <p className="text-xs text-muted-foreground">
                                   Growth Rate: {profile.growthRate}%
                                 </p>
                               </div>
                               <div className="text-right">
                                 <p className="font-bold text-sm">
-                                  ${(
+                                  $
+                                  {(
                                     (profile.demandAssumption *
                                       profile.avgOrderValue) /
                                     1000000
@@ -754,7 +818,9 @@ const BusinessForecast = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <Card className="p-4 bg-muted/30">
                         <div className="space-y-3">
-                          <h4 className="font-semibold text-sm">2024 Performance</h4>
+                          <h4 className="font-semibold text-sm">
+                            2024 Performance
+                          </h4>
                           <div className="space-y-2">
                             <div className="flex justify-between">
                               <span className="text-sm">Total Revenue</span>
@@ -762,7 +828,9 @@ const BusinessForecast = () => {
                             </div>
                             <div className="flex justify-between">
                               <span className="text-sm">YoY Growth</span>
-                              <span className="font-bold text-economic-positive">+16%</span>
+                              <span className="font-bold text-economic-positive">
+                                +16%
+                              </span>
                             </div>
                             <div className="flex justify-between">
                               <span className="text-sm">Q4 Actual</span>
@@ -774,7 +842,9 @@ const BusinessForecast = () => {
 
                       <Card className="p-4 bg-blue-50">
                         <div className="space-y-3">
-                          <h4 className="font-semibold text-sm">2025 Projection</h4>
+                          <h4 className="font-semibold text-sm">
+                            2025 Projection
+                          </h4>
                           <div className="space-y-2">
                             <div className="flex justify-between">
                               <span className="text-sm">Total Revenue</span>
@@ -782,7 +852,9 @@ const BusinessForecast = () => {
                             </div>
                             <div className="flex justify-between">
                               <span className="text-sm">Projected Growth</span>
-                              <span className="font-bold text-economic-positive">+22%</span>
+                              <span className="font-bold text-economic-positive">
+                                +22%
+                              </span>
                             </div>
                             <div className="flex justify-between">
                               <span className="text-sm">Confidence Level</span>
@@ -809,7 +881,9 @@ const BusinessForecast = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-4">
                         <div className="border rounded-lg p-4">
-                          <h4 className="font-semibold text-sm mb-2">Linear Regression</h4>
+                          <h4 className="font-semibold text-sm mb-2">
+                            Linear Regression
+                          </h4>
                           <p className="text-xs text-muted-foreground mb-3">
                             Baseline trend assuming steady growth
                           </p>
@@ -826,7 +900,9 @@ const BusinessForecast = () => {
                         </div>
 
                         <div className="border rounded-lg p-4">
-                          <h4 className="font-semibold text-sm mb-2">Moving Average (12-Month)</h4>
+                          <h4 className="font-semibold text-sm mb-2">
+                            Moving Average (12-Month)
+                          </h4>
                           <p className="text-xs text-muted-foreground mb-3">
                             Smoothed trend accounting for seasonality
                           </p>
@@ -837,7 +913,9 @@ const BusinessForecast = () => {
                             </div>
                             <div className="flex justify-between text-sm">
                               <span>Trend Direction</span>
-                              <span className="font-bold text-economic-positive">↗ Up</span>
+                              <span className="font-bold text-economic-positive">
+                                ↗ Up
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -845,7 +923,9 @@ const BusinessForecast = () => {
 
                       <div className="space-y-4">
                         <div className="border rounded-lg p-4">
-                          <h4 className="font-semibold text-sm mb-2">Exponential Smoothing</h4>
+                          <h4 className="font-semibold text-sm mb-2">
+                            Exponential Smoothing
+                          </h4>
                           <p className="text-xs text-muted-foreground mb-3">
                             Recent data weighted more heavily
                           </p>
@@ -862,7 +942,9 @@ const BusinessForecast = () => {
                         </div>
 
                         <div className="border rounded-lg p-4">
-                          <h4 className="font-semibold text-sm mb-2">AI-Based Prediction</h4>
+                          <h4 className="font-semibold text-sm mb-2">
+                            AI-Based Prediction
+                          </h4>
                           <p className="text-xs text-muted-foreground mb-3">
                             Machine learning model incorporating market factors
                           </p>
@@ -901,11 +983,15 @@ const BusinessForecast = () => {
                               <h4 className="font-semibold text-sm">
                                 {scenario.scenario}
                               </h4>
-                              <Badge variant={
-                                scenario.scenario === "Best Case" ? "default" :
-                                scenario.scenario === "Base Case" ? "secondary" :
-                                "destructive"
-                              }>
+                              <Badge
+                                variant={
+                                  scenario.scenario === "Best Case"
+                                    ? "default"
+                                    : scenario.scenario === "Base Case"
+                                      ? "secondary"
+                                      : "destructive"
+                                }
+                              >
                                 {scenario.probability}%
                               </Badge>
                             </div>
@@ -943,11 +1029,16 @@ const BusinessForecast = () => {
                                   Key Assumptions
                                 </p>
                                 <ul className="text-xs space-y-1">
-                                  {scenario.keyAssumptions.map((assumption, idx) => (
-                                    <li key={idx} className="text-muted-foreground">
-                                      • {assumption}
-                                    </li>
-                                  ))}
+                                  {scenario.keyAssumptions.map(
+                                    (assumption, idx) => (
+                                      <li
+                                        key={idx}
+                                        className="text-muted-foreground"
+                                      >
+                                        • {assumption}
+                                      </li>
+                                    ),
+                                  )}
                                 </ul>
                               </div>
                             </div>
@@ -957,8 +1048,13 @@ const BusinessForecast = () => {
                       <Card className="p-4 border-2 border-destructive/30">
                         <div className="space-y-3">
                           <div className="flex items-center justify-between">
-                            <h4 className="font-semibold text-sm">Worst Case</h4>
-                            <Badge variant="outline" className="border-destructive text-destructive">
+                            <h4 className="font-semibold text-sm">
+                              Worst Case
+                            </h4>
+                            <Badge
+                              variant="outline"
+                              className="border-destructive text-destructive"
+                            >
                               25%
                             </Badge>
                           </div>
@@ -1027,7 +1123,9 @@ const BusinessForecast = () => {
                       Cost & Expense Forecasting
                     </CardTitle>
                     <p className="text-sm text-muted-foreground mt-2">
-                      Predicts future spending to ensure profitability. Comprehensive view of fixed costs, variable costs, and forecasted expenses.
+                      Predicts future spending to ensure profitability.
+                      Comprehensive view of fixed costs, variable costs, and
+                      forecasted expenses.
                     </p>
                   </CardHeader>
                 </Card>
@@ -1046,8 +1144,12 @@ const BusinessForecast = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <Card className="p-4 border-2 border-orange-200 bg-orange-50">
                         <div className="space-y-3">
-                          <h4 className="font-semibold text-sm text-orange-900">Fixed Costs</h4>
-                          <p className="text-xs text-orange-800">Rent, salaries, subscriptions, insurance</p>
+                          <h4 className="font-semibold text-sm text-orange-900">
+                            Fixed Costs
+                          </h4>
+                          <p className="text-xs text-orange-800">
+                            Rent, salaries, subscriptions, insurance
+                          </p>
                           <div className="space-y-2">
                             <div className="flex justify-between">
                               <span className="text-sm">Annual Total</span>
@@ -1065,7 +1167,9 @@ const BusinessForecast = () => {
                           <div className="border-t pt-2 mt-2">
                             <div className="flex items-center gap-2">
                               <TrendingUp className="h-4 w-4 text-orange-600" />
-                              <span className="text-xs text-orange-800 font-semibold">Stable and predictable</span>
+                              <span className="text-xs text-orange-800 font-semibold">
+                                Stable and predictable
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -1073,8 +1177,12 @@ const BusinessForecast = () => {
 
                       <Card className="p-4 border-2 border-purple-200 bg-purple-50">
                         <div className="space-y-3">
-                          <h4 className="font-semibold text-sm text-purple-900">Variable Costs</h4>
-                          <p className="text-xs text-purple-800">Raw materials, commissions, production costs</p>
+                          <h4 className="font-semibold text-sm text-purple-900">
+                            Variable Costs
+                          </h4>
+                          <p className="text-xs text-purple-800">
+                            Raw materials, commissions, production costs
+                          </p>
                           <div className="space-y-2">
                             <div className="flex justify-between">
                               <span className="text-sm">Annual Total</span>
@@ -1092,7 +1200,9 @@ const BusinessForecast = () => {
                           <div className="border-t pt-2 mt-2">
                             <div className="flex items-center gap-2">
                               <TrendingUp className="h-4 w-4 text-purple-600" />
-                              <span className="text-xs text-purple-800 font-semibold">Scales with revenue</span>
+                              <span className="text-xs text-purple-800 font-semibold">
+                                Scales with revenue
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -1122,9 +1232,7 @@ const BusinessForecast = () => {
                               </h4>
                               <Badge
                                 variant={
-                                  cost.type === "COGS"
-                                    ? "default"
-                                    : "secondary"
+                                  cost.type === "COGS" ? "default" : "secondary"
                                 }
                               >
                                 {cost.type}
@@ -1178,45 +1286,89 @@ const BusinessForecast = () => {
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <Card className="p-4 bg-blue-50">
                           <div className="space-y-2">
-                            <h5 className="font-semibold text-sm text-blue-900">Budget 2025</h5>
-                            <div className="text-3xl font-bold text-blue-600">$8.8M</div>
-                            <p className="text-xs text-blue-800">Target spending</p>
+                            <h5 className="font-semibold text-sm text-blue-900">
+                              Budget 2025
+                            </h5>
+                            <div className="text-3xl font-bold text-blue-600">
+                              $8.8M
+                            </div>
+                            <p className="text-xs text-blue-800">
+                              Target spending
+                            </p>
                           </div>
                         </Card>
 
                         <Card className="p-4 bg-purple-50">
                           <div className="space-y-2">
-                            <h5 className="font-semibold text-sm text-purple-900">Forecast 2025</h5>
-                            <div className="text-3xl font-bold text-purple-600">$8.3M</div>
-                            <p className="text-xs text-purple-800">Projected spending</p>
+                            <h5 className="font-semibold text-sm text-purple-900">
+                              Forecast 2025
+                            </h5>
+                            <div className="text-3xl font-bold text-purple-600">
+                              $8.3M
+                            </div>
+                            <p className="text-xs text-purple-800">
+                              Projected spending
+                            </p>
                           </div>
                         </Card>
 
                         <Card className="p-4 bg-green-50">
                           <div className="space-y-2">
-                            <h5 className="font-semibold text-sm text-green-900">Variance</h5>
-                            <div className="text-3xl font-bold text-green-600">+$500K</div>
-                            <p className="text-xs text-green-800">Under budget (5.7%)</p>
+                            <h5 className="font-semibold text-sm text-green-900">
+                              Variance
+                            </h5>
+                            <div className="text-3xl font-bold text-green-600">
+                              +$500K
+                            </div>
+                            <p className="text-xs text-green-800">
+                              Under budget (5.7%)
+                            </p>
                           </div>
                         </Card>
                       </div>
 
                       <div className="border rounded-lg p-4 space-y-4">
-                        <h4 className="font-semibold text-sm">Monthly Comparison</h4>
+                        <h4 className="font-semibold text-sm">
+                          Monthly Comparison
+                        </h4>
                         <div className="space-y-3">
                           {[
-                            { month: "January", budget: 750, forecast: 680, actual: 690 },
-                            { month: "February", budget: 750, forecast: 720, actual: 750 },
-                            { month: "March", budget: 750, forecast: 700, actual: 680 },
-                            { month: "April", budget: 750, forecast: 710, actual: null },
+                            {
+                              month: "January",
+                              budget: 750,
+                              forecast: 680,
+                              actual: 690,
+                            },
+                            {
+                              month: "February",
+                              budget: 750,
+                              forecast: 720,
+                              actual: 750,
+                            },
+                            {
+                              month: "March",
+                              budget: 750,
+                              forecast: 700,
+                              actual: 680,
+                            },
+                            {
+                              month: "April",
+                              budget: 750,
+                              forecast: 710,
+                              actual: null,
+                            },
                           ].map((row) => (
                             <div key={row.month} className="space-y-2">
                               <div className="flex items-center justify-between">
-                                <span className="font-medium text-sm">{row.month}</span>
+                                <span className="font-medium text-sm">
+                                  {row.month}
+                                </span>
                               </div>
                               <div className="flex gap-2">
                                 <div className="flex-1 flex items-center gap-2">
-                                  <Badge variant="outline" className="text-xs">Budget</Badge>
+                                  <Badge variant="outline" className="text-xs">
+                                    Budget
+                                  </Badge>
                                   <div className="flex-1">
                                     <div className="h-6 bg-blue-200 rounded flex items-center justify-center text-xs font-semibold">
                                       ${row.budget}K
@@ -1224,7 +1376,9 @@ const BusinessForecast = () => {
                                   </div>
                                 </div>
                                 <div className="flex-1 flex items-center gap-2">
-                                  <Badge variant="outline" className="text-xs">Forecast</Badge>
+                                  <Badge variant="outline" className="text-xs">
+                                    Forecast
+                                  </Badge>
                                   <div className="flex-1">
                                     <div className="h-6 bg-purple-200 rounded flex items-center justify-center text-xs font-semibold">
                                       ${row.forecast}K
@@ -1233,7 +1387,12 @@ const BusinessForecast = () => {
                                 </div>
                                 {row.actual && (
                                   <div className="flex-1 flex items-center gap-2">
-                                    <Badge variant="outline" className="text-xs">Actual</Badge>
+                                    <Badge
+                                      variant="outline"
+                                      className="text-xs"
+                                    >
+                                      Actual
+                                    </Badge>
                                     <div className="flex-1">
                                       <div className="h-6 bg-green-200 rounded flex items-center justify-center text-xs font-semibold">
                                         ${row.actual}K
@@ -1264,18 +1423,26 @@ const BusinessForecast = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <Card className="p-4 border-l-4 border-l-blue-500">
                         <div className="space-y-3">
-                          <h5 className="font-semibold text-sm">Marketing & Sales</h5>
+                          <h5 className="font-semibold text-sm">
+                            Marketing & Sales
+                          </h5>
                           <div className="space-y-2">
                             <div className="flex justify-between">
-                              <span className="text-sm text-muted-foreground">Digital Marketing</span>
+                              <span className="text-sm text-muted-foreground">
+                                Digital Marketing
+                              </span>
                               <span className="font-bold">$480K</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-sm text-muted-foreground">Sales Team Salaries</span>
+                              <span className="text-sm text-muted-foreground">
+                                Sales Team Salaries
+                              </span>
                               <span className="font-bold">$620K</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-sm text-muted-foreground">Events & Conferences</span>
+                              <span className="text-sm text-muted-foreground">
+                                Events & Conferences
+                              </span>
                               <span className="font-bold">$150K</span>
                             </div>
                             <div className="border-t pt-2 flex justify-between font-bold">
@@ -1288,18 +1455,26 @@ const BusinessForecast = () => {
 
                       <Card className="p-4 border-l-4 border-l-purple-500">
                         <div className="space-y-3">
-                          <h5 className="font-semibold text-sm">Research & Development</h5>
+                          <h5 className="font-semibold text-sm">
+                            Research & Development
+                          </h5>
                           <div className="space-y-2">
                             <div className="flex justify-between">
-                              <span className="text-sm text-muted-foreground">R&D Team Salaries</span>
+                              <span className="text-sm text-muted-foreground">
+                                R&D Team Salaries
+                              </span>
                               <span className="font-bold">$850K</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-sm text-muted-foreground">Tools & Infrastructure</span>
+                              <span className="text-sm text-muted-foreground">
+                                Tools & Infrastructure
+                              </span>
                               <span className="font-bold">$220K</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-sm text-muted-foreground">Licenses & Software</span>
+                              <span className="text-sm text-muted-foreground">
+                                Licenses & Software
+                              </span>
                               <span className="font-bold">$180K</span>
                             </div>
                             <div className="border-t pt-2 flex justify-between font-bold">
@@ -1312,18 +1487,26 @@ const BusinessForecast = () => {
 
                       <Card className="p-4 border-l-4 border-l-orange-500">
                         <div className="space-y-3">
-                          <h5 className="font-semibold text-sm">General & Administrative</h5>
+                          <h5 className="font-semibold text-sm">
+                            General & Administrative
+                          </h5>
                           <div className="space-y-2">
                             <div className="flex justify-between">
-                              <span className="text-sm text-muted-foreground">Office Rent</span>
+                              <span className="text-sm text-muted-foreground">
+                                Office Rent
+                              </span>
                               <span className="font-bold">$360K</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-sm text-muted-foreground">Admin Staff Salaries</span>
+                              <span className="text-sm text-muted-foreground">
+                                Admin Staff Salaries
+                              </span>
                               <span className="font-bold">$420K</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-sm text-muted-foreground">Utilities & Services</span>
+                              <span className="text-sm text-muted-foreground">
+                                Utilities & Services
+                              </span>
                               <span className="font-bold">$140K</span>
                             </div>
                             <div className="border-t pt-2 flex justify-between font-bold">
@@ -1336,18 +1519,26 @@ const BusinessForecast = () => {
 
                       <Card className="p-4 border-l-4 border-l-green-500">
                         <div className="space-y-3">
-                          <h5 className="font-semibold text-sm">Forecasted COGS</h5>
+                          <h5 className="font-semibold text-sm">
+                            Forecasted COGS
+                          </h5>
                           <div className="space-y-2">
                             <div className="flex justify-between">
-                              <span className="text-sm text-muted-foreground">Raw Materials</span>
+                              <span className="text-sm text-muted-foreground">
+                                Raw Materials
+                              </span>
                               <span className="font-bold">$2.1M</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-sm text-muted-foreground">Manufacturing</span>
+                              <span className="text-sm text-muted-foreground">
+                                Manufacturing
+                              </span>
                               <span className="font-bold">$1.8M</span>
                             </div>
                             <div className="flex justify-between">
-                              <span className="text-sm text-muted-foreground">Shipping & Logistics</span>
+                              <span className="text-sm text-muted-foreground">
+                                Shipping & Logistics
+                              </span>
                               <span className="font-bold">$620K</span>
                             </div>
                             <div className="border-t pt-2 flex justify-between font-bold">
@@ -1376,11 +1567,19 @@ const BusinessForecast = () => {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <Card className="p-4">
                           <div className="space-y-3">
-                            <h5 className="font-semibold text-sm">Cost Growth Rate</h5>
-                            <div className="text-3xl font-bold text-orange-600">+4.2%</div>
-                            <p className="text-xs text-muted-foreground">YoY increase from 2024 to 2025</p>
+                            <h5 className="font-semibold text-sm">
+                              Cost Growth Rate
+                            </h5>
+                            <div className="text-3xl font-bold text-orange-600">
+                              +4.2%
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                              YoY increase from 2024 to 2025
+                            </p>
                             <div className="border-t pt-2 mt-2">
-                              <p className="text-xs text-muted-foreground">Primary drivers:</p>
+                              <p className="text-xs text-muted-foreground">
+                                Primary drivers:
+                              </p>
                               <ul className="text-xs space-y-1 mt-1">
                                 <li>• Salary increases (+2%)</li>
                                 <li>• Material cost inflation (+3%)</li>
@@ -1392,11 +1591,19 @@ const BusinessForecast = () => {
 
                         <Card className="p-4">
                           <div className="space-y-3">
-                            <h5 className="font-semibold text-sm">COGS as % of Revenue</h5>
-                            <div className="text-3xl font-bold text-green-600">37%</div>
-                            <p className="text-xs text-muted-foreground">Below industry average of 42%</p>
+                            <h5 className="font-semibold text-sm">
+                              COGS as % of Revenue
+                            </h5>
+                            <div className="text-3xl font-bold text-green-600">
+                              37%
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                              Below industry average of 42%
+                            </p>
                             <div className="border-t pt-2 mt-2">
-                              <p className="text-xs text-muted-foreground">Cost efficiency opportunity:</p>
+                              <p className="text-xs text-muted-foreground">
+                                Cost efficiency opportunity:
+                              </p>
                               <ul className="text-xs space-y-1 mt-1">
                                 <li>• Potential 1-2% improvement</li>
                                 <li>• Supplier optimization needed</li>
@@ -1530,7 +1737,9 @@ const BusinessForecast = () => {
                         </h4>
                         <div className="space-y-2 text-sm text-muted-foreground">
                           {KEY_ASSUMPTIONS.map((assumption, idx) => (
-                            <p key={idx}>• {assumption.label}: {assumption.value}</p>
+                            <p key={idx}>
+                              • {assumption.label}: {assumption.value}
+                            </p>
                           ))}
                           <div className="mt-3">
                             <Link to="/risk-management">
@@ -1577,11 +1786,13 @@ const BusinessForecast = () => {
                                 {metric.label}
                               </h4>
                               <div className="text-2xl font-bold">
-                                {metric.currentValue}{metric.unit}
+                                {metric.currentValue}
+                                {metric.unit}
                               </div>
                               {metric.targetValue && (
                                 <div className="text-xs text-muted-foreground">
-                                  Target: {metric.targetValue}{metric.unit}
+                                  Target: {metric.targetValue}
+                                  {metric.unit}
                                 </div>
                               )}
                             </div>
