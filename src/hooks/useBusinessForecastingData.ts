@@ -69,7 +69,7 @@ function transformBusinessForecastingData(
   ];
 
   // Transform to revenue projections
-  const revenueProjections: RevenueProjection[] = [
+  const baseRevenueProjections: RevenueProjection[] = [
     {
       id: "q1-2025",
       period: "Q1 2025",
@@ -98,7 +98,26 @@ function transformBusinessForecastingData(
             ? 70
             : 55,
     },
-    {
+  ];
+
+  // Add Q3 if available in API, otherwise use fallback
+  if (forecast.q3_2025_projected_revenue) {
+    baseRevenueProjections.push({
+      id: "q3-2025",
+      period: "Q3 2025",
+      projected: forecast.q3_2025_projected_revenue,
+      conservative: forecast.q3_2025_scenario_range_min || 3150000,
+      optimistic: forecast.q3_2025_scenario_range_max || 4025000,
+      actualToDate: forecast.q3_2025_actual_to_date,
+      confidence:
+        forecast.q3_2025_confidence === "High"
+          ? 85
+          : forecast.q3_2025_confidence === "Medium"
+            ? 70
+            : 72,
+    });
+  } else {
+    baseRevenueProjections.push({
       id: "q3-2025",
       period: "Q3 2025",
       projected: 3500000,
@@ -106,16 +125,37 @@ function transformBusinessForecastingData(
       optimistic: 4025000,
       actualToDate: 1850000,
       confidence: 72,
-    },
-    {
+    });
+  }
+
+  // Add Q4 if available in API, otherwise use fallback
+  if (forecast.q4_2025_projected_revenue) {
+    baseRevenueProjections.push({
+      id: "q4-2025",
+      period: "Q4 2025",
+      projected: forecast.q4_2025_projected_revenue,
+      conservative: forecast.q4_2025_scenario_range_min || 3780000,
+      optimistic: forecast.q4_2025_scenario_range_max || 4860000,
+      actualToDate: forecast.q4_2025_actual_to_date,
+      confidence:
+        forecast.q4_2025_confidence === "High"
+          ? 85
+          : forecast.q4_2025_confidence === "Medium"
+            ? 70
+            : 68,
+    });
+  } else {
+    baseRevenueProjections.push({
       id: "q4-2025",
       period: "Q4 2025",
       projected: 4200000,
       conservative: 3780000,
       optimistic: 4860000,
       confidence: 68,
-    },
-  ];
+    });
+  }
+
+  const revenueProjections = baseRevenueProjections;
 
   // Transform to KPIs
   const kpis: KPI[] = [
