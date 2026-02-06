@@ -33,10 +33,10 @@ function transformBusinessForecastingData(
 ): TransformedBusinessData {
   if (!data || data.length === 0) {
     return {
-      customerProfiles: [],
-      revenueProjections: [],
-      kpis: [],
-      scenarios: [],
+      customerProfiles: mockCustomerProfiles,
+      revenueProjections: mockRevenueProjections,
+      kpis: mockKpis,
+      scenarios: mockScenarios,
       lastUpdated: new Date(),
       isLoading: false,
       error: null,
