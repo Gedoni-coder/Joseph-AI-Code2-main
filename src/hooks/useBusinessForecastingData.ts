@@ -157,69 +157,29 @@ function transformBusinessForecastingData(
 
   const revenueProjections = baseRevenueProjections;
 
-  // Transform to KPIs
-  const kpis: KPI[] = [
-    {
-      id: "annual-revenue-target",
-      name: "Annual Revenue Target",
-      current: forecast.total_revenue_target,
-      target: forecast.total_revenue_target,
-      unit: "USD",
-      trend: forecast.weighted_avg_growth > 15 ? "up" : "stable",
-      category: "Revenue",
-      frequency: "Annual",
-    },
-    {
-      id: "avg-order-value",
-      name: "Average Order Value",
-      current: forecast.average_order_value,
-      target: forecast.average_order_value * 1.1,
-      unit: "USD",
-      trend: "stable",
-      category: "Sales",
-      frequency: "Monthly",
-    },
-    {
-      id: "total-demand",
-      name: "Total Demand Units",
-      current: forecast.total_demand_units,
-      target: forecast.total_demand_units * 1.2,
-      unit: "units",
-      trend: "up",
-      category: "Sales",
-      frequency: "Monthly",
-    },
-    {
-      id: "market-opportunity",
-      name: "Total Market Opportunity",
-      current: forecast.total_market_opportunity,
-      target: forecast.total_market_opportunity * 1.15,
-      unit: "USD",
-      trend: "up",
-      category: "Market",
-      frequency: "Quarterly",
-    },
-    {
-      id: "overall-retention",
-      name: "Overall Customer Retention",
-      current: forecast.overall_retention,
-      target: 95,
-      unit: "%",
-      trend: forecast.overall_retention > 80 ? "up" : "down",
-      category: "Customer",
-      frequency: "Monthly",
-    },
-    {
-      id: "weighted-growth",
-      name: "Weighted Average Growth Rate",
-      current: forecast.weighted_avg_growth,
-      target: 20,
-      unit: "%",
-      trend: forecast.weighted_avg_growth > 15 ? "up" : "stable",
-      category: "Growth",
-      frequency: "Quarterly",
-    },
-  ];
+  // Transform to KPIs - use comprehensive mock KPIs as base
+  const kpis: KPI[] = mockKpis.map(kpi => {
+    // Allow API to override specific KPI values if available
+    if (kpi.category === "Revenue" || kpi.category === "Financial") {
+      return {
+        ...kpi,
+        current: forecast.total_revenue_target ? forecast.total_revenue_target * 0.85 : kpi.current,
+      };
+    }
+    if (kpi.category === "Customer" && kpi.name.includes("Retention")) {
+      return {
+        ...kpi,
+        current: forecast.overall_retention || kpi.current,
+      };
+    }
+    if (kpi.category === "Growth" || kpi.name.includes("Growth Rate")) {
+      return {
+        ...kpi,
+        current: forecast.weighted_avg_growth || kpi.current,
+      };
+    }
+    return kpi;
+  });
 
   // Transform to scenarios
   const scenarios: ScenarioPlanning[] = [
