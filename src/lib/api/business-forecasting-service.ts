@@ -58,35 +58,51 @@ export interface BusinessForecastingData {
   documents: string[];
 }
 
-export type BusinessForecastingCreateData = Omit<BusinessForecastingData, "id" | "created_at">;
-export type BusinessForecastingUpdateData = Partial<BusinessForecastingCreateData>;
+export type BusinessForecastingCreateData = Omit<
+  BusinessForecastingData,
+  "id" | "created_at"
+>;
+export type BusinessForecastingUpdateData =
+  Partial<BusinessForecastingCreateData>;
 
 /**
  * Get all business forecasting records
  */
-export async function getBusinessForecasts(): Promise<BusinessForecastingData[]> {
+export async function getBusinessForecasts(): Promise<
+  BusinessForecastingData[]
+> {
   return xanoGet<BusinessForecastingData[]>("/business_forecasting");
 }
 
 /**
  * Get a specific business forecasting record by ID
  */
-export async function getBusinessForecast(id: number): Promise<BusinessForecastingData> {
+export async function getBusinessForecast(
+  id: number,
+): Promise<BusinessForecastingData> {
   return xanoGet<BusinessForecastingData>(`/business_forecasting/${id}`);
 }
 
 /**
  * Create a new business forecasting record
  */
-export async function createBusinessForecast(data: BusinessForecastingCreateData): Promise<BusinessForecastingData> {
+export async function createBusinessForecast(
+  data: BusinessForecastingCreateData,
+): Promise<BusinessForecastingData> {
   return xanoPost<BusinessForecastingData>("/business_forecasting", data);
 }
 
 /**
  * Update an existing business forecasting record
  */
-export async function updateBusinessForecast(id: number, data: BusinessForecastingUpdateData): Promise<BusinessForecastingData> {
-  return xanoPatch<BusinessForecastingData>(`/business_forecasting/${id}`, data);
+export async function updateBusinessForecast(
+  id: number,
+  data: BusinessForecastingUpdateData,
+): Promise<BusinessForecastingData> {
+  return xanoPatch<BusinessForecastingData>(
+    `/business_forecasting/${id}`,
+    data,
+  );
 }
 
 /**

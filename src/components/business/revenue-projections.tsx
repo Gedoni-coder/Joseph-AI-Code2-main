@@ -167,14 +167,16 @@ export function RevenueProjections({
         </div>
       </div>
 
-      <div className={cn(
-        "grid gap-4",
-        viewType === "yearly"
-          ? "grid-cols-1"
-          : viewType === "monthly"
-            ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-            : "grid-cols-1 md:grid-cols-2 lg:grid-cols-4"
-      )}>
+      <div
+        className={cn(
+          "grid gap-4",
+          viewType === "yearly"
+            ? "grid-cols-1"
+            : viewType === "monthly"
+              ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+              : "grid-cols-1 md:grid-cols-2 lg:grid-cols-4",
+        )}
+      >
         {displayData.map((projection) => {
           const variance = getVariancePercentage(
             projection.actualToDate,
@@ -253,19 +255,25 @@ export function RevenueProjections({
                       {/* Volume Level Progress Indicator */}
                       <div className="space-y-2">
                         <div className="flex items-center justify-between text-xs mb-2">
-                          <span className="text-muted-foreground">Progress</span>
+                          <span className="text-muted-foreground">
+                            Progress
+                          </span>
                           <span className="font-bold text-primary">
                             {Math.round(
-                              (projection.actualToDate / projection.projected) * 100
-                            )}%
+                              (projection.actualToDate / projection.projected) *
+                                100,
+                            )}
+                            %
                           </span>
                         </div>
                         <div className="flex gap-1 h-12 items-end">
                           {[...Array(10)].map((_, i) => {
                             const progressPercentage =
-                              (projection.actualToDate / projection.projected) * 100;
+                              (projection.actualToDate / projection.projected) *
+                              100;
                             const segmentThreshold = (i + 1) * 10;
-                            const isFilled = progressPercentage >= segmentThreshold;
+                            const isFilled =
+                              progressPercentage >= segmentThreshold;
 
                             return (
                               <div
@@ -274,7 +282,7 @@ export function RevenueProjections({
                                   "flex-1 rounded-sm transition-all duration-300",
                                   isFilled
                                     ? "bg-gradient-to-t from-primary to-primary/80 h-full shadow-sm"
-                                    : "bg-muted h-1"
+                                    : "bg-muted h-1",
                                 )}
                               />
                             );

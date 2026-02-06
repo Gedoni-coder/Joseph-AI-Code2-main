@@ -29,7 +29,7 @@ interface TransformedBusinessData {
  * Transform Xano API response to component-ready data structures
  */
 function transformBusinessForecastingData(
-  data: BusinessForecastingData[]
+  data: BusinessForecastingData[],
 ): TransformedBusinessData {
   if (!data || data.length === 0) {
     return {
@@ -227,8 +227,8 @@ function transformBusinessForecastingData(
       id: "best-case",
       scenario: "Best Case",
       revenue: forecast.q1_2025_scenario_range_max * 4, // Annualized
-      costs: (forecast.q1_2025_scenario_range_max * 4 * 0.65), // Assuming 65% of revenue as costs
-      profit: (forecast.q1_2025_scenario_range_max * 4 * 0.35),
+      costs: forecast.q1_2025_scenario_range_max * 4 * 0.65, // Assuming 65% of revenue as costs
+      profit: forecast.q1_2025_scenario_range_max * 4 * 0.35,
       probability: 25,
       keyAssumptions: [
         `Enterprise units reach ${forecast.enterprise_units} with ${forecast.enterprise_growth_rate}% growth`,
@@ -251,8 +251,8 @@ function transformBusinessForecastingData(
       id: "worst-case",
       scenario: "Worst Case",
       revenue: forecast.q1_2025_scenario_range_min * 4, // Annualized
-      costs: (forecast.q1_2025_scenario_range_min * 4 * 0.75), // Higher cost percentage in worst case
-      profit: (forecast.q1_2025_scenario_range_min * 4 * 0.25),
+      costs: forecast.q1_2025_scenario_range_min * 4 * 0.75, // Higher cost percentage in worst case
+      profit: forecast.q1_2025_scenario_range_min * 4 * 0.25,
       probability: 25,
       keyAssumptions: [
         `Conservative scenario assumes 75% of base case revenue`,
