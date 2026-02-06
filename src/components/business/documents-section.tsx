@@ -304,12 +304,20 @@ export function DocumentsSection() {
                                 </Badge>
                               )}
                               {doc.extractedText && (
-                                <Badge
-                                  variant="secondary"
-                                  className="text-xs bg-green-100 text-green-800"
-                                >
-                                  ✓ Text extracted
-                                </Badge>
+                                <>
+                                  <Badge
+                                    variant="secondary"
+                                    className="text-xs bg-green-100 text-green-800"
+                                  >
+                                    ✓ Extracted
+                                  </Badge>
+                                  <span className="text-xs text-muted-foreground">
+                                    {(() => {
+                                      const stats = formatExtractedText(doc.extractedText);
+                                      return `${stats.charCount} chars, ${stats.lineCount} lines`;
+                                    })()}
+                                  </span>
+                                </>
                               )}
                               {doc.extractionError && (
                                 <Badge
