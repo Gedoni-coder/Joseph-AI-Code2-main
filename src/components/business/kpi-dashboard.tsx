@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -8,6 +9,8 @@ import {
   Target,
   Minus,
   BarChart3,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -20,6 +23,9 @@ export function KPIDashboard({
   kpis,
   title = "Performance Metrics & KPIs",
 }: KPIDashboardProps) {
+  const [expandedCategories, setExpandedCategories] = useState<
+    Record<string, boolean>
+  >({});
   const formatValue = (value: number, unit: string) => {
     if (unit === "USD") {
       return new Intl.NumberFormat("en-US", {
