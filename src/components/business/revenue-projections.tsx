@@ -1,19 +1,24 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
 import { RevenueProjection } from "@/lib/business-forecast-data";
 import { TrendingUp, Target, AlertCircle, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 interface RevenueProjectionsProps {
   projections: RevenueProjection[];
   title?: string;
 }
 
+type ViewType = "monthly" | "quarterly" | "yearly";
+
 export function RevenueProjections({
   projections,
   title = "Revenue Projections",
 }: RevenueProjectionsProps) {
+  const [viewType, setViewType] = useState<ViewType>("quarterly");
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
