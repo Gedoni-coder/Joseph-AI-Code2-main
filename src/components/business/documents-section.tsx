@@ -22,6 +22,12 @@ import {
   getFileTypeInfo,
 } from "@/lib/document-processor";
 
+// Re-use formatExtractedText in JSX
+const formatStats = (text: string) => {
+  const { charCount, lineCount } = formatExtractedText(text);
+  return `${charCount} chars, ${lineCount} lines`;
+};
+
 interface Document {
   id: string;
   name: string;
