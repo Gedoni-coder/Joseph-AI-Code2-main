@@ -105,20 +105,8 @@ export function KPIDashboard({
   };
 
   const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case "Sales":
-        return "💼";
-      case "Revenue":
-        return "💰";
-      case "Profitability":
-        return "📈";
-      case "Operations":
-        return "⚙️";
-      case "Finance":
-        return "🏦";
-      default:
-        return "📊";
-    }
+    // Return bullseye emoji for all categories
+    return "🎯";
   };
 
   const groupedKPIs = kpis.reduce(
