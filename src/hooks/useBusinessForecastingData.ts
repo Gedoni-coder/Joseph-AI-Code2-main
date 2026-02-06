@@ -93,6 +93,23 @@ function transformBusinessForecastingData(
             ? 70
             : 55,
     },
+    {
+      id: "q3-2025",
+      period: "Q3 2025",
+      projected: 3500000,
+      conservative: 3150000,
+      optimistic: 4025000,
+      actualToDate: 1850000,
+      confidence: 72,
+    },
+    {
+      id: "q4-2025",
+      period: "Q4 2025",
+      projected: 4200000,
+      conservative: 3780000,
+      optimistic: 4860000,
+      confidence: 68,
+    },
   ];
 
   // Transform to KPIs
