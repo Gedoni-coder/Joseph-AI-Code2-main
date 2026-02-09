@@ -38,7 +38,13 @@ export async function extractTextFromFile(file: File): Promise<string> {
  */
 async function extractTextFromPDF(file: File): Promise<string> {
   try {
-    const pdfjs = await import("pdfjs-dist");
+    let pdfjs;
+    try {
+      pdfjs = await import("pdfjs-dist");
+    } catch (importError) {
+      console.warn("pdfjs-dist not available:", importError);
+      return `[PDF] ${file.name}\nPDF extraction library not available. Please use a tool to extract PDF content.`;
+    }
 
     // Set up the worker
     pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
@@ -66,7 +72,13 @@ async function extractTextFromPDF(file: File): Promise<string> {
  */
 async function extractTextFromDOCX(file: File): Promise<string> {
   try {
-    const mammoth = await import("mammoth");
+    let mammoth;
+    try {
+      mammoth = await import("mammoth");
+    } catch (importError) {
+      console.warn("mammoth not available:", importError);
+      return `[DOCX] ${file.name}\nWord document extraction library not available. Please use a tool to extract document content.`;
+    }
     const arrayBuffer = await file.arrayBuffer();
 
     const result = await mammoth.extractRawText({ arrayBuffer });
@@ -82,7 +94,13 @@ async function extractTextFromDOCX(file: File): Promise<string> {
  */
 async function extractTextFromSpreadsheet(file: File): Promise<string> {
   try {
-    const XLSX = await import("xlsx");
+    let XLSX;
+    try {
+      XLSX = await import("xlsx");
+    } catch (importError) {
+      console.warn("xlsx not available:", importError);
+      return `[SPREADSHEET] ${file.name}\nSpreadsheet extraction library not available. Please use a tool to extract spreadsheet content.`;
+    }
     const arrayBuffer = await file.arrayBuffer();
 
     const workbook = XLSX.read(arrayBuffer, { type: "array" });
@@ -106,7 +124,13 @@ async function extractTextFromSpreadsheet(file: File): Promise<string> {
  */
 async function extractTextFromCSV(file: File): Promise<string> {
   try {
-    const Papa = await import("papaparse");
+    let Papa;
+    try {
+      Papa = await import("papaparse");
+    } catch (importError) {
+      console.warn("papaparse not available:", importError);
+      return `[CSV] ${file.name}\nCSV extraction library not available. Please use a tool to extract CSV content.`;
+    }
 
     return new Promise((resolve, reject) => {
       Papa.parse(file, {
