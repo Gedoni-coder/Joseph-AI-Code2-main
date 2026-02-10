@@ -1,5 +1,7 @@
+import { useState, useEffect } from "react";
 import { useCompanyInfo } from "@/lib/company-context";
 import { useBusinessForecastingData } from "./useBusinessForecastingData";
+import { getMarketAnalysisFromAI } from "@/lib/api/groq-agent-service";
 import {
   type MarketSize,
   type CustomerSegment,
@@ -54,7 +56,7 @@ export interface UseMarketAnalysisDataReturn {
 
 /**
  * Hook to fetch and integrate market analysis data from multiple sources
- * 1. AI Agent (when available - not yet implemented)
+ * 1. AI Agent (Groq - primary)
  * 2. Onboarding form
  * 3. Business Forecasting Module
  * 4. Placeholders (when no data available)
@@ -66,67 +68,114 @@ export function useMarketAnalysisData(): UseMarketAnalysisDataReturn {
     revenueProjections,
   } = useBusinessForecastingData();
 
-  // TODO: Integrate with AI Agent when available
-  // const { marketData: aiGeneratedData } = useAIAgentData();
+  // State for AI-generated data
+  const [aiData, setAiData] = useState<any>(null);
+  const [isLoadingAI, setIsLoadingAI] = useState(false);
+
+  // Fetch AI-generated market analysis
+  useEffect(() => {
+    const fetchAIAnalysis = async () => {
+      if (!companyInfo?.companyName || companyInfo.companyName.trim().length === 0) {
+        return; // Don't call AI if no company info
+      }
+
+      setIsLoadingAI(true);
+      const aiResult = await getMarketAnalysisFromAI(
+        {
+          name: companyInfo.companyName,
+          industry: companyInfo.companyIndustry,
+          description: companyInfo.companyDescription,
+        },
+        {
+          targetMarket: companyInfo.targetMarket,
+          businessStage: companyInfo.businessStage,
+        }
+      );
+      setAiData(aiResult);
+      setIsLoadingAI(false);
+    };
+
+    fetchAIAnalysis();
+  }, [companyInfo?.companyName, companyInfo?.companyIndustry]);
 
   // Determine if we have meaningful data
   const hasCompanyInfo = companyInfo?.companyName && companyInfo.companyName.trim().length > 0;
   const hasCustomerProfiles = customerProfiles && customerProfiles.length > 0;
   const hasRevenueProjections = revenueProjections && revenueProjections.length > 0;
+  const hasAIData = aiData && (
+    aiData.marketSizes?.length > 0 ||
+    aiData.customerSegments?.length > 0 ||
+    aiData.marketTrends?.length > 0 ||
+    aiData.demandForecasts?.length > 0 ||
+    aiData.industryInsights?.length > 0
+  );
 
   // Priority: AI Generated > Onboarding > Business Forecast > Placeholders
-  const marketSizes: MarketSize[] = hasCustomerProfiles && hasRevenueProjections
-    ? [
-        {
-          id: "market-primary",
-          name: "Total Addressable Market (TAM)",
-          region: "Primary Market",
-          timeframe: "2025-2027",
-          tam: 0, // To be filled by AI Agent
-          sam: 0, // To be filled by AI Agent
-          som: revenueProjections[0]?.projected || 0,
-          growthRate: 0, // To be filled by AI Agent
-        },
-      ]
-    : [createPlaceholderMarketSize()];
+  let marketSizes: MarketSize[] = [createPlaceholderMarketSize()];
+  let customerSegments: CustomerSegment[] = createPlaceholderCustomerSegments();
+  let marketTrends: MarketTrend[] = createPlaceholderMarketTrends();
+  let demandForecasts: DemandForecast[] = createPlaceholderDemandForecasts();
+  let industryInsights: IndustryInsight[] = createPlaceholderInsights();
 
-  const customerSegments: CustomerSegment[] = hasCustomerProfiles
-    ? customerProfiles.map((profile, idx) => ({
-        id: `segment-${idx}`,
-        name: profile.segment,
-        size: profile.demandAssumption,
-        percentage: idx === 0 ? 65 : 35, // Will be replaced by AI
-        avgSpending: profile.avgOrderValue,
-        growthRate: profile.growthRate,
-        characteristics: ["Key characteristic to be defined by AI Agent"],
-        priority: idx === 0 ? "high" : "medium",
-      }))
-    : createPlaceholderCustomerSegments();
+  // Use AI data if available
+  if (hasAIData) {
+    if (aiData.marketSizes?.length > 0) {
+      marketSizes = aiData.marketSizes;
+    }
+    if (aiData.customerSegments?.length > 0) {
+      customerSegments = aiData.customerSegments;
+    }
+    if (aiData.marketTrends?.length > 0) {
+      marketTrends = aiData.marketTrends;
+    }
+    if (aiData.demandForecasts?.length > 0) {
+      demandForecasts = aiData.demandForecasts;
+    }
+    if (aiData.industryInsights?.length > 0) {
+      industryInsights = aiData.industryInsights;
+    }
+  } else if (hasCustomerProfiles && hasRevenueProjections) {
+    // Fallback to Business Forecast data
+    marketSizes = [
+      {
+        id: "market-primary",
+        name: "Total Addressable Market (TAM)",
+        region: "Primary Market",
+        timeframe: "2025-2027",
+        tam: 0,
+        sam: 0,
+        som: revenueProjections[0]?.projected || 0,
+        growthRate: 0,
+      },
+    ];
 
-  const marketTrends: MarketTrend[] = createPlaceholderMarketTrends();
-  const demandForecasts: DemandForecast[] = createPlaceholderDemandForecasts();
-  const industryInsights: IndustryInsight[] = createPlaceholderInsights();
+    customerSegments = customerProfiles.map((profile, idx) => ({
+      id: `segment-${idx}`,
+      name: profile.segment,
+      size: profile.demandAssumption,
+      percentage: idx === 0 ? 65 : 35,
+      avgSpending: profile.avgOrderValue,
+      growthRate: profile.growthRate,
+      characteristics: [profile.segment + " segment characteristics"],
+      priority: idx === 0 ? "high" : "medium",
+    }));
+  }
 
   // Determine data source
   let dataSource: "ai-generated" | "onboarding" | "business-forecast" | "placeholder" =
     "placeholder";
   let isDataAvailable = false;
 
-  if (hasCustomerProfiles || hasRevenueProjections) {
+  if (hasAIData) {
+    dataSource = "ai-generated";
+    isDataAvailable = true;
+  } else if (hasCustomerProfiles || hasRevenueProjections) {
     dataSource = "business-forecast";
     isDataAvailable = true;
-  }
-
-  if (hasCompanyInfo) {
+  } else if (hasCompanyInfo) {
     dataSource = "onboarding";
     isDataAvailable = true;
   }
-
-  // AI generated would override all (when implemented)
-  // if (aiGeneratedData) {
-  //   dataSource = "ai-generated";
-  //   isDataAvailable = true;
-  // }
 
   return {
     marketSizes,
