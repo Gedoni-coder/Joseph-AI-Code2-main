@@ -75,28 +75,39 @@ export function useMarketAnalysisData(): UseMarketAnalysisDataReturn {
   // Fetch AI-generated market analysis
   useEffect(() => {
     const fetchAIAnalysis = async () => {
-      if (!companyInfo?.companyName || companyInfo.companyName.trim().length === 0) {
-        return; // Don't call AI if no company info
+      // Only fetch if we have company info
+      const hasName = companyInfo?.companyName && companyInfo.companyName.trim().length > 0;
+      if (!hasName) {
+        setAiData(null);
+        setIsLoadingAI(false);
+        return;
       }
 
       setIsLoadingAI(true);
-      const aiResult = await getMarketAnalysisFromAI(
-        {
-          name: companyInfo.companyName,
-          industry: companyInfo.companyIndustry,
-          description: companyInfo.companyDescription,
-        },
-        {
-          targetMarket: companyInfo.targetMarket,
-          businessStage: companyInfo.businessStage,
-        }
-      );
-      setAiData(aiResult);
-      setIsLoadingAI(false);
+      try {
+        const aiResult = await getMarketAnalysisFromAI(
+          {
+            name: companyInfo.companyName,
+            industry: companyInfo.companyIndustry,
+            description: companyInfo.companyDescription,
+          },
+          {
+            targetMarket: companyInfo.targetMarket,
+            businessStage: companyInfo.businessStage,
+          }
+        );
+        setAiData(aiResult);
+        console.debug("AI market analysis generated:", aiResult ? "success" : "no data");
+      } catch (err) {
+        console.debug("Failed to fetch AI analysis:", err);
+        setAiData(null);
+      } finally {
+        setIsLoadingAI(false);
+      }
     };
 
     fetchAIAnalysis();
-  }, [companyInfo?.companyName, companyInfo?.companyIndustry]);
+  }, [companyInfo?.companyName, companyInfo?.companyIndustry, companyInfo?.companyDescription]);
 
   // Determine if we have meaningful data
   const hasCompanyInfo = companyInfo?.companyName && companyInfo.companyName.trim().length > 0;

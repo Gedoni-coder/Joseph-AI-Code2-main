@@ -22,24 +22,16 @@ interface OnboardingData {
   businessStage?: string;
 }
 
-const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
-const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
-
 export async function generateMarketAnalysisWithGroq(
   onboardingData: OnboardingData
 ): Promise<MarketAnalysisResponse | null> {
-  if (!GROQ_API_KEY) {
-    console.debug("Groq API key not configured");
-    return null;
-  }
-
   try {
     const prompt = buildMarketAnalysisPrompt(onboardingData);
 
-    const response = await fetch(GROQ_API_URL, {
+    // Call the backend proxy endpoint instead of direct Groq API
+    const response = await fetch("/api/ai/groq", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${GROQ_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -47,7 +39,7 @@ export async function generateMarketAnalysisWithGroq(
         messages: [
           {
             role: "system",
-            content: `You are a market analysis expert. Generate comprehensive market analysis data in valid JSON format. 
+            content: `You are a market analysis expert. Generate comprehensive market analysis data in valid JSON format.
 Always respond with ONLY valid JSON, no markdown, no code blocks, no explanations.`,
           },
           {
@@ -61,7 +53,7 @@ Always respond with ONLY valid JSON, no markdown, no code blocks, no explanation
     });
 
     if (!response.ok) {
-      console.debug(`Groq API error: ${response.status}`);
+      console.debug(`Backend Groq API error: ${response.status}`);
       return null;
     }
 
@@ -77,7 +69,7 @@ Always respond with ONLY valid JSON, no markdown, no code blocks, no explanation
     const analysisData = parseMarketAnalysisResponse(content);
     return analysisData;
   } catch (error) {
-    console.debug("Error calling Groq API:", error);
+    console.debug("Error calling Groq backend API:", error);
     return null;
   }
 }
