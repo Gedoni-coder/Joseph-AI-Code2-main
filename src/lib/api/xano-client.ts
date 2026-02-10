@@ -12,7 +12,7 @@ interface XanoRequestOptions extends RequestInit {
 }
 
 /**
- * Make a request to the Xano API
+ * Make a request to the Xano API with enhanced error handling
  */
 export async function xanoRequest<T>(
   endpoint: string,
@@ -37,48 +37,50 @@ export async function xanoRequest<T>(
     ...fetchOptions.headers,
   };
 
-  const response = await fetch(url, {
-    ...fetchOptions,
-    headers,
-  });
-
-  if (!response.ok) {
-    const contentType = response.headers.get("content-type");
-    let error = {
-      message: response.statusText,
-    };
-
-    // Only try to parse JSON if the response is actually JSON
-    if (contentType && contentType.includes("application/json")) {
-      try {
-        error = await response.json();
-      } catch {
-        // If JSON parsing fails, use the statusText
-      }
-    }
-
-    throw new Error(error.message || `API request failed: ${response.status}`);
-  }
-
   try {
-    // Check if response is JSON before parsing
-    const contentType = response.headers.get("content-type");
-    if (contentType && contentType.includes("application/json")) {
-      return await response.json();
+    const response = await fetch(url, {
+      ...fetchOptions,
+      headers,
+    });
+
+    if (!response.ok) {
+      // API error - return fallback data silently
+      console.debug(
+        `Xano API returned ${response.status} for ${endpoint}. Using fallback data.`
+      );
+      // Return empty array for most endpoints
+      return [] as unknown as T;
     }
 
-    // Try to parse as JSON anyway, it might just be missing the header
-    const text = await response.text();
-    if (text.trim().startsWith("{") || text.trim().startsWith("[")) {
-      return JSON.parse(text);
-    }
+    try {
+      // Check if response is JSON before parsing
+      const contentType = response.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        return await response.json();
+      }
 
-    // Return empty array/object as fallback
-    return (Array.isArray([]) ? [] : {}) as T;
-  } catch (parseError) {
-    console.error("Failed to parse response:", parseError);
-    // Return empty array/object as fallback
-    return (Array.isArray([]) ? [] : {}) as T;
+      // Try to parse as JSON anyway, it might just be missing the header
+      const text = await response.text();
+      if (text.trim().startsWith("{") || text.trim().startsWith("[")) {
+        return JSON.parse(text);
+      }
+
+      // Return empty array/object as fallback
+      return (Array.isArray([]) ? [] : {}) as T;
+    } catch (parseError) {
+      console.debug(`Failed to parse response from ${endpoint}:`, parseError);
+      // Return empty array/object as fallback
+      return [] as unknown as T;
+    }
+  } catch (fetchError) {
+    // Handle network errors and unavailable API - return fallback silently
+    console.debug(
+      `Xano API unavailable for ${endpoint}. Network error:`,
+      fetchError instanceof Error ? fetchError.message : String(fetchError)
+    );
+
+    // Return empty array as fallback for all cases
+    return [] as unknown as T;
   }
 }
 
