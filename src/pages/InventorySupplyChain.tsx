@@ -519,7 +519,7 @@ export default function InventorySupplyChain() {
             <StockMonitoring
               inventoryItems={inventoryItems}
               onUpdateStock={updateStockLevel}
-              onRefresh={refreshInventoryData}
+              onRefresh={refreshData}
             />
           </TabsContent>
 
