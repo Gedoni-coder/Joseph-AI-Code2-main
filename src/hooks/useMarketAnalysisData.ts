@@ -85,19 +85,24 @@ export function useMarketAnalysisData(): UseMarketAnalysisDataReturn {
 
       setIsLoadingAI(true);
       try {
+        console.debug("Fetching AI market analysis for:", companyInfo.companyName);
         const aiResult = await getMarketAnalysisFromAI(
           {
             name: companyInfo.companyName,
-            industry: companyInfo.companyIndustry,
-            description: companyInfo.companyDescription,
+            industry: companyInfo.sector,
+            description: companyInfo.description,
           },
           {
-            targetMarket: companyInfo.targetMarket,
-            businessStage: companyInfo.businessStage,
+            targetMarket: companyInfo.country,
+            businessStage: companyInfo.companySize,
           }
         );
         setAiData(aiResult);
-        console.debug("AI market analysis generated:", aiResult ? "success" : "no data");
+        console.debug("AI market analysis result:", aiResult ? "success - data received" : "null - no data");
+        if (aiResult) {
+          console.debug("Market sizes:", aiResult.marketSizes?.length || 0);
+          console.debug("Customer segments:", aiResult.customerSegments?.length || 0);
+        }
       } catch (err) {
         console.debug("Failed to fetch AI analysis:", err);
         setAiData(null);
@@ -107,7 +112,7 @@ export function useMarketAnalysisData(): UseMarketAnalysisDataReturn {
     };
 
     fetchAIAnalysis();
-  }, [companyInfo?.companyName, companyInfo?.companyIndustry, companyInfo?.companyDescription]);
+  }, [companyInfo?.companyName, companyInfo?.sector, companyInfo?.description]);
 
   // Determine if we have meaningful data
   const hasCompanyInfo = companyInfo?.companyName && companyInfo.companyName.trim().length > 0;
