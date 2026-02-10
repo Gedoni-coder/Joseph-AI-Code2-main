@@ -44,21 +44,12 @@ export async function xanoRequest<T>(
     });
 
     if (!response.ok) {
-      const contentType = response.headers.get("content-type");
-      let error = {
-        message: response.statusText,
-      };
-
-      // Only try to parse JSON if the response is actually JSON
-      if (contentType && contentType.includes("application/json")) {
-        try {
-          error = await response.json();
-        } catch {
-          // If JSON parsing fails, use the statusText
-        }
-      }
-
-      throw new Error(error.message || `API request failed: ${response.status}`);
+      // API error - return fallback data silently
+      console.debug(
+        `Xano API returned ${response.status} for ${endpoint}. Using fallback data.`
+      );
+      // Return empty array for most endpoints
+      return [] as unknown as T;
     }
 
     try {
@@ -77,25 +68,19 @@ export async function xanoRequest<T>(
       // Return empty array/object as fallback
       return (Array.isArray([]) ? [] : {}) as T;
     } catch (parseError) {
-      console.error("Failed to parse response:", parseError);
+      console.debug(`Failed to parse response from ${endpoint}:`, parseError);
       // Return empty array/object as fallback
-      return (Array.isArray([]) ? [] : {}) as T;
-    }
-  } catch (fetchError) {
-    // Handle network errors and unavailable API
-    const errorMessage = fetchError instanceof Error ? fetchError.message : String(fetchError);
-
-    console.warn(
-      `Xano API unavailable (${endpoint}): ${errorMessage}. Returning empty data as fallback.`
-    );
-
-    // Return appropriate empty response based on typical usage
-    // Most endpoints return arrays, some return objects
-    if (endpoint.includes("GET")) {
       return [] as unknown as T;
     }
+  } catch (fetchError) {
+    // Handle network errors and unavailable API - return fallback silently
+    console.debug(
+      `Xano API unavailable for ${endpoint}. Network error:`,
+      fetchError instanceof Error ? fetchError.message : String(fetchError)
+    );
 
-    return {} as T;
+    // Return empty array as fallback for all cases
+    return [] as unknown as T;
   }
 }
 

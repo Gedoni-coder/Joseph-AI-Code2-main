@@ -35,7 +35,7 @@ export function useInventorySupplyChainAPI(): UseInventorySupplyChainReturn {
     queryFn: () => getInventorySupplyChain(1),
     staleTime: 5 * 60 * 1000,
     gcTime: 10 * 60 * 1000,
-    retry: 2,
+    retry: 0, // Don't retry failed API calls - use fallback data immediately
   });
 
   // Use API data if available, fall back to mock
