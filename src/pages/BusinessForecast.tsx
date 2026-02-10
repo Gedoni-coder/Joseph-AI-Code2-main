@@ -1111,6 +1111,157 @@ const BusinessForecast = () => {
               <section>
                 <CustomerProfileComponent profiles={customerProfiles} />
               </section>
+
+              {/* Revenue Breakdown Analysis */}
+              <section>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg flex items-center gap-2">
+                      <BarChart3 className="h-5 w-5" />
+                      Revenue Breakdown Analysis
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-8">
+                      {/* By Customer Segment */}
+                      <div>
+                        <h4 className="font-semibold text-sm mb-4">
+                          By Customer Segment
+                        </h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <Card className="p-5 border-l-4 border-l-blue-500 bg-blue-50/50">
+                            <div className="space-y-3">
+                              <h5 className="font-semibold text-sm text-blue-900">
+                                Enterprise
+                              </h5>
+                              <div className="text-3xl font-bold text-blue-600">
+                                $2.0M
+                              </div>
+                              <div className="space-y-2 text-xs text-muted-foreground">
+                                <div className="flex justify-between">
+                                  <span>% of Total Revenue:</span>
+                                  <span className="font-medium">45%</span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span>Growth Rate:</span>
+                                  <span className="font-medium text-economic-positive">
+                                    +28%
+                                  </span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span>Customer Count:</span>
+                                  <span className="font-medium">12</span>
+                                </div>
+                              </div>
+                            </div>
+                          </Card>
+
+                          <Card className="p-5 border-l-4 border-l-emerald-500 bg-emerald-50/50">
+                            <div className="space-y-3">
+                              <h5 className="font-semibold text-sm text-emerald-900">
+                                SMB
+                              </h5>
+                              <div className="text-3xl font-bold text-emerald-600">
+                                $0.3M
+                              </div>
+                              <div className="space-y-2 text-xs text-muted-foreground">
+                                <div className="flex justify-between">
+                                  <span>% of Total Revenue:</span>
+                                  <span className="font-medium">6%</span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span>Growth Rate:</span>
+                                  <span className="font-medium text-economic-positive">
+                                    +15%
+                                  </span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span>Customer Count:</span>
+                                  <span className="font-medium">87</span>
+                                </div>
+                              </div>
+                            </div>
+                          </Card>
+                        </div>
+                      </div>
+
+                      {/* Growth Trajectory */}
+                      <div className="border-t pt-6">
+                        <h4 className="font-semibold text-sm mb-4">
+                          Growth Trajectory
+                        </h4>
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+                          <Card className="p-4 border-2 border-amber-100">
+                            <div className="space-y-2">
+                              <h5 className="font-semibold text-xs text-amber-900">
+                                Q1 2025
+                              </h5>
+                              <p className="text-sm text-muted-foreground">
+                                Foundation building phase
+                              </p>
+                              <div className="text-xl font-bold text-amber-600 mt-2">
+                                $3.0M
+                              </div>
+                            </div>
+                          </Card>
+
+                          <Card className="p-4 border-2 border-blue-100">
+                            <div className="space-y-2">
+                              <h5 className="font-semibold text-xs text-blue-900">
+                                Q2 2025
+                              </h5>
+                              <p className="text-sm text-muted-foreground">
+                                Accelerated growth period
+                              </p>
+                              <div className="text-xl font-bold text-blue-600 mt-2">
+                                $3.3M
+                              </div>
+                            </div>
+                          </Card>
+
+                          <Card className="p-4 border-2 border-purple-100">
+                            <div className="space-y-2">
+                              <h5 className="font-semibold text-xs text-purple-900">
+                                Q3 2025
+                              </h5>
+                              <p className="text-sm text-muted-foreground">
+                                Market expansion phase
+                              </p>
+                              <div className="text-xl font-bold text-purple-600 mt-2">
+                                $3.6M
+                              </div>
+                            </div>
+                          </Card>
+
+                          <Card className="p-4 border-2 border-green-100">
+                            <div className="space-y-2">
+                              <h5 className="font-semibold text-xs text-green-900">
+                                Q4 2025
+                              </h5>
+                              <p className="text-sm text-muted-foreground">
+                                Optimization and scaling
+                              </p>
+                              <div className="text-xl font-bold text-green-600 mt-2">
+                                $3.8M
+                              </div>
+                            </div>
+                          </Card>
+                        </div>
+                      </div>
+
+                      {/* Plan Growth Strategy */}
+                      <div className="border-t pt-6">
+                        <Link to="/revenue-strategy">
+                          <Button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
+                            <TrendingUp className="h-4 w-4 mr-2" />
+                            Plan Growth Strategy
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </section>
             </TabsContent>
 
             <TabsContent value="costs" className="space-y-8">
