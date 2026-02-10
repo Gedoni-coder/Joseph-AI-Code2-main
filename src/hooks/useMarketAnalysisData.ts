@@ -57,10 +57,9 @@ export interface UseMarketAnalysisDataReturn {
 
 /**
  * Hook to fetch and integrate market analysis data from multiple sources
- * 1. AI Agent (Groq - primary)
- * 2. Onboarding form
- * 3. Business Forecasting Module
- * 4. Placeholders (when no data available)
+ * 1. Generated from onboarding form data
+ * 2. Business Forecasting Module
+ * 3. Placeholders (when no data available)
  */
 export function useMarketAnalysisData(): UseMarketAnalysisDataReturn {
   const { companyInfo } = useCompanyInfo();
@@ -69,224 +68,208 @@ export function useMarketAnalysisData(): UseMarketAnalysisDataReturn {
     revenueProjections,
   } = useBusinessForecastingData();
 
-  // State for AI-generated data
+  // State for generated data
   const [aiData, setAiData] = useState<any>(null);
-  const [isLoadingAI, setIsLoadingAI] = useState(false);
 
-  // Generate AI-like market analysis from onboarding data
+  // Generate market analysis from onboarding data
   useEffect(() => {
-    const generateMarketAnalysis = () => {
-      const hasName = companyInfo?.companyName && companyInfo.companyName.trim().length > 0;
-      if (!hasName) {
-        setAiData(null);
-        return;
-      }
+    console.log("[Market Analysis] companyInfo:", companyInfo);
+    
+    if (!companyInfo?.companyName || companyInfo.companyName.trim().length === 0) {
+      console.log("[Market Analysis] No company name - showing placeholders");
+      setAiData(null);
+      return;
+    }
 
-      setIsLoadingAI(true);
+    console.log("[Market Analysis] Generating data for:", companyInfo.companyName);
 
-      // Simulate API delay
-      const timer = setTimeout(() => {
-        try {
-          const sector = companyInfo.sector || "Technology";
-          const size = companyInfo.companySize || "small";
-          const country = companyInfo.country || "Global";
+    const sector = companyInfo.sector || "Technology";
+    const size = companyInfo.companySize || "small";
+    const country = companyInfo.country || "Global";
 
-          // Generate realistic market data based on company profile
-          const tamMultiplier = size === "enterprise" ? 50 : size === "medium" ? 20 : 10;
-          const baseMarketValue = 1000 * tamMultiplier; // millions
+    console.log("[Market Analysis] Parameters - sector:", sector, "size:", size, "country:", country);
 
-          const aiResult = {
-            marketSizes: [
-              {
-                id: "tam-1",
-                name: `${sector} Market - Total Addressable Market`,
-                tam: baseMarketValue,
-                sam: Math.floor(baseMarketValue * 0.3),
-                som: Math.floor(baseMarketValue * 0.08),
-                growthRate: size === "enterprise" ? 12 : 18,
-                timeframe: "2025-2027",
-                currency: "USD",
-                region: country,
-              },
-            ],
-            customerSegments: [
-              {
-                id: "seg-1",
-                name: "Enterprise Customers",
-                size: size === "enterprise" ? 500 : 150,
-                percentage: 45,
-                avgSpending: size === "enterprise" ? 250000 : 100000,
-                growthRate: 15,
-                characteristics: [
-                  `Large organizations in ${sector}`,
-                  "High security and compliance needs",
-                  "Multi-year contracts",
-                  "Dedicated support requirements",
-                ],
-                region: country,
-                priority: "high",
-              },
-              {
-                id: "seg-2",
-                name: "Mid-Market Companies",
-                size: size === "enterprise" ? 1200 : 400,
-                percentage: 35,
-                avgSpending: size === "enterprise" ? 75000 : 35000,
-                growthRate: 22,
-                characteristics: [
-                  `Growing ${sector} companies`,
-                  "Strong digital transformation focus",
-                  "Flexible pricing preferred",
-                  "Moderate support needs",
-                ],
-                region: country,
-                priority: "high",
-              },
-              {
-                id: "seg-3",
-                name: "Small Business & Startups",
-                size: size === "enterprise" ? 3000 : 1000,
-                percentage: 20,
-                avgSpending: size === "enterprise" ? 15000 : 8000,
-                growthRate: 35,
-                characteristics: [
-                  `Agile ${sector} organizations`,
-                  "Cost-sensitive segments",
-                  "Self-service preference",
-                  "Community-driven support",
-                ],
-                region: country,
-                priority: "medium",
-              },
-            ],
-            marketTrends: [
-              {
-                id: "trend-1",
-                category: "Technology",
-                trend: "AI Integration & Automation",
-                impact: "high",
-                direction: "positive",
-                timeframe: "2025-2026",
-                description: `The ${sector} industry is experiencing rapid adoption of AI-powered solutions. Organizations are investing heavily in automation, machine learning, and intelligent analytics to improve efficiency and decision-making.`,
-                sources: ["Industry Reports", "Market Research"],
-                confidence: 92,
-              },
-              {
-                id: "trend-2",
-                category: "Market",
-                trend: "Digital Transformation Acceleration",
-                impact: "high",
-                direction: "positive",
-                timeframe: "2025-2027",
-                description: `Post-pandemic, digital adoption has become essential. Companies are prioritizing cloud migration, remote capabilities, and integrated digital ecosystems, creating significant opportunities in the ${sector} space.`,
-                sources: ["Market Analysis"],
-                confidence: 88,
-              },
-              {
-                id: "trend-3",
-                category: "Regulatory",
-                trend: "Data Privacy & Compliance Requirements",
-                impact: "medium",
-                direction: "neutral",
-                timeframe: "Ongoing",
-                description: `Stricter data privacy regulations globally are driving demand for compliant solutions. Organizations need tools that ensure GDPR, CCPA, and industry-specific compliance.`,
-                sources: ["Regulatory Bodies"],
-                confidence: 95,
-              },
-            ],
-            demandForecasts: [
-              {
-                id: "forecast-1",
-                product: `${sector} Solutions & Services`,
-                currentDemand: 45000,
-                forecastDemand: 72000,
-                timeframe: "Next 18 months",
-                confidence: 85,
-                methodology: "Market growth analysis",
-                factors: [],
-                scenarios: [],
-              },
-              {
-                id: "forecast-2",
-                product: "Enterprise Deployments",
-                currentDemand: 12000,
-                forecastDemand: 18500,
-                timeframe: "Next 18 months",
-                confidence: 82,
-                methodology: "Trend extrapolation",
-                factors: [],
-                scenarios: [],
-              },
-            ],
-            industryInsights: [
-              {
-                id: "insight-1",
-                type: "opportunity",
-                title: "Growing Market Demand for Integrated Solutions",
-                description: `Organizations prefer unified platforms over point solutions. There's significant opportunity to capture market share by offering comprehensive, integrated offerings in the ${sector} sector.`,
-                impact: "high",
-                timeframe: "immediate",
-                probability: 88,
-                actionItems: [
-                  "Develop integration capabilities with key platforms",
-                  "Build partnerships to expand solution offerings",
-                  "Invest in API and ecosystem development",
-                ],
-                relatedTrends: ["AI Integration & Automation"],
-              },
-              {
-                id: "insight-2",
-                type: "opportunity",
-                title: "Emerging Markets Expansion Potential",
-                description: `Developing markets in Asia and Africa represent untapped growth opportunities for ${sector} solutions. Early market entry can establish strong competitive positions before maturation.`,
-                impact: "high",
-                timeframe: "long-term",
-                probability: 75,
-                actionItems: [
-                  "Research target emerging markets",
-                  "Adapt solutions for local requirements",
-                  "Establish regional partnerships",
-                ],
-                relatedTrends: ["Digital Transformation Acceleration"],
-              },
-              {
-                id: "insight-3",
-                type: "challenge",
-                title: "Increasing Competition & Market Consolidation",
-                description: `Large players are acquiring smaller competitors, consolidating market share. Differentiation through innovation and specialized solutions is critical for competitive survival.`,
-                impact: "medium",
-                timeframe: "short-term",
-                probability: 82,
-                actionItems: [
-                  "Focus on unique value propositions",
-                  "Invest in R&D for differentiation",
-                  "Build strong customer relationships for retention",
-                ],
-                relatedTrends: [],
-              },
-            ],
-          };
+    // Generate realistic market data based on company profile
+    const tamMultiplier = size === "enterprise" ? 50 : size === "medium" ? 20 : 10;
+    const baseMarketValue = 1000 * tamMultiplier; // millions
 
-          setAiData(aiResult);
-          console.debug("Generated market analysis from onboarding data");
-        } catch (err) {
-          console.debug("Error generating market analysis:", err);
-          setAiData(null);
-        } finally {
-          setIsLoadingAI(false);
-        }
-      }, 800); // Simulate processing time
-
-      return () => clearTimeout(timer);
+    const generatedData = {
+      marketSizes: [
+        {
+          id: "tam-1",
+          name: `${sector} Market - Total Addressable Market`,
+          tam: baseMarketValue,
+          sam: Math.floor(baseMarketValue * 0.3),
+          som: Math.floor(baseMarketValue * 0.08),
+          growthRate: size === "enterprise" ? 12 : 18,
+          timeframe: "2025-2027",
+          currency: "USD",
+          region: country,
+        },
+      ],
+      customerSegments: [
+        {
+          id: "seg-1",
+          name: "Enterprise Customers",
+          size: size === "enterprise" ? 500 : 150,
+          percentage: 45,
+          avgSpending: size === "enterprise" ? 250000 : 100000,
+          growthRate: 15,
+          characteristics: [
+            `Large organizations in ${sector}`,
+            "High security and compliance needs",
+            "Multi-year contracts",
+            "Dedicated support requirements",
+          ],
+          region: country,
+          priority: "high",
+        },
+        {
+          id: "seg-2",
+          name: "Mid-Market Companies",
+          size: size === "enterprise" ? 1200 : 400,
+          percentage: 35,
+          avgSpending: size === "enterprise" ? 75000 : 35000,
+          growthRate: 22,
+          characteristics: [
+            `Growing ${sector} companies`,
+            "Strong digital transformation focus",
+            "Flexible pricing preferred",
+            "Moderate support needs",
+          ],
+          region: country,
+          priority: "high",
+        },
+        {
+          id: "seg-3",
+          name: "Small Business & Startups",
+          size: size === "enterprise" ? 3000 : 1000,
+          percentage: 20,
+          avgSpending: size === "enterprise" ? 15000 : 8000,
+          growthRate: 35,
+          characteristics: [
+            `Agile ${sector} organizations`,
+            "Cost-sensitive segments",
+            "Self-service preference",
+            "Community-driven support",
+          ],
+          region: country,
+          priority: "medium",
+        },
+      ],
+      marketTrends: [
+        {
+          id: "trend-1",
+          category: "Technology",
+          trend: "AI Integration & Automation",
+          impact: "high",
+          direction: "positive",
+          timeframe: "2025-2026",
+          description: `The ${sector} industry is experiencing rapid adoption of AI-powered solutions. Organizations are investing heavily in automation, machine learning, and intelligent analytics to improve efficiency and decision-making.`,
+          sources: ["Industry Reports", "Market Research"],
+          confidence: 92,
+        },
+        {
+          id: "trend-2",
+          category: "Market",
+          trend: "Digital Transformation Acceleration",
+          impact: "high",
+          direction: "positive",
+          timeframe: "2025-2027",
+          description: `Post-pandemic, digital adoption has become essential. Companies are prioritizing cloud migration, remote capabilities, and integrated digital ecosystems, creating significant opportunities in the ${sector} space.`,
+          sources: ["Market Analysis"],
+          confidence: 88,
+        },
+        {
+          id: "trend-3",
+          category: "Regulatory",
+          trend: "Data Privacy & Compliance Requirements",
+          impact: "medium",
+          direction: "neutral",
+          timeframe: "Ongoing",
+          description: `Stricter data privacy regulations globally are driving demand for compliant solutions. Organizations need tools that ensure GDPR, CCPA, and industry-specific compliance.`,
+          sources: ["Regulatory Bodies"],
+          confidence: 95,
+        },
+      ],
+      demandForecasts: [
+        {
+          id: "forecast-1",
+          product: `${sector} Solutions & Services`,
+          currentDemand: 45000,
+          forecastDemand: 72000,
+          timeframe: "Next 18 months",
+          confidence: 85,
+          methodology: "Market growth analysis",
+          factors: [],
+          scenarios: [],
+        },
+        {
+          id: "forecast-2",
+          product: "Enterprise Deployments",
+          currentDemand: 12000,
+          forecastDemand: 18500,
+          timeframe: "Next 18 months",
+          confidence: 82,
+          methodology: "Trend extrapolation",
+          factors: [],
+          scenarios: [],
+        },
+      ],
+      industryInsights: [
+        {
+          id: "insight-1",
+          type: "opportunity",
+          title: "Growing Market Demand for Integrated Solutions",
+          description: `Organizations prefer unified platforms over point solutions. There's significant opportunity to capture market share by offering comprehensive, integrated offerings in the ${sector} sector.`,
+          impact: "high",
+          timeframe: "immediate",
+          probability: 88,
+          actionItems: [
+            "Develop integration capabilities with key platforms",
+            "Build partnerships to expand solution offerings",
+            "Invest in API and ecosystem development",
+          ],
+          relatedTrends: ["AI Integration & Automation"],
+        },
+        {
+          id: "insight-2",
+          type: "opportunity",
+          title: "Emerging Markets Expansion Potential",
+          description: `Developing markets in Asia and Africa represent untapped growth opportunities for ${sector} solutions. Early market entry can establish strong competitive positions before maturation.`,
+          impact: "high",
+          timeframe: "long-term",
+          probability: 75,
+          actionItems: [
+            "Research target emerging markets",
+            "Adapt solutions for local requirements",
+            "Establish regional partnerships",
+          ],
+          relatedTrends: ["Digital Transformation Acceleration"],
+        },
+        {
+          id: "insight-3",
+          type: "challenge",
+          title: "Increasing Competition & Market Consolidation",
+          description: `Large players are acquiring smaller competitors, consolidating market share. Differentiation through innovation and specialized solutions is critical for competitive survival.`,
+          impact: "medium",
+          timeframe: "short-term",
+          probability: 82,
+          actionItems: [
+            "Focus on unique value propositions",
+            "Invest in R&D for differentiation",
+            "Build strong customer relationships for retention",
+          ],
+          relatedTrends: [],
+        },
+      ],
     };
 
-    generateMarketAnalysis();
-  }, [companyInfo?.companyName, companyInfo?.sector]);
+    console.log("[Market Analysis] Data generated successfully:", generatedData);
+    setAiData(generatedData);
+  }, [companyInfo?.companyName, companyInfo?.sector, companyInfo?.country, companyInfo?.companySize]);
 
   // Determine if we have meaningful data
-  const hasCompanyInfo = companyInfo?.companyName && companyInfo.companyName.trim().length > 0;
-  const hasCustomerProfiles = customerProfiles && customerProfiles.length > 0;
-  const hasRevenueProjections = revenueProjections && revenueProjections.length > 0;
   const hasAIData = aiData && (
     aiData.marketSizes?.length > 0 ||
     aiData.customerSegments?.length > 0 ||
@@ -294,6 +277,9 @@ export function useMarketAnalysisData(): UseMarketAnalysisDataReturn {
     aiData.demandForecasts?.length > 0 ||
     aiData.industryInsights?.length > 0
   );
+
+  const hasCustomerProfiles = customerProfiles && customerProfiles.length > 0;
+  const hasRevenueProjections = revenueProjections && revenueProjections.length > 0;
 
   // Priority: Generated from Onboarding > Business Forecast > Placeholders
   let marketSizes: MarketSize[] = [createPlaceholderMarketSize()];
@@ -339,18 +325,19 @@ export function useMarketAnalysisData(): UseMarketAnalysisDataReturn {
   }
 
   // Determine data source
-  let dataSource: "ai-generated" | "onboarding" | "business-forecast" | "placeholder" =
-    "placeholder";
+  let dataSource: "ai-generated" | "onboarding" | "business-forecast" | "placeholder" = "placeholder";
   let isDataAvailable = false;
 
   if (hasAIData) {
-    // Generated from onboarding data (AI-like processing)
+    // Generated from onboarding data
     dataSource = "onboarding";
     isDataAvailable = true;
   } else if (hasCustomerProfiles || hasRevenueProjections) {
     dataSource = "business-forecast";
     isDataAvailable = true;
   }
+
+  console.log("[Market Analysis] Final state - dataSource:", dataSource, "isDataAvailable:", isDataAvailable, "marketSizes count:", marketSizes.length);
 
   return {
     marketSizes,
