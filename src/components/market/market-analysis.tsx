@@ -32,6 +32,8 @@ interface MarketAnalysisProps {
   marketTrends: MarketTrend[];
   demandForecasts: DemandForecast[];
   industryInsights: IndustryInsight[];
+  isDataAvailable?: boolean;
+  dataSource?: "ai-generated" | "onboarding" | "business-forecast" | "placeholder";
 }
 
 export function MarketAnalysis({
@@ -40,6 +42,8 @@ export function MarketAnalysis({
   marketTrends,
   demandForecasts,
   industryInsights,
+  isDataAvailable = true,
+  dataSource = "placeholder",
 }: MarketAnalysisProps) {
   const formatCurrency = (amount: number) => {
     if (amount >= 1000000000) {
@@ -88,8 +92,52 @@ export function MarketAnalysis({
     }
   };
 
+  // Placeholder section component
+  const PlaceholderSection = ({ title, description }: { title: string; description: string }) => (
+    <Card className="border-dashed border-2 border-gray-300 bg-gray-50">
+      <CardContent className="py-8 text-center">
+        <Lightbulb className="w-10 h-10 text-gray-400 mx-auto mb-3" />
+        <h3 className="font-semibold text-gray-700 mb-1">{title}</h3>
+        <p className="text-sm text-gray-500">{description}</p>
+      </CardContent>
+    </Card>
+  );
+
   return (
     <div id="market-analysis-print" className="space-y-8">
+      {/* Data Source Indicator */}
+      {!isDataAvailable && dataSource === "placeholder" && (
+        <Card className="border-amber-200 bg-amber-50">
+          <CardContent className="pt-4">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="font-semibold text-amber-900">Market Analysis Data Pending</p>
+                <p className="text-sm text-amber-800 mt-1">
+                  This market analysis will be populated by the AI Agent using data from your onboarding form and business forecasting module. Complete your onboarding profile to see market insights.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {isDataAvailable && dataSource !== "ai-generated" && (
+        <Card className="border-blue-200 bg-blue-50">
+          <CardContent className="pt-4">
+            <div className="flex items-start gap-3">
+              <Lightbulb className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="font-semibold text-blue-900">Market Analysis - Enhanced View Available</p>
+                <p className="text-sm text-blue-800 mt-1">
+                  AI Agent integration will provide deeper market insights and TAM analysis. Current view based on {dataSource === "business-forecast" ? "business forecasting data" : dataSource === "onboarding" ? "onboarding information" : "placeholder data"}.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Market Size & Growth */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
