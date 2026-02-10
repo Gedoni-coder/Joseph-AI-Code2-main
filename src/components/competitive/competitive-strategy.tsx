@@ -122,7 +122,7 @@ function StrengthenDialogComponent({
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-3 max-h-[300px] overflow-auto pr-1">
-          {choices.map((c) => (
+          {(choices || []).map((c) => (
             <label
               key={c.id}
               className="flex items-start gap-3 rounded-md border p-3 hover:bg-accent cursor-pointer"
@@ -629,7 +629,7 @@ export function CompetitiveStrategy({
         </div>
 
         <div className="space-y-6">
-          {strategyRecommendations.map((strategy) => (
+          {(strategyRecommendations || []).map((strategy) => (
             <Card
               key={strategy.id}
               className="hover:shadow-lg transition-shadow"
@@ -699,7 +699,7 @@ export function CompetitiveStrategy({
                       Required Resources
                     </h4>
                     <ul className="space-y-1">
-                      {strategy.resources.map((resource, index) => (
+                      {(strategy.resources || []).map((resource, index) => (
                         <li
                           key={index}
                           className="text-sm text-gray-700 flex items-start"
@@ -716,7 +716,7 @@ export function CompetitiveStrategy({
                       Success Metrics
                     </h4>
                     <ul className="space-y-1">
-                      {strategy.metrics.map((metric, index) => (
+                      {(strategy.metrics || []).map((metric, index) => (
                         <li
                           key={index}
                           className="text-sm text-gray-700 flex items-start"
@@ -733,7 +733,7 @@ export function CompetitiveStrategy({
                       Key Risks
                     </h4>
                     <ul className="space-y-1">
-                      {strategy.risks.map((risk, index) => (
+                      {(strategy.risks || []).map((risk, index) => (
                         <li
                           key={index}
                           className="text-sm text-gray-700 flex items-start"
