@@ -15,6 +15,7 @@ import { useCompanyInfo } from "@/lib/company-context";
 import { getCompanyName } from "@/lib/get-company-name";
 import { useMarketDataAPI } from "@/hooks/useMarketDataAPI";
 import { useCompetitiveDataAPI } from "@/hooks/useCompetitiveDataAPI";
+import { useMarketAnalysisData } from "@/hooks/useMarketAnalysisData";
 import { MarketAnalysis } from "@/components/market/market-analysis";
 import { ReportNotes } from "@/components/market/report-notes";
 import { CompetitiveAnalysis } from "@/components/competitive/competitive-analysis";
@@ -75,6 +76,16 @@ export default function MarketCompetitiveAnalysis() {
     error: competitiveError,
     refreshData: refreshCompetitiveData,
   } = useCompetitiveDataAPI();
+
+  const {
+    marketSizes: dynamicMarketSizes,
+    customerSegments: dynamicCustomerSegments,
+    marketTrends: dynamicMarketTrends,
+    demandForecasts: dynamicDemandForecasts,
+    industryInsights: dynamicIndustryInsights,
+    isDataAvailable,
+    dataSource,
+  } = useMarketAnalysisData();
 
   const [activeTab, setActiveTab] = useState("overview");
 
@@ -359,11 +370,13 @@ export default function MarketCompetitiveAnalysis() {
 
           <TabsContent value="market">
             <MarketAnalysis
-              marketSizes={marketSizes}
-              customerSegments={customerSegments}
-              marketTrends={marketTrends}
-              demandForecasts={demandForecasts}
-              industryInsights={industryInsights}
+              marketSizes={dynamicMarketSizes.length > 0 ? dynamicMarketSizes : marketSizes}
+              customerSegments={dynamicCustomerSegments.length > 0 ? dynamicCustomerSegments : customerSegments}
+              marketTrends={dynamicMarketTrends.length > 0 ? dynamicMarketTrends : marketTrends}
+              demandForecasts={dynamicDemandForecasts.length > 0 ? dynamicDemandForecasts : demandForecasts}
+              industryInsights={dynamicIndustryInsights.length > 0 ? dynamicIndustryInsights : industryInsights}
+              isDataAvailable={isDataAvailable}
+              dataSource={dataSource}
             />
           </TabsContent>
 

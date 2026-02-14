@@ -122,7 +122,7 @@ function StrengthenDialogComponent({
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-3 max-h-[300px] overflow-auto pr-1">
-          {choices.map((c) => (
+          {(choices || []).map((c) => (
             <label
               key={c.id}
               className="flex items-start gap-3 rounded-md border p-3 hover:bg-accent cursor-pointer"
@@ -210,7 +210,7 @@ export function CompetitiveStrategy({
     timeToReplicate: 12,
     strategicImportance:
       "important" as CompetitiveAdvantage["strategicImportance"],
-    competitorResponse: "",
+    competitorResponse: "", // String for form input, converted to array on save
   });
 
   const [newStrategy, setNewStrategy] = useState({
@@ -420,16 +420,20 @@ export function CompetitiveStrategy({
 
   const handleAnalyzeSubmit = () => {
     if (!newAdv.advantage.trim() || !newAdv.description.trim()) return;
+
+    // Safely convert competitorResponse string to array
+    const responseArray = (newAdv.competitorResponse || "")
+      .split(/\n|,/) // split by newlines or commas
+      .map((s) => s.trim())
+      .filter(Boolean);
+
     const adv: CompetitiveAdvantage = {
       id: `${Date.now()}`,
       type: newAdv.type,
       advantage: newAdv.advantage.trim(),
       description: newAdv.description.trim(),
       sustainability: newAdv.sustainability,
-      competitorResponse: newAdv.competitorResponse
-        .split(/\n|,/) // split by newlines or commas
-        .map((s) => s.trim())
-        .filter(Boolean),
+      competitorResponse: responseArray,
       timeToReplicate: Number(newAdv.timeToReplicate) || 0,
       strategicImportance: newAdv.strategicImportance,
     };
@@ -442,7 +446,7 @@ export function CompetitiveStrategy({
       sustainability: "medium",
       timeToReplicate: 12,
       strategicImportance: "important",
-      competitorResponse: "",
+      competitorResponse: "", // String input reset
     });
   };
 
@@ -545,7 +549,7 @@ export function CompetitiveStrategy({
                       Potential Competitor Responses
                     </div>
                     <ul className="space-y-1">
-                      {advantage.competitorResponse.map((response, index) => (
+                      {(advantage.competitorResponse || []).map((response, index) => (
                         <li
                           key={index}
                           className="text-sm text-gray-700 flex items-start"
@@ -554,6 +558,11 @@ export function CompetitiveStrategy({
                           {response}
                         </li>
                       ))}
+                      {(!advantage.competitorResponse || advantage.competitorResponse.length === 0) && (
+                        <li className="text-sm text-gray-500 italic">
+                          No competitor responses analyzed yet.
+                        </li>
+                      )}
                     </ul>
                   </div>
 
@@ -620,7 +629,7 @@ export function CompetitiveStrategy({
         </div>
 
         <div className="space-y-6">
-          {strategyRecommendations.map((strategy) => (
+          {(strategyRecommendations || []).map((strategy) => (
             <Card
               key={strategy.id}
               className="hover:shadow-lg transition-shadow"
@@ -690,7 +699,7 @@ export function CompetitiveStrategy({
                       Required Resources
                     </h4>
                     <ul className="space-y-1">
-                      {strategy.resources.map((resource, index) => (
+                      {(strategy.resources || []).map((resource, index) => (
                         <li
                           key={index}
                           className="text-sm text-gray-700 flex items-start"
@@ -707,7 +716,7 @@ export function CompetitiveStrategy({
                       Success Metrics
                     </h4>
                     <ul className="space-y-1">
-                      {strategy.metrics.map((metric, index) => (
+                      {(strategy.metrics || []).map((metric, index) => (
                         <li
                           key={index}
                           className="text-sm text-gray-700 flex items-start"
@@ -724,7 +733,7 @@ export function CompetitiveStrategy({
                       Key Risks
                     </h4>
                     <ul className="space-y-1">
-                      {strategy.risks.map((risk, index) => (
+                      {(strategy.risks || []).map((risk, index) => (
                         <li
                           key={index}
                           className="text-sm text-gray-700 flex items-start"

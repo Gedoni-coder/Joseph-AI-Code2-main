@@ -1,19 +1,24 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
 import { RevenueProjection } from "@/lib/business-forecast-data";
 import { TrendingUp, Target, AlertCircle, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 interface RevenueProjectionsProps {
   projections: RevenueProjection[];
   title?: string;
 }
 
+type ViewType = "monthly" | "quarterly" | "yearly";
+
 export function RevenueProjections({
   projections,
   title = "Revenue Projections",
 }: RevenueProjectionsProps) {
+  const [viewType, setViewType] = useState<ViewType>("quarterly");
   const formatCurrency = (value: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -47,6 +52,81 @@ export function RevenueProjections({
     0,
   );
 
+  // Generate monthly data from quarterly projections
+  const generateMonthlyData = (): RevenueProjection[] => {
+    const monthlyData: RevenueProjection[] = [];
+    const months = [
+      "Jan 2025",
+      "Feb 2025",
+      "Mar 2025",
+      "Apr 2025",
+      "May 2025",
+      "Jun 2025",
+      "Jul 2025",
+      "Aug 2025",
+      "Sep 2025",
+      "Oct 2025",
+      "Nov 2025",
+      "Dec 2025",
+    ];
+
+    const quarterly = projections.slice(0, 4);
+
+    for (let i = 0; i < 12; i++) {
+      const quarterIndex = Math.floor(i / 3);
+      const q = quarterly[quarterIndex];
+
+      if (q) {
+        const monthlyProjected = q.projected / 3;
+        const monthlyConservative = q.conservative / 3;
+        const monthlyOptimistic = q.optimistic / 3;
+        const monthlyActual = q.actualToDate ? q.actualToDate / 3 : undefined;
+
+        monthlyData.push({
+          id: `month-${i + 1}`,
+          period: months[i],
+          projected: monthlyProjected,
+          conservative: monthlyConservative,
+          optimistic: monthlyOptimistic,
+          actualToDate: monthlyActual,
+          confidence: q.confidence,
+        });
+      }
+    }
+
+    return monthlyData;
+  };
+
+  // Generate yearly data
+  const generateYearlyData = (): RevenueProjection[] => {
+    return [
+      {
+        id: "yearly-2025",
+        period: "Full Year 2025",
+        projected: totalProjectedRevenue,
+        conservative: projections.reduce((sum, p) => sum + p.conservative, 0),
+        optimistic: projections.reduce((sum, p) => sum + p.optimistic, 0),
+        actualToDate: projections.reduce(
+          (sum, p) => sum + (p.actualToDate || 0),
+          0,
+        ),
+        confidence: Math.round(
+          projections.reduce((sum, p) => sum + p.confidence, 0) /
+            projections.length,
+        ),
+      },
+    ];
+  };
+
+  const getDisplayData = (): RevenueProjection[] => {
+    if (viewType === "monthly") return generateMonthlyData();
+    if (viewType === "yearly") return generateYearlyData();
+    return projections;
+  };
+
+  const displayData = getDisplayData();
+  const displayTotal = displayData.reduce((sum, p) => sum + p.projected, 0);
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -55,14 +135,49 @@ export function RevenueProjections({
           {title}
         </h3>
         <div className="flex items-center gap-2">
+          <div className="flex gap-2 border rounded-lg p-1">
+            <Button
+              size="sm"
+              variant={viewType === "monthly" ? "default" : "ghost"}
+              onClick={() => setViewType("monthly")}
+              className="text-xs"
+            >
+              Monthly
+            </Button>
+            <Button
+              size="sm"
+              variant={viewType === "quarterly" ? "default" : "ghost"}
+              onClick={() => setViewType("quarterly")}
+              className="text-xs"
+            >
+              Quarterly
+            </Button>
+            <Button
+              size="sm"
+              variant={viewType === "yearly" ? "default" : "ghost"}
+              onClick={() => setViewType("yearly")}
+              className="text-xs"
+            >
+              Yearly
+            </Button>
+          </div>
           <Badge variant="outline" className="text-xs">
-            Total: {formatCurrency(totalProjectedRevenue)}
+            Total: {formatCurrency(displayTotal)}
           </Badge>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {projections.map((projection) => {
+      <div
+        className={cn(
+          "grid gap-4",
+          viewType === "yearly"
+            ? "grid-cols-1"
+            : viewType === "monthly"
+              ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+              : "grid-cols-1 md:grid-cols-2 lg:grid-cols-4",
+        )}
+      >
+        {displayData.map((projection) => {
           const variance = getVariancePercentage(
             projection.actualToDate,
             projection.projected,
@@ -133,8 +248,46 @@ export function RevenueProjections({
                           )}
                         </span>
                       </div>
-                      <div className="text-lg font-semibold">
+                      <div className="text-lg font-semibold mb-3">
                         {formatCurrency(projection.actualToDate)}
+                      </div>
+
+                      {/* Volume Level Progress Indicator */}
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between text-xs mb-2">
+                          <span className="text-muted-foreground">
+                            Progress
+                          </span>
+                          <span className="font-bold text-primary">
+                            {Math.round(
+                              (projection.actualToDate / projection.projected) *
+                                100,
+                            )}
+                            %
+                          </span>
+                        </div>
+                        <div className="flex gap-1 h-12 items-end">
+                          {[...Array(10)].map((_, i) => {
+                            const progressPercentage =
+                              (projection.actualToDate / projection.projected) *
+                              100;
+                            const segmentThreshold = (i + 1) * 10;
+                            const isFilled =
+                              progressPercentage >= segmentThreshold;
+
+                            return (
+                              <div
+                                key={i}
+                                className={cn(
+                                  "flex-1 rounded-sm transition-all duration-300",
+                                  isFilled
+                                    ? "bg-gradient-to-t from-primary to-primary/80 h-full shadow-sm"
+                                    : "bg-muted h-1",
+                                )}
+                              />
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
                   )}
@@ -204,7 +357,7 @@ export function RevenueProjections({
                   Total Revenue Target
                 </div>
                 <div className="text-lg font-bold">
-                  {formatCurrency(totalProjectedRevenue)}
+                  {formatCurrency(displayTotal)}
                 </div>
               </div>
             </div>
@@ -223,8 +376,8 @@ export function RevenueProjections({
                 </div>
                 <div className="text-lg font-bold">
                   {(
-                    projections.reduce((sum, p) => sum + p.confidence, 0) /
-                    projections.length
+                    displayData.reduce((sum, p) => sum + p.confidence, 0) /
+                    displayData.length
                   ).toFixed(0)}
                   %
                 </div>
@@ -245,8 +398,8 @@ export function RevenueProjections({
                 </div>
                 <div className="text-lg font-bold">
                   {formatCurrency(
-                    projections.reduce((sum, p) => sum + p.optimistic, 0) -
-                      totalProjectedRevenue,
+                    displayData.reduce((sum, p) => sum + p.optimistic, 0) -
+                      displayTotal,
                   )}
                 </div>
               </div>
