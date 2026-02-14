@@ -6,7 +6,6 @@ import React, {
   useCallback,
 } from "react";
 import * as authService from "./api/auth-service";
-import * as accountsService from "./api/accounts-service";
 
 export interface AuthUser {
   id: number;
