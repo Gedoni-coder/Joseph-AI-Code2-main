@@ -3,10 +3,6 @@ import { connnectDB, disconnectDB } from "./admin/admin.db.ts";
 import { config } from "dotenv";
 import cookieParser from "cookie-parser";
 import passport from "passport";
-import {
-  createCategoryHandler,
-  getCategoriesHandler,
-} from "./admin/categoryController.ts";
 import { adminMiddleware } from "./utils/adminOnly.ts";
 import { authMiddleware } from "./utils/authMiddleware.ts";
 import { createAdmin } from "./admin/adminController.ts";
@@ -23,8 +19,8 @@ app.use(passport.initialize());
 //API Routes
 const base = "/admin";
 
-app.post(`${base}/createCategory`, authMiddleware, adminMiddleware, createCategoryHandler);
-app.get(`${base}/getCategories`, authMiddleware, adminMiddleware, getCategoriesHandler);
+app.post(`${base}/createCategory`, authMiddleware, adminMiddleware);
+app.get(`${base}/getCategories`, authMiddleware, adminMiddleware);
 
 app.post(`${base}/createAdmin`, authMiddleware, adminMiddleware, createAdmin);
 

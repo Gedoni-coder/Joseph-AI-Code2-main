@@ -1,16 +1,22 @@
+-- CreateEnum
+CREATE TYPE "UserRole" AS ENUM ('MEMBER', 'ADMIN');
+
 -- CreateTable
 CREATE TABLE "User" (
-    "id" TEXT NOT NULL PRIMARY KEY,
+    "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "role" TEXT NOT NULL DEFAULT 'BUSINESS',
+    "role" "UserRole" NOT NULL DEFAULT 'MEMBER',
     "google_id" TEXT,
     "phone" TEXT,
     "avatar_url" TEXT,
+    "bio" TEXT,
     "password_hash" TEXT,
     "email_verified" BOOLEAN NOT NULL DEFAULT false,
-    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
