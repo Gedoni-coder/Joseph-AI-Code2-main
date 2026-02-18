@@ -36,9 +36,20 @@ export interface BusinessForecastingData {
   q1_2025_scenario_range_max: number;
   q1_2025_confidence: string;
   q2_2025_projected_revenue: number;
+  q2_2025_actual_to_date?: number;
   q2_2025_scenario_range_min: number;
   q2_2025_scenario_range_max: number;
   q2_2025_confidence: string;
+  q3_2025_projected_revenue?: number;
+  q3_2025_actual_to_date?: number;
+  q3_2025_scenario_range_min?: number;
+  q3_2025_scenario_range_max?: number;
+  q3_2025_confidence?: string;
+  q4_2025_projected_revenue?: number;
+  q4_2025_actual_to_date?: number;
+  q4_2025_scenario_range_min?: number;
+  q4_2025_scenario_range_max?: number;
+  q4_2025_confidence?: string;
   total_revenue_target: number;
   avg_confidence: number;
   potential_upside: number;
@@ -47,35 +58,57 @@ export interface BusinessForecastingData {
   documents: string[];
 }
 
-export type BusinessForecastingCreateData = Omit<BusinessForecastingData, "id" | "created_at">;
-export type BusinessForecastingUpdateData = Partial<BusinessForecastingCreateData>;
+export type BusinessForecastingCreateData = Omit<
+  BusinessForecastingData,
+  "id" | "created_at"
+>;
+export type BusinessForecastingUpdateData =
+  Partial<BusinessForecastingCreateData>;
 
 /**
  * Get all business forecasting records
  */
-export async function getBusinessForecasts(): Promise<BusinessForecastingData[]> {
-  return xanoGet<BusinessForecastingData[]>("/business_forecasting");
+export async function getBusinessForecasts(): Promise<
+  BusinessForecastingData[]
+> {
+  try {
+    return await xanoGet<BusinessForecastingData[]>("/business_forecasting");
+  } catch (error) {
+    console.error("Error fetching business forecasts from API:", error);
+    // Return empty array on error - will trigger fallback to mock data
+    return [];
+  }
 }
 
 /**
  * Get a specific business forecasting record by ID
  */
-export async function getBusinessForecast(id: number): Promise<BusinessForecastingData> {
+export async function getBusinessForecast(
+  id: number,
+): Promise<BusinessForecastingData> {
   return xanoGet<BusinessForecastingData>(`/business_forecasting/${id}`);
 }
 
 /**
  * Create a new business forecasting record
  */
-export async function createBusinessForecast(data: BusinessForecastingCreateData): Promise<BusinessForecastingData> {
+export async function createBusinessForecast(
+  data: BusinessForecastingCreateData,
+): Promise<BusinessForecastingData> {
   return xanoPost<BusinessForecastingData>("/business_forecasting", data);
 }
 
 /**
  * Update an existing business forecasting record
  */
-export async function updateBusinessForecast(id: number, data: BusinessForecastingUpdateData): Promise<BusinessForecastingData> {
-  return xanoPatch<BusinessForecastingData>(`/business_forecasting/${id}`, data);
+export async function updateBusinessForecast(
+  id: number,
+  data: BusinessForecastingUpdateData,
+): Promise<BusinessForecastingData> {
+  return xanoPatch<BusinessForecastingData>(
+    `/business_forecasting/${id}`,
+    data,
+  );
 }
 
 /**

@@ -36,17 +36,192 @@ const LANGUAGES = [
   "Arabic",
 ];
 
-const CURRENCIES = [
+// International currencies (simplified)
+const INTERNATIONAL_CURRENCIES = [
   { code: "USD", symbol: "$", label: "US Dollar" },
   { code: "EUR", symbol: "€", label: "Euro" },
-  { code: "GBP", symbol: "£", label: "British Pound" },
-  { code: "JPY", symbol: "¥", label: "Japanese Yen" },
-  { code: "CAD", symbol: "$", label: "Canadian Dollar" },
+];
+
+// All world currencies
+const NATIONAL_CURRENCIES = [
+  { code: "AED", symbol: "د.إ", label: "UAE Dirham" },
+  { code: "AFN", symbol: "؋", label: "Afghan Afghani" },
+  { code: "ALL", symbol: "L", label: "Albanian Lek" },
+  { code: "AMD", symbol: "֏", label: "Armenian Dram" },
+  { code: "ANG", symbol: "ƒ", label: "Netherlands Antillean Guilder" },
+  { code: "AOA", symbol: "Kz", label: "Angolan Kwanza" },
+  { code: "ARS", symbol: "$", label: "Argentine Peso" },
   { code: "AUD", symbol: "$", label: "Australian Dollar" },
-  { code: "INR", symbol: "₹", label: "Indian Rupee" },
-  { code: "MXN", symbol: "$", label: "Mexican Peso" },
+  { code: "AWG", symbol: "ƒ", label: "Aruban Florin" },
+  { code: "AZN", symbol: "₼", label: "Azerbaijani Manat" },
+  { code: "BAM", symbol: "KM", label: "Bosnia-Herzegovina Mark" },
+  { code: "BBD", symbol: "$", label: "Barbadian Dollar" },
+  { code: "BDT", symbol: "৳", label: "Bangladeshi Taka" },
+  { code: "BGN", symbol: "лв", label: "Bulgarian Lev" },
+  { code: "BHD", symbol: ".د.ب", label: "Bahraini Dinar" },
+  { code: "BIF", symbol: "Fr", label: "Burundian Franc" },
+  { code: "BMD", symbol: "$", label: "Bermudian Dollar" },
+  { code: "BND", symbol: "$", label: "Brunei Dollar" },
+  { code: "BOB", symbol: "Bs.", label: "Bolivian Boliviano" },
   { code: "BRL", symbol: "R$", label: "Brazilian Real" },
+  { code: "BSD", symbol: "$", label: "Bahamian Dollar" },
+  { code: "BTN", symbol: "Nu.", label: "Bhutanese Ngultrum" },
+  { code: "BWP", symbol: "P", label: "Botswana Pula" },
+  { code: "BYN", symbol: "Br", label: "Belarusian Ruble" },
+  { code: "BZD", symbol: "$", label: "Belize Dollar" },
+  { code: "CAD", symbol: "$", label: "Canadian Dollar" },
+  { code: "CDF", symbol: "Fr", label: "Congolese Franc" },
+  { code: "CHE", symbol: "CHE", label: "Swiss WIR Euro" },
+  { code: "CHF", symbol: "CHF", label: "Swiss Franc" },
+  { code: "CHW", symbol: "CHW", label: "Swiss WIR Franc" },
+  { code: "CLF", symbol: "UF", label: "Chilean Unit of Account" },
+  { code: "CLP", symbol: "$", label: "Chilean Peso" },
+  { code: "CNY", symbol: "¥", label: "Chinese Yuan" },
+  { code: "COP", symbol: "$", label: "Colombian Peso" },
+  { code: "COU", symbol: "$", label: "Colombian Real Value Unit" },
+  { code: "CRC", symbol: "₡", label: "Costa Rican Colon" },
+  { code: "CUC", symbol: "$", label: "Cuban Convertible Peso" },
+  { code: "CUP", symbol: "₱", label: "Cuban Peso" },
+  { code: "CVE", symbol: "$", label: "Cape Verdean Escudo" },
+  { code: "CZK", symbol: "Kč", label: "Czech Koruna" },
+  { code: "DJF", symbol: "Fr", label: "Djiboutian Franc" },
+  { code: "DKK", symbol: "kr", label: "Danish Krone" },
+  { code: "DOP", symbol: "RD$", label: "Dominican Peso" },
+  { code: "DZD", symbol: "د.ج", label: "Algerian Dinar" },
+  { code: "EGP", symbol: "£", label: "Egyptian Pound" },
+  { code: "ERN", symbol: "Nfk", label: "Eritrean Nakfa" },
+  { code: "ETB", symbol: "Br", label: "Ethiopian Birr" },
+  { code: "EUR", symbol: "€", label: "Euro" },
+  { code: "FJD", symbol: "$", label: "Fiji Dollar" },
+  { code: "FKP", symbol: "£", label: "Falkland Islands Pound" },
+  { code: "GBP", symbol: "£", label: "British Pound" },
+  { code: "GEL", symbol: "₾", label: "Georgian Lari" },
+  { code: "GHS", symbol: "₵", label: "Ghanaian Cedi" },
+  { code: "GIP", symbol: "£", label: "Gibraltar Pound" },
+  { code: "GMD", symbol: "D", label: "Gambian Dalasi" },
+  { code: "GNF", symbol: "Fr", label: "Guinean Franc" },
+  { code: "GTQ", symbol: "Q", label: "Guatemalan Quetzal" },
+  { code: "GYD", symbol: "$", label: "Guyanese Dollar" },
+  { code: "HKD", symbol: "$", label: "Hong Kong Dollar" },
+  { code: "HNL", symbol: "L", label: "Honduran Lempira" },
+  { code: "HRK", symbol: "kn", label: "Croatian Kuna" },
+  { code: "HTG", symbol: "G", label: "Haitian Gourde" },
+  { code: "HUF", symbol: "Ft", label: "Hungarian Forint" },
+  { code: "IDR", symbol: "Rp", label: "Indonesian Rupiah" },
+  { code: "ILS", symbol: "₪", label: "Israeli Shekel" },
+  { code: "INR", symbol: "₹", label: "Indian Rupee" },
+  { code: "IQD", symbol: "ع.د", label: "Iraqi Dinar" },
+  { code: "IRR", symbol: "﷼", label: "Iranian Rial" },
+  { code: "ISK", symbol: "kr", label: "Icelandic Króna" },
+  { code: "JMD", symbol: "J$", label: "Jamaican Dollar" },
+  { code: "JOD", symbol: "د.ا", label: "Jordanian Dinar" },
+  { code: "JPY", symbol: "¥", label: "Japanese Yen" },
+  { code: "KES", symbol: "Sh", label: "Kenyan Shilling" },
+  { code: "KGS", symbol: "с", label: "Kyrgyzstani Som" },
+  { code: "KHR", symbol: "៛", label: "Cambodian Riel" },
+  { code: "KMF", symbol: "Fr", label: "Comorian Franc" },
+  { code: "KPW", symbol: "₩", label: "North Korean Won" },
+  { code: "KRW", symbol: "₩", label: "South Korean Won" },
+  { code: "KWD", symbol: "د.ك", label: "Kuwaiti Dinar" },
+  { code: "KYD", symbol: "$", label: "Cayman Islands Dollar" },
+  { code: "KZT", symbol: "₸", label: "Kazakhstani Tenge" },
+  { code: "LAK", symbol: "₭", label: "Laotian Kip" },
+  { code: "LBP", symbol: "£", label: "Lebanese Pound" },
+  { code: "LKR", symbol: "Rs", label: "Sri Lankan Rupee" },
+  { code: "LRD", symbol: "$", label: "Liberian Dollar" },
+  { code: "LSL", symbol: "L", label: "Lesotho Loti" },
+  { code: "LYD", symbol: "ل.د", label: "Libyan Dinar" },
+  { code: "MAD", symbol: "د.م.", label: "Moroccan Dirham" },
+  { code: "MDL", symbol: "L", label: "Moldovan Leu" },
+  { code: "MGA", symbol: "Ar", label: "Malagasy Ariary" },
+  { code: "MKD", symbol: "ден", label: "Macedonian Denar" },
+  { code: "MMK", symbol: "Ks", label: "Myanmar Kyat" },
+  { code: "MNT", symbol: "₮", label: "Mongolian Tugrik" },
+  { code: "MOP", symbol: "P", label: "Macanese Pataca" },
+  { code: "MRU", symbol: "UM", label: "Mauritanian Ouguiya" },
+  { code: "MUR", symbol: "₨", label: "Mauritian Rupee" },
+  { code: "MVR", symbol: "Rf", label: "Maldivian Rufiyaa" },
+  { code: "MWK", symbol: "MK", label: "Malawian Kwacha" },
+  { code: "MXN", symbol: "$", label: "Mexican Peso" },
+  { code: "MYR", symbol: "RM", label: "Malaysian Ringgit" },
+  { code: "MZN", symbol: "MT", label: "Mozambican Metical" },
+  { code: "NAD", symbol: "$", label: "Namibian Dollar" },
+  { code: "NGN", symbol: "₦", label: "Nigerian Naira" },
+  { code: "NIO", symbol: "C$", label: "Nicaraguan Córdoba" },
+  { code: "NOK", symbol: "kr", label: "Norwegian Krone" },
+  { code: "NPR", symbol: "₨", label: "Nepalese Rupee" },
+  { code: "NZD", symbol: "$", label: "New Zealand Dollar" },
+  { code: "OMR", symbol: "ر.ع.", label: "Omani Rial" },
+  { code: "PAB", symbol: "B/.", label: "Panamanian Balboa" },
+  { code: "PEN", symbol: "S/", label: "Peruvian Sol" },
+  { code: "PGK", symbol: "K", label: "Papua New Guinean Kina" },
+  { code: "PHP", symbol: "₱", label: "Philippine Peso" },
+  { code: "PKR", symbol: "₨", label: "Pakistani Rupee" },
+  { code: "PLN", symbol: "zł", label: "Polish Zloty" },
+  { code: "PYG", symbol: "₲", label: "Paraguayan Guarani" },
+  { code: "QAR", symbol: "ر.ق", label: "Qatari Riyal" },
+  { code: "RON", symbol: "lei", label: "Romanian Leu" },
+  { code: "RSD", symbol: "Дин.", label: "Serbian Dinar" },
+  { code: "RUB", symbol: "₽", label: "Russian Ruble" },
+  { code: "RWF", symbol: "Fr", label: "Rwandan Franc" },
+  { code: "SAR", symbol: "ر.س", label: "Saudi Riyal" },
+  { code: "SBD", symbol: "$", label: "Solomon Islands Dollar" },
+  { code: "SCR", symbol: "₨", label: "Seychellois Rupee" },
+  { code: "SDG", symbol: "£", label: "Sudanese Pound" },
+  { code: "SEK", symbol: "kr", label: "Swedish Krona" },
+  { code: "SGD", symbol: "$", label: "Singapore Dollar" },
+  { code: "SHP", symbol: "£", label: "Saint Helena Pound" },
+  { code: "SLE", symbol: "Le", label: "Sierra Leonean Leone" },
+  { code: "SLL", symbol: "Le", label: "Sierra Leonean Leone (old)" },
+  { code: "SOS", symbol: "Sh", label: "Somali Shilling" },
+  { code: "SRD", symbol: "$", label: "Surinamese Dollar" },
+  { code: "SSP", symbol: "£", label: "South Sudanese Pound" },
+  { code: "STN", symbol: "Db", label: "São Tomé & Príncipe Dobra" },
+  { code: "SYP", symbol: "£", label: "Syrian Pound" },
+  { code: "SZL", symbol: "L", label: "Eswatini Lilangeni" },
+  { code: "THB", symbol: "฿", label: "Thai Baht" },
+  { code: "TJS", symbol: "ЅМ", label: "Tajikistani Somoni" },
+  { code: "TMT", symbol: "m", label: "Turkmenistani Manat" },
+  { code: "TND", symbol: "د.ت", label: "Tunisian Dinar" },
+  { code: "TOP", symbol: "T$", label: "Tongan Paʻanga" },
+  { code: "TRY", symbol: "₺", label: "Turkish Lira" },
+  { code: "TTD", symbol: "$", label: "Trinidad & Tobago Dollar" },
+  { code: "TWD", symbol: "$", label: "Taiwan Dollar" },
+  { code: "TZS", symbol: "Sh", label: "Tanzanian Shilling" },
+  { code: "UAH", symbol: "₴", label: "Ukrainian Hryvnia" },
+  { code: "UGX", symbol: "Sh", label: "Ugandan Shilling" },
+  { code: "USD", symbol: "$", label: "US Dollar" },
+  { code: "USN", symbol: "$", label: "US Dollar (Next day)" },
+  { code: "UYI", symbol: "$", label: "Uruguayan Real Value Unit" },
+  { code: "UYU", symbol: "$", label: "Uruguayan Peso" },
+  { code: "UYW", symbol: "$", label: "Uruguayan Peso (Indexed)" },
+  { code: "UZS", symbol: "so'm", label: "Uzbekistani Som" },
+  { code: "VEF", symbol: "Bs.", label: "Venezuelan Bolívar (old)" },
+  { code: "VES", symbol: "Bs.", label: "Venezuelan Bolívar" },
+  { code: "VND", symbol: "₫", label: "Vietnamese Dong" },
+  { code: "VUV", symbol: "Vt", label: "Vanuatu Vatu" },
+  { code: "WST", symbol: "T", label: "Samoan Tala" },
+  { code: "XAF", symbol: "Fr", label: "Central African CFA Franc" },
+  { code: "XAG", symbol: "Ag", label: "Silver (Troy Ounce)" },
+  { code: "XAU", symbol: "Au", label: "Gold (Troy Ounce)" },
+  { code: "XBA", symbol: "XBA", label: "European Composite Unit Bond" },
+  { code: "XBB", symbol: "XBB", label: "European Monetary Unit Bond" },
+  { code: "XBC", symbol: "XBC", label: "European Unit of Account 9" },
+  { code: "XBD", symbol: "XBD", label: "European Unit of Account 17" },
+  { code: "XCD", symbol: "$", label: "East Caribbean Dollar" },
+  { code: "XDR", symbol: "XDR", label: "SDR (IMF)" },
+  { code: "XOF", symbol: "Fr", label: "West African CFA Franc" },
+  { code: "XPD", symbol: "Pd", label: "Palladium (Troy Ounce)" },
+  { code: "XPF", symbol: "Fr", label: "CFP Franc" },
+  { code: "XPT", symbol: "Pt", label: "Platinum (Troy Ounce)" },
+  { code: "XSU", symbol: "XSU", label: "Sucre (ALBA)" },
+  { code: "XTS", symbol: "XTS", label: "Testing Code" },
+  { code: "XUA", symbol: "XUA", label: "ADB Unit of Account" },
+  { code: "XXX", symbol: "XXX", label: "No Currency" },
+  { code: "YER", symbol: "﷼", label: "Yemeni Rial" },
   { code: "ZAR", symbol: "R", label: "South African Rand" },
+  { code: "ZMW", symbol: "ZK", label: "Zambian Kwacha" },
+  { code: "ZWL", symbol: "$", label: "Zimbabwean Dollar" },
 ];
 
 export default function Onboarding() {
@@ -78,6 +253,9 @@ export default function Onboarding() {
   const [phone, setPhone] = useState(companyInfo?.phone || "");
   const [fiscalYearEndDate, setFiscalYearEndDate] = useState(
     companyInfo?.fiscalYearEndDate || "",
+  );
+  const [currencyFormat, setCurrencyFormat] = useState(
+    companyInfo?.currencyFormat || "international"
   );
   const [currencyPreference, setCurrencyPreference] = useState(
     companyInfo?.currencyPreference || "USD",
@@ -151,6 +329,7 @@ export default function Onboarding() {
         ...(email && { email }),
         ...(phone && { phone }),
         ...(fiscalYearEndDate && { fiscalYearEndDate }),
+        ...(currencyFormat && { currencyFormat }),
         ...(currencyPreference && { currencyPreference }),
         ...(language && { language }),
         ...(numberOfEntities && { numberOfEntities: Number(numberOfEntities) }),
@@ -556,13 +735,61 @@ export default function Onboarding() {
                       />
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-4">
+                      <div>
+                        <Label
+                          htmlFor="currencyFormat"
+                          className="text-sm font-medium"
+                        >
+                          Currency Format (Optional)
+                        </Label>
+                        <p className="text-xs text-gray-500 mt-1 mb-3">
+                          Choose how you want to select your currency
+                        </p>
+                        <div className="grid grid-cols-2 gap-3">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setCurrencyFormat("international");
+                              setCurrencyPreference("USD");
+                            }}
+                            className={`p-3 rounded-lg border-2 transition-all text-sm font-medium ${
+                              currencyFormat === "international"
+                                ? "border-blue-500 bg-blue-50 text-blue-900"
+                                : "border-gray-200 bg-white hover:border-gray-300 text-gray-700"
+                            }`}
+                          >
+                            🌍 International
+                            <p className="text-xs font-normal text-gray-600 mt-1">
+                              Dollars & Euros
+                            </p>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setCurrencyFormat("national");
+                              setCurrencyPreference("USD");
+                            }}
+                            className={`p-3 rounded-lg border-2 transition-all text-sm font-medium ${
+                              currencyFormat === "national"
+                                ? "border-blue-500 bg-blue-50 text-blue-900"
+                                : "border-gray-200 bg-white hover:border-gray-300 text-gray-700"
+                            }`}
+                          >
+                            🗺️ National
+                            <p className="text-xs font-normal text-gray-600 mt-1">
+                              All currencies
+                            </p>
+                          </button>
+                        </div>
+                      </div>
+
                       <div>
                         <Label
                           htmlFor="currencyPreference"
                           className="text-sm font-medium"
                         >
-                          Currency Preference (Optional)
+                          Select Currency (Optional)
                         </Label>
                         <select
                           id="currencyPreference"
@@ -572,34 +799,45 @@ export default function Onboarding() {
                           }
                           className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                         >
-                          {CURRENCIES.map((curr) => (
-                            <option key={curr.code} value={curr.code}>
-                              {curr.code} - {curr.label}
-                            </option>
-                          ))}
+                          {currencyFormat === "international"
+                            ? INTERNATIONAL_CURRENCIES.map((curr) => (
+                                <option key={curr.code} value={curr.code}>
+                                  {curr.code} - {curr.label}
+                                </option>
+                              ))
+                            : NATIONAL_CURRENCIES.map((curr) => (
+                                <option key={curr.code} value={curr.code}>
+                                  {curr.code} - {curr.label}
+                                </option>
+                              ))}
                         </select>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {currencyFormat === "international"
+                            ? "Choose between USD or EUR"
+                            : `${NATIONAL_CURRENCIES.length} currencies available`}
+                        </p>
                       </div>
+                    </div>
 
-                      <div>
-                        <Label
-                          htmlFor="language"
-                          className="text-sm font-medium"
-                        >
-                          Preferred Language (Optional)
-                        </Label>
-                        <select
-                          id="language"
-                          value={language}
-                          onChange={(e) => setLanguage(e.target.value)}
-                          className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                        >
-                          {LANGUAGES.map((lang) => (
-                            <option key={lang} value={lang}>
-                              {lang}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                    <div>
+                      <Label
+                        htmlFor="language"
+                        className="text-sm font-medium"
+                      >
+                        Preferred Language (Optional)
+                      </Label>
+                      <select
+                        id="language"
+                        value={language}
+                        onChange={(e) => setLanguage(e.target.value)}
+                        className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                      >
+                        {LANGUAGES.map((lang) => (
+                          <option key={lang} value={lang}>
+                            {lang}
+                          </option>
+                        ))}
+                      </select>
                     </div>
 
                     <div>

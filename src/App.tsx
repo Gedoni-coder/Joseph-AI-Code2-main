@@ -349,6 +349,51 @@ function AppContent() {
           />
           <Route path="/business-planning" element={<BusinessPlanning />} />
           <Route
+            path="/business-planning-flow/:planId"
+            element={<BusinessPlanningFlow />}
+          />
+          <Route path="/business-plans" element={<BusinessPlansList />} />
+          <Route path="/sales-intelligence" element={<SalesIntelligence />} />
+          <Route path="/kpi-dashboard" element={<SalesIntelligence />} />
+          {/* Main 10 Module Routes - matching landing page links */}
+          <Route path="/economic-indicators" element={<Index />} />
+          <Route path="/business-forecast" element={<BusinessForecast />} />
+          <Route
+            path="/market-competitive-analysis"
+            element={<MarketCompetitiveAnalysis />}
+          />
+          <Route
+            path="/market-report/:reportId"
+            element={<MarketReportView />}
+          />
+          <Route
+            path="/market-competitive-analysis/swot"
+            element={<SwotWhitePaper />}
+          />
+          <Route
+            path="/market-competitive-analysis/profile/:id"
+            element={<CompetitorWhitePaper />}
+          />
+          <Route path="/pricing-strategies" element={<PricingStrategy />} />
+          <Route path="/revenue-forecasting" element={<RevenueStrategy />} />
+          <Route path="/loan-research" element={<LoanFunding />} />
+          <Route
+            path="/supply-chain-analytics"
+            element={<InventorySupplyChain />}
+          />
+          <Route path="/financial-advisory" element={<FinancialAdvisory />} />
+          <Route path="/impact-calculator" element={<ImpactCalculator />} />
+          <Route path="/tax-compliance" element={<TaxCompliance />} />
+          <Route
+            path="/business-feasibility"
+            element={<BusinessFeasibility />}
+          />
+          <Route
+            path="/business-feasibility/:id"
+            element={<BusinessFeasibilityIdea />}
+          />
+          <Route path="/business-planning" element={<BusinessPlanning />} />
+          <Route
             path="/business-planning/:id"
             element={<BusinessPlanningFromFeasibility />}
           />

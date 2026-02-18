@@ -61,7 +61,7 @@ function transformPricingStrategyData(
 }
 
 /**
- * Hook to fetch and transform pricing strategy data
+ * Hook to fetch and transform pricing strategy data with fallback
  */
 export function usePricingStrategyAPI() {
   const { data, isLoading, error, refetch } = useQuery({
@@ -69,15 +69,18 @@ export function usePricingStrategyAPI() {
     queryFn: () => getPricingStrategies(),
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
-    retry: 2,
+    retry: 1,
+    retryDelay: 2000,
   });
 
   const transformed = transformPricingStrategyData(data || []);
+  const isConnected = !error && (data !== undefined && data !== null);
 
   return {
     ...transformed,
-    isLoading,
+    isLoading: isLoading && !data, // Don't show loading if we have fallback data
     error: error ? (error as Error).message : null,
+    isConnected,
     refreshData: () => refetch(),
     reconnect: () => refetch(),
   };
