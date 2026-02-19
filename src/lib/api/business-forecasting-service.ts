@@ -74,8 +74,9 @@ export async function getBusinessForecasts(): Promise<
   try {
     return await xanoGet<BusinessForecastingData[]>("/business_forecasting");
   } catch (error) {
-    console.error("Error fetching business forecasts from API:", error);
-    // Return empty array on error - will trigger fallback to mock data
+    // Error already handled by xanoGet - will return empty array
+    // This try-catch is kept for type safety but the error is already logged
+    // in the xano-client.ts if VITE_DEBUG_API is enabled
     return [];
   }
 }

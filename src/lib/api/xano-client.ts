@@ -45,9 +45,11 @@ export async function xanoRequest<T>(
 
     if (!response.ok) {
       // API error - return fallback data silently
-      console.debug(
-        `Xano API returned ${response.status} for ${endpoint}. Using fallback data.`
-      );
+      if (import.meta.env.DEV && import.meta.env.VITE_DEBUG_API) {
+        console.debug(
+          `Xano API returned ${response.status} for ${endpoint}. Using fallback data.`
+        );
+      }
       // Return empty array for most endpoints
       return [] as unknown as T;
     }
@@ -68,16 +70,21 @@ export async function xanoRequest<T>(
       // Return empty array/object as fallback
       return (Array.isArray([]) ? [] : {}) as T;
     } catch (parseError) {
-      console.debug(`Failed to parse response from ${endpoint}:`, parseError);
+      if (import.meta.env.DEV && import.meta.env.VITE_DEBUG_API) {
+        console.debug(`Failed to parse response from ${endpoint}:`, parseError);
+      }
       // Return empty array/object as fallback
       return [] as unknown as T;
     }
   } catch (fetchError) {
     // Handle network errors and unavailable API - return fallback silently
-    console.debug(
-      `Xano API unavailable for ${endpoint}. Network error:`,
-      fetchError instanceof Error ? fetchError.message : String(fetchError)
-    );
+    // Only log in development and only if verbose debugging is needed
+    if (import.meta.env.DEV && import.meta.env.VITE_DEBUG_API) {
+      console.debug(
+        `Xano API unavailable for ${endpoint}. Network error:`,
+        fetchError instanceof Error ? fetchError.message : String(fetchError)
+      );
+    }
 
     // Return empty array as fallback for all cases
     return [] as unknown as T;
