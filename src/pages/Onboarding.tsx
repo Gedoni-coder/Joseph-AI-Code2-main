@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCompanyInfo } from "@/lib/company-context";
+import { useCurrency } from "@/lib/currency-context";
 import { AlertCircle, Upload } from "lucide-react";
 
 const SECTORS = [
@@ -227,6 +228,7 @@ const NATIONAL_CURRENCIES = [
 export default function Onboarding() {
   const navigate = useNavigate();
   const { updateCompanyInfo, companyInfo } = useCompanyInfo();
+  const { setCurrency } = useCurrency();
 
   // Required fields
   const [companyName, setCompanyName] = useState(
@@ -334,6 +336,11 @@ export default function Onboarding() {
         ...(language && { language }),
         ...(numberOfEntities && { numberOfEntities: Number(numberOfEntities) }),
       });
+
+      // Sync with global currency context
+      if (currencyPreference) {
+        setCurrency(currencyPreference);
+      }
 
       setLoading(false);
       navigate("/home");

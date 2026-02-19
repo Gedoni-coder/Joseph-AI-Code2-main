@@ -87,6 +87,7 @@ import SalesIntelligence from "./pages/SalesIntelligence";
 import ChatbotTest from "./pages/ChatbotTest";
 import { useCompanyInfo } from "./lib/company-context";
 import { AuthProvider } from "./lib/auth-context";
+import { useSyncCurrency } from "./hooks/useSyncCurrency";
 
 const queryClient = new QueryClient();
 
@@ -301,6 +302,10 @@ function ProtectedHomeRoute() {
 function AppContent() {
   const [conversationalMode, setConversationalMode] = React.useState(true);
   const location = useLocation();
+
+  // Sync company's currency preference with global currency context
+  useSyncCurrency();
+
   const isLandingPage =
     location.pathname === "/" ||
     location.pathname === "/signup" ||
