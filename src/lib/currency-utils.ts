@@ -82,6 +82,79 @@ export function convertCurrency(
 }
 
 /**
+ * Get complete currency information
+ * @param currencyCode Currency code (e.g., 'USD', 'EUR')
+ * @returns Currency object with code, name, and symbol
+ */
+export function getCurrencyInfo(
+  currencyCode: string
+): { code: string; name: string; symbol: string } | null {
+  const currencyMap: Record<string, { name: string; symbol: string }> = {
+    USD: { name: "United States Dollar", symbol: "$" },
+    EUR: { name: "Euro", symbol: "€" },
+    GBP: { name: "British Pound", symbol: "£" },
+    JPY: { name: "Japanese Yen", symbol: "¥" },
+    CAD: { name: "Canadian Dollar", symbol: "$" },
+    AUD: { name: "Australian Dollar", symbol: "$" },
+    CHF: { name: "Swiss Franc", symbol: "CHF" },
+    CNY: { name: "Chinese Yuan", symbol: "¥" },
+    INR: { name: "Indian Rupee", symbol: "₹" },
+    MXN: { name: "Mexican Peso", symbol: "$" },
+    BRL: { name: "Brazilian Real", symbol: "R$" },
+    ZAR: { name: "South African Rand", symbol: "R" },
+    SGD: { name: "Singapore Dollar", symbol: "$" },
+    HKD: { name: "Hong Kong Dollar", symbol: "$" },
+    KRW: { name: "South Korean Won", symbol: "₩" },
+    THB: { name: "Thai Baht", symbol: "฿" },
+    IDR: { name: "Indonesian Rupiah", symbol: "Rp" },
+    PHP: { name: "Philippine Peso", symbol: "₱" },
+    MYR: { name: "Malaysian Ringgit", symbol: "RM" },
+    PKR: { name: "Pakistani Rupee", symbol: "₨" },
+    BDT: { name: "Bangladeshi Taka", symbol: "৳" },
+    VND: { name: "Vietnamese Dong", symbol: "₫" },
+    TWD: { name: "Taiwan Dollar", symbol: "$" },
+    TRY: { name: "Turkish Lira", symbol: "₺" },
+    AED: { name: "United Arab Emirates Dirham", symbol: "د.إ" },
+    SAR: { name: "Saudi Arabian Riyal", symbol: "﷼" },
+    KWD: { name: "Kuwaiti Dinar", symbol: "د.ك" },
+    QAR: { name: "Qatari Riyal", symbol: "﷼" },
+    OMR: { name: "Omani Rial", symbol: "﷼" },
+    BHD: { name: "Bahraini Dinar", symbol: ".د.ب" },
+    JOD: { name: "Jordanian Dinar", symbol: "د.ا" },
+    EGP: { name: "Egyptian Pound", symbol: "£" },
+    NGN: { name: "Nigerian Naira", symbol: "₦" },
+    GHS: { name: "Ghanaian Cedi", symbol: "₵" },
+    KES: { name: "Kenyan Shilling", symbol: "KSh" },
+    UGX: { name: "Ugandan Shilling", symbol: "USh" },
+    SEK: { name: "Swedish Krona", symbol: "kr" },
+    NOK: { name: "Norwegian Krone", symbol: "kr" },
+    DKK: { name: "Danish Krone", symbol: "kr" },
+    PLN: { name: "Polish Zloty", symbol: "zł" },
+    CZK: { name: "Czech Koruna", symbol: "Kč" },
+    HUF: { name: "Hungarian Forint", symbol: "Ft" },
+    RON: { name: "Romanian Leu", symbol: "lei" },
+    BGN: { name: "Bulgarian Lev", symbol: "лв" },
+    HRK: { name: "Croatian Kuna", symbol: "kn" },
+    RUB: { name: "Russian Ruble", symbol: "₽" },
+    ARS: { name: "Argentine Peso", symbol: "$" },
+    CLP: { name: "Chilean Peso", symbol: "$" },
+    COP: { name: "Colombian Peso", symbol: "$" },
+    PEN: { name: "Peruvian Sol", symbol: "S/" },
+    UYU: { name: "Uruguayan Peso", symbol: "$" },
+    NZD: { name: "New Zealand Dollar", symbol: "$" },
+    FJD: { name: "Fiji Dollar", symbol: "$" },
+  };
+
+  const info = currencyMap[currencyCode];
+  if (!info) return null;
+
+  return {
+    code: currencyCode,
+    ...info,
+  };
+}
+
+/**
  * Get currency symbol by code
  * @param currencyCode Currency code (e.g., 'USD', 'EUR')
  * @returns Currency symbol
@@ -147,28 +220,33 @@ export function getCurrencySymbol(currencyCode: string): string {
 
 /**
  * Format a number as currency
- * @param amount Amount to format
+ * @param amount Amount to format (can be number or string)
  * @param currencyCode Currency code
- * @param options Intl.NumberFormat options
+ * @param decimalPlaces Number of decimal places (default: 2)
  * @returns Formatted currency string
  */
 export function formatCurrency(
-  amount: number,
+  amount: number | string,
   currencyCode: string = "USD",
-  options?: Intl.NumberFormatOptions
+  decimalPlaces: number = 2
 ): string {
+  const numAmount = typeof amount === "string" ? parseFloat(amount) : amount;
+
+  if (isNaN(numAmount)) {
+    return `${getCurrencySymbol(currencyCode)}0${"." + "0".repeat(decimalPlaces)}`;
+  }
+
   try {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
       currency: currencyCode,
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-      ...options,
-    }).format(amount);
+      minimumFractionDigits: decimalPlaces,
+      maximumFractionDigits: decimalPlaces,
+    }).format(numAmount);
   } catch (error) {
     // Fallback for unsupported currencies
     const symbol = getCurrencySymbol(currencyCode);
-    return `${symbol}${amount.toFixed(2)}`;
+    return `${symbol}${numAmount.toFixed(decimalPlaces)}`;
   }
 }
 
@@ -195,6 +273,19 @@ export function formatCompactCurrency(
     return `${symbol}${(amount / 1e3).toFixed(2)}K`;
   }
   return `${symbol}${amount.toFixed(2)}`;
+}
+
+/**
+ * Alias for formatCompactCurrency - formats a large number with K, M, B suffixes
+ * @param amount Amount to format
+ * @param currencyCode Currency code
+ * @returns Formatted string with symbol and suffix (e.g., "$2.4M")
+ */
+export function formatCurrencyShort(
+  amount: number,
+  currencyCode: string = "USD"
+): string {
+  return formatCompactCurrency(amount, currencyCode);
 }
 
 /**
