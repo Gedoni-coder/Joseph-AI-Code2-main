@@ -6,6 +6,7 @@ import { RevenueProjection } from "@/lib/business-forecast-data";
 import { TrendingUp, Target, AlertCircle, CheckCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { useCurrency } from "@/lib/currency-context";
 
 interface RevenueProjectionsProps {
   projections: RevenueProjection[];
@@ -19,14 +20,7 @@ export function RevenueProjections({
   title = "Revenue Projections",
 }: RevenueProjectionsProps) {
   const [viewType, setViewType] = useState<ViewType>("quarterly");
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
+  const { formatCurrency } = useCurrency();
 
   const getVarianceColor = (actual?: number, projected?: number) => {
     if (!actual || !projected) return "text-muted-foreground";

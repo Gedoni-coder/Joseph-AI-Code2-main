@@ -13,6 +13,8 @@ import {
   ChevronUp,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { useCurrency } from "@/lib/currency-context";
 
 interface KPIDashboardProps {
   kpis: KPI[];
@@ -23,6 +25,8 @@ export function KPIDashboard({
   kpis,
   title = "Performance Metrics & KPIs",
 }: KPIDashboardProps) {
+  const { formatCurrency, getCurrencySymbol } = useCurrency();
+
   const [expandedCategories, setExpandedCategories] = useState<
     Record<string, boolean>
   >(() => {
@@ -45,17 +49,14 @@ export function KPIDashboard({
       [category]: !prev[category],
     }));
   };
+
   const formatValue = (value: number, unit: string) => {
     if (unit === "USD") {
-      return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      }).format(value);
+      return formatCurrency(value);
     }
     if (unit === "USD/employee") {
-      return `$${(value / 1000).toFixed(0)}K/emp`;
+      const symbol = getCurrencySymbol();
+      return `${symbol}${(value / 1000).toFixed(0)}K/emp`;
     }
     if (unit === "%") {
       return `${value}%`;

@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TrendingUp, TrendingDown, Minus, BarChart3 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useCurrency } from "@/lib/currency-context";
 
 interface BusinessMetric {
   id: string;
@@ -685,14 +686,17 @@ interface BusinessMetricsTableProps {
 export function BusinessMetricsTable({
   title = "Business Metrics & Performance Table",
 }: BusinessMetricsTableProps) {
+  const { getCurrencySymbol } = useCurrency();
+
   const formatValue = (value: number, unit: string) => {
     if (unit === "USD") {
+      const symbol = getCurrencySymbol();
       if (value >= 1000000) {
-        return `$${(value / 1000000).toFixed(1)}M`;
+        return `${symbol}${(value / 1000000).toFixed(1)}M`;
       } else if (value >= 1000) {
-        return `$${(value / 1000).toFixed(0)}K`;
+        return `${symbol}${(value / 1000).toFixed(0)}K`;
       }
-      return `$${value.toLocaleString()}`;
+      return `${symbol}${value.toLocaleString()}`;
     }
     if (unit === "%") {
       return `${value}%`;

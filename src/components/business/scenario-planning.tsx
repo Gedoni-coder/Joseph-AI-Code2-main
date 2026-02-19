@@ -10,6 +10,7 @@ import {
   BarChart3,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useCurrency } from "@/lib/currency-context";
 
 interface ScenarioPlanningProps {
   scenarios: ScenarioPlanning[];
@@ -20,14 +21,7 @@ export function ScenarioPlanningComponent({
   scenarios,
   title = "Scenario Planning & Stress Testing",
 }: ScenarioPlanningProps) {
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
+  const { formatCurrency } = useCurrency();
 
   const getScenarioColor = (scenario: string) => {
     switch (scenario) {
