@@ -14,7 +14,7 @@ import {
   useLocation,
   Navigate,
 } from "react-router-dom";
-import { Radio, Moon, Sun } from "lucide-react";
+import { Radio, Moon, Sun, Settings } from "lucide-react";
 import { Switch } from "./components/ui/switch";
 import { ThemeProvider, useTheme } from "./lib/theme-context";
 import Landing from "./pages/Landing";
@@ -73,6 +73,7 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import Onboarding from "./pages/Onboarding";
 import CompanySettings from "./pages/CompanySettings";
+import UserSettings from "./pages/UserSettings";
 import Learn from "./pages/learn/Learn";
 import { CompanyInfoProvider } from "./lib/company-context";
 import LearnDiscover from "./pages/learn/LearnDiscover";
@@ -209,6 +210,20 @@ function TopDivisionNav({
 
         <div className="h-6 w-px bg-border"></div>
 
+        <Link
+          to="/user-settings"
+          className="flex items-center gap-2 px-2 py-1 hover:bg-primary/10 rounded transition-all cursor-pointer"
+          title="User Settings"
+          aria-label="Open user settings"
+        >
+          <Settings className="h-4 w-4 text-primary" />
+          <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">
+            Settings
+          </span>
+        </Link>
+
+        <div className="h-6 w-px bg-border"></div>
+
         <button
           onClick={toggleTheme}
           className="flex items-center gap-2 px-2 py-1 hover:bg-primary/10 rounded transition-all cursor-pointer"
@@ -306,6 +321,7 @@ function AppContent() {
           <Route path="/login" element={<Login />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/company-settings" element={<CompanySettings />} />
+          <Route path="/user-settings" element={<UserSettings />} />
           <Route path="/chatbot-test" element={<ChatbotTest />} />
           <Route path="/home" element={<ProtectedHomeRoute />} />
           <Route path="/landing" element={<Landing />} />
