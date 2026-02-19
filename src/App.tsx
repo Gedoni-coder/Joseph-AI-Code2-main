@@ -17,6 +17,7 @@ import {
 import { Radio, Moon, Sun, Settings, DollarSign } from "lucide-react";
 import { Switch } from "./components/ui/switch";
 import { ThemeProvider, useTheme } from "./lib/theme-context";
+import { CurrencyProvider, useCurrency, CURRENCIES } from "./lib/currency-context";
 import Landing from "./pages/Landing";
 import PrimaryLanding from "./pages/PrimaryLanding";
 import Index from "./pages/Index";
@@ -179,14 +180,7 @@ function TopDivisionNav({
   onConversationalModeChange,
 }: TopDivisionNavProps) {
   const { theme, toggleTheme } = useTheme();
-  const [currency, setCurrency] = React.useState(() => {
-    return localStorage.getItem("selectedCurrency") || "USD";
-  });
-
-  const handleCurrencyChange = (newCurrency: string) => {
-    setCurrency(newCurrency);
-    localStorage.setItem("selectedCurrency", newCurrency);
-  };
+  const { currency, setCurrency } = useCurrency();
 
   return (
     <nav className="hidden md:flex w-full bg-card border-b shadow-sm px-4 py-3 sticky top-0 z-40 gap-2 items-center">
@@ -236,20 +230,16 @@ function TopDivisionNav({
           <DollarSign className="h-4 w-4 text-primary" />
           <select
             value={currency}
-            onChange={(e) => handleCurrencyChange(e.target.value)}
+            onChange={(e) => setCurrency(e.target.value)}
             className="text-xs font-medium bg-transparent text-muted-foreground border-0 outline-0 focus:outline-0 cursor-pointer"
             aria-label="Select currency"
+            title="Select currency"
           >
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <option value="GBP">GBP</option>
-            <option value="JPY">JPY</option>
-            <option value="CAD">CAD</option>
-            <option value="AUD">AUD</option>
-            <option value="INR">INR</option>
-            <option value="MXN">MXN</option>
-            <option value="BRL">BRL</option>
-            <option value="ZAR">ZAR</option>
+            {CURRENCIES.map((curr) => (
+              <option key={curr.code} value={curr.code}>
+                {curr.code}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -530,17 +520,19 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <AuthProvider>
-              <CompanyInfoProvider>
-                <AppContent />
-              </CompanyInfoProvider>
-            </AuthProvider>
-          </BrowserRouter>
-        </TooltipProvider>
+        <CurrencyProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <AuthProvider>
+                <CompanyInfoProvider>
+                  <AppContent />
+                </CompanyInfoProvider>
+              </AuthProvider>
+            </BrowserRouter>
+          </TooltipProvider>
+        </CurrencyProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );

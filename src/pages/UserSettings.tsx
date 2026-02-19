@@ -7,12 +7,14 @@ import { AlertCircle, ArrowLeft, Sun, Moon, Lock, Bell, Eye, CreditCard, Globe, 
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@/lib/theme-context";
 import { useAuth } from "@/lib/auth-context";
+import { useCurrency, CURRENCIES } from "@/lib/currency-context";
 import { Switch } from "@/components/ui/switch";
 
 export default function UserSettings() {
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
   const { user, logout } = useAuth();
+  const { currency, setCurrency: setCurrencyContext } = useCurrency();
   const [activeTab, setActiveTab] = useState("account");
   const [saved, setSaved] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -44,7 +46,6 @@ export default function UserSettings() {
   ]);
 
   // Preferences
-  const [currency, setCurrency] = useState("USD");
   const [timezone, setTimezone] = useState("UTC");
   const [autoSave, setAutoSave] = useState(true);
 
@@ -446,14 +447,14 @@ export default function UserSettings() {
                     <select
                       id="currency"
                       value={currency}
-                      onChange={(e) => setCurrency(e.target.value)}
+                      onChange={(e) => setCurrencyContext(e.target.value)}
                       className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                     >
-                      <option value="USD">USD ($)</option>
-                      <option value="EUR">EUR (€)</option>
-                      <option value="GBP">GBP (£)</option>
-                      <option value="JPY">JPY (¥)</option>
-                      <option value="CAD">CAD ($)</option>
+                      {CURRENCIES.map((curr) => (
+                        <option key={curr.code} value={curr.code}>
+                          {curr.code} - {curr.name}
+                        </option>
+                      ))}
                     </select>
                   </div>
 
