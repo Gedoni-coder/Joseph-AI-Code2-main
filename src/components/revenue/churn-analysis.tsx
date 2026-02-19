@@ -10,18 +10,15 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { AlertTriangle, Users, DollarSign, Clock, Shield } from "lucide-react";
 import { type ChurnAnalysis } from "@/lib/revenue-data";
+import { useCurrencyFormatter } from "@/components/currency-formatter";
 
 interface ChurnAnalysisProps {
   churn: ChurnAnalysis[];
 }
 
 export function ChurnAnalysisComponent({ churn }: ChurnAnalysisProps) {
-  const formatCurrency = (amount: number) => {
-    if (amount >= 1000000) {
-      return `$${(amount / 1000000).toFixed(1)}M`;
-    }
-    return `$${amount.toLocaleString()}`;
-  };
+  const { compact } = useCurrencyFormatter();
+  const formatCurrency = (amount: number) => compact(amount, 1);
 
   const getChurnRateColor = (rate: number) => {
     if (rate <= 3) return "text-green-600";

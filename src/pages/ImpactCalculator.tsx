@@ -39,8 +39,10 @@ import {
   PolicyInputs,
   EconomicInputs,
 } from "@/mocks/impact-calculator";
+import { useCurrencyFormatter } from "@/components/currency-formatter";
 
 const ImpactCalculator = () => {
+  const { compact, format } = useCurrencyFormatter();
   const [calculationType, setCalculationType] = useState("policy");
   const [isCalculating, setIsCalculating] = useState(false);
   const [results, setResults] = useState(null);
@@ -705,13 +707,13 @@ const ImpactCalculator = () => {
                           Direct Implementation Cost
                         </span>
                         <span className="font-medium">
-                          ${results.totalDirectCost.toLocaleString()}
+                          {format(results.totalDirectCost, 0)}
                         </span>
                       </div>
                       <div className="flex justify-between items-center p-3 border rounded">
                         <span className="text-sm">Annual Ongoing Cost</span>
                         <span className="font-medium">
-                          ${results.totalOngoingCost.toLocaleString()}
+                          {format(results.totalOngoingCost, 0)}
                         </span>
                       </div>
                       <div className="flex justify-between items-center p-3 border rounded">
@@ -719,8 +721,7 @@ const ImpactCalculator = () => {
                         <span
                           className={`font-medium ${results.netBenefit > 0 ? "text-green-600" : "text-red-600"}`}
                         >
-                          {getImpactIcon(results.netBenefit)}$
-                          {Math.abs(results.netBenefit).toLocaleString()}
+                          {getImpactIcon(results.netBenefit)}{format(Math.abs(results.netBenefit), 0)}
                         </span>
                       </div>
                       <div className="flex justify-between items-center p-3 border rounded">
@@ -764,8 +765,7 @@ const ImpactCalculator = () => {
                         <div
                           className={`text-2xl font-bold ${results.netEconomicImpact > 0 ? "text-green-600" : "text-red-600"}`}
                         >
-                          {getImpactIcon(results.netEconomicImpact)}$
-                          {Math.abs(results.netEconomicImpact).toLocaleString()}
+                          {getImpactIcon(results.netEconomicImpact)}{format(Math.abs(results.netEconomicImpact), 0)}
                         </div>
                         <div className="text-sm text-muted-foreground">
                           Net Economic Impact
@@ -773,7 +773,7 @@ const ImpactCalculator = () => {
                       </div>
                       <div className="text-center p-4 border rounded">
                         <div className="text-2xl font-bold text-blue-600">
-                          ${results.adjustedBusinessValue.toLocaleString()}
+                          {format(results.adjustedBusinessValue, 0)}
                         </div>
                         <div className="text-sm text-muted-foreground">
                           Adjusted Business Value
@@ -787,26 +787,25 @@ const ImpactCalculator = () => {
                         <span
                           className={`font-medium ${results.gdpImpact > 0 ? "text-green-600" : "text-red-600"}`}
                         >
-                          {getImpactIcon(results.gdpImpact)}$
-                          {Math.abs(results.gdpImpact).toLocaleString()}
+                          {getImpactIcon(results.gdpImpact)}{format(Math.abs(results.gdpImpact), 0)}
                         </span>
                       </div>
                       <div className="flex justify-between items-center p-3 border rounded">
                         <span className="text-sm">Inflation Adjustment</span>
                         <span className="font-medium text-orange-600">
-                          -${results.inflationAdjustment.toLocaleString()}
+                          -{format(results.inflationAdjustment, 0)}
                         </span>
                       </div>
                       <div className="flex justify-between items-center p-3 border rounded">
                         <span className="text-sm">Interest Cost Impact</span>
                         <span className="font-medium text-red-600">
-                          -${results.interestCostImpact.toLocaleString()}
+                          -{format(results.interestCostImpact, 0)}
                         </span>
                       </div>
                       <div className="flex justify-between items-center p-3 border rounded">
                         <span className="text-sm">Volatility Risk</span>
                         <span className="font-medium text-red-600">
-                          -${results.volatilityRisk.toLocaleString()}
+                          -{format(results.volatilityRisk, 0)}
                         </span>
                       </div>
                       <div className="flex justify-between items-center p-3 border rounded">
@@ -814,8 +813,7 @@ const ImpactCalculator = () => {
                         <span
                           className={`font-medium ${results.currencyImpact > 0 ? "text-green-600" : "text-red-600"}`}
                         >
-                          {getImpactIcon(results.currencyImpact)}$
-                          {Math.abs(results.currencyImpact).toLocaleString()}
+                          {getImpactIcon(results.currencyImpact)}{format(Math.abs(results.currencyImpact), 0)}
                         </span>
                       </div>
                       <div className="flex justify-between items-center p-3 border rounded">

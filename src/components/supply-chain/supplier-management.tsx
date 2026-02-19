@@ -39,6 +39,7 @@ import {
   Clock,
   Package,
 } from "lucide-react";
+import { useCurrencyFormatter } from "@/components/currency-formatter";
 
 interface SupplierManagementProps {
   suppliers: Supplier[];
@@ -52,6 +53,7 @@ export function SupplierManagement({
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const { format } = useCurrencyFormatter();
 
   const handleAddSupplier = () => {
     alert(
@@ -84,14 +86,7 @@ export function SupplierManagement({
     return true;
   });
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
+  const formatCurrency = (amount: number) => format(amount, 0);
 
   const getPerformanceColor = (score: number) => {
     if (score >= 90) return "text-green-600 bg-green-100";
