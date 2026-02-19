@@ -1,11 +1,13 @@
 /**
  * Xano API Client
  * Central configuration and utilities for communicating with the Xano backend
+ *
+ * Note: If VITE_XANO_API_BASE is not configured, the app will use mock data
+ * without attempting to fetch from the API.
  */
 
-const XANO_BASE_URL =
-  import.meta.env.VITE_XANO_API_BASE ||
-  "https://x8ki-letl-twmt.n7.xano.io/api:MdDKI7Xp";
+const XANO_BASE_URL = import.meta.env.VITE_XANO_API_BASE || null;
+const API_ENABLED = !!XANO_BASE_URL && XANO_BASE_URL !== "";
 
 interface XanoRequestOptions extends RequestInit {
   params?: Record<string, string | number | boolean>;
@@ -18,6 +20,16 @@ export async function xanoRequest<T>(
   endpoint: string,
   options: XanoRequestOptions = {},
 ): Promise<T> {
+  // If API is not configured, return empty data immediately without attempting fetch
+  if (!API_ENABLED) {
+    if (import.meta.env.DEV && import.meta.env.VITE_DEBUG_API) {
+      console.debug(
+        `Xano API not configured (VITE_XANO_API_BASE not set). Using mock data for ${endpoint}`
+      );
+    }
+    return [] as unknown as T;
+  }
+
   const { params, ...fetchOptions } = options;
 
   let url = `${XANO_BASE_URL}${endpoint}`;
