@@ -176,6 +176,111 @@ interface TopDivisionNavProps {
   onConversationalModeChange: (enabled: boolean) => void;
 }
 
+function MobileNav({
+  conversationalMode,
+  onConversationalModeChange,
+}: TopDivisionNavProps) {
+  const { theme, toggleTheme } = useTheme();
+  const { currency, setCurrency } = useCurrency();
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+
+  return (
+    <nav className="flex md:hidden w-full bg-card border-b shadow-sm px-4 py-3 sticky top-0 z-40 gap-2 items-center justify-between">
+      <Link
+        to="/home"
+        className="font-bold tracking-tight text-sm px-2 py-1 rounded hover:bg-muted/30 transition-colors"
+      >
+        Menu
+      </Link>
+
+      <div className="flex items-center gap-2">
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="flex items-center gap-2 px-2 py-1 hover:bg-primary/10 rounded transition-all cursor-pointer"
+          title="More options"
+          aria-label="Toggle menu"
+        >
+          <Settings className="h-4 w-4 text-primary" />
+        </button>
+
+        {mobileMenuOpen && (
+          <div className="absolute top-full right-0 mt-0 bg-card border rounded-b shadow-lg p-3 space-y-3 min-w-max">
+            <div className="flex items-center gap-2">
+              <DollarSign className="h-4 w-4 text-primary" />
+              <select
+                value={currency}
+                onChange={(e) => {
+                  setCurrency(e.target.value);
+                  setMobileMenuOpen(false);
+                }}
+                className="text-xs font-medium bg-transparent text-muted-foreground border-0 outline-0 focus:outline-0 cursor-pointer"
+                aria-label="Select currency"
+                title="Select currency"
+              >
+                {CURRENCIES.map((curr) => (
+                  <option key={curr.code} value={curr.code}>
+                    {curr.code} - {curr.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="h-px bg-border"></div>
+
+            <button
+              onClick={() => {
+                toggleTheme();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full flex items-center gap-2 px-2 py-2 hover:bg-primary/10 rounded transition-all cursor-pointer"
+              title={
+                theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+              }
+              aria-label="Toggle dark mode"
+            >
+              {theme === "dark" ? (
+                <Sun className="h-4 w-4 text-primary" />
+              ) : (
+                <Moon className="h-4 w-4 text-primary" />
+              )}
+              <span className="text-xs font-medium">
+                {theme === "dark" ? "Light Mode" : "Dark Mode"}
+              </span>
+            </button>
+
+            <div className="h-px bg-border"></div>
+
+            <Link
+              to="/user-settings"
+              className="w-full flex items-center gap-2 px-2 py-2 hover:bg-primary/10 rounded transition-all cursor-pointer"
+              title="User Settings"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <Settings className="h-4 w-4 text-primary" />
+              <span className="text-xs font-medium">Settings</span>
+            </Link>
+
+            <div className="h-px bg-border"></div>
+
+            <div className="flex items-center gap-2 px-2 py-2 hover:bg-primary/10 rounded transition-all cursor-pointer">
+              <Radio className="h-4 w-4 text-primary" />
+              <span className="text-xs font-medium">Chat</span>
+              <Switch
+                checked={conversationalMode}
+                onCheckedChange={(checked) => {
+                  onConversationalModeChange(checked);
+                  setMobileMenuOpen(false);
+                }}
+                className="scale-75"
+              />
+            </div>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+}
+
 function TopDivisionNav({
   conversationalMode,
   onConversationalModeChange,
@@ -333,10 +438,16 @@ function AppContent() {
     >
       <>
         {!isLandingPage && (
-          <TopDivisionNav
-            conversationalMode={conversationalMode}
-            onConversationalModeChange={handleConversationalModeChange}
-          />
+          <>
+            <MobileNav
+              conversationalMode={conversationalMode}
+              onConversationalModeChange={handleConversationalModeChange}
+            />
+            <TopDivisionNav
+              conversationalMode={conversationalMode}
+              onConversationalModeChange={handleConversationalModeChange}
+            />
+          </>
         )}
         {!isLandingPage && (
           <ChatbotContainer conversationalMode={conversationalMode} />
