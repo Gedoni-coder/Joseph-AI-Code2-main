@@ -14,7 +14,7 @@ import {
   useLocation,
   Navigate,
 } from "react-router-dom";
-import { Radio, Moon, Sun, Settings } from "lucide-react";
+import { Radio, Moon, Sun, Settings, DollarSign } from "lucide-react";
 import { Switch } from "./components/ui/switch";
 import { ThemeProvider, useTheme } from "./lib/theme-context";
 import Landing from "./pages/Landing";
@@ -179,6 +179,14 @@ function TopDivisionNav({
   onConversationalModeChange,
 }: TopDivisionNavProps) {
   const { theme, toggleTheme } = useTheme();
+  const [currency, setCurrency] = React.useState(() => {
+    return localStorage.getItem("selectedCurrency") || "USD";
+  });
+
+  const handleCurrencyChange = (newCurrency: string) => {
+    setCurrency(newCurrency);
+    localStorage.setItem("selectedCurrency", newCurrency);
+  };
 
   return (
     <nav className="hidden md:flex w-full bg-card border-b shadow-sm px-4 py-3 sticky top-0 z-40 gap-2 items-center">
@@ -221,6 +229,29 @@ function TopDivisionNav({
             Settings
           </span>
         </Link>
+
+        <div className="h-6 w-px bg-border"></div>
+
+        <div className="flex items-center gap-2 px-2 py-1 hover:bg-primary/10 rounded transition-all cursor-pointer">
+          <DollarSign className="h-4 w-4 text-primary" />
+          <select
+            value={currency}
+            onChange={(e) => handleCurrencyChange(e.target.value)}
+            className="text-xs font-medium bg-transparent text-muted-foreground border-0 outline-0 focus:outline-0 cursor-pointer"
+            aria-label="Select currency"
+          >
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="JPY">JPY</option>
+            <option value="CAD">CAD</option>
+            <option value="AUD">AUD</option>
+            <option value="INR">INR</option>
+            <option value="MXN">MXN</option>
+            <option value="BRL">BRL</option>
+            <option value="ZAR">ZAR</option>
+          </select>
+        </div>
 
         <div className="h-6 w-px bg-border"></div>
 
