@@ -3,8 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AlertCircle, ArrowLeft, Sun, Moon, Lock, Bell, Eye, CreditCard, Globe, Link as LinkIcon, LogOut, Trash2 } from "lucide-react";
+import { AlertCircle, ArrowLeft, Sun, Moon, Lock, Bell, Eye, CreditCard, Globe, Link as LinkIcon, LogOut, Trash2, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@/lib/theme-context";
 import { useAuth } from "@/lib/auth-context";
@@ -14,6 +13,7 @@ export default function UserSettings() {
   const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
   const { user, logout } = useAuth();
+  const [activeTab, setActiveTab] = useState("account");
   const [saved, setSaved] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -71,9 +71,20 @@ export default function UserSettings() {
     }
   };
 
+  const settingsMenu = [
+    { id: "account", label: "Account", icon: User },
+    { id: "appearance", label: "Appearance", icon: Sun },
+    { id: "notifications", label: "Notifications", icon: Bell },
+    { id: "privacy", label: "Privacy & Security", icon: Eye },
+    { id: "preferences", label: "Preferences", icon: Globe },
+    { id: "connected", label: "Connected Accounts", icon: LinkIcon },
+    { id: "billing", label: "Billing", icon: CreditCard },
+    { id: "danger", label: "Danger Zone", icon: AlertCircle },
+  ];
+
   return (
     <div className="container mx-auto py-8 px-4">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <Button
           variant="ghost"
           onClick={() => navigate(-1)}
@@ -99,472 +110,492 @@ export default function UserSettings() {
           </div>
         )}
 
-        <Tabs defaultValue="account" className="space-y-6">
-          <TabsList className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 w-full">
-            <TabsTrigger value="account" className="text-xs md:text-sm">Account</TabsTrigger>
-            <TabsTrigger value="appearance" className="text-xs md:text-sm">Appearance</TabsTrigger>
-            <TabsTrigger value="notifications" className="text-xs md:text-sm">Notifications</TabsTrigger>
-            <TabsTrigger value="privacy" className="text-xs md:text-sm">Privacy</TabsTrigger>
-            <TabsTrigger value="preferences" className="text-xs md:text-sm">Preferences</TabsTrigger>
-            <TabsTrigger value="connected" className="text-xs md:text-sm">Connected</TabsTrigger>
-            <TabsTrigger value="billing" className="text-xs md:text-sm">Billing</TabsTrigger>
-            <TabsTrigger value="danger" className="text-xs md:text-sm">Danger Zone</TabsTrigger>
-          </TabsList>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* SIDEBAR NAVIGATION */}
+          <aside className="lg:col-span-1">
+            <Card className="sticky top-24">
+              <CardContent className="p-0">
+                <nav className="space-y-1">
+                  {settingsMenu.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = activeTab === item.id;
+                    return (
+                      <button
+                        key={item.id}
+                        onClick={() => setActiveTab(item.id)}
+                        className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${
+                          isActive
+                            ? "bg-blue-100 dark:bg-blue-950 border-l-4 border-blue-600 text-blue-700 dark:text-blue-400 font-medium"
+                            : "text-muted-foreground hover:bg-muted/50"
+                        }`}
+                      >
+                        <Icon className="h-4 w-4 flex-shrink-0" />
+                        <span className="text-sm">{item.label}</span>
+                      </button>
+                    );
+                  })}
+                </nav>
+              </CardContent>
+            </Card>
+          </aside>
 
-          {/* ACCOUNT SETTINGS TAB */}
-          <TabsContent value="account">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
-                    <span className="text-sm font-bold text-blue-700">{firstName.charAt(0)}{lastName.charAt(0)}</span>
-                  </div>
-                  Account Settings
-                </CardTitle>
-                <CardDescription>Update your personal information</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <form onSubmit={handleSaveAccountSettings} className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* MAIN CONTENT */}
+          <main className="lg:col-span-3">
+            {/* ACCOUNT SETTINGS */}
+            {activeTab === "account" && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
+                      <span className="text-sm font-bold text-blue-700">{firstName.charAt(0)}{lastName.charAt(0)}</span>
+                    </div>
+                    Account Settings
+                  </CardTitle>
+                  <CardDescription>Update your personal information</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <form onSubmit={handleSaveAccountSettings} className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="firstName" className="text-sm font-medium">First Name</Label>
+                        <Input
+                          id="firstName"
+                          value={firstName}
+                          onChange={(e) => setFirstName(e.target.value)}
+                          placeholder="John"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="lastName" className="text-sm font-medium">Last Name</Label>
+                        <Input
+                          id="lastName"
+                          value={lastName}
+                          onChange={(e) => setLastName(e.target.value)}
+                          placeholder="Doe"
+                          className="mt-1"
+                        />
+                      </div>
+                    </div>
+
                     <div>
-                      <Label htmlFor="firstName" className="text-sm font-medium">First Name</Label>
+                      <Label htmlFor="email" className="text-sm font-medium">Email Address</Label>
                       <Input
-                        id="firstName"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                        placeholder="John"
+                        id="email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="john@example.com"
                         className="mt-1"
                       />
                     </div>
-                    <div>
-                      <Label htmlFor="lastName" className="text-sm font-medium">Last Name</Label>
-                      <Input
-                        id="lastName"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                        placeholder="Doe"
-                        className="mt-1"
-                      />
-                    </div>
-                  </div>
 
+                    <div className="border-t pt-4">
+                      <h4 className="font-semibold mb-4 flex items-center gap-2">
+                        <Lock className="h-4 w-4" />
+                        Change Password
+                      </h4>
+                      <div className="space-y-4">
+                        <div>
+                          <Label htmlFor="currentPassword" className="text-sm font-medium">Current Password</Label>
+                          <Input
+                            id="currentPassword"
+                            type="password"
+                            value={currentPassword}
+                            onChange={(e) => setCurrentPassword(e.target.value)}
+                            placeholder="••••••••"
+                            className="mt-1"
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="newPassword" className="text-sm font-medium">New Password</Label>
+                          <Input
+                            id="newPassword"
+                            type="password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            placeholder="••••••••"
+                            className="mt-1"
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="confirmPassword" className="text-sm font-medium">Confirm Password</Label>
+                          <Input
+                            id="confirmPassword"
+                            type="password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            placeholder="••••••••"
+                            className="mt-1"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-3 pt-6 border-t">
+                      <Button type="submit" disabled={loading} className="bg-blue-600 hover:bg-blue-700">
+                        {loading ? "Saving..." : "Save Changes"}
+                      </Button>
+                    </div>
+                  </form>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* APPEARANCE SETTINGS */}
+            {activeTab === "appearance" && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Sun className="h-5 w-5" />
+                    Appearance
+                  </CardTitle>
+                  <CardDescription>Customize how the app looks</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
                   <div>
-                    <Label htmlFor="email" className="text-sm font-medium">Email Address</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="john@example.com"
-                      className="mt-1"
-                    />
+                    <Label className="text-sm font-medium mb-3 block">Theme</Label>
+                    <div className="flex gap-4">
+                      <button
+                        onClick={() => setTheme("light")}
+                        className={`flex-1 p-4 rounded-lg border-2 transition-all ${
+                          theme === "light" ? "border-blue-600 bg-blue-50" : "border-border hover:border-muted-foreground"
+                        }`}
+                      >
+                        <Sun className="h-5 w-5 mx-auto mb-2" />
+                        <p className="text-sm font-medium">Light Mode</p>
+                      </button>
+                      <button
+                        onClick={() => setTheme("dark")}
+                        className={`flex-1 p-4 rounded-lg border-2 transition-all ${
+                          theme === "dark" ? "border-blue-600 bg-blue-50 dark:bg-blue-950" : "border-border hover:border-muted-foreground"
+                        }`}
+                      >
+                        <Moon className="h-5 w-5 mx-auto mb-2" />
+                        <p className="text-sm font-medium">Dark Mode</p>
+                      </button>
+                    </div>
                   </div>
 
                   <div className="border-t pt-4">
-                    <h4 className="font-semibold mb-4 flex items-center gap-2">
-                      <Lock className="h-4 w-4" />
-                      Change Password
-                    </h4>
-                    <div className="space-y-4">
+                    <Label htmlFor="fontSize" className="text-sm font-medium block mb-2">Font Size</Label>
+                    <select
+                      id="fontSize"
+                      value={fontSize}
+                      onChange={(e) => setFontSize(e.target.value)}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                    >
+                      <option value="small">Small</option>
+                      <option value="medium">Medium (Default)</option>
+                      <option value="large">Large</option>
+                    </select>
+                  </div>
+
+                  <div className="border-t pt-4">
+                    <Label htmlFor="language" className="text-sm font-medium block mb-2">Language</Label>
+                    <select
+                      id="language"
+                      value={language}
+                      onChange={(e) => setLanguage(e.target.value)}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                    >
+                      <option value="English">English</option>
+                      <option value="Spanish">Spanish</option>
+                      <option value="French">French</option>
+                      <option value="German">German</option>
+                      <option value="Portuguese">Portuguese</option>
+                      <option value="Chinese">Chinese</option>
+                    </select>
+                  </div>
+
+                  <div className="border-t pt-4">
+                    <Label htmlFor="layout" className="text-sm font-medium block mb-2">Layout Style</Label>
+                    <select
+                      id="layout"
+                      value={layout}
+                      onChange={(e) => setLayout(e.target.value)}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                    >
+                      <option value="compact">Compact</option>
+                      <option value="comfortable">Comfortable (Default)</option>
+                      <option value="spacious">Spacious</option>
+                    </select>
+                  </div>
+
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700">Save Appearance Settings</Button>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* NOTIFICATIONS SETTINGS */}
+            {activeTab === "notifications" && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Bell className="h-5 w-5" />
+                    Notifications
+                  </CardTitle>
+                  <CardDescription>Control how you receive notifications</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="space-y-4 p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+                    <div className="flex items-center justify-between">
                       <div>
-                        <Label htmlFor="currentPassword" className="text-sm font-medium">Current Password</Label>
-                        <Input
-                          id="currentPassword"
-                          type="password"
-                          value={currentPassword}
-                          onChange={(e) => setCurrentPassword(e.target.value)}
-                          placeholder="••••••••"
-                          className="mt-1"
-                        />
+                        <p className="font-medium">Email Notifications</p>
+                        <p className="text-sm text-muted-foreground">Get updates via email</p>
                       </div>
+                      <Switch checked={emailNotifications} onCheckedChange={setEmailNotifications} />
+                    </div>
+
+                    <div className="flex items-center justify-between border-t pt-4">
                       <div>
-                        <Label htmlFor="newPassword" className="text-sm font-medium">New Password</Label>
-                        <Input
-                          id="newPassword"
-                          type="password"
-                          value={newPassword}
-                          onChange={(e) => setNewPassword(e.target.value)}
-                          placeholder="••••••••"
-                          className="mt-1"
-                        />
+                        <p className="font-medium">Push Notifications</p>
+                        <p className="text-sm text-muted-foreground">Receive browser notifications</p>
                       </div>
+                      <Switch checked={pushNotifications} onCheckedChange={setPushNotifications} />
+                    </div>
+
+                    <div className="flex items-center justify-between border-t pt-4">
                       <div>
-                        <Label htmlFor="confirmPassword" className="text-sm font-medium">Confirm Password</Label>
-                        <Input
-                          id="confirmPassword"
-                          type="password"
-                          value={confirmPassword}
-                          onChange={(e) => setConfirmPassword(e.target.value)}
-                          placeholder="••••••••"
-                          className="mt-1"
-                        />
+                        <p className="font-medium">Marketing Emails</p>
+                        <p className="text-sm text-muted-foreground">News and special offers</p>
                       </div>
+                      <Switch checked={marketingEmails} onCheckedChange={setMarketingEmails} />
                     </div>
                   </div>
 
-                  <div className="flex gap-3 pt-6 border-t">
-                    <Button type="submit" disabled={loading} className="bg-blue-600 hover:bg-blue-700">
-                      {loading ? "Saving..." : "Save Changes"}
+                  <div className="border-t pt-4">
+                    <Label htmlFor="frequency" className="text-sm font-medium block mb-2">Notification Frequency</Label>
+                    <select
+                      id="frequency"
+                      value={notificationFrequency}
+                      onChange={(e) => setNotificationFrequency(e.target.value)}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                    >
+                      <option value="instant">Instant</option>
+                      <option value="hourly">Hourly Digest</option>
+                      <option value="daily">Daily Digest</option>
+                      <option value="weekly">Weekly Digest</option>
+                    </select>
+                  </div>
+
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700">Save Notification Settings</Button>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* PRIVACY & SECURITY */}
+            {activeTab === "privacy" && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Eye className="h-5 w-5" />
+                    Privacy & Security
+                  </CardTitle>
+                  <CardDescription>Manage your account security</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium flex items-center gap-2">
+                          <Lock className="h-4 w-4" />
+                          Two-Factor Authentication (2FA)
+                        </p>
+                        <p className="text-sm text-muted-foreground mt-1">Add an extra layer of security</p>
+                      </div>
+                      <Switch checked={twoFactorEnabled} onCheckedChange={setTwoFactorEnabled} />
+                    </div>
+                  </div>
+
+                  <div className="border-t pt-4">
+                    <h4 className="font-semibold mb-3">Login History</h4>
+                    <div className="space-y-3">
+                      {loginHistory.map((login, index) => (
+                        <div key={index} className="p-3 border rounded-lg">
+                          <div className="flex items-start justify-between">
+                            <div>
+                              <p className="font-medium text-sm">{login.device}</p>
+                              <p className="text-xs text-muted-foreground">IP: {login.ip}</p>
+                            </div>
+                            <span className="text-xs text-muted-foreground">{login.date}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700">Save Privacy Settings</Button>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* PREFERENCES */}
+            {activeTab === "preferences" && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Globe className="h-5 w-5" />
+                    Preferences
+                  </CardTitle>
+                  <CardDescription>Set your app preferences</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div>
+                    <Label htmlFor="currency" className="text-sm font-medium block mb-2">Currency</Label>
+                    <select
+                      id="currency"
+                      value={currency}
+                      onChange={(e) => setCurrency(e.target.value)}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                    >
+                      <option value="USD">USD ($)</option>
+                      <option value="EUR">EUR (€)</option>
+                      <option value="GBP">GBP (£)</option>
+                      <option value="JPY">JPY (¥)</option>
+                      <option value="CAD">CAD ($)</option>
+                    </select>
+                  </div>
+
+                  <div className="border-t pt-4">
+                    <Label htmlFor="timezone" className="text-sm font-medium block mb-2">Timezone</Label>
+                    <select
+                      id="timezone"
+                      value={timezone}
+                      onChange={(e) => setTimezone(e.target.value)}
+                      className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                    >
+                      <option value="UTC">UTC</option>
+                      <option value="EST">EST (Eastern)</option>
+                      <option value="CST">CST (Central)</option>
+                      <option value="MST">MST (Mountain)</option>
+                      <option value="PST">PST (Pacific)</option>
+                      <option value="GMT">GMT (London)</option>
+                    </select>
+                  </div>
+
+                  <div className="border-t pt-4">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium">Auto-Save</p>
+                        <p className="text-sm text-muted-foreground">Automatically save your work</p>
+                      </div>
+                      <Switch checked={autoSave} onCheckedChange={setAutoSave} />
+                    </div>
+                  </div>
+
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700">Save Preferences</Button>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* CONNECTED ACCOUNTS */}
+            {activeTab === "connected" && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <LinkIcon className="h-5 w-5" />
+                    Connected Accounts
+                  </CardTitle>
+                  <CardDescription>Manage your linked integrations</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="p-4 border rounded-lg flex items-center justify-between">
+                    <div>
+                      <p className="font-medium">Google Account</p>
+                      <p className="text-sm text-muted-foreground">Not connected</p>
+                    </div>
+                    <Button variant="outline">Connect</Button>
+                  </div>
+
+                  <div className="p-4 border rounded-lg flex items-center justify-between">
+                    <div>
+                      <p className="font-medium">Microsoft Account</p>
+                      <p className="text-sm text-muted-foreground">Not connected</p>
+                    </div>
+                    <Button variant="outline">Connect</Button>
+                  </div>
+
+                  <div className="p-4 border rounded-lg flex items-center justify-between">
+                    <div>
+                      <p className="font-medium">Slack Workspace</p>
+                      <p className="text-sm text-muted-foreground">Not connected</p>
+                    </div>
+                    <Button variant="outline">Connect</Button>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* BILLING */}
+            {activeTab === "billing" && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <CreditCard className="h-5 w-5" />
+                    Billing & Subscription
+                  </CardTitle>
+                  <CardDescription>Manage your subscription</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
+                    <p className="text-sm text-muted-foreground mb-2">Current Plan</p>
+                    <p className="text-2xl font-bold">Free Plan</p>
+                    <p className="text-sm text-muted-foreground mt-2">Limited features. Upgrade for full access.</p>
+                  </div>
+
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700">Upgrade to Premium</Button>
+
+                  <div className="border-t pt-4">
+                    <h4 className="font-semibold mb-3">Billing History</h4>
+                    <div className="text-sm text-muted-foreground">
+                      <p>No billing history yet. You're on a free plan.</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* DANGER ZONE */}
+            {activeTab === "danger" && (
+              <Card className="border-red-200">
+                <CardHeader className="bg-red-50 dark:bg-red-950 border-b border-red-200">
+                  <CardTitle className="text-red-700 flex items-center gap-2">
+                    <AlertCircle className="h-5 w-5" />
+                    Danger Zone
+                  </CardTitle>
+                  <CardDescription className="text-red-600">Irreversible and destructive actions</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4 pt-6">
+                  <div className="p-4 border border-red-200 rounded-lg">
+                    <p className="font-medium mb-2">Log Out</p>
+                    <p className="text-sm text-muted-foreground mb-4">Sign out from this session</p>
+                    <Button
+                      variant="outline"
+                      className="border-red-200 text-red-700 hover:bg-red-50"
+                      onClick={handleLogout}
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Log Out
                     </Button>
                   </div>
-                </form>
-              </CardContent>
-            </Card>
-          </TabsContent>
 
-          {/* APPEARANCE SETTINGS TAB */}
-          <TabsContent value="appearance">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Sun className="h-5 w-5" />
-                  Appearance
-                </CardTitle>
-                <CardDescription>Customize how the app looks</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div>
-                  <Label className="text-sm font-medium mb-3 block">Theme</Label>
-                  <div className="flex gap-4">
-                    <button
-                      onClick={() => setTheme("light")}
-                      className={`flex-1 p-4 rounded-lg border-2 transition-all ${
-                        theme === "light" ? "border-blue-600 bg-blue-50" : "border-border hover:border-muted-foreground"
-                      }`}
+                  <div className="p-4 border border-red-200 rounded-lg">
+                    <p className="font-medium mb-2">Delete Account</p>
+                    <p className="text-sm text-muted-foreground mb-4">Permanently delete your account and all associated data</p>
+                    <Button
+                      variant="destructive"
+                      onClick={handleDeleteAccount}
                     >
-                      <Sun className="h-5 w-5 mx-auto mb-2" />
-                      <p className="text-sm font-medium">Light Mode</p>
-                    </button>
-                    <button
-                      onClick={() => setTheme("dark")}
-                      className={`flex-1 p-4 rounded-lg border-2 transition-all ${
-                        theme === "dark" ? "border-blue-600 bg-blue-50 dark:bg-blue-950" : "border-border hover:border-muted-foreground"
-                      }`}
-                    >
-                      <Moon className="h-5 w-5 mx-auto mb-2" />
-                      <p className="text-sm font-medium">Dark Mode</p>
-                    </button>
+                      <Trash2 className="h-4 w-4 mr-2" />
+                      Delete Account Permanently
+                    </Button>
                   </div>
-                </div>
-
-                <div className="border-t pt-4">
-                  <Label htmlFor="fontSize" className="text-sm font-medium block mb-2">Font Size</Label>
-                  <select
-                    id="fontSize"
-                    value={fontSize}
-                    onChange={(e) => setFontSize(e.target.value)}
-                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                  >
-                    <option value="small">Small</option>
-                    <option value="medium">Medium (Default)</option>
-                    <option value="large">Large</option>
-                  </select>
-                </div>
-
-                <div className="border-t pt-4">
-                  <Label htmlFor="language" className="text-sm font-medium block mb-2">Language</Label>
-                  <select
-                    id="language"
-                    value={language}
-                    onChange={(e) => setLanguage(e.target.value)}
-                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                  >
-                    <option value="English">English</option>
-                    <option value="Spanish">Spanish</option>
-                    <option value="French">French</option>
-                    <option value="German">German</option>
-                    <option value="Portuguese">Portuguese</option>
-                    <option value="Chinese">Chinese</option>
-                  </select>
-                </div>
-
-                <div className="border-t pt-4">
-                  <Label htmlFor="layout" className="text-sm font-medium block mb-2">Layout Style</Label>
-                  <select
-                    id="layout"
-                    value={layout}
-                    onChange={(e) => setLayout(e.target.value)}
-                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                  >
-                    <option value="compact">Compact</option>
-                    <option value="comfortable">Comfortable (Default)</option>
-                    <option value="spacious">Spacious</option>
-                  </select>
-                </div>
-
-                <Button className="w-full bg-blue-600 hover:bg-blue-700">Save Appearance Settings</Button>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* NOTIFICATIONS SETTINGS TAB */}
-          <TabsContent value="notifications">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Bell className="h-5 w-5" />
-                  Notifications
-                </CardTitle>
-                <CardDescription>Control how you receive notifications</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="space-y-4 p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-medium">Email Notifications</p>
-                      <p className="text-sm text-muted-foreground">Get updates via email</p>
-                    </div>
-                    <Switch checked={emailNotifications} onCheckedChange={setEmailNotifications} />
-                  </div>
-
-                  <div className="flex items-center justify-between border-t pt-4">
-                    <div>
-                      <p className="font-medium">Push Notifications</p>
-                      <p className="text-sm text-muted-foreground">Receive browser notifications</p>
-                    </div>
-                    <Switch checked={pushNotifications} onCheckedChange={setPushNotifications} />
-                  </div>
-
-                  <div className="flex items-center justify-between border-t pt-4">
-                    <div>
-                      <p className="font-medium">Marketing Emails</p>
-                      <p className="text-sm text-muted-foreground">News and special offers</p>
-                    </div>
-                    <Switch checked={marketingEmails} onCheckedChange={setMarketingEmails} />
-                  </div>
-                </div>
-
-                <div className="border-t pt-4">
-                  <Label htmlFor="frequency" className="text-sm font-medium block mb-2">Notification Frequency</Label>
-                  <select
-                    id="frequency"
-                    value={notificationFrequency}
-                    onChange={(e) => setNotificationFrequency(e.target.value)}
-                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                  >
-                    <option value="instant">Instant</option>
-                    <option value="hourly">Hourly Digest</option>
-                    <option value="daily">Daily Digest</option>
-                    <option value="weekly">Weekly Digest</option>
-                  </select>
-                </div>
-
-                <Button className="w-full bg-blue-600 hover:bg-blue-700">Save Notification Settings</Button>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* PRIVACY & SECURITY TAB */}
-          <TabsContent value="privacy">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Eye className="h-5 w-5" />
-                  Privacy & Security
-                </CardTitle>
-                <CardDescription>Manage your account security</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-medium flex items-center gap-2">
-                        <Lock className="h-4 w-4" />
-                        Two-Factor Authentication (2FA)
-                      </p>
-                      <p className="text-sm text-muted-foreground mt-1">Add an extra layer of security</p>
-                    </div>
-                    <Switch checked={twoFactorEnabled} onCheckedChange={setTwoFactorEnabled} />
-                  </div>
-                </div>
-
-                <div className="border-t pt-4">
-                  <h4 className="font-semibold mb-3">Login History</h4>
-                  <div className="space-y-3">
-                    {loginHistory.map((login, index) => (
-                      <div key={index} className="p-3 border rounded-lg">
-                        <div className="flex items-start justify-between">
-                          <div>
-                            <p className="font-medium text-sm">{login.device}</p>
-                            <p className="text-xs text-muted-foreground">IP: {login.ip}</p>
-                          </div>
-                          <span className="text-xs text-muted-foreground">{login.date}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <Button className="w-full bg-blue-600 hover:bg-blue-700">Save Privacy Settings</Button>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* PREFERENCES TAB */}
-          <TabsContent value="preferences">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Globe className="h-5 w-5" />
-                  Preferences
-                </CardTitle>
-                <CardDescription>Set your app preferences</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div>
-                  <Label htmlFor="currency" className="text-sm font-medium block mb-2">Currency</Label>
-                  <select
-                    id="currency"
-                    value={currency}
-                    onChange={(e) => setCurrency(e.target.value)}
-                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                  >
-                    <option value="USD">USD ($)</option>
-                    <option value="EUR">EUR (€)</option>
-                    <option value="GBP">GBP (£)</option>
-                    <option value="JPY">JPY (¥)</option>
-                    <option value="CAD">CAD ($)</option>
-                  </select>
-                </div>
-
-                <div className="border-t pt-4">
-                  <Label htmlFor="timezone" className="text-sm font-medium block mb-2">Timezone</Label>
-                  <select
-                    id="timezone"
-                    value={timezone}
-                    onChange={(e) => setTimezone(e.target.value)}
-                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                  >
-                    <option value="UTC">UTC</option>
-                    <option value="EST">EST (Eastern)</option>
-                    <option value="CST">CST (Central)</option>
-                    <option value="MST">MST (Mountain)</option>
-                    <option value="PST">PST (Pacific)</option>
-                    <option value="GMT">GMT (London)</option>
-                  </select>
-                </div>
-
-                <div className="border-t pt-4">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-medium">Auto-Save</p>
-                      <p className="text-sm text-muted-foreground">Automatically save your work</p>
-                    </div>
-                    <Switch checked={autoSave} onCheckedChange={setAutoSave} />
-                  </div>
-                </div>
-
-                <Button className="w-full bg-blue-600 hover:bg-blue-700">Save Preferences</Button>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* CONNECTED ACCOUNTS TAB */}
-          <TabsContent value="connected">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <LinkIcon className="h-5 w-5" />
-                  Connected Accounts
-                </CardTitle>
-                <CardDescription>Manage your linked integrations</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="p-4 border rounded-lg flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">Google Account</p>
-                    <p className="text-sm text-muted-foreground">Not connected</p>
-                  </div>
-                  <Button variant="outline">Connect</Button>
-                </div>
-
-                <div className="p-4 border rounded-lg flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">Microsoft Account</p>
-                    <p className="text-sm text-muted-foreground">Not connected</p>
-                  </div>
-                  <Button variant="outline">Connect</Button>
-                </div>
-
-                <div className="p-4 border rounded-lg flex items-center justify-between">
-                  <div>
-                    <p className="font-medium">Slack Workspace</p>
-                    <p className="text-sm text-muted-foreground">Not connected</p>
-                  </div>
-                  <Button variant="outline">Connect</Button>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* BILLING TAB */}
-          <TabsContent value="billing">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <CreditCard className="h-5 w-5" />
-                  Billing & Subscription
-                </CardTitle>
-                <CardDescription>Manage your subscription</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
-                  <p className="text-sm text-muted-foreground mb-2">Current Plan</p>
-                  <p className="text-2xl font-bold">Free Plan</p>
-                  <p className="text-sm text-muted-foreground mt-2">Limited features. Upgrade for full access.</p>
-                </div>
-
-                <Button className="w-full bg-blue-600 hover:bg-blue-700">Upgrade to Premium</Button>
-
-                <div className="border-t pt-4">
-                  <h4 className="font-semibold mb-3">Billing History</h4>
-                  <div className="text-sm text-muted-foreground">
-                    <p>No billing history yet. You're on a free plan.</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          {/* DANGER ZONE TAB */}
-          <TabsContent value="danger">
-            <Card className="border-red-200">
-              <CardHeader className="bg-red-50 dark:bg-red-950 border-b border-red-200">
-                <CardTitle className="text-red-700 flex items-center gap-2">
-                  <AlertCircle className="h-5 w-5" />
-                  Danger Zone
-                </CardTitle>
-                <CardDescription className="text-red-600">Irreversible and destructive actions</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4 pt-6">
-                <div className="p-4 border border-red-200 rounded-lg">
-                  <p className="font-medium mb-2">Log Out</p>
-                  <p className="text-sm text-muted-foreground mb-4">Sign out from this session</p>
-                  <Button
-                    variant="outline"
-                    className="border-red-200 text-red-700 hover:bg-red-50"
-                    onClick={handleLogout}
-                  >
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Log Out
-                  </Button>
-                </div>
-
-                <div className="p-4 border border-red-200 rounded-lg">
-                  <p className="font-medium mb-2">Delete Account</p>
-                  <p className="text-sm text-muted-foreground mb-4">Permanently delete your account and all associated data</p>
-                  <Button
-                    variant="destructive"
-                    onClick={handleDeleteAccount}
-                  >
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Delete Account Permanently
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+                </CardContent>
+              </Card>
+            )}
+          </main>
+        </div>
       </div>
     </div>
   );
