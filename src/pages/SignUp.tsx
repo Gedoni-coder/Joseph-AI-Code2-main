@@ -24,13 +24,6 @@ export default function SignUp() {
     | string
     | undefined;
 
-  // Redirect if already authenticated
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/home");
-    }
-  }, [isAuthenticated, navigate]);
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLocalError("");
@@ -43,7 +36,8 @@ export default function SignUp() {
 
     try {
       await signup(email, password, fullName);
-      // Auth context will handle the navigation via isAuthenticated redirect
+      // Navigate to onboarding after successful signup
+      navigate("/onboarding", { replace: true });
     } catch (err) {
       setLocalError(error || "Signup failed. Please try again.");
     }
@@ -65,7 +59,9 @@ export default function SignUp() {
           callback: (response: any) => {
             // Google credential handling - integrate with your backend/Xano
             // The credential (JWT) should be sent to your backend to create/authenticate user
-            console.log("Google sign-up - integrate with backend to exchange JWT for auth token");
+            console.log(
+              "Google sign-up - integrate with backend to exchange JWT for auth token",
+            );
             try {
               localStorage.setItem(
                 "joseph:googleCredential",
