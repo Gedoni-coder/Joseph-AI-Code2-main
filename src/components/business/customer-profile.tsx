@@ -4,6 +4,7 @@ import { Progress } from "@/components/ui/progress";
 import { CustomerProfile } from "@/lib/business-forecast-data";
 import { Users, TrendingUp, Percent, DollarSign } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useCurrency } from "@/lib/currency-context";
 
 interface CustomerProfileProps {
   profiles: CustomerProfile[];
@@ -14,14 +15,7 @@ export function CustomerProfileComponent({
   profiles,
   title = "Customer Profile & Demand Assumptions",
 }: CustomerProfileProps) {
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(value);
-  };
+  const { formatCurrency } = useCurrency();
 
   const getSegmentColor = (segment: string) => {
     const colors = {

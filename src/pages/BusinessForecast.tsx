@@ -8,6 +8,7 @@ import { LoadingOverlay } from "@/components/ui/loading-spinner";
 import ModuleHeader from "@/components/ui/module-header";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useCompanyInfo } from "@/lib/company-context";
+import { useCurrency } from "@/lib/currency-context";
 import { getCompanyName } from "@/lib/get-company-name";
 import { useBusinessForecastingData } from "@/hooks/useBusinessForecastingData";
 import { CustomerProfileComponent } from "@/components/business/customer-profile";
@@ -59,6 +60,7 @@ import {
 
 const BusinessForecast = () => {
   const { companyInfo } = useCompanyInfo();
+  const { formatCurrency } = useCurrency();
   const companyName = getCompanyName(companyInfo?.companyName);
 
   const {
@@ -108,7 +110,7 @@ const BusinessForecast = () => {
                       Annual Revenue Target
                     </div>
                     <div className="text-lg font-bold">
-                      {BUSINESS_FORECAST_DEFAULTS.ANNUAL_REVENUE_TARGET}
+                      {formatCurrency(parseFloat(BUSINESS_FORECAST_DEFAULTS.ANNUAL_REVENUE_TARGET.replace(/[^\d.-]/g, '')))}
                     </div>
                   </div>
                 </div>

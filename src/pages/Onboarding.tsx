@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCompanyInfo } from "@/lib/company-context";
+import { useCurrency } from "@/lib/currency-context";
 import { AlertCircle, Upload } from "lucide-react";
 
 const SECTORS = [
@@ -227,6 +228,7 @@ const NATIONAL_CURRENCIES = [
 export default function Onboarding() {
   const navigate = useNavigate();
   const { updateCompanyInfo, companyInfo } = useCompanyInfo();
+  const { setCurrency } = useCurrency();
 
   // Required fields
   const [companyName, setCompanyName] = useState(
@@ -281,6 +283,8 @@ export default function Onboarding() {
     if (!country.trim()) newErrors.country = "Country is required";
     if (!state.trim()) newErrors.state = "State/Province is required";
     if (!city.trim()) newErrors.city = "City is required";
+    if (!currencyFormat) newErrors.currencyFormat = "Please select a currency format";
+    if (!currencyPreference) newErrors.currencyPreference = "Please select a currency";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -325,15 +329,20 @@ export default function Onboarding() {
         country,
         state,
         city,
+        currencyFormat,
+        currencyPreference,
         ...(websiteUrl && websiteUrl !== "" && { websiteUrl }),
         ...(email && { email }),
         ...(phone && { phone }),
         ...(fiscalYearEndDate && { fiscalYearEndDate }),
-        ...(currencyFormat && { currencyFormat }),
-        ...(currencyPreference && { currencyPreference }),
         ...(language && { language }),
         ...(numberOfEntities && { numberOfEntities: Number(numberOfEntities) }),
       });
+
+      // Sync with global currency context
+      if (currencyPreference) {
+        setCurrency(currencyPreference);
+      }
 
       setLoading(false);
       navigate("/home");
@@ -673,6 +682,107 @@ export default function Onboarding() {
                 </div>
               </div>
 
+              {/* Currency Format - Required */}
+              <div className="border-t pt-6">
+                <div className="space-y-4">
+                  <div>
+                    <Label
+                      htmlFor="currencyFormat"
+                      className="text-sm font-medium"
+                    >
+                      Currency Format{" "}
+                      <span className="text-red-500">*</span>
+                    </Label>
+                    <p className="text-xs text-gray-500 mt-1 mb-3">
+                      Choose how you want to select your currency
+                    </p>
+                    <div className="grid grid-cols-2 gap-3">
+                      {errors.currencyFormat && (
+                        <p className="col-span-2 text-sm text-red-500 mb-2 flex items-center gap-1">
+                          <AlertCircle className="h-4 w-4" />
+                          {errors.currencyFormat}
+                        </p>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCurrencyFormat("international");
+                          setCurrencyPreference("USD");
+                        }}
+                        className={`p-3 rounded-lg border-2 transition-all text-sm font-medium ${
+                          currencyFormat === "international"
+                            ? "border-blue-500 bg-blue-50 text-blue-900"
+                            : "border-gray-200 bg-white hover:border-gray-300 text-gray-700"
+                        }`}
+                      >
+                        🌍 International
+                        <p className="text-xs font-normal text-gray-600 mt-1">
+                          Dollars & Euros
+                        </p>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCurrencyFormat("national");
+                          setCurrencyPreference("USD");
+                        }}
+                        className={`p-3 rounded-lg border-2 transition-all text-sm font-medium ${
+                          currencyFormat === "national"
+                            ? "border-blue-500 bg-blue-50 text-blue-900"
+                            : "border-gray-200 bg-white hover:border-gray-300 text-gray-700"
+                        }`}
+                      >
+                        🗺️ National
+                        <p className="text-xs font-normal text-gray-600 mt-1">
+                          All currencies
+                        </p>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label
+                      htmlFor="currencyPreference"
+                      className="text-sm font-medium"
+                    >
+                      Select Currency{" "}
+                      <span className="text-red-500">*</span>
+                    </Label>
+                    {errors.currencyPreference && (
+                      <p className="text-sm text-red-500 mt-1 mb-2 flex items-center gap-1">
+                        <AlertCircle className="h-4 w-4" />
+                        {errors.currencyPreference}
+                      </p>
+                    )}
+                    <select
+                      id="currencyPreference"
+                      value={currencyPreference}
+                      onChange={(e) =>
+                        setCurrencyPreference(e.target.value)
+                      }
+                      className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                    >
+                      {currencyFormat === "international"
+                        ? INTERNATIONAL_CURRENCIES.map((curr) => (
+                            <option key={curr.code} value={curr.code}>
+                              {curr.code} - {curr.label}
+                            </option>
+                          ))
+                        : NATIONAL_CURRENCIES.map((curr) => (
+                            <option key={curr.code} value={curr.code}>
+                              {curr.code} - {curr.label}
+                            </option>
+                          ))}
+                    </select>
+                    <p className="text-xs text-gray-500 mt-1">
+                      {currencyFormat === "international"
+                        ? "Choose between USD or EUR"
+                        : `${NATIONAL_CURRENCIES.length} currencies available`}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               {/* Optional Fields Toggle */}
               <div className="border-t pt-6">
                 <button
@@ -735,89 +845,6 @@ export default function Onboarding() {
                       />
                     </div>
 
-                    <div className="space-y-4">
-                      <div>
-                        <Label
-                          htmlFor="currencyFormat"
-                          className="text-sm font-medium"
-                        >
-                          Currency Format (Optional)
-                        </Label>
-                        <p className="text-xs text-gray-500 mt-1 mb-3">
-                          Choose how you want to select your currency
-                        </p>
-                        <div className="grid grid-cols-2 gap-3">
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setCurrencyFormat("international");
-                              setCurrencyPreference("USD");
-                            }}
-                            className={`p-3 rounded-lg border-2 transition-all text-sm font-medium ${
-                              currencyFormat === "international"
-                                ? "border-blue-500 bg-blue-50 text-blue-900"
-                                : "border-gray-200 bg-white hover:border-gray-300 text-gray-700"
-                            }`}
-                          >
-                            🌍 International
-                            <p className="text-xs font-normal text-gray-600 mt-1">
-                              Dollars & Euros
-                            </p>
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setCurrencyFormat("national");
-                              setCurrencyPreference("USD");
-                            }}
-                            className={`p-3 rounded-lg border-2 transition-all text-sm font-medium ${
-                              currencyFormat === "national"
-                                ? "border-blue-500 bg-blue-50 text-blue-900"
-                                : "border-gray-200 bg-white hover:border-gray-300 text-gray-700"
-                            }`}
-                          >
-                            🗺️ National
-                            <p className="text-xs font-normal text-gray-600 mt-1">
-                              All currencies
-                            </p>
-                          </button>
-                        </div>
-                      </div>
-
-                      <div>
-                        <Label
-                          htmlFor="currencyPreference"
-                          className="text-sm font-medium"
-                        >
-                          Select Currency (Optional)
-                        </Label>
-                        <select
-                          id="currencyPreference"
-                          value={currencyPreference}
-                          onChange={(e) =>
-                            setCurrencyPreference(e.target.value)
-                          }
-                          className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                        >
-                          {currencyFormat === "international"
-                            ? INTERNATIONAL_CURRENCIES.map((curr) => (
-                                <option key={curr.code} value={curr.code}>
-                                  {curr.code} - {curr.label}
-                                </option>
-                              ))
-                            : NATIONAL_CURRENCIES.map((curr) => (
-                                <option key={curr.code} value={curr.code}>
-                                  {curr.code} - {curr.label}
-                                </option>
-                              ))}
-                        </select>
-                        <p className="text-xs text-gray-500 mt-1">
-                          {currencyFormat === "international"
-                            ? "Choose between USD or EUR"
-                            : `${NATIONAL_CURRENCIES.length} currencies available`}
-                        </p>
-                      </div>
-                    </div>
 
                     <div>
                       <Label

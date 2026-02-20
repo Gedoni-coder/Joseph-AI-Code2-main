@@ -24,6 +24,7 @@ import {
 } from "recharts";
 import { TrendingUp, Target, AlertCircle, DollarSign } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useCurrency } from "@/lib/currency-context";
 
 interface RevenueData {
   category: string;
@@ -83,6 +84,7 @@ const DealsAnalytics = ({
   dealVelocityRisk = 0,
   repPerformanceRisk = 0,
 }: DealsAnalyticsProps) => {
+  const { getCurrencySymbol, formatCurrency } = useCurrency();
   const colors = ["#3b82f6", "#ef4444", "#10b981", "#f59e0b", "#8b5cf6"];
 
   // Calculate key insights
@@ -125,7 +127,7 @@ const DealsAnalytics = ({
               <div>
                 <p className="text-sm text-gray-600 mb-2">Total Revenue</p>
                 <p className="text-2xl font-bold text-gray-900">
-                  ${(totalRevenue / 1000000).toFixed(2)}M
+                  {getCurrencySymbol()}{(totalRevenue / 1000000).toFixed(2)}M
                 </p>
               </div>
               <div className="p-2 bg-blue-100 rounded-lg">
@@ -152,7 +154,7 @@ const DealsAnalytics = ({
               </div>
             </div>
             <p className="text-xs text-gray-600 mt-2">
-              ${(topProduct.revenue / 1000).toFixed(0)}K (
+              {getCurrencySymbol()}{(topProduct.revenue / 1000).toFixed(0)}K (
               {topProduct.percentage}%)
             </p>
           </CardContent>
@@ -174,7 +176,7 @@ const DealsAnalytics = ({
               </div>
             </div>
             <p className="text-xs text-gray-600 mt-2">
-              ${(topRegion.revenue / 1000).toFixed(0)}K ({topRegion.percentage}
+              {getCurrencySymbol()}{(topRegion.revenue / 1000).toFixed(0)}K ({topRegion.percentage}
               %)
             </p>
           </CardContent>
