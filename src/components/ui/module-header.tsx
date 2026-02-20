@@ -23,6 +23,7 @@ import {
   AlertCircle,
   Zap,
   Target,
+  Settings,
 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 
@@ -295,6 +296,26 @@ const ModuleHeader: React.FC<ModuleHeaderProps> = ({
                       ? "Conversational Mode ON"
                       : "Conversational Mode OFF"}
                   </p>
+                </TooltipContent>
+              </Tooltip>
+
+              <div className="h-4 w-px bg-border mx-1 hidden sm:block"></div>
+
+              {/* Settings Link */}
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link
+                    to="/user-settings"
+                    className="flex items-center gap-1.5 px-2 py-1 hover:bg-primary/10 rounded transition-all cursor-pointer border border-transparent hover:border-primary/20"
+                  >
+                    <Settings className="h-3.5 sm:h-4 w-3.5 sm:w-4 text-primary flex-shrink-0" />
+                    <span className="text-[10px] sm:text-xs text-muted-foreground font-medium whitespace-nowrap uppercase tracking-wider">
+                      Settings
+                    </span>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Access your user preferences and account settings</p>
                 </TooltipContent>
               </Tooltip>
 
