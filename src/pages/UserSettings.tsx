@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AlertCircle, ArrowLeft, Sun, Moon, Lock, Bell, Eye, CreditCard, Globe, Link as LinkIcon, LogOut, Trash2, User } from "lucide-react";
+import { AlertCircle, ArrowLeft, Sun, Moon, Lock, Bell, Eye, CreditCard, Globe, Link as LinkIcon, LogOut, Trash2, User, Menu, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@/lib/theme-context";
 import { useAuth } from "@/lib/auth-context";
@@ -18,6 +18,7 @@ export default function UserSettings() {
   const [activeTab, setActiveTab] = useState("account");
   const [saved, setSaved] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Account Settings
   const [firstName, setFirstName] = useState(user?.name?.split(" ")[0] || "");
@@ -84,7 +85,7 @@ export default function UserSettings() {
   ];
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container mx-auto py-6 md:py-8 px-3 md:px-4">
       <div className="max-w-6xl mx-auto">
         <Button
           variant="ghost"
@@ -96,11 +97,23 @@ export default function UserSettings() {
         </Button>
 
         <Card className="mb-6">
-          <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
-            <CardTitle className="text-2xl">User Settings</CardTitle>
-            <CardDescription className="text-blue-100">
-              Manage your account, preferences, and security
-            </CardDescription>
+          <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-4 md:p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex-1">
+                <CardTitle className="text-xl md:text-2xl">User Settings</CardTitle>
+                <CardDescription className="text-blue-100 text-sm">
+                  Manage your account, preferences, and security
+                </CardDescription>
+              </div>
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="md:hidden p-2 hover:bg-blue-500 rounded transition-colors"
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </button>
+            </div>
           </CardHeader>
         </Card>
 
@@ -111,10 +124,10 @@ export default function UserSettings() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          {/* SIDEBAR NAVIGATION */}
-          <aside className="lg:col-span-1">
-            <Card className="sticky top-24">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-6">
+          {/* SIDEBAR NAVIGATION - DESKTOP */}
+          <aside className="hidden md:block lg:col-span-1">
+            <Card className="sticky top-20">
               <CardContent className="p-0">
                 <nav className="space-y-1">
                   {settingsMenu.map((item) => {
@@ -124,14 +137,14 @@ export default function UserSettings() {
                       <button
                         key={item.id}
                         onClick={() => setActiveTab(item.id)}
-                        className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${
+                        className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors text-sm ${
                           isActive
                             ? "bg-blue-100 dark:bg-blue-950 border-l-4 border-blue-600 text-blue-700 dark:text-blue-400 font-medium"
                             : "text-muted-foreground hover:bg-muted/50"
                         }`}
                       >
                         <Icon className="h-4 w-4 flex-shrink-0" />
-                        <span className="text-sm">{item.label}</span>
+                        <span className="text-xs md:text-sm">{item.label}</span>
                       </button>
                     );
                   })}
@@ -140,25 +153,58 @@ export default function UserSettings() {
             </Card>
           </aside>
 
+          {/* SIDEBAR NAVIGATION - MOBILE */}
+          {mobileMenuOpen && (
+            <div className="md:hidden col-span-1 mb-4">
+              <Card>
+                <CardContent className="p-0">
+                  <nav className="space-y-1">
+                    {settingsMenu.map((item) => {
+                      const Icon = item.icon;
+                      const isActive = activeTab === item.id;
+                      return (
+                        <button
+                          key={item.id}
+                          onClick={() => {
+                            setActiveTab(item.id);
+                            setMobileMenuOpen(false);
+                          }}
+                          className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors text-sm ${
+                            isActive
+                              ? "bg-blue-100 dark:bg-blue-950 border-l-4 border-blue-600 text-blue-700 dark:text-blue-400 font-medium"
+                              : "text-muted-foreground hover:bg-muted/50"
+                          }`}
+                        >
+                          <Icon className="h-4 w-4 flex-shrink-0" />
+                          <span className="text-sm">{item.label}</span>
+                        </button>
+                      );
+                    })}
+                  </nav>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
           {/* MAIN CONTENT */}
-          <main className="lg:col-span-3">
+          <main className="col-span-1 lg:col-span-3">
             {/* ACCOUNT SETTINGS */}
             {activeTab === "account" && (
               <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
-                      <span className="text-sm font-bold text-blue-700">{firstName.charAt(0)}{lastName.charAt(0)}</span>
+                <CardHeader className="p-4 md:p-6">
+                  <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
+                    <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                      <span className="text-xs md:text-sm font-bold text-blue-700">{firstName.charAt(0)}{lastName.charAt(0)}</span>
                     </div>
                     Account Settings
                   </CardTitle>
-                  <CardDescription>Update your personal information</CardDescription>
+                  <CardDescription className="text-xs md:text-sm">Update your personal information</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-6 p-4 md:p-6">
                   <form onSubmit={handleSaveAccountSettings} className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <Label htmlFor="firstName" className="text-sm font-medium">First Name</Label>
+                        <Label htmlFor="firstName" className="text-xs md:text-sm font-medium">First Name</Label>
                         <Input
                           id="firstName"
                           value={firstName}
@@ -246,14 +292,14 @@ export default function UserSettings() {
             {/* APPEARANCE SETTINGS */}
             {activeTab === "appearance" && (
               <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
+                <CardHeader className="p-4 md:p-6">
+                  <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
                     <Sun className="h-5 w-5" />
                     Appearance
                   </CardTitle>
-                  <CardDescription>Customize how the app looks</CardDescription>
+                  <CardDescription className="text-xs md:text-sm">Customize how the app looks</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-6 p-4 md:p-6">
                   <div>
                     <Label className="text-sm font-medium mb-3 block">Theme</Label>
                     <div className="flex gap-4">
@@ -331,14 +377,14 @@ export default function UserSettings() {
             {/* NOTIFICATIONS SETTINGS */}
             {activeTab === "notifications" && (
               <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
+                <CardHeader className="p-4 md:p-6">
+                  <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
                     <Bell className="h-5 w-5" />
                     Notifications
                   </CardTitle>
-                  <CardDescription>Control how you receive notifications</CardDescription>
+                  <CardDescription className="text-xs md:text-sm">Control how you receive notifications</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-6 p-4 md:p-6">
                   <div className="space-y-4 p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
                     <div className="flex items-center justify-between">
                       <div>
@@ -388,14 +434,14 @@ export default function UserSettings() {
             {/* PRIVACY & SECURITY */}
             {activeTab === "privacy" && (
               <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
+                <CardHeader className="p-4 md:p-6">
+                  <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
                     <Eye className="h-5 w-5" />
                     Privacy & Security
                   </CardTitle>
-                  <CardDescription>Manage your account security</CardDescription>
+                  <CardDescription className="text-xs md:text-sm">Manage your account security</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-6 p-4 md:p-6">
                   <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
                     <div className="flex items-center justify-between">
                       <div>
@@ -434,14 +480,14 @@ export default function UserSettings() {
             {/* PREFERENCES */}
             {activeTab === "preferences" && (
               <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
+                <CardHeader className="p-4 md:p-6">
+                  <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
                     <Globe className="h-5 w-5" />
                     Preferences
                   </CardTitle>
-                  <CardDescription>Set your app preferences</CardDescription>
+                  <CardDescription className="text-xs md:text-sm">Set your app preferences</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-6 p-4 md:p-6">
                   <div>
                     <Label htmlFor="currency" className="text-sm font-medium block mb-2">Currency</Label>
                     <select
@@ -493,14 +539,14 @@ export default function UserSettings() {
             {/* CONNECTED ACCOUNTS */}
             {activeTab === "connected" && (
               <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
+                <CardHeader className="p-4 md:p-6">
+                  <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
                     <LinkIcon className="h-5 w-5" />
                     Connected Accounts
                   </CardTitle>
-                  <CardDescription>Manage your linked integrations</CardDescription>
+                  <CardDescription className="text-xs md:text-sm">Manage your linked integrations</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-4 p-4 md:p-6">
                   <div className="p-4 border rounded-lg flex items-center justify-between">
                     <div>
                       <p className="font-medium">Google Account</p>
@@ -531,14 +577,14 @@ export default function UserSettings() {
             {/* BILLING */}
             {activeTab === "billing" && (
               <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
+                <CardHeader className="p-4 md:p-6">
+                  <CardTitle className="flex items-center gap-2 text-lg md:text-xl">
                     <CreditCard className="h-5 w-5" />
                     Billing & Subscription
                   </CardTitle>
-                  <CardDescription>Manage your subscription</CardDescription>
+                  <CardDescription className="text-xs md:text-sm">Manage your subscription</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-6 p-4 md:p-6">
                   <div className="p-4 bg-blue-50 dark:bg-blue-950 rounded-lg">
                     <p className="text-sm text-muted-foreground mb-2">Current Plan</p>
                     <p className="text-2xl font-bold">Free Plan</p>
@@ -560,14 +606,14 @@ export default function UserSettings() {
             {/* DANGER ZONE */}
             {activeTab === "danger" && (
               <Card className="border-red-200">
-                <CardHeader className="bg-red-50 dark:bg-red-950 border-b border-red-200">
-                  <CardTitle className="text-red-700 flex items-center gap-2">
+                <CardHeader className="bg-red-50 dark:bg-red-950 border-b border-red-200 p-4 md:p-6">
+                  <CardTitle className="text-red-700 flex items-center gap-2 text-lg md:text-xl">
                     <AlertCircle className="h-5 w-5" />
                     Danger Zone
                   </CardTitle>
-                  <CardDescription className="text-red-600">Irreversible and destructive actions</CardDescription>
+                  <CardDescription className="text-red-600 text-xs md:text-sm">Irreversible and destructive actions</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4 pt-6">
+                <CardContent className="space-y-4 p-4 md:p-6">
                   <div className="p-4 border border-red-200 rounded-lg">
                     <p className="font-medium mb-2">Log Out</p>
                     <p className="text-sm text-muted-foreground mb-4">Sign out from this session</p>
