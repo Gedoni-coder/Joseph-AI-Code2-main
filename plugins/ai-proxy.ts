@@ -138,9 +138,19 @@ export default function aiProxy(): Plugin {
 
       // Auth API proxy to bypass CORS issues
       server.middlewares.use("/api/auth", async (req, res) => {
-        const authApiBase =
-          process.env.VITE_AUTH_API_BASE ||
-          "https://x8ki-letl-twmt.n7.xano.io/api:FWLNXgW6";
+        const authApiBase = process.env.VITE_AUTH_API_BASE;
+
+        if (!authApiBase) {
+          res.statusCode = 500;
+          res.end(
+            JSON.stringify({
+              error: "Auth API not configured",
+              message: "Set VITE_AUTH_API_BASE environment variable to enable authentication",
+            })
+          );
+          return;
+        }
+
         const pathname = req.url.split("?")[0]; // Remove query string
         const upstreamUrl = `${authApiBase}${pathname}`;
 
