@@ -430,7 +430,7 @@ export function ChatbotContainer({
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-8 w-8 p-0 hidden sm:flex hover:bg-primary/10"
+                    className="h-8 w-8 p-0 flex items-center justify-center hover:bg-primary/10 transition-colors"
                     onClick={() => {
                       const panels = ["chat", "tools", "agent"] as const;
                       const currentIndex = panels.indexOf(activePanel);

@@ -14,7 +14,7 @@ import {
   useLocation,
   Navigate,
 } from "react-router-dom";
-import { Radio, Moon, Sun, Settings, DollarSign } from "lucide-react";
+import { Radio, Moon, Sun, Settings, DollarSign, Menu, X } from "lucide-react";
 import { Switch } from "./components/ui/switch";
 import { ThemeProvider, useTheme } from "./lib/theme-context";
 import { CurrencyProvider, useCurrency, CURRENCIES } from "./lib/currency-context";
@@ -188,92 +188,118 @@ function MobileNav({
     <nav className="flex md:hidden w-full bg-card border-b shadow-sm px-4 py-3 sticky top-0 z-40 gap-2 items-center justify-between">
       <Link
         to="/home"
-        className="font-bold tracking-tight text-sm px-2 py-1 rounded hover:bg-muted/30 transition-colors"
+        className="font-bold tracking-tight text-base px-2 py-1 rounded hover:bg-muted/30 transition-colors flex items-center gap-2 text-primary"
       >
-        Menu
+        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 shadow-sm">
+          <Settings className="h-5 w-5 text-primary animate-pulse-subtle" />
+        </div>
+        <span className="hidden xs:inline">Joseph AI</span>
       </Link>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5">
+        <Link
+          to="/user-settings"
+          className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 hover:bg-primary/20 text-primary rounded-full transition-all cursor-pointer border border-primary/20 shadow-sm"
+          title="User Settings"
+          aria-label="User Settings"
+        >
+          <Settings className="h-5 w-5" />
+          <span className="text-xs font-bold uppercase tracking-wider">Settings</span>
+        </Link>
+
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="flex items-center gap-2 px-2 py-1 hover:bg-primary/10 rounded transition-all cursor-pointer"
+          className="flex items-center justify-center h-10 w-10 hover:bg-primary/10 rounded-full transition-all cursor-pointer"
           title="More options"
           aria-label="Toggle menu"
         >
-          <Settings className="h-4 w-4 text-primary" />
+          {mobileMenuOpen ? (
+            <X className="h-6 w-6 text-primary" />
+          ) : (
+            <Menu className="h-6 w-6 text-primary" />
+          )}
         </button>
 
         {mobileMenuOpen && (
-          <div className="absolute top-full right-0 mt-0 bg-card border rounded-b shadow-lg p-3 space-y-3 min-w-max">
-            <div className="flex items-center gap-2">
-              <DollarSign className="h-4 w-4 text-primary" />
-              <select
-                value={currency}
-                onChange={(e) => {
-                  setCurrency(e.target.value);
+          <div className="absolute top-full right-0 left-0 mt-0 bg-card border-b shadow-xl p-4 space-y-4 z-50 animate-in slide-in-from-top-2">
+            <div className="grid grid-cols-2 gap-3">
+              <Link
+                to="/user-settings"
+                className="flex flex-col items-center justify-center gap-2 p-4 bg-primary text-white rounded-xl shadow-md transition-all active:scale-95"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <Settings className="h-6 w-6" />
+                <span className="text-sm font-bold">Account Settings</span>
+              </Link>
+
+              <button
+                onClick={() => {
+                  toggleTheme();
                   setMobileMenuOpen(false);
                 }}
-                className="text-xs font-medium bg-transparent text-muted-foreground border-0 outline-0 focus:outline-0 cursor-pointer"
-                aria-label="Select currency"
-                title="Select currency"
+                className="flex flex-col items-center justify-center gap-2 p-4 bg-card border border-border rounded-xl shadow-sm transition-all active:scale-95"
               >
-                {CURRENCIES.map((curr) => (
-                  <option key={curr.code} value={curr.code}>
-                    {curr.code} - {curr.name}
-                  </option>
-                ))}
-              </select>
+                {theme === "dark" ? (
+                  <Sun className="h-6 w-6 text-yellow-500" />
+                ) : (
+                  <Moon className="h-6 w-6 text-blue-500" />
+                )}
+                <span className="text-sm font-medium">
+                  {theme === "dark" ? "Light Mode" : "Dark Mode"}
+                </span>
+              </button>
             </div>
 
             <div className="h-px bg-border"></div>
 
-            <button
-              onClick={() => {
-                toggleTheme();
-                setMobileMenuOpen(false);
-              }}
-              className="w-full flex items-center gap-2 px-2 py-2 hover:bg-primary/10 rounded transition-all cursor-pointer"
-              title={
-                theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
-              }
-              aria-label="Toggle dark mode"
-            >
-              {theme === "dark" ? (
-                <Sun className="h-4 w-4 text-primary" />
-              ) : (
-                <Moon className="h-4 w-4 text-primary" />
-              )}
-              <span className="text-xs font-medium">
-                {theme === "dark" ? "Light Mode" : "Dark Mode"}
-              </span>
-            </button>
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <DollarSign className="h-5 w-5 text-primary" />
+                  <span className="text-sm font-medium text-muted-foreground">Currency</span>
+                </div>
+                <select
+                  value={currency}
+                  onChange={(e) => {
+                    setCurrency(e.target.value);
+                    setMobileMenuOpen(false);
+                  }}
+                  className="text-sm font-bold bg-transparent text-primary border-0 outline-0 focus:outline-0 cursor-pointer"
+                  aria-label="Select currency"
+                  title="Select currency"
+                >
+                  {CURRENCIES.map((curr) => (
+                    <option key={curr.code} value={curr.code}>
+                      {curr.code}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <Radio className="h-5 w-5 text-primary" />
+                  <span className="text-sm font-medium text-muted-foreground">Conversational Chat</span>
+                </div>
+                <Switch
+                  checked={conversationalMode}
+                  onCheckedChange={(checked) => {
+                    onConversationalModeChange(checked);
+                    setMobileMenuOpen(false);
+                  }}
+                />
+              </div>
+            </div>
 
             <div className="h-px bg-border"></div>
 
             <Link
-              to="/user-settings"
-              className="w-full flex items-center gap-2 px-2 py-2 hover:bg-primary/10 rounded transition-all cursor-pointer"
-              title="User Settings"
+              to="/home"
+              className="w-full flex items-center justify-center gap-2 p-3 text-muted-foreground font-medium hover:text-primary transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              <Settings className="h-4 w-4 text-primary" />
-              <span className="text-xs font-medium">Settings</span>
+              <span>Back to Home</span>
             </Link>
-
-            <div className="h-px bg-border"></div>
-
-            <div className="flex items-center gap-2 px-2 py-2 hover:bg-primary/10 rounded transition-all cursor-pointer">
-              <Radio className="h-4 w-4 text-primary" />
-              <span className="text-xs font-medium">Chat</span>
-              <Switch
-                checked={conversationalMode}
-                onCheckedChange={(checked) => {
-                  onConversationalModeChange(checked);
-                  setMobileMenuOpen(false);
-                }}
-                className="scale-75"
-              />
-            </div>
           </div>
         )}
       </div>
