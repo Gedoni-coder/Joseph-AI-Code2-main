@@ -1,9 +1,8 @@
 /**
  * Risk Management Service
- * Handles all API requests for risk management and mitigation strategies
+ * XANO DISCONNECTED - All API calls have been disabled
+ * Functions return empty data only
  */
-
-import { xanoGet, xanoPost, xanoPatch, xanoDelete } from "./xano-client";
 
 export interface RiskManagementData {
   id: number;
@@ -28,35 +27,44 @@ export type RiskManagementUpdateData = Partial<RiskManagementCreateData>;
 
 /**
  * Get all risk management records
+ * XANO DISCONNECTED - Returns empty array
  */
 export async function getRiskManagementRecords(): Promise<RiskManagementData[]> {
-  return xanoGet<RiskManagementData[]>("/risk_management");
+  console.debug("[XANO DISCONNECTED] getRiskManagementRecords blocked");
+  return [];
 }
 
 /**
  * Get a specific risk management record by ID
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function getRiskManagement(id: number): Promise<RiskManagementData> {
-  return xanoGet<RiskManagementData>(`/risk_management/${id}`);
+  console.debug(`[XANO DISCONNECTED] getRiskManagement blocked for ID: ${id}`);
+  return {} as RiskManagementData;
 }
 
 /**
  * Create a new risk management record
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function createRiskManagement(data: RiskManagementCreateData): Promise<RiskManagementData> {
-  return xanoPost<RiskManagementData>("/risk_management", data);
+  console.debug("[XANO DISCONNECTED] createRiskManagement blocked");
+  return {} as RiskManagementData;
 }
 
 /**
  * Update an existing risk management record
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function updateRiskManagement(id: number, data: RiskManagementUpdateData): Promise<RiskManagementData> {
-  return xanoPatch<RiskManagementData>(`/risk_management/${id}`, data);
+  console.debug(`[XANO DISCONNECTED] updateRiskManagement blocked for ID: ${id}`);
+  return {} as RiskManagementData;
 }
 
 /**
  * Delete a risk management record
+ * XANO DISCONNECTED - Does nothing
  */
 export async function deleteRiskManagement(id: number): Promise<void> {
-  return xanoDelete(`/risk_management/${id}`);
+  console.debug(`[XANO DISCONNECTED] deleteRiskManagement blocked for ID: ${id}`);
 }

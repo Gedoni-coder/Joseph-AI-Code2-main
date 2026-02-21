@@ -1,9 +1,8 @@
 /**
  * Tax Compliance Service
- * Handles all API requests for tax compliance data
+ * XANO DISCONNECTED - All API calls have been disabled
+ * Functions return empty data only
  */
-
-import { xanoGet, xanoPost, xanoPatch, xanoDelete } from "./xano-client";
 
 export interface TaxComplianceData {
   id: number;
@@ -27,35 +26,44 @@ export type TaxComplianceUpdateData = Partial<TaxComplianceCreateData>;
 
 /**
  * Get all tax compliance records
+ * XANO DISCONNECTED - Returns empty array
  */
 export async function getTaxComplianceRecords(): Promise<TaxComplianceData[]> {
-  return xanoGet<TaxComplianceData[]>("/tax_compliance");
+  console.debug("[XANO DISCONNECTED] getTaxComplianceRecords blocked");
+  return [];
 }
 
 /**
  * Get a specific tax compliance record by ID
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function getTaxCompliance(id: number): Promise<TaxComplianceData> {
-  return xanoGet<TaxComplianceData>(`/tax_compliance/${id}`);
+  console.debug(`[XANO DISCONNECTED] getTaxCompliance blocked for ID: ${id}`);
+  return {} as TaxComplianceData;
 }
 
 /**
  * Create a new tax compliance record
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function createTaxCompliance(data: TaxComplianceCreateData): Promise<TaxComplianceData> {
-  return xanoPost<TaxComplianceData>("/tax_compliance", data);
+  console.debug("[XANO DISCONNECTED] createTaxCompliance blocked");
+  return {} as TaxComplianceData;
 }
 
 /**
  * Update an existing tax compliance record
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function updateTaxCompliance(id: number, data: TaxComplianceUpdateData): Promise<TaxComplianceData> {
-  return xanoPatch<TaxComplianceData>(`/tax_compliance/${id}`, data);
+  console.debug(`[XANO DISCONNECTED] updateTaxCompliance blocked for ID: ${id}`);
+  return {} as TaxComplianceData;
 }
 
 /**
  * Delete a tax compliance record
+ * XANO DISCONNECTED - Does nothing
  */
 export async function deleteTaxCompliance(id: number): Promise<void> {
-  return xanoDelete(`/tax_compliance/${id}`);
+  console.debug(`[XANO DISCONNECTED] deleteTaxCompliance blocked for ID: ${id}`);
 }

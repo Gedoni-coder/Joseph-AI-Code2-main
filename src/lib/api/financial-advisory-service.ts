@@ -1,9 +1,8 @@
 /**
  * Financial Advisory Service
- * Handles all API requests for financial advisory and planning
+ * XANO DISCONNECTED - All API calls have been disabled
+ * Functions return empty data only
  */
-
-import { xanoGet, xanoPost, xanoPatch, xanoDelete } from "./xano-client";
 
 export interface FinancialAdvisoryData {
   id: number;
@@ -29,35 +28,44 @@ export type FinancialAdvisoryUpdateData = Partial<FinancialAdvisoryCreateData>;
 
 /**
  * Get all financial advisory records
+ * XANO DISCONNECTED - Returns empty array
  */
 export async function getFinancialAdvisoryRecords(): Promise<FinancialAdvisoryData[]> {
-  return xanoGet<FinancialAdvisoryData[]>("/financial_advisory");
+  console.debug("[XANO DISCONNECTED] getFinancialAdvisoryRecords blocked");
+  return [];
 }
 
 /**
  * Get a specific financial advisory record by ID
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function getFinancialAdvisory(id: number): Promise<FinancialAdvisoryData> {
-  return xanoGet<FinancialAdvisoryData>(`/financial_advisory/${id}`);
+  console.debug(`[XANO DISCONNECTED] getFinancialAdvisory blocked for ID: ${id}`);
+  return {} as FinancialAdvisoryData;
 }
 
 /**
  * Create a new financial advisory record
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function createFinancialAdvisory(data: FinancialAdvisoryCreateData): Promise<FinancialAdvisoryData> {
-  return xanoPost<FinancialAdvisoryData>("/financial_advisory", data);
+  console.debug("[XANO DISCONNECTED] createFinancialAdvisory blocked");
+  return {} as FinancialAdvisoryData;
 }
 
 /**
  * Update an existing financial advisory record
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function updateFinancialAdvisory(id: number, data: FinancialAdvisoryUpdateData): Promise<FinancialAdvisoryData> {
-  return xanoPatch<FinancialAdvisoryData>(`/financial_advisory/${id}`, data);
+  console.debug(`[XANO DISCONNECTED] updateFinancialAdvisory blocked for ID: ${id}`);
+  return {} as FinancialAdvisoryData;
 }
 
 /**
  * Delete a financial advisory record
+ * XANO DISCONNECTED - Does nothing
  */
 export async function deleteFinancialAdvisory(id: number): Promise<void> {
-  return xanoDelete(`/financial_advisory/${id}`);
+  console.debug(`[XANO DISCONNECTED] deleteFinancialAdvisory blocked for ID: ${id}`);
 }
