@@ -1,9 +1,8 @@
 /**
  * Loan & Funding Service
- * Handles all API requests for loan and funding research
+ * XANO DISCONNECTED - All API calls have been disabled
+ * Functions return empty data only
  */
-
-import { xanoGet, xanoPost, xanoPatch, xanoDelete } from "./xano-client";
 
 export interface LoanFundingData {
   id: number;
@@ -29,35 +28,44 @@ export type LoanFundingUpdateData = Partial<LoanFundingCreateData>;
 
 /**
  * Get all loan and funding records
+ * XANO DISCONNECTED - Returns empty array
  */
 export async function getLoanFundingRecords(): Promise<LoanFundingData[]> {
-  return xanoGet<LoanFundingData[]>("/loan_funding");
+  console.debug("[XANO DISCONNECTED] getLoanFundingRecords blocked");
+  return [];
 }
 
 /**
  * Get a specific loan and funding record by ID
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function getLoanFunding(id: number): Promise<LoanFundingData> {
-  return xanoGet<LoanFundingData>(`/loan_funding/${id}`);
+  console.debug(`[XANO DISCONNECTED] getLoanFunding blocked for ID: ${id}`);
+  return {} as LoanFundingData;
 }
 
 /**
  * Create a new loan and funding record
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function createLoanFunding(data: LoanFundingCreateData): Promise<LoanFundingData> {
-  return xanoPost<LoanFundingData>("/loan_funding", data);
+  console.debug("[XANO DISCONNECTED] createLoanFunding blocked");
+  return {} as LoanFundingData;
 }
 
 /**
  * Update an existing loan and funding record
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function updateLoanFunding(id: number, data: LoanFundingUpdateData): Promise<LoanFundingData> {
-  return xanoPatch<LoanFundingData>(`/loan_funding/${id}`, data);
+  console.debug(`[XANO DISCONNECTED] updateLoanFunding blocked for ID: ${id}`);
+  return {} as LoanFundingData;
 }
 
 /**
  * Delete a loan and funding record
+ * XANO DISCONNECTED - Does nothing
  */
 export async function deleteLoanFunding(id: number): Promise<void> {
-  return xanoDelete(`/loan_funding/${id}`);
+  console.debug(`[XANO DISCONNECTED] deleteLoanFunding blocked for ID: ${id}`);
 }

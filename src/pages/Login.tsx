@@ -53,7 +53,7 @@ export default function Login() {
 
       try {
         // The response.credential is a JWT token from Google
-        // Send this to your backend/Xano to authenticate the user
+        // This would need to be sent to your backend to authenticate the user
         // For now, store it and show implementation guidance
         const credential = response?.credential;
 
@@ -65,22 +65,18 @@ export default function Login() {
         // TODO: Implement backend endpoint to exchange Google JWT for auth token
         // This should:
         // 1. Verify the Google JWT signature
-        // 2. Find or create a user in your database with the Google account info
+        // 2. Find or create a user in your backend database with the Google account info
         // 3. Return an authToken to store in localStorage
         // 4. Call the useAuth().login or directly set user state
 
         console.log(
-          "Google Sign-In credential received, integrate with backend:",
+          "Google Sign-In credential received, integration not yet implemented",
         );
-        console.log("1. Send credential JWT to /auth/google-login endpoint");
-        console.log(
-          "2. Backend should verify JWT and create/authenticate user in Xano",
-        );
-        console.log("3. Return authToken to complete sign-in");
+        console.log("Credential:", credential.substring(0, 20) + "...");
 
         // For now, show a helpful message
         setLocalError(
-          "Google Sign-In integration required: Please configure Xano backend endpoint for /auth/google-login",
+          "Google Sign-In integration not yet implemented. Please use email/password login.",
         );
       } catch (err) {
         setLocalError(

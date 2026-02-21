@@ -1,9 +1,8 @@
 /**
  * Market Analysis Service
- * Handles all API requests for market competitive analysis data
+ * XANO DISCONNECTED - All API calls have been disabled
+ * Functions return empty data only
  */
-
-import { xanoGet, xanoPost, xanoPatch, xanoDelete } from "./xano-client";
 
 export interface MarketAnalysisData {
   id: number;
@@ -31,35 +30,44 @@ export type MarketAnalysisUpdateData = Partial<MarketAnalysisCreateData>;
 
 /**
  * Get all market analysis records
+ * XANO DISCONNECTED - Returns empty array
  */
 export async function getMarketAnalyses(): Promise<MarketAnalysisData[]> {
-  return xanoGet<MarketAnalysisData[]>("/market_analysis");
+  console.debug("[XANO DISCONNECTED] getMarketAnalyses blocked");
+  return [];
 }
 
 /**
  * Get a specific market analysis record by ID
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function getMarketAnalysis(id: number): Promise<MarketAnalysisData> {
-  return xanoGet<MarketAnalysisData>(`/market_analysis/${id}`);
+  console.debug(`[XANO DISCONNECTED] getMarketAnalysis blocked for ID: ${id}`);
+  return {} as MarketAnalysisData;
 }
 
 /**
  * Create a new market analysis record
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function createMarketAnalysis(data: MarketAnalysisCreateData): Promise<MarketAnalysisData> {
-  return xanoPost<MarketAnalysisData>("/market_analysis", data);
+  console.debug("[XANO DISCONNECTED] createMarketAnalysis blocked");
+  return {} as MarketAnalysisData;
 }
 
 /**
  * Update an existing market analysis record
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function updateMarketAnalysis(id: number, data: MarketAnalysisUpdateData): Promise<MarketAnalysisData> {
-  return xanoPatch<MarketAnalysisData>(`/market_analysis/${id}`, data);
+  console.debug(`[XANO DISCONNECTED] updateMarketAnalysis blocked for ID: ${id}`);
+  return {} as MarketAnalysisData;
 }
 
 /**
  * Delete a market analysis record
+ * XANO DISCONNECTED - Does nothing
  */
 export async function deleteMarketAnalysis(id: number): Promise<void> {
-  return xanoDelete(`/market_analysis/${id}`);
+  console.debug(`[XANO DISCONNECTED] deleteMarketAnalysis blocked for ID: ${id}`);
 }

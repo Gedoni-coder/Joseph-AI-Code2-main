@@ -1,9 +1,8 @@
 /**
  * Policy & Compliance Service
- * Handles all API requests for policy and compliance data
+ * XANO DISCONNECTED - All API calls have been disabled
+ * Functions return empty data only
  */
-
-import { xanoGet, xanoPost, xanoPatch, xanoDelete } from "./xano-client";
 
 export interface PolicyComplianceData {
   id: number;
@@ -30,35 +29,44 @@ export type PolicyComplianceUpdateData = Partial<PolicyComplianceCreateData>;
 
 /**
  * Get all policy compliance records
+ * XANO DISCONNECTED - Returns empty array
  */
 export async function getPolicyComplianceRecords(): Promise<PolicyComplianceData[]> {
-  return xanoGet<PolicyComplianceData[]>("/policy_compliance");
+  console.debug("[XANO DISCONNECTED] getPolicyComplianceRecords blocked");
+  return [];
 }
 
 /**
  * Get a specific policy compliance record by ID
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function getPolicyCompliance(id: number): Promise<PolicyComplianceData> {
-  return xanoGet<PolicyComplianceData>(`/policy_compliance/${id}`);
+  console.debug(`[XANO DISCONNECTED] getPolicyCompliance blocked for ID: ${id}`);
+  return {} as PolicyComplianceData;
 }
 
 /**
  * Create a new policy compliance record
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function createPolicyCompliance(data: PolicyComplianceCreateData): Promise<PolicyComplianceData> {
-  return xanoPost<PolicyComplianceData>("/policy_compliance", data);
+  console.debug("[XANO DISCONNECTED] createPolicyCompliance blocked");
+  return {} as PolicyComplianceData;
 }
 
 /**
  * Update an existing policy compliance record
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function updatePolicyCompliance(id: number, data: PolicyComplianceUpdateData): Promise<PolicyComplianceData> {
-  return xanoPatch<PolicyComplianceData>(`/policy_compliance/${id}`, data);
+  console.debug(`[XANO DISCONNECTED] updatePolicyCompliance blocked for ID: ${id}`);
+  return {} as PolicyComplianceData;
 }
 
 /**
  * Delete a policy compliance record
+ * XANO DISCONNECTED - Does nothing
  */
 export async function deletePolicyCompliance(id: number): Promise<void> {
-  return xanoDelete(`/policy_compliance/${id}`);
+  console.debug(`[XANO DISCONNECTED] deletePolicyCompliance blocked for ID: ${id}`);
 }

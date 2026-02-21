@@ -57,10 +57,10 @@ export default function SignUp() {
         window.google.accounts.id.initialize({
           client_id: googleClientId,
           callback: (response: any) => {
-            // Google credential handling - integrate with your backend/Xano
-            // The credential (JWT) should be sent to your backend to create/authenticate user
+            // Google credential handling - not yet implemented
+            // The credential (JWT) would need to be exchanged for an auth token
             console.log(
-              "Google sign-up - integrate with backend to exchange JWT for auth token",
+              "Google sign-up - credential received but integration not yet implemented",
             );
             try {
               localStorage.setItem(

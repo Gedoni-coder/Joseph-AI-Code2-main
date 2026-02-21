@@ -1,106 +1,24 @@
 /**
  * Xano API Client
- * Central configuration and utilities for communicating with the Xano backend
- *
- * Note: If VITE_XANO_API_BASE is not configured, the app will use mock data
- * without attempting to fetch from the API.
+ * DISCONNECTED - All APIs have been disabled to prevent any calls to xano
+ * All functions now return empty data immediately
  */
-
-const XANO_BASE_URL = import.meta.env.VITE_XANO_API_BASE || null;
-const API_ENABLED = !!XANO_BASE_URL && XANO_BASE_URL !== "";
 
 interface XanoRequestOptions extends RequestInit {
   params?: Record<string, string | number | boolean>;
 }
 
 /**
- * Make a request to the Xano API with enhanced error handling
+ * Make a request to the Xano API - DISABLED
+ * Returns empty data without making any API calls
  */
 export async function xanoRequest<T>(
   endpoint: string,
   options: XanoRequestOptions = {},
 ): Promise<T> {
-  // If API is not configured, return empty data immediately without attempting fetch
-  if (!API_ENABLED) {
-    if (import.meta.env.DEV && import.meta.env.VITE_DEBUG_API) {
-      console.debug(
-        `Xano API not configured (VITE_XANO_API_BASE not set). Using mock data for ${endpoint}`
-      );
-    }
-    return [] as unknown as T;
-  }
-
-  const { params, ...fetchOptions } = options;
-
-  let url = `${XANO_BASE_URL}${endpoint}`;
-
-  // Add query parameters if provided
-  if (params) {
-    const queryString = new URLSearchParams();
-    Object.entries(params).forEach(([key, value]) => {
-      queryString.append(key, String(value));
-    });
-    url += `?${queryString.toString()}`;
-  }
-
-  // Default headers
-  const headers: HeadersInit = {
-    "Content-Type": "application/json",
-    ...fetchOptions.headers,
-  };
-
-  try {
-    const response = await fetch(url, {
-      ...fetchOptions,
-      headers,
-    });
-
-    if (!response.ok) {
-      // API error - return fallback data silently
-      if (import.meta.env.DEV && import.meta.env.VITE_DEBUG_API) {
-        console.debug(
-          `Xano API returned ${response.status} for ${endpoint}. Using fallback data.`
-        );
-      }
-      // Return empty array for most endpoints
-      return [] as unknown as T;
-    }
-
-    try {
-      // Check if response is JSON before parsing
-      const contentType = response.headers.get("content-type");
-      if (contentType && contentType.includes("application/json")) {
-        return await response.json();
-      }
-
-      // Try to parse as JSON anyway, it might just be missing the header
-      const text = await response.text();
-      if (text.trim().startsWith("{") || text.trim().startsWith("[")) {
-        return JSON.parse(text);
-      }
-
-      // Return empty array/object as fallback
-      return (Array.isArray([]) ? [] : {}) as T;
-    } catch (parseError) {
-      if (import.meta.env.DEV && import.meta.env.VITE_DEBUG_API) {
-        console.debug(`Failed to parse response from ${endpoint}:`, parseError);
-      }
-      // Return empty array/object as fallback
-      return [] as unknown as T;
-    }
-  } catch (fetchError) {
-    // Handle network errors and unavailable API - return fallback silently
-    // Only log in development and only if verbose debugging is needed
-    if (import.meta.env.DEV && import.meta.env.VITE_DEBUG_API) {
-      console.debug(
-        `Xano API unavailable for ${endpoint}. Network error:`,
-        fetchError instanceof Error ? fetchError.message : String(fetchError)
-      );
-    }
-
-    // Return empty array as fallback for all cases
-    return [] as unknown as T;
-  }
+  // ALL XANO API CALLS DISABLED - Return empty data immediately
+  console.debug(`[XANO DISCONNECTED] Request blocked for endpoint: ${endpoint}`);
+  return [] as unknown as T;
 }
 
 /**

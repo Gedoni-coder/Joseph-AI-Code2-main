@@ -1,9 +1,8 @@
 /**
  * Business Forecasting Service
- * Handles all API requests for business forecasting data
+ * XANO DISCONNECTED - All API calls have been disabled
+ * Functions return empty data only
  */
-
-import { xanoGet, xanoPost, xanoPatch, xanoDelete } from "./xano-client";
 
 export interface BusinessForecastingData {
   id: number;
@@ -67,54 +66,53 @@ export type BusinessForecastingUpdateData =
 
 /**
  * Get all business forecasting records
+ * XANO DISCONNECTED - Returns empty array
  */
 export async function getBusinessForecasts(): Promise<
   BusinessForecastingData[]
 > {
-  try {
-    return await xanoGet<BusinessForecastingData[]>("/business_forecasting");
-  } catch (error) {
-    // Error already handled by xanoGet - will return empty array
-    // This try-catch is kept for type safety but the error is already logged
-    // in the xano-client.ts if VITE_DEBUG_API is enabled
-    return [];
-  }
+  console.debug("[XANO DISCONNECTED] getBusinessForecasts blocked");
+  return [];
 }
 
 /**
  * Get a specific business forecasting record by ID
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function getBusinessForecast(
   id: number,
 ): Promise<BusinessForecastingData> {
-  return xanoGet<BusinessForecastingData>(`/business_forecasting/${id}`);
+  console.debug(`[XANO DISCONNECTED] getBusinessForecast blocked for ID: ${id}`);
+  return {} as BusinessForecastingData;
 }
 
 /**
  * Create a new business forecasting record
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function createBusinessForecast(
   data: BusinessForecastingCreateData,
 ): Promise<BusinessForecastingData> {
-  return xanoPost<BusinessForecastingData>("/business_forecasting", data);
+  console.debug("[XANO DISCONNECTED] createBusinessForecast blocked");
+  return {} as BusinessForecastingData;
 }
 
 /**
  * Update an existing business forecasting record
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function updateBusinessForecast(
   id: number,
   data: BusinessForecastingUpdateData,
 ): Promise<BusinessForecastingData> {
-  return xanoPatch<BusinessForecastingData>(
-    `/business_forecasting/${id}`,
-    data,
-  );
+  console.debug(`[XANO DISCONNECTED] updateBusinessForecast blocked for ID: ${id}`);
+  return {} as BusinessForecastingData;
 }
 
 /**
  * Delete a business forecasting record
+ * XANO DISCONNECTED - Does nothing
  */
 export async function deleteBusinessForecast(id: number): Promise<void> {
-  return xanoDelete(`/business_forecasting/${id}`);
+  console.debug(`[XANO DISCONNECTED] deleteBusinessForecast blocked for ID: ${id}`);
 }

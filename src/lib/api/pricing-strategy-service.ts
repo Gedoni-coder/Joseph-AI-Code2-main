@@ -1,9 +1,8 @@
 /**
  * Pricing Strategy Service
- * Handles all API requests for pricing strategy data
+ * XANO DISCONNECTED - All API calls have been disabled
+ * Functions return empty data only
  */
-
-import { xanoGet, xanoPost, xanoPatch, xanoDelete } from "./xano-client";
 
 export interface PricingStrategyData {
   id: number;
@@ -31,35 +30,44 @@ export type PricingStrategyUpdateData = Partial<PricingStrategyCreateData>;
 
 /**
  * Get all pricing strategies
+ * XANO DISCONNECTED - Returns empty array
  */
 export async function getPricingStrategies(): Promise<PricingStrategyData[]> {
-  return xanoGet<PricingStrategyData[]>("/pricing_strategy");
+  console.debug("[XANO DISCONNECTED] getPricingStrategies blocked");
+  return [];
 }
 
 /**
  * Get a specific pricing strategy by ID
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function getPricingStrategy(id: number): Promise<PricingStrategyData> {
-  return xanoGet<PricingStrategyData>(`/pricing_strategy/${id}`);
+  console.debug(`[XANO DISCONNECTED] getPricingStrategy blocked for ID: ${id}`);
+  return {} as PricingStrategyData;
 }
 
 /**
  * Create a new pricing strategy
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function createPricingStrategy(data: PricingStrategyCreateData): Promise<PricingStrategyData> {
-  return xanoPost<PricingStrategyData>("/pricing_strategy", data);
+  console.debug("[XANO DISCONNECTED] createPricingStrategy blocked");
+  return {} as PricingStrategyData;
 }
 
 /**
  * Update an existing pricing strategy
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function updatePricingStrategy(id: number, data: PricingStrategyUpdateData): Promise<PricingStrategyData> {
-  return xanoPatch<PricingStrategyData>(`/pricing_strategy/${id}`, data);
+  console.debug(`[XANO DISCONNECTED] updatePricingStrategy blocked for ID: ${id}`);
+  return {} as PricingStrategyData;
 }
 
 /**
  * Delete a pricing strategy
+ * XANO DISCONNECTED - Does nothing
  */
 export async function deletePricingStrategy(id: number): Promise<void> {
-  return xanoDelete(`/pricing_strategy/${id}`);
+  console.debug(`[XANO DISCONNECTED] deletePricingStrategy blocked for ID: ${id}`);
 }
