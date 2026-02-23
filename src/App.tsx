@@ -88,6 +88,7 @@ import ChatbotTest from "./pages/ChatbotTest";
 import { useCompanyInfo } from "./lib/company-context";
 import { AuthProvider } from "./lib/auth-context";
 import { useSyncCurrency } from "./hooks/useSyncCurrency";
+import { AgentCredits } from "./components/agent-credits";
 
 const queryClient = new QueryClient();
 
@@ -465,6 +466,7 @@ function AppContent() {
       <>
         {!isLandingPage && (
           <>
+            <AgentCredits creditBalance={1500} />
             <MobileNav
               conversationalMode={conversationalMode}
               onConversationalModeChange={handleConversationalModeChange}
