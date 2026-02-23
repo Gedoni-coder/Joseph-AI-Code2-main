@@ -1,20 +1,108 @@
 import React, { useState } from "react";
-import { ChevronDown, Zap, ShoppingCart, TrendingUp, BarChart3 } from "lucide-react";
+import { ChevronDown, Zap, ShoppingCart, TrendingUp, BarChart3, CheckCircle, AlertCircle } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "./ui/tabs";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
+import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { useToast } from "@/hooks/use-toast";
 
 interface AgentCreditsProps {
   creditBalance?: number;
   className?: string;
+  userEmail?: string;
+  userName?: string;
 }
+
+// Credit packages with amount in credits
+const CREDIT_PACKAGES = [
+  { id: 1, amount: 500 },
+  { id: 2, amount: 2000 },
+  { id: 3, amount: 5000 },
+];
+
+// Pricing per credit
+const PRICING = {
+  NGN: 10, // 10 naira per credit
+  USD: 0.005, // 0.005 dollars per credit
+};
 
 export function AgentCredits({
   creditBalance = 1500,
   className,
+  userEmail = "user@example.com",
+  userName = "User",
 }: AgentCreditsProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState("balance");
+  const [selectedCurrency, setSelectedCurrency] = useState("NGN");
+  const [selectedPackage, setSelectedPackage] = useState(CREDIT_PACKAGES[0]);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const { toast } = useToast();
+
+  // Calculate price based on credits and currency
+  const calculatePrice = (credits: number, currency: string) => {
+    return credits * PRICING[currency as keyof typeof PRICING];
+  };
+
+  const selectedPrice = calculatePrice(selectedPackage.amount, selectedCurrency);
+
+  // Flutterwave configuration
+  const config = {
+    public_key: import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY || "FLUTTERWAVE_KEY",
+    tx_ref: `agent-credits-${Date.now()}`,
+    amount: selectedPrice,
+    currency: selectedCurrency,
+    customer: {
+      email: userEmail,
+      name: userName,
+    },
+    customizations: {
+      title: `Buy ${selectedPackage.amount.toLocaleString()} Agent Credits`,
+      description: `Payment for ${selectedPackage.amount.toLocaleString()} Agent Credits - ${selectedPrice.toFixed(2)} ${selectedCurrency}`,
+    },
+  };
+
+  const handleFlutterWaveResponse = (response: any) => {
+    if (response.status === "successful") {
+      // Payment successful
+      toast({
+        title: "Payment Successful",
+        description: `${selectedPackage.amount.toLocaleString()} credits have been added to your account.`,
+        variant: "default",
+      });
+      // Here you would typically send a request to your backend to update the user's credits
+      // Example: await updateUserCredits(selectedPackage.amount, response.transaction_id);
+      setIsProcessing(false);
+      closePaymentModal();
+    } else if (response.status === "cancelled") {
+      toast({
+        title: "Payment Cancelled",
+        description: "Your payment has been cancelled. Please try again.",
+        variant: "destructive",
+      });
+      setIsProcessing(false);
+    } else {
+      toast({
+        title: "Payment Failed",
+        description: "There was an error processing your payment. Please try again.",
+        variant: "destructive",
+      });
+      setIsProcessing(false);
+    }
+  };
+
+  const handleFlutterWaveClose = () => {
+    setIsProcessing(false);
+  };
+
+  const { handlePayment } = useFlutterwave(config);
 
   return (
     <div className={cn("w-full px-4 py-3", className)}>
@@ -153,30 +241,109 @@ export function AgentCredits({
                 <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
                   Purchase additional credits for your account
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-                  {[
-                    { amount: 500, price: "$9.99" },
-                    { amount: 2000, price: "$29.99" },
-                    { amount: 5000, price: "$69.99" },
-                  ].map((pkg) => (
-                    <div
-                      key={pkg.amount}
-                      className="border border-blue-200 dark:border-blue-800 rounded-lg p-3 hover:bg-blue-50 dark:hover:bg-blue-950/50 transition-colors cursor-pointer"
-                    >
-                      <p className="font-semibold text-slate-900 dark:text-white">
-                        {pkg.amount.toLocaleString()}
-                      </p>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">
-                        credits
-                      </p>
-                      <p className="text-lg font-bold text-blue-600 dark:text-blue-400 mt-2">
-                        {pkg.price}
-                      </p>
-                    </div>
-                  ))}
+
+                {/* Currency Selection */}
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                    Select Payment Currency
+                  </label>
+                  <Select value={selectedCurrency} onValueChange={setSelectedCurrency}>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select currency" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="NGN">Nigerian Naira (₦)</SelectItem>
+                      <SelectItem value="USD">US Dollar ($)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
+                    {selectedCurrency === "NGN"
+                      ? "10 naira per credit"
+                      : "0.005 dollars per credit"}
+                  </p>
                 </div>
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
-                  Proceed to Payment
+
+                {/* Credit Packages */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+                  {CREDIT_PACKAGES.map((pkg) => {
+                    const price = calculatePrice(pkg.amount, selectedCurrency);
+                    const isSelected = selectedPackage.id === pkg.id;
+                    return (
+                      <div
+                        key={pkg.id}
+                        onClick={() => setSelectedPackage(pkg)}
+                        className={cn(
+                          "border rounded-lg p-3 transition-all cursor-pointer",
+                          isSelected
+                            ? "border-blue-600 dark:border-blue-500 bg-blue-50 dark:bg-blue-950/50 shadow-md"
+                            : "border-blue-200 dark:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-950/50"
+                        )}
+                      >
+                        <p className="font-semibold text-slate-900 dark:text-white">
+                          {pkg.amount.toLocaleString()}
+                        </p>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">
+                          credits
+                        </p>
+                        <p className="text-lg font-bold text-blue-600 dark:text-blue-400 mt-2">
+                          {selectedCurrency === "NGN" ? "₦" : "$"}
+                          {price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Order Summary */}
+                <div className="bg-blue-50 dark:bg-blue-950/30 p-3 rounded-lg mb-4 border border-blue-200 dark:border-blue-800">
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-slate-600 dark:text-slate-400">Credits:</span>
+                      <span className="font-medium text-slate-900 dark:text-white">
+                        {selectedPackage.amount.toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="flex justify-between pt-2 border-t border-blue-200 dark:border-blue-800">
+                      <span className="font-medium text-slate-900 dark:text-white">Total:</span>
+                      <span className="font-bold text-blue-600 dark:text-blue-400">
+                        {selectedCurrency === "NGN" ? "₦" : "$"}
+                        {selectedPrice.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {!import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY ||
+                import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY.includes("your_") ? (
+                  <div className="p-3 rounded-lg bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 mb-4">
+                    <div className="flex gap-2">
+                      <AlertCircle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+                      <div className="text-sm text-red-700 dark:text-red-300">
+                        <p className="font-medium">Payment Gateway Not Configured</p>
+                        <p className="text-xs mt-1">
+                          Please add your Flutterwave public key to the .env file as VITE_FLUTTERWAVE_PUBLIC_KEY
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
+
+                <Button
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50"
+                  disabled={
+                    isProcessing ||
+                    !import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY ||
+                    import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY.includes("your_")
+                  }
+                  onClick={() => {
+                    setIsProcessing(true);
+                    handlePayment({
+                      callback: handleFlutterWaveResponse,
+                      onClose: handleFlutterWaveClose,
+                    });
+                  }}
+                >
+                  {isProcessing ? "Processing..." : "Proceed to Payment"}
                 </Button>
               </div>
             </TabsContent>
