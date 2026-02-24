@@ -44,6 +44,9 @@ export function AgentCredits({
   const [selectedCurrency, setSelectedCurrency] = useState("NGN");
   const [selectedPackage, setSelectedPackage] = useState(CREDIT_PACKAGES[0]);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [useCustomInput, setUseCustomInput] = useState(false);
+  const [customCredits, setCustomCredits] = useState("");
+  const [customAmount, setCustomAmount] = useState("");
   const { toast } = useToast();
 
   // Calculate price based on credits and currency
@@ -51,7 +54,46 @@ export function AgentCredits({
     return credits * PRICING[currency as keyof typeof PRICING];
   };
 
-  const selectedPrice = calculatePrice(selectedPackage.amount, selectedCurrency);
+  // Handle custom credits input
+  const handleCustomCreditsChange = (value: string) => {
+    setCustomCredits(value);
+    if (value) {
+      const credits = parseInt(value) || 0;
+      const amount = calculatePrice(credits, selectedCurrency);
+      setCustomAmount(amount.toFixed(2));
+    } else {
+      setCustomAmount("");
+    }
+  };
+
+  // Handle custom amount input
+  const handleCustomAmountChange = (value: string) => {
+    setCustomAmount(value);
+    if (value) {
+      const amount = parseFloat(value) || 0;
+      const credits = Math.floor(amount / PRICING[selectedCurrency as keyof typeof PRICING]);
+      setCustomCredits(credits.toString());
+    } else {
+      setCustomCredits("");
+    }
+  };
+
+  // Determine which price and credits to use
+  const getActivePrice = () => {
+    if (useCustomInput && customAmount) {
+      return parseFloat(customAmount);
+    }
+    return calculatePrice(selectedPackage.amount, selectedCurrency);
+  };
+
+  const getActiveCredits = () => {
+    if (useCustomInput && customCredits) {
+      return parseInt(customCredits);
+    }
+    return selectedPackage.amount;
+  };
+
+  const selectedPrice = getActivePrice();
 
   // Flutterwave configuration
   const config = {
@@ -64,8 +106,8 @@ export function AgentCredits({
       name: userName,
     },
     customizations: {
-      title: `Buy ${selectedPackage.amount.toLocaleString()} Agent Credits`,
-      description: `Payment for ${selectedPackage.amount.toLocaleString()} Agent Credits - ${selectedPrice.toFixed(2)} ${selectedCurrency}`,
+      title: `Buy ${getActiveCredits().toLocaleString()} Agent Credits`,
+      description: `Payment for ${getActiveCredits().toLocaleString()} Agent Credits - ${selectedPrice.toFixed(2)} ${selectedCurrency}`,
     },
   };
 
@@ -247,7 +289,12 @@ export function AgentCredits({
                   <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
                     Select Payment Currency
                   </label>
-                  <Select value={selectedCurrency} onValueChange={setSelectedCurrency}>
+                  <Select value={selectedCurrency} onValueChange={(value) => {
+                    setSelectedCurrency(value);
+                    // Reset custom input when currency changes
+                    setCustomCredits("");
+                    setCustomAmount("");
+                  }}>
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select currency" />
                     </SelectTrigger>
@@ -263,36 +310,112 @@ export function AgentCredits({
                   </p>
                 </div>
 
-                {/* Credit Packages */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
-                  {CREDIT_PACKAGES.map((pkg) => {
-                    const price = calculatePrice(pkg.amount, selectedCurrency);
-                    const isSelected = selectedPackage.id === pkg.id;
-                    return (
-                      <div
-                        key={pkg.id}
-                        onClick={() => setSelectedPackage(pkg)}
-                        className={cn(
-                          "border rounded-lg p-3 transition-all cursor-pointer",
-                          isSelected
-                            ? "border-blue-600 dark:border-blue-500 bg-blue-50 dark:bg-blue-950/50 shadow-md"
-                            : "border-blue-200 dark:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-950/50"
-                        )}
-                      >
-                        <p className="font-semibold text-slate-900 dark:text-white">
-                          {pkg.amount.toLocaleString()}
-                        </p>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                          credits
-                        </p>
-                        <p className="text-lg font-bold text-blue-600 dark:text-blue-400 mt-2">
-                          {selectedCurrency === "NGN" ? "₦" : "$"}
-                          {price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                        </p>
-                      </div>
-                    );
-                  })}
+                {/* Tab to switch between bundle and custom */}
+                <div className="mb-4 flex gap-2">
+                  <button
+                    onClick={() => setUseCustomInput(false)}
+                    className={cn(
+                      "px-4 py-2 rounded text-sm font-medium transition-all",
+                      !useCustomInput
+                        ? "bg-blue-600 text-white"
+                        : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"
+                    )}
+                  >
+                    Choose Bundle
+                  </button>
+                  <button
+                    onClick={() => setUseCustomInput(true)}
+                    className={cn(
+                      "px-4 py-2 rounded text-sm font-medium transition-all",
+                      useCustomInput
+                        ? "bg-blue-600 text-white"
+                        : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"
+                    )}
+                  >
+                    Custom Amount
+                  </button>
                 </div>
+
+                {!useCustomInput ? (
+                  <>
+                    {/* Credit Packages */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+                      {CREDIT_PACKAGES.map((pkg) => {
+                        const price = calculatePrice(pkg.amount, selectedCurrency);
+                        const isSelected = selectedPackage.id === pkg.id;
+                        return (
+                          <div
+                            key={pkg.id}
+                            onClick={() => setSelectedPackage(pkg)}
+                            className={cn(
+                              "border rounded-lg p-3 transition-all cursor-pointer",
+                              isSelected
+                                ? "border-blue-600 dark:border-blue-500 bg-blue-50 dark:bg-blue-950/50 shadow-md"
+                                : "border-blue-200 dark:border-blue-800 hover:bg-blue-50 dark:hover:bg-blue-950/50"
+                            )}
+                          >
+                            <p className="font-semibold text-slate-900 dark:text-white">
+                              {pkg.amount.toLocaleString()}
+                            </p>
+                            <p className="text-sm text-slate-600 dark:text-slate-400">
+                              credits
+                            </p>
+                            <p className="text-lg font-bold text-blue-600 dark:text-blue-400 mt-2">
+                              {selectedCurrency === "NGN" ? "₦" : "$"}
+                              {price.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* Custom Input Section */}
+                    <div className="space-y-4 mb-4">
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                          Enter Number of Credits
+                        </label>
+                        <div className="relative">
+                          <input
+                            type="number"
+                            min="1"
+                            value={customCredits}
+                            onChange={(e) => handleCustomCreditsChange(e.target.value)}
+                            placeholder="e.g., 1000"
+                            className="w-full px-3 py-2 border border-blue-200 dark:border-blue-800 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                          <span className="absolute right-3 top-2.5 text-slate-500 dark:text-slate-400 text-sm">
+                            credits
+                          </span>
+                        </div>
+                      </div>
+                      <div className="text-center text-slate-500 dark:text-slate-400 text-sm">
+                        OR
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                          Enter Amount to Spend
+                        </label>
+                        <div className="relative">
+                          <span className="absolute left-3 top-2.5 text-slate-500 dark:text-slate-400 text-sm">
+                            {selectedCurrency === "NGN" ? "₦" : "$"}
+                          </span>
+                          <input
+                            type="number"
+                            step="0.01"
+                            min="0"
+                            value={customAmount}
+                            onChange={(e) => handleCustomAmountChange(e.target.value)}
+                            placeholder={selectedCurrency === "NGN" ? "e.g., 10000" : "e.g., 50.00"}
+                            className="w-full pl-8 pr-3 py-2 border border-blue-200 dark:border-blue-800 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
 
                 {/* Order Summary */}
                 <div className="bg-blue-50 dark:bg-blue-950/30 p-3 rounded-lg mb-4 border border-blue-200 dark:border-blue-800">
@@ -300,7 +423,7 @@ export function AgentCredits({
                     <div className="flex justify-between">
                       <span className="text-slate-600 dark:text-slate-400">Credits:</span>
                       <span className="font-medium text-slate-900 dark:text-white">
-                        {selectedPackage.amount.toLocaleString()}
+                        {getActiveCredits().toLocaleString()}
                       </span>
                     </div>
                     <div className="flex justify-between pt-2 border-t border-blue-200 dark:border-blue-800">
@@ -333,7 +456,8 @@ export function AgentCredits({
                   disabled={
                     isProcessing ||
                     !import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY ||
-                    import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY.includes("your_")
+                    import.meta.env.VITE_FLUTTERWAVE_PUBLIC_KEY.includes("your_") ||
+                    getActiveCredits() === 0
                   }
                   onClick={() => {
                     setIsProcessing(true);
@@ -351,61 +475,108 @@ export function AgentCredits({
             {/* Upgrade Plan Tab */}
             <TabsContent value="upgrade" className="space-y-3">
               <div className="bg-white dark:bg-slate-900 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
-                <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                  Upgrade your plan for more credits and features
-                </p>
+                <div className="flex items-center justify-between mb-4">
+                  <p className="text-sm text-slate-600 dark:text-slate-400">
+                    Upgrade your plan for more credits and features
+                  </p>
+                  <Select value={selectedCurrency} onValueChange={setSelectedCurrency}>
+                    <SelectTrigger className="w-32 h-9">
+                      <SelectValue placeholder="Select currency" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="NGN">Naira (₦)</SelectItem>
+                      <SelectItem value="USD">Dollar ($)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
                 <div className="space-y-3">
-                  {[
-                    {
-                      name: "Starter",
-                      credits: "2,000/month",
-                      price: "Free",
-                      current: true,
-                    },
-                    {
-                      name: "Professional",
-                      credits: "10,000/month",
-                      price: "$49/month",
-                      current: false,
-                    },
-                    {
-                      name: "Enterprise",
-                      credits: "Unlimited",
-                      price: "Custom",
-                      current: false,
-                    },
-                  ].map((plan) => (
-                    <div
-                      key={plan.name}
-                      className={cn(
-                        "p-3 rounded-lg border transition-all",
-                        plan.current
-                          ? "bg-blue-50 dark:bg-blue-950/30 border-blue-600 dark:border-blue-500"
-                          : "border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600",
-                      )}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="font-semibold text-slate-900 dark:text-white">
-                            {plan.name}
-                          </p>
-                          <p className="text-sm text-slate-600 dark:text-slate-400">
-                            {plan.credits}
-                          </p>
-                        </div>
-                        <div className="text-right">
-                          <p className="font-bold text-blue-600 dark:text-blue-400">
-                            {plan.price}
-                          </p>
-                          {plan.current && (
-                            <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">
-                              Current Plan
+                  {(() => {
+                    const plans = selectedCurrency === "NGN"
+                      ? [
+                          {
+                            name: "Basic Plan",
+                            credits: "300 credits/month",
+                            price: "₦3,000",
+                            current: true,
+                          },
+                          {
+                            name: "Standard Plan",
+                            credits: "500 credits/month",
+                            price: "₦5,000/month",
+                            current: false,
+                          },
+                          {
+                            name: "Mid-size Enterprise",
+                            credits: "1000 credits/month",
+                            price: "₦10,000/month",
+                            current: false,
+                          },
+                          {
+                            name: "Enterprise",
+                            credits: "Unlimited",
+                            price: "Custom",
+                            current: false,
+                          },
+                        ]
+                      : [
+                          {
+                            name: "Basic Plan",
+                            credits: "300 credits/month",
+                            price: "$15",
+                            current: true,
+                          },
+                          {
+                            name: "Standard Plan",
+                            credits: "500 credits/month",
+                            price: "$25",
+                            current: false,
+                          },
+                          {
+                            name: "Mid-size Enterprise",
+                            credits: "1000 credits/month",
+                            price: "$50",
+                            current: false,
+                          },
+                          {
+                            name: "Enterprise",
+                            credits: "Unlimited",
+                            price: "Custom",
+                            current: false,
+                          },
+                        ];
+                    return plans.map((plan) => (
+                      <div
+                        key={plan.name}
+                        className={cn(
+                          "p-3 rounded-lg border transition-all",
+                          plan.current
+                            ? "bg-blue-50 dark:bg-blue-950/30 border-blue-600 dark:border-blue-500"
+                            : "border-slate-200 dark:border-slate-700 hover:border-blue-400 dark:hover:border-blue-600",
+                        )}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="font-semibold text-slate-900 dark:text-white">
+                              {plan.name}
                             </p>
-                          )}
+                            <p className="text-sm text-slate-600 dark:text-slate-400">
+                              {plan.credits}
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <p className="font-bold text-blue-600 dark:text-blue-400">
+                              {plan.price}
+                            </p>
+                            {plan.current && (
+                              <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">
+                                Current Plan
+                              </p>
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ));
+                  })()}
                 </div>
                 <Button
                   className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white"
