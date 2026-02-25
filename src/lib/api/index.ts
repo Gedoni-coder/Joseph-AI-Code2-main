@@ -4,7 +4,9 @@
  */
 
 // Base client
-export { xanoRequest, xanoGet, xanoPost, xanoPatch, xanoDelete } from "./xano-client";
+export { apiGet, apiPost, apiPatch, apiPut, apiDelete, ApiError } from "./apiClient";
+// Legacy aliases kept for backward compatibility
+export { xanoRequest, xanoGet, xanoPost, xanoPatch, xanoDelete } from "./apiClient";
 
 // Service modules
 export * from "./business-forecasting-service";
