@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,7 @@ import { BusinessMetricsTable } from "@/components/business/business-metrics-tab
 import { FinancialLayout } from "@/components/business/financial-layout";
 import { DocumentsSection } from "@/components/business/documents-section";
 import { SummaryRecommendationSection } from "@/components/module/summary-recommendation-section";
+import { RevenueTargetsModal, type RevenueTargets } from "@/components/business/revenue-targets-modal";
 import {
   costStructure as mockCosts,
   cashFlowForecast as mockCashFlow,
@@ -78,6 +79,27 @@ const BusinessForecast = () => {
     reconnect,
   } = useBusinessForecastingData();
 
+  // Revenue targets state
+  const [showRevenueModal, setShowRevenueModal] = useState(false);
+  const [revenueTargets, setRevenueTargets] = useState<RevenueTargets | null>(null);
+
+  // Load revenue targets from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("joseph:revenueTargets");
+    if (saved) {
+      try {
+        setRevenueTargets(JSON.parse(saved));
+      } catch (error) {
+        console.error("Failed to load revenue targets:", error);
+      }
+    }
+  }, []);
+
+  const handleSaveRevenueTargets = (targets: RevenueTargets) => {
+    setRevenueTargets(targets);
+    localStorage.setItem("joseph:revenueTargets", JSON.stringify(targets));
+  };
+
   const handleRefresh = async () => {
     await refreshData();
   };
@@ -99,20 +121,26 @@ const BusinessForecast = () => {
         <main className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8 space-y-6 sm:space-y-8">
           {/* Quick Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            <Card>
+            <Card className="hover:shadow-md transition-shadow cursor-pointer"
+              onClick={() => setShowRevenueModal(true)}>
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-economic-positive/10 rounded-lg">
                     <DollarSign className="h-5 w-5 text-economic-positive" />
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <div className="text-sm text-muted-foreground">
                       Annual Revenue Target
                     </div>
                     <div className="text-lg font-bold">
-                      {formatCurrency(parseFloat(BUSINESS_FORECAST_DEFAULTS.ANNUAL_REVENUE_TARGET.replace(/[^\d.-]/g, '')))}
+                      {revenueTargets
+                        ? formatCurrency(revenueTargets.annualRevenue)
+                        : formatCurrency(parseFloat(BUSINESS_FORECAST_DEFAULTS.ANNUAL_REVENUE_TARGET.replace(/[^\d.-]/g, '')))}
                     </div>
                   </div>
+                  <Badge variant="outline" className="text-xs">
+                    {revenueTargets ? "Set" : "Click to set"}
+                  </Badge>
                 </div>
               </CardContent>
             </Card>
@@ -1995,6 +2023,14 @@ const BusinessForecast = () => {
           </div>
         </footer>
       </div>
+
+      {/* Revenue Targets Modal */}
+      <RevenueTargetsModal
+        isOpen={showRevenueModal}
+        onClose={() => setShowRevenueModal(false)}
+        onSave={handleSaveRevenueTargets}
+        initialTargets={revenueTargets || undefined}
+      />
     </TooltipProvider>
   );
 };
