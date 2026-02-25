@@ -37,4 +37,36 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
+  economicIndicators EconomicIndicator[]
+}
+
+// ─── Economic Forecasting ────────────────────────────────────────────────────
+
+model EconomicIndicator {
+  id                  String   @id @default(uuid())
+  user_id             String
+  user                User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  gdp_growth_rate     Float    @default(0)
+  inflation_rate      Float    @default(0)
+  unemployment_rate   Float    @default(0)
+  interest_rates      Float    @default(0)
+  exchange_rates      Float    @default(0)
+  consumer_confidence Float    @default(0)
+  stock_market_index  Float    @default(0)
+  commodity_prices    Float    @default(0)
+  housing_index       Float    @default(0)
+  trade_balance       Float    @default(0)
+
+  /// JSON arrays stored as strings
+  economic_news       String   @default("[]")
+  forecasts           String   @default("[]")
+  trends              String   @default("[]")
+  impact_analysis     String   @default("[]")
+  alerts              String   @default("[]")
+
+  created_at          DateTime @default(now())
+  updated_at          DateTime @default(now())
+
+  @@index([user_id])
 }
