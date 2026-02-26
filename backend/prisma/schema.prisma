@@ -37,4 +37,71 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
+  marketAnalyses      MarketAnalysis[]
+  competitiveAnalyses CompetitiveAnalysis[]
+}
+
+// ─── Market Analysis ──────────────────────────────────────────────────────────
+
+model MarketAnalysis {
+  id String @id @default(uuid())
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  total_addressable_market       Float  @default(0)
+  serviceable_addressable_market Float  @default(0)
+  market_growth_rate             Float  @default(0)
+  market_segments_count          Int    @default(0)
+  competitors_tracked            Int    @default(0)
+  competitive_position_score     Float  @default(0)
+  market_share_estimate          Float  @default(0)
+
+  market_trends          String @default("[]")
+  competitive_threats    String @default("[]")
+  market_opportunities   String @default("[]")
+  competitor_analysis    String @default("[]")
+  swot_analysis          String @default("[]")
+  market_dynamics        String @default("[]")
+  regulatory_environment String @default("[]")
+  customer_preferences   String @default("[]")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@index([user_id])
+}
+
+// ─── Competitive Analysis ─────────────────────────────────────────────────────
+
+model CompetitiveAnalysis {
+  id String @id @default(uuid())
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  competitor_name          String
+  competitor_type          String @default("direct")
+  market_share             Float  @default(0)
+  revenue                  Float  @default(0)
+  employees                Int    @default(0)
+  founded                  Int    @default(2020)
+  headquarters             String @default("")
+  website                  String @default("")
+  description              String @default("")
+
+  key_products             String @default("[]")
+  target_markets           String @default("[]")
+  strengths                String @default("[]")
+  weaknesses               String @default("[]")
+  opportunities            String @default("[]")
+  threats                  String @default("[]")
+  strategy_recommendations String @default("[]")
+
+  overall_score            Float  @default(0)
+  funding_stage            String @default("")
+  last_funding_year        Int    @default(2024)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@index([user_id])
 }
