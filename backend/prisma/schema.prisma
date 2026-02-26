@@ -37,4 +37,120 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
+  leads         Lead[]
+  salesTargets  SalesTarget[]
+  engagements   Engagement[]
+  salesKPIs     SalesKPI[]
+  dealAnalytics DealAnalytic[]
+}
+
+// ─── Sales Intelligence ───────────────────────────────────────────────────────
+
+model Lead {
+  id             String   @id @default(uuid())
+  user_id        String
+  user           User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  company        String
+  description    String   @default("")
+  opening        String   @default("")
+  expected_close String   @default("")
+  stage          String   @default("cold")   // hot | warm | cold
+  lead_score     Int      @default(0)
+  probability    Float    @default(0)
+  stall          String   @default("")
+  playbook       String   @default("")
+  lead_source    String   @default("")
+  product        String   @default("")
+  region         String   @default("")
+  industry       String   @default("")
+  segment        String   @default("")
+  deal_size      Float    @default(0)
+  sales_rep      String   @default("")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@index([user_id])
+  @@index([stage])
+}
+
+model SalesTarget {
+  id              String   @id @default(uuid())
+  user_id         String
+  user            User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  sales_rep_id    String
+  sales_rep_name  String
+  target_period   String
+  target_amount   Float    @default(0)
+  achieved_amount Float    @default(0)
+  status          String   @default("in-progress")
+  deals_closed    Int      @default(0)
+  avg_deal_size   Float    @default(0)
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@index([user_id])
+}
+
+model Engagement {
+  id            String   @id @default(uuid())
+  user_id       String
+  user          User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  lead_company  String   @default("")
+  channel       String   @default("email")   // email | whatsapp | linkedin | sms
+  message       String   @default("")
+  subject       String   @default("")
+  status        String   @default("sent")
+  scheduled_at  String   @default("")
+  sent_at       String   @default("")
+  response      String   @default("")
+  rep_name      String   @default("")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@index([user_id])
+}
+
+model SalesKPI {
+  id          String   @id @default(uuid())
+  user_id     String
+  user        User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  name        String
+  value       String
+  change      String   @default("")
+  trend       String   @default("stable")  // up | down | stable
+  category    String   @default("")
+  description String   @default("")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@index([user_id])
+}
+
+model DealAnalytic {
+  id            String   @id @default(uuid())
+  user_id       String
+  user          User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  deal_name     String
+  value         Float    @default(0)
+  stage         String   @default("")
+  probability   Float    @default(0)
+  rep_name      String   @default("")
+  close_date    String   @default("")
+  industry      String   @default("")
+  region        String   @default("")
+  notes         String   @default("")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@index([user_id])
 }
