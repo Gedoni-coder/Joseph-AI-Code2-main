@@ -37,4 +37,61 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
+  revenueStrategies RevenueStrategy[]
+  revenueStreams     RevenueStream[]
+}
+
+// ─── Revenue Strategy ─────────────────────────────────────────────────────────
+
+model RevenueStrategy {
+  id String @id @default(uuid())
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  monthly_recurring_revenue Float  @default(0)
+  annual_contract_value     Float  @default(0)
+  customer_lifetime_value   Float  @default(0)
+  revenue_per_customer      Float  @default(0)
+  gross_revenue_retention   Float  @default(0)
+  net_revenue_retention     Float  @default(0)
+
+  top_revenue_streams              String @default("[]")
+  churn_risk_summary               String @default("[]")
+  top_upsell_opportunities         String @default("[]")
+  channel_performance              String @default("[]")
+  revenue_strategy_summary         String @default("")
+  key_metrics_insights             String @default("[]")
+  revenue_strategy_recommendations String @default("[]")
+  action_items                     String @default("[]")
+  next_steps                       String @default("[]")
+  revenue_streams_details          String @default("[]")
+  revenue_forecasting              String @default("[]")
+  churn_analysis                   String @default("[]")
+  upsell_opportunities             String @default("[]")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@index([user_id])
+}
+
+// Revenue streams as individual records (enables add/remove via API)
+model RevenueStream {
+  id String @id @default(uuid())
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  name             String
+  type             String  @default("subscription")
+  current_revenue  Float   @default(0)
+  projected_growth Float   @default(0)
+  margin           Float   @default(0)
+  status           String  @default("active")
+  description      String  @default("")
+  tags             String  @default("[]")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  @@index([user_id])
 }
