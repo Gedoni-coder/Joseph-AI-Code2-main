@@ -8,6 +8,7 @@ import "./config/passport.ts";
 // routes
 import authRoutes from "./routes/authRoutes.ts";
 import userRoutes from "./routes/userRoutes.ts";
+import financialAdvisoryRoutes from "./routes/financialAdvisoryRoutes.ts";
 import { connectRedis } from "./config/redis.ts";
 import { requestLogger } from "./admin/loggingController.ts";
 
@@ -32,6 +33,7 @@ export const mainHost = `${host}:${port}${base}`;
 console.log(mainHost);
 app.use(`${base}/auth`, authRoutes);
 app.use(`${base}/users`, userRoutes);
+app.use(`${base}/financial`, financialAdvisoryRoutes);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
