@@ -11,6 +11,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 
@@ -31,6 +32,7 @@ model User {
   phone String?
   avatar_url String?
   bio String?
+  campus String?
 
   password_hash String?
   email_verified Boolean @default(false)
@@ -39,32 +41,85 @@ model User {
 
   revenueStrategies RevenueStrategy[]
   revenueStreams     RevenueStream[]
+  businessForecasts  BusinessForecast[]
 }
 
-// ─── Revenue Strategy ─────────────────────────────────────────────────────────
+// ─── Revenue Strategy (reference / future use) ─────────────────────────────────
 
 model RevenueStrategy {
-  financialAdvisory    FinancialAdvisory[]
-  budgetForecasts      BudgetForecastRecord[]
-  cashFlowProjections  CashFlowProjectionRecord[]
-  scenarioTests        ScenarioTestRecord[]
-  riskAssessments      RiskAssessmentRecord[]
-  advisoryInsights     AdvisoryInsightRecord[]
+  id                    String    @id @default(uuid())
+  user_id               String?
+  user                  User?     @relation(fields: [user_id], references: [id])
+  financialAdvisory     FinancialAdvisory[]
+  budgetForecasts       BudgetForecastRecord[]
+  cashFlowProjections   CashFlowProjectionRecord[]
+  scenarioTests         ScenarioTestRecord[]
+  riskAssessments       RiskAssessmentRecord[]
+  advisoryInsights      AdvisoryInsightRecord[]
   performanceDrivers   PerformanceDriverRecord[]
 }
 
-// ─── Financial Advisory ───────────────────────────────────────────────────────
+// ─── Financial Advisory (reference / future use) ────────────────────────────────
 
 model FinancialAdvisory {
+  id               String           @id @default(uuid())
+  revenueStrategyId String?
+  revenueStrategy   RevenueStrategy? @relation(fields: [revenueStrategyId], references: [id])
   businessForecasts BusinessForecast[]
+}
+
+// ─── Stub models for schema validation (reference / future use) ───────────────
+
+model RevenueStream {
+  id      String  @id @default(uuid())
+  user_id String
+  user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model BudgetForecastRecord {
+  id                 String          @id @default(uuid())
+  revenueStrategyId  String?
+  revenueStrategy    RevenueStrategy? @relation(fields: [revenueStrategyId], references: [id])
+}
+
+model CashFlowProjectionRecord {
+  id                 String          @id @default(uuid())
+  revenueStrategyId  String?
+  revenueStrategy    RevenueStrategy? @relation(fields: [revenueStrategyId], references: [id])
+}
+
+model ScenarioTestRecord {
+  id                 String          @id @default(uuid())
+  revenueStrategyId  String?
+  revenueStrategy    RevenueStrategy? @relation(fields: [revenueStrategyId], references: [id])
+}
+
+model RiskAssessmentRecord {
+  id                 String          @id @default(uuid())
+  revenueStrategyId  String?
+  revenueStrategy    RevenueStrategy? @relation(fields: [revenueStrategyId], references: [id])
+}
+
+model AdvisoryInsightRecord {
+  id                 String          @id @default(uuid())
+  revenueStrategyId  String?
+  revenueStrategy    RevenueStrategy? @relation(fields: [revenueStrategyId], references: [id])
+}
+
+model PerformanceDriverRecord {
+  id                 String          @id @default(uuid())
+  revenueStrategyId  String?
+  revenueStrategy    RevenueStrategy? @relation(fields: [revenueStrategyId], references: [id])
 }
 
 // ─── Business Forecasting ─────────────────────────────────────────────────────
 
 model BusinessForecast {
-  id String @id @default(uuid())
-  user_id String
-  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  id                  String            @id @default(uuid())
+  user_id             String
+  user                User              @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  financialAdvisoryId  String?
+  financialAdvisory    FinancialAdvisory? @relation(fields: [financialAdvisoryId], references: [id])
 
   // Headline KPIs
   annual_revenue_target      Float  @default(0)

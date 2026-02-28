@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCompanyInfo } from "@/lib/company-context";
 import { useCurrency } from "@/lib/currency-context";
-import { AlertCircle, Upload, Sparkles, Edit2, Check } from "lucide-react";
+import { AlertCircle, Upload, Sparkles, Edit2, Check, ChevronDown, ChevronRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const SECTORS = [
   "Technology",
@@ -225,10 +226,15 @@ const NATIONAL_CURRENCIES = [
   { code: "ZWL", symbol: "$", label: "Zimbabwean Dollar" },
 ];
 
+const inputErrorClass = "border-red-500 focus-visible:ring-red-500/20";
+const inputBaseClass =
+  "w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
+
 export default function Onboarding() {
   const navigate = useNavigate();
   const { updateCompanyInfo, companyInfo } = useCompanyInfo();
   const { setCurrency } = useCurrency();
+  const formRef = useRef<HTMLFormElement>(null);
 
   // Required fields
   const [companyName, setCompanyName] = useState(
@@ -279,11 +285,21 @@ export default function Onboarding() {
   const [generatingSummary, setGeneratingSummary] = useState(false);
   const [editingSummary, setEditingSummary] = useState(false);
 
+  const canGenerateSummary =
+    [companyName, description, numberOfWorkers, sector, companySize, country, state, city].every(
+      (v) => typeof v === "string" && v.trim().length > 0
+    );
+
   const generateAISummary = async () => {
+    if (!canGenerateSummary) return;
     setGeneratingSummary(true);
+    setErrors((prev) => {
+      const next = { ...prev };
+      delete next.aiSummary;
+      return next;
+    });
     try {
-      // Generate a contextual AI summary based on company info
-      const summary = `${companyName} is a ${companySize} company in the ${sector} sector with ${numberOfWorkers} employees, based in ${city}, ${state}, ${country}. ${description}`;
+      const summary = `${companyName.trim()} is a ${companySize} company in the ${sector} sector with ${numberOfWorkers} employees, based in ${city.trim()}, ${state.trim()}, ${country.trim()}. ${description.trim()}`;
       setAiSummary(summary);
       setSummaryApproved(false);
       setEditingSummary(false);
@@ -297,6 +313,13 @@ export default function Onboarding() {
       setGeneratingSummary(false);
     }
   };
+
+  useEffect(() => {
+    const firstKey = Object.keys(errors)[0];
+    if (!firstKey || !formRef.current) return;
+    const el = formRef.current.querySelector(`[data-error-key="${firstKey}"]`);
+    (el as HTMLElement)?.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [errors]);
 
   const validateRequired = () => {
     const newErrors: Record<string, string> = {};
@@ -323,13 +346,15 @@ export default function Onboarding() {
     const file = e.target.files?.[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        setErrors((prev) => ({
-          ...prev,
-          logo: "Logo must be less than 5MB",
-        }));
+        setErrors((prev) => ({ ...prev, logo: "Logo must be less than 5MB" }));
         return;
       }
       setLogoFile(file);
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next.logo;
+        return next;
+      });
       const reader = new FileReader();
       reader.onloadend = () => {
         updateCompanyInfo({ logo: reader.result as string });
@@ -380,30 +405,29 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 py-12 px-4">
-      <div className="max-w-2xl mx-auto">
-        <Card className="shadow-lg">
-          <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 py-6 px-4 sm:py-8 sm:px-6 md:py-12">
+      <div className="max-w-2xl mx-auto w-full">
+        <Card className="shadow-lg shadow-primary/5 border-0 overflow-hidden transition-shadow duration-300 hover:shadow-xl hover:shadow-primary/10">
+          <CardHeader className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-6 sm:py-8 px-4 sm:px-6 md:px-8">
             <div>
-              <CardTitle className="text-2xl mb-2">
+              <CardTitle className="text-xl sm:text-2xl font-bold mb-2 tracking-tight">
                 Complete Your Company Profile
               </CardTitle>
-              <p className="text-blue-100 text-sm">
-                Set up your company information to personalize your Joseph
-                experience
+              <p className="text-blue-100 text-sm sm:text-base">
+                Set up your company information to personalize your Joseph experience
               </p>
             </div>
           </CardHeader>
 
-          <CardContent className="p-8">
-            <form onSubmit={handleSubmit} className="space-y-6">
+          <CardContent className="p-4 sm:p-6 md:p-8">
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
               {/* Required Fields Section */}
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">
+                <h3 className="text-base sm:text-lg font-semibold text-foreground mb-4">
                   Required Information
                 </h3>
                 <div className="space-y-4">
-                  <div>
+                  <div data-error-key="companyName">
                     <Label
                       htmlFor="companyName"
                       className="text-sm font-medium"
@@ -422,19 +446,17 @@ export default function Onboarding() {
                         });
                       }}
                       placeholder="Enter your company name"
-                      className={`mt-1 ${
-                        errors.companyName ? "border-red-500" : ""
-                      }`}
+                      className={cn("mt-1.5", errors.companyName && inputErrorClass)}
                     />
                     {errors.companyName && (
-                      <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
-                        <AlertCircle className="h-4 w-4" />
+                      <p className="text-sm text-destructive mt-1 flex items-center gap-1.5">
+                        <AlertCircle className="h-4 w-4 shrink-0" />
                         {errors.companyName}
                       </p>
                     )}
                   </div>
 
-                  <div>
+                  <div data-error-key="description">
                     <Label
                       htmlFor="description"
                       className="text-sm font-medium"
@@ -453,21 +475,23 @@ export default function Onboarding() {
                         });
                       }}
                       placeholder="Brief description of your company"
-                      className={`mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ${
-                        errors.description ? "border-red-500" : ""
-                      }`}
+                      className={cn(
+                        "mt-1.5 resize-y min-h-[80px]",
+                        inputBaseClass,
+                        errors.description && inputErrorClass
+                      )}
                       rows={3}
                     />
                     {errors.description && (
-                      <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
-                        <AlertCircle className="h-4 w-4" />
+                      <p className="text-sm text-destructive mt-1 flex items-center gap-1.5">
+                        <AlertCircle className="h-4 w-4 shrink-0" />
                         {errors.description}
                       </p>
                     )}
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div data-error-key="numberOfWorkers">
                       <Label
                         htmlFor="numberOfWorkers"
                         className="text-sm font-medium"
@@ -488,19 +512,17 @@ export default function Onboarding() {
                         }}
                         placeholder="e.g., 50"
                         min="1"
-                        className={`mt-1 ${
-                          errors.numberOfWorkers ? "border-red-500" : ""
-                        }`}
+                        className={cn("mt-1.5", errors.numberOfWorkers && inputErrorClass)}
                       />
                       {errors.numberOfWorkers && (
-                        <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
-                          <AlertCircle className="h-4 w-4" />
+                        <p className="text-sm text-destructive mt-1 flex items-center gap-1.5">
+                          <AlertCircle className="h-4 w-4 shrink-0" />
                           {errors.numberOfWorkers}
                         </p>
                       )}
                     </div>
 
-                    <div>
+                    <div data-error-key="sector">
                       <Label htmlFor="sector" className="text-sm font-medium">
                         Sector
                       </Label>
@@ -515,9 +537,12 @@ export default function Onboarding() {
                             return newErrors;
                           });
                         }}
-                        className={`mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ${
-                          errors.sector ? "border-red-500" : ""
-                        }`}
+                        className={cn(
+                          "mt-1.5",
+                          inputBaseClass,
+                          "cursor-pointer",
+                          errors.sector && inputErrorClass
+                        )}
                       >
                         <option value="">Select a sector</option>
                         {SECTORS.map((s) => (
@@ -527,16 +552,16 @@ export default function Onboarding() {
                         ))}
                       </select>
                       {errors.sector && (
-                        <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
-                          <AlertCircle className="h-4 w-4" />
+                        <p className="text-sm text-destructive mt-1 flex items-center gap-1.5">
+                          <AlertCircle className="h-4 w-4 shrink-0" />
                           {errors.sector}
                         </p>
                       )}
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div data-error-key="companySize">
                       <Label
                         htmlFor="companySize"
                         className="text-sm font-medium"
@@ -554,9 +579,12 @@ export default function Onboarding() {
                             return newErrors;
                           });
                         }}
-                        className={`mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ${
-                          errors.companySize ? "border-red-500" : ""
-                        }`}
+                        className={cn(
+                          "mt-1.5",
+                          inputBaseClass,
+                          "cursor-pointer",
+                          errors.companySize && inputErrorClass
+                        )}
                       >
                         <option value="">Select company size</option>
                         <option value="small">Small (1-50 employees)</option>
@@ -568,8 +596,8 @@ export default function Onboarding() {
                         </option>
                       </select>
                       {errors.companySize && (
-                        <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
-                          <AlertCircle className="h-4 w-4" />
+                        <p className="text-sm text-destructive mt-1 flex items-center gap-1.5">
+                          <AlertCircle className="h-4 w-4 shrink-0" />
                           {errors.companySize}
                         </p>
                       )}
@@ -577,11 +605,11 @@ export default function Onboarding() {
                   </div>
 
                   <div>
-                    <h4 className="text-sm font-medium text-gray-700 mb-3">
+                    <h4 className="text-sm font-medium text-muted-foreground mb-3">
                       Location
                     </h4>
                     <div className="space-y-3">
-                      <div>
+                      <div data-error-key="country">
                         <Label
                           htmlFor="country"
                           className="text-sm font-medium"
@@ -600,20 +628,18 @@ export default function Onboarding() {
                             });
                           }}
                           placeholder="e.g., United States"
-                          className={`mt-1 ${
-                            errors.country ? "border-red-500" : ""
-                          }`}
+                          className={cn("mt-1.5", errors.country && inputErrorClass)}
                         />
                         {errors.country && (
-                          <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
-                            <AlertCircle className="h-4 w-4" />
+                          <p className="text-sm text-destructive mt-1 flex items-center gap-1.5">
+                            <AlertCircle className="h-4 w-4 shrink-0" />
                             {errors.country}
                           </p>
                         )}
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div data-error-key="state">
                           <Label
                             htmlFor="state"
                             className="text-sm font-medium"
@@ -632,19 +658,17 @@ export default function Onboarding() {
                               });
                             }}
                             placeholder="e.g., California"
-                            className={`mt-1 ${
-                              errors.state ? "border-red-500" : ""
-                            }`}
+                            className={cn("mt-1.5", errors.state && inputErrorClass)}
                           />
                           {errors.state && (
-                            <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
-                              <AlertCircle className="h-4 w-4" />
+                            <p className="text-sm text-destructive mt-1 flex items-center gap-1.5">
+                              <AlertCircle className="h-4 w-4 shrink-0" />
                               {errors.state}
                             </p>
                           )}
                         </div>
 
-                        <div>
+                        <div data-error-key="city">
                           <Label htmlFor="city" className="text-sm font-medium">
                             City
                           </Label>
@@ -660,13 +684,11 @@ export default function Onboarding() {
                               });
                             }}
                             placeholder="e.g., San Francisco"
-                            className={`mt-1 ${
-                              errors.city ? "border-red-500" : ""
-                            }`}
+                            className={cn("mt-1.5", errors.city && inputErrorClass)}
                           />
                           {errors.city && (
-                            <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
-                              <AlertCircle className="h-4 w-4" />
+                            <p className="text-sm text-destructive mt-1 flex items-center gap-1.5">
+                              <AlertCircle className="h-4 w-4 shrink-0" />
                               {errors.city}
                             </p>
                           )}
@@ -678,12 +700,10 @@ export default function Onboarding() {
                   <div>
                     <Label htmlFor="websiteUrl" className="text-sm font-medium">
                       Website URL{" "}
-                      <span className="text-gray-500 text-xs">(Optional)</span>
+                      <span className="text-muted-foreground text-xs">(Optional)</span>
                     </Label>
-                    <div
-                      className={`mt-1 flex items-center rounded-md border border-input bg-background overflow-hidden`}
-                    >
-                      <span className="px-3 py-2 text-sm font-medium text-muted-foreground bg-muted/30 border-r border-input whitespace-nowrap">
+                    <div className="mt-1.5 flex items-center rounded-md border border-input bg-background overflow-hidden ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 transition-shadow">
+                      <span className="px-3 py-2.5 text-sm font-medium text-muted-foreground bg-muted/30 border-r border-input whitespace-nowrap">
                         https://
                       </span>
                       <input
@@ -704,8 +724,8 @@ export default function Onboarding() {
                             return newErrors;
                           });
                         }}
-                        placeholder="example.com (you can skip this)"
-                        className="flex-1 px-3 py-2 text-sm bg-transparent outline-none"
+                        placeholder="example.com (optional)"
+                        className="flex-1 min-w-0 px-3 py-2 text-sm bg-transparent outline-none placeholder:text-muted-foreground"
                       />
                     </div>
                   </div>
@@ -713,51 +733,60 @@ export default function Onboarding() {
               </div>
 
               {/* AI Business Summary - Required */}
-              <div className="border-t pt-6">
+              <div data-error-key="aiSummary" className="border-t border-border pt-6">
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-gray-900">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <h3 className="text-base sm:text-lg font-semibold text-foreground">
                       AI Business Summary
                     </h3>
                     {summaryApproved && (
-                      <span className="flex items-center gap-1 text-sm text-green-600">
-                        <Check className="h-4 w-4" />
+                      <span className="flex items-center gap-1.5 text-sm text-green-600 font-medium">
+                        <Check className="h-4 w-4 shrink-0" />
                         Approved
                       </span>
                     )}
                   </div>
-                  <p className="text-sm text-gray-600">
-                    Is this an accurate description of your company?
+                  <p className="text-sm text-muted-foreground">
+                    Fill in the required fields above, then generate and approve a short description of your company.
                   </p>
 
                   {!aiSummary ? (
-                    <Button
-                      type="button"
-                      onClick={generateAISummary}
-                      disabled={generatingSummary}
-                      className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700"
-                    >
-                      <Sparkles className="h-4 w-4 mr-2" />
-                      {generatingSummary
-                        ? "Generating Summary..."
-                        : "Generate AI Summary"}
-                    </Button>
+                    <div className="space-y-2">
+                      <Button
+                        type="button"
+                        onClick={generateAISummary}
+                        disabled={generatingSummary || !canGenerateSummary}
+                        className="w-full min-h-[44px] sm:min-h-11 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white transition-all duration-200 disabled:opacity-60"
+                      >
+                        <Sparkles className="h-4 w-4 mr-2 shrink-0" />
+                        {generatingSummary
+                          ? "Generating Summary..."
+                          : canGenerateSummary
+                            ? "Generate AI Summary"
+                            : "Fill required fields above first"}
+                      </Button>
+                      {!canGenerateSummary && (
+                        <p className="text-xs text-muted-foreground">
+                          Company name, description, workers, sector, size, and location are required.
+                        </p>
+                      )}
+                    </div>
                   ) : (
                     <div className="space-y-3">
                       {editingSummary ? (
                         <textarea
                           value={aiSummary}
                           onChange={(e) => setAiSummary(e.target.value)}
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className={cn(inputBaseClass, "min-h-[100px] resize-y")}
                           rows={4}
                         />
                       ) : (
-                        <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                          <p className="text-sm text-gray-700">{aiSummary}</p>
+                        <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg transition-colors">
+                          <p className="text-sm text-foreground">{aiSummary}</p>
                         </div>
                       )}
 
-                      <div className="flex gap-2">
+                      <div className="flex flex-col sm:flex-row gap-2">
                         {!summaryApproved ? (
                           <>
                             <Button
@@ -771,18 +800,18 @@ export default function Onboarding() {
                                   return newErrors;
                                 });
                               }}
-                              className="flex-1 bg-green-600 hover:bg-green-700"
+                              className="flex-1 min-h-[44px] sm:min-h-10 bg-green-600 hover:bg-green-700 text-white transition-colors"
                             >
-                              <Check className="h-4 w-4 mr-2" />
+                              <Check className="h-4 w-4 mr-2 shrink-0" />
                               Approve
                             </Button>
                             <Button
                               type="button"
                               onClick={() => setEditingSummary(!editingSummary)}
                               variant="outline"
-                              className="flex-1"
+                              className="flex-1 min-h-[44px] sm:min-h-10"
                             >
-                              <Edit2 className="h-4 w-4 mr-2" />
+                              <Edit2 className="h-4 w-4 mr-2 shrink-0" />
                               {editingSummary ? "Cancel" : "Edit"}
                             </Button>
                           </>
@@ -795,9 +824,9 @@ export default function Onboarding() {
                                 setEditingSummary(true);
                               }}
                               variant="outline"
-                              className="flex-1"
+                              className="flex-1 min-h-[44px] sm:min-h-10"
                             >
-                              <Edit2 className="h-4 w-4 mr-2" />
+                              <Edit2 className="h-4 w-4 mr-2 shrink-0" />
                               Edit
                             </Button>
                             <Button
@@ -808,7 +837,7 @@ export default function Onboarding() {
                                 setEditingSummary(false);
                               }}
                               variant="outline"
-                              className="flex-1"
+                              className="flex-1 min-h-[44px] sm:min-h-10"
                             >
                               Regenerate
                             </Button>
@@ -819,8 +848,8 @@ export default function Onboarding() {
                   )}
 
                   {errors.aiSummary && (
-                    <p className="text-sm text-red-500 flex items-center gap-1">
-                      <AlertCircle className="h-4 w-4" />
+                    <p className="text-sm text-destructive flex items-center gap-1.5">
+                      <AlertCircle className="h-4 w-4 shrink-0" />
                       {errors.aiSummary}
                     </p>
                   )}
@@ -828,85 +857,101 @@ export default function Onboarding() {
               </div>
 
               {/* Currency Format - Required */}
-              <div className="border-t pt-6">
-                <div className="space-y-4">
-                  <div>
-                    <Label
-                      htmlFor="currencyFormat"
-                      className="text-sm font-medium"
-                    >
-                      Currency Format{" "}
-                      <span className="text-red-500">*</span>
-                    </Label>
-                    <p className="text-xs text-gray-500 mt-1 mb-3">
-                      Choose how you want to select your currency
-                    </p>
-                    <div className="grid grid-cols-2 gap-3">
-                      {errors.currencyFormat && (
-                        <p className="col-span-2 text-sm text-red-500 mb-2 flex items-center gap-1">
-                          <AlertCircle className="h-4 w-4" />
-                          {errors.currencyFormat}
-                        </p>
-                      )}
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setCurrencyFormat("international");
-                          setCurrencyPreference("USD");
-                        }}
-                        className={`p-3 rounded-lg border-2 transition-all text-sm font-medium ${
-                          currencyFormat === "international"
-                            ? "border-blue-500 bg-blue-50 text-blue-900"
-                            : "border-gray-200 bg-white hover:border-gray-300 text-gray-700"
-                        }`}
-                      >
-                        🌍 International
-                        <p className="text-xs font-normal text-gray-600 mt-1">
-                          Dollars & Euros
-                        </p>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setCurrencyFormat("national");
-                          setCurrencyPreference("USD");
-                        }}
-                        className={`p-3 rounded-lg border-2 transition-all text-sm font-medium ${
-                          currencyFormat === "national"
-                            ? "border-blue-500 bg-blue-50 text-blue-900"
-                            : "border-gray-200 bg-white hover:border-gray-300 text-gray-700"
-                        }`}
-                      >
-                        🗺️ National
-                        <p className="text-xs font-normal text-gray-600 mt-1">
-                          All currencies
-                        </p>
-                      </button>
-                    </div>
-                  </div>
-
-                  <div>
-                    <Label
-                      htmlFor="currencyPreference"
-                      className="text-sm font-medium"
-                    >
-                      Select Currency{" "}
-                      <span className="text-red-500">*</span>
-                    </Label>
-                    {errors.currencyPreference && (
-                      <p className="text-sm text-red-500 mt-1 mb-2 flex items-center gap-1">
-                        <AlertCircle className="h-4 w-4" />
-                        {errors.currencyPreference}
+              <div className="border-t border-border pt-6 space-y-4">
+                <div data-error-key="currencyFormat">
+                  <Label className="text-sm font-medium">
+                    Currency Format <span className="text-destructive">*</span>
+                  </Label>
+                  <p className="text-xs text-muted-foreground mt-1 mb-3">
+                    Choose how you want to select your currency
+                  </p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {errors.currencyFormat && (
+                      <p className="col-span-full text-sm text-destructive mb-2 flex items-center gap-1.5">
+                        <AlertCircle className="h-4 w-4 shrink-0" />
+                        {errors.currencyFormat}
                       </p>
                     )}
-                    <select
-                      id="currencyPreference"
-                      value={currencyPreference}
-                      onChange={(e) =>
-                        setCurrencyPreference(e.target.value)
-                      }
-                      className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCurrencyFormat("international");
+                        setCurrencyPreference("USD");
+                        setErrors((prev) => {
+                          const next = { ...prev };
+                          delete next.currencyFormat;
+                          return next;
+                        });
+                      }}
+                      className={cn(
+                        "p-3 sm:p-4 rounded-lg border-2 min-h-[72px] sm:min-h-[80px] transition-all duration-200 text-left text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                        currencyFormat === "international"
+                          ? "border-primary bg-primary/10 text-primary"
+                          : "border-border bg-card hover:border-muted-foreground/30 text-foreground"
+                      )}
                     >
+                      <span className="block">🌍 International</span>
+                      <span className="text-xs font-normal text-muted-foreground mt-1 block">
+                        Dollars & Euros
+                      </span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCurrencyFormat("national");
+                        setCurrencyPreference("USD");
+                        setErrors((prev) => {
+                          const next = { ...prev };
+                          delete next.currencyFormat;
+                          return next;
+                        });
+                      }}
+                      className={cn(
+                        "p-3 sm:p-4 rounded-lg border-2 min-h-[72px] sm:min-h-[80px] transition-all duration-200 text-left text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                        currencyFormat === "national"
+                          ? "border-primary bg-primary/10 text-primary"
+                          : "border-border bg-card hover:border-muted-foreground/30 text-foreground"
+                      )}
+                    >
+                      <span className="block">🗺️ National</span>
+                      <span className="text-xs font-normal text-muted-foreground mt-1 block">
+                        All currencies
+                      </span>
+                    </button>
+                  </div>
+                </div>
+
+                <div data-error-key="currencyPreference">
+                  <Label
+                    htmlFor="currencyPreference"
+                    className="text-sm font-medium"
+                  >
+                    Select Currency <span className="text-destructive">*</span>
+                  </Label>
+                  {errors.currencyPreference && (
+                    <p className="text-sm text-destructive mt-1 mb-2 flex items-center gap-1.5">
+                      <AlertCircle className="h-4 w-4 shrink-0" />
+                      {errors.currencyPreference}
+                    </p>
+                  )}
+                  <select
+                    id="currencyPreference"
+                    value={currencyPreference}
+                    onChange={(e) => {
+                      setCurrencyPreference(e.target.value);
+                      setErrors((prev) => {
+                        const next = { ...prev };
+                        delete next.currencyPreference;
+                        return next;
+                      });
+                    }}
+                    className={cn(
+                      "mt-1.5",
+                      inputBaseClass,
+                      "cursor-pointer",
+                      errors.currencyPreference && inputErrorClass
+                    )}
+                  >
                       {currencyFormat === "international"
                         ? INTERNATIONAL_CURRENCIES.map((curr) => (
                             <option key={curr.code} value={curr.code}>
@@ -919,32 +964,42 @@ export default function Onboarding() {
                             </option>
                           ))}
                     </select>
-                    <p className="text-xs text-gray-500 mt-1">
-                      {currencyFormat === "international"
-                        ? "Choose between USD or EUR"
-                        : `${NATIONAL_CURRENCIES.length} currencies available`}
-                    </p>
-                  </div>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    {currencyFormat === "international"
+                      ? "Choose between USD or EUR"
+                      : `${NATIONAL_CURRENCIES.length} currencies available`}
+                  </p>
                 </div>
               </div>
 
               {/* Optional Fields Toggle */}
-              <div className="border-t pt-6">
+              <div className="border-t border-border pt-6">
                 <button
                   type="button"
                   onClick={() => setShowOptional(!showOptional)}
-                  className="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1"
+                  aria-expanded={showOptional}
+                  className="flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/90 transition-colors py-1 -ml-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-h-[44px] sm:min-h-0"
                 >
-                  {showOptional ? "▼" : "▶"} Optional Information
+                  {showOptional ? (
+                    <ChevronDown className="h-4 w-4 shrink-0" />
+                  ) : (
+                    <ChevronRight className="h-4 w-4 shrink-0" />
+                  )}
+                  Optional Information
                 </button>
 
-                {showOptional && (
-                  <div className="mt-4 space-y-4 p-4 bg-blue-50 rounded-lg">
-                    <p className="text-xs text-gray-600">
-                      These fields are optional and can be filled in later
+                <div
+                  className={cn(
+                    "overflow-hidden transition-all duration-200 ease-out",
+                    showOptional ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
+                  )}
+                >
+                  <div className="mt-4 space-y-4 p-4 bg-muted/50 rounded-lg border border-border">
+                    <p className="text-xs text-muted-foreground">
+                      These fields are optional and can be filled in later.
                     </p>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <Label htmlFor="email" className="text-sm font-medium">
                           Email Address (Optional)
@@ -1002,7 +1057,7 @@ export default function Onboarding() {
                         id="language"
                         value={language}
                         onChange={(e) => setLanguage(e.target.value)}
-                        className="mt-1 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                        className={cn("mt-1.5", inputBaseClass, "cursor-pointer")}
                       >
                         {LANGUAGES.map((lang) => (
                           <option key={lang} value={lang}>
@@ -1053,33 +1108,31 @@ export default function Onboarding() {
                         </label>
                       </div>
                       {errors.logo && (
-                        <p className="text-sm text-red-500 mt-1 flex items-center gap-1">
-                          <AlertCircle className="h-4 w-4" />
+                        <p className="text-sm text-destructive mt-1 flex items-center gap-1.5">
+                          <AlertCircle className="h-4 w-4 shrink-0" />
                           {errors.logo}
                         </p>
                       )}
                     </div>
                   </div>
-                )}
+                </div>
               </div>
 
               {/* Form Actions */}
-              <div className="flex gap-3 pt-6 border-t">
+              <div className="flex flex-col gap-3 pt-6 border-t border-border">
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700"
+                  className="w-full min-h-[48px] sm:min-h-11 bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-all duration-200 disabled:opacity-70"
                 >
                   {loading
                     ? "Setting up your company..."
                     : "Complete Setup & Continue"}
                 </Button>
+                <p className="text-xs text-muted-foreground text-center">
+                  You can update all of this information later in company settings.
+                </p>
               </div>
-
-              <p className="text-xs text-gray-600 text-center">
-                You can update all of this information later in your company
-                settings.
-              </p>
             </form>
           </CardContent>
         </Card>
