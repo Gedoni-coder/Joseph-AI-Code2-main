@@ -49,125 +49,81 @@ model User {
 // ─── Financial Advisory ───────────────────────────────────────────────────────
 
 model FinancialAdvisory {
+  businessForecasts BusinessForecast[]
+}
+
+// ─── Business Forecasting ─────────────────────────────────────────────────────
+
+model BusinessForecast {
   id String @id @default(uuid())
   user_id String
   user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  total_financial_health_score    Float  @default(0)
-  profitability_trend             String @default("")
-  liquidity_score                 Float  @default(0)
-  debt_to_equity_ratio            Float  @default(0)
-  cash_flow_health                String @default("")
+  // Headline KPIs
+  annual_revenue_target      Float  @default(0)
+  customer_segments_count    Int    @default(0)
+  kpis_tracked_count         Int    @default(0)
+  scenarios_modeled_count    Int    @default(0)
+  total_demand_units         Int    @default(0)
+  average_order_value        Float  @default(0)
+  total_revenue_target       Float  @default(0)
+  avg_confidence             Float  @default(0)
+  potential_upside           Float  @default(0)
+  total_market_opportunity   Float  @default(0)
+  weighted_avg_growth        Float  @default(0)
+  overall_retention          Float  @default(0)
 
-  financial_forecasts             String @default("[]")
-  budget_recommendations          String @default("[]")
-  cost_optimization_opportunities String @default("[]")
-  investment_opportunities        String @default("[]")
-  financial_risk_assessment       String @default("[]")
-  tax_optimization_strategies     String @default("[]")
-  working_capital_management      String @default("[]")
-  financial_planning_roadmap      String @default("[]")
+  // Enterprise segment
+  enterprise_units           Int    @default(0)
+  enterprise_growth_rate     Float  @default(0)
+  enterprise_retention       Float  @default(0)
+  enterprise_avg_order       Float  @default(0)
+  enterprise_seasonality     Float  @default(0)
+  enterprise_revenue_potential Float @default(0)
+
+  // SMB segment
+  smb_units                  Int    @default(0)
+  smb_growth_rate            Float  @default(0)
+  smb_retention              Float  @default(0)
+  smb_avg_order              Float  @default(0)
+  smb_seasonality            Float  @default(0)
+  smb_revenue_potential      Float  @default(0)
+
+  // Q1 2025
+  q1_projected_revenue       Float  @default(0)
+  q1_actual_to_date          Float  @default(0)
+  q1_scenario_min            Float  @default(0)
+  q1_scenario_max            Float  @default(0)
+  q1_confidence              String @default("Medium")
+
+  // Q2 2025
+  q2_projected_revenue       Float  @default(0)
+  q2_actual_to_date          Float  @default(0)
+  q2_scenario_min            Float  @default(0)
+  q2_scenario_max            Float  @default(0)
+  q2_confidence              String @default("Medium")
+
+  // Q3 2025
+  q3_projected_revenue       Float  @default(0)
+  q3_actual_to_date          Float  @default(0)
+  q3_scenario_min            Float  @default(0)
+  q3_scenario_max            Float  @default(0)
+  q3_confidence              String @default("Medium")
+
+  // Q4 2025
+  q4_projected_revenue       Float  @default(0)
+  q4_actual_to_date          Float  @default(0)
+  q4_scenario_min            Float  @default(0)
+  q4_scenario_max            Float  @default(0)
+  q4_confidence              String @default("Medium")
+
+  // JSON arrays
+  kpis               String @default("[]")
+  forecast_scenarios String @default("[]")
+  documents          String @default("[]")
 
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  @@index([user_id])
-}
-
-model BudgetForecastRecord {
-  id           String   @id @default(uuid())
-  user_id      String
-  user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  period       String
-  type         String   @default("quarterly")
-  revenue      Float    @default(0)
-  expenses     Float    @default(0)
-  net_income   Float    @default(0)
-  confidence   Float    @default(85)
-  variance     Float    @default(0)
-  assumptions  String   @default("[]")
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now())
-  @@index([user_id])
-}
-
-model CashFlowProjectionRecord {
-  id           String   @id @default(uuid())
-  user_id      String
-  user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  period       String
-  inflows      Float    @default(0)
-  outflows     Float    @default(0)
-  net_cash     Float    @default(0)
-  cumulative   Float    @default(0)
-  category     String   @default("")
-  notes        String   @default("")
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now())
-  @@index([user_id])
-}
-
-model ScenarioTestRecord {
-  id           String   @id @default(uuid())
-  user_id      String
-  user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  name         String
-  description  String   @default("")
-  status       String   @default("pending")
-  impact       String   @default("medium")
-  probability  Float    @default(0)
-  assumptions  String   @default("[]")
-  results      String   @default("{}")
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now())
-  @@index([user_id])
-}
-
-model RiskAssessmentRecord {
-  id           String   @id @default(uuid())
-  user_id      String
-  user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  title        String
-  category     String   @default("")
-  severity     String   @default("medium")
-  probability  Float    @default(0)
-  impact       String   @default("medium")
-  status       String   @default("identified")
-  description  String   @default("")
-  mitigation   String   @default("")
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now())
-  @@index([user_id])
-}
-
-model AdvisoryInsightRecord {
-  id           String   @id @default(uuid())
-  user_id      String
-  user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  title        String
-  category     String   @default("")
-  priority     String   @default("medium")
-  status       String   @default("pending")
-  description  String   @default("")
-  action_items String   @default("[]")
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now())
-  @@index([user_id])
-}
-
-model PerformanceDriverRecord {
-  id           String   @id @default(uuid())
-  user_id      String
-  user         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  name         String
-  category     String   @default("")
-  current      Float    @default(0)
-  target       Float    @default(0)
-  unit         String   @default("")
-  trend        String   @default("stable")
-  impact       String   @default("medium")
-  description  String   @default("")
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now())
   @@index([user_id])
 }

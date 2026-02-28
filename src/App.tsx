@@ -52,6 +52,7 @@ import ComplianceReports from "./pages/ComplianceReports";
 import AuditReports from "./pages/AuditReports";
 import AuditTrail from "./pages/AuditTrail";
 import DocumentUpload from "./pages/DocumentUpload";
+import DocumentProcessing from "./pages/DocumentProcessing";
 import NotFound from "./pages/NotFound";
 import Infrastructure from "./pages/Infrastructure";
 import Networks from "./pages/infrastructure/Networks";
@@ -88,6 +89,7 @@ import ChatbotTest from "./pages/ChatbotTest";
 import { useCompanyInfo } from "./lib/company-context";
 import { AuthProvider } from "./lib/auth-context";
 import { useSyncCurrency } from "./hooks/useSyncCurrency";
+import { AgentCredits } from "./components/agent-credits";
 
 const queryClient = new QueryClient();
 
@@ -465,6 +467,7 @@ function AppContent() {
       <>
         {!isLandingPage && (
           <>
+            <AgentCredits creditBalance={1500} />
             <MobileNav
               conversationalMode={conversationalMode}
               onConversationalModeChange={handleConversationalModeChange}
@@ -596,6 +599,7 @@ function AppContent() {
           <Route path="/audit-reports" element={<AuditReports />} />
           <Route path="/audit-trail" element={<AuditTrail />} />
           <Route path="/document-upload" element={<DocumentUpload />} />
+          <Route path="/document-processing" element={<DocumentProcessing />} />
 
           {/* Legacy routes for backward compatibility */}
           <Route path="/pricing-strategy" element={<PricingStrategy />} />
