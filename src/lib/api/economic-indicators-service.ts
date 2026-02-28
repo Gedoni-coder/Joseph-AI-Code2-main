@@ -1,13 +1,12 @@
 /**
  * Economic Indicators Service
- * XANO DISCONNECTED - All API calls have been disabled
- * Functions return empty data only
+ * Calls /api/economic/indicators on the Node.js/Express backend.
  */
+import { apiGet, apiPost, apiPatch, apiDelete } from "./apiClient";
 
 export interface EconomicIndicatorData {
-  id: number;
-  created_at: string;
-  account_id: number;
+  id: string;
+  user_id: string;
   gdp_growth_rate: number;
   inflation_rate: number;
   unemployment_rate: number;
@@ -23,51 +22,36 @@ export interface EconomicIndicatorData {
   trends: string[];
   impact_analysis: string[];
   alerts: string[];
+  created_at: string;
+  updated_at: string;
 }
 
-export type EconomicIndicatorCreateData = Omit<EconomicIndicatorData, "id" | "created_at">;
+export type EconomicIndicatorCreateData = Omit<EconomicIndicatorData, "id" | "user_id" | "created_at" | "updated_at">;
 export type EconomicIndicatorUpdateData = Partial<EconomicIndicatorCreateData>;
 
-/**
- * Get all economic indicator records
- * XANO DISCONNECTED - Returns empty array
- */
+const BASE = "/api/economic/indicators";
+
 export async function getEconomicIndicatorRecords(): Promise<EconomicIndicatorData[]> {
-  console.debug("[XANO DISCONNECTED] getEconomicIndicatorRecords blocked");
-  return [];
+  return apiGet<EconomicIndicatorData[]>(BASE);
 }
 
-/**
- * Get a specific economic indicator record by ID
- * XANO DISCONNECTED - Returns empty object
- */
-export async function getEconomicIndicator(id: number): Promise<EconomicIndicatorData> {
-  console.debug(`[XANO DISCONNECTED] getEconomicIndicator blocked for ID: ${id}`);
-  return {} as EconomicIndicatorData;
+export async function getEconomicIndicator(id: string): Promise<EconomicIndicatorData> {
+  return apiGet<EconomicIndicatorData>(`${BASE}/${id}`);
 }
 
-/**
- * Create a new economic indicator record
- * XANO DISCONNECTED - Returns empty object
- */
-export async function createEconomicIndicator(data: EconomicIndicatorCreateData): Promise<EconomicIndicatorData> {
-  console.debug("[XANO DISCONNECTED] createEconomicIndicator blocked");
-  return {} as EconomicIndicatorData;
+export async function createEconomicIndicator(
+  data: EconomicIndicatorCreateData,
+): Promise<EconomicIndicatorData> {
+  return apiPost<EconomicIndicatorData>(BASE, data);
 }
 
-/**
- * Update an existing economic indicator record
- * XANO DISCONNECTED - Returns empty object
- */
-export async function updateEconomicIndicator(id: number, data: EconomicIndicatorUpdateData): Promise<EconomicIndicatorData> {
-  console.debug(`[XANO DISCONNECTED] updateEconomicIndicator blocked for ID: ${id}`);
-  return {} as EconomicIndicatorData;
+export async function updateEconomicIndicator(
+  id: string,
+  data: EconomicIndicatorUpdateData,
+): Promise<EconomicIndicatorData> {
+  return apiPatch<EconomicIndicatorData>(`${BASE}/${id}`, data);
 }
 
-/**
- * Delete an economic indicator record
- * XANO DISCONNECTED - Does nothing
- */
-export async function deleteEconomicIndicator(id: number): Promise<void> {
-  console.debug(`[XANO DISCONNECTED] deleteEconomicIndicator blocked for ID: ${id}`);
+export async function deleteEconomicIndicator(id: string): Promise<void> {
+  return apiDelete(`${BASE}/${id}`);
 }
