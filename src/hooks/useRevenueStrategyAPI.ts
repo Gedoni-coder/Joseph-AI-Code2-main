@@ -1,6 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getRevenueStrategies,
+  addRevenueStream,
+  updateRevenueStream,
+  deleteRevenueStream,
   RevenueStrategyData,
 } from "@/lib/api/revenue-strategy-service";
 
@@ -20,12 +23,7 @@ interface TransformedRevenueData {
   lastUpdated: Date;
 }
 
-/**
- * Transform Xano API response to component-ready data structures
- */
-function transformRevenueStrategyData(
-  data: RevenueStrategyData[]
-): TransformedRevenueData {
+function transformRevenueStrategyData(data: RevenueStrategyData[]): TransformedRevenueData {
   if (!data || data.length === 0) {
     return {
       monthlyRecurringRevenue: 0,
@@ -43,9 +41,7 @@ function transformRevenueStrategyData(
       lastUpdated: new Date(),
     };
   }
-
   const record = data[0];
-
   return {
     monthlyRecurringRevenue: record.monthly_recurring_revenue,
     annualContractValue: record.annual_contract_value,
@@ -63,19 +59,21 @@ function transformRevenueStrategyData(
   };
 }
 
-/**
- * Hook to fetch and transform revenue strategy data
- */
 export function useRevenueStrategyAPI() {
+  const queryClient = useQueryClient();
+
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["revenue-strategy"],
     queryFn: () => getRevenueStrategies(),
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
     retry: 2,
   });
 
   const transformed = transformRevenueStrategyData(data || []);
+
+  const invalidate = () =>
+    queryClient.invalidateQueries({ queryKey: ["revenue-strategy"] });
 
   return {
     ...transformed,
@@ -83,5 +81,43 @@ export function useRevenueStrategyAPI() {
     error: error ? (error as Error).message : null,
     refreshData: () => refetch(),
     reconnect: () => refetch(),
+
+    /** Add a new revenue stream via the API (replaces local-state-only mutation) */
+    onAddStream: async (streamData: {
+      name: string;
+      type?: string;
+      currentRevenue?: number;
+      projectedGrowth?: number;
+      margin?: number;
+      status?: string;
+      description?: string;
+    }) => {
+      await addRevenueStream({
+        name: streamData.name,
+        type: streamData.type ?? "subscription",
+        current_revenue: streamData.currentRevenue ?? 0,
+        projected_growth: streamData.projectedGrowth ?? 0,
+        margin: streamData.margin ?? 0,
+        status: streamData.status ?? "active",
+        description: streamData.description ?? "",
+        tags: [],
+      });
+      invalidate();
+    },
+
+    /** Update an existing revenue stream */
+    onUpdateStream: async (
+      id: string,
+      updates: { name?: string; status?: string; current_revenue?: number },
+    ) => {
+      await updateRevenueStream(id, updates);
+      invalidate();
+    },
+
+    /** Remove a revenue stream */
+    onDeleteStream: async (id: string) => {
+      await deleteRevenueStream(id);
+      invalidate();
+    },
   };
 }
