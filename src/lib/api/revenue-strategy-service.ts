@@ -1,13 +1,14 @@
 /**
  * Revenue Strategy Service
- * XANO DISCONNECTED - All API calls have been disabled
- * Functions return empty data only
+ * Calls /api/revenue on the Node.js/Express backend.
  */
+import { apiGet, apiPost, apiPatch, apiDelete } from "./apiClient";
+
+// ─── Revenue Strategy Summary ─────────────────────────────────────────────────
 
 export interface RevenueStrategyData {
-  id: number;
-  created_at: string;
-  account_id: number;
+  id: string;
+  user_id: string;
   monthly_recurring_revenue: number;
   annual_contract_value: number;
   customer_lifetime_value: number;
@@ -27,51 +28,65 @@ export interface RevenueStrategyData {
   revenue_forecasting: string[];
   churn_analysis: string[];
   upsell_opportunities: string[];
+  created_at: string;
+  updated_at: string;
 }
 
-export type RevenueStrategyCreateData = Omit<RevenueStrategyData, "id" | "created_at">;
+export type RevenueStrategyCreateData = Omit<RevenueStrategyData, "id" | "user_id" | "created_at" | "updated_at">;
 export type RevenueStrategyUpdateData = Partial<RevenueStrategyCreateData>;
 
-/**
- * Get all revenue strategies
- * XANO DISCONNECTED - Returns empty array
- */
+const STRATEGY_BASE = "/api/revenue/strategies";
+
 export async function getRevenueStrategies(): Promise<RevenueStrategyData[]> {
-  console.debug("[XANO DISCONNECTED] getRevenueStrategies blocked");
-  return [];
+  return apiGet<RevenueStrategyData[]>(STRATEGY_BASE);
 }
 
-/**
- * Get a specific revenue strategy by ID
- * XANO DISCONNECTED - Returns empty object
- */
-export async function getRevenueStrategy(id: number): Promise<RevenueStrategyData> {
-  console.debug(`[XANO DISCONNECTED] getRevenueStrategy blocked for ID: ${id}`);
-  return {} as RevenueStrategyData;
+export async function getRevenueStrategy(id: string): Promise<RevenueStrategyData> {
+  return apiGet<RevenueStrategyData>(`${STRATEGY_BASE}/${id}`);
 }
 
-/**
- * Create a new revenue strategy
- * XANO DISCONNECTED - Returns empty object
- */
 export async function createRevenueStrategy(data: RevenueStrategyCreateData): Promise<RevenueStrategyData> {
-  console.debug("[XANO DISCONNECTED] createRevenueStrategy blocked");
-  return {} as RevenueStrategyData;
+  return apiPost<RevenueStrategyData>(STRATEGY_BASE, data);
 }
 
-/**
- * Update an existing revenue strategy
- * XANO DISCONNECTED - Returns empty object
- */
-export async function updateRevenueStrategy(id: number, data: RevenueStrategyUpdateData): Promise<RevenueStrategyData> {
-  console.debug(`[XANO DISCONNECTED] updateRevenueStrategy blocked for ID: ${id}`);
-  return {} as RevenueStrategyData;
+export async function updateRevenueStrategy(id: string, data: RevenueStrategyUpdateData): Promise<RevenueStrategyData> {
+  return apiPatch<RevenueStrategyData>(`${STRATEGY_BASE}/${id}`, data);
 }
 
-/**
- * Delete a revenue strategy
- * XANO DISCONNECTED - Does nothing
- */
-export async function deleteRevenueStrategy(id: number): Promise<void> {
-  console.debug(`[XANO DISCONNECTED] deleteRevenueStrategy blocked for ID: ${id}`);
+// ─── Revenue Streams ──────────────────────────────────────────────────────────
+
+export interface RevenueStreamData {
+  id: string;
+  user_id: string;
+  name: string;
+  type: string;
+  current_revenue: number;
+  projected_growth: number;
+  margin: number;
+  status: string;
+  description: string;
+  tags: string[];
+  created_at: string;
+  updated_at: string;
+}
+
+export type RevenueStreamCreateData = Omit<RevenueStreamData, "id" | "user_id" | "created_at" | "updated_at">;
+export type RevenueStreamUpdateData = Partial<RevenueStreamCreateData>;
+
+const STREAM_BASE = "/api/revenue/streams";
+
+export async function getRevenueStreams(): Promise<RevenueStreamData[]> {
+  return apiGet<RevenueStreamData[]>(STREAM_BASE);
+}
+
+export async function addRevenueStream(data: RevenueStreamCreateData): Promise<RevenueStreamData> {
+  return apiPost<RevenueStreamData>(STREAM_BASE, data);
+}
+
+export async function updateRevenueStream(id: string, data: RevenueStreamUpdateData): Promise<RevenueStreamData> {
+  return apiPatch<RevenueStreamData>(`${STREAM_BASE}/${id}`, data);
+}
+
+export async function deleteRevenueStream(id: string): Promise<void> {
+  return apiDelete(`${STREAM_BASE}/${id}`);
 }
