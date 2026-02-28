@@ -37,6 +37,18 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
+  financialAdvisory    FinancialAdvisory[]
+  budgetForecasts      BudgetForecastRecord[]
+  cashFlowProjections  CashFlowProjectionRecord[]
+  scenarioTests        ScenarioTestRecord[]
+  riskAssessments      RiskAssessmentRecord[]
+  advisoryInsights     AdvisoryInsightRecord[]
+  performanceDrivers   PerformanceDriverRecord[]
+}
+
+// ─── Financial Advisory ───────────────────────────────────────────────────────
+
+model FinancialAdvisory {
   businessForecasts BusinessForecast[]
 }
 
