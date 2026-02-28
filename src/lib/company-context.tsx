@@ -21,6 +21,7 @@ export interface CompanyInfo {
   logo?: string;
   language?: string;
   numberOfEntities?: number;
+  aiSummary?: string;
 }
 
 interface CompanyContextType {
