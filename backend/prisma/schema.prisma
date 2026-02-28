@@ -37,6 +37,13 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
+  revenueStrategies RevenueStrategy[]
+  revenueStreams     RevenueStream[]
+}
+
+// ─── Revenue Strategy ─────────────────────────────────────────────────────────
+
+model RevenueStrategy {
   financialAdvisory    FinancialAdvisory[]
   budgetForecasts      BudgetForecastRecord[]
   cashFlowProjections  CashFlowProjectionRecord[]
