@@ -37,36 +37,93 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @default(now())
 
-  economicIndicators EconomicIndicator[]
+  financialAdvisory    FinancialAdvisory[]
+  budgetForecasts      BudgetForecastRecord[]
+  cashFlowProjections  CashFlowProjectionRecord[]
+  scenarioTests        ScenarioTestRecord[]
+  riskAssessments      RiskAssessmentRecord[]
+  advisoryInsights     AdvisoryInsightRecord[]
+  performanceDrivers   PerformanceDriverRecord[]
 }
 
-// ─── Economic Forecasting ────────────────────────────────────────────────────
+// ─── Financial Advisory ───────────────────────────────────────────────────────
 
-model EconomicIndicator {
-  id                  String   @id @default(uuid())
-  user_id             String
-  user                User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+model FinancialAdvisory {
+  businessForecasts BusinessForecast[]
+}
 
-  gdp_growth_rate     Float    @default(0)
-  inflation_rate      Float    @default(0)
-  unemployment_rate   Float    @default(0)
-  interest_rates      Float    @default(0)
-  exchange_rates      Float    @default(0)
-  consumer_confidence Float    @default(0)
-  stock_market_index  Float    @default(0)
-  commodity_prices    Float    @default(0)
-  housing_index       Float    @default(0)
-  trade_balance       Float    @default(0)
+// ─── Business Forecasting ─────────────────────────────────────────────────────
 
-  /// JSON arrays stored as strings
-  economic_news       String   @default("[]")
-  forecasts           String   @default("[]")
-  trends              String   @default("[]")
-  impact_analysis     String   @default("[]")
-  alerts              String   @default("[]")
+model BusinessForecast {
+  id String @id @default(uuid())
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  created_at          DateTime @default(now())
-  updated_at          DateTime @default(now())
+  // Headline KPIs
+  annual_revenue_target      Float  @default(0)
+  customer_segments_count    Int    @default(0)
+  kpis_tracked_count         Int    @default(0)
+  scenarios_modeled_count    Int    @default(0)
+  total_demand_units         Int    @default(0)
+  average_order_value        Float  @default(0)
+  total_revenue_target       Float  @default(0)
+  avg_confidence             Float  @default(0)
+  potential_upside           Float  @default(0)
+  total_market_opportunity   Float  @default(0)
+  weighted_avg_growth        Float  @default(0)
+  overall_retention          Float  @default(0)
+
+  // Enterprise segment
+  enterprise_units           Int    @default(0)
+  enterprise_growth_rate     Float  @default(0)
+  enterprise_retention       Float  @default(0)
+  enterprise_avg_order       Float  @default(0)
+  enterprise_seasonality     Float  @default(0)
+  enterprise_revenue_potential Float @default(0)
+
+  // SMB segment
+  smb_units                  Int    @default(0)
+  smb_growth_rate            Float  @default(0)
+  smb_retention              Float  @default(0)
+  smb_avg_order              Float  @default(0)
+  smb_seasonality            Float  @default(0)
+  smb_revenue_potential      Float  @default(0)
+
+  // Q1 2025
+  q1_projected_revenue       Float  @default(0)
+  q1_actual_to_date          Float  @default(0)
+  q1_scenario_min            Float  @default(0)
+  q1_scenario_max            Float  @default(0)
+  q1_confidence              String @default("Medium")
+
+  // Q2 2025
+  q2_projected_revenue       Float  @default(0)
+  q2_actual_to_date          Float  @default(0)
+  q2_scenario_min            Float  @default(0)
+  q2_scenario_max            Float  @default(0)
+  q2_confidence              String @default("Medium")
+
+  // Q3 2025
+  q3_projected_revenue       Float  @default(0)
+  q3_actual_to_date          Float  @default(0)
+  q3_scenario_min            Float  @default(0)
+  q3_scenario_max            Float  @default(0)
+  q3_confidence              String @default("Medium")
+
+  // Q4 2025
+  q4_projected_revenue       Float  @default(0)
+  q4_actual_to_date          Float  @default(0)
+  q4_scenario_min            Float  @default(0)
+  q4_scenario_max            Float  @default(0)
+  q4_confidence              String @default("Medium")
+
+  // JSON arrays
+  kpis               String @default("[]")
+  forecast_scenarios String @default("[]")
+  documents          String @default("[]")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
 
   @@index([user_id])
 }

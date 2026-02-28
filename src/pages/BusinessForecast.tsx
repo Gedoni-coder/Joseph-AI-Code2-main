@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,7 @@ import { BusinessMetricsTable } from "@/components/business/business-metrics-tab
 import { FinancialLayout } from "@/components/business/financial-layout";
 import { DocumentsSection } from "@/components/business/documents-section";
 import { SummaryRecommendationSection } from "@/components/module/summary-recommendation-section";
+import { RevenueTargetsModal, type RevenueTargets } from "@/components/business/revenue-targets-modal";
 import {
   costStructure as mockCosts,
   cashFlowForecast as mockCashFlow,
@@ -78,6 +79,38 @@ const BusinessForecast = () => {
     reconnect,
   } = useBusinessForecastingData();
 
+  // Revenue targets state
+  const [showRevenueModal, setShowRevenueModal] = useState(false);
+  const [revenueTargets, setRevenueTargets] = useState<RevenueTargets | null>(null);
+
+  // Load revenue targets from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("joseph:revenueTargets");
+    if (saved) {
+      try {
+        setRevenueTargets(JSON.parse(saved));
+      } catch (error) {
+        console.error("Failed to load revenue targets:", error);
+      }
+    }
+  }, []);
+
+  // Auto-popup modal for new users (3 seconds after page load)
+  useEffect(() => {
+    const isNewUser = !localStorage.getItem("joseph:revenueTargets");
+    if (isNewUser) {
+      const timer = setTimeout(() => {
+        setShowRevenueModal(true);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  const handleSaveRevenueTargets = (targets: RevenueTargets) => {
+    setRevenueTargets(targets);
+    localStorage.setItem("joseph:revenueTargets", JSON.stringify(targets));
+  };
+
   const handleRefresh = async () => {
     await refreshData();
   };
@@ -99,20 +132,26 @@ const BusinessForecast = () => {
         <main className="container mx-auto px-3 sm:px-4 md:px-6 lg:px-8 py-4 sm:py-6 md:py-8 space-y-6 sm:space-y-8">
           {/* Quick Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            <Card>
+            <Card className="hover:shadow-md transition-shadow cursor-pointer"
+              onClick={() => setShowRevenueModal(true)}>
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-economic-positive/10 rounded-lg">
                     <DollarSign className="h-5 w-5 text-economic-positive" />
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <div className="text-sm text-muted-foreground">
                       Annual Revenue Target
                     </div>
                     <div className="text-lg font-bold">
-                      {formatCurrency(parseFloat(BUSINESS_FORECAST_DEFAULTS.ANNUAL_REVENUE_TARGET.replace(/[^\d.-]/g, '')))}
+                      {revenueTargets
+                        ? formatCurrency(revenueTargets.annualRevenue)
+                        : formatCurrency(parseFloat(BUSINESS_FORECAST_DEFAULTS.ANNUAL_REVENUE_TARGET.replace(/[^\d.-]/g, '')))}
                     </div>
                   </div>
+                  <Badge variant="outline" className="text-xs">
+                    {revenueTargets ? "Set" : "Click to set"}
+                  </Badge>
                 </div>
               </CardContent>
             </Card>
@@ -234,79 +273,112 @@ const BusinessForecast = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <Card className="p-4">
-                        <div className="space-y-2">
-                          <h4 className="text-sm font-medium text-muted-foreground">
-                            Annual Target
-                          </h4>
-                          <div className="text-3xl font-bold text-economic-positive">
-                            {BUSINESS_FORECAST_DEFAULTS.ANNUAL_REVENUE_TARGET}
+                    {!revenueTargets ? (
+                      <div className="flex flex-col items-center justify-center py-12 px-4">
+                        <AlertTriangle className="h-12 w-12 text-muted-foreground mb-4" />
+                        <p className="text-center text-muted-foreground mb-4">
+                          Please set your revenue targets to view forecasts and projections
+                        </p>
+                        <Button
+                          onClick={() => setShowRevenueModal(true)}
+                          className="bg-blue-600 hover:bg-blue-700"
+                        >
+                          Set Revenue Targets
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <Card className="p-4">
+                          <div className="space-y-2">
+                            <h4 className="text-sm font-medium text-muted-foreground">
+                              Annual Target
+                            </h4>
+                            <div className="text-3xl font-bold text-economic-positive">
+                              {formatCurrency(revenueTargets.annualRevenue)}
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                              Total yearly revenue goal
+                            </p>
                           </div>
-                          <p className="text-xs text-muted-foreground">
-                            Total yearly revenue goal
-                          </p>
-                        </div>
-                      </Card>
-                      <Card className="p-4">
-                        <div className="space-y-2">
-                          <h4 className="text-sm font-medium text-muted-foreground">
-                            Projected Revenue
-                          </h4>
-                          <div className="text-3xl font-bold">
-                            $
-                            {(
-                              revenueProjections.reduce(
-                                (sum, p) => sum + (p.value || 0),
-                                0,
-                              ) / 1000000
-                            ).toFixed(1)}
-                            M
+                        </Card>
+                        <Card className="p-4">
+                          <div className="space-y-2">
+                            <h4 className="text-sm font-medium text-muted-foreground">
+                              Projected Revenue
+                            </h4>
+                            <div className="text-3xl font-bold">
+                              {formatCurrency(
+                                revenueProjections.reduce(
+                                  (sum, p) => sum + (p.value || 0),
+                                  0,
+                                )
+                              )}
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                              Based on current forecasts
+                            </p>
                           </div>
-                          <p className="text-xs text-muted-foreground">
-                            Based on current forecasts
-                          </p>
-                        </div>
-                      </Card>
-                      <Card className="p-4">
-                        <div className="space-y-2">
-                          <h4 className="text-sm font-medium text-muted-foreground">
-                            Achievement %
-                          </h4>
-                          <div className="text-3xl font-bold">
-                            {(
-                              (revenueProjections.reduce(
-                                (sum, p) => sum + (p.value || 0),
-                                0,
-                              ) /
-                                parseFloat(
-                                  BUSINESS_FORECAST_DEFAULTS.ANNUAL_REVENUE_TARGET.replace(
-                                    /[^0-9.]/g,
-                                    "",
-                                  ),
-                                )) *
+                        </Card>
+                        <Card className="p-4">
+                          <div className="space-y-2">
+                            <h4 className="text-sm font-medium text-muted-foreground">
+                              Achievement %
+                            </h4>
+                            <div className="text-3xl font-bold">
+                              {(
+                                (revenueProjections.reduce(
+                                  (sum, p) => sum + (p.value || 0),
+                                  0,
+                                ) /
+                                  revenueTargets.annualRevenue) *
                                 100 || 0
-                            ).toFixed(0)}
-                            %
+                              ).toFixed(0)}
+                              %
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                              On track to goal
+                            </p>
                           </div>
-                          <p className="text-xs text-muted-foreground">
-                            On track to goal
-                          </p>
-                        </div>
-                      </Card>
-                    </div>
+                        </Card>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               </section>
 
               {/* Monthly/Quarterly/Annual Revenue */}
               <section>
-                <LoadingOverlay
-                  isLoading={isLoading}
-                  loadingText="Calculating revenue projections..."
-                >
-                  <RevenueProjections projections={revenueProjections} />
-                </LoadingOverlay>
+                {!revenueTargets ? (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg flex items-center gap-2">
+                        <TrendingUp className="h-5 w-5" />
+                        Revenue Projections
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex flex-col items-center justify-center py-12 px-4">
+                        <AlertTriangle className="h-12 w-12 text-muted-foreground mb-4" />
+                        <p className="text-center text-muted-foreground mb-4">
+                          Please set your revenue targets to view detailed projections and forecasts
+                        </p>
+                        <Button
+                          onClick={() => setShowRevenueModal(true)}
+                          className="bg-blue-600 hover:bg-blue-700"
+                        >
+                          Set Revenue Targets
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <LoadingOverlay
+                    isLoading={isLoading}
+                    loadingText="Calculating revenue projections..."
+                  >
+                    <RevenueProjections projections={revenueProjections} />
+                  </LoadingOverlay>
+                )}
               </section>
 
               {/* Cash Flow Forecast */}
@@ -560,7 +632,32 @@ const BusinessForecast = () => {
             <TabsContent value="revenue" className="space-y-8">
               {/* Monthly/Quarterly/Yearly Views - Revenue Projections */}
               <section>
-                <RevenueProjections projections={revenueProjections} />
+                {!revenueTargets ? (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle className="text-lg flex items-center gap-2">
+                        <TrendingUp className="h-5 w-5" />
+                        Revenue Projections
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex flex-col items-center justify-center py-12 px-4">
+                        <AlertTriangle className="h-12 w-12 text-muted-foreground mb-4" />
+                        <p className="text-center text-muted-foreground mb-4">
+                          Please set your revenue targets to view detailed projections and forecasts
+                        </p>
+                        <Button
+                          onClick={() => setShowRevenueModal(true)}
+                          className="bg-blue-600 hover:bg-blue-700"
+                        >
+                          Set Revenue Targets
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <RevenueProjections projections={revenueProjections} />
+                )}
               </section>
 
               {/* Forecast by Product/Service */}
@@ -1995,6 +2092,14 @@ const BusinessForecast = () => {
           </div>
         </footer>
       </div>
+
+      {/* Revenue Targets Modal */}
+      <RevenueTargetsModal
+        isOpen={showRevenueModal}
+        onClose={() => setShowRevenueModal(false)}
+        onSave={handleSaveRevenueTargets}
+        initialTargets={revenueTargets || undefined}
+      />
     </TooltipProvider>
   );
 };
