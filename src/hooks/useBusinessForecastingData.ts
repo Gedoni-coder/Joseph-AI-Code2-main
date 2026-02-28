@@ -1,6 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getBusinessForecasts,
+  updateBusinessForecastKPI,
+  updateBusinessForecastScenario,
   BusinessForecastingData,
 } from "@/lib/api/business-forecasting-service";
 import {
@@ -239,29 +241,40 @@ function transformBusinessForecastingData(
  * Hook to fetch and transform business forecasting data
  */
 export function useBusinessForecastingData() {
+  const queryClient = useQueryClient();
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["business-forecasting"],
     queryFn: () => getBusinessForecasts(),
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
     retry: 1,
   });
 
-  // Use mock data as fallback when API fails or returns no data
   const transformed = transformBusinessForecastingData(data || []);
+  const forecastId = data?.[0]?.id;
 
   return {
     ...transformed,
     isLoading,
     error: error ? (error as Error).message : null,
     refreshData: () => refetch(),
-    updateKPI: (id: string, newValue: number) => {
-      // TODO: Implement API call to update KPI
-      console.log("Update KPI:", id, newValue);
+    updateKPI: async (kpiId: string, newValue: number) => {
+      if (!forecastId) return;
+      try {
+        await updateBusinessForecastKPI(forecastId, kpiId, newValue);
+        queryClient.invalidateQueries({ queryKey: ["business-forecasting"] });
+      } catch (err) {
+        console.error("updateKPI failed:", err);
+      }
     },
-    updateScenario: (id: string, updates: Partial<ScenarioPlanning>) => {
-      // TODO: Implement API call to update scenario
-      console.log("Update scenario:", id, updates);
+    updateScenario: async (scenarioId: string, updates: Partial<ScenarioPlanning>) => {
+      if (!forecastId) return;
+      try {
+        await updateBusinessForecastScenario(forecastId, scenarioId, updates as Record<string, unknown>);
+        queryClient.invalidateQueries({ queryKey: ["business-forecasting"] });
+      } catch (err) {
+        console.error("updateScenario failed:", err);
+      }
     },
     reconnect: () => refetch(),
   };
