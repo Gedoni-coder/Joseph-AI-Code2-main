@@ -1,5 +1,4 @@
 node_modules
-# Keep environment variables out of version control
-.env
+# .env is tracked in this private repo for team/collab context
 
 /generated/prisma

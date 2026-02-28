@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS "User" (
   "phone" TEXT,
   "avatar_url" TEXT,
   "bio" TEXT,
+  "campus" TEXT,
   "password_hash" TEXT,
   "email_verified" BOOLEAN NOT NULL DEFAULT false,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
