@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCompanyInfo } from "@/lib/company-context";
+import { useCurrency } from "@/lib/currency-context";
 import { AlertCircle, Upload, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -52,6 +53,7 @@ const CURRENCIES = [
 export default function CompanySettings() {
   const navigate = useNavigate();
   const { companyInfo, updateCompanyInfo } = useCompanyInfo();
+  const { setCurrency } = useCurrency();
 
   if (!companyInfo) {
     return (
@@ -147,6 +149,11 @@ export default function CompanySettings() {
         ...(language && { language }),
         ...(numberOfEntities && { numberOfEntities: Number(numberOfEntities) }),
       });
+
+      // Sync with global currency context
+      if (currencyPreference) {
+        setCurrency(currencyPreference);
+      }
 
       setLoading(false);
       setSaved(true);

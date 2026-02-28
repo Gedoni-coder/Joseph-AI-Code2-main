@@ -18,6 +18,7 @@ import {
   BarChart3,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useCurrency } from "@/lib/currency-context";
 
 interface FinancialData {
   id: string;
@@ -171,13 +172,17 @@ interface FinancialLayoutProps {
 export function FinancialLayout({
   title = "Financial Layout & Metrics Analysis",
 }: FinancialLayoutProps) {
+  const { formatCurrency: contextFormatCurrency, getCurrencySymbol } = useCurrency();
+
+  // Use compact format for large numbers
   const formatCurrency = (value: number) => {
+    const symbol = getCurrencySymbol();
     if (value >= 1000000) {
-      return `$${(value / 1000000).toFixed(1)}M`;
+      return `${symbol}${(value / 1000000).toFixed(1)}M`;
     } else if (value >= 1000) {
-      return `$${(value / 1000).toFixed(0)}K`;
+      return `${symbol}${(value / 1000).toFixed(0)}K`;
     }
-    return `$${value.toLocaleString()}`;
+    return `${symbol}${value.toLocaleString()}`;
   };
 
   const getCategoryIcon = (category: string) => {

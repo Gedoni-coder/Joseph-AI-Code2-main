@@ -6,7 +6,6 @@ import React, {
   useCallback,
 } from "react";
 import * as authService from "./api/auth-service";
-import * as accountsService from "./api/accounts-service";
 
 export interface AuthUser {
   id: number;
@@ -102,8 +101,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // If token expires in less than 1 minute, try to refresh
     if (timeUntilExpiry < 60 * 1000) {
       try {
-        // The Xano API should return a new token in the response
-        // We'll set a new expiry time (8 minutes from now)
+        // Set a new expiry time (8 minutes from now)
         const newExpiryTime = Date.now() + 8 * 60 * 1000;
         localStorage.setItem(TOKEN_EXPIRY_KEY, newExpiryTime.toString());
       } catch (err) {

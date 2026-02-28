@@ -1,6 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getBusinessForecasts,
+  updateBusinessForecastKPI,
+  updateBusinessForecastScenario,
   BusinessForecastingData,
 } from "@/lib/api/business-forecasting-service";
 import {
@@ -8,6 +10,10 @@ import {
   RevenueProjection,
   KPI,
   ScenarioPlanning,
+  revenueProjections as mockRevenueProjections,
+  customerProfiles as mockCustomerProfiles,
+  kpis as mockKpis,
+  scenarioPlanning as mockScenarios,
 } from "@/lib/business-forecast-data";
 
 interface TransformedBusinessData {
@@ -25,14 +31,14 @@ interface TransformedBusinessData {
  * Transform Xano API response to component-ready data structures
  */
 function transformBusinessForecastingData(
-  data: BusinessForecastingData[]
+  data: BusinessForecastingData[],
 ): TransformedBusinessData {
   if (!data || data.length === 0) {
     return {
-      customerProfiles: [],
-      revenueProjections: [],
-      kpis: [],
-      scenarios: [],
+      customerProfiles: mockCustomerProfiles,
+      revenueProjections: mockRevenueProjections,
+      kpis: mockKpis,
+      scenarios: mockScenarios,
       lastUpdated: new Date(),
       isLoading: false,
       error: null,
@@ -65,7 +71,7 @@ function transformBusinessForecastingData(
   ];
 
   // Transform to revenue projections
-  const revenueProjections: RevenueProjection[] = [
+  const baseRevenueProjections: RevenueProjection[] = [
     {
       id: "q1-2025",
       period: "Q1 2025",
@@ -86,6 +92,7 @@ function transformBusinessForecastingData(
       projected: forecast.q2_2025_projected_revenue,
       conservative: forecast.q2_2025_scenario_range_min,
       optimistic: forecast.q2_2025_scenario_range_max,
+      actualToDate: forecast.q2_2025_actual_to_date,
       confidence:
         forecast.q2_2025_confidence === "High"
           ? 85
@@ -95,69 +102,88 @@ function transformBusinessForecastingData(
     },
   ];
 
-  // Transform to KPIs
-  const kpis: KPI[] = [
-    {
-      id: "annual-revenue-target",
-      name: "Annual Revenue Target",
-      current: forecast.total_revenue_target,
-      target: forecast.total_revenue_target,
-      unit: "USD",
-      trend: forecast.weighted_avg_growth > 15 ? "up" : "stable",
-      category: "Revenue",
-      frequency: "Annual",
-    },
-    {
-      id: "avg-order-value",
-      name: "Average Order Value",
-      current: forecast.average_order_value,
-      target: forecast.average_order_value * 1.1,
-      unit: "USD",
-      trend: "stable",
-      category: "Sales",
-      frequency: "Monthly",
-    },
-    {
-      id: "total-demand",
-      name: "Total Demand Units",
-      current: forecast.total_demand_units,
-      target: forecast.total_demand_units * 1.2,
-      unit: "units",
-      trend: "up",
-      category: "Sales",
-      frequency: "Monthly",
-    },
-    {
-      id: "market-opportunity",
-      name: "Total Market Opportunity",
-      current: forecast.total_market_opportunity,
-      target: forecast.total_market_opportunity * 1.15,
-      unit: "USD",
-      trend: "up",
-      category: "Market",
-      frequency: "Quarterly",
-    },
-    {
-      id: "overall-retention",
-      name: "Overall Customer Retention",
-      current: forecast.overall_retention,
-      target: 95,
-      unit: "%",
-      trend: forecast.overall_retention > 80 ? "up" : "down",
-      category: "Customer",
-      frequency: "Monthly",
-    },
-    {
-      id: "weighted-growth",
-      name: "Weighted Average Growth Rate",
-      current: forecast.weighted_avg_growth,
-      target: 20,
-      unit: "%",
-      trend: forecast.weighted_avg_growth > 15 ? "up" : "stable",
-      category: "Growth",
-      frequency: "Quarterly",
-    },
-  ];
+  // Add Q3 if available in API, otherwise use fallback
+  if (forecast.q3_2025_projected_revenue) {
+    baseRevenueProjections.push({
+      id: "q3-2025",
+      period: "Q3 2025",
+      projected: forecast.q3_2025_projected_revenue,
+      conservative: forecast.q3_2025_scenario_range_min || 3150000,
+      optimistic: forecast.q3_2025_scenario_range_max || 4025000,
+      actualToDate: forecast.q3_2025_actual_to_date,
+      confidence:
+        forecast.q3_2025_confidence === "High"
+          ? 85
+          : forecast.q3_2025_confidence === "Medium"
+            ? 70
+            : 72,
+    });
+  } else {
+    baseRevenueProjections.push({
+      id: "q3-2025",
+      period: "Q3 2025",
+      projected: 3500000,
+      conservative: 3150000,
+      optimistic: 4025000,
+      actualToDate: 1850000,
+      confidence: 72,
+    });
+  }
+
+  // Add Q4 if available in API, otherwise use fallback
+  if (forecast.q4_2025_projected_revenue) {
+    baseRevenueProjections.push({
+      id: "q4-2025",
+      period: "Q4 2025",
+      projected: forecast.q4_2025_projected_revenue,
+      conservative: forecast.q4_2025_scenario_range_min || 3780000,
+      optimistic: forecast.q4_2025_scenario_range_max || 4860000,
+      actualToDate: forecast.q4_2025_actual_to_date,
+      confidence:
+        forecast.q4_2025_confidence === "High"
+          ? 85
+          : forecast.q4_2025_confidence === "Medium"
+            ? 70
+            : 68,
+    });
+  } else {
+    baseRevenueProjections.push({
+      id: "q4-2025",
+      period: "Q4 2025",
+      projected: 4200000,
+      conservative: 3780000,
+      optimistic: 4860000,
+      confidence: 68,
+    });
+  }
+
+  const revenueProjections = baseRevenueProjections;
+
+  // Transform to KPIs - use comprehensive mock KPIs as base
+  const kpis: KPI[] = mockKpis.map((kpi) => {
+    // Allow API to override specific KPI values if available
+    if (kpi.category === "Revenue" || kpi.category === "Financial") {
+      return {
+        ...kpi,
+        current: forecast.total_revenue_target
+          ? forecast.total_revenue_target * 0.85
+          : kpi.current,
+      };
+    }
+    if (kpi.category === "Customer" && kpi.name.includes("Retention")) {
+      return {
+        ...kpi,
+        current: forecast.overall_retention || kpi.current,
+      };
+    }
+    if (kpi.category === "Growth" || kpi.name.includes("Growth Rate")) {
+      return {
+        ...kpi,
+        current: forecast.weighted_avg_growth || kpi.current,
+      };
+    }
+    return kpi;
+  });
 
   // Transform to scenarios
   const scenarios: ScenarioPlanning[] = [
@@ -165,8 +191,8 @@ function transformBusinessForecastingData(
       id: "best-case",
       scenario: "Best Case",
       revenue: forecast.q1_2025_scenario_range_max * 4, // Annualized
-      costs: (forecast.q1_2025_scenario_range_max * 4 * 0.65), // Assuming 65% of revenue as costs
-      profit: (forecast.q1_2025_scenario_range_max * 4 * 0.35),
+      costs: forecast.q1_2025_scenario_range_max * 4 * 0.65, // Assuming 65% of revenue as costs
+      profit: forecast.q1_2025_scenario_range_max * 4 * 0.35,
       probability: 25,
       keyAssumptions: [
         `Enterprise units reach ${forecast.enterprise_units} with ${forecast.enterprise_growth_rate}% growth`,
@@ -189,8 +215,8 @@ function transformBusinessForecastingData(
       id: "worst-case",
       scenario: "Worst Case",
       revenue: forecast.q1_2025_scenario_range_min * 4, // Annualized
-      costs: (forecast.q1_2025_scenario_range_min * 4 * 0.75), // Higher cost percentage in worst case
-      profit: (forecast.q1_2025_scenario_range_min * 4 * 0.25),
+      costs: forecast.q1_2025_scenario_range_min * 4 * 0.75, // Higher cost percentage in worst case
+      profit: forecast.q1_2025_scenario_range_min * 4 * 0.25,
       probability: 25,
       keyAssumptions: [
         `Conservative scenario assumes 75% of base case revenue`,
@@ -215,28 +241,40 @@ function transformBusinessForecastingData(
  * Hook to fetch and transform business forecasting data
  */
 export function useBusinessForecastingData() {
+  const queryClient = useQueryClient();
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["business-forecasting"],
     queryFn: () => getBusinessForecasts(),
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
-    retry: 2,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
+    retry: 1,
   });
 
   const transformed = transformBusinessForecastingData(data || []);
+  const forecastId = data?.[0]?.id;
 
   return {
     ...transformed,
     isLoading,
     error: error ? (error as Error).message : null,
     refreshData: () => refetch(),
-    updateKPI: (id: string, newValue: number) => {
-      // TODO: Implement API call to update KPI
-      console.log("Update KPI:", id, newValue);
+    updateKPI: async (kpiId: string, newValue: number) => {
+      if (!forecastId) return;
+      try {
+        await updateBusinessForecastKPI(forecastId, kpiId, newValue);
+        queryClient.invalidateQueries({ queryKey: ["business-forecasting"] });
+      } catch (err) {
+        console.error("updateKPI failed:", err);
+      }
     },
-    updateScenario: (id: string, updates: Partial<ScenarioPlanning>) => {
-      // TODO: Implement API call to update scenario
-      console.log("Update scenario:", id, updates);
+    updateScenario: async (scenarioId: string, updates: Partial<ScenarioPlanning>) => {
+      if (!forecastId) return;
+      try {
+        await updateBusinessForecastScenario(forecastId, scenarioId, updates as Record<string, unknown>);
+        queryClient.invalidateQueries({ queryKey: ["business-forecasting"] });
+      } catch (err) {
+        console.error("updateScenario failed:", err);
+      }
     },
     reconnect: () => refetch(),
   };

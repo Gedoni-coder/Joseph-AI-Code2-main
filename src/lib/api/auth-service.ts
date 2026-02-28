@@ -1,4 +1,5 @@
-const AUTH_API_BASE = import.meta.env.VITE_AUTH_API_BASE || "";
+// Use local proxy to avoid CORS issues
+const AUTH_API_BASE = "/api/auth";
 
 export interface LoginRequest {
   email: string;
@@ -48,84 +49,72 @@ export interface ResetPasswordRequest {
 
 /**
  * Login with email and password
+ * BYPASS MODE: Accepts any email/password without calling API
  */
 export async function login(credentials: LoginRequest): Promise<AuthResponse> {
-  const response = await fetch(`${AUTH_API_BASE}/auth/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify(credentials),
-  });
+  // Bypass auth - accept any credentials
+  const mockAuthToken = `mock-token-${Date.now()}`;
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Login failed");
-  }
-
-  const { authToken } = data;
-
-  // Fetch full user details using the token
-  const userDetails = await getMe(authToken);
+  const mockUser: UserRecord = {
+    id: Math.floor(Math.random() * 10000),
+    created_at: new Date().toISOString(),
+    name: credentials.email.split("@")[0], // Use email prefix as name
+    email: credentials.email,
+    account_id: 1,
+    role: "user",
+  };
 
   return {
-    authToken,
-    user: userDetails,
+    authToken: mockAuthToken,
+    user: mockUser,
   };
 }
 
 /**
  * Signup with email and password
+ * BYPASS MODE: Accepts any credentials without calling API
  */
 export async function signup(data: SignupRequest): Promise<AuthResponse> {
-  const response = await fetch(`${AUTH_API_BASE}/auth/signup`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify(data),
-  });
+  // Bypass auth - accept any credentials
+  const mockAuthToken = `mock-token-${Date.now()}`;
 
-  const responseData = await response.json();
-
-  if (!response.ok) {
-    throw new Error(responseData.message || "Signup failed");
-  }
-
-  const { authToken } = responseData;
-
-  // Fetch full user details using the token
-  const userDetails = await getMe(authToken);
+  const mockUser: UserRecord = {
+    id: Math.floor(Math.random() * 10000),
+    created_at: new Date().toISOString(),
+    name: data.name || data.email.split("@")[0],
+    email: data.email,
+    account_id: 1,
+    role: "user",
+  };
 
   return {
-    authToken,
-    user: userDetails,
+    authToken: mockAuthToken,
+    user: mockUser,
   };
 }
 
 /**
  * Get the current user record using the auth token
+ * BYPASS MODE: Returns mock user data without calling API
  */
 export async function getMe(token: string): Promise<UserRecord> {
-  const response = await fetch(`${AUTH_API_BASE}/auth/me`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    credentials: "include",
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Failed to get user");
+  // Bypass auth - return mock user from token
+  // In bypass mode, token format is "mock-token-{timestamp}"
+  if (!token.startsWith("mock-token-")) {
+    throw new Error("Invalid token");
   }
 
-  return data;
+  // Return a mock user record
+  const mockUser: UserRecord = {
+    id: Math.floor(Math.random() * 10000),
+    created_at: new Date().toISOString(),
+    name: "Test User",
+    email: "test@example.com",
+    account_id: 1,
+    role: "user",
+  };
+
+  return mockUser;
 }
 
 /**

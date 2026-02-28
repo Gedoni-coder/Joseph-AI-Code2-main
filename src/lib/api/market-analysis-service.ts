@@ -1,14 +1,14 @@
 /**
  * Market Analysis Service
- * Handles all API requests for market competitive analysis data
+ * Calls /api/market on the Node.js/Express backend.
  */
+import { apiGet, apiPost, apiPatch, apiDelete } from "./apiClient";
 
-import { xanoGet, xanoPost, xanoPatch, xanoDelete } from "./xano-client";
+// ─── Market Analysis ──────────────────────────────────────────────────────────
 
 export interface MarketAnalysisData {
-  id: number;
-  created_at: string;
-  account_id: number;
+  id: string;
+  user_id: string;
   total_addressable_market: number;
   serviceable_addressable_market: number;
   market_growth_rate: number;
@@ -24,42 +24,84 @@ export interface MarketAnalysisData {
   market_dynamics: string[];
   regulatory_environment: string[];
   customer_preferences: string[];
+  created_at: string;
+  updated_at: string;
 }
 
-export type MarketAnalysisCreateData = Omit<MarketAnalysisData, "id" | "created_at">;
+export type MarketAnalysisCreateData = Omit<MarketAnalysisData, "id" | "user_id" | "created_at" | "updated_at">;
 export type MarketAnalysisUpdateData = Partial<MarketAnalysisCreateData>;
 
-/**
- * Get all market analysis records
- */
+const MARKET_BASE = "/api/market/analyses";
+
 export async function getMarketAnalyses(): Promise<MarketAnalysisData[]> {
-  return xanoGet<MarketAnalysisData[]>("/market_analysis");
+  return apiGet<MarketAnalysisData[]>(MARKET_BASE);
 }
 
-/**
- * Get a specific market analysis record by ID
- */
-export async function getMarketAnalysis(id: number): Promise<MarketAnalysisData> {
-  return xanoGet<MarketAnalysisData>(`/market_analysis/${id}`);
+export async function getMarketAnalysis(id: string): Promise<MarketAnalysisData> {
+  return apiGet<MarketAnalysisData>(`${MARKET_BASE}/${id}`);
 }
 
-/**
- * Create a new market analysis record
- */
 export async function createMarketAnalysis(data: MarketAnalysisCreateData): Promise<MarketAnalysisData> {
-  return xanoPost<MarketAnalysisData>("/market_analysis", data);
+  return apiPost<MarketAnalysisData>(MARKET_BASE, data);
 }
 
-/**
- * Update an existing market analysis record
- */
-export async function updateMarketAnalysis(id: number, data: MarketAnalysisUpdateData): Promise<MarketAnalysisData> {
-  return xanoPatch<MarketAnalysisData>(`/market_analysis/${id}`, data);
+export async function updateMarketAnalysis(id: string, data: MarketAnalysisUpdateData): Promise<MarketAnalysisData> {
+  return apiPatch<MarketAnalysisData>(`${MARKET_BASE}/${id}`, data);
 }
 
-/**
- * Delete a market analysis record
- */
-export async function deleteMarketAnalysis(id: number): Promise<void> {
-  return xanoDelete(`/market_analysis/${id}`);
+export async function deleteMarketAnalysis(id: string): Promise<void> {
+  return apiDelete(`${MARKET_BASE}/${id}`);
+}
+
+// ─── Competitive Analysis ─────────────────────────────────────────────────────
+
+export interface CompetitiveAnalysisData {
+  id: string;
+  user_id: string;
+  competitor_name: string;
+  competitor_type: string;
+  market_share: number;
+  revenue: number;
+  employees: number;
+  founded: number;
+  headquarters: string;
+  website: string;
+  description: string;
+  key_products: string[];
+  target_markets: string[];
+  strengths: string[];
+  weaknesses: string[];
+  opportunities: string[];
+  threats: string[];
+  strategy_recommendations: string[];
+  overall_score: number;
+  funding_stage: string;
+  last_funding_year: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export type CompetitiveAnalysisCreateData = Omit<CompetitiveAnalysisData, "id" | "user_id" | "created_at" | "updated_at">;
+export type CompetitiveAnalysisUpdateData = Partial<CompetitiveAnalysisCreateData>;
+
+const COMPETITIVE_BASE = "/api/market/competitive";
+
+export async function getCompetitiveAnalyses(): Promise<CompetitiveAnalysisData[]> {
+  return apiGet<CompetitiveAnalysisData[]>(COMPETITIVE_BASE);
+}
+
+export async function getCompetitiveAnalysis(id: string): Promise<CompetitiveAnalysisData> {
+  return apiGet<CompetitiveAnalysisData>(`${COMPETITIVE_BASE}/${id}`);
+}
+
+export async function createCompetitiveAnalysis(data: CompetitiveAnalysisCreateData): Promise<CompetitiveAnalysisData> {
+  return apiPost<CompetitiveAnalysisData>(COMPETITIVE_BASE, data);
+}
+
+export async function updateCompetitiveAnalysis(id: string, data: CompetitiveAnalysisUpdateData): Promise<CompetitiveAnalysisData> {
+  return apiPatch<CompetitiveAnalysisData>(`${COMPETITIVE_BASE}/${id}`, data);
+}
+
+export async function deleteCompetitiveAnalysis(id: string): Promise<void> {
+  return apiDelete(`${COMPETITIVE_BASE}/${id}`);
 }

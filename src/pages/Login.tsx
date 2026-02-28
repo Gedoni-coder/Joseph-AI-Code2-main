@@ -1,11 +1,16 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "../components/ui/card";
+import { Button } from "../components/ui/button";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
 import { AlertCircle, Mail, Lock, Loader2 } from "lucide-react";
-import { useAuth } from "@/lib/auth-context";
+import { useAuth } from "../lib/auth-context";
 
 declare global {
   interface Window {
@@ -36,9 +41,9 @@ export default function Login() {
   // Redirect if already authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/home");
+      navigate("/home", { replace: true });
     }
-  }, [isAuthenticated, navigate]);
+  }, []);
 
   const handleGoogleSignIn = useCallback(
     async (response: any) => {
@@ -48,7 +53,7 @@ export default function Login() {
 
       try {
         // The response.credential is a JWT token from Google
-        // Send this to your backend/Xano to authenticate the user
+        // This would need to be sent to your backend to authenticate the user
         // For now, store it and show implementation guidance
         const credential = response?.credential;
 
@@ -60,18 +65,18 @@ export default function Login() {
         // TODO: Implement backend endpoint to exchange Google JWT for auth token
         // This should:
         // 1. Verify the Google JWT signature
-        // 2. Find or create a user in your database with the Google account info
+        // 2. Find or create a user in your backend database with the Google account info
         // 3. Return an authToken to store in localStorage
         // 4. Call the useAuth().login or directly set user state
 
-        console.log("Google Sign-In credential received, integrate with backend:");
-        console.log("1. Send credential JWT to /auth/google-login endpoint");
-        console.log("2. Backend should verify JWT and create/authenticate user in Xano");
-        console.log("3. Return authToken to complete sign-in");
+        console.log(
+          "Google Sign-In credential received, integration not yet implemented",
+        );
+        console.log("Credential:", credential.substring(0, 20) + "...");
 
         // For now, show a helpful message
         setLocalError(
-          "Google Sign-In integration required: Please configure Xano backend endpoint for /auth/google-login",
+          "Google Sign-In integration not yet implemented. Please use email/password login.",
         );
       } catch (err) {
         setLocalError(
@@ -127,7 +132,8 @@ export default function Login() {
 
     try {
       await login(email, password);
-      // Auth context will handle redirect via isAuthenticated effect
+      // Navigate to home after successful login
+      navigate("/home", { replace: true });
     } catch (err) {
       setLocalError(error || "Login failed. Please try again.");
     }
@@ -276,7 +282,9 @@ export default function Login() {
                     <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
                     <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
                   </svg>
-                  <span className="hidden sm:inline">Google (Not configured)</span>
+                  <span className="hidden sm:inline">
+                    Google (Not configured)
+                  </span>
                 </Button>
               )}
             </form>

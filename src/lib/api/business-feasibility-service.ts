@@ -1,9 +1,8 @@
 /**
  * Business Feasibility Service
- * Handles all API requests for business feasibility analysis
+ * XANO DISCONNECTED - All API calls have been disabled
+ * Functions return empty data only
  */
-
-import { xanoGet, xanoPost, xanoPatch, xanoDelete } from "./xano-client";
 
 export interface BusinessFeasibilityData {
   id: number;
@@ -33,35 +32,44 @@ export type BusinessFeasibilityUpdateData = Partial<BusinessFeasibilityCreateDat
 
 /**
  * Get all business feasibility records
+ * XANO DISCONNECTED - Returns empty array
  */
 export async function getBusinessFeasibilities(): Promise<BusinessFeasibilityData[]> {
-  return xanoGet<BusinessFeasibilityData[]>("/business_feasibility");
+  console.debug("[XANO DISCONNECTED] getBusinessFeasibilities blocked");
+  return [];
 }
 
 /**
  * Get a specific business feasibility record by ID
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function getBusinessFeasibility(id: number): Promise<BusinessFeasibilityData> {
-  return xanoGet<BusinessFeasibilityData>(`/business_feasibility/${id}`);
+  console.debug(`[XANO DISCONNECTED] getBusinessFeasibility blocked for ID: ${id}`);
+  return {} as BusinessFeasibilityData;
 }
 
 /**
  * Create a new business feasibility record
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function createBusinessFeasibility(data: BusinessFeasibilityCreateData): Promise<BusinessFeasibilityData> {
-  return xanoPost<BusinessFeasibilityData>("/business_feasibility", data);
+  console.debug("[XANO DISCONNECTED] createBusinessFeasibility blocked");
+  return {} as BusinessFeasibilityData;
 }
 
 /**
  * Update an existing business feasibility record
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function updateBusinessFeasibility(id: number, data: BusinessFeasibilityUpdateData): Promise<BusinessFeasibilityData> {
-  return xanoPatch<BusinessFeasibilityData>(`/business_feasibility/${id}`, data);
+  console.debug(`[XANO DISCONNECTED] updateBusinessFeasibility blocked for ID: ${id}`);
+  return {} as BusinessFeasibilityData;
 }
 
 /**
  * Delete a business feasibility record
+ * XANO DISCONNECTED - Does nothing
  */
 export async function deleteBusinessFeasibility(id: number): Promise<void> {
-  return xanoDelete(`/business_feasibility/${id}`);
+  console.debug(`[XANO DISCONNECTED] deleteBusinessFeasibility blocked for ID: ${id}`);
 }

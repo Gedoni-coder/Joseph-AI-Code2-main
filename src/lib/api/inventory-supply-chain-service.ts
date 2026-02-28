@@ -1,9 +1,8 @@
 /**
  * Inventory & Supply Chain Service
- * Handles all API requests for inventory and supply chain analytics
+ * XANO DISCONNECTED - All API calls have been disabled
+ * Functions return empty data only
  */
-
-import { xanoGet, xanoPost, xanoPatch, xanoDelete } from "./xano-client";
 
 export interface InventorySupplyChainData {
   id: number;
@@ -30,35 +29,44 @@ export type InventorySupplyChainUpdateData = Partial<InventorySupplyChainCreateD
 
 /**
  * Get all inventory and supply chain records
+ * XANO DISCONNECTED - Returns empty array
  */
 export async function getInventorySupplyChainRecords(): Promise<InventorySupplyChainData[]> {
-  return xanoGet<InventorySupplyChainData[]>("/inventory_supply_chain");
+  console.debug("[XANO DISCONNECTED] getInventorySupplyChainRecords blocked");
+  return [];
 }
 
 /**
  * Get a specific inventory and supply chain record by ID
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function getInventorySupplyChain(id: number): Promise<InventorySupplyChainData> {
-  return xanoGet<InventorySupplyChainData>(`/inventory_supply_chain/${id}`);
+  console.debug(`[XANO DISCONNECTED] getInventorySupplyChain blocked for ID: ${id}`);
+  return {} as InventorySupplyChainData;
 }
 
 /**
  * Create a new inventory and supply chain record
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function createInventorySupplyChain(data: InventorySupplyChainCreateData): Promise<InventorySupplyChainData> {
-  return xanoPost<InventorySupplyChainData>("/inventory_supply_chain", data);
+  console.debug("[XANO DISCONNECTED] createInventorySupplyChain blocked");
+  return {} as InventorySupplyChainData;
 }
 
 /**
  * Update an existing inventory and supply chain record
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function updateInventorySupplyChain(id: number, data: InventorySupplyChainUpdateData): Promise<InventorySupplyChainData> {
-  return xanoPatch<InventorySupplyChainData>(`/inventory_supply_chain/${id}`, data);
+  console.debug(`[XANO DISCONNECTED] updateInventorySupplyChain blocked for ID: ${id}`);
+  return {} as InventorySupplyChainData;
 }
 
 /**
  * Delete an inventory and supply chain record
+ * XANO DISCONNECTED - Does nothing
  */
 export async function deleteInventorySupplyChain(id: number): Promise<void> {
-  return xanoDelete(`/inventory_supply_chain/${id}`);
+  console.debug(`[XANO DISCONNECTED] deleteInventorySupplyChain blocked for ID: ${id}`);
 }

@@ -1,9 +1,8 @@
 /**
  * Company Profile Service
- * Handles all API requests for company profile data
+ * XANO DISCONNECTED - All API calls have been disabled
+ * Functions return empty data only
  */
-
-import { xanoGet, xanoPost, xanoPatch, xanoDelete } from "./xano-client";
 
 export interface CompanyLogoFile {
   access: string;
@@ -43,35 +42,44 @@ export type CompanyProfileUpdateData = Partial<CompanyProfileCreateData>;
 
 /**
  * Get all company profiles
+ * XANO DISCONNECTED - Returns empty array
  */
 export async function getCompanyProfiles(): Promise<CompanyProfileData[]> {
-  return xanoGet<CompanyProfileData[]>("/company_profile");
+  console.debug("[XANO DISCONNECTED] getCompanyProfiles blocked");
+  return [];
 }
 
 /**
  * Get a specific company profile by ID
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function getCompanyProfile(id: number): Promise<CompanyProfileData> {
-  return xanoGet<CompanyProfileData>(`/company_profile/${id}`);
+  console.debug(`[XANO DISCONNECTED] getCompanyProfile blocked for ID: ${id}`);
+  return {} as CompanyProfileData;
 }
 
 /**
  * Create a new company profile
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function createCompanyProfile(data: CompanyProfileCreateData): Promise<CompanyProfileData> {
-  return xanoPost<CompanyProfileData>("/company_profile", data);
+  console.debug("[XANO DISCONNECTED] createCompanyProfile blocked");
+  return {} as CompanyProfileData;
 }
 
 /**
  * Update an existing company profile
+ * XANO DISCONNECTED - Returns empty object
  */
 export async function updateCompanyProfile(id: number, data: CompanyProfileUpdateData): Promise<CompanyProfileData> {
-  return xanoPatch<CompanyProfileData>(`/company_profile/${id}`, data);
+  console.debug(`[XANO DISCONNECTED] updateCompanyProfile blocked for ID: ${id}`);
+  return {} as CompanyProfileData;
 }
 
 /**
  * Delete a company profile
+ * XANO DISCONNECTED - Does nothing
  */
 export async function deleteCompanyProfile(id: number): Promise<void> {
-  return xanoDelete(`/company_profile/${id}`);
+  console.debug(`[XANO DISCONNECTED] deleteCompanyProfile blocked for ID: ${id}`);
 }

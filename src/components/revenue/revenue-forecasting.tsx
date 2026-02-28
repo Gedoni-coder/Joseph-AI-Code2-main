@@ -12,6 +12,7 @@ import { Progress } from "@/components/ui/progress";
 import { TrendingUp, AlertTriangle, CheckCircle, Calendar } from "lucide-react";
 import { type RevenueScenario } from "@/lib/revenue-data";
 import { ScenarioComparisonDialog } from "./scenario-comparison-dialog";
+import { useCurrencyFormatter } from "@/components/currency-formatter";
 
 interface RevenueForecastingProps {
   scenarios: RevenueScenario[];
@@ -19,13 +20,9 @@ interface RevenueForecastingProps {
 
 export function RevenueForecasting({ scenarios }: RevenueForecastingProps) {
   const [dialogOpen, setDialogOpen] = useState(false);
+  const { compact, format } = useCurrencyFormatter();
   const currentRevenue = scenarios.reduce((sum, s) => sum + s.totalRevenue, 0) / scenarios.length;
-  const formatCurrency = (amount: number) => {
-    if (amount >= 1000000) {
-      return `$${(amount / 1000000).toFixed(1)}M`;
-    }
-    return `$${amount.toLocaleString()}`;
-  };
+  const formatCurrency = (amount: number) => compact(amount, 1);
 
   const getScenarioColor = (probability: number) => {
     if (probability >= 40) return "bg-green-100 text-green-800";

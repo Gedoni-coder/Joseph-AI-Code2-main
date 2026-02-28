@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -8,8 +9,11 @@ import {
   Target,
   Minus,
   BarChart3,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useCurrency } from "@/lib/currency-context";
 
 interface KPIDashboardProps {
   kpis: KPI[];
@@ -20,17 +24,38 @@ export function KPIDashboard({
   kpis,
   title = "Performance Metrics & KPIs",
 }: KPIDashboardProps) {
+  const { formatCurrency, getCurrencySymbol } = useCurrency();
+
+  const [expandedCategories, setExpandedCategories] = useState<
+    Record<string, boolean>
+  >(() => {
+    // Initialize all categories as expanded by default
+    const grouped = kpis.reduce(
+      (acc, kpi) => {
+        if (!acc[kpi.category]) {
+          acc[kpi.category] = true; // All expanded by default
+        }
+        return acc;
+      },
+      {} as Record<string, boolean>,
+    );
+    return grouped;
+  });
+
+  const toggleCategory = (category: string) => {
+    setExpandedCategories((prev) => ({
+      ...prev,
+      [category]: !prev[category],
+    }));
+  };
+
   const formatValue = (value: number, unit: string) => {
     if (unit === "USD") {
-      return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      }).format(value);
+      return formatCurrency(value);
     }
     if (unit === "USD/employee") {
-      return `$${(value / 1000).toFixed(0)}K/emp`;
+      const symbol = getCurrencySymbol();
+      return `${symbol}${(value / 1000).toFixed(0)}K/emp`;
     }
     if (unit === "%") {
       return `${value}%`;
@@ -105,20 +130,8 @@ export function KPIDashboard({
   };
 
   const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case "Sales":
-        return "💼";
-      case "Revenue":
-        return "💰";
-      case "Profitability":
-        return "📈";
-      case "Operations":
-        return "⚙️";
-      case "Finance":
-        return "🏦";
-      default:
-        return "📊";
-    }
+    // Return bullseye emoji for all categories
+    return "🎯";
   };
 
   const groupedKPIs = kpis.reduce(
@@ -147,99 +160,115 @@ export function KPIDashboard({
       {/* KPI Categories */}
       {Object.entries(groupedKPIs).map(([category, categoryKPIs]) => (
         <div key={category} className="space-y-4">
-          <div className="flex items-center gap-2">
-            <span className="text-lg">{getCategoryIcon(category)}</span>
-            <h4 className="font-medium text-base">{category}</h4>
-            <Badge variant="secondary" className="text-xs">
-              {categoryKPIs.length}
-            </Badge>
-          </div>
+          <button
+            onClick={() => toggleCategory(category)}
+            className="w-full flex items-center justify-between p-3 bg-muted hover:bg-muted/80 rounded-lg border border-muted-foreground/20 transition-colors cursor-pointer"
+          >
+            <div className="flex items-center gap-3">
+              <span className="text-lg">{getCategoryIcon(category)}</span>
+              <h4 className="font-medium text-base">{category}</h4>
+              <Badge variant="secondary" className="text-xs">
+                {categoryKPIs.length}
+              </Badge>
+            </div>
+            <div>
+              {expandedCategories[category] ? (
+                <ChevronUp className="h-5 w-5 text-muted-foreground" />
+              ) : (
+                <ChevronDown className="h-5 w-5 text-muted-foreground" />
+              )}
+            </div>
+          </button>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {categoryKPIs.map((kpi) => {
-              const performance = (kpi.current / kpi.target) * 100;
-              const status = getPerformanceStatus(
-                kpi.current,
-                kpi.target,
-                kpi.trend,
-              );
+          {expandedCategories[category] && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {categoryKPIs.map((kpi) => {
+                const performance = (kpi.current / kpi.target) * 100;
+                const status = getPerformanceStatus(
+                  kpi.current,
+                  kpi.target,
+                  kpi.trend,
+                );
 
-              return (
-                <Card
-                  key={kpi.id}
-                  className="hover:shadow-md transition-shadow"
-                >
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-sm font-medium leading-tight">
-                        {kpi.name}
-                      </CardTitle>
-                      <div className="flex items-center gap-2">
-                        {getTrendIcon(kpi.trend)}
-                        <Badge
-                          className={cn("text-xs", getStatusColor(status))}
-                        >
-                          {getStatusLabel(status)}
+                return (
+                  <Card
+                    key={kpi.id}
+                    className="hover:shadow-md transition-shadow"
+                  >
+                    <CardHeader className="pb-3">
+                      <div className="flex items-center justify-between">
+                        <CardTitle className="text-sm font-medium leading-tight">
+                          {kpi.name}
+                        </CardTitle>
+                        <div className="flex items-center gap-2">
+                          {getTrendIcon(kpi.trend)}
+                          <Badge
+                            className={cn("text-xs", getStatusColor(status))}
+                          >
+                            {getStatusLabel(status)}
+                          </Badge>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-muted-foreground">
+                            Current
+                          </span>
+                          <span className="text-lg font-bold">
+                            {formatValue(kpi.current, kpi.unit)}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-muted-foreground">
+                            Target
+                          </span>
+                          <span className="text-sm font-medium">
+                            {formatValue(kpi.target, kpi.unit)}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-muted-foreground">
+                            Progress
+                          </span>
+                          <span
+                            className={cn(
+                              "font-medium",
+                              performance >= 100
+                                ? "text-economic-positive"
+                                : performance >= 90
+                                  ? "text-economic-warning"
+                                  : "text-economic-negative",
+                            )}
+                          >
+                            {performance.toFixed(0)}%
+                          </span>
+                        </div>
+                        <Progress
+                          value={Math.min(performance, 100)}
+                          className="h-2"
+                        />
+                      </div>
+
+                      <div className="flex items-center justify-between text-xs text-muted-foreground border-t pt-3">
+                        <div className="flex items-center gap-1">
+                          <Target className="h-3 w-3" />
+                          <span>{kpi.frequency}</span>
+                        </div>
+                        <Badge variant="outline" className="text-xs">
+                          {category}
                         </Badge>
                       </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-muted-foreground">
-                          Current
-                        </span>
-                        <span className="text-lg font-bold">
-                          {formatValue(kpi.current, kpi.unit)}
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-muted-foreground">
-                          Target
-                        </span>
-                        <span className="text-sm font-medium">
-                          {formatValue(kpi.target, kpi.unit)}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Progress</span>
-                        <span
-                          className={cn(
-                            "font-medium",
-                            performance >= 100
-                              ? "text-economic-positive"
-                              : performance >= 90
-                                ? "text-economic-warning"
-                                : "text-economic-negative",
-                          )}
-                        >
-                          {performance.toFixed(0)}%
-                        </span>
-                      </div>
-                      <Progress
-                        value={Math.min(performance, 100)}
-                        className="h-2"
-                      />
-                    </div>
-
-                    <div className="flex items-center justify-between text-xs text-muted-foreground border-t pt-3">
-                      <div className="flex items-center gap-1">
-                        <Target className="h-3 w-3" />
-                        <span>{kpi.frequency}</span>
-                      </div>
-                      <Badge variant="outline" className="text-xs">
-                        {category}
-                      </Badge>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          )}
         </div>
       ))}
 

@@ -41,6 +41,7 @@ import {
   FileText,
   User,
 } from "lucide-react";
+import { useCurrencyFormatter } from "@/components/currency-formatter";
 
 interface ProcurementTrackingProps {
   procurementOrders: ProcurementOrder[];
@@ -55,6 +56,7 @@ export function ProcurementTracking({
 }: ProcurementTrackingProps) {
   const [selectedStatus, setSelectedStatus] = useState("all");
   const [selectedSupplier, setSelectedSupplier] = useState("all");
+  const { format } = useCurrencyFormatter();
 
   const filteredOrders = procurementOrders.filter((order) => {
     if (selectedStatus !== "all" && order.status !== selectedStatus)
@@ -64,14 +66,7 @@ export function ProcurementTracking({
     return true;
   });
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount);
-  };
+  const formatCurrency = (amount: number) => format(amount, 0);
 
   const getStatusColor = (status: string) => {
     switch (status) {

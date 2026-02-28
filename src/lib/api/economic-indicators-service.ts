@@ -1,14 +1,12 @@
 /**
  * Economic Indicators Service
- * Handles all API requests for economic indicators data
+ * Calls /api/economic/indicators on the Node.js/Express backend.
  */
-
-import { xanoGet, xanoPost, xanoPatch, xanoDelete } from "./xano-client";
+import { apiGet, apiPost, apiPatch, apiDelete } from "./apiClient";
 
 export interface EconomicIndicatorData {
-  id: number;
-  created_at: string;
-  account_id: number;
+  id: string;
+  user_id: string;
   gdp_growth_rate: number;
   inflation_rate: number;
   unemployment_rate: number;
@@ -24,42 +22,36 @@ export interface EconomicIndicatorData {
   trends: string[];
   impact_analysis: string[];
   alerts: string[];
+  created_at: string;
+  updated_at: string;
 }
 
-export type EconomicIndicatorCreateData = Omit<EconomicIndicatorData, "id" | "created_at">;
+export type EconomicIndicatorCreateData = Omit<EconomicIndicatorData, "id" | "user_id" | "created_at" | "updated_at">;
 export type EconomicIndicatorUpdateData = Partial<EconomicIndicatorCreateData>;
 
-/**
- * Get all economic indicator records
- */
+const BASE = "/api/economic/indicators";
+
 export async function getEconomicIndicatorRecords(): Promise<EconomicIndicatorData[]> {
-  return xanoGet<EconomicIndicatorData[]>("/economic_indicators");
+  return apiGet<EconomicIndicatorData[]>(BASE);
 }
 
-/**
- * Get a specific economic indicator record by ID
- */
-export async function getEconomicIndicator(id: number): Promise<EconomicIndicatorData> {
-  return xanoGet<EconomicIndicatorData>(`/economic_indicators/${id}`);
+export async function getEconomicIndicator(id: string): Promise<EconomicIndicatorData> {
+  return apiGet<EconomicIndicatorData>(`${BASE}/${id}`);
 }
 
-/**
- * Create a new economic indicator record
- */
-export async function createEconomicIndicator(data: EconomicIndicatorCreateData): Promise<EconomicIndicatorData> {
-  return xanoPost<EconomicIndicatorData>("/economic_indicators", data);
+export async function createEconomicIndicator(
+  data: EconomicIndicatorCreateData,
+): Promise<EconomicIndicatorData> {
+  return apiPost<EconomicIndicatorData>(BASE, data);
 }
 
-/**
- * Update an existing economic indicator record
- */
-export async function updateEconomicIndicator(id: number, data: EconomicIndicatorUpdateData): Promise<EconomicIndicatorData> {
-  return xanoPatch<EconomicIndicatorData>(`/economic_indicators/${id}`, data);
+export async function updateEconomicIndicator(
+  id: string,
+  data: EconomicIndicatorUpdateData,
+): Promise<EconomicIndicatorData> {
+  return apiPatch<EconomicIndicatorData>(`${BASE}/${id}`, data);
 }
 
-/**
- * Delete an economic indicator record
- */
-export async function deleteEconomicIndicator(id: number): Promise<void> {
-  return xanoDelete(`/economic_indicators/${id}`);
+export async function deleteEconomicIndicator(id: string): Promise<void> {
+  return apiDelete(`${BASE}/${id}`);
 }

@@ -14,9 +14,10 @@ import {
   useLocation,
   Navigate,
 } from "react-router-dom";
-import { Radio, Moon, Sun } from "lucide-react";
+import { Radio, Moon, Sun, Settings, DollarSign, Menu, X } from "lucide-react";
 import { Switch } from "./components/ui/switch";
 import { ThemeProvider, useTheme } from "./lib/theme-context";
+import { CurrencyProvider, useCurrency, CURRENCIES } from "./lib/currency-context";
 import Landing from "./pages/Landing";
 import PrimaryLanding from "./pages/PrimaryLanding";
 import Index from "./pages/Index";
@@ -51,6 +52,7 @@ import ComplianceReports from "./pages/ComplianceReports";
 import AuditReports from "./pages/AuditReports";
 import AuditTrail from "./pages/AuditTrail";
 import DocumentUpload from "./pages/DocumentUpload";
+import DocumentProcessing from "./pages/DocumentProcessing";
 import NotFound from "./pages/NotFound";
 import Infrastructure from "./pages/Infrastructure";
 import Networks from "./pages/infrastructure/Networks";
@@ -73,6 +75,7 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import Onboarding from "./pages/Onboarding";
 import CompanySettings from "./pages/CompanySettings";
+import UserSettings from "./pages/UserSettings";
 import Learn from "./pages/learn/Learn";
 import { CompanyInfoProvider } from "./lib/company-context";
 import LearnDiscover from "./pages/learn/LearnDiscover";
@@ -85,6 +88,8 @@ import SalesIntelligence from "./pages/SalesIntelligence";
 import ChatbotTest from "./pages/ChatbotTest";
 import { useCompanyInfo } from "./lib/company-context";
 import { AuthProvider } from "./lib/auth-context";
+import { useSyncCurrency } from "./hooks/useSyncCurrency";
+import { AgentCredits } from "./components/agent-credits";
 
 const queryClient = new QueryClient();
 
@@ -173,11 +178,143 @@ interface TopDivisionNavProps {
   onConversationalModeChange: (enabled: boolean) => void;
 }
 
+function MobileNav({
+  conversationalMode,
+  onConversationalModeChange,
+}: TopDivisionNavProps) {
+  const { theme, toggleTheme } = useTheme();
+  const { currency, setCurrency } = useCurrency();
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+
+  return (
+    <nav className="flex md:hidden w-full bg-card border-b shadow-sm px-4 py-3 sticky top-0 z-40 gap-2 items-center justify-between">
+      <Link
+        to="/home"
+        className="font-bold tracking-tight text-base px-2 py-1 rounded hover:bg-muted/30 transition-colors flex items-center gap-2 text-primary"
+      >
+        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 shadow-sm">
+          <Settings className="h-5 w-5 text-primary animate-pulse-subtle" />
+        </div>
+        <span className="hidden xs:inline">Joseph AI</span>
+      </Link>
+
+      <div className="flex items-center gap-1.5">
+        <Link
+          to="/user-settings"
+          className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 hover:bg-primary/20 text-primary rounded-full transition-all cursor-pointer border border-primary/20 shadow-sm"
+          title="User Settings"
+          aria-label="User Settings"
+        >
+          <Settings className="h-5 w-5" />
+          <span className="text-xs font-bold uppercase tracking-wider">Settings</span>
+        </Link>
+
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="flex items-center justify-center h-10 w-10 hover:bg-primary/10 rounded-full transition-all cursor-pointer"
+          title="More options"
+          aria-label="Toggle menu"
+        >
+          {mobileMenuOpen ? (
+            <X className="h-6 w-6 text-primary" />
+          ) : (
+            <Menu className="h-6 w-6 text-primary" />
+          )}
+        </button>
+
+        {mobileMenuOpen && (
+          <div className="absolute top-full right-0 left-0 mt-0 bg-card border-b shadow-xl p-4 space-y-4 z-50 animate-in slide-in-from-top-2">
+            <div className="grid grid-cols-2 gap-3">
+              <Link
+                to="/user-settings"
+                className="flex flex-col items-center justify-center gap-2 p-4 bg-primary text-white rounded-xl shadow-md transition-all active:scale-95"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <Settings className="h-6 w-6" />
+                <span className="text-sm font-bold">Account Settings</span>
+              </Link>
+
+              <button
+                onClick={() => {
+                  toggleTheme();
+                  setMobileMenuOpen(false);
+                }}
+                className="flex flex-col items-center justify-center gap-2 p-4 bg-card border border-border rounded-xl shadow-sm transition-all active:scale-95"
+              >
+                {theme === "dark" ? (
+                  <Sun className="h-6 w-6 text-yellow-500" />
+                ) : (
+                  <Moon className="h-6 w-6 text-blue-500" />
+                )}
+                <span className="text-sm font-medium">
+                  {theme === "dark" ? "Light Mode" : "Dark Mode"}
+                </span>
+              </button>
+            </div>
+
+            <div className="h-px bg-border"></div>
+
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <DollarSign className="h-5 w-5 text-primary" />
+                  <span className="text-sm font-medium text-muted-foreground">Currency</span>
+                </div>
+                <select
+                  value={currency}
+                  onChange={(e) => {
+                    setCurrency(e.target.value);
+                    setMobileMenuOpen(false);
+                  }}
+                  className="text-sm font-bold bg-transparent text-primary border-0 outline-0 focus:outline-0 cursor-pointer"
+                  aria-label="Select currency"
+                  title="Select currency"
+                >
+                  {CURRENCIES.map((curr) => (
+                    <option key={curr.code} value={curr.code}>
+                      {curr.code}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <Radio className="h-5 w-5 text-primary" />
+                  <span className="text-sm font-medium text-muted-foreground">Conversational Chat</span>
+                </div>
+                <Switch
+                  checked={conversationalMode}
+                  onCheckedChange={(checked) => {
+                    onConversationalModeChange(checked);
+                    setMobileMenuOpen(false);
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="h-px bg-border"></div>
+
+            <Link
+              to="/home"
+              className="w-full flex items-center justify-center gap-2 p-3 text-muted-foreground font-medium hover:text-primary transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <span>Back to Home</span>
+            </Link>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+}
+
 function TopDivisionNav({
   conversationalMode,
   onConversationalModeChange,
 }: TopDivisionNavProps) {
   const { theme, toggleTheme } = useTheme();
+  const { currency, setCurrency } = useCurrency();
 
   return (
     <nav className="hidden md:flex w-full bg-card border-b shadow-sm px-4 py-3 sticky top-0 z-40 gap-2 items-center">
@@ -205,6 +342,39 @@ function TopDivisionNav({
           <span className="text-xs text-muted-foreground font-medium">
             Divisions
           </span>
+        </div>
+
+        <div className="h-6 w-px bg-border"></div>
+
+        <Link
+          to="/user-settings"
+          className="flex items-center gap-2 px-2 py-1 hover:bg-primary/10 rounded transition-all cursor-pointer"
+          title="User Settings"
+          aria-label="Open user settings"
+        >
+          <Settings className="h-4 w-4 text-primary" />
+          <span className="text-xs text-muted-foreground font-medium whitespace-nowrap">
+            Settings
+          </span>
+        </Link>
+
+        <div className="h-6 w-px bg-border"></div>
+
+        <div className="flex items-center gap-2 px-2 py-1 hover:bg-primary/10 rounded transition-all cursor-pointer">
+          <DollarSign className="h-4 w-4 text-primary" />
+          <select
+            value={currency}
+            onChange={(e) => setCurrency(e.target.value)}
+            className="text-xs font-medium bg-transparent text-muted-foreground border-0 outline-0 focus:outline-0 cursor-pointer"
+            aria-label="Select currency"
+            title="Select currency"
+          >
+            {CURRENCIES.map((curr) => (
+              <option key={curr.code} value={curr.code}>
+                {curr.code}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="h-6 w-px bg-border"></div>
@@ -265,6 +435,10 @@ function ProtectedHomeRoute() {
 function AppContent() {
   const [conversationalMode, setConversationalMode] = React.useState(true);
   const location = useLocation();
+
+  // Sync company's currency preference with global currency context
+  useSyncCurrency();
+
   const isLandingPage =
     location.pathname === "/" ||
     location.pathname === "/signup" ||
@@ -292,10 +466,17 @@ function AppContent() {
     >
       <>
         {!isLandingPage && (
-          <TopDivisionNav
-            conversationalMode={conversationalMode}
-            onConversationalModeChange={handleConversationalModeChange}
-          />
+          <>
+            <AgentCredits creditBalance={1500} />
+            <MobileNav
+              conversationalMode={conversationalMode}
+              onConversationalModeChange={handleConversationalModeChange}
+            />
+            <TopDivisionNav
+              conversationalMode={conversationalMode}
+              onConversationalModeChange={handleConversationalModeChange}
+            />
+          </>
         )}
         {!isLandingPage && (
           <ChatbotContainer conversationalMode={conversationalMode} />
@@ -306,10 +487,56 @@ function AppContent() {
           <Route path="/login" element={<Login />} />
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/company-settings" element={<CompanySettings />} />
+          <Route path="/user-settings" element={<UserSettings />} />
           <Route path="/chatbot-test" element={<ChatbotTest />} />
           <Route path="/home" element={<ProtectedHomeRoute />} />
           <Route path="/landing" element={<Landing />} />
 
+          {/* Main 10 Module Routes - matching landing page links */}
+          <Route path="/economic-indicators" element={<Index />} />
+          <Route path="/business-forecast" element={<BusinessForecast />} />
+          <Route
+            path="/market-competitive-analysis"
+            element={<MarketCompetitiveAnalysis />}
+          />
+          <Route
+            path="/market-report/:reportId"
+            element={<MarketReportView />}
+          />
+          <Route
+            path="/market-competitive-analysis/swot"
+            element={<SwotWhitePaper />}
+          />
+          <Route
+            path="/market-competitive-analysis/profile/:id"
+            element={<CompetitorWhitePaper />}
+          />
+          <Route path="/pricing-strategies" element={<PricingStrategy />} />
+          <Route path="/revenue-forecasting" element={<RevenueStrategy />} />
+          <Route path="/loan-research" element={<LoanFunding />} />
+          <Route
+            path="/supply-chain-analytics"
+            element={<InventorySupplyChain />}
+          />
+          <Route path="/financial-advisory" element={<FinancialAdvisory />} />
+          <Route path="/impact-calculator" element={<ImpactCalculator />} />
+          <Route path="/tax-compliance" element={<TaxCompliance />} />
+          <Route
+            path="/business-feasibility"
+            element={<BusinessFeasibility />}
+          />
+          <Route
+            path="/business-feasibility/:id"
+            element={<BusinessFeasibilityIdea />}
+          />
+          <Route path="/business-planning" element={<BusinessPlanning />} />
+          <Route
+            path="/business-planning-flow/:planId"
+            element={<BusinessPlanningFlow />}
+          />
+          <Route path="/business-plans" element={<BusinessPlansList />} />
+          <Route path="/sales-intelligence" element={<SalesIntelligence />} />
+          <Route path="/kpi-dashboard" element={<SalesIntelligence />} />
           {/* Main 10 Module Routes - matching landing page links */}
           <Route path="/economic-indicators" element={<Index />} />
           <Route path="/business-forecast" element={<BusinessForecast />} />
@@ -372,6 +599,7 @@ function AppContent() {
           <Route path="/audit-reports" element={<AuditReports />} />
           <Route path="/audit-trail" element={<AuditTrail />} />
           <Route path="/document-upload" element={<DocumentUpload />} />
+          <Route path="/document-processing" element={<DocumentProcessing />} />
 
           {/* Legacy routes for backward compatibility */}
           <Route path="/pricing-strategy" element={<PricingStrategy />} />
@@ -438,17 +666,19 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <AuthProvider>
-              <CompanyInfoProvider>
-                <AppContent />
-              </CompanyInfoProvider>
-            </AuthProvider>
-          </BrowserRouter>
-        </TooltipProvider>
+        <CurrencyProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <AuthProvider>
+                <CompanyInfoProvider>
+                  <AppContent />
+                </CompanyInfoProvider>
+              </AuthProvider>
+            </BrowserRouter>
+          </TooltipProvider>
+        </CurrencyProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
