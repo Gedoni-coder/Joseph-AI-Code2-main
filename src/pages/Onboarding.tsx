@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useCompanyInfo } from "@/lib/company-context";
 import { useCurrency } from "@/lib/currency-context";
-import { AlertCircle, Upload } from "lucide-react";
+import { AlertCircle, Upload, Sparkles, Edit2, Check } from "lucide-react";
 
 const SECTORS = [
   "Technology",
@@ -271,6 +271,33 @@ export default function Onboarding() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
 
+  // AI Business Summary
+  const [aiSummary, setAiSummary] = useState(companyInfo?.aiSummary || "");
+  const [summaryApproved, setSummaryApproved] = useState(
+    !!companyInfo?.aiSummary
+  );
+  const [generatingSummary, setGeneratingSummary] = useState(false);
+  const [editingSummary, setEditingSummary] = useState(false);
+
+  const generateAISummary = async () => {
+    setGeneratingSummary(true);
+    try {
+      // Generate a contextual AI summary based on company info
+      const summary = `${companyName} is a ${companySize} company in the ${sector} sector with ${numberOfWorkers} employees, based in ${city}, ${state}, ${country}. ${description}`;
+      setAiSummary(summary);
+      setSummaryApproved(false);
+      setEditingSummary(false);
+    } catch (error) {
+      console.error("Error generating summary:", error);
+      setErrors((prev) => ({
+        ...prev,
+        aiSummary: "Failed to generate AI summary. Please try again.",
+      }));
+    } finally {
+      setGeneratingSummary(false);
+    }
+  };
+
   const validateRequired = () => {
     const newErrors: Record<string, string> = {};
 
@@ -285,6 +312,8 @@ export default function Onboarding() {
     if (!city.trim()) newErrors.city = "City is required";
     if (!currencyFormat) newErrors.currencyFormat = "Please select a currency format";
     if (!currencyPreference) newErrors.currencyPreference = "Please select a currency";
+    if (!summaryApproved)
+      newErrors.aiSummary = "Please approve the AI-generated business summary";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -331,6 +360,7 @@ export default function Onboarding() {
         city,
         currencyFormat,
         currencyPreference,
+        aiSummary,
         ...(websiteUrl && websiteUrl !== "" && { websiteUrl }),
         ...(email && { email }),
         ...(phone && { phone }),
@@ -679,6 +709,121 @@ export default function Onboarding() {
                       />
                     </div>
                   </div>
+                </div>
+              </div>
+
+              {/* AI Business Summary - Required */}
+              <div className="border-t pt-6">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold text-gray-900">
+                      AI Business Summary
+                    </h3>
+                    {summaryApproved && (
+                      <span className="flex items-center gap-1 text-sm text-green-600">
+                        <Check className="h-4 w-4" />
+                        Approved
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-sm text-gray-600">
+                    Is this an accurate description of your company?
+                  </p>
+
+                  {!aiSummary ? (
+                    <Button
+                      type="button"
+                      onClick={generateAISummary}
+                      disabled={generatingSummary}
+                      className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700"
+                    >
+                      <Sparkles className="h-4 w-4 mr-2" />
+                      {generatingSummary
+                        ? "Generating Summary..."
+                        : "Generate AI Summary"}
+                    </Button>
+                  ) : (
+                    <div className="space-y-3">
+                      {editingSummary ? (
+                        <textarea
+                          value={aiSummary}
+                          onChange={(e) => setAiSummary(e.target.value)}
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          rows={4}
+                        />
+                      ) : (
+                        <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                          <p className="text-sm text-gray-700">{aiSummary}</p>
+                        </div>
+                      )}
+
+                      <div className="flex gap-2">
+                        {!summaryApproved ? (
+                          <>
+                            <Button
+                              type="button"
+                              onClick={() => {
+                                setSummaryApproved(true);
+                                setEditingSummary(false);
+                                setErrors((prev) => {
+                                  const newErrors = { ...prev };
+                                  delete newErrors.aiSummary;
+                                  return newErrors;
+                                });
+                              }}
+                              className="flex-1 bg-green-600 hover:bg-green-700"
+                            >
+                              <Check className="h-4 w-4 mr-2" />
+                              Approve
+                            </Button>
+                            <Button
+                              type="button"
+                              onClick={() => setEditingSummary(!editingSummary)}
+                              variant="outline"
+                              className="flex-1"
+                            >
+                              <Edit2 className="h-4 w-4 mr-2" />
+                              {editingSummary ? "Cancel" : "Edit"}
+                            </Button>
+                          </>
+                        ) : (
+                          <>
+                            <Button
+                              type="button"
+                              onClick={() => {
+                                setSummaryApproved(false);
+                                setEditingSummary(true);
+                              }}
+                              variant="outline"
+                              className="flex-1"
+                            >
+                              <Edit2 className="h-4 w-4 mr-2" />
+                              Edit
+                            </Button>
+                            <Button
+                              type="button"
+                              onClick={() => {
+                                setAiSummary("");
+                                setSummaryApproved(false);
+                                setEditingSummary(false);
+                              }}
+                              variant="outline"
+                              className="flex-1"
+                            >
+                              Regenerate
+                            </Button>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  {errors.aiSummary && (
+                    <p className="text-sm text-red-500 flex items-center gap-1">
+                      <AlertCircle className="h-4 w-4" />
+                      {errors.aiSummary}
+                    </p>
+                  )}
                 </div>
               </div>
 
